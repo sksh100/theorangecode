@@ -1,0 +1,23 @@
+{
+  "name": "your-luxury-agent",
+  "version": "1.0.0",
+  "description": "Your Luxury Agent - Premium AI-powered luxury services coming soon page",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build needed'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "luxury",
+    "ai",
+    "coming-soon",
+    "glass-morphism",
+    "futuristic"
+  ],
+  "author": "Your Luxury Agent",
+  "license": "MIT",
+  "devDependencies": {
+    "vercel": "^32.7.2"
+  }
+}

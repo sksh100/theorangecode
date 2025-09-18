@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Your Luxury Agent</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0e27;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #3b82f6;
+            margin-bottom: 2rem;
+        }
+        .submissions {
+            display: grid;
+            gap: 1rem;
+        }
+        .submission {
+            background: rgba(30, 58, 138, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+        .submission-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .submission-id {
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+        .submission-time {
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+        .submission-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .detail {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .detail-label {
+            font-size: 0.875rem;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .detail-value {
+            font-weight: 500;
+            color: #ffffff;
+        }
+        .no-data {
+            text-align: center;
+            color: #94a3b8;
+            padding: 3rem;
+            background: rgba(30, 58, 138, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+        .refresh-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-bottom: 2rem;
+        }
+        .refresh-btn:hover {
+            background: #2563eb;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: rgba(30, 58, 138, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            color: #cbd5e1;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Luxury Agent - Form Submissions</h1>
+        
+        <button class="refresh-btn" onclick="loadSubmissions()">Refresh Data</button>
+        
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalSubmissions">0</div>
+                <div class="stat-label">Total Submissions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="todaySubmissions">0</div>
+                <div class="stat-label">Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="uniqueEmails">0</div>
+                <div class="stat-label">Unique Emails</div>
+            </div>
+        </div>
+        
+        <div class="submissions" id="submissions">
+            <div class="no-data">
+                <h3>No submissions yet</h3>
+                <p>Form submissions will appear here once people start registering.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Note: This is a demo admin page
+        // In a real implementation, you'd need to:
+        // 1. Store submissions in a database
+        // 2. Create an API endpoint to fetch submissions
+        // 3. Add authentication to protect this page
+        
+        function loadSubmissions() {
+            // For demo purposes, we'll show sample data
+            // In production, you'd fetch from your database
+            const sampleSubmissions = [
+                {
+                    id: '1734567890123',
+                    firstName: 'John',
+                    lastName: 'Smith',
+                    email: 'john.smith@example.com',
+                    phone: '+1-555-0123',
+                    eventDate: '2025-10-09',
+                    timestamp: new Date().toISOString(),
+                    source: 'Your Luxury Agent Coming Soon Page'
+                },
+                {
+                    id: '1734567890124',
+                    firstName: 'Sarah',
+                    lastName: 'Johnson',
+                    email: 'sarah.j@example.com',
+                    phone: '+1-555-0124',
+                    eventDate: '2025-10-09',
+                    timestamp: new Date(Date.now() - 3600000).toISOString(),
+                    source: 'Your Luxury Agent Coming Soon Page'
+                }
+            ];
+            
+            displaySubmissions(sampleSubmissions);
+        }
+        
+        function displaySubmissions(submissions) {
+            const container = document.getElementById('submissions');
+            const stats = {
+                total: submissions.length,
+                today: submissions.filter(s => isToday(new Date(s.timestamp))).length,
+                uniqueEmails: new Set(submissions.map(s => s.email)).size
+            };
+            
+            // Update stats
+            document.getElementById('totalSubmissions').textContent = stats.total;
+            document.getElementById('todaySubmissions').textContent = stats.today;
+            document.getElementById('uniqueEmails').textContent = stats.uniqueEmails;
+            
+            if (submissions.length === 0) {
+                container.innerHTML = `
+                    <div class="no-data">
+                        <h3>No submissions yet</h3>
+                        <p>Form submissions will appear here once people start registering.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = submissions.map(submission => `
+                <div class="submission">
+                    <div class="submission-header">
+                        <div class="submission-id">ID: ${submission.id}</div>
+                        <div class="submission-time">${formatDate(submission.timestamp)}</div>
+                    </div>
+                    <div class="submission-details">
+                        <div class="detail">
+                            <div class="detail-label">Name</div>
+                            <div class="detail-value">${submission.firstName} ${submission.lastName}</div>
+                        </div>
+                        <div class="detail">
+                            <div class="detail-label">Email</div>
+                            <div class="detail-value">${submission.email}</div>
+                        </div>
+                        <div class="detail">
+                            <div class="detail-label">Phone</div>
+                            <div class="detail-value">${submission.phone}</div>
+                        </div>
+                        <div class="detail">
+                            <div class="detail-label">Event Date</div>
+                            <div class="detail-value">${submission.eventDate}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function formatDate(timestamp) {
+            return new Date(timestamp).toLocaleString();
+        }
+        
+        function isToday(date) {
+            const today = new Date();
+            return date.toDateString() === today.toDateString();
+        }
+        
+        // Load submissions on page load
+        loadSubmissions();
+    </script>
+</body>
+</html>
