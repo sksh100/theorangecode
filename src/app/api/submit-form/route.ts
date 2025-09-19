@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { kv } from '@vercel/kv'
 
 interface FormData {
   firstName: string
@@ -43,8 +44,12 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    // Log the submission (in production, you'd save to a database)
-    console.log('Form submission received:', {
+    // Create unique ID for this submission
+    const submissionId = `luxury_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    
+    // Prepare data for storage
+    const submissionData = {
+      id: submissionId,
       firstName,
       lastName,
       email,
@@ -52,21 +57,35 @@ export async function POST(request: NextRequest) {
       eventDate,
       timestamp,
       source,
-      ip: request.ip || request.headers.get('x-forwarded-for') || 'unknown'
-    })
+      ip: request.ip || request.headers.get('x-forwarded-for') || 'unknown',
+      submittedAt: new Date().toISOString()
+    }
     
-    // In a real application, you would:
-    // 1. Save to database
-    // 2. Send confirmation email
-    // 3. Add to mailing list
-    // 4. Send notification to admin
+    try {
+      // Save to Vercel KV (Redis)
+      await kv.set(`submission:${submissionId}`, submissionData)
+      
+      // Add to submissions list for easy retrieval
+      await kv.lpush('submissions:list', submissionId)
+      
+      // Add email to unique emails set (to track unique users)
+      await kv.sadd('submissions:emails', email)
+      
+      console.log('Form submission saved to Vercel KV:', submissionId)
+      
+    } catch (kvError) {
+      console.error('KV storage error:', kvError)
+      // Continue with success response even if KV fails
+    }
     
-    // For now, we'll just return success
+    // Log the submission
+    console.log('Form submission received:', submissionData)
+    
     return NextResponse.json({
       success: true,
       message: 'Interest registered successfully',
       data: {
-        id: `luxury_${Date.now()}`,
+        id: submissionId,
         firstName,
         lastName,
         email,
