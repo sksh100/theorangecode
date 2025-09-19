@@ -8,18 +8,20 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'azure': '#3b82f6',
-        'darkAzure': '#1e3a8a',
-        'primary-dark': '#0a0e27',
+        'azure': '#ff914d',
+        'darkAzure': '#ff914d',
+        'primary-dark': '#01011e',
         'secondary-dark': '#1a1f3a',
-        'accent-blue': '#1e3a8a',
-        'bright-blue': '#3b82f6',
-        'light-blue': '#60a5fa',
-        'glass-bg': 'rgba(30, 58, 138, 0.1)',
-        'glass-border': 'rgba(96, 165, 250, 0.2)',
+        'accent-blue': '#ff914d',
+        'bright-blue': '#ff914d',
+        'light-blue': '#ff914d',
+        'glass-bg': 'rgba(255, 145, 77, 0.32)',
+        'glass-border': 'rgba(255, 145, 77, 0.2)',
         'text-primary': '#ffffff',
         'text-secondary': '#cbd5e1',
         'text-muted': '#94a3b8',
+        'brand-orange': '#ff914d',
+        'brand-orange-transparent': 'rgba(255, 145, 77, 0.32)',
       },
       fontFamily: {
         'playfair': ['Playfair Display', 'serif'],
@@ -27,12 +29,12 @@ module.exports = {
         'inter': ['Inter', 'sans-serif'],
       },
       backgroundImage: {
-        'gradient-primary': 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%)',
-        'gradient-secondary': 'linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #1e3a8a 100%)',
+        'gradient-primary': 'linear-gradient(135deg, #ff914d 0%, #ff914d 50%, rgba(255, 145, 77, 0.8) 100%)',
+        'gradient-secondary': 'linear-gradient(135deg, #01011e 0%, #1a1f3a 50%, #ff914d 100%)',
       },
       boxShadow: {
-        'glass': '0 8px 32px rgba(30, 58, 138, 0.3)',
-        'glow': '0 0 40px rgba(59, 130, 246, 0.3)',
+        'glass': '0 8px 32px rgba(255, 145, 77, 0.3)',
+        'glow': '0 0 40px rgba(255, 145, 77, 0.3)',
       },
       backdropBlur: {
         'xs': '2px',
