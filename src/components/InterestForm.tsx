@@ -430,11 +430,24 @@ export function InterestForm({ onSuccess }: InterestFormProps) {
             <select
               value={formData.countryCode}
               onChange={(e) => setFormData(prev => ({ ...prev, countryCode: e.target.value }))}
-              className="p-4 px-3 bg-azure-blue-transparent border border-glass-border rounded-xl text-white text-sm font-montserrat backdrop-blur-[10px] transition-all duration-300 min-w-[120px]"
+              className="p-4 px-3 bg-dark-blue border-2 border-azure-blue rounded-xl text-white text-sm font-montserrat backdrop-blur-[10px] transition-all duration-300 min-w-[140px] focus:outline-none focus:border-azure-luminous focus:shadow-glow-azure"
+              style={{
+                backgroundColor: '#01011e',
+                color: '#ffffff',
+                borderColor: '#00d4ff'
+              }}
             >
               {countryCodes.map((country) => (
-                <option key={country.code} value={country.code} className="bg-dark-blue text-white">
-                  {country.flag} {country.code}
+                <option 
+                  key={country.code} 
+                  value={country.code} 
+                  style={{
+                    backgroundColor: '#01011e',
+                    color: '#ffffff',
+                    padding: '8px'
+                  }}
+                >
+                  {country.flag} {country.code} {country.country}
                 </option>
               ))}
             </select>
