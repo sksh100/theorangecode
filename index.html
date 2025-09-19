@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Luxury Agent - Coming Soon</title>
+    <meta name="description" content="Your Luxury Agent - Premium AI-powered luxury services coming soon. Register your interest for our exclusive event on Thursday, October 9, 2025.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Sofia+Pro:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="particles"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <h1>Your Luxury Agent</h1>
+                <span class="domain">www.yourluxuryagent.ai</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <div class="glass-card">
+                        <h2 class="hero-title">Something Extraordinary is Coming</h2>
+                        <p class="hero-subtitle">Experience the future of luxury with AI-powered precision</p>
+                        
+                        <div class="event-info">
+                            <div class="event-date">
+                                <span class="date-label">Exclusive Event</span>
+                                <span class="date-value">Thursday, October 9, 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="container">
+                    <div class="glass-card form-card">
+                        <h3 class="form-title">Register Your Interest</h3>
+                        <p class="form-subtitle">Be among the first to experience luxury redefined</p>
+                        
+                        <form id="interestForm" class="interest-form">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirmEmail">Confirm Email Address</label>
+                                <input type="email" id="confirmEmail" name="confirmEmail" required>
+                                <span class="error-message" id="emailError"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">
+                                <span class="btn-text">Register Interest</span>
+                                <div class="btn-loader" style="display: none;">
+                                    <div class="spinner"></div>
+                                </div>
+                            </button>
+                        </form>
+                        
+                        <div class="success-message" id="successMessage" style="display: none;">
+                            <div class="success-icon">✓</div>
+                            <h4>Thank You!</h4>
+                            <p>Your interest has been registered. We'll be in touch soon with exclusive updates.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2025 Your Luxury Agent. All rights reserved.</p>
+                <p>Powered by cutting-edge AI technology</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!-- Deployment trigger Fri Sep 19 18:38:14 +04 2025 -->
+<!-- Trigger deployment Fri Sep 19 18:42:20 +04 2025 -->
