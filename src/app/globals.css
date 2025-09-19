@@ -146,11 +146,11 @@
   }
   
   .success-message {
-    @apply text-center p-8 bg-green-500/10 border border-green-500/30 rounded-2xl backdrop-blur-[10px];
+    @apply text-center p-8 bg-azure-blue-transparent border border-azure-blue/30 rounded-2xl backdrop-blur-[10px] shadow-glow-azure;
   }
   
   .success-icon {
-    @apply w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-2xl text-white font-bold mx-auto mb-4;
+    @apply w-16 h-16 bg-gradient-azure rounded-full flex items-center justify-center text-2xl text-white font-bold mx-auto mb-4 shadow-glow-azure;
   }
   
   .notification {

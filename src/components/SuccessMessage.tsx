@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { CheckCircle } from 'lucide-react'
 
 export function SuccessMessage() {
   return (
@@ -17,7 +16,19 @@ export function SuccessMessage() {
         animate={{ scale: 1 }}
         transition={{ duration: 0.5, delay: 0.2, type: "spring", stiffness: 200 }}
       >
-        <CheckCircle className="w-8 h-8" />
+        <svg 
+          className="w-8 h-8 text-white" 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            strokeWidth={3} 
+            d="M5 13l4 4L19 7" 
+          />
+        </svg>
       </motion.div>
       
       <motion.h4 
