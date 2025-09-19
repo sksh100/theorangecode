@@ -8,33 +8,59 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'azure': '#ff914d',
-        'darkAzure': '#ff914d',
+        // Brand Colors - Exact codes as requested
+        'dark-blue': '#01011e',
+        'orange': '#ff914d',
+        'azure-blue': '#5ce1e6',
+        'bright-blue': '#1f8bff',
+        
+        // Transparent versions with 32% transparency
+        'orange-transparent': 'rgba(255, 145, 77, 0.32)',
+        'azure-blue-transparent': 'rgba(92, 225, 230, 0.32)',
+        'bright-blue-transparent': 'rgba(31, 139, 255, 0.32)',
+        
+        // Legacy color mappings for existing components
+        'azure': '#5ce1e6',
+        'darkAzure': '#5ce1e6',
         'primary-dark': '#01011e',
         'secondary-dark': '#1a1f3a',
-        'accent-blue': '#ff914d',
-        'bright-blue': '#ff914d',
-        'light-blue': '#ff914d',
-        'glass-bg': 'rgba(255, 145, 77, 0.32)',
-        'glass-border': 'rgba(255, 145, 77, 0.2)',
+        'accent-blue': '#1f8bff',
+        'light-blue': '#5ce1e6',
+        'glass-bg': 'rgba(92, 225, 230, 0.32)',
+        'glass-border': 'rgba(92, 225, 230, 0.2)',
+        
+        // Text colors - All white as requested
         'text-primary': '#ffffff',
-        'text-secondary': '#cbd5e1',
-        'text-muted': '#94a3b8',
+        'text-secondary': '#ffffff',
+        'text-muted': '#ffffff',
+        
+        // Brand color aliases
         'brand-orange': '#ff914d',
         'brand-orange-transparent': 'rgba(255, 145, 77, 0.32)',
+        'brand-azure': '#5ce1e6',
+        'brand-azure-transparent': 'rgba(92, 225, 230, 0.32)',
+        'brand-bright-blue': '#1f8bff',
+        'brand-bright-blue-transparent': 'rgba(31, 139, 255, 0.32)',
       },
       fontFamily: {
-        'playfair': ['Playfair Display', 'serif'],
-        'sofia': ['Sofia Pro', 'sans-serif'],
-        'inter': ['Inter', 'sans-serif'],
+        'montserrat': ['Montserrat', 'sans-serif'],
+        'playfair': ['Montserrat', 'sans-serif'],
+        'sofia': ['Montserrat', 'sans-serif'],
+        'inter': ['Montserrat', 'sans-serif'],
       },
       backgroundImage: {
-        'gradient-primary': 'linear-gradient(135deg, #ff914d 0%, #ff914d 50%, rgba(255, 145, 77, 0.8) 100%)',
-        'gradient-secondary': 'linear-gradient(135deg, #01011e 0%, #1a1f3a 50%, #ff914d 100%)',
+        'gradient-primary': 'linear-gradient(135deg, #ff914d 0%, #5ce1e6 50%, #1f8bff 100%)',
+        'gradient-secondary': 'linear-gradient(135deg, #01011e 0%, #1a1f3a 50%, #5ce1e6 100%)',
+        'gradient-azure': 'linear-gradient(135deg, #5ce1e6 0%, rgba(92, 225, 230, 0.8) 100%)',
+        'gradient-bright-blue': 'linear-gradient(135deg, #1f8bff 0%, rgba(31, 139, 255, 0.8) 100%)',
+        'gradient-orange': 'linear-gradient(135deg, #ff914d 0%, rgba(255, 145, 77, 0.8) 100%)',
       },
       boxShadow: {
-        'glass': '0 8px 32px rgba(255, 145, 77, 0.3)',
-        'glow': '0 0 40px rgba(255, 145, 77, 0.3)',
+        'glass': '0 8px 32px rgba(92, 225, 230, 0.3)',
+        'glow': '0 0 40px rgba(92, 225, 230, 0.3)',
+        'glow-orange': '0 0 40px rgba(255, 145, 77, 0.3)',
+        'glow-azure': '0 0 40px rgba(92, 225, 230, 0.3)',
+        'glow-bright-blue': '0 0 40px rgba(31, 139, 255, 0.3)',
       },
       backdropBlur: {
         'xs': '2px',
