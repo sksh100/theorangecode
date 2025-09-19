@@ -15,9 +15,9 @@ export function DevNavigation() {
     <>
       {/* Dev Toggle Button */}
       <motion.button
-        initial={{ opacity: 0, x: 50 }}
+        initial={{ opacity: 1, x: 0 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5, delay: 1 }}
+        transition={{ duration: 0.3 }}
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-6 right-6 z-50 bg-orange/20 hover:bg-orange/30 border border-orange/30 rounded-full p-3 backdrop-blur-[10px] transition-all duration-300 group"
         title="Development Navigation"
