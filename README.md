@@ -1,4 +1,4 @@
-# Your Luxury Agent - Coming Soon Page
+# Your Luxury Agent - Coming Soon Page a
 
 A modern, luxurious coming soon page with glass morphism effects for Your Luxury Agent AI services.
 
