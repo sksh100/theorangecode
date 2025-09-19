@@ -6,27 +6,32 @@ import { motion } from 'framer-motion'
 export function DevNavigation() {
   const [isOpen, setIsOpen] = useState(false)
 
-  // Only show in development
-  if (process.env.NODE_ENV === 'production') {
+  // Only show in development - check for localhost
+  if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost')) {
     return null
   }
 
   return (
     <>
+      {/* Development Banner */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-orange/90 text-white text-center py-2 text-sm font-semibold backdrop-blur-[10px] border-b border-orange/30">
+        🚧 DEVELOPMENT MODE - Localhost Only 🚧
+      </div>
+      
       {/* Dev Toggle Button */}
       <motion.button
         initial={{ opacity: 1, x: 0 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 bg-orange/20 hover:bg-orange/30 border border-orange/30 rounded-full p-3 backdrop-blur-[10px] transition-all duration-300 group"
-        title="Development Navigation"
+        className="fixed bottom-6 right-6 z-50 bg-orange/30 hover:bg-orange/40 border-2 border-orange/50 rounded-full p-4 backdrop-blur-[10px] transition-all duration-300 group shadow-lg shadow-orange/20"
+        title="Development Navigation - Click to access dev pages"
       >
         <div className="w-6 h-6 flex items-center justify-center">
           {isOpen ? (
-            <span className="text-orange text-lg">×</span>
+            <span className="text-orange text-xl font-bold">×</span>
           ) : (
-            <span className="text-orange text-lg">⚙️</span>
+            <span className="text-orange text-xl">⚙️</span>
           )}
         </div>
       </motion.button>
