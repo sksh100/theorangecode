@@ -5,6 +5,7 @@ import { Header } from '@/components/Header'
 import { HeroSection } from '@/components/HeroSection'
 import { FormSection } from '@/components/FormSection'
 import { Footer } from '@/components/Footer'
+import { DevNavigation } from '@/components/DevNavigation'
 
 export default function Home() {
   return (
@@ -21,6 +22,8 @@ export default function Home() {
         
         <Footer />
       </div>
+      
+      <DevNavigation />
     </div>
   )
 }
