@@ -206,6 +206,9 @@ export function ModernFooter() {
                 <a href="#contact" className="block text-white/70 hover:text-orange transition-colors">
                   Contact
                 </a>
+                <Link href="/faq" className="block text-white/70 hover:text-orange transition-colors">
+                  FAQ
+                </Link>
               </div>
             </motion.div>
           </div>
