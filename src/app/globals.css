@@ -61,8 +61,20 @@
   }
   
   .hero-section {
-    @apply fixed top-0 left-0 w-screen h-screen bg-cover bg-center bg-no-repeat bg-fixed flex items-center justify-center p-0 z-10;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #01011e;
     background-image: url('/hero-page/hero-2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    z-index: 1;
   }
   
   .hero-section::before {
@@ -71,11 +83,19 @@
   }
   
   .hero-content {
-    @apply relative z-20 max-w-4xl w-[90%] text-center;
+    position: relative;
+    max-width: 64rem;
+    width: 90%;
+    text-align: center;
+    z-index: 10;
   }
   
   .hero-section .glass-card {
     @apply bg-accent-blue/20 backdrop-blur-[30px] border border-light-blue/40 shadow-2xl;
+    box-shadow: 
+      0 25px 50px rgba(0, 0, 0, 0.3),
+      0 0 60px rgba(0, 212, 255, 0.4),
+      0 0 100px rgba(255, 145, 77, 0.2);
   }
   
   .form-group input {
@@ -176,6 +196,291 @@
   .notification-close:hover {
     @apply bg-white/20;
   }
+
+  /* Modern Navbar Styles - 2026 SaaS Trends */
+  .navbar-glass {
+    @apply bg-primary-dark/80 backdrop-blur-[20px] border-b border-glass-border;
+    background: linear-gradient(135deg, 
+      rgba(1, 1, 30, 0.8) 0%, 
+      rgba(0, 212, 255, 0.1) 25%, 
+      rgba(255, 145, 77, 0.05) 50%, 
+      rgba(0, 153, 255, 0.1) 75%, 
+      rgba(1, 1, 30, 0.8) 100%);
+  }
+
+  .navbar-glass::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-azure-blue/5 via-transparent to-orange/5 pointer-events-none;
+  }
+
+  .dropdown-glass {
+    @apply bg-primary-dark/95 backdrop-blur-[20px] border border-glass-border;
+    background: linear-gradient(135deg, 
+      rgba(1, 1, 30, 0.95) 0%, 
+      rgba(0, 212, 255, 0.1) 50%, 
+      rgba(1, 1, 30, 0.95) 100%);
+    box-shadow: 
+      0 20px 40px rgba(0, 0, 0, 0.3),
+      0 0 60px rgba(0, 212, 255, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-item-hover {
+    @apply relative overflow-hidden;
+  }
+
+  .nav-item-hover::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-azure-blue/10 to-orange/10 opacity-0 transition-opacity duration-300;
+  }
+
+  .nav-item-hover:hover::before {
+    @apply opacity-100;
+  }
+
+  .cta-button-glow {
+    @apply relative overflow-hidden;
+    background: linear-gradient(135deg, #ff914d 0%, #00d4ff 50%, #0099ff 100%);
+    box-shadow: 
+      0 8px 32px rgba(0, 212, 255, 0.4),
+      0 0 60px rgba(255, 145, 77, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .cta-button-glow::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full transition-transform duration-700;
+  }
+
+  .cta-button-glow:hover::before {
+    @apply translate-x-full;
+  }
+
+  .mobile-menu-glass {
+    @apply bg-primary-dark/95 backdrop-blur-[20px] border border-glass-border;
+    background: linear-gradient(135deg, 
+      rgba(1, 1, 30, 0.95) 0%, 
+      rgba(0, 212, 255, 0.1) 50%, 
+      rgba(1, 1, 30, 0.95) 100%);
+    box-shadow: 
+      0 20px 40px rgba(0, 0, 0, 0.3),
+      0 0 60px rgba(0, 212, 255, 0.2);
+  }
+
+  /* Mega Dropdown Styles - 2026 SaaS Trends */
+  .mega-dropdown-glass {
+    @apply bg-primary-dark backdrop-blur-[30px] border border-glass-border;
+    background: linear-gradient(135deg, 
+      rgba(1, 1, 30, 1) 0%, 
+      rgba(0, 212, 255, 0.05) 25%, 
+      rgba(255, 145, 77, 0.02) 50%, 
+      rgba(0, 153, 255, 0.05) 75%, 
+      rgba(1, 1, 30, 1) 100%);
+    box-shadow: 
+      0 25px 50px rgba(0, 0, 0, 0.6),
+      0 0 80px rgba(0, 212, 255, 0.2),
+      0 0 120px rgba(255, 145, 77, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .service-card {
+    @apply relative bg-primary-dark/60 backdrop-blur-[20px] border border-glass-border rounded-2xl overflow-hidden transition-all duration-500;
+    background: linear-gradient(135deg, 
+      rgba(1, 1, 30, 0.6) 0%, 
+      rgba(0, 212, 255, 0.05) 50%, 
+      rgba(1, 1, 30, 0.6) 100%);
+    box-shadow: 
+      0 10px 30px rgba(0, 0, 0, 0.2),
+      0 0 40px rgba(0, 212, 255, 0.1);
+  }
+
+  .service-card:hover {
+    @apply border-azure-blue/50;
+    box-shadow: 
+      0 20px 40px rgba(0, 0, 0, 0.3),
+      0 0 60px rgba(0, 212, 255, 0.3),
+      0 0 80px rgba(255, 145, 77, 0.2);
+    background: linear-gradient(135deg, 
+      rgba(1, 1, 30, 0.8) 0%, 
+      rgba(0, 212, 255, 0.1) 50%, 
+      rgba(1, 1, 30, 0.8) 100%);
+  }
+
+  .service-card::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-azure-blue/5 via-transparent to-orange/5 opacity-0 transition-opacity duration-500;
+  }
+
+  .service-card:hover::before {
+    @apply opacity-100;
+  }
+
+  .service-card::after {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-azure-blue/50 to-transparent opacity-0 transition-opacity duration-500;
+  }
+
+  .service-card:hover::after {
+    @apply opacity-100;
+  }
+
+  /* Badge Styles */
+  .badge-gradient-primary {
+    background: linear-gradient(135deg, #ff914d 0%, #00d4ff 50%, #0099ff 100%);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+  }
+
+  .badge-azure {
+    background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+  }
+
+  .badge-orange {
+    background: linear-gradient(135deg, #ff914d 0%, #ffaa00 100%);
+    box-shadow: 0 4px 15px rgba(255, 145, 77, 0.3);
+  }
+
+  .badge-blue {
+    background: linear-gradient(135deg, #0099ff 0%, #0088ff 100%);
+    box-shadow: 0 4px 15px rgba(0, 153, 255, 0.3);
+  }
+
+  /* Login & Shopping Basket Styles */
+  .nav-button-glass {
+    @apply bg-primary-dark/60 backdrop-blur-[10px] border border-glass-border rounded-xl transition-all duration-300;
+    background: linear-gradient(135deg, 
+      rgba(1, 1, 30, 0.6) 0%, 
+      rgba(0, 212, 255, 0.05) 50%, 
+      rgba(1, 1, 30, 0.6) 100%);
+    box-shadow: 
+      0 4px 15px rgba(0, 0, 0, 0.2),
+      0 0 20px rgba(0, 212, 255, 0.1);
+  }
+
+  .nav-button-glass:hover {
+    @apply border-azure-blue/50 bg-azure-blue-transparent;
+    box-shadow: 
+      0 8px 25px rgba(0, 0, 0, 0.3),
+      0 0 30px rgba(0, 212, 255, 0.2);
+  }
+
+  .cart-badge {
+    @apply absolute -top-2 -right-2 bg-orange text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center;
+    background: linear-gradient(135deg, #ff914d 0%, #ffaa00 100%);
+    box-shadow: 0 2px 8px rgba(255, 145, 77, 0.4);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+
+  /* USP Bar Styles - 2026 SaaS Trends */
+  .usp-card {
+    @apply relative bg-primary-dark/80 backdrop-blur-[20px] border border-glass-border rounded-3xl overflow-hidden transition-all duration-500;
+    background: linear-gradient(135deg, 
+      rgba(1, 1, 30, 0.8) 0%, 
+      rgba(0, 212, 255, 0.05) 50%, 
+      rgba(1, 1, 30, 0.8) 100%);
+    box-shadow: 
+      0 10px 30px rgba(0, 0, 0, 0.2),
+      0 0 40px rgba(0, 212, 255, 0.1);
+  }
+
+  .usp-card:hover {
+    @apply border-azure-blue/50;
+    box-shadow: 
+      0 20px 40px rgba(0, 0, 0, 0.3),
+      0 0 60px rgba(0, 212, 255, 0.3),
+      0 0 80px rgba(255, 145, 77, 0.2);
+    background: linear-gradient(135deg, 
+      rgba(1, 1, 30, 0.9) 0%, 
+      rgba(0, 212, 255, 0.1) 50%, 
+      rgba(1, 1, 30, 0.9) 100%);
+  }
+
+  .usp-icon-gradient {
+    @apply w-16 h-16 rounded-2xl flex items-center justify-center shadow-glow transition-transform duration-500;
+    background: linear-gradient(135deg, var(--tw-gradient-stops));
+  }
+
+  .usp-icon-gradient:hover {
+    @apply scale-110;
+    box-shadow: 
+      0 0 30px rgba(0, 212, 255, 0.5),
+      0 0 60px rgba(255, 145, 77, 0.3);
+  }
+
+  .usp-connection-line {
+    @apply absolute top-1/2 -right-4 w-8 h-px transform -translate-y-1/2;
+    background: linear-gradient(90deg, rgba(0, 212, 255, 0.5) 0%, transparent 100%);
+  }
+
+  .usp-floating-orb {
+    @apply absolute rounded-full blur-xl animate-float;
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+
+  /* State of Art Section Separators */
+  .section-separator {
+    @apply relative;
+  }
+
+  .section-separator::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(0, 212, 255, 0.3) 25%, 
+      rgba(255, 145, 77, 0.3) 50%, 
+      rgba(0, 153, 255, 0.3) 75%, 
+      transparent 100%);
+  }
+
+  .section-separator::after {
+    content: '';
+    @apply absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-1;
+    background: linear-gradient(90deg, 
+      rgba(0, 212, 255, 0.6) 0%, 
+      rgba(255, 145, 77, 0.6) 50%, 
+      rgba(0, 153, 255, 0.6) 100%);
+    border-radius: 2px;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+  }
+
+  /* Floating Geometric Elements */
+  .floating-geometry {
+    @apply absolute border border-azure-blue/20 animate-float;
+    animation-duration: 8s;
+  }
+
+  .floating-geometry:nth-child(odd) {
+    @apply border-orange/20;
+    animation-duration: 10s;
+  }
+
+  /* Advanced Background Patterns */
+  .advanced-bg-pattern {
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(255, 145, 77, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(0, 153, 255, 0.05) 0%, transparent 50%);
+  }
+
+  /* Hero Section Enhancements */
+  .hero-section {
+    /* Enhanced backdrop blur for better readability */
+    backdrop-filter: blur(20px);
+    /* Subtle border glow */
+    box-shadow: 
+      0 0 0 1px rgba(0, 212, 255, 0.2),
+      0 25px 50px rgba(0, 0, 0, 0.3);
+  }
 }
 
 @layer utilities {
@@ -208,6 +513,10 @@
   
   .hero-section {
     @apply bg-scroll h-screen;
+    /* Ensure fixed behavior works on mobile */
+    position: fixed;
+    top: 0;
+    left: 0;
   }
   
   .hero-content {

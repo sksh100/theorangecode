@@ -13,11 +13,6 @@ export function DevNavigation() {
 
   return (
     <>
-      {/* Development Banner */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-orange/90 text-white text-center py-2 text-sm font-semibold backdrop-blur-[10px] border-b border-orange/30">
-        🚧 DEVELOPMENT MODE - Localhost Only 🚧
-      </div>
-      
       {/* Dev Toggle Button */}
       <motion.button
         initial={{ opacity: 1, x: 0 }}

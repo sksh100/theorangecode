@@ -13,7 +13,7 @@ export function FormSection() {
   }
 
   return (
-    <section className="form-section py-16 bg-primary-dark flex justify-center items-center min-h-screen relative z-20">
+        <section className="form-section py-16 bg-primary-dark flex justify-center items-center min-h-screen relative">
       <div className="container max-w-lg w-full">
         <motion.div 
           className="glass-card form-card"
