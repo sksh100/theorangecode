@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Instagram, Twitter, Facebook, Linkedin, Mail, Phone, MapPin, Send, Crown } from 'lucide-react'
+import Link from 'next/link'
 
 export function ModernFooter() {
   const [email, setEmail] = useState('')
@@ -132,7 +133,7 @@ export function ModernFooter() {
                   </div>
                   <div>
                     <p className="text-white/70 text-sm">Location</p>
-                    <p className="text-white">Dubai, UAE</p>
+                    <p className="text-white">Abu Dhabi, UAE</p>
                   </div>
                 </div>
               </div>
@@ -221,7 +222,7 @@ export function ModernFooter() {
                 viewport={{ once: true }}
                 className="text-white/60 text-sm"
               >
-                © 2024 Your Luxury Agent. All rights reserved.
+                © 2025 Your Luxury Agent. All rights reserved.
               </motion.p>
               
               <motion.div
@@ -231,18 +232,18 @@ export function ModernFooter() {
                 viewport={{ once: true }}
                 className="flex gap-6"
               >
-                <a 
+                <Link 
                   href="/terms-conditions" 
                   className="text-white/60 hover:text-orange transition-colors text-sm"
                 >
                   Terms & Conditions
-                </a>
-                <a 
+                </Link>
+                <Link 
                   href="/privacy-policy" 
                   className="text-white/60 hover:text-orange transition-colors text-sm"
                 >
                   Privacy Policy
-                </a>
+                </Link>
               </motion.div>
             </div>
           </div>
