@@ -481,6 +481,199 @@
       0 0 0 1px rgba(0, 212, 255, 0.2),
       0 25px 50px rgba(0, 0, 0, 0.3);
   }
+
+  /* Program Cards Enhancements */
+  .program-card {
+    @apply relative bg-gradient-to-br from-primary-dark/80 to-primary-dark/60 backdrop-blur-[20px] border border-azure-blue/20 rounded-2xl p-8 h-full transition-all duration-500;
+  }
+
+  .program-card:hover {
+    @apply border-azure-blue/40 shadow-2xl;
+    box-shadow: 
+      0 25px 50px rgba(0, 212, 255, 0.2),
+      0 0 0 1px rgba(0, 212, 255, 0.3);
+  }
+
+  .program-card-number {
+    @apply absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-br from-azure-blue to-orange rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg;
+  }
+
+  .program-card-icon {
+    @apply w-16 h-16 bg-gradient-to-br from-azure-blue/20 to-orange/20 rounded-2xl flex items-center justify-center mb-6 text-azure-blue transition-colors duration-300;
+  }
+
+  .program-card-icon:hover {
+    @apply text-orange;
+  }
+
+  .program-card-image {
+    @apply w-full h-48 bg-gradient-to-br from-primary-dark/60 to-primary-dark/40 rounded-xl mb-6 overflow-hidden border border-azure-blue/20 transition-all duration-300;
+  }
+
+  .program-card-image:hover {
+    @apply border-azure-blue/40;
+  }
+
+  .program-card-title {
+    @apply text-2xl font-bold text-text-primary mb-4 transition-colors duration-300;
+  }
+
+  .program-card-title:hover {
+    @apply text-azure-blue;
+  }
+
+  .program-card-link {
+    @apply inline-flex items-center gap-2 text-azure-blue hover:text-orange transition-colors duration-300 font-medium;
+  }
+
+  .program-card-link:hover {
+    @apply gap-3;
+  }
+
+  /* Cutting-Edge Programs Overview Styles */
+  .grid-pattern-animated {
+    background-image: 
+      linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: grid-move 20s linear infinite;
+  }
+
+  @keyframes grid-move {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+  }
+
+  /* Futuristic Card Effects */
+  .futuristic-card {
+    @apply relative bg-gradient-to-br from-primary-dark/90 to-primary-dark/70 backdrop-blur-[30px] border border-azure-blue/20 rounded-3xl p-8 h-full transition-all duration-500;
+    box-shadow: 
+      0 0 0 1px rgba(0, 212, 255, 0.1),
+      0 25px 50px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .futuristic-card:hover {
+    @apply border-azure-blue/50;
+    box-shadow: 
+      0 0 0 1px rgba(0, 212, 255, 0.3),
+      0 35px 70px rgba(0, 212, 255, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  /* 3D Text Effects */
+  .text-3d-glow {
+    text-shadow: 
+      0 0 20px rgba(0, 212, 255, 0.5),
+      0 0 40px rgba(0, 212, 255, 0.3),
+      0 0 60px rgba(0, 212, 255, 0.1),
+      0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Animated Badge */
+  .animated-badge {
+    @apply inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-azure-blue/10 to-orange/10 border border-azure-blue/30 rounded-full backdrop-blur-sm;
+    box-shadow: 
+      0 0 0 1px rgba(0, 212, 255, 0.2),
+      0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .animated-badge:hover {
+    @apply border-azure-blue/50;
+    box-shadow: 
+      0 0 0 1px rgba(0, 212, 255, 0.4),
+      0 15px 40px rgba(0, 212, 255, 0.2);
+  }
+
+  /* Floating Number Badge */
+  .floating-number-badge {
+    @apply absolute -top-6 -left-6 w-16 h-16 bg-gradient-to-br from-azure-blue to-orange rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-2xl;
+    box-shadow: 
+      0 0 0 1px rgba(0, 212, 255, 0.3),
+      0 15px 35px rgba(0, 0, 0, 0.4),
+      0 0 20px rgba(0, 212, 255, 0.2);
+  }
+
+  .floating-number-badge:hover {
+    box-shadow: 
+      0 0 0 1px rgba(0, 212, 255, 0.5),
+      0 20px 45px rgba(0, 212, 255, 0.3),
+      0 0 30px rgba(0, 212, 255, 0.4);
+  }
+
+  /* Animated Icon Container */
+  .animated-icon-container {
+    @apply w-20 h-20 bg-gradient-to-br from-azure-blue/20 to-orange/20 rounded-3xl flex items-center justify-center relative overflow-hidden;
+    box-shadow: 
+      0 0 0 1px rgba(0, 212, 255, 0.2),
+      0 10px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  .animated-icon-container:hover {
+    box-shadow: 
+      0 0 0 1px rgba(0, 212, 255, 0.4),
+      0 15px 35px rgba(0, 212, 255, 0.2),
+      0 0 40px rgba(0, 212, 255, 0.3);
+  }
+
+  /* Futuristic CTA Button */
+  .futuristic-cta-button {
+    @apply inline-flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-azure-blue/20 to-orange/20 border border-azure-blue/40 rounded-2xl font-semibold transition-all duration-300;
+    box-shadow: 
+      0 0 0 1px rgba(0, 212, 255, 0.2),
+      0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .futuristic-cta-button:hover {
+    @apply border-azure-blue/60;
+    box-shadow: 
+      0 0 0 1px rgba(0, 212, 255, 0.4),
+      0 10px 30px rgba(0, 212, 255, 0.3),
+      0 0 20px rgba(0, 212, 255, 0.2);
+  }
+
+  /* Academy Grid Trigger */
+  .academy-grid-trigger {
+    @apply inline-flex items-center gap-4 px-10 py-6 bg-gradient-to-r from-azure-blue/10 to-orange/10 border border-azure-blue/30 rounded-3xl cursor-pointer backdrop-blur-sm transition-all duration-300;
+    box-shadow: 
+      0 0 0 1px rgba(0, 212, 255, 0.2),
+      0 15px 35px rgba(0, 0, 0, 0.2);
+  }
+
+  .academy-grid-trigger:hover {
+    @apply border-azure-blue/50;
+    box-shadow: 
+      0 0 0 1px rgba(0, 212, 255, 0.4),
+      0 20px 40px rgba(0, 212, 255, 0.2),
+      0 0 30px rgba(0, 212, 255, 0.1);
+  }
+
+  /* Cyberpunk Grid Effect */
+  .cyberpunk-grid {
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: cyberpunk-grid-move 10s linear infinite;
+  }
+
+  @keyframes cyberpunk-grid-move {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(20px, 20px); }
+  }
+
+  /* Cyberpunk Panel Styles */
+  .cyberpunk-panel-orange {
+    @apply bg-gradient-to-br from-orange/15 to-orange/5 backdrop-blur-[40px] border border-orange/40 rounded-3xl p-12 transition-all duration-500 shadow-2xl;
+  }
+
+  .cyberpunk-panel-blue {
+    @apply bg-gradient-to-br from-bright-blue/15 to-bright-blue/5 backdrop-blur-[40px] border border-bright-blue/40 rounded-3xl p-12 transition-all duration-500 shadow-2xl;
+  }
+
+  .cyberpunk-panel-light-blue {
+    @apply bg-gradient-to-br from-light-blue/15 to-light-blue/5 backdrop-blur-[40px] border border-light-blue/40 rounded-3xl p-12 transition-all duration-500 shadow-2xl;
+  }
 }
 
 @layer utilities {
