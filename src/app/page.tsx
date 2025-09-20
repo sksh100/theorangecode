@@ -11,6 +11,7 @@ import { ModernFooter } from '@/components/ModernFooter'
 import { CookieBanner } from '@/components/CookieBanner'
 import { Analytics } from '@/components/Analytics'
 import { TrackingHooks } from '@/components/TrackingHooks'
+import { Chatbot } from '@/components/Chatbot'
 
 export default function Home() {
   return (
@@ -37,6 +38,7 @@ export default function Home() {
       </main>
       
       <CookieBanner />
+      <Chatbot />
     </div>
   )
 }
