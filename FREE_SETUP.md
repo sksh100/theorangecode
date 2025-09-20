@@ -83,3 +83,4 @@ After deployment:
 - ✅ Cost $0 to run
 
 The data will be available in your Vercel dashboard immediately after each submission.
+

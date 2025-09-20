@@ -70,3 +70,4 @@ async function sendEmailNotification(submission) {
         // Don't fail the form submission if email fails
     }
 }
+

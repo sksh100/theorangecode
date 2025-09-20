@@ -1,8 +1,9 @@
 'use client'
 
 import { Background } from '@/components/Background'
-import { Header } from '@/components/Header'
+import { ModernNavbar } from '@/components/ModernNavbar'
 import { HeroSection } from '@/components/HeroSection'
+import { USPBar } from '@/components/USPBar'
 import { FormSection } from '@/components/FormSection'
 import { Footer } from '@/components/Footer'
 import { DevNavigation } from '@/components/DevNavigation'
@@ -11,17 +12,21 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-primary-dark">
       <Background />
+      <ModernNavbar />
       
-      <div className="container max-w-6xl mx-auto px-5 min-h-screen flex flex-col">
-        <Header />
-        
-        <main className="relative z-20 mt-[100vh] bg-primary-dark">
-          <HeroSection />
+      {/* Hero Section - Normal Flow */}
+      <HeroSection />
+      
+      {/* Main Content - Normal Flow */}
+      <main className="relative bg-primary-dark">
+        {/* Continuous Dark Blue Background Section */}
+        <section className="relative">
+          <USPBar />
           <FormSection />
-        </main>
+        </section>
         
         <Footer />
-      </div>
+      </main>
       
       <DevNavigation />
     </div>
