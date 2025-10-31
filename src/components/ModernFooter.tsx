@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { Instagram, Twitter, Facebook, Linkedin, Mail, Phone, MapPin, Send, Crown } from 'lucide-react'
 import Link from 'next/link'
 
@@ -20,10 +21,10 @@ export function ModernFooter() {
   }
 
   const socialLinks = [
-    { icon: Instagram, href: 'https://instagram.com/yourluxuryagent', label: 'Instagram' },
-    { icon: Twitter, href: 'https://twitter.com/yourluxuryagent', label: 'Twitter' },
-    { icon: Facebook, href: 'https://facebook.com/yourluxuryagent', label: 'Facebook' },
-    { icon: Linkedin, href: 'https://linkedin.com/company/yourluxuryagent', label: 'LinkedIn' }
+    { icon: Instagram, href: 'https://www.instagram.com/the.orangecode/?next=%2F', label: 'Instagram' },
+    { icon: Twitter, href: 'https://twitter.com/theorangecode', label: 'Twitter' },
+    { icon: Facebook, href: 'https://facebook.com/theorangecode', label: 'Facebook' },
+    { icon: Linkedin, href: 'https://linkedin.com/company/theorangecode', label: 'LinkedIn' }
   ]
 
   return (
@@ -61,10 +62,16 @@ export function ModernFooter() {
               className="lg:col-span-1"
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-br from-orange to-bright-blue rounded-xl flex items-center justify-center">
-                  <Crown className="w-6 h-6 text-white" />
+                <div className="w-10 h-10 relative">
+                  <Image 
+                    src="/coming-soon/logo-1.png" 
+                    alt="The Orange Code Logo" 
+                    width={40} 
+                    height={40}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
-                <h3 className="text-2xl font-bold text-white">Your Luxury Agent</h3>
+                <h3 className="text-2xl font-bold text-white">The Orange Code</h3>
               </div>
               <p className="text-white/70 text-lg leading-relaxed mb-6">
                 Transforming cultural barriers into bridges of trust through refined knowledge and authentic presence.
@@ -109,8 +116,8 @@ export function ModernFooter() {
                   </div>
                   <div>
                     <p className="text-white/70 text-sm">Email</p>
-                    <a href="mailto:info@yourluxuryagent.com" className="text-white hover:text-orange transition-colors">
-                      info@yourluxuryagent.com
+                    <a href="mailto:hello@theorangecode.com" className="text-white hover:text-orange transition-colors">
+                      hello@theorangecode.com
                     </a>
                   </div>
                 </div>
@@ -225,7 +232,7 @@ export function ModernFooter() {
                 viewport={{ once: true }}
                 className="text-white/60 text-sm"
               >
-                © 2025 Your Luxury Agent. All rights reserved.
+                © 2025 The Orange Code. All rights reserved.
               </motion.p>
               
               <motion.div
