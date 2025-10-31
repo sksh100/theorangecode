@@ -233,7 +233,6 @@ export function BentoBoxSection() {
                 y: -10,
                 scale: 1.02
               }}
-              transition={{ duration: 0.3 }}
             >
               {/* Box Glow Effect */}
               <motion.div
