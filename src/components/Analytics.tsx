@@ -16,9 +16,9 @@ export const initGA = () => {
     document.head.appendChild(script)
 
     // Initialize gtag
-    window.dataLayer = window.dataLayer || []
-    function gtag(...args: any[]) {
-      window.dataLayer.push(args)
+    ;(window as any).dataLayer = (window as any).dataLayer || []
+    const gtag = (...args: any[]) => {
+      ;(window as any).dataLayer.push(args)
     }
     gtag('js', new Date())
     gtag('config', GA_TRACKING_ID, {
