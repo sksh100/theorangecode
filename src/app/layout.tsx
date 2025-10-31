@@ -9,19 +9,19 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: 'Your Luxury Agent - Coming Soon',
-  description: 'Your Luxury Agent - Premium AI-powered luxury services coming soon. Register your interest for our exclusive event on Thursday, October 9, 2025.',
+  title: 'The Orange Code - Coming Soon',
+  description: 'The Orange Code - Premium AI-powered luxury services coming soon. Register your interest for our exclusive event on Thursday, October 9, 2025.',
   keywords: ['luxury', 'ai', 'coming-soon', 'glass-morphism', 'futuristic'],
-  authors: [{ name: 'Your Luxury Agent' }],
+  authors: [{ name: 'The Orange Code' }],
   openGraph: {
-    title: 'Your Luxury Agent - Coming Soon',
+    title: 'The Orange Code - Coming Soon',
     description: 'Experience the future of luxury with AI-powered precision',
     type: 'website',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Your Luxury Agent - Coming Soon',
+    title: 'The Orange Code - Coming Soon',
     description: 'Experience the future of luxury with AI-powered precision',
   },
   robots: {
