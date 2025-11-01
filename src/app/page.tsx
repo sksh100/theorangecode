@@ -13,7 +13,7 @@ export default function Home() {
         <div className="hero-content pt-20">
 
           <motion.div 
-            className="glass-card mt-8 relative"
+            className="glass-card mt-8 relative overflow-visible"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -23,14 +23,14 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="absolute -top-4 -left-4 z-20"
+              className="absolute top-0 left-0 z-20"
             >
               <Image 
                 src="/coming-soon/logo-1.png" 
                 alt="The Orange Code Logo" 
-                width={120} 
-                height={120}
-                className="w-auto h-auto max-w-[120px]"
+                width={180} 
+                height={180}
+                className="w-auto h-auto max-w-[180px]"
                 priority
               />
             </motion.div>
