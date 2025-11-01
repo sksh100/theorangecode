@@ -10,10 +10,10 @@ export default function Home() {
     <div className="min-h-screen bg-primary-dark">
       {/* Coming Soon Hero Section */}
       <section className="hero-section">
-        <div className="hero-content pt-20">
+        <div className="hero-content pt-12">
 
           <motion.div 
-            className="glass-card mt-8 relative overflow-visible py-16"
+            className="glass-card mt-4 relative overflow-visible py-16"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
