@@ -35,7 +35,7 @@ export default function Home() {
               />
             </motion.div>
             <motion.h1 
-              className="hero-title font-playfair text-6xl font-bold mb-6 text-gradient-primary leading-tight tracking-tight text-center whitespace-nowrap"
+              className="font-playfair text-6xl font-bold mb-6 leading-tight tracking-tight text-center whitespace-nowrap bg-gradient-to-r from-orange via-azure-blue to-bright-blue bg-clip-text text-transparent"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
