@@ -152,24 +152,21 @@ export async function POST(request: NextRequest) {
     
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(email.trim())) {
+      console.log('❌ Email validation failed:', { email })
       return NextResponse.json(
         { error: 'Invalid email format' },
         { status: 400 }
       )
     }
     
-    // Phone validation (optional - be very lenient, just check it has some content)
-    if (phone) {
-      // Remove all non-digit characters except + for validation
+    // Phone validation is optional - only validate if phone is provided
+    // Don't block submission if phone is missing or invalid
+    if (phone && phone.trim()) {
       const cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '')
-      // Just check it has at least 7 characters total (digits + country code)
-      if (cleanPhone.length < 7) {
-        console.log('Phone validation failed: too short', { phone, cleanPhone, length: cleanPhone.length })
-        return NextResponse.json(
-          { error: 'Phone number is too short. Please enter a valid phone number.' },
-          { status: 400 }
-        )
+      // Only log a warning if phone seems invalid, but don't block submission
+      if (cleanPhone.length < 5) {
+        console.warn('⚠️ Phone number seems too short, but continuing:', { phone, cleanPhone, length: cleanPhone.length })
       }
     }
     

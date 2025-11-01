@@ -174,6 +174,7 @@ export default function Home() {
       return
     }
 
+    // Phone validation - make it more lenient
     if (!trimmedPhone || trimmedPhone.length < 3) {
       setMessage({ type: 'error', text: 'Please enter your phone number (at least 3 digits)' })
       return
@@ -189,19 +190,37 @@ export default function Home() {
       return
     }
 
+    // Additional check: make sure phone has at least some digits after removing non-digits
+    const phoneDigits = trimmedPhone.replace(/\D/g, '')
+    if (phoneDigits.length < 3) {
+      setMessage({ type: 'error', text: 'Please enter a valid phone number with at least 3 digits' })
+      return
+    }
+
     setIsSubmitting(true)
     setMessage(null)
 
     try {
+      // Clean phone number - remove all non-digits, then add country code
+      const phoneDigits = phone.trim().replace(/\D/g, '')
+      const fullPhone = phoneDigits ? `${countryCode}${phoneDigits}` : ''
+
       const requestBody = {
         email: email.trim(),
-        name: name.trim() || '',
-        phone: `${countryCode}${phone.trim().replace(/\D/g, '')}`, // Ensure only digits after country code
+        name: (name || '').trim() || '',
+        phone: fullPhone,
         timestamp: new Date().toISOString(),
         source: 'Coming Soon Page'
       }
 
       console.log('✅ Submitting form with data:', requestBody)
+      
+      // Double check before sending
+      if (!requestBody.email || !requestBody.email.includes('@')) {
+        setIsSubmitting(false)
+        setMessage({ type: 'error', text: 'Please enter a valid email address' })
+        return
+      }
 
       const response = await fetch('/api/submit-form', {
         method: 'POST',
