@@ -4,8 +4,58 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { ModernFooter } from '@/components/ModernFooter'
 import { ArrowRight, Clock, Mail } from 'lucide-react'
+import { useState } from 'react'
 
 export default function Home() {
+  const [showModal, setShowModal] = useState(false)
+  const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+
+  const handleSubscribe = async () => {
+    if (!email || !email.includes('@')) {
+      setMessage({ type: 'error', text: 'Please enter a valid email address' })
+      return
+    }
+
+    setIsSubmitting(true)
+    setMessage(null)
+
+    try {
+      const response = await fetch('/api/submit-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          name: name.trim() || 'Anonymous',
+          timestamp: new Date().toISOString(),
+          source: 'Coming Soon Page'
+        })
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setMessage({ type: 'success', text: 'Thank you! We\'ll notify you when we launch.' })
+        setEmail('')
+        setName('')
+        setTimeout(() => {
+          setShowModal(false)
+          setMessage(null)
+        }, 2000)
+      } else {
+        setMessage({ type: 'error', text: data.error || 'Something went wrong. Please try again.' })
+      }
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Something went wrong. Please try again.' })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-primary-dark">
       {/* Coming Soon Hero Section */}
@@ -83,11 +133,14 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 1.3 }}
             >
               <div className="flex flex-col items-center gap-6">
-                <div className="flex items-center gap-4 px-8 py-4 bg-gradient-primary rounded-full cursor-pointer hover:shadow-glow transition-all duration-300 group">
+                <button 
+                  onClick={() => setShowModal(true)}
+                  className="flex items-center gap-4 px-8 py-4 bg-gradient-primary rounded-full cursor-pointer hover:shadow-glow transition-all duration-300 group"
+                >
                   <Mail className="w-5 h-5 text-white" />
                   <span className="text-white font-semibold text-lg">Notify Me When Launch</span>
                   <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform duration-300" />
-                </div>
+                </button>
                 <p className="text-white/70 text-sm font-medium">
                   Be the first to know when we go live
                 </p>
@@ -164,6 +217,73 @@ export default function Home() {
       </section>
 
       <ModernFooter hideQuickLinks={true} />
+
+      {/* Subscribe Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="glass-card max-w-md w-full p-8 relative"
+          >
+            <button
+              onClick={() => {
+                setShowModal(false)
+                setMessage(null)
+                setEmail('')
+                setName('')
+              }}
+              className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
+            >
+              ✕
+            </button>
+            
+            <h2 className="text-2xl font-bold text-white mb-2">Get Notified</h2>
+            <p className="text-white/70 mb-6">We'll let you know as soon as we launch!</p>
+
+            <div className="space-y-4">
+              <div>
+                <input
+                  type="text"
+                  placeholder="Your name (optional)"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-azure-blue transition-colors"
+                />
+              </div>
+              
+              <div>
+                <input
+                  type="email"
+                  placeholder="Your email address *"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSubscribe()}
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-azure-blue transition-colors"
+                />
+              </div>
+
+              {message && (
+                <div className={`p-3 rounded-lg ${
+                  message.type === 'success' 
+                    ? 'bg-green-500/20 text-green-300 border border-green-500/30' 
+                    : 'bg-red-500/20 text-red-300 border border-red-500/30'
+                }`}>
+                  {message.text}
+                </div>
+              )}
+
+              <button
+                onClick={handleSubscribe}
+                disabled={isSubmitting}
+                className="w-full px-6 py-3 bg-gradient-primary rounded-lg text-white font-semibold hover:shadow-glow transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   )
 }
