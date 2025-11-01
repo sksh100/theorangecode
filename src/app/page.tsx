@@ -13,7 +13,7 @@ export default function Home() {
         <div className="hero-content pt-20">
 
           <motion.div 
-            className="glass-card mt-8 relative overflow-visible py-12"
+            className="glass-card mt-8 relative overflow-visible py-16"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
