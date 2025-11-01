@@ -128,8 +128,8 @@ export function ModernFooter() {
                   </div>
                   <div>
                     <p className="text-white/70 text-sm">Phone</p>
-                    <a href="tel:+971569091701" className="text-white hover:text-orange transition-colors">
-                      +971 56 909 1701
+                    <a href="tel:+971568786106" className="text-white hover:text-orange transition-colors">
+                      +971 56 878 6106
                     </a>
                   </div>
                 </div>

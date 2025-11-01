@@ -85,7 +85,7 @@ export function Chatbot({ onWhatsAppRedirect }: ChatbotProps) {
   }
 
   const handleWhatsAppRedirect = () => {
-    const phoneNumber = "971569091701" // UAE number
+    const phoneNumber = "971568786106" // UAE number
     const message = encodeURIComponent("Hello! I'm interested in Your Luxury Agent services. Can you help me?")
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`
     window.open(whatsappUrl, '_blank')
