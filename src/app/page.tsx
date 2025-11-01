@@ -1,44 +1,169 @@
 'use client'
 
+import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { Background } from '@/components/Background'
-import { ModernNavbar } from '@/components/ModernNavbar'
-import { HeroSection } from '@/components/HeroSection'
-import { USPBar } from '@/components/USPBar'
-import { ProgramsOverview } from '@/components/ProgramsOverview'
-import { BentoBoxSection } from '@/components/BentoBoxSection'
-import { ExtendedAdvantagesBanner } from '@/components/ExtendedAdvantagesBanner'
 import { ModernFooter } from '@/components/ModernFooter'
-import { CookieBanner } from '@/components/CookieBanner'
-import { Analytics } from '@/components/Analytics'
-import { TrackingHooks } from '@/components/TrackingHooks'
-import { Chatbot } from '@/components/Chatbot'
+import { Sparkles, ArrowRight, Clock, Mail } from 'lucide-react'
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-primary-dark">
       <Background />
-      <Analytics />
-      <TrackingHooks />
-      <ModernNavbar />
       
-      {/* Hero Section - Normal Flow */}
-      <HeroSection />
-      
-      {/* Main Content - Normal Flow */}
-      <main className="relative bg-primary-dark">
-        {/* Continuous Dark Blue Background Section */}
-            <section className="relative">
-              <USPBar />
-              <ProgramsOverview />
-              <BentoBoxSection />
-              <ExtendedAdvantagesBanner />
-            </section>
-        
-        <ModernFooter />
-      </main>
-      
-      <CookieBanner />
-      <Chatbot />
+      {/* Coming Soon Hero Section */}
+      <section className="hero-section">
+        <div className="hero-content">
+          <motion.div 
+            className="glass-card"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="flex justify-center mb-8"
+            >
+              <div className="relative">
+                <Image 
+                  src="/coming-soon/logo-1.png" 
+                  alt="The Orange Code Logo" 
+                  width={200} 
+                  height={200}
+                  className="w-auto h-auto max-w-[200px] animate-pulse"
+                  priority
+                />
+                <div className="absolute inset-0 bg-azure-blue/30 blur-3xl rounded-full"></div>
+              </div>
+            </motion.div>
+
+            <motion.h1 
+              className="hero-title font-playfair text-6xl font-bold mb-6 text-gradient-primary leading-tight tracking-tight text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+            >
+              Something Extraordinary is on the Way
+            </motion.h1>
+            
+            <motion.p 
+              className="hero-subtitle font-sofia text-2xl text-text-secondary mb-12 font-normal text-center max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
+            >
+              Transforming cultural barriers into bridges of trust through refined knowledge and authentic presence.
+            </motion.p>
+            
+            <motion.div 
+              className="countdown-section mt-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.1 }}
+            >
+              <div className="event-info inline-flex flex-col items-center gap-4 p-8 px-12 bg-bright-blue/10 border border-light-blue/30 rounded-2xl backdrop-blur-[10px]">
+                <div className="flex items-center gap-3">
+                  <Clock className="w-6 h-6 text-azure-blue" />
+                  <span className="date-label font-sofia text-sm text-text-muted uppercase tracking-wider font-medium">
+                    Launch Date
+                  </span>
+                </div>
+                <span className="date-value font-sofia text-3xl text-gradient-primary font-bold">
+                  November 8, 2025
+                </span>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="cta-section mt-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.3 }}
+            >
+              <div className="flex flex-col items-center gap-6">
+                <div className="flex items-center gap-4 px-8 py-4 bg-gradient-primary rounded-full cursor-pointer hover:shadow-glow transition-all duration-300 group">
+                  <Mail className="w-5 h-5 text-white" />
+                  <span className="text-white font-semibold text-lg">Notify Me When Launch</span>
+                  <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform duration-300" />
+                </div>
+                <p className="text-white/70 text-sm font-medium">
+                  Be the first to know when we go live
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Decorative Elements */}
+          <motion.div
+            className="absolute top-20 left-10 w-32 h-32 border border-azure-blue/20 rounded-full blur-2xl"
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          <motion.div
+            className="absolute bottom-20 right-10 w-40 h-40 border border-orange/20 rounded-full blur-2xl"
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1,
+            }}
+          />
+        </div>
+      </section>
+
+      {/* Info Section */}
+      <section className="relative py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
+            <motion.div
+              className="glass-card text-center"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="w-16 h-16 bg-gradient-azure rounded-full flex items-center justify-center mx-auto mb-4">
+                <Clock className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-text-primary mb-3">Coming November 2025</h3>
+              <p className="text-text-secondary">
+                Mark your calendar for our exclusive launch event
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="glass-card text-center"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <div className="w-16 h-16 bg-gradient-orange rounded-full flex items-center justify-center mx-auto mb-4">
+                <Mail className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-text-primary mb-3">Stay Updated</h3>
+              <p className="text-text-secondary">
+                Get notified when we launch and receive exclusive early access
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <ModernFooter />
     </div>
   )
 }
