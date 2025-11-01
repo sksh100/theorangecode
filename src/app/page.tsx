@@ -40,7 +40,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
             >
-              Something Extraordinary is on the Way
+              Coming Soon
             </motion.h1>
             
             <motion.p 
