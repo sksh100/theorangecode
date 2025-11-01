@@ -101,10 +101,13 @@ export async function POST(request: NextRequest) {
   try {
     const body: FormData = await request.json()
     
+    console.log('Received form data:', body)
+    
     // Validate required fields - now only email is required
     const { firstName, lastName, name, email, phone, eventDate, timestamp, source } = body
     
-    if (!email) {
+    if (!email || !email.trim()) {
+      console.log('Validation failed: email missing')
       return NextResponse.json(
         { error: 'Email is required' },
         { status: 400 }
@@ -120,11 +123,13 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    // Phone validation (optional)
+    // Phone validation (optional - be more lenient)
     if (phone) {
-      const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/
-      const cleanPhone = phone.replace(/[\s\-\(\)]/g, '')
-      if (!phoneRegex.test(cleanPhone)) {
+      // Remove all non-digit characters except + for validation
+      const cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '')
+      // Just check it has at least 7 digits and starts with + or digit
+      if (cleanPhone.length < 7 || (!cleanPhone.match(/^\+?[\d]{7,}$/))) {
+        console.log('Phone validation failed:', { phone, cleanPhone })
         return NextResponse.json(
           { error: 'Invalid phone number format' },
           { status: 400 }

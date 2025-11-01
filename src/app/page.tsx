@@ -165,22 +165,26 @@ export default function Home() {
 
   const handleSubscribe = async () => {
     // Validation
-    if (!email || !email.includes('@')) {
+    const trimmedEmail = email?.trim() || ''
+    const trimmedPhone = phone?.trim() || ''
+    const trimmedRepeatPhone = repeatPhone?.trim() || ''
+
+    if (!trimmedEmail || !trimmedEmail.includes('@')) {
       setMessage({ type: 'error', text: 'Please enter a valid email address' })
       return
     }
 
-    if (!phone || phone.trim().length === 0) {
+    if (!trimmedPhone || trimmedPhone.length === 0) {
       setMessage({ type: 'error', text: 'Please enter your phone number' })
       return
     }
 
-    if (!repeatPhone || repeatPhone.trim().length === 0) {
+    if (!trimmedRepeatPhone || trimmedRepeatPhone.length === 0) {
       setMessage({ type: 'error', text: 'Please confirm your phone number' })
       return
     }
 
-    if (phone !== repeatPhone) {
+    if (trimmedPhone !== trimmedRepeatPhone) {
       setMessage({ type: 'error', text: 'Phone numbers do not match. Please check and try again.' })
       return
     }
@@ -189,21 +193,27 @@ export default function Home() {
     setMessage(null)
 
     try {
+      const requestBody = {
+        email: email.trim(),
+        name: name.trim() || '',
+        phone: `${countryCode}${phone.trim().replace(/\D/g, '')}`, // Ensure only digits after country code
+        timestamp: new Date().toISOString(),
+        source: 'Coming Soon Page'
+      }
+
+      console.log('Submitting form with data:', requestBody)
+
       const response = await fetch('/api/submit-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          email: email.trim(),
-          name: name.trim() || 'Anonymous',
-          phone: `${countryCode}${phone.trim()}`,
-          timestamp: new Date().toISOString(),
-          source: 'Coming Soon Page'
-        })
+        body: JSON.stringify(requestBody)
       })
 
       const data = await response.json()
+
+      console.log('API Response:', { status: response.status, data })
 
       if (response.ok) {
         setMessage({ type: 'success', text: 'Thank you! We\'ll notify you when we launch.' })
@@ -220,6 +230,7 @@ export default function Home() {
         setMessage({ type: 'error', text: data.error || 'Something went wrong. Please try again.' })
       }
     } catch (error) {
+      console.error('Form submission error:', error)
       setMessage({ type: 'error', text: 'Something went wrong. Please try again.' })
     } finally {
       setIsSubmitting(false)
