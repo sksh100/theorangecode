@@ -336,7 +336,7 @@ export default function PrivacyPolicy() {
                     <p className="text-white font-bold text-xl mb-2">Data Protection Officer</p>
                     <p className="text-white/80 mb-1">Your Luxury Agent</p>
                     <p className="text-white/80 mb-1">Email: privacy@yourluxuryagent.com</p>
-                    <p className="text-white/80 mb-1">Phone: +971 50 123 4567</p>
+                    <p className="text-white/80 mb-1">Phone: +971 56 909 1701</p>
                   </div>
                   <div>
                     <p className="text-white font-bold text-xl mb-2">Business Address</p>
