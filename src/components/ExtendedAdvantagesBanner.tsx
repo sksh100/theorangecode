@@ -233,9 +233,9 @@ export function ExtendedAdvantagesBanner() {
                   whileHover={{ 
                     y: -10,
                     scale: 1.02,
-                    rotateY: 2
+                    rotateY: 2,
+                    transition: { duration: 0.3 }
                   }}
-                  transition={{ duration: 0.3 }}
                 >
                   {/* Hexagonal Container */}
                   <div className="relative">

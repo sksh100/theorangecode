@@ -253,9 +253,9 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
                 }}
                 whileHover={{ 
                   y: -10,
-                  scale: 1.01
+                  scale: 1.01,
+                  transition: { duration: 0.3 }
                 }}
-                transition={{ duration: 0.3 }}
               >
                 {/* Cyberpunk Panel Container */}
                 <div className="relative">
