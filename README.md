@@ -1,6 +1,6 @@
-# Your Luxury Agent - TypeScript/Next.js
+# The Orange Code - TypeScript/Next.js
 
-A modern, luxurious coming-soon page built with Next.js 14, TypeScript, and Tailwind CSS. This project features glass-morphism design, smooth animations, and a professional form submission system.
+A modern, luxurious coming-soon page built with Next.js 14, TypeScript, and Tailwind CSS. This project features glass-morphism design, smooth animations, and a professional form submission system for The Orange Code - Premium AI-powered luxury services and cultural intelligence platform.
 
 ## 🚀 Features
 
@@ -142,4 +142,4 @@ MIT License - see LICENSE file for details
 
 ---
 
-**Your Luxury Agent** - Experience the future of luxury with AI-powered precision
+**The Orange Code** - Transforming cultural barriers into bridges of trust through refined knowledge and authentic presence

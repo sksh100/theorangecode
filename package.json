@@ -1,7 +1,7 @@
 {
-  "name": "your-luxury-agent",
+  "name": "theorangecode",
   "version": "1.0.0",
-  "description": "Your Luxury Agent - Premium AI-powered luxury services coming soon page",
+  "description": "The Orange Code - Premium AI-powered luxury services and cultural intelligence platform",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -39,6 +39,6 @@
     "typescript",
     "react"
   ],
-  "author": "Your Luxury Agent",
+  "author": "The Orange Code",
   "license": "MIT"
 }
