@@ -9,8 +9,8 @@ interface FormData {
   email: string
   phone?: string
   eventDate?: string
-  timestamp: string
-  source: string
+  timestamp?: string
+  source?: string
 }
 
 async function appendToGoogleSheets(data: {
@@ -24,29 +24,42 @@ async function appendToGoogleSheets(data: {
     // Try to parse the credentials - handle both string and object format
     let credentials: any = {}
     
-    if (process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
-      try {
-        // If it's already a string, parse it
-        if (typeof process.env.GOOGLE_SERVICE_ACCOUNT_KEY === 'string') {
-          credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY)
-        } else {
-          credentials = process.env.GOOGLE_SERVICE_ACCOUNT_KEY
-        }
-      } catch (parseError) {
-        console.error('Failed to parse GOOGLE_SERVICE_ACCOUNT_KEY:', parseError)
-        return
+    const serviceAccountKey = process.env.GOOGLE_SERVICE_ACCOUNT_KEY
+    const spreadsheetId = process.env.GOOGLE_SHEET_ID
+    
+    console.log('📋 Google Sheets config check:', {
+      hasServiceAccountKey: !!serviceAccountKey,
+      hasSpreadsheetId: !!spreadsheetId,
+      spreadsheetId: spreadsheetId ? `${spreadsheetId.substring(0, 10)}...` : 'missing'
+    })
+    
+    if (!serviceAccountKey || !spreadsheetId) {
+      console.log('⚠️ Google Sheets not configured - missing environment variables:', {
+        hasServiceAccountKey: !!serviceAccountKey,
+        hasSpreadsheetId: !!spreadsheetId
+      })
+      return false
+    }
+    
+    try {
+      // If it's already a string, parse it
+      if (typeof serviceAccountKey === 'string') {
+        credentials = JSON.parse(serviceAccountKey)
+      } else {
+        credentials = serviceAccountKey
       }
+    } catch (parseError) {
+      console.error('❌ Failed to parse GOOGLE_SERVICE_ACCOUNT_KEY:', parseError)
+      return false
     }
 
-    const spreadsheetId = process.env.GOOGLE_SHEET_ID
-
-    if (!credentials.private_key || !spreadsheetId) {
-      console.log('Google Sheets not configured:', {
+    if (!credentials.private_key || !credentials.client_email) {
+      console.log('❌ Google Sheets credentials incomplete:', {
         hasPrivateKey: !!credentials.private_key,
-        hasSpreadsheetId: !!spreadsheetId,
-        hasCredentials: !!process.env.GOOGLE_SERVICE_ACCOUNT_KEY
+        hasClientEmail: !!credentials.client_email,
+        hasProjectId: !!credentials.project_id
       })
-      return
+      return false
     }
 
     // Handle escaped newlines in private key (common when storing in env vars)
@@ -64,9 +77,15 @@ async function appendToGoogleSheets(data: {
     const sheets = google.sheets({ version: 'v4', auth })
     
     // Append data to the sheet
+    console.log('📝 Appending to sheet:', {
+      spreadsheetId: spreadsheetId.substring(0, 10) + '...',
+      range: 'The Orange Code Form Responses!A:E',
+      data: { name: data.name, email: data.email, phone: data.phone }
+    })
+    
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: 'The Orange Code Form Responses!A:E', // Updated to use correct sheet name
+      range: 'The Orange Code Form Responses!A:E',
       valueInputOption: 'USER_ENTERED',
       requestBody: {
         values: [[
@@ -80,7 +99,6 @@ async function appendToGoogleSheets(data: {
     })
 
     console.log('✅ Data appended to Google Sheets successfully:', {
-      spreadsheetId,
       updatedCells: response.data.updates?.updatedCells,
       updatedRange: response.data.updates?.updatedRange
     })
@@ -90,8 +108,16 @@ async function appendToGoogleSheets(data: {
     console.error('❌ Google Sheets error:', {
       message: error.message,
       code: error.code,
+      status: error.response?.status,
+      statusText: error.response?.statusText,
       details: error.response?.data || error.toString()
     })
+    
+    // Check if it's a permissions error
+    if (error.message?.includes('permission') || error.code === 403) {
+      console.error('💡 Make sure the service account email has edit access to the spreadsheet')
+    }
+    
     // Don't throw - allow submission to continue even if Sheets fails
     return false
   }
@@ -99,15 +125,25 @@ async function appendToGoogleSheets(data: {
 
 export async function POST(request: NextRequest) {
   try {
-    const body: FormData = await request.json()
+    let body: FormData
+    try {
+      body = await request.json()
+    } catch (parseError) {
+      console.error('Failed to parse request body:', parseError)
+      return NextResponse.json(
+        { error: 'Invalid request format' },
+        { status: 400 }
+      )
+    }
     
-    console.log('Received form data:', body)
+    console.log('📥 Received form data:', JSON.stringify(body, null, 2))
     
     // Validate required fields - now only email is required
-    const { firstName, lastName, name, email, phone, eventDate, timestamp, source } = body
+    const { firstName, lastName, name, email, phone, eventDate, timestamp, source } = body || {}
     
-    if (!email || !email.trim()) {
-      console.log('Validation failed: email missing')
+    // Email is required
+    if (!email || typeof email !== 'string' || !email.trim()) {
+      console.log('❌ Validation failed: email missing or invalid', { email, type: typeof email })
       return NextResponse.json(
         { error: 'Email is required' },
         { status: 400 }
@@ -123,15 +159,15 @@ export async function POST(request: NextRequest) {
       )
     }
     
-    // Phone validation (optional - be more lenient)
+    // Phone validation (optional - be very lenient, just check it has some content)
     if (phone) {
       // Remove all non-digit characters except + for validation
       const cleanPhone = phone.replace(/[\s\-\(\)\.]/g, '')
-      // Just check it has at least 7 digits and starts with + or digit
-      if (cleanPhone.length < 7 || (!cleanPhone.match(/^\+?[\d]{7,}$/))) {
-        console.log('Phone validation failed:', { phone, cleanPhone })
+      // Just check it has at least 7 characters total (digits + country code)
+      if (cleanPhone.length < 7) {
+        console.log('Phone validation failed: too short', { phone, cleanPhone, length: cleanPhone.length })
         return NextResponse.json(
-          { error: 'Invalid phone number format' },
+          { error: 'Phone number is too short. Please enter a valid phone number.' },
           { status: 400 }
         )
       }
@@ -142,31 +178,36 @@ export async function POST(request: NextRequest) {
     
     // Prepare data for storage
     const displayName = name || `${firstName || ''} ${lastName || ''}`.trim() || 'Anonymous'
+    const finalTimestamp = timestamp || new Date().toISOString()
+    const finalSource = source || 'Coming Soon Page'
     
     const submissionData = {
       id: submissionId,
       firstName: firstName || '',
       lastName: lastName || '',
       name: displayName,
-      email,
+      email: email.trim(),
       phone: phone || '',
       eventDate: eventDate || '',
-      timestamp,
-      source,
+      timestamp: finalTimestamp,
+      source: finalSource,
       ip: request.ip || request.headers.get('x-forwarded-for') || 'unknown',
       submittedAt: new Date().toISOString()
     }
     
     // Save to Google Sheets
+    console.log('📊 Attempting to save to Google Sheets...')
     const sheetsSuccess = await appendToGoogleSheets({
       name: displayName,
-      email,
+      email: submissionData.email,
       phone: submissionData.phone,
       timestamp: submissionData.submittedAt,
-      source
+      source: finalSource
     })
     
-    if (!sheetsSuccess) {
+    if (sheetsSuccess) {
+      console.log('✅ Successfully saved to Google Sheets')
+    } else {
       console.warn('⚠️ Google Sheets append failed, but submission will continue')
     }
     

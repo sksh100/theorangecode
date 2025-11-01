@@ -174,13 +174,13 @@ export default function Home() {
       return
     }
 
-    if (!trimmedPhone || trimmedPhone.length === 0) {
-      setMessage({ type: 'error', text: 'Please enter your phone number' })
+    if (!trimmedPhone || trimmedPhone.length < 3) {
+      setMessage({ type: 'error', text: 'Please enter your phone number (at least 3 digits)' })
       return
     }
 
-    if (!trimmedRepeatPhone || trimmedRepeatPhone.length === 0) {
-      setMessage({ type: 'error', text: 'Please confirm your phone number' })
+    if (!trimmedRepeatPhone || trimmedRepeatPhone.length < 3) {
+      setMessage({ type: 'error', text: 'Please confirm your phone number (at least 3 digits)' })
       return
     }
 
@@ -201,7 +201,7 @@ export default function Home() {
         source: 'Coming Soon Page'
       }
 
-      console.log('Submitting form with data:', requestBody)
+      console.log('✅ Submitting form with data:', requestBody)
 
       const response = await fetch('/api/submit-form', {
         method: 'POST',
@@ -211,11 +211,27 @@ export default function Home() {
         body: JSON.stringify(requestBody)
       })
 
-      const data = await response.json()
+      let data
+      try {
+        data = await response.json()
+      } catch (parseError) {
+        console.error('❌ Failed to parse API response:', parseError)
+        const text = await response.text()
+        console.error('Raw response:', text)
+        setMessage({ type: 'error', text: 'Server error. Please try again.' })
+        return
+      }
 
-      console.log('API Response:', { status: response.status, data })
+      console.log('📥 API Response:', { status: response.status, statusText: response.statusText, data })
+      
+      if (!response.ok) {
+        console.error('❌ Form submission failed:', data)
+        const errorMessage = data?.error || data?.message || `Server error (${response.status})`
+        setMessage({ type: 'error', text: errorMessage })
+        return
+      }
 
-      if (response.ok) {
+      if (response.ok && data.success) {
         setMessage({ type: 'success', text: 'Thank you! We\'ll notify you when we launch.' })
         setEmail('')
         setName('')
@@ -499,7 +515,7 @@ export default function Home() {
                 disabled={isSubmitting}
                 className="w-full px-6 py-3 bg-gradient-primary rounded-lg text-white font-semibold hover:shadow-glow transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+                {isSubmitting ? 'Registering...' : 'Register Your Interest'}
               </button>
             </div>
           </motion.div>
