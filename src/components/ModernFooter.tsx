@@ -8,25 +8,61 @@ import Link from 'next/link'
 
 interface ModernFooterProps {
   hideQuickLinks?: boolean
+  hideLegalLinks?: boolean
 }
 
-export function ModernFooter({ hideQuickLinks = false }: ModernFooterProps = {}) {
+export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }: ModernFooterProps = {}) {
   const [email, setEmail] = useState('')
   const [isSubscribed, setIsSubscribed] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (email) {
-      setIsSubscribed(true)
-      setEmail('')
-      // Here you would typically send the email to your backend
-      console.log('Subscribed:', email)
+    
+    if (!email || !email.trim() || !email.includes('@')) {
+      setMessage({ type: 'error', text: 'Please enter a valid email address' })
+      return
+    }
+
+    setIsSubmitting(true)
+    setMessage(null)
+
+    try {
+      const response = await fetch('/api/submit-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          name: '',
+          phone: '',
+          timestamp: new Date().toISOString(),
+          source: 'Footer Newsletter Subscription'
+        })
+      })
+
+      const data = await response.json()
+
+      if (response.ok && data.success) {
+        setIsSubscribed(true)
+        setEmail('')
+        setMessage({ type: 'success', text: 'Thank you for subscribing!' })
+      } else {
+        setMessage({ type: 'error', text: data?.error || 'Something went wrong. Please try again.' })
+      }
+    } catch (error) {
+      console.error('Subscription error:', error)
+      setMessage({ type: 'error', text: 'Network error. Please try again.' })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
   const socialLinks = [
     { icon: Instagram, href: 'https://www.instagram.com/the.orangecode/?next=%2F', label: 'Instagram' },
-    { icon: Twitter, href: 'https://twitter.com/theorangecode', label: 'Twitter' },
+    { icon: Twitter, href: 'https://x.com/TheOrangeCode', label: 'Twitter' },
     { icon: Facebook, href: 'https://facebook.com/theorangecode', label: 'Facebook' },
     { icon: Linkedin, href: 'https://linkedin.com/company/theorangecode', label: 'LinkedIn' }
   ]
@@ -78,7 +114,7 @@ export function ModernFooter({ hideQuickLinks = false }: ModernFooterProps = {})
                 <h3 className="text-2xl font-bold text-white tracking-tight">The Orange Code</h3>
               </div>
               <p className="text-white/70 text-sm leading-relaxed mb-8 max-w-sm">
-                Transforming cultural barriers into bridges of trust through refined knowledge and authentic presence.
+                Bridging minds, cultures & intelligence.
               </p>
               
               {/* Social Links */}
@@ -173,16 +209,36 @@ export function ModernFooter({ hideQuickLinks = false }: ModernFooterProps = {})
                       placeholder="Enter your email"
                       className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg text-white text-sm placeholder-white/40 focus:outline-none focus:border-orange/50 focus:bg-white/10 transition-all duration-300"
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
+                  {message && (
+                    <div className={`p-2 rounded-lg text-xs ${
+                      message.type === 'success' 
+                        ? 'bg-azure-blue/20 text-azure-blue border border-azure-blue/40' 
+                        : 'bg-red-500/20 text-red-300 border border-red-500/30'
+                    }`}>
+                      {message.text}
+                    </div>
+                  )}
                   <motion.button
                     type="submit"
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-orange to-bright-blue rounded-lg text-white text-sm font-semibold hover:shadow-lg hover:shadow-orange/20 transition-all duration-300"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    disabled={isSubmitting}
+                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-orange to-bright-blue rounded-lg text-white text-sm font-semibold hover:shadow-lg hover:shadow-orange/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                   >
-                    <Send className="w-4 h-4" />
-                    Subscribe
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span>Subscribing...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        Subscribe
+                      </>
+                    )}
                   </motion.button>
                 </form>
               ) : (
@@ -243,26 +299,28 @@ export function ModernFooter({ hideQuickLinks = false }: ModernFooterProps = {})
                 © 2025 The Orange Code. All rights reserved.
               </motion.p>
               
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                viewport={{ once: true }}
-                className="flex gap-6"
-              >
-                <Link 
-                  href="/terms-conditions" 
-                  className="text-white/50 hover:text-orange transition-colors text-xs"
+              {!hideLegalLinks && (
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                  viewport={{ once: true }}
+                  className="flex gap-6"
                 >
-                  Terms & Conditions
-                </Link>
-                <Link 
-                  href="/privacy-policy" 
-                  className="text-white/50 hover:text-orange transition-colors text-xs"
-                >
-                  Privacy Policy
-                </Link>
-              </motion.div>
+                  <Link 
+                    href="/terms-conditions" 
+                    className="text-white/50 hover:text-orange transition-colors text-xs"
+                  >
+                    Terms & Conditions
+                  </Link>
+                  <Link 
+                    href="/privacy-policy" 
+                    className="text-white/50 hover:text-orange transition-colors text-xs"
+                  >
+                    Privacy Policy
+                  </Link>
+                </motion.div>
+              )}
             </div>
           </div>
         </div>

@@ -3,18 +3,11 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { ModernFooter } from '@/components/ModernFooter'
-import { ArrowRight, Clock, Mail } from 'lucide-react'
+import { ArrowRight, Clock, Check, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 
 export default function Home() {
-  const [showModal, setShowModal] = useState(false)
-  const [email, setEmail] = useState('')
-  const [name, setName] = useState('')
-  const [countryCode, setCountryCode] = useState('+971')
-  const [phone, setPhone] = useState('')
-  const [repeatPhone, setRepeatPhone] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+  const [isLoadingCheckout, setIsLoadingCheckout] = useState(false)
 
   const countryCodes = [
     { code: '+971', flag: '🇦🇪', name: 'UAE' },
@@ -163,142 +156,14 @@ export default function Home() {
     { code: '+687', flag: '🇳🇨', name: 'New Caledonia' },
   ]
 
-  const handleSubscribe = async () => {
-    // Validation
-    const trimmedEmail = email?.trim() || ''
-    const trimmedPhone = phone?.trim() || ''
-    const trimmedRepeatPhone = repeatPhone?.trim() || ''
-
-    if (!trimmedEmail || !trimmedEmail.includes('@')) {
-      setMessage({ type: 'error', text: 'Please enter a valid email address' })
-      return
-    }
-
-    // Phone validation - make it more lenient
-    if (!trimmedPhone || trimmedPhone.length < 3) {
-      setMessage({ type: 'error', text: 'Please enter your phone number (at least 3 digits)' })
-      return
-    }
-
-    if (!trimmedRepeatPhone || trimmedRepeatPhone.length < 3) {
-      setMessage({ type: 'error', text: 'Please confirm your phone number (at least 3 digits)' })
-      return
-    }
-
-    if (trimmedPhone !== trimmedRepeatPhone) {
-      setMessage({ type: 'error', text: 'Phone numbers do not match. Please check and try again.' })
-      return
-    }
-
-    // Additional check: make sure phone has at least some digits after removing non-digits
-    const phoneDigits = trimmedPhone.replace(/\D/g, '')
-    if (phoneDigits.length < 3) {
-      setMessage({ type: 'error', text: 'Please enter a valid phone number with at least 3 digits' })
-      return
-    }
-
-    setIsSubmitting(true)
-    setMessage(null)
-
-    try {
-      // Clean phone number - remove all non-digits, then add country code
-      const cleanPhoneDigits = phone.trim().replace(/\D/g, '')
-      const fullPhone = cleanPhoneDigits ? `${countryCode}${cleanPhoneDigits}` : ''
-
-      const requestBody = {
-        email: email.trim(),
-        name: (name || '').trim() || '',
-        phone: fullPhone,
-        timestamp: new Date().toISOString(),
-        source: 'Coming Soon Page'
-      }
-
-      console.log('✅ Submitting form with data:', JSON.stringify(requestBody, null, 2))
-      
-      // Final validation check
-      if (!requestBody.email || requestBody.email.length === 0) {
-        setIsSubmitting(false)
-        setMessage({ type: 'error', text: 'Please enter your email address' })
-        return
-      }
-      
-      if (!requestBody.email.includes('@')) {
-        setIsSubmitting(false)
-        setMessage({ type: 'error', text: 'Please enter a valid email address' })
-        return
-      }
-
-      const response = await fetch('/api/submit-form', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody)
-      })
-
-      let data
-      try {
-        data = await response.json()
-      } catch (parseError) {
-        console.error('❌ Failed to parse API response:', parseError)
-        const text = await response.text()
-        console.error('Raw response:', text)
-        setMessage({ type: 'error', text: 'Server error. Please try again.' })
-        return
-      }
-
-      console.log('📥 API Response:', { status: response.status, statusText: response.statusText, data })
-      
-      if (!response.ok) {
-        console.error('❌ Form submission failed:', { status: response.status, data })
-        let errorMessage = 'Something went wrong. Please try again.'
-        
-        if (data?.error) {
-          errorMessage = data.error
-        } else if (data?.message) {
-          errorMessage = data.message
-        } else if (response.status === 400) {
-          errorMessage = 'Please check that all required fields are filled correctly.'
-        } else if (response.status === 500) {
-          errorMessage = 'Server error. Please try again later.'
-        }
-        
-        setMessage({ type: 'error', text: errorMessage })
-        setIsSubmitting(false)
-        return
-      }
-
-      if (response.ok && data.success) {
-        setMessage({ type: 'success', text: 'Thank you! We\'ll notify you when we launch.' })
-        setEmail('')
-        setName('')
-        setPhone('')
-        setRepeatPhone('')
-        setCountryCode('+971')
-        setTimeout(() => {
-          setShowModal(false)
-          setMessage(null)
-        }, 2000)
-      } else {
-        setIsSubmitting(false)
-        setMessage({ type: 'error', text: data?.error || data?.message || 'Something went wrong. Please try again.' })
-      }
-    } catch (error) {
-      console.error('❌ Form submission error:', error)
-      setIsSubmitting(false)
-      const errorMessage = error instanceof Error ? error.message : 'Network error. Please check your connection and try again.'
-      setMessage({ type: 'error', text: errorMessage })
-    }
-  }
-
   return (
     <div className="min-h-screen bg-primary-dark">
       {/* Coming Soon Hero Section */}
       <section className="hero-section">
-        <div className="hero-content pt-12">
+        <div className="hero-content pt-4">
 
           <motion.div 
-            className="glass-card mt-4 relative overflow-visible py-16"
+            className="glass-card mt-0 relative overflow-visible py-40"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -319,22 +184,13 @@ export default function Home() {
                 priority
               />
             </motion.div>
-            <h1 className="text-6xl font-bold mb-6 leading-tight tracking-tight text-center whitespace-nowrap" style={{ color: '#ffffff' }}>
-              <span
-                style={{
-                  backgroundImage: 'linear-gradient(135deg, #ff914d 0%, #00d4ff 50%, #0099ff 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  display: 'inline-block',
-                }}
-              >
-                Coming Soon
-              </span>
+            <div className="-mt-12">
+            <h1 className="text-6xl font-bold mb-6 leading-tight tracking-tight text-right whitespace-nowrap text-white">
+              Coming Soon
             </h1>
             
             <motion.p 
-              className="hero-subtitle font-sofia text-2xl text-white mb-12 font-normal text-center max-w-2xl mx-auto"
+              className="hero-subtitle font-sofia text-2xl text-white mb-12 font-normal text-right max-w-2xl ml-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.9 }}
@@ -343,7 +199,7 @@ export default function Home() {
             </motion.p>
             
             <motion.div 
-              className="countdown-section mt-8"
+              className="countdown-section mt-8 flex justify-end"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.1 }}
@@ -360,24 +216,8 @@ export default function Home() {
                 </span>
               </div>
             </motion.div>
+            </div>
 
-            <motion.div 
-              className="cta-section mt-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.3 }}
-            >
-              <div className="flex flex-col items-center gap-6">
-                <button 
-                  onClick={() => setShowModal(true)}
-                  className="flex items-center gap-4 px-8 py-4 bg-gradient-primary rounded-full cursor-pointer hover:shadow-glow transition-all duration-300 group"
-                >
-                  <Mail className="w-5 h-5 text-white" />
-                  <span className="text-white font-semibold text-lg">Register Your Interest</span>
-                  <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform duration-300" />
-                </button>
-              </div>
-            </motion.div>
           </motion.div>
 
           {/* Decorative Elements */}
@@ -409,156 +249,118 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Info Section */}
+      {/* Exclusive Offer Section */}
       <section className="relative py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8">
-            <motion.div
-              className="glass-card text-center"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="w-16 h-16 bg-gradient-azure rounded-full flex items-center justify-center mx-auto mb-4">
-                <Clock className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-3">Coming November 2025</h3>
-              <p className="text-white/80">
-                Mark your calendar for our exclusive launch event
-              </p>
-            </motion.div>
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            className="glass-card p-8 md:p-12 relative overflow-hidden bg-accent-blue/20 backdrop-blur-[30px] border border-light-blue/40"
+            style={{
+              boxShadow: '0 25px 50px rgba(0, 0, 0, 0.3), 0 0 60px rgba(0, 212, 255, 0.4), 0 0 100px rgba(255, 145, 77, 0.2)'
+            }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Badge */}
+            <div className="absolute top-4 right-4 bg-gradient-primary px-4 py-2 rounded-full">
+              <span className="text-white text-xs font-semibold uppercase tracking-wide">Limited Time</span>
+            </div>
 
-            <motion.div
-              className="glass-card text-center"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className="w-16 h-16 bg-gradient-orange rounded-full flex items-center justify-center mx-auto mb-4">
-                <Mail className="w-8 h-8 text-white" />
+            <div className="text-center mb-8">
+              <div className="w-20 h-20 bg-azure-blue/20 border border-azure-blue/40 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Sparkles className="w-10 h-10 text-azure-blue" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-3">Stay Updated</h3>
-              <p className="text-white/80">
-                Get notified when we launch and receive exclusive early access
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Exclusive Pre-Launch Offer - Enroll Now
+              </h2>
+              
+              {/* Pricing */}
+              <div className="mb-6">
+                <div className="flex items-center justify-center gap-4 mb-2">
+                  <span className="text-4xl md:text-5xl font-bold text-gradient-primary">999 AED</span>
+                  <span className="text-xl text-white/50 line-through">2,999 AED</span>
+                </div>
+                <p className="text-white/70 text-sm">For the first 30 registrations only</p>
+              </div>
+            </div>
+
+            {/* Benefits List */}
+            <div className="mb-8 space-y-4">
+              <h3 className="text-xl font-semibold text-white mb-4">What you'll get:</h3>
+              <ul className="space-y-3">
+                {[
+                  "Access to The Orange Code – Cultural Intelligence Foundations",
+                  "Immersive live modules guided by Dutch-led expertise",
+                  "Bonus: One-on-One Q&A Session (personalized cultural insight consultation)",
+                  "Extra Bonus Session: Impeccable Introductions — how to present yourself across cultures with confidence",
+                  "Priority Invitation to upcoming in-person sessions & GCC workshops",
+                  "15% Discount on private consulting packages with The Orange Code team"
+                ].map((benefit, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+                    <span className="text-white/90">{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* CTA Button */}
+            <div className="flex flex-col items-center gap-4">
+              <button
+                onClick={async () => {
+                  setIsLoadingCheckout(true)
+                  try {
+                    const response = await fetch('/api/create-checkout-session', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        price: 99900, // 999 AED in fils (smallest currency unit)
+                        currency: 'aed'
+                      })
+                    })
+                    
+                    const data = await response.json()
+                    
+                    if (data.url) {
+                      window.location.href = data.url
+                    } else {
+                      console.error('Checkout error:', data.error)
+                      alert('Unable to start checkout. Please try again.')
+                    }
+                  } catch (error) {
+                    console.error('Checkout error:', error)
+                    alert('Unable to start checkout. Please try again.')
+                  } finally {
+                    setIsLoadingCheckout(false)
+                  }
+                }}
+                disabled={isLoadingCheckout}
+                className="flex items-center gap-3 px-8 py-4 bg-gradient-primary rounded-full cursor-pointer hover:shadow-glow transition-all duration-300 group disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoadingCheckout ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span className="text-white font-semibold text-lg">Processing...</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-white font-semibold text-lg">Enroll Now - Secure Checkout</span>
+                    <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform duration-300" />
+                  </>
+                )}
+              </button>
+              <p className="text-white/60 text-xs text-center">
+                Secure payment powered by Stripe • Limited to first 30 registrations
               </p>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
             </section>
         
       <ModernFooter hideQuickLinks={true} hideLegalLinks={true} />
-
-      {/* Subscribe Modal */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="glass-card max-w-md w-full p-8 relative"
-          >
-            <button
-              onClick={() => {
-                setShowModal(false)
-                setMessage(null)
-                setEmail('')
-                setName('')
-                setPhone('')
-                setRepeatPhone('')
-                setCountryCode('+971')
-              }}
-              className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
-            >
-              ✕
-            </button>
-            
-            <h2 className="text-2xl font-bold text-white mb-2">Get Notified</h2>
-            <p className="text-white/70 mb-6">We'll let you know as soon as we launch!</p>
-
-            <div className="space-y-4">
-              <div>
-                <input
-                  type="text"
-                  placeholder="Your name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-azure-blue transition-colors"
-                />
-              </div>
-              
-              <div>
-                <input
-                  type="email"
-                  placeholder="Your email address *"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-azure-blue transition-colors"
-                />
-              </div>
-
-              <div>
-                <label className="block text-white/70 text-sm mb-2">Phone Number *</label>
-                <div className="flex gap-2">
-                  <select
-                    value={countryCode}
-                    onChange={(e) => setCountryCode(e.target.value)}
-                    className="px-3 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-azure-blue transition-colors"
-                  >
-                    {countryCodes.map((country) => (
-                      <option key={country.code} value={country.code} className="bg-primary-dark">
-                        {country.flag} {country.code}
-                      </option>
-                    ))}
-                  </select>
-                  <input
-                    type="tel"
-                    placeholder="Phone number"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
-                    className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-azure-blue transition-colors"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-white/70 text-sm mb-2">Repeat Phone Number *</label>
-                <div className="flex gap-2">
-                  <div className="px-3 py-3 bg-white/5 border border-white/10 rounded-lg text-white/50 flex items-center">
-                    {countryCode}
-                  </div>
-                  <input
-                    type="tel"
-                    placeholder="Confirm phone number"
-                    value={repeatPhone}
-                    onChange={(e) => setRepeatPhone(e.target.value.replace(/\D/g, ''))}
-                    onKeyPress={(e) => e.key === 'Enter' && handleSubscribe()}
-                    className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-azure-blue transition-colors"
-                  />
-                </div>
-              </div>
-
-              {message && (
-                <div className={`p-3 rounded-lg ${
-                  message.type === 'success' 
-                    ? 'bg-green-500/20 text-green-300 border border-green-500/30' 
-                    : 'bg-red-500/20 text-red-300 border border-red-500/30'
-                }`}>
-                  {message.text}
-                </div>
-              )}
-
-              <button
-                onClick={handleSubscribe}
-                disabled={isSubmitting}
-                className="w-full px-6 py-3 bg-gradient-primary rounded-lg text-white font-semibold hover:shadow-glow transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? 'Registering...' : 'Register Your Interest'}
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      )}
     </div>
   )
 }
