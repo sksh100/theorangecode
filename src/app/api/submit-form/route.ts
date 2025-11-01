@@ -18,44 +18,82 @@ async function appendToGoogleSheets(data: {
   email: string
   timestamp: string
   source: string
+  phone?: string
 }) {
   try {
-    const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY || '{}')
+    // Try to parse the credentials - handle both string and object format
+    let credentials: any = {}
+    
+    if (process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
+      try {
+        // If it's already a string, parse it
+        if (typeof process.env.GOOGLE_SERVICE_ACCOUNT_KEY === 'string') {
+          credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY)
+        } else {
+          credentials = process.env.GOOGLE_SERVICE_ACCOUNT_KEY
+        }
+      } catch (parseError) {
+        console.error('Failed to parse GOOGLE_SERVICE_ACCOUNT_KEY:', parseError)
+        return
+      }
+    }
+
     const spreadsheetId = process.env.GOOGLE_SHEET_ID
 
     if (!credentials.private_key || !spreadsheetId) {
-      console.log('Google Sheets not configured, skipping...')
+      console.log('Google Sheets not configured:', {
+        hasPrivateKey: !!credentials.private_key,
+        hasSpreadsheetId: !!spreadsheetId,
+        hasCredentials: !!process.env.GOOGLE_SERVICE_ACCOUNT_KEY
+      })
       return
     }
+
+    // Handle escaped newlines in private key (common when storing in env vars)
+    const privateKey = credentials.private_key.replace(/\\n/g, '\n')
 
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: credentials.client_email,
-        private_key: credentials.private_key,
+        private_key: privateKey,
+        project_id: credentials.project_id,
       },
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     })
 
     const sheets = google.sheets({ version: 'v4', auth })
     
-    await sheets.spreadsheets.values.append({
+    // Append data to the sheet
+    const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: 'Sheet1!A:D',
+      range: 'Sheet1!A:E', // Updated to include phone
       valueInputOption: 'USER_ENTERED',
       requestBody: {
         values: [[
           data.timestamp,
           data.name || 'Anonymous',
           data.email,
+          data.phone || '',
           data.source
         ]],
       },
     })
 
-    console.log('Data appended to Google Sheets successfully')
-  } catch (error) {
-    console.error('Google Sheets error:', error)
+    console.log('✅ Data appended to Google Sheets successfully:', {
+      spreadsheetId,
+      updatedCells: response.data.updates?.updatedCells,
+      updatedRange: response.data.updates?.updatedRange
+    })
+    
+    return true
+  } catch (error: any) {
+    console.error('❌ Google Sheets error:', {
+      message: error.message,
+      code: error.code,
+      details: error.response?.data || error.toString()
+    })
     // Don't throw - allow submission to continue even if Sheets fails
+    return false
   }
 }
 
@@ -115,12 +153,17 @@ export async function POST(request: NextRequest) {
     }
     
     // Save to Google Sheets
-    await appendToGoogleSheets({
+    const sheetsSuccess = await appendToGoogleSheets({
       name: displayName,
       email,
+      phone: submissionData.phone,
       timestamp: submissionData.submittedAt,
       source
     })
+    
+    if (!sheetsSuccess) {
+      console.warn('⚠️ Google Sheets append failed, but submission will continue')
+    }
     
     try {
       // Save to Vercel KV (Redis) if available

@@ -51,11 +51,39 @@ The data will be appended to columns:
 - Column A: Timestamp
 - Column B: Name
 - Column C: Email
-- Column D: Source
+- Column D: Phone
+- Column E: Source
 
 You can add headers in row 1:
-| Timestamp | Name | Email | Source |
-|-----------|------|-------|--------|
+| Timestamp | Name | Email | Phone | Source |
+|-----------|------|-------|-------|--------|
+
+## Troubleshooting
+
+If data isn't appearing in your sheet:
+
+1. **Check Vercel Environment Variables:**
+   - Go to Vercel Dashboard > Your Project > Settings > Environment Variables
+   - Make sure `GOOGLE_SERVICE_ACCOUNT_KEY` contains the FULL JSON (including all braces, quotes, etc.)
+   - Make sure `GOOGLE_SHEET_ID` is just the ID (the part between `/d/` and `/edit` in your sheet URL)
+   
+2. **Verify Service Account Permissions:**
+   - The service account email must be shared as an "Editor" on the Google Sheet
+   - Check the sheet sharing settings
+
+3. **Check Sheet Name:**
+   - Make sure your sheet tab is named "Sheet1" (or update the code if you use a different name)
+   - The range is currently set to: `Sheet1!A:E`
+
+4. **Check Vercel Logs:**
+   - Go to Vercel Dashboard > Your Project > Functions tab
+   - Look for errors when submitting the form
+   - Should see "✅ Data appended to Google Sheets successfully" if it works
+
+5. **Common Issues:**
+   - Private key with escaped `\n` characters - the code now handles this automatically
+   - Sheet ID missing the leading/trailing characters
+   - Service account not shared properly with the sheet
 
 ## Testing
 
