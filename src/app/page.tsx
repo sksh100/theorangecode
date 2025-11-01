@@ -35,13 +35,7 @@ export default function Home() {
               />
             </motion.div>
             <motion.h1 
-              className="font-playfair text-6xl font-bold mb-6 leading-tight tracking-tight text-center whitespace-nowrap"
-              style={{
-                background: 'linear-gradient(135deg, #ff914d 0%, #00d4ff 50%, #0099ff 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
+              className="font-playfair text-6xl font-bold mb-6 leading-tight tracking-tight text-center whitespace-nowrap text-gradient-primary"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
