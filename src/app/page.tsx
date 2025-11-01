@@ -2,15 +2,12 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { Background } from '@/components/Background'
 import { ModernFooter } from '@/components/ModernFooter'
 import { ArrowRight, Clock, Mail } from 'lucide-react'
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-primary-dark">
-      <Background />
-      
       {/* Coming Soon Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
