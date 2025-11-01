@@ -23,14 +23,14 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="absolute top-0 left-0 z-20"
+              className="absolute top-6 left-0 z-20"
             >
               <Image 
                 src="/coming-soon/logo-1.png" 
                 alt="The Orange Code Logo" 
-                width={180} 
-                height={180}
-                className="w-auto h-auto max-w-[180px]"
+                width={240} 
+                height={240}
+                className="w-auto h-auto max-w-[240px]"
                 priority
               />
             </motion.div>
