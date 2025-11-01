@@ -10,13 +10,13 @@ export default function Home() {
     <div className="min-h-screen bg-primary-dark">
       {/* Coming Soon Hero Section */}
       <section className="hero-section">
-        <div className="hero-content">
+        <div className="hero-content pt-20">
           {/* Logo above glass card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex justify-center mb-12"
+            className="flex justify-center mb-16"
           >
             <div className="relative">
               <Image 
