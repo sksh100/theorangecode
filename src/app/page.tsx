@@ -28,9 +28,9 @@ export default function Home() {
               <Image 
                 src="/coming-soon/logo-1.png" 
                 alt="The Orange Code Logo" 
-                width={240} 
-                height={240}
-                className="w-auto h-auto max-w-[240px]"
+                width={300} 
+                height={300}
+                className="w-auto h-auto max-w-[300px]"
                 priority
               />
             </motion.div>
