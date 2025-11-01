@@ -72,8 +72,8 @@ If data isn't appearing in your sheet:
    - Check the sheet sharing settings
 
 3. **Check Sheet Name:**
-   - Make sure your sheet tab is named "Sheet1" (or update the code if you use a different name)
-   - The range is currently set to: `Sheet1!A:E`
+   - Make sure your sheet tab is named "The Orange Code Form Responses" (or update the code if you use a different name)
+   - The range is currently set to: `The Orange Code Form Responses!A:E`
 
 4. **Check Vercel Logs:**
    - Go to Vercel Dashboard > Your Project > Functions tab

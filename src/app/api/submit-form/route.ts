@@ -66,7 +66,7 @@ async function appendToGoogleSheets(data: {
     // Append data to the sheet
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: 'Sheet1!A:E', // Updated to include phone
+      range: 'The Orange Code Form Responses!A:E', // Updated to use correct sheet name
       valueInputOption: 'USER_ENTERED',
       requestBody: {
         values: [[
