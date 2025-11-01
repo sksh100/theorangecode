@@ -11,31 +11,32 @@ export default function Home() {
       {/* Coming Soon Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
+          {/* Logo above glass card */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex justify-center mb-12"
+          >
+            <div className="relative">
+              <Image 
+                src="/coming-soon/logo-1.png" 
+                alt="The Orange Code Logo" 
+                width={200} 
+                height={200}
+                className="w-auto h-auto max-w-[200px]"
+                priority
+              />
+              <div className="absolute inset-0 bg-azure-blue/30 blur-3xl rounded-full"></div>
+            </div>
+          </motion.div>
+
           <motion.div 
-            className="glass-card"
+            className="glass-card mt-8"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="flex justify-center mb-8"
-            >
-              <div className="relative">
-                <Image 
-                  src="/coming-soon/logo-1.png" 
-                  alt="The Orange Code Logo" 
-                  width={200} 
-                  height={200}
-                  className="w-auto h-auto max-w-[200px] animate-pulse"
-                  priority
-                />
-                <div className="absolute inset-0 bg-azure-blue/30 blur-3xl rounded-full"></div>
-              </div>
-            </motion.div>
-
             <motion.h1 
               className="hero-title font-playfair text-6xl font-bold mb-6 text-gradient-primary leading-tight tracking-tight text-center"
               initial={{ opacity: 0, y: 20 }}
