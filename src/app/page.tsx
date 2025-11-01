@@ -34,16 +34,18 @@ export default function Home() {
                 priority
               />
             </motion.div>
-            <h1 
-              className="text-6xl font-bold mb-6 leading-tight tracking-tight text-center whitespace-nowrap"
-              style={{
-                backgroundImage: 'linear-gradient(135deg, #ff914d 0%, #00d4ff 50%, #0099ff 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              Coming Soon
+            <h1 className="text-6xl font-bold mb-6 leading-tight tracking-tight text-center whitespace-nowrap">
+              <span
+                style={{
+                  backgroundImage: 'linear-gradient(135deg, #ff914d 0%, #00d4ff 50%, #0099ff 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  display: 'inline-block',
+                }}
+              >
+                Coming Soon
+              </span>
             </h1>
             
             <motion.p 
