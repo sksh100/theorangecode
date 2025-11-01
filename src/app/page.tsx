@@ -163,7 +163,7 @@ export default function Home() {
         </div>
       </section>
 
-      <ModernFooter />
+      <ModernFooter hideQuickLinks={true} />
     </div>
   )
 }

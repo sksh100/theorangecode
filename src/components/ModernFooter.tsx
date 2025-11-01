@@ -6,7 +6,11 @@ import Image from 'next/image'
 import { Instagram, Twitter, Facebook, Linkedin, Mail, Phone, MapPin, Send, Crown } from 'lucide-react'
 import Link from 'next/link'
 
-export function ModernFooter() {
+interface ModernFooterProps {
+  hideQuickLinks?: boolean
+}
+
+export function ModernFooter({ hideQuickLinks = false }: ModernFooterProps = {} as ModernFooterProps) {
   const [email, setEmail] = useState('')
   const [isSubscribed, setIsSubscribed] = useState(false)
 
@@ -193,31 +197,33 @@ export function ModernFooter() {
             </motion.div>
 
             {/* Quick Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              <h4 className="text-xl font-bold text-white mb-6">Quick Links</h4>
-              <div className="space-y-3">
-                <a href="#programs" className="block text-white/70 hover:text-orange transition-colors">
-                  Programs
-                </a>
-                <a href="#about" className="block text-white/70 hover:text-orange transition-colors">
-                  About Us
-                </a>
-                <a href="#services" className="block text-white/70 hover:text-orange transition-colors">
-                  Services
-                </a>
-                <a href="#contact" className="block text-white/70 hover:text-orange transition-colors">
-                  Contact
-                </a>
-                <Link href="/faq" className="block text-white/70 hover:text-orange transition-colors">
-                  FAQ
-                </Link>
-              </div>
-            </motion.div>
+            {!hideQuickLinks && (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <h4 className="text-xl font-bold text-white mb-6">Quick Links</h4>
+                <div className="space-y-3">
+                  <a href="#programs" className="block text-white/70 hover:text-orange transition-colors">
+                    Programs
+                  </a>
+                  <a href="#about" className="block text-white/70 hover:text-orange transition-colors">
+                    About Us
+                  </a>
+                  <a href="#services" className="block text-white/70 hover:text-orange transition-colors">
+                    Services
+                  </a>
+                  <a href="#contact" className="block text-white/70 hover:text-orange transition-colors">
+                    Contact
+                  </a>
+                  <Link href="/faq" className="block text-white/70 hover:text-orange transition-colors">
+                    FAQ
+                  </Link>
+                </div>
+              </motion.div>
+            )}
           </div>
         </div>
 
