@@ -202,8 +202,8 @@ export default function Home() {
 
     try {
       // Clean phone number - remove all non-digits, then add country code
-      const phoneDigits = phone.trim().replace(/\D/g, '')
-      const fullPhone = phoneDigits ? `${countryCode}${phoneDigits}` : ''
+      const cleanPhoneDigits = phone.trim().replace(/\D/g, '')
+      const fullPhone = cleanPhoneDigits ? `${countryCode}${cleanPhoneDigits}` : ''
 
       const requestBody = {
         email: email.trim(),
@@ -213,10 +213,16 @@ export default function Home() {
         source: 'Coming Soon Page'
       }
 
-      console.log('✅ Submitting form with data:', requestBody)
+      console.log('✅ Submitting form with data:', JSON.stringify(requestBody, null, 2))
       
-      // Double check before sending
-      if (!requestBody.email || !requestBody.email.includes('@')) {
+      // Final validation check
+      if (!requestBody.email || requestBody.email.length === 0) {
+        setIsSubmitting(false)
+        setMessage({ type: 'error', text: 'Please enter your email address' })
+        return
+      }
+      
+      if (!requestBody.email.includes('@')) {
         setIsSubmitting(false)
         setMessage({ type: 'error', text: 'Please enter a valid email address' })
         return
@@ -244,9 +250,21 @@ export default function Home() {
       console.log('📥 API Response:', { status: response.status, statusText: response.statusText, data })
       
       if (!response.ok) {
-        console.error('❌ Form submission failed:', data)
-        const errorMessage = data?.error || data?.message || `Server error (${response.status})`
+        console.error('❌ Form submission failed:', { status: response.status, data })
+        let errorMessage = 'Something went wrong. Please try again.'
+        
+        if (data?.error) {
+          errorMessage = data.error
+        } else if (data?.message) {
+          errorMessage = data.message
+        } else if (response.status === 400) {
+          errorMessage = 'Please check that all required fields are filled correctly.'
+        } else if (response.status === 500) {
+          errorMessage = 'Server error. Please try again later.'
+        }
+        
         setMessage({ type: 'error', text: errorMessage })
+        setIsSubmitting(false)
         return
       }
 
@@ -262,13 +280,14 @@ export default function Home() {
           setMessage(null)
         }, 2000)
       } else {
-        setMessage({ type: 'error', text: data.error || 'Something went wrong. Please try again.' })
+        setIsSubmitting(false)
+        setMessage({ type: 'error', text: data?.error || data?.message || 'Something went wrong. Please try again.' })
       }
     } catch (error) {
-      console.error('Form submission error:', error)
-      setMessage({ type: 'error', text: 'Something went wrong. Please try again.' })
-    } finally {
+      console.error('❌ Form submission error:', error)
       setIsSubmitting(false)
+      const errorMessage = error instanceof Error ? error.message : 'Network error. Please check your connection and try again.'
+      setMessage({ type: 'error', text: errorMessage })
     }
   }
 
@@ -427,9 +446,9 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
-      </section>
-
-      <ModernFooter hideQuickLinks={true} />
+            </section>
+        
+      <ModernFooter hideQuickLinks={true} hideLegalLinks={true} />
 
       {/* Subscribe Modal */}
       {showModal && (

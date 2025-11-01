@@ -141,21 +141,21 @@ export async function POST(request: NextRequest) {
     // Validate required fields - now only email is required
     const { firstName, lastName, name, email, phone, eventDate, timestamp, source } = body || {}
     
-    // Email is required
-    if (!email || typeof email !== 'string' || !email.trim()) {
-      console.log('❌ Validation failed: email missing or invalid', { email, type: typeof email })
+    // Email is required - be very lenient
+    const emailStr = email ? String(email).trim() : ''
+    if (!emailStr || emailStr.length === 0) {
+      console.log('❌ Validation failed: email missing', { email, emailStr })
       return NextResponse.json(
-        { error: 'Email is required' },
+        { error: 'Please enter your email address' },
         { status: 400 }
       )
     }
     
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email.trim())) {
-      console.log('❌ Email validation failed:', { email })
+    // Email validation - simple check
+    if (!emailStr.includes('@') || !emailStr.includes('.')) {
+      console.log('❌ Email validation failed: invalid format', { email, emailStr })
       return NextResponse.json(
-        { error: 'Invalid email format' },
+        { error: 'Please enter a valid email address' },
         { status: 400 }
       )
     }
@@ -174,17 +174,19 @@ export async function POST(request: NextRequest) {
     const submissionId = `luxury_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
     
     // Prepare data for storage
-    const displayName = name || `${firstName || ''} ${lastName || ''}`.trim() || 'Anonymous'
+    const displayName = (name || `${firstName || ''} ${lastName || ''}`.trim() || 'Anonymous').trim()
     const finalTimestamp = timestamp || new Date().toISOString()
     const finalSource = source || 'Coming Soon Page'
+    const cleanEmail = emailStr
+    const cleanPhone = phone ? String(phone).trim() : ''
     
     const submissionData = {
       id: submissionId,
       firstName: firstName || '',
       lastName: lastName || '',
       name: displayName,
-      email: email.trim(),
-      phone: phone || '',
+      email: cleanEmail,
+      phone: cleanPhone,
       eventDate: eventDate || '',
       timestamp: finalTimestamp,
       source: finalSource,
@@ -193,11 +195,11 @@ export async function POST(request: NextRequest) {
     }
     
     // Save to Google Sheets
-    console.log('📊 Attempting to save to Google Sheets...')
+    console.log('📊 Attempting to save to Google Sheets...', { name: displayName, email: cleanEmail, phone: cleanPhone })
     const sheetsSuccess = await appendToGoogleSheets({
       name: displayName,
-      email: submissionData.email,
-      phone: submissionData.phone,
+      email: cleanEmail,
+      phone: cleanPhone,
       timestamp: submissionData.submittedAt,
       source: finalSource
     })
