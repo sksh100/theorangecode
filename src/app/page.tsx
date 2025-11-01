@@ -185,8 +185,8 @@ export default function Home() {
               />
             </motion.div>
             <div className="-mt-12">
-            <h1 className="text-6xl font-bold mb-6 leading-tight tracking-tight text-right whitespace-nowrap text-white">
-              Coming Soon
+            <h1 className="text-6xl font-bold mb-6 leading-tight tracking-tight text-right whitespace-nowrap text-orange">
+              Launching Soon
             </h1>
             
             <motion.p 
