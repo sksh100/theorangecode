@@ -10,12 +10,48 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false)
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
+  const [countryCode, setCountryCode] = useState('+971')
+  const [phone, setPhone] = useState('')
+  const [repeatPhone, setRepeatPhone] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
+  const countryCodes = [
+    { code: '+971', flag: '🇦🇪', name: 'UAE' },
+    { code: '+1', flag: '🇺🇸', name: 'US/CA' },
+    { code: '+44', flag: '🇬🇧', name: 'UK' },
+    { code: '+91', flag: '🇮🇳', name: 'India' },
+    { code: '+966', flag: '🇸🇦', name: 'Saudi' },
+    { code: '+974', flag: '🇶🇦', name: 'Qatar' },
+    { code: '+965', flag: '🇰🇼', name: 'Kuwait' },
+    { code: '+973', flag: '🇧🇭', name: 'Bahrain' },
+    { code: '+968', flag: '🇴🇲', name: 'Oman' },
+    { code: '+33', flag: '🇫🇷', name: 'France' },
+    { code: '+49', flag: '🇩🇪', name: 'Germany' },
+    { code: '+39', flag: '🇮🇹', name: 'Italy' },
+    { code: '+34', flag: '🇪🇸', name: 'Spain' },
+    { code: '+61', flag: '🇦🇺', name: 'Australia' },
+  ]
+
   const handleSubscribe = async () => {
+    // Validation
     if (!email || !email.includes('@')) {
       setMessage({ type: 'error', text: 'Please enter a valid email address' })
+      return
+    }
+
+    if (!phone || phone.trim().length === 0) {
+      setMessage({ type: 'error', text: 'Please enter your phone number' })
+      return
+    }
+
+    if (!repeatPhone || repeatPhone.trim().length === 0) {
+      setMessage({ type: 'error', text: 'Please confirm your phone number' })
+      return
+    }
+
+    if (phone !== repeatPhone) {
+      setMessage({ type: 'error', text: 'Phone numbers do not match. Please check and try again.' })
       return
     }
 
@@ -31,6 +67,7 @@ export default function Home() {
         body: JSON.stringify({
           email: email.trim(),
           name: name.trim() || 'Anonymous',
+          phone: `${countryCode}${phone.trim()}`,
           timestamp: new Date().toISOString(),
           source: 'Coming Soon Page'
         })
@@ -42,6 +79,9 @@ export default function Home() {
         setMessage({ type: 'success', text: 'Thank you! We\'ll notify you when we launch.' })
         setEmail('')
         setName('')
+        setPhone('')
+        setRepeatPhone('')
+        setCountryCode('+971')
         setTimeout(() => {
           setShowModal(false)
           setMessage(null)
@@ -138,7 +178,7 @@ export default function Home() {
                   className="flex items-center gap-4 px-8 py-4 bg-gradient-primary rounded-full cursor-pointer hover:shadow-glow transition-all duration-300 group"
                 >
                   <Mail className="w-5 h-5 text-white" />
-                  <span className="text-white font-semibold text-lg">Notify Me When Launch</span>
+                  <span className="text-white font-semibold text-lg">Register Your Interest</span>
                   <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform duration-300" />
                 </button>
                 <p className="text-white/70 text-sm font-medium">
@@ -232,6 +272,9 @@ export default function Home() {
                 setMessage(null)
                 setEmail('')
                 setName('')
+                setPhone('')
+                setRepeatPhone('')
+                setCountryCode('+971')
               }}
               className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
             >
@@ -245,7 +288,7 @@ export default function Home() {
               <div>
                 <input
                   type="text"
-                  placeholder="Your name (optional)"
+                  placeholder="Your name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-azure-blue transition-colors"
@@ -258,9 +301,49 @@ export default function Home() {
                   placeholder="Your email address *"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSubscribe()}
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-azure-blue transition-colors"
                 />
+              </div>
+
+              <div>
+                <label className="block text-white/70 text-sm mb-2">Phone Number *</label>
+                <div className="flex gap-2">
+                  <select
+                    value={countryCode}
+                    onChange={(e) => setCountryCode(e.target.value)}
+                    className="px-3 py-3 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-azure-blue transition-colors"
+                  >
+                    {countryCodes.map((country) => (
+                      <option key={country.code} value={country.code} className="bg-primary-dark">
+                        {country.flag} {country.code}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    type="tel"
+                    placeholder="Phone number"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                    className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-azure-blue transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-white/70 text-sm mb-2">Repeat Phone Number *</label>
+                <div className="flex gap-2">
+                  <div className="px-3 py-3 bg-white/5 border border-white/10 rounded-lg text-white/50 flex items-center">
+                    {countryCode}
+                  </div>
+                  <input
+                    type="tel"
+                    placeholder="Confirm phone number"
+                    value={repeatPhone}
+                    onChange={(e) => setRepeatPhone(e.target.value.replace(/\D/g, ''))}
+                    onKeyPress={(e) => e.key === 'Enter' && handleSubscribe()}
+                    className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-azure-blue transition-colors"
+                  />
+                </div>
               </div>
 
               {message && (
