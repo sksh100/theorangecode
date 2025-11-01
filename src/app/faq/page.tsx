@@ -56,7 +56,7 @@ export default function FAQ() {
     {
       id: '6',
       question: 'How do I book a consultation session?',
-      answer: 'You can book a consultation through our website, contact us directly at +971 56 909 1701, or email info@yourluxuryagent.com. We offer both in-person sessions in Abu Dhabi and virtual consultations for international clients.',
+      answer: 'You can book a consultation through our website, contact us directly at +971 56 878 6106, or email info@yourluxuryagent.com. We offer both in-person sessions in Abu Dhabi and virtual consultations for international clients.',
       category: 'booking',
       icon: <Phone className="w-5 h-5" />
     },
@@ -285,13 +285,13 @@ export default function FAQ() {
               <p className="text-white/80 mb-6">Our luxury agent team is here to help you with personalized guidance</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <motion.a
-                  href="tel:+971569091701"
+                  href="tel:+971568786106"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange to-bright-blue text-white rounded-xl hover:opacity-90 transition-opacity font-medium"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <Phone className="w-5 h-5" />
-                  Call Us: +971 56 909 1701
+                  Call Us: +971 56 878 6106
                 </motion.a>
                 <motion.a
                   href="mailto:info@yourluxuryagent.com"

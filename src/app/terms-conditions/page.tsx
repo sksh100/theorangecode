@@ -220,7 +220,7 @@ export default function TermsConditions() {
                     <p className="text-white font-bold text-xl mb-2">Your Luxury Agent</p>
                     <p className="text-white/80 mb-1">Legal Department</p>
                     <p className="text-white/80 mb-1">Email: legal@yourluxuryagent.com</p>
-                    <p className="text-white/80 mb-1">Phone: +971 56 909 1701</p>
+                    <p className="text-white/80 mb-1">Phone: +971 56 878 6106</p>
                   </div>
                   <div>
                     <p className="text-white font-bold text-xl mb-2">Business Address</p>
