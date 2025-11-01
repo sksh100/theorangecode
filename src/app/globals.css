@@ -75,9 +75,7 @@
   }
   
   .hero-section::before {
-    content: '';
-    @apply absolute top-0 left-0 right-0 bottom-0 bg-primary-dark/50;
-    z-index: 1;
+    display: none;
   }
   
   .hero-content {

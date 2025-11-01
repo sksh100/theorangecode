@@ -34,7 +34,7 @@ export default function Home() {
                 priority
               />
             </motion.div>
-            <h1 className="text-6xl font-bold mb-6 leading-tight tracking-tight text-center whitespace-nowrap">
+            <h1 className="text-6xl font-bold mb-6 leading-tight tracking-tight text-center whitespace-nowrap" style={{ color: '#ffffff' }}>
               <span
                 style={{
                   backgroundImage: 'linear-gradient(135deg, #ff914d 0%, #00d4ff 50%, #0099ff 100%)',
@@ -49,7 +49,7 @@ export default function Home() {
             </h1>
             
             <motion.p 
-              className="hero-subtitle font-sofia text-2xl text-text-secondary mb-12 font-normal text-center max-w-2xl mx-auto"
+              className="hero-subtitle font-sofia text-2xl text-white mb-12 font-normal text-center max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.9 }}
@@ -66,7 +66,7 @@ export default function Home() {
               <div className="event-info inline-flex flex-col items-center gap-4 p-8 px-12 bg-bright-blue/10 border border-light-blue/30 rounded-2xl backdrop-blur-[10px]">
                 <div className="flex items-center gap-3">
                   <Clock className="w-6 h-6 text-azure-blue" />
-                  <span className="date-label font-sofia text-sm text-text-muted uppercase tracking-wider font-medium">
+                  <span className="date-label font-sofia text-sm text-white/70 uppercase tracking-wider font-medium">
                     Launch Date
                   </span>
                 </div>
@@ -138,8 +138,8 @@ export default function Home() {
               <div className="w-16 h-16 bg-gradient-azure rounded-full flex items-center justify-center mx-auto mb-4">
                 <Clock className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-text-primary mb-3">Coming November 2025</h3>
-              <p className="text-text-secondary">
+              <h3 className="text-2xl font-bold text-white mb-3">Coming November 2025</h3>
+              <p className="text-white/80">
                 Mark your calendar for our exclusive launch event
               </p>
             </motion.div>
@@ -154,8 +154,8 @@ export default function Home() {
               <div className="w-16 h-16 bg-gradient-orange rounded-full flex items-center justify-center mx-auto mb-4">
                 <Mail className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-text-primary mb-3">Stay Updated</h3>
-              <p className="text-text-secondary">
+              <h3 className="text-2xl font-bold text-white mb-3">Stay Updated</h3>
+              <p className="text-white/80">
                 Get notified when we launch and receive exclusive early access
               </p>
             </motion.div>
