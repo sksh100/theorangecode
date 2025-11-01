@@ -15,7 +15,7 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="absolute top-8 left-8 z-20"
+          className="absolute top-4 left-4 z-20"
         >
           <Image 
             src="/coming-soon/logo-1.png" 
