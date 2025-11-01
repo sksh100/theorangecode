@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Background } from '@/components/Background'
 import { ModernFooter } from '@/components/ModernFooter'
-import { Sparkles, ArrowRight, Clock, Mail } from 'lucide-react'
+import { ArrowRight, Clock, Mail } from 'lucide-react'
 
 export default function Home() {
   return (
