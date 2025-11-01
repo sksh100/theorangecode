@@ -1,23 +1,5 @@
 import type { Metadata } from 'next'
-import localFont from 'next/font/local'
 import './globals.css'
-
-const glacialIndifference = localFont({
-  src: [
-    {
-      path: '../../../public/fonts/GlacialIndifference-Regular.otf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../../../public/fonts/GlacialIndifference-Bold.otf',
-      weight: '700',
-      style: 'normal',
-    },
-  ],
-  variable: '--font-glacial',
-  fallback: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-})
 
 export const metadata: Metadata = {
   title: 'The Orange Code - Coming Soon',
@@ -47,12 +29,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${glacialIndifference.variable}`}>
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className="font-glacial antialiased" style={{ fontFamily: "'Glacial Indifference', sans-serif" }}>
+      <body className="font-glacial antialiased">
         {children}
       </body>
     </html>
