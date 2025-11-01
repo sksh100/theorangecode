@@ -48,10 +48,11 @@ module.exports = {
         'brand-bright-blue-transparent': 'rgba(0, 153, 255, 0.4)',
       },
       fontFamily: {
-        'montserrat': ['Montserrat', 'sans-serif'],
-        'playfair': ['Montserrat', 'sans-serif'],
-        'sofia': ['Montserrat', 'sans-serif'],
-        'inter': ['Montserrat', 'sans-serif'],
+        'glacial': ['var(--font-glacial)', 'Glacial Indifference', 'sans-serif'],
+        'montserrat': ['var(--font-glacial)', 'Glacial Indifference', 'sans-serif'],
+        'playfair': ['var(--font-glacial)', 'Glacial Indifference', 'sans-serif'],
+        'sofia': ['var(--font-glacial)', 'Glacial Indifference', 'sans-serif'],
+        'inter': ['var(--font-glacial)', 'Glacial Indifference', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-primary': 'linear-gradient(135deg, #ff914d 0%, #00d4ff 50%, #0099ff 100%)',

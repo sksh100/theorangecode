@@ -1,11 +1,22 @@
 import type { Metadata } from 'next'
-import { Montserrat } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 
-const montserrat = Montserrat({ 
-  subsets: ['latin'],
-  variable: '--font-montserrat',
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
+const glacialIndifference = localFont({
+  src: [
+    {
+      path: '../../../public/fonts/GlacialIndifference-Regular.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../../public/fonts/GlacialIndifference-Bold.otf',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-glacial',
+  fallback: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
 })
 
 export const metadata: Metadata = {
@@ -36,16 +47,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${montserrat.variable}`}>
+    <html lang="en" className={`${glacialIndifference.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link 
-          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" 
-          rel="stylesheet" 
-        />
       </head>
-      <body className="font-montserrat antialiased">
+      <body className="font-glacial antialiased" style={{ fontFamily: "'Glacial Indifference', sans-serif" }}>
         {children}
       </body>
     </html>
