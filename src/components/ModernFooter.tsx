@@ -10,7 +10,7 @@ interface ModernFooterProps {
   hideQuickLinks?: boolean
 }
 
-export function ModernFooter({ hideQuickLinks = false }: ModernFooterProps = {} as ModernFooterProps) {
+export function ModernFooter({ hideQuickLinks = false }: ModernFooterProps = {}) {
   const [email, setEmail] = useState('')
   const [isSubscribed, setIsSubscribed] = useState(false)
 
@@ -54,10 +54,10 @@ export function ModernFooter({ hideQuickLinks = false }: ModernFooterProps = {} 
 
       <div className="relative z-10">
         {/* Main Footer Content */}
-        <div className="container mx-auto px-6 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="container mx-auto px-6 py-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
             
-            {/* Company Info */}
+            {/* Company Info - Left Column */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -65,118 +65,119 @@ export function ModernFooter({ hideQuickLinks = false }: ModernFooterProps = {} 
               viewport={{ once: true }}
               className="lg:col-span-1"
             >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 relative">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-12 h-12 relative">
                   <Image 
                     src="/coming-soon/logo-1.png" 
                     alt="The Orange Code Logo" 
-                    width={40} 
-                    height={40}
+                    width={48} 
+                    height={48}
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <h3 className="text-2xl font-bold text-white">The Orange Code</h3>
+                <h3 className="text-2xl font-bold text-white tracking-tight">The Orange Code</h3>
               </div>
-              <p className="text-white/70 text-lg leading-relaxed mb-6">
+              <p className="text-white/70 text-sm leading-relaxed mb-8 max-w-sm">
                 Transforming cultural barriers into bridges of trust through refined knowledge and authentic presence.
               </p>
               
               {/* Social Links */}
-              <div className="flex gap-4">
+              <div className="flex gap-3">
                 {socialLinks.map((social, index) => (
                   <motion.a
                     key={social.label}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 rounded-xl flex items-center justify-center text-white hover:text-orange transition-all duration-300 hover:border-orange/50 hover:scale-110"
+                    className="w-10 h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg flex items-center justify-center text-white/70 hover:text-orange hover:border-orange/30 hover:bg-orange/10 transition-all duration-300"
                     initial={{ opacity: 0, scale: 0 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
                     viewport={{ once: true }}
                     whileHover={{ 
                       scale: 1.1,
-                      boxShadow: "0 0 20px rgba(255, 145, 77, 0.3)"
+                      boxShadow: "0 0 20px rgba(255, 145, 77, 0.2)"
                     }}
                   >
-                    <social.icon className="w-5 h-5" />
+                    <social.icon className="w-4 h-4" />
                   </motion.a>
                 ))}
               </div>
             </motion.div>
 
-            {/* Contact Information */}
+            {/* Contact Information - Middle Column */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <h4 className="text-xl font-bold text-white mb-6">Contact Us</h4>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-azure-blue/20 to-azure-blue/5 rounded-lg flex items-center justify-center">
-                    <Mail className="w-5 h-5 text-azure-blue" />
+              <h4 className="text-lg font-semibold text-white mb-6 tracking-tight">Contact Us</h4>
+              <div className="space-y-5">
+                <div className="flex items-start gap-4">
+                  <div className="w-9 h-9 bg-gradient-to-br from-azure-blue/15 to-azure-blue/5 rounded-lg flex items-center justify-center flex-shrink-0 border border-azure-blue/20">
+                    <Mail className="w-4 h-4 text-azure-blue" />
                   </div>
-                  <div>
-                    <p className="text-white/70 text-sm">Email</p>
-                    <a href="mailto:hello@theorangecode.com" className="text-white hover:text-orange transition-colors">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white/60 text-xs font-medium uppercase tracking-wider mb-1">Email</p>
+                    <a href="mailto:hello@theorangecode.com" className="text-white text-sm hover:text-orange transition-colors break-all">
                       hello@theorangecode.com
                     </a>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-orange/20 to-orange/5 rounded-lg flex items-center justify-center">
-                    <Phone className="w-5 h-5 text-orange" />
+                <div className="flex items-start gap-4">
+                  <div className="w-9 h-9 bg-gradient-to-br from-orange/15 to-orange/5 rounded-lg flex items-center justify-center flex-shrink-0 border border-orange/20">
+                    <Phone className="w-4 h-4 text-orange" />
                   </div>
-                  <div>
-                    <p className="text-white/70 text-sm">Phone</p>
-                    <a href="tel:+971568786106" className="text-white hover:text-orange transition-colors">
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white/60 text-xs font-medium uppercase tracking-wider mb-1">Phone</p>
+                    <a href="tel:+971568786106" className="text-white text-sm hover:text-orange transition-colors">
                       +971 56 878 6106
                     </a>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-bright-blue/20 to-bright-blue/5 rounded-lg flex items-center justify-center">
-                    <MapPin className="w-5 h-5 text-bright-blue" />
+                <div className="flex items-start gap-4">
+                  <div className="w-9 h-9 bg-gradient-to-br from-bright-blue/15 to-bright-blue/5 rounded-lg flex items-center justify-center flex-shrink-0 border border-bright-blue/20">
+                    <MapPin className="w-4 h-4 text-bright-blue" />
                   </div>
-                  <div>
-                    <p className="text-white/70 text-sm">Location</p>
-                    <p className="text-white">Abu Dhabi, UAE</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white/60 text-xs font-medium uppercase tracking-wider mb-1">Location</p>
+                    <p className="text-white text-sm">Abu Dhabi, UAE</p>
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Newsletter Subscription */}
+            {/* Newsletter Subscription - Right Column */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
+              className="lg:col-span-1"
             >
-              <h4 className="text-xl font-bold text-white mb-6">Stay Connected</h4>
-              <p className="text-white/70 mb-6">
+              <h4 className="text-lg font-semibold text-white mb-6 tracking-tight">Stay Connected</h4>
+              <p className="text-white/70 text-sm mb-6 leading-relaxed">
                 Subscribe to our newsletter for exclusive insights and cultural intelligence updates.
               </p>
               
               {!isSubscribed ? (
-                <form onSubmit={handleSubscribe} className="space-y-4">
+                <form onSubmit={handleSubscribe} className="space-y-3">
                   <div className="relative">
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email"
-                      className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-orange/50 transition-colors"
+                      className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg text-white text-sm placeholder-white/40 focus:outline-none focus:border-orange/50 focus:bg-white/10 transition-all duration-300"
                       required
                     />
                   </div>
                   <motion.button
                     type="submit"
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-orange to-bright-blue rounded-xl text-white font-semibold hover:shadow-lg transition-all duration-300"
+                    className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-orange to-bright-blue rounded-lg text-white text-sm font-semibold hover:shadow-lg hover:shadow-orange/20 transition-all duration-300"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -188,37 +189,38 @@ export function ModernFooter({ hideQuickLinks = false }: ModernFooterProps = {} 
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="p-4 bg-gradient-to-r from-orange/20 to-bright-blue/20 border border-orange/30 rounded-xl text-center"
+                  className="p-4 bg-gradient-to-r from-orange/20 to-bright-blue/20 border border-orange/30 rounded-lg text-center"
                 >
-                  <p className="text-white font-semibold">Thank you for subscribing!</p>
-                  <p className="text-white/70 text-sm">You'll receive our latest updates soon.</p>
+                  <p className="text-white font-semibold text-sm">Thank you for subscribing!</p>
+                  <p className="text-white/70 text-xs mt-1">You'll receive our latest updates soon.</p>
                 </motion.div>
               )}
             </motion.div>
 
-            {/* Quick Links */}
+            {/* Quick Links - Additional Column when not hidden */}
             {!hideQuickLinks && (
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
                 viewport={{ once: true }}
+                className="md:col-span-2 lg:col-span-1 lg:col-start-1 lg:row-start-2"
               >
-                <h4 className="text-xl font-bold text-white mb-6">Quick Links</h4>
-                <div className="space-y-3">
-                  <a href="#programs" className="block text-white/70 hover:text-orange transition-colors">
+                <h4 className="text-lg font-semibold text-white mb-6 tracking-tight">Quick Links</h4>
+                <div className="grid grid-cols-2 md:grid-cols-1 gap-3">
+                  <a href="#programs" className="text-white/70 text-sm hover:text-orange transition-colors">
                     Programs
                   </a>
-                  <a href="#about" className="block text-white/70 hover:text-orange transition-colors">
+                  <a href="#about" className="text-white/70 text-sm hover:text-orange transition-colors">
                     About Us
                   </a>
-                  <a href="#services" className="block text-white/70 hover:text-orange transition-colors">
+                  <a href="#services" className="text-white/70 text-sm hover:text-orange transition-colors">
                     Services
                   </a>
-                  <a href="#contact" className="block text-white/70 hover:text-orange transition-colors">
+                  <a href="#contact" className="text-white/70 text-sm hover:text-orange transition-colors">
                     Contact
                   </a>
-                  <Link href="/faq" className="block text-white/70 hover:text-orange transition-colors">
+                  <Link href="/faq" className="text-white/70 text-sm hover:text-orange transition-colors">
                     FAQ
                   </Link>
                 </div>
@@ -236,7 +238,7 @@ export function ModernFooter({ hideQuickLinks = false }: ModernFooterProps = {} 
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
                 viewport={{ once: true }}
-                className="text-white/60 text-sm"
+                className="text-white/50 text-xs"
               >
                 © 2025 The Orange Code. All rights reserved.
               </motion.p>
@@ -250,13 +252,13 @@ export function ModernFooter({ hideQuickLinks = false }: ModernFooterProps = {} 
               >
                 <Link 
                   href="/terms-conditions" 
-                  className="text-white/60 hover:text-orange transition-colors text-sm"
+                  className="text-white/50 hover:text-orange transition-colors text-xs"
                 >
                   Terms & Conditions
                 </Link>
                 <Link 
                   href="/privacy-policy" 
-                  className="text-white/60 hover:text-orange transition-colors text-sm"
+                  className="text-white/50 hover:text-orange transition-colors text-xs"
                 >
                   Privacy Policy
                 </Link>
