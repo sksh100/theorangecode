@@ -18,12 +18,12 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            {/* Logo in top left corner of glass box */}
+            {/* Logo in bottom left corner of glass box */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="absolute top-6 left-0 z-20"
+              className="absolute bottom-0 left-0 z-20"
             >
               <Image 
                 src="/coming-soon/logo-1.png" 
