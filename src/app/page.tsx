@@ -10,31 +10,30 @@ export default function Home() {
     <div className="min-h-screen bg-primary-dark">
       {/* Coming Soon Hero Section */}
       <section className="hero-section">
-        {/* Logo in top left corner */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="absolute top-4 left-4 z-20"
-        >
-          <Image 
-            src="/coming-soon/logo-1.png" 
-            alt="The Orange Code Logo" 
-            width={150} 
-            height={150}
-            className="w-auto h-auto max-w-[150px]"
-            priority
-          />
-        </motion.div>
-
         <div className="hero-content pt-20">
 
           <motion.div 
-            className="glass-card mt-8"
+            className="glass-card mt-8 relative"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
+            {/* Logo in top left corner of glass box */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="absolute -top-4 -left-4 z-20"
+            >
+              <Image 
+                src="/coming-soon/logo-1.png" 
+                alt="The Orange Code Logo" 
+                width={120} 
+                height={120}
+                className="w-auto h-auto max-w-[120px]"
+                priority
+              />
+            </motion.div>
             <motion.h1 
               className="hero-title font-playfair text-6xl font-bold mb-6 text-gradient-primary leading-tight tracking-tight text-center"
               initial={{ opacity: 0, y: 20 }}
