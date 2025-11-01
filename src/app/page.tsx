@@ -311,9 +311,6 @@ export default function Home() {
                   <span className="text-white font-semibold text-lg">Register Your Interest</span>
                   <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform duration-300" />
                 </button>
-                <p className="text-white/70 text-sm font-medium">
-                  Be the first to know when we go live
-                </p>
               </div>
             </motion.div>
           </motion.div>
