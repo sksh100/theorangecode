@@ -1,12 +1,12 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/coming-soon/page": "app/coming-soon/page.js",
-  "/api/admin/submissions/route": "app/api/admin/submissions/route.js",
-  "/dev-home/page": "app/dev-home/page.js",
   "/admin/page": "app/admin/page.js",
+  "/api/admin/submissions/route": "app/api/admin/submissions/route.js",
+  "/coming-soon/page": "app/coming-soon/page.js",
+  "/dev-home/page": "app/dev-home/page.js",
   "/page": "app/page.js",
-  "/faq/page": "app/faq/page.js",
   "/api/submit-form/route": "app/api/submit-form/route.js",
-  "/terms-conditions/page": "app/terms-conditions/page.js",
-  "/privacy-policy/page": "app/privacy-policy/page.js"
+  "/faq/page": "app/faq/page.js",
+  "/privacy-policy/page": "app/privacy-policy/page.js",
+  "/terms-conditions/page": "app/terms-conditions/page.js"
 }
