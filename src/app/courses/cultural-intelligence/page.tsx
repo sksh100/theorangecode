@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { Background } from '@/components/Background'
 import { ModernFooter } from '@/components/ModernFooter'
-import { BookOpen, CheckCircle2, Clock, Play, Lock, ChevronRight, Upload, Image as ImageIcon } from 'lucide-react'
+import { BookOpen, CheckCircle2, Clock, Play, Lock, ChevronRight, Upload, Image as ImageIcon, ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -165,6 +165,25 @@ export default function CulturalIntelligenceCourse() {
       
       <main className="relative z-10 pt-24 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Back Button */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-6"
+          >
+            <Link href="/dashboard">
+              <motion.button
+                whileHover={{ scale: 1.05, x: -4 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 px-4 py-2 text-white/70 hover:text-white transition-colors group"
+              >
+                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                <span className="font-medium">Back to Dashboard</span>
+              </motion.button>
+            </Link>
+          </motion.div>
+
           {/* Course Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -225,7 +244,7 @@ export default function CulturalIntelligenceCourse() {
           </motion.div>
 
           {/* Modules Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-12 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 mb-12">
             {modules.map((module, index) => {
               const coverImage = moduleCoverImages[module.id] || module.coverImage
               
