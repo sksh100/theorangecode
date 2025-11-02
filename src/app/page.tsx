@@ -249,7 +249,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Exclusive Offer Section */}
+      {/* Exclusive Pre-Launch Offer Section */}
       <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           <motion.div
