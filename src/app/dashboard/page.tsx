@@ -159,37 +159,54 @@ export default function Dashboard() {
             >
               <div className="glass-card overflow-hidden">
                 {/* Cover Photo */}
-                <div className="relative w-full h-48 -mx-6 -mt-6 mb-6">
-                  {profile.coverPhoto ? (
+                {profile.coverPhoto && (
+                  <div className="relative w-full h-48 -mx-6 -mt-6 mb-6">
                     <Image
                       src={profile.coverPhoto}
                       alt="Cover"
                       fill
                       className="object-cover"
                     />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-azure-blue/20 via-orange/20 to-bright-blue/20 flex items-center justify-center">
-                      <div className="text-center p-4">
-                        <Globe className="w-12 h-12 text-white/30 mx-auto mb-2" />
-                        <p className="text-white/50 text-sm">Cover Picture</p>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {isEditing && (
+                    
+                    {isEditing && (
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => coverFileInputRef.current?.click()}
+                        className="absolute bottom-4 right-4 px-4 py-2 bg-black/60 backdrop-blur-sm rounded-lg flex items-center gap-2 text-white hover:bg-black/80 transition-all shadow-lg"
+                      >
+                        <Upload className="w-4 h-4" />
+                        <span className="text-sm font-medium">Change Cover</span>
+                      </motion.button>
+                    )}
+                  </div>
+                )}
+                
+                {/* Upload Cover Button - Only shown in edit mode when no cover photo */}
+                {isEditing && !profile.coverPhoto && (
+                  <div className="mb-6">
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => coverFileInputRef.current?.click()}
-                      className="absolute bottom-4 right-4 px-4 py-2 bg-black/60 backdrop-blur-sm rounded-lg flex items-center gap-2 text-white hover:bg-black/80 transition-all shadow-lg"
+                      className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl flex items-center justify-center gap-2 text-white hover:bg-white/20 transition-all"
                     >
-                      <Upload className="w-4 h-4" />
-                      <span className="text-sm font-medium">
-                        {profile.coverPhoto ? 'Change' : 'Upload'} Cover
-                      </span>
+                      <Upload className="w-5 h-5" />
+                      <span className="font-medium">Upload Cover Picture</span>
                     </motion.button>
-                  )}
-                  
+                    
+                    <input
+                      ref={coverFileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleCoverPhotoUpload}
+                      className="hidden"
+                    />
+                  </div>
+                )}
+                
+                {/* Hidden input for when cover photo exists */}
+                {profile.coverPhoto && (
                   <input
                     ref={coverFileInputRef}
                     type="file"
@@ -197,7 +214,7 @@ export default function Dashboard() {
                     onChange={handleCoverPhotoUpload}
                     className="hidden"
                   />
-                </div>
+                )}
 
                 {/* Profile Photo */}
                 <div className="mb-6">
