@@ -46,8 +46,8 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
       const data = await response.json()
 
       if (response.ok && data.success) {
-        setIsSubscribed(true)
-        setEmail('')
+      setIsSubscribed(true)
+      setEmail('')
         setMessage({ type: 'success', text: 'Thank you for subscribing!' })
       } else {
         setMessage({ type: 'error', text: data?.error || 'Something went wrong. Please try again.' })
@@ -90,8 +90,8 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
 
       <div className="relative z-10">
         {/* Main Footer Content */}
-        <div className="container mx-auto px-6 py-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
+        <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 lg:gap-16">
             
             {/* Company Info - Left Column */}
             <motion.div
@@ -235,8 +235,8 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                       </>
                     ) : (
                       <>
-                        <Send className="w-4 h-4" />
-                        Subscribe
+                    <Send className="w-4 h-4" />
+                    Subscribe
                       </>
                     )}
                   </motion.button>
@@ -255,32 +255,32 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
 
             {/* Quick Links - Additional Column when not hidden */}
             {!hideQuickLinks && (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                viewport={{ once: true }}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
                 className="md:col-span-2 lg:col-span-1 lg:col-start-1 lg:row-start-2"
-              >
+            >
                 <h4 className="text-lg font-semibold text-white mb-6 tracking-tight">Quick Links</h4>
                 <div className="grid grid-cols-2 md:grid-cols-1 gap-3">
                   <a href="#programs" className="text-white/70 text-sm hover:text-orange transition-colors">
-                    Programs
-                  </a>
+                  Programs
+                </a>
                   <a href="#about" className="text-white/70 text-sm hover:text-orange transition-colors">
-                    About Us
-                  </a>
+                  About Us
+                </a>
                   <a href="#services" className="text-white/70 text-sm hover:text-orange transition-colors">
-                    Services
-                  </a>
+                  Services
+                </a>
                   <a href="#contact" className="text-white/70 text-sm hover:text-orange transition-colors">
-                    Contact
-                  </a>
+                  Contact
+                </a>
                   <Link href="/faq" className="text-white/70 text-sm hover:text-orange transition-colors">
-                    FAQ
-                  </Link>
-                </div>
-              </motion.div>
+                  FAQ
+                </Link>
+              </div>
+            </motion.div>
             )}
           </div>
         </div>
@@ -300,26 +300,26 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
               </motion.p>
               
               {!hideLegalLinks && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                  viewport={{ once: true }}
-                  className="flex gap-6"
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                viewport={{ once: true }}
+                className="flex gap-6"
+              >
+                <Link 
+                  href="/terms-conditions" 
+                    className="text-white/50 hover:text-orange transition-colors text-xs"
                 >
-                  <Link 
-                    href="/terms-conditions" 
+                  Terms & Conditions
+                </Link>
+                <Link 
+                  href="/privacy-policy" 
                     className="text-white/50 hover:text-orange transition-colors text-xs"
-                  >
-                    Terms & Conditions
-                  </Link>
-                  <Link 
-                    href="/privacy-policy" 
-                    className="text-white/50 hover:text-orange transition-colors text-xs"
-                  >
-                    Privacy Policy
-                  </Link>
-                </motion.div>
+                >
+                  Privacy Policy
+                </Link>
+              </motion.div>
               )}
             </div>
           </div>

@@ -160,10 +160,10 @@ export default function Home() {
     <div className="min-h-screen bg-primary-dark">
       {/* Coming Soon Hero Section */}
       <section className="hero-section">
-        <div className="hero-content pt-4">
+        <div className="hero-content pt-4 sm:pt-4 md:pt-4">
 
           <motion.div 
-            className="glass-card mt-0 relative overflow-visible py-40"
+            className="glass-card mt-0 relative overflow-visible py-20 sm:py-32 md:py-40"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -173,24 +173,24 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="absolute bottom-0 left-0 z-20"
+              className="absolute bottom-0 left-0 z-20 hidden sm:block"
             >
               <Image 
                 src="/coming-soon/logo-1.png" 
                 alt="The Orange Code Logo" 
                 width={400} 
                 height={400}
-                className="w-auto h-auto max-w-[400px]"
+                className="w-auto h-auto max-w-[200px] sm:max-w-[300px] md:max-w-[400px]"
                 priority
               />
             </motion.div>
-            <div className="-mt-12">
-            <h1 className="text-6xl font-bold mb-6 leading-tight tracking-tight text-right whitespace-nowrap text-orange">
+            <div className="-mt-8 sm:-mt-12">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight tracking-tight text-center sm:text-right text-orange">
               Launching Soon
             </h1>
             
             <motion.p 
-              className="hero-subtitle font-sofia text-2xl text-white mb-12 font-normal text-right max-w-2xl ml-auto"
+              className="hero-subtitle font-sofia text-base sm:text-lg md:text-xl lg:text-2xl text-white mb-6 sm:mb-12 font-normal text-center sm:text-right max-w-full sm:max-w-2xl sm:ml-auto px-4 sm:px-0"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.9 }}
@@ -199,19 +199,19 @@ export default function Home() {
             </motion.p>
             
             <motion.div 
-              className="countdown-section mt-8 flex justify-end"
+              className="countdown-section mt-4 sm:mt-8 flex justify-center sm:justify-end pr-4 sm:pr-0"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.1 }}
             >
-              <div className="event-info inline-flex flex-col items-center gap-4 p-8 px-12 bg-bright-blue/10 border border-light-blue/30 rounded-2xl backdrop-blur-[10px]">
-                <div className="flex items-center gap-3">
-                  <Clock className="w-6 h-6 text-azure-blue" />
-                  <span className="date-label font-sofia text-sm text-white/70 uppercase tracking-wider font-medium">
+              <div className="event-info inline-flex flex-col items-center gap-2 sm:gap-4 p-4 sm:p-6 md:p-8 px-6 sm:px-8 md:px-12 bg-bright-blue/10 border border-light-blue/30 rounded-xl sm:rounded-2xl backdrop-blur-[10px]">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <Clock className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-azure-blue" />
+                  <span className="date-label font-sofia text-xs sm:text-sm text-white/70 uppercase tracking-wider font-medium">
                     Launch Date
                   </span>
                 </div>
-                <span className="date-value font-sofia text-3xl text-gradient-primary font-bold">
+                <span className="date-value font-sofia text-xl sm:text-2xl md:text-3xl text-gradient-primary font-bold">
                   November 8, 2025
                 </span>
               </div>
@@ -219,10 +219,10 @@ export default function Home() {
             </div>
 
           </motion.div>
-
+      
           {/* Decorative Elements */}
           <motion.div
-            className="absolute top-20 left-10 w-32 h-32 border border-azure-blue/20 rounded-full blur-2xl"
+            className="absolute top-20 left-10 w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 border border-azure-blue/20 rounded-full blur-2xl hidden sm:block"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.3, 0.5, 0.3],
@@ -234,7 +234,7 @@ export default function Home() {
             }}
           />
           <motion.div
-            className="absolute bottom-20 right-10 w-40 h-40 border border-orange/20 rounded-full blur-2xl"
+            className="absolute bottom-20 right-10 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 border border-orange/20 rounded-full blur-2xl hidden sm:block"
             animate={{
               scale: [1, 1.3, 1],
               opacity: [0.3, 0.6, 0.3],
@@ -250,10 +250,10 @@ export default function Home() {
       </section>
 
       {/* Exclusive Offer Section */}
-      <section className="relative py-20 px-4">
+      <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           <motion.div
-            className="glass-card p-8 md:p-12 relative overflow-hidden bg-accent-blue/20 backdrop-blur-[30px] border border-light-blue/40"
+            className="glass-card p-6 sm:p-8 md:p-12 relative overflow-hidden bg-accent-blue/20 backdrop-blur-[30px] border border-light-blue/40"
             style={{
               boxShadow: '0 25px 50px rgba(0, 0, 0, 0.3), 0 0 60px rgba(0, 212, 255, 0.4), 0 0 100px rgba(255, 145, 77, 0.2)'
             }}
@@ -263,32 +263,32 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             {/* Badge */}
-            <div className="absolute top-4 right-4 bg-gradient-primary px-4 py-2 rounded-full">
+            <div className="absolute top-3 sm:top-4 right-3 sm:right-4 bg-gradient-primary px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
               <span className="text-white text-xs font-semibold uppercase tracking-wide">Limited Time</span>
             </div>
 
-            <div className="text-center mb-8">
-              <div className="w-20 h-20 bg-azure-blue/20 border border-azure-blue/40 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Sparkles className="w-10 h-10 text-azure-blue" />
+            <div className="text-center mb-6 sm:mb-8">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-azure-blue/20 border border-azure-blue/40 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 text-azure-blue" />
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 px-2">
                 Exclusive Pre-Launch Offer - Enroll Now
               </h2>
               
               {/* Pricing */}
-              <div className="mb-6">
-                <div className="flex items-center justify-center gap-4 mb-2">
-                  <span className="text-4xl md:text-5xl font-bold text-gradient-primary">999 AED</span>
-                  <span className="text-xl text-white/50 line-through">2,999 AED</span>
+              <div className="mb-4 sm:mb-6">
+                <div className="flex items-center justify-center gap-3 sm:gap-4 mb-2 flex-wrap">
+                  <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient-primary">999 AED</span>
+                  <span className="text-lg sm:text-xl text-white/50 line-through">2,999 AED</span>
                 </div>
-                <p className="text-white/70 text-sm">For the first 30 registrations only</p>
+                <p className="text-white/70 text-xs sm:text-sm px-4">For the first 30 registrations only</p>
               </div>
             </div>
 
             {/* Benefits List */}
-            <div className="mb-8 space-y-4">
-              <h3 className="text-xl font-semibold text-white mb-4">What you'll get:</h3>
-              <ul className="space-y-3">
+            <div className="mb-6 sm:mb-8 space-y-3 sm:space-y-4">
+              <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">What you'll get:</h3>
+              <ul className="space-y-2 sm:space-y-3">
                 {[
                   "Access to The Orange Code – Cultural Intelligence Foundations",
                   "Immersive live modules guided by Dutch-led expertise",
@@ -297,16 +297,16 @@ export default function Home() {
                   "Priority Invitation to upcoming in-person sessions & GCC workshops",
                   "15% Discount on private consulting packages with The Orange Code team"
                 ].map((benefit, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-                    <span className="text-white/90">{benefit}</span>
+                  <li key={index} className="flex items-start gap-2 sm:gap-3">
+                    <Check className="w-4 h-4 sm:w-5 sm:h-5 text-azure-blue flex-shrink-0 mt-0.5 sm:mt-1" />
+                    <span className="text-white/90 text-sm sm:text-base">{benefit}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
             {/* CTA Button */}
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center gap-3 sm:gap-4">
               <button
                 onClick={async () => {
                   setIsLoadingCheckout(true)
@@ -338,21 +338,21 @@ export default function Home() {
                   }
                 }}
                 disabled={isLoadingCheckout}
-                className="flex items-center gap-3 px-8 py-4 bg-gradient-primary rounded-full cursor-pointer hover:shadow-glow transition-all duration-300 group disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-primary rounded-full cursor-pointer hover:shadow-glow transition-all duration-300 group disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto min-h-[48px] touch-manipulation"
               >
                 {isLoadingCheckout ? (
                   <>
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    <span className="text-white font-semibold text-lg">Processing...</span>
+                    <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span className="text-white font-semibold text-base sm:text-lg">Processing...</span>
                   </>
                 ) : (
                   <>
-                    <span className="text-white font-semibold text-lg">Enroll Now - Secure Checkout</span>
-                    <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform duration-300" />
+                    <span className="text-white font-semibold text-base sm:text-lg">Enroll Now - Secure Checkout</span>
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:translate-x-1 transition-transform duration-300" />
                   </>
                 )}
               </button>
-              <p className="text-white/60 text-xs text-center">
+              <p className="text-white/60 text-xs text-center px-4">
                 Secure payment powered by Stripe • Limited to first 30 registrations
               </p>
             </div>

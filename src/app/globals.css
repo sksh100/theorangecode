@@ -698,43 +698,85 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .hero-section {
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  .hero-content {
+    padding-top: 6rem;
+    padding-bottom: 2rem;
+  }
+}
+
 @media (max-width: 768px) {
   .glass-card {
-    @apply p-8 px-6;
+    @apply p-6 sm:p-8;
   }
   
   .hero-section {
-    @apply bg-scroll h-screen;
-    /* Ensure fixed behavior works on mobile */
-    position: fixed;
-    top: 0;
-    left: 0;
+    height: auto;
+    min-height: 100vh;
+    position: relative;
+    padding: 1rem 0;
   }
   
   .hero-content {
     @apply w-[95%];
+    padding-top: 5rem;
+    padding-bottom: 2rem;
   }
   
   .hero-section .glass-card {
-    @apply p-8 px-6;
+    @apply p-6 sm:p-8;
   }
   
   .orb-1, .orb-2, .orb-3 {
     @apply hidden;
   }
+  
+  /* Ensure text doesn't overflow on mobile */
+  h1, h2, h3 {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  /* Make buttons touch-friendly */
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Improve touch targets */
+  a, button {
+    touch-action: manipulation;
+  }
 }
 
 @media (max-width: 480px) {
   .glass-card {
-    @apply p-6 px-4;
+    @apply p-4 sm:p-6;
   }
   
   .hero-section {
-    @apply min-h-[70vh];
+    @apply min-h-screen;
+    padding: 0.5rem 0;
+  }
+  
+  .hero-content {
+    padding-top: 4rem;
+    padding-bottom: 1.5rem;
   }
   
   .submit-btn {
-    @apply p-4 px-6;
+    @apply p-3 sm:p-4 px-4 sm:px-6;
+    min-height: 48px;
+  }
+  
+  /* Prevent text from being too small */
+  body {
+    font-size: 16px;
   }
 }
 
