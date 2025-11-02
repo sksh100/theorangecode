@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { Background } from '@/components/Background'
 import { ModernFooter } from '@/components/ModernFooter'
-import { BookOpen, User, Settings, ArrowRight, Edit2, Save, Upload, Linkedin, Twitter, Facebook, Instagram, Globe, Users } from 'lucide-react'
+import { BookOpen, User, Settings, ArrowRight, Edit2, Save, Upload, Linkedin, Twitter, Facebook, Instagram, Globe, Users, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -610,6 +610,38 @@ export default function Dashboard() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="lg:col-span-2"
             >
+              {/* Settings Link */}
+              <div className="mb-8">
+                <Link href="/settings">
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="glass-card cursor-pointer group hover:border-azure-blue/50 transition-all duration-300 mb-6"
+                  >
+                    <div className="flex items-center gap-6">
+                      <div className="w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <Settings className="w-10 h-10 text-white" />
+                      </div>
+                      
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="text-2xl font-bold text-white group-hover:text-azure-blue transition-colors">
+                            Settings
+                          </h3>
+                          <ChevronRight className="w-6 h-6 text-white/50 group-hover:text-azure-blue group-hover:translate-x-2 transition-all" />
+                        </div>
+                        <p className="text-white/70 mb-3">
+                          Manage your account, security, notifications, and privacy settings.
+                        </p>
+                        <div className="flex items-center gap-4 text-sm text-white/60">
+                          <span>Security • Privacy • Notifications</span>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </Link>
+              </div>
+
               <div className="mb-8">
                 <h2 className="text-2xl font-bold mb-6 text-white">My Courses</h2>
                 
