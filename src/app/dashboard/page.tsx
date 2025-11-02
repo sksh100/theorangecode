@@ -322,6 +322,34 @@ export default function Dashboard() {
                       />
                     </div>
 
+                    {/* Company */}
+                    <div>
+                      <label className="block text-sm font-medium text-white/80 mb-2">
+                        Company
+                      </label>
+                      <input
+                        type="text"
+                        value={profile.company}
+                        onChange={(e) => setProfile(prev => ({ ...prev, company: e.target.value }))}
+                        className="w-full px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50 transition-all"
+                        placeholder="Enter your company name"
+                      />
+                    </div>
+
+                    {/* Position/Title */}
+                    <div>
+                      <label className="block text-sm font-medium text-white/80 mb-2">
+                        Position / Title
+                      </label>
+                      <input
+                        type="text"
+                        value={profile.position}
+                        onChange={(e) => setProfile(prev => ({ ...prev, position: e.target.value }))}
+                        className="w-full px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50 transition-all"
+                        placeholder="Enter your position or job title"
+                      />
+                    </div>
+
                     {/* Bio */}
                     <div>
                       <label className="block text-sm font-medium text-white/80 mb-2">
