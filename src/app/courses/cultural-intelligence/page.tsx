@@ -219,7 +219,7 @@ export default function CulturalIntelligenceCourse() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="glass-card h-full cursor-pointer group hover:scale-[1.02] transition-all duration-300 py-8 px-6"
+                  className="glass-card h-full cursor-pointer group hover:scale-[1.02] transition-all duration-300 !py-10 !px-8"
                 >
                   <div className="flex items-start gap-4">
                     {/* Module Number Badge */}
