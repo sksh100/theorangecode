@@ -221,6 +221,10 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                   onSubmit={handleSubscribe} 
                   className="space-y-3"
                   noValidate
+                  onInvalid={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                  }}
                 >
                   <div className="relative">
                     <input
@@ -245,6 +249,10 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                    }}
                     className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-orange to-bright-blue rounded-lg text-white text-sm font-semibold hover:shadow-lg hover:shadow-orange/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                     whileTap={{ scale: isSubmitting ? 1 : 0.98 }}

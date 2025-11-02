@@ -437,7 +437,10 @@ export default function Home() {
             <div className="flex flex-col items-center gap-3 sm:gap-4">
               <button
                 type="button"
-                onClick={async () => {
+                onClick={async (e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  
                   if (isLoadingCheckout) return
                   
                   setIsLoadingCheckout(true)
@@ -482,6 +485,7 @@ export default function Home() {
                     setIsLoadingCheckout(false)
                   }
                 }}
+                onMouseDown={(e) => e.preventDefault()}
                 disabled={isLoadingCheckout}
                 className="flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-primary rounded-full cursor-pointer hover:shadow-glow transition-all duration-300 group disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto min-h-[48px] touch-manipulation"
               >
