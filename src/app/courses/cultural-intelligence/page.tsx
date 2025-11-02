@@ -226,15 +226,39 @@ export default function CulturalIntelligenceCourse() {
 
           {/* Modules Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            {modules.map((module, index) => (
-              <Link key={module.id} href={`/courses/cultural-intelligence/module/${module.id}`}>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="glass-card h-full cursor-pointer group hover:scale-[1.02] transition-all duration-300 !py-16 !px-10"
-                >
-                  <div className="flex items-start gap-5">
+            {modules.map((module, index) => {
+              const coverImage = moduleCoverImages[module.id] || module.coverImage
+              
+              return (
+                <div key={module.id} className="relative">
+                  <Link href={`/courses/cultural-intelligence/module/${module.id}`}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      className="glass-card h-full cursor-pointer group hover:scale-[1.02] transition-all duration-300 !py-0 !px-0 overflow-hidden"
+                    >
+                      {/* Cover Image */}
+                      {coverImage ? (
+                        <div className="relative w-[calc(100%+3rem)] h-48 -mx-6 -mt-6 mb-6 left-0 right-0">
+                          <Image
+                            src={coverImage}
+                            alt={module.title}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div className="relative w-[calc(100%+3rem)] h-48 -mx-6 -mt-6 mb-6 bg-gradient-to-br from-azure-blue/20 via-orange/20 to-bright-blue/20 flex items-center justify-center left-0 right-0">
+                          <div className="text-center p-4">
+                            <ImageIcon className="w-12 h-12 text-white/30 mx-auto mb-2" />
+                            <p className="text-white/50 text-sm">Module Cover Image</p>
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div className="px-10 pb-16 pt-6">
+                        <div className="flex items-start gap-5">
                     {/* Module Number Badge */}
                     <div className={`w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 ${
                       completedModules.has(module.id)
@@ -272,8 +296,8 @@ export default function CulturalIntelligenceCourse() {
                           </div>
                         )}
                       </div>
-                    </div>
-                  </div>
+                        </div>
+                      </div>
                     </div>
                   </motion.div>
                 </Link>
@@ -313,6 +337,7 @@ export default function CulturalIntelligenceCourse() {
                     <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
+                      onClick={(e) => e.preventDefault()}
                       className="w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center hover:bg-black/80 transition-all shadow-lg"
                       title="Upload cover image"
                     >
