@@ -108,9 +108,6 @@ export function ModernNavbar() {
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-              <Sparkles className="w-6 h-6 text-white" />
-            </div>
             <div>
               <h1 className="text-xl font-bold text-white font-montserrat">
                 The Orange Code
@@ -122,13 +119,13 @@ export function ModernNavbar() {
           </motion.div>
           
           {/* Logo at bottom left of header */}
-          <div className="absolute bottom-0 left-6 lg:left-8 z-50">
+          <div className="absolute bottom-0 left-0 z-50 h-20">
             <Image
               src="/coming-soon/logo-1.png"
               alt="The Orange Code Logo"
-              width={80}
-              height={40}
-              className="h-8 sm:h-10 md:h-12 w-auto"
+              width={200}
+              height={80}
+              className="h-full w-auto"
               priority
             />
           </div>
