@@ -12,6 +12,8 @@ import Image from 'next/image'
 interface UserProfile {
   firstName: string
   lastName: string
+  company: string
+  position: string
   bio: string
   profilePhoto: string | null
   coverPhoto: string | null
@@ -28,6 +30,8 @@ export default function Dashboard() {
   const [profile, setProfile] = useState<UserProfile>({
     firstName: '',
     lastName: '',
+    company: '',
+    position: '',
     bio: '',
     profilePhoto: null,
     coverPhoto: null,
@@ -448,6 +452,22 @@ export default function Dashboard() {
                         {profile.firstName || 'Your'} {profile.lastName || 'Name'}
                       </p>
                     </div>
+
+                    {(profile.company || profile.position) && (
+                      <div>
+                        <h3 className="text-lg font-bold text-white mb-2">Professional Info</h3>
+                        {profile.position && (
+                          <p className="text-white/80 mb-1">
+                            {profile.position}
+                          </p>
+                        )}
+                        {profile.company && (
+                          <p className="text-white/70 text-sm">
+                            {profile.company}
+                          </p>
+                        )}
+                      </div>
+                    )}
 
                     {profile.bio && (
                       <div>
