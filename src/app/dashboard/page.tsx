@@ -14,6 +14,7 @@ interface UserProfile {
   lastName: string
   company: string
   position: string
+  countryOfResidency: string
   bio: string
   profilePhoto: string | null
   coverPhoto: string | null
@@ -32,6 +33,7 @@ export default function Dashboard() {
     lastName: '',
     company: '',
     position: '',
+    countryOfResidency: '',
     bio: '',
     profilePhoto: null,
     coverPhoto: null,
@@ -481,7 +483,7 @@ export default function Dashboard() {
                       </p>
                     </div>
 
-                    {(profile.company || profile.position) && (
+                    {(profile.company || profile.position || profile.countryOfResidency) && (
                       <div>
                         <h3 className="text-lg font-bold text-white mb-2">Professional Info</h3>
                         {profile.position && (
@@ -490,8 +492,13 @@ export default function Dashboard() {
                           </p>
                         )}
                         {profile.company && (
-                          <p className="text-white/70 text-sm">
+                          <p className="text-white/70 text-sm mb-1">
                             {profile.company}
+                          </p>
+                        )}
+                        {profile.countryOfResidency && (
+                          <p className="text-white/70 text-sm">
+                            {profile.countryOfResidency}
                           </p>
                         )}
                       </div>
