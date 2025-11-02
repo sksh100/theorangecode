@@ -159,32 +159,32 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-primary-dark">
       {/* Coming Soon Hero Section */}
-      <section className="hero-section pb-8 sm:pb-0">
-        <div className="hero-content pt-4 sm:pt-4 md:pt-4 pb-4 sm:pb-0">
+      <section className="hero-section pb-4 sm:pb-0">
+        <div className="hero-content pt-2 sm:pt-4 md:pt-4 pb-2 sm:pb-0">
 
           <motion.div 
-            className="glass-card mt-0 relative overflow-hidden py-8 sm:py-16 md:py-32 lg:py-40"
+            className="glass-card mt-0 relative overflow-hidden py-6 sm:py-12 md:py-24 lg:py-40"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            {/* Logo in bottom left corner of glass box - hidden on mobile */}
+            {/* Logo in bottom left corner of glass box - smaller on mobile */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="absolute bottom-0 left-0 z-10 hidden md:block"
+              className="absolute bottom-0 left-0 z-10"
             >
               <Image 
                 src="/coming-soon/logo-1.png" 
                 alt="The Orange Code Logo" 
                 width={400} 
                 height={400}
-                className="w-auto h-auto max-w-[150px] md:max-w-[250px] lg:max-w-[400px]"
+                className="w-auto h-auto max-w-[100px] sm:max-w-[120px] md:max-w-[200px] lg:max-w-[300px] xl:max-w-[400px]"
                 priority
               />
             </motion.div>
-            <div className="relative z-20 px-4 sm:px-6 md:px-0 mb-8 md:mb-0">
+            <div className="relative z-20 px-4 sm:px-6 md:px-0 mb-4 sm:mb-6 md:mb-8 lg:mb-0 pb-16 sm:pb-20 md:pb-0">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 md:mb-6 leading-tight tracking-tight text-center sm:text-right text-orange">
               Launching Soon
             </h1>
@@ -321,17 +321,27 @@ export default function Home() {
                       })
                     })
                     
+                    if (!response.ok) {
+                      const errorData = await response.json().catch(() => ({ error: 'Network error' }))
+                      console.error('Checkout API error:', errorData)
+                      alert(errorData.error || `Server error (${response.status}). Please check your Stripe configuration.`)
+                      return
+                    }
+                    
                     const data = await response.json()
                     
                     if (data.url) {
                       window.location.href = data.url
-                    } else {
+                    } else if (data.error) {
                       console.error('Checkout error:', data.error)
-                      alert('Unable to start checkout. Please try again.')
+                      alert(`Checkout error: ${data.error}`)
+                    } else {
+                      console.error('Unexpected response:', data)
+                      alert('Unable to start checkout. Please try again or contact support.')
                     }
-                  } catch (error) {
+                  } catch (error: any) {
                     console.error('Checkout error:', error)
-                    alert('Unable to start checkout. Please try again.')
+                    alert(`Checkout failed: ${error.message || 'Network error. Please check your connection and try again.'}`)
                   } finally {
                     setIsLoadingCheckout(false)
                   }

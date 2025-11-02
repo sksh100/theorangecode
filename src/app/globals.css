@@ -77,7 +77,12 @@
     .hero-section {
       height: auto;
       min-height: auto;
-      padding: 2rem 0;
+      padding: 1rem 0;
+    }
+    
+    .hero-content {
+      padding-top: 3rem;
+      padding-bottom: 1rem;
     }
   }
   
