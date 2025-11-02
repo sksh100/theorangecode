@@ -90,7 +90,7 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
 
       <div className="relative z-10">
         {/* Main Footer Content */}
-        <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20">
+        <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-20 md:py-24 mt-8 sm:mt-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 lg:gap-16">
             
             {/* Company Info - Left Column */}

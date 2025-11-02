@@ -159,38 +159,38 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-primary-dark">
       {/* Coming Soon Hero Section */}
-      <section className="hero-section">
-        <div className="hero-content pt-4 sm:pt-4 md:pt-4">
+      <section className="hero-section pb-8 sm:pb-0">
+        <div className="hero-content pt-4 sm:pt-4 md:pt-4 pb-4 sm:pb-0">
 
           <motion.div 
-            className="glass-card mt-0 relative overflow-visible py-20 sm:py-32 md:py-40"
+            className="glass-card mt-0 relative overflow-hidden py-8 sm:py-16 md:py-32 lg:py-40"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            {/* Logo in bottom left corner of glass box */}
+            {/* Logo in bottom left corner of glass box - hidden on mobile */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="absolute bottom-0 left-0 z-20 hidden sm:block"
+              className="absolute bottom-0 left-0 z-10 hidden md:block"
             >
               <Image 
                 src="/coming-soon/logo-1.png" 
                 alt="The Orange Code Logo" 
                 width={400} 
                 height={400}
-                className="w-auto h-auto max-w-[200px] sm:max-w-[300px] md:max-w-[400px]"
+                className="w-auto h-auto max-w-[150px] md:max-w-[250px] lg:max-w-[400px]"
                 priority
               />
             </motion.div>
-            <div className="-mt-8 sm:-mt-12">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight tracking-tight text-center sm:text-right text-orange">
+            <div className="relative z-20 px-4 sm:px-6 md:px-0 mb-8 md:mb-0">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 md:mb-6 leading-tight tracking-tight text-center sm:text-right text-orange">
               Launching Soon
             </h1>
             
             <motion.p 
-              className="hero-subtitle font-sofia text-base sm:text-lg md:text-xl lg:text-2xl text-white mb-6 sm:mb-12 font-normal text-center sm:text-right max-w-full sm:max-w-2xl sm:ml-auto px-4 sm:px-0"
+              className="hero-subtitle font-sofia text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-white mb-4 sm:mb-6 md:mb-12 font-normal text-center sm:text-right max-w-full sm:max-w-2xl sm:ml-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.9 }}
@@ -199,12 +199,12 @@ export default function Home() {
             </motion.p>
             
             <motion.div 
-              className="countdown-section mt-4 sm:mt-8 flex justify-center sm:justify-end pr-4 sm:pr-0"
+              className="countdown-section mt-4 sm:mt-6 md:mt-8 flex justify-center sm:justify-end"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.1 }}
             >
-              <div className="event-info inline-flex flex-col items-center gap-2 sm:gap-4 p-4 sm:p-6 md:p-8 px-6 sm:px-8 md:px-12 bg-bright-blue/10 border border-light-blue/30 rounded-xl sm:rounded-2xl backdrop-blur-[10px]">
+              <div className="event-info inline-flex flex-col items-center gap-2 sm:gap-3 md:gap-4 p-3 sm:p-4 md:p-6 lg:p-8 px-4 sm:px-6 md:px-8 lg:px-12 bg-bright-blue/10 border border-light-blue/30 rounded-xl sm:rounded-2xl backdrop-blur-[10px]">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <Clock className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-azure-blue" />
                   <span className="date-label font-sofia text-xs sm:text-sm text-white/70 uppercase tracking-wider font-medium">
@@ -250,10 +250,10 @@ export default function Home() {
       </section>
 
       {/* Exclusive Pre-Launch Offer Section */}
-      <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6">
+      <section className="relative py-16 sm:py-20 md:py-24 px-4 sm:px-6 mb-8 sm:mb-0">
         <div className="max-w-4xl mx-auto">
           <motion.div
-            className="glass-card p-6 sm:p-8 md:p-12 relative overflow-hidden bg-accent-blue/20 backdrop-blur-[30px] border border-light-blue/40"
+            className="glass-card p-4 sm:p-6 md:p-8 lg:p-12 relative overflow-hidden bg-accent-blue/20 backdrop-blur-[30px] border border-light-blue/40"
             style={{
               boxShadow: '0 25px 50px rgba(0, 0, 0, 0.3), 0 0 60px rgba(0, 212, 255, 0.4), 0 0 100px rgba(255, 145, 77, 0.2)'
             }}
