@@ -5,7 +5,8 @@ import { motion } from 'framer-motion'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { Background } from '@/components/Background'
 import { ModernFooter } from '@/components/ModernFooter'
-import { BookOpen, CheckCircle2, Clock, Play, Lock, ChevronRight } from 'lucide-react'
+import { BookOpen, CheckCircle2, Clock, Play, Lock, ChevronRight, Upload, Image as ImageIcon } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 
 interface Module {
@@ -15,6 +16,7 @@ interface Module {
   duration: string
   completed: boolean
   locked: boolean
+  coverImage?: string | null
 }
 
 const modules: Module[] = [
@@ -103,6 +105,7 @@ const modules: Module[] = [
 export default function CulturalIntelligenceCourse() {
   const [completedModules, setCompletedModules] = useState<Set<string>>(new Set())
   const [courseCompleted, setCourseCompleted] = useState(false)
+  const [moduleCoverImages, setModuleCoverImages] = useState<Record<string, string>>({})
 
   useEffect(() => {
     // Load completion status from localStorage
@@ -111,6 +114,16 @@ export default function CulturalIntelligenceCourse() {
       const progress = JSON.parse(saved)
       setCompletedModules(new Set(progress.completedModules || []))
       setCourseCompleted(progress.courseCompleted || false)
+    }
+    
+    // Load module cover images from localStorage
+    const savedImages = localStorage.getItem('cultural-intelligence-module-images')
+    if (savedImages) {
+      try {
+        setModuleCoverImages(JSON.parse(savedImages))
+      } catch (e) {
+        console.error('Error loading module images:', e)
+      }
     }
   }, [])
 
@@ -261,9 +274,54 @@ export default function CulturalIntelligenceCourse() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
-              </Link>
-            ))}
+                    </div>
+                  </motion.div>
+                </Link>
+                
+                {/* Upload Cover Image Button - Admin/Edit Mode */}
+                <div className="absolute top-4 right-4 z-10">
+                  <label className="cursor-pointer">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0]
+                        if (file) {
+                          // Validate file type
+                          if (!file.type.startsWith('image/')) {
+                            alert('Please upload an image file')
+                            return
+                          }
+                          
+                          // Validate file size (max 5MB)
+                          if (file.size > 5 * 1024 * 1024) {
+                            alert('Image size must be less than 5MB')
+                            return
+                          }
+
+                          const reader = new FileReader()
+                          reader.onloadend = () => {
+                            const newImages = { ...moduleCoverImages, [module.id]: reader.result as string }
+                            setModuleCoverImages(newImages)
+                            localStorage.setItem('cultural-intelligence-module-images', JSON.stringify(newImages))
+                          }
+                          reader.readAsDataURL(file)
+                        }
+                      }}
+                      className="hidden"
+                    />
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center hover:bg-black/80 transition-all shadow-lg"
+                      title="Upload cover image"
+                    >
+                      <Upload className="w-5 h-5 text-white" />
+                    </motion.button>
+                  </label>
+                </div>
+              </div>
+            )})}
           </div>
         </div>
       </main>
