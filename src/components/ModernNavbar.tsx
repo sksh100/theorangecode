@@ -124,9 +124,6 @@ export function ModernNavbar() {
               <h1 className="text-xl font-bold text-white font-montserrat">
                 The Orange Code
               </h1>
-              <p className="text-xs text-azure-blue/80 font-montserrat">
-                AI-Powered Luxury
-              </p>
             </div>
           </motion.div>
 
