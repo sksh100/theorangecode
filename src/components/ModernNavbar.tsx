@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronDown, Menu, X, Sparkles, Zap, Shield, Users, Settings, LogOut, LogIn, ShoppingBag } from 'lucide-react'
+import { ChevronDown, Menu, X, Sparkles, Zap, Shield, Users, Settings, LogOut, LogIn, ShoppingBag, CheckCircle } from 'lucide-react'
 import { MegaDropdown } from './MegaDropdown'
 import { AboutMegaDropdown } from './AboutMegaDropdown'
 import { ContactMegaDropdown } from './ContactMegaDropdown'
@@ -18,6 +18,8 @@ export function ModernNavbar() {
   const [isContactMegaOpen, setIsContactMegaOpen] = useState(false)
   const [cartItems, setCartItems] = useState(0)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [showWelcomeMessage, setShowWelcomeMessage] = useState(false)
+  const [userName, setUserName] = useState<string>('')
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +27,22 @@ export function ModernNavbar() {
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    // Load user profile to get name
+    const saved = localStorage.getItem('user-profile')
+    if (saved) {
+      try {
+        const profile = JSON.parse(saved)
+        const name = profile.firstName || profile.lastName 
+          ? `${profile.firstName || ''} ${profile.lastName || ''}`.trim()
+          : ''
+        setUserName(name)
+      } catch (e) {
+        console.error('Error loading user profile:', e)
+      }
+    }
   }, [])
 
   const navItems = [
@@ -339,7 +357,33 @@ export function ModernNavbar() {
                       className="w-full flex items-center justify-center space-x-2 p-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      onClick={() => setIsLoggedIn(!isLoggedIn)}
+                onClick={() => {
+                  const newLoggedInState = !isLoggedIn
+                  setIsLoggedIn(newLoggedInState)
+                  if (newLoggedInState) {
+                    // Load user profile to get current name
+                    const saved = localStorage.getItem('user-profile')
+                    if (saved) {
+                      try {
+                        const profile = JSON.parse(saved)
+                        const name = profile.firstName || profile.lastName 
+                          ? `${profile.firstName || ''} ${profile.lastName || ''}`.trim()
+                          : 'there'
+                        setUserName(name || 'there')
+                      } catch (e) {
+                        setUserName('there')
+                      }
+                    } else {
+                      setUserName('there')
+                    }
+                    // Show welcome message when logging in
+                    setShowWelcomeMessage(true)
+                    // Auto-hide after 5 seconds
+                    setTimeout(() => {
+                      setShowWelcomeMessage(false)
+                    }, 5000)
+                  }
+                }}
                     >
                       <LogIn className="w-4 h-4" />
                       <span className="font-montserrat font-medium">Login</span>
@@ -363,6 +407,46 @@ export function ModernNavbar() {
 
       {/* Background blur effect */}
       <div className="absolute inset-0 bg-gradient-to-r from-azure-blue/5 via-transparent to-orange/5 pointer-events-none" />
+      
+      {/* Welcome Message */}
+      <AnimatePresence>
+        {showWelcomeMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -50, scale: 0.9 }}
+            transition={{ duration: 0.3 }}
+            className="fixed top-24 left-1/2 transform -translate-x-1/2 z-[100] pointer-events-none"
+          >
+            <motion.div
+              className="glass-card px-8 py-6 flex items-center gap-4 shadow-2xl"
+              style={{ 
+                background: 'rgba(0, 212, 255, 0.15)',
+                backdropFilter: 'blur(20px)',
+                border: '1px solid rgba(0, 212, 255, 0.3)'
+              }}
+            >
+              <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center flex-shrink-0">
+                <CheckCircle className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-white mb-1">
+                  Welcome{userName ? `, ${userName}` : '!'}
+                </h3>
+                <p className="text-white/80 text-sm">
+                  You're successfully logged in
+                </p>
+              </div>
+              <button
+                onClick={() => setShowWelcomeMessage(false)}
+                className="ml-4 text-white/60 hover:text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       
       {/* Mega Dropdowns */}
       <MegaDropdown 
