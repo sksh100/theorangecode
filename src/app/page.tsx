@@ -159,16 +159,16 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-primary-dark">
       {/* Coming Soon Hero Section */}
-      <section className="hero-section pb-4 sm:pb-0">
-        <div className="hero-content pt-2 sm:pt-4 md:pt-4 pb-2 sm:pb-0">
+      <section className="hero-section pb-2 sm:pb-0">
+        <div className="hero-content pt-1 sm:pt-4 md:pt-4 pb-1 sm:pb-0">
 
           <motion.div 
-            className="glass-card mt-0 relative overflow-hidden py-6 sm:py-12 md:py-24 lg:py-40"
+            className="glass-card mt-0 relative overflow-hidden py-4 sm:py-8 md:py-16 lg:py-32 xl:py-40"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            {/* Logo in bottom left corner of glass box - smaller on mobile */}
+            {/* Logo in bottom left corner of glass box - bigger size */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -180,11 +180,11 @@ export default function Home() {
                 alt="The Orange Code Logo" 
                 width={400} 
                 height={400}
-                className="w-auto h-auto max-w-[100px] sm:max-w-[120px] md:max-w-[200px] lg:max-w-[300px] xl:max-w-[400px]"
+                className="w-auto h-auto max-w-[150px] sm:max-w-[180px] md:max-w-[250px] lg:max-w-[320px] xl:max-w-[400px]"
                 priority
               />
             </motion.div>
-            <div className="relative z-20 px-4 sm:px-6 md:px-0 mb-4 sm:mb-6 md:mb-8 lg:mb-0 pb-16 sm:pb-20 md:pb-0">
+            <div className="relative z-20 px-4 sm:px-6 md:px-0 mb-4 sm:mb-6 md:mb-8 lg:mb-0 pb-20 sm:pb-24 md:pb-0">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 md:mb-6 leading-tight tracking-tight text-center sm:text-right text-orange">
               Launching Soon
             </h1>
