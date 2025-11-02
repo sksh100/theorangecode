@@ -240,16 +240,16 @@ export default function CulturalIntelligenceCourse() {
                     >
                       {/* Cover Image */}
                       {coverImage ? (
-                        <div className="relative w-[calc(100%+3rem)] h-48 -mx-6 -mt-6 mb-6 left-0 right-0">
+                        <div className="absolute top-0 left-0 right-0 w-full h-48">
                           <Image
                             src={coverImage}
                             alt={module.title}
                             fill
-                            className="object-cover"
+                            className="object-cover rounded-t-3xl"
                           />
                         </div>
                       ) : (
-                        <div className="relative w-[calc(100%+3rem)] h-48 -mx-6 -mt-6 mb-6 bg-gradient-to-br from-azure-blue/20 via-orange/20 to-bright-blue/20 flex items-center justify-center left-0 right-0">
+                        <div className="absolute top-0 left-0 right-0 w-full h-48 bg-gradient-to-br from-azure-blue/20 via-orange/20 to-bright-blue/20 flex items-center justify-center rounded-t-3xl">
                           <div className="text-center p-4">
                             <ImageIcon className="w-12 h-12 text-white/30 mx-auto mb-2" />
                             <p className="text-white/50 text-sm">Module Cover Image</p>
@@ -257,7 +257,7 @@ export default function CulturalIntelligenceCourse() {
                         </div>
                       )}
                       
-                      <div className="px-10 pb-16 pt-6">
+                      <div className="px-10 pb-16 pt-56">
                         <div className="flex items-start gap-5">
                     {/* Module Number Badge */}
                     <div className={`w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 ${
