@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import { ChevronDown, Menu, X, Sparkles, Zap, Shield, Users, Settings, LogOut, LogIn, ShoppingBag } from 'lucide-react'
 import { MegaDropdown } from './MegaDropdown'
 import { AboutMegaDropdown } from './AboutMegaDropdown'
@@ -204,19 +205,31 @@ export function ModernNavbar() {
               )}
             </motion.button>
 
-            {/* Login Button */}
-            <motion.button
-              className="flex items-center space-x-2 px-4 py-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300 group"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              onClick={() => setIsLoggedIn(!isLoggedIn)}
-            >
-              <LogIn className="w-4 h-4 group-hover:text-azure-blue transition-colors duration-300" />
-              <span className="font-montserrat font-medium text-sm">
-                {isLoggedIn ? 'Dashboard' : 'Login'}
-              </span>
-            </motion.button>
+            {/* Login/Dashboard Button */}
+            {isLoggedIn ? (
+              <Link href="/dashboard">
+                <motion.button
+                  className="flex items-center space-x-2 px-4 py-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300 group"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <LogIn className="w-4 h-4 group-hover:text-azure-blue transition-colors duration-300" />
+                  <span className="font-montserrat font-medium text-sm">Dashboard</span>
+                </motion.button>
+              </Link>
+            ) : (
+              <motion.button
+                className="flex items-center space-x-2 px-4 py-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300 group"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                onClick={() => setIsLoggedIn(!isLoggedIn)}
+              >
+                <LogIn className="w-4 h-4 group-hover:text-azure-blue transition-colors duration-300" />
+                <span className="font-montserrat font-medium text-sm">Login</span>
+              </motion.button>
+            )}
 
             {/* Get Started Button */}
             <motion.button
@@ -309,18 +322,29 @@ export function ModernNavbar() {
                     )}
                   </motion.button>
 
-                  {/* Login Button - Mobile */}
-                  <motion.button
-                    className="w-full flex items-center justify-center space-x-2 p-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => setIsLoggedIn(!isLoggedIn)}
-                  >
-                    <LogIn className="w-4 h-4" />
-                    <span className="font-montserrat font-medium">
-                      {isLoggedIn ? 'Dashboard' : 'Login'}
-                    </span>
-                  </motion.button>
+                  {/* Login/Dashboard Button - Mobile */}
+                  {isLoggedIn ? (
+                    <Link href="/dashboard">
+                      <motion.button
+                        className="w-full flex items-center justify-center space-x-2 p-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <LogIn className="w-4 h-4" />
+                        <span className="font-montserrat font-medium">Dashboard</span>
+                      </motion.button>
+                    </Link>
+                  ) : (
+                    <motion.button
+                      className="w-full flex items-center justify-center space-x-2 p-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => setIsLoggedIn(!isLoggedIn)}
+                    >
+                      <LogIn className="w-4 h-4" />
+                      <span className="font-montserrat font-medium">Login</span>
+                    </motion.button>
+                  )}
 
                   {/* Get Started Button - Mobile */}
                   <motion.button

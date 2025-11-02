@@ -119,6 +119,33 @@
       0 0 100px rgba(255, 145, 77, 0.2);
   }
   
+  /* Video Player Protection Styles */
+  video {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: auto;
+  }
+  
+  video::-webkit-media-controls {
+    display: none !important;
+  }
+  
+  video::-webkit-media-controls-enclosure {
+    display: none !important;
+  }
+  
+  /* Prevent text selection on video container */
+  .video-container {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
   .form-group input {
     @apply p-4 px-5 bg-azure-blue-transparent border border-glass-border rounded-xl text-white text-base font-montserrat backdrop-blur-[10px] transition-all duration-300;
   }
