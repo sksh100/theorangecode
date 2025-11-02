@@ -100,6 +100,18 @@ export function ModernNavbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
+      {/* Logo at bottom left edge of page */}
+      <div className="absolute bottom-0 left-0 z-50 h-20 -ml-0">
+        <Image
+          src="/coming-soon/logo-1.png"
+          alt="The Orange Code Logo"
+          width={200}
+          height={80}
+          className="h-full w-auto"
+          priority
+        />
+      </div>
+      
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
@@ -117,18 +129,6 @@ export function ModernNavbar() {
               </p>
             </div>
           </motion.div>
-          
-          {/* Logo at bottom left of header */}
-          <div className="absolute bottom-0 left-0 z-50 h-20">
-            <Image
-              src="/coming-soon/logo-1.png"
-              alt="The Orange Code Logo"
-              width={200}
-              height={80}
-              className="h-full w-auto"
-              priority
-            />
-          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
