@@ -249,7 +249,7 @@
 
   .cta-button-glow {
     @apply relative overflow-hidden;
-    background: linear-gradient(135deg, #ff914d 0%, #00d4ff 50%, #0099ff 100%);
+    background: linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%);
     box-shadow: 
       0 8px 32px rgba(0, 212, 255, 0.4),
       0 0 60px rgba(255, 145, 77, 0.3),

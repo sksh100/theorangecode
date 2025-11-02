@@ -447,7 +447,8 @@ export function ExtendedAdvantagesBanner() {
         >
           <motion.a
             href="#contact"
-            className="inline-flex items-center gap-4 px-12 py-6 bg-gradient-to-r from-orange to-bright-blue border border-orange/50 rounded-3xl cursor-pointer hover:border-orange/80 transition-all duration-300 backdrop-blur-sm text-white font-bold text-xl shadow-2xl"
+            className="inline-flex items-center gap-4 px-12 py-6 border border-orange/50 rounded-3xl cursor-pointer hover:border-orange/80 transition-all duration-300 backdrop-blur-sm text-white font-bold text-xl shadow-2xl"
+            style={{ background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)' }}
             whileHover={{ 
               scale: 1.05,
               boxShadow: "0 25px 50px rgba(255, 145, 77, 0.3)"

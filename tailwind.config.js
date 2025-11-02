@@ -56,7 +56,7 @@ module.exports = {
         'sans': ['Glacial Indifference', 'sans-serif'],
       },
       backgroundImage: {
-        'gradient-primary': 'linear-gradient(135deg, #ff914d 0%, #00d4ff 50%, #0099ff 100%)',
+        'gradient-primary': 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)',
         'gradient-secondary': 'linear-gradient(135deg, #01011e 0%, #0a0e27 50%, #00d4ff 100%)',
         'gradient-azure': 'linear-gradient(135deg, #00d4ff 0%, rgba(0, 212, 255, 0.8) 100%)',
         'gradient-bright-blue': 'linear-gradient(135deg, #0099ff 0%, rgba(0, 153, 255, 0.8) 100%)',
