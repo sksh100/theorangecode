@@ -153,8 +153,8 @@ export default function ModulePage() {
     if (videoRef.current) {
       const video = videoRef.current
       
-      // Disable picture-in-picture
-      if (video.requestPictureInPicture) {
+      // Disable picture-in-picture (already handled by disablePictureInPicture attribute)
+      if ('disablePictureInPicture' in video) {
         video.disablePictureInPicture = true
       }
 
