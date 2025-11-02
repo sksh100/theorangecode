@@ -185,12 +185,12 @@ export default function Home() {
               />
             </motion.div>
             <div className="relative z-20 px-4 sm:px-6 md:px-0 mb-4 sm:mb-6 md:mb-8 lg:mb-0 pb-20 sm:pb-24 md:pb-0">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 md:mb-6 leading-tight tracking-tight text-center sm:text-right text-orange">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-6 md:mb-6 leading-tight tracking-tight text-center sm:text-right text-orange">
               Launching Soon
             </h1>
             
             <motion.p 
-              className="hero-subtitle font-sofia text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-white mb-4 sm:mb-6 md:mb-12 font-normal text-center sm:text-right max-w-full sm:max-w-2xl sm:ml-auto"
+              className="hero-subtitle font-sofia text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-white mb-6 sm:mb-6 md:mb-12 font-normal text-center sm:text-right max-w-full sm:max-w-2xl sm:ml-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.9 }}
@@ -199,7 +199,7 @@ export default function Home() {
             </motion.p>
             
             <motion.div 
-              className="countdown-section mt-4 sm:mt-6 md:mt-8 flex justify-center sm:justify-end"
+              className="countdown-section mt-6 sm:mt-6 md:mt-8 flex justify-center sm:justify-end"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.1 }}
@@ -212,7 +212,7 @@ export default function Home() {
                   </span>
                 </div>
                 <span className="date-value font-sofia text-xl sm:text-2xl md:text-3xl text-gradient-primary font-bold">
-                  November 8, 2025
+                  November 28, 2025
                 </span>
               </div>
             </motion.div>
