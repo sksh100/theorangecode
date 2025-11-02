@@ -19,8 +19,12 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
+    e.stopPropagation()
     
     const emailTrimmed = email.trim()
+    
+    // Clear any previous messages
+    setMessage(null)
     
     if (!emailTrimmed) {
       setMessage({ type: 'error', text: 'Please enter your email address' })
@@ -33,7 +37,6 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
     }
 
     setIsSubmitting(true)
-    setMessage(null)
 
     try {
       const response = await fetch('/api/submit-form', {
@@ -50,13 +53,14 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
         })
       })
 
+      const data = await response.json().catch(() => ({ error: 'Failed to parse response' }))
+
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: 'Server error' }))
-        setMessage({ type: 'error', text: errorData?.error || 'Something went wrong. Please try again.' })
+        console.error('Subscription API error:', data)
+        setMessage({ type: 'error', text: data?.error || `Error (${response.status}). Please try again.` })
+        setIsSubmitting(false)
         return
       }
-
-      const data = await response.json()
 
       if (data.success) {
         setIsSubscribed(true)
@@ -64,11 +68,11 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
         setMessage({ type: 'success', text: 'Thank you for subscribing!' })
       } else {
         setMessage({ type: 'error', text: data?.error || 'Something went wrong. Please try again.' })
+        setIsSubmitting(false)
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Subscription error:', error)
-      setMessage({ type: 'error', text: 'Network error. Please check your connection and try again.' })
-    } finally {
+      setMessage({ type: 'error', text: `Network error: ${error.message || 'Please check your connection and try again.'}` })
       setIsSubmitting(false)
     }
   }
@@ -213,7 +217,11 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
               </p>
               
               {!isSubscribed ? (
-                <form onSubmit={handleSubscribe} className="space-y-3">
+                <form 
+                  onSubmit={handleSubscribe} 
+                  className="space-y-3"
+                  noValidate
+                >
                   <div className="relative">
                     <input
                       type="email"
@@ -221,8 +229,8 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email"
                       className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg text-white text-sm placeholder-white/40 focus:outline-none focus:border-orange/50 focus:bg-white/10 transition-all duration-300"
-                      required
                       disabled={isSubmitting}
+                      autoComplete="email"
                     />
                   </div>
                   {message && (
