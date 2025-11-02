@@ -14,6 +14,7 @@ interface UserProfile {
   lastName: string
   bio: string
   profilePhoto: string | null
+  coverPhoto: string | null
   linkedin: string
   twitter: string
   facebook: string
@@ -29,6 +30,7 @@ export default function Dashboard() {
     lastName: '',
     bio: '',
     profilePhoto: null,
+    coverPhoto: null,
     linkedin: '',
     twitter: '',
     facebook: '',
@@ -37,6 +39,7 @@ export default function Dashboard() {
     showInCommunity: false
   })
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const coverFileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     // Load profile from localStorage
@@ -74,6 +77,29 @@ export default function Dashboard() {
       const reader = new FileReader()
       reader.onloadend = () => {
         setProfile(prev => ({ ...prev, profilePhoto: reader.result as string }))
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleCoverPhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        alert('Please upload an image file')
+        return
+      }
+      
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('Image size must be less than 5MB')
+        return
+      }
+
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setProfile(prev => ({ ...prev, coverPhoto: reader.result as string }))
       }
       reader.readAsDataURL(file)
     }
@@ -131,7 +157,48 @@ export default function Dashboard() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="lg:col-span-1"
             >
-              <div className="glass-card">
+              <div className="glass-card overflow-hidden">
+                {/* Cover Photo */}
+                <div className="relative w-full h-48 -mx-6 -mt-6 mb-6">
+                  {profile.coverPhoto ? (
+                    <Image
+                      src={profile.coverPhoto}
+                      alt="Cover"
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-azure-blue/20 via-orange/20 to-bright-blue/20 flex items-center justify-center">
+                      <div className="text-center p-4">
+                        <Globe className="w-12 h-12 text-white/30 mx-auto mb-2" />
+                        <p className="text-white/50 text-sm">Cover Picture</p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {isEditing && (
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => coverFileInputRef.current?.click()}
+                      className="absolute bottom-4 right-4 px-4 py-2 bg-black/60 backdrop-blur-sm rounded-lg flex items-center gap-2 text-white hover:bg-black/80 transition-all shadow-lg"
+                    >
+                      <Upload className="w-4 h-4" />
+                      <span className="text-sm font-medium">
+                        {profile.coverPhoto ? 'Change' : 'Upload'} Cover
+                      </span>
+                    </motion.button>
+                  )}
+                  
+                  <input
+                    ref={coverFileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleCoverPhotoUpload}
+                    className="hidden"
+                  />
+                </div>
+
                 {/* Profile Photo */}
                 <div className="mb-6">
                   <div className="relative w-32 h-32 mx-auto mb-4">
