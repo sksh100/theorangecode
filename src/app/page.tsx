@@ -341,7 +341,7 @@ export default function Home() {
             }}
           />
           <motion.div
-            className="absolute -top-5 top-1/2 right-1/3 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 border border-light-blue/30 rotate-12 z-0"
+            className="absolute -top-5 right-1/3 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 border border-light-blue/30 rotate-12 z-0"
             animate={{
               rotate: [12, 372],
               scale: [1, 1.35, 1],
