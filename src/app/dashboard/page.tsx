@@ -352,6 +352,20 @@ export default function Dashboard() {
                       />
                     </div>
 
+                    {/* Country of Residency */}
+                    <div>
+                      <label className="block text-sm font-medium text-white/80 mb-2">
+                        Country of Residency
+                      </label>
+                      <input
+                        type="text"
+                        value={profile.countryOfResidency}
+                        onChange={(e) => setProfile(prev => ({ ...prev, countryOfResidency: e.target.value }))}
+                        className="w-full px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50 transition-all"
+                        placeholder="Enter your country of residency"
+                      />
+                    </div>
+
                     {/* Bio */}
                     <div>
                       <label className="block text-sm font-medium text-white/80 mb-2">
