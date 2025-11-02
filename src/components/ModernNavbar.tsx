@@ -452,9 +452,6 @@ export function ModernNavbar() {
                 border: '1px solid rgba(0, 212, 255, 0.3)'
               }}
             >
-              <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center flex-shrink-0">
-                <CheckCircle className="w-6 h-6 text-white" />
-              </div>
               <div>
                 <h3 className="text-xl font-bold text-white mb-1">
                   Welcome{userName ? `, ${userName}` : '!'}
@@ -463,12 +460,14 @@ export function ModernNavbar() {
                   You're successfully logged in
                 </p>
               </div>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={() => setShowWelcomeMessage(false)}
-                className="ml-4 text-white/60 hover:text-white transition-colors"
+                className="ml-4 text-white/60 hover:text-white transition-colors pointer-events-auto"
               >
                 <X className="w-5 h-5" />
-              </button>
+              </motion.button>
             </motion.div>
           </motion.div>
         )}
