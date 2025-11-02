@@ -391,7 +391,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             {/* Badge */}
-            <div className="absolute top-3 sm:top-4 right-3 sm:right-4 bg-gradient-primary px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
+            <div className="absolute top-3 sm:top-4 right-3 sm:right-4 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full" style={{ background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)' }}>
               <span className="text-white text-xs font-semibold uppercase tracking-wide">Limited Time</span>
             </div>
 
@@ -487,7 +487,8 @@ export default function Home() {
                 }}
                 onMouseDown={(e) => e.preventDefault()}
                 disabled={isLoadingCheckout}
-                className="flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-primary rounded-full cursor-pointer hover:shadow-glow transition-all duration-300 group disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto min-h-[48px] touch-manipulation"
+                className="flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-full cursor-pointer hover:shadow-glow transition-all duration-300 group disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto min-h-[48px] touch-manipulation"
+                style={{ background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)' }}
               >
                 {isLoadingCheckout ? (
                   <>
