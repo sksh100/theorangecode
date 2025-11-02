@@ -392,6 +392,24 @@ export default function SettingsPage() {
                       </div>
                     </div>
 
+                    {/* Forgot Password Link */}
+                    <div className="pt-6 border-t border-white/10">
+                      <h3 className="text-lg font-semibold text-white mb-4">Forgot Password?</h3>
+                      <p className="text-white/70 text-sm mb-4">
+                        If you've forgotten your password, you can request a password reset link via email.
+                      </p>
+                      <Link href="/forgot-password">
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="px-6 py-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold transition-all duration-300 hover:bg-white/20 flex items-center gap-2"
+                        >
+                          <Mail className="w-5 h-5" />
+                          Request Password Reset
+                        </motion.button>
+                      </Link>
+                    </div>
+
                     {/* Two-Factor Authentication */}
                     <div className="pt-6 border-t border-white/10">
                       <h3 className="text-lg font-semibold text-white mb-4">Two-Factor Authentication</h3>
