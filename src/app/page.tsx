@@ -223,7 +223,7 @@ export default function Home() {
           {/* 3D Floating Objects Around Glass Box */}
           {/* Floating Geometric Shapes */}
           <motion.div
-            className="absolute top-10 right-10 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 border-2 border-azure-blue/30 rotate-45 z-0"
+            className="absolute -top-8 right-10 sm:top-10 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 border-2 border-azure-blue/30 rotate-45 z-0"
             animate={{
               rotate: [45, 405],
               scale: [1, 1.2, 1],
@@ -236,7 +236,7 @@ export default function Home() {
             }}
           />
           <motion.div
-            className="absolute -bottom-5 left-10 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 border-2 border-orange/30 rounded-full z-0"
+            className="absolute -bottom-12 left-10 sm:-bottom-5 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 border-2 border-orange/30 rounded-full z-0"
             animate={{
               scale: [1, 1.3, 1],
               x: [0, 15, 0],
@@ -250,7 +250,7 @@ export default function Home() {
             }}
           />
           <motion.div
-            className="absolute -top-5 left-1/4 w-10 h-10 sm:w-14 sm:h-14 md:w-18 md:h-18 bg-gradient-to-br from-azure-blue/20 to-orange/20 rotate-12 z-0"
+            className="absolute -top-12 left-1/4 sm:-top-5 w-10 h-10 sm:w-14 sm:h-14 md:w-18 md:h-18 bg-gradient-to-br from-azure-blue/20 to-orange/20 rotate-12 z-0"
             animate={{
               rotate: [12, 372],
               scale: [1, 1.4, 1],
@@ -264,7 +264,7 @@ export default function Home() {
           
           {/* Floating Gradient Orbs */}
           <motion.div
-            className="absolute -top-10 left-10 w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 bg-gradient-radial from-azure-blue/20 to-transparent rounded-full blur-2xl z-0"
+            className="absolute -top-16 left-10 sm:-top-10 w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 bg-gradient-radial from-azure-blue/20 to-transparent rounded-full blur-2xl z-0"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.3, 0.5, 0.3],
@@ -278,7 +278,7 @@ export default function Home() {
             }}
           />
           <motion.div
-            className="absolute -bottom-10 right-10 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-gradient-radial from-orange/20 to-transparent rounded-full blur-2xl z-0"
+            className="absolute -bottom-16 right-10 sm:-bottom-10 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-gradient-radial from-orange/20 to-transparent rounded-full blur-2xl z-0"
             animate={{
               scale: [1, 1.3, 1],
               opacity: [0.3, 0.6, 0.3],
@@ -314,7 +314,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           {/* 3D Floating Objects Around Offer Box */}
           <motion.div
-            className="absolute -top-8 right-0 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 border-2 border-azure-blue/25 rotate-45 z-0"
+            className="absolute -top-16 right-0 sm:-top-8 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 border-2 border-azure-blue/25 rotate-45 z-0"
             animate={{
               rotate: [45, 405],
               scale: [1, 1.15, 1],
@@ -327,7 +327,7 @@ export default function Home() {
             }}
           />
           <motion.div
-            className="absolute -bottom-8 left-0 w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 bg-gradient-to-br from-orange/20 to-azure-blue/20 rounded-full z-0"
+            className="absolute -bottom-16 left-0 sm:-bottom-8 w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 bg-gradient-to-br from-orange/20 to-azure-blue/20 rounded-full z-0"
             animate={{
               scale: [1, 1.3, 1],
               x: [0, 20, 0],
@@ -341,7 +341,7 @@ export default function Home() {
             }}
           />
           <motion.div
-            className="absolute -top-5 right-1/3 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 border border-light-blue/30 rotate-12 z-0"
+            className="absolute -top-12 right-1/3 sm:-top-5 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 border border-light-blue/30 rotate-12 z-0"
             animate={{
               rotate: [12, 372],
               scale: [1, 1.35, 1],
@@ -353,7 +353,7 @@ export default function Home() {
             }}
           />
           <motion.div
-            className="absolute -top-12 left-1/4 w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 bg-gradient-radial from-bright-blue/15 to-transparent rounded-full blur-xl z-0"
+            className="absolute -top-20 left-1/4 sm:-top-12 w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 bg-gradient-radial from-bright-blue/15 to-transparent rounded-full blur-xl z-0"
             animate={{
               scale: [1, 1.25, 1],
               opacity: [0.2, 0.4, 0.2],
@@ -367,7 +367,7 @@ export default function Home() {
             }}
           />
           <motion.div
-            className="absolute -bottom-12 right-1/4 w-18 h-18 sm:w-22 sm:h-22 md:w-28 md:h-28 bg-gradient-radial from-orange/15 to-transparent rounded-full blur-xl z-0"
+            className="absolute -bottom-20 right-1/4 sm:-bottom-12 w-18 h-18 sm:w-22 sm:h-22 md:w-28 md:h-28 bg-gradient-radial from-orange/15 to-transparent rounded-full blur-xl z-0"
             animate={{
               scale: [1, 1.3, 1],
               opacity: [0.25, 0.45, 0.25],
