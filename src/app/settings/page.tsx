@@ -18,7 +18,8 @@ import {
   Trash2, 
   ArrowLeft,
   Save,
-  CheckCircle2
+  CheckCircle2,
+  AlertCircle
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -88,41 +89,70 @@ export default function SettingsPage() {
     }
   }, [])
 
-  const handlePasswordChange = () => {
+  const handlePasswordChange = async (e: React.FormEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+
     const newErrors: Record<string, string> = {}
     
-    if (!passwordData.oldPassword) {
+    // Clear previous errors
+    setErrors({})
+    
+    // Validate old password
+    if (!passwordData.oldPassword || passwordData.oldPassword.trim().length === 0) {
       newErrors.oldPassword = 'Current password is required'
     }
     
-    if (!passwordData.newPassword) {
+    // Validate new password
+    if (!passwordData.newPassword || passwordData.newPassword.trim().length === 0) {
       newErrors.newPassword = 'New password is required'
     } else if (passwordData.newPassword.length < 8) {
       newErrors.newPassword = 'Password must be at least 8 characters'
     }
     
-    if (passwordData.newPassword !== passwordData.confirmPassword) {
+    // Validate confirm password
+    if (!passwordData.confirmPassword || passwordData.confirmPassword.trim().length === 0) {
+      newErrors.confirmPassword = 'Please confirm your new password'
+    } else if (passwordData.newPassword !== passwordData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match'
     }
     
-    if (passwordData.oldPassword === passwordData.newPassword) {
+    // Check if new password is different
+    if (passwordData.oldPassword && passwordData.newPassword && 
+        passwordData.oldPassword === passwordData.newPassword) {
       newErrors.newPassword = 'New password must be different from current password'
     }
     
+    // If there are errors, show them and return
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
       return
     }
     
-    // Here you would normally send the password change request to your backend
-    // For now, we'll simulate it
-    console.log('Password change requested')
-    
-    // Clear form and show success
-    setPasswordData({ oldPassword: '', newPassword: '', confirmPassword: '' })
-    setErrors({})
-    setSaveSuccess(true)
-    setTimeout(() => setSaveSuccess(false), 3000)
+    try {
+      // Here you would normally send the password change request to your backend
+      // For now, we'll simulate it
+      console.log('Password change requested')
+      
+      // In production, call API:
+      // const response = await fetch('/api/change-password', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({
+      //     oldPassword: passwordData.oldPassword,
+      //     newPassword: passwordData.newPassword
+      //   })
+      // })
+      
+      // Clear form and show success
+      setPasswordData({ oldPassword: '', newPassword: '', confirmPassword: '' })
+      setErrors({})
+      setSaveSuccess(true)
+      setTimeout(() => setSaveSuccess(false), 3000)
+    } catch (error: any) {
+      console.error('Password change error:', error)
+      setErrors({ submit: error.message || 'Failed to change password. Please try again.' })
+    }
   }
 
   const handleSaveEmailPreferences = () => {

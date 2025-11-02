@@ -276,14 +276,16 @@ export function ModernNavbar() {
             )}
 
             {/* Get Started Button */}
-            <motion.button
-              className="px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            >
-              Get Started
-            </motion.button>
+            <Link href="/signup">
+              <motion.button
+                className="px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                Get Started
+              </motion.button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -417,13 +419,15 @@ export function ModernNavbar() {
                   )}
 
                   {/* Get Started Button - Mobile */}
-                  <motion.button
-                    className="w-full px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Get Started
-                  </motion.button>
+                  <Link href="/signup">
+                    <motion.button
+                      className="w-full px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      Get Started
+                    </motion.button>
+                  </Link>
                 </div>
               </div>
             </motion.div>

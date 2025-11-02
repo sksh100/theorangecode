@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { Background } from '@/components/Background'
 import { ModernFooter } from '@/components/ModernFooter'
-import { BookOpen, User, Settings, ArrowRight, Edit2, Save, Upload, Linkedin, Twitter, Facebook, Instagram, Globe, Users, ChevronRight } from 'lucide-react'
+import { BookOpen, User, Settings, ArrowRight, Edit2, Save, Upload, Linkedin, Twitter, Facebook, Instagram, Globe, Users, ChevronRight, AlertCircle, CheckCircle2, TrendingUp, Play, Clock, Trophy, Award, Target, Calendar, Zap, Activity, BarChart3, Download, FileText, Sparkles, Flame, Star, Medal, Gift } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -46,6 +46,128 @@ export default function Dashboard() {
   })
   const fileInputRef = useRef<HTMLInputElement>(null)
   const coverFileInputRef = useRef<HTMLInputElement>(null)
+  
+  // Learning stats and activity
+  const [learningStats, setLearningStats] = useState({
+    modulesCompleted: 0,
+    totalModules: 10,
+    courseCompletion: 0,
+    totalLearningTime: 0, // in minutes
+    learningStreak: 0,
+    lastAccessedModule: null as string | null,
+    lastAccessedCourse: null as string | null,
+  })
+  const [recentActivity, setRecentActivity] = useState<Array<{
+    type: 'module' | 'course' | 'achievement'
+    title: string
+    timestamp: number
+    icon: string
+  }>>([])
+  const [achievements, setAchievements] = useState<Array<{
+    id: string
+    title: string
+    description: string
+    icon: string
+    unlocked: boolean
+    unlockedAt?: number
+  }>>([
+    { id: 'first-module', title: 'First Steps', description: 'Complete your first module', icon: '🎯', unlocked: false },
+    { id: 'halfway', title: 'Halfway Hero', description: 'Complete 50% of the course', icon: '🎖️', unlocked: false },
+    { id: 'week-streak', title: 'Consistent Learner', description: '7-day learning streak', icon: '🔥', unlocked: false },
+    { id: 'completed', title: 'Master Achiever', description: 'Complete the entire course', icon: '🏆', unlocked: false },
+  ])
+
+  useEffect(() => {
+    // Load learning stats from localStorage
+    const progressData = localStorage.getItem('cultural-intelligence-progress')
+    if (progressData) {
+      try {
+        const progress = JSON.parse(progressData)
+        const completedModules = progress.completedModules || []
+        const totalModules = 10
+        const modulesCompleted = completedModules.length
+        const courseCompletion = Math.round((modulesCompleted / totalModules) * 100)
+        
+        // Calculate learning time (estimate: 20 min per module on average)
+        const totalLearningTime = modulesCompleted * 20
+        
+        // Get learning streak (simplified: check last 7 days)
+        const lastActivity = localStorage.getItem('last-learning-activity')
+        const streak = lastActivity ? calculateStreak(lastActivity) : 0
+        
+        // Get last accessed module
+        const lastModule = localStorage.getItem('last-accessed-module')
+        
+        setLearningStats({
+          modulesCompleted,
+          totalModules,
+          courseCompletion,
+          totalLearningTime,
+          learningStreak: streak,
+          lastAccessedModule: lastModule,
+          lastAccessedCourse: 'cultural-intelligence',
+        })
+      } catch (e) {
+        console.error('Error loading learning stats:', e)
+      }
+    }
+    
+    // Load recent activity
+    const activityData = localStorage.getItem('recent-activity')
+    if (activityData) {
+      try {
+        setRecentActivity(JSON.parse(activityData))
+      } catch (e) {
+        console.error('Error loading recent activity:', e)
+      }
+    }
+    
+    // Check and unlock achievements
+    checkAchievements()
+  }, [profile, isEditing])
+
+  const calculateStreak = (lastActivityDate: string): number => {
+    const lastDate = new Date(lastActivityDate)
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    lastDate.setHours(0, 0, 0, 0)
+    
+    const diffTime = today.getTime() - lastDate.getTime()
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
+    
+    return diffDays === 0 ? 1 : 0 // Simplified: 1 if today, 0 otherwise
+  }
+
+  const checkAchievements = () => {
+    const progressData = localStorage.getItem('cultural-intelligence-progress')
+    if (progressData) {
+      try {
+        const progress = JSON.parse(progressData)
+        const completedModules = (progress.completedModules || []).length
+        const courseCompleted = progress.courseCompleted || false
+        
+        setAchievements(prev => prev.map(achievement => {
+          let unlocked = achievement.unlocked
+          
+          if (achievement.id === 'first-module' && completedModules >= 1 && !unlocked) {
+            unlocked = true
+          } else if (achievement.id === 'halfway' && completedModules >= 5 && !unlocked) {
+            unlocked = true
+          } else if (achievement.id === 'completed' && courseCompleted && !unlocked) {
+            unlocked = true
+          }
+          
+          return {
+            ...achievement,
+            unlocked,
+            unlockedAt: unlocked && !achievement.unlockedAt ? Date.now() : achievement.unlockedAt,
+          }
+        }))
+      } catch (e) {
+        console.error('Error checking achievements:', e)
+      }
+    }
+  }
 
   useEffect(() => {
     // Load profile from localStorage
@@ -124,6 +246,39 @@ export default function Dashboard() {
     return profile.bio.trim().split(/\s+/).filter(word => word.length > 0).length
   }
 
+  const calculateProfileCompletion = () => {
+    const essentialFields = [
+      { key: 'firstName', label: 'First Name' },
+      { key: 'lastName', label: 'Last Name' },
+      { key: 'profilePhoto', label: 'Profile Photo' },
+      { key: 'bio', label: 'Bio' },
+      { key: 'company', label: 'Company' },
+      { key: 'position', label: 'Position/Title' },
+      { key: 'countryOfResidency', label: 'Country of Residency' },
+    ]
+
+    const completedFields = essentialFields.filter(field => {
+      const value = profile[field.key as keyof UserProfile]
+      return value !== null && value !== undefined && String(value).trim().length > 0
+    })
+
+    const completionPercentage = Math.round((completedFields.length / essentialFields.length) * 100)
+    const missingFields = essentialFields.filter(field => {
+      const value = profile[field.key as keyof UserProfile]
+      return !value || value === null || value === undefined || String(value).trim().length === 0
+    })
+
+    return {
+      percentage: completionPercentage,
+      completedCount: completedFields.length,
+      totalCount: essentialFields.length,
+      missingFields: missingFields.map(f => f.label),
+      isComplete: completionPercentage === 100
+    }
+  }
+
+  const profileCompletion = calculateProfileCompletion()
+
   return (
     <div className="min-h-screen bg-primary-dark text-white">
       <Background />
@@ -136,7 +291,7 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-12"
+            className="mb-6"
           >
             <div className="glass-card">
               <div className="flex items-center gap-4 mb-6">
@@ -155,13 +310,80 @@ export default function Dashboard() {
             </div>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Profile Section - Left Column */}
+          {/* Profile Completion Banner - Compact - Only shows when incomplete */}
+          {!profileCompletion.isComplete && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="mb-6"
+            >
+              <div className="glass-card border border-azure-blue/50 bg-gradient-to-r from-azure-blue/10 to-transparent p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="w-4 h-4 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-semibold text-white">
+                        Complete Your Profile
+                      </span>
+                      <span className="text-xs font-bold text-azure-blue">
+                        {profileCompletion.percentage}%
+                      </span>
+                    </div>
+                    <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden mb-1">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${profileCompletion.percentage}%` }}
+                        transition={{ duration: 0.8, ease: 'easeOut' }}
+                        className="h-full bg-gradient-primary rounded-full"
+                      />
+                    </div>
+                    {profileCompletion.missingFields.length > 0 && (
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        {profileCompletion.missingFields.slice(0, 2).map((field, idx) => (
+                          <span
+                            key={idx}
+                            className="text-xs px-1.5 py-0.5 bg-white/10 rounded text-white/70"
+                          >
+                            {field}
+                          </span>
+                        ))}
+                        {profileCompletion.missingFields.length > 2 && (
+                          <span className="text-xs text-white/50">
+                            +{profileCompletion.missingFields.length - 2}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  {!isEditing && (
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setIsEditing(true)}
+                      className="px-4 py-2 rounded-full text-white text-sm font-semibold transition-all duration-300 hover:shadow-glow flex items-center justify-center gap-1.5 whitespace-nowrap flex-shrink-0"
+                      style={{ background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)' }}
+                    >
+                      <Edit2 className="w-4 h-4" />
+                      Edit
+                    </motion.button>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Main Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {/* Left Sidebar - Profile & Settings */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="lg:col-span-1"
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="lg:col-span-1 space-y-6"
             >
               <div className="glass-card overflow-hidden">
                 {/* Cover Photo */}
@@ -601,48 +823,53 @@ export default function Dashboard() {
                   </div>
                 )}
               </div>
-            </motion.div>
 
-            {/* Courses Section - Right Column */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="lg:col-span-2"
-            >
-              {/* Settings Link */}
-              <div className="mb-8">
-                <Link href="/settings">
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="glass-card cursor-pointer group hover:border-azure-blue/50 transition-all duration-300 mb-6"
-                  >
-                    <div className="flex items-center gap-6">
-                      <div className="w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center flex-shrink-0">
-                        <Settings className="w-10 h-10 text-white" />
+              {/* Settings Box - Placed under Profile */}
+              <Link href="/settings">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="glass-card cursor-pointer group hover:border-azure-blue/50 transition-all duration-300 p-6"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Settings className="w-6 h-6 text-white" />
+                    </div>
+                    
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-xl font-bold text-white group-hover:text-azure-blue transition-colors">
+                          Settings
+                        </h3>
+                        <ChevronRight className="w-5 h-5 text-white/50 group-hover:text-azure-blue group-hover:translate-x-2 transition-all flex-shrink-0" />
                       </div>
-                      
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-2">
-                          <h3 className="text-2xl font-bold text-white group-hover:text-azure-blue transition-colors">
-                            Settings
-                          </h3>
-                          <ChevronRight className="w-6 h-6 text-white/50 group-hover:text-azure-blue group-hover:translate-x-2 transition-all" />
-                        </div>
-                        <p className="text-white/70 mb-3">
-                          Manage your account, security, notifications, and privacy settings.
-                        </p>
-                        <div className="flex items-center gap-4 text-sm text-white/60">
-                          <span>Security • Privacy • Notifications</span>
-                        </div>
+                      <p className="text-white/70 text-sm mb-2 leading-relaxed">
+                        Manage your account, security, notifications, and privacy settings.
+                      </p>
+                      <div className="flex items-center gap-3 text-xs text-white/60">
+                        <span>Security</span>
+                        <span className="text-white/30">•</span>
+                        <span>Privacy</span>
+                        <span className="text-white/30">•</span>
+                        <span>Notifications</span>
                       </div>
                     </div>
-                  </motion.div>
-                </Link>
-              </div>
+                  </div>
+                </motion.div>
+              </Link>
+            </motion.div>
 
-              <div className="mb-8">
+            {/* Right Side - My Courses & Dashboard Features */}
+            <div className="lg:col-span-3 space-y-6">
+              {/* Courses Section */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+              >
                 <h2 className="text-2xl font-bold mb-6 text-white">My Courses</h2>
                 
                 <Link href="/courses/cultural-intelligence">
@@ -670,13 +897,384 @@ export default function Dashboard() {
                           <span>10 Modules</span>
                           <span>•</span>
                           <span>Self-Paced</span>
+                          {learningStats.modulesCompleted > 0 && (
+                            <>
+                              <span>•</span>
+                              <span className="text-azure-blue font-semibold">
+                                {learningStats.modulesCompleted} completed
+                              </span>
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
                   </motion.div>
                 </Link>
+              </motion.div>
+
+              {/* Statistics Cards */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+                className="grid grid-cols-2 md:grid-cols-4 gap-4"
+              >
+                <div className="glass-card p-4">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+                      <CheckCircle2 className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-xs text-white/60 mb-1">Modules</p>
+                      <p className="text-xl font-bold text-white">
+                        {learningStats.modulesCompleted}/{learningStats.totalModules}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="glass-card p-4">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+                      <BarChart3 className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-xs text-white/60 mb-1">Completion</p>
+                      <p className="text-xl font-bold text-white">{learningStats.courseCompletion}%</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="glass-card p-4">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+                      <Clock className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-xs text-white/60 mb-1">Time Spent</p>
+                      <p className="text-xl font-bold text-white">{learningStats.totalLearningTime}m</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="glass-card p-4">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+                      <Flame className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-xs text-white/60 mb-1">Streak</p>
+                      <p className="text-xl font-bold text-white">{learningStats.learningStreak} days</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Continue Learning & Quick Actions */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Continue Learning */}
+                {learningStats.lastAccessedModule && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.8 }}
+                  >
+                    <div className="glass-card p-6">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+                          <Play className="w-5 h-5 text-white" />
+                        </div>
+                        <h3 className="text-lg font-bold text-white">Continue Learning</h3>
+                      </div>
+                      <p className="text-white/70 text-sm mb-4">
+                        Pick up where you left off
+                      </p>
+                      <Link href={`/courses/cultural-intelligence/module/${learningStats.lastAccessedModule}`}>
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="w-full px-4 py-3 rounded-full text-white font-semibold transition-all duration-300 flex items-center justify-center gap-2"
+                          style={{ background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)' }}
+                        >
+                          <Play className="w-5 h-5" />
+                          Continue Module
+                        </motion.button>
+                      </Link>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Quick Actions */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.9 }}
+                >
+                  <div className="glass-card p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+                        <Zap className="w-5 h-5 text-white" />
+                      </div>
+                      <h3 className="text-lg font-bold text-white">Quick Actions</h3>
+                    </div>
+                    <div className="grid grid-cols-3 gap-3">
+                      <Link href="/courses/cultural-intelligence">
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white hover:bg-white/20 transition-all flex flex-col items-center gap-2"
+                        >
+                          <BookOpen className="w-5 h-5" />
+                          <span className="text-xs font-medium">Courses</span>
+                        </motion.button>
+                      </Link>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white hover:bg-white/20 transition-all flex flex-col items-center gap-2"
+                      >
+                        <FileText className="w-5 h-5" />
+                        <span className="text-xs font-medium">Resources</span>
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white hover:bg-white/20 transition-all flex flex-col items-center gap-2"
+                      >
+                        <Target className="w-5 h-5" />
+                        <span className="text-xs font-medium">Goals</span>
+                      </motion.button>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
-            </motion.div>
+
+              {/* Progress Overview & Achievements */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Progress Overview */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1.0 }}
+                >
+                  <div className="glass-card p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+                        <BarChart3 className="w-5 h-5 text-white" />
+                      </div>
+                      <h3 className="text-lg font-bold text-white">Progress Overview</h3>
+                    </div>
+                    <div className="space-y-4">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm text-white/80">Cultural Intelligence</span>
+                          <span className="text-sm font-bold text-azure-blue">{learningStats.courseCompletion}%</span>
+                        </div>
+                        <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${learningStats.courseCompletion}%` }}
+                            transition={{ duration: 0.8, ease: 'easeOut' }}
+                            className="h-full bg-gradient-primary rounded-full"
+                          />
+                        </div>
+                        <p className="text-xs text-white/60 mt-1">
+                          {learningStats.modulesCompleted} of {learningStats.totalModules} modules completed
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Achievement Badges */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1.1 }}
+                >
+                  <div className="glass-card p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+                        <Trophy className="w-5 h-5 text-white" />
+                      </div>
+                      <h3 className="text-lg font-bold text-white">Achievements</h3>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      {achievements.map((achievement) => (
+                        <div
+                          key={achievement.id}
+                          className={`p-3 rounded-xl border ${
+                            achievement.unlocked
+                              ? 'bg-green-500/10 border-green-500/40'
+                              : 'bg-white/5 border-white/10'
+                          }`}
+                        >
+                          <div className="text-2xl mb-1">{achievement.icon}</div>
+                          <p className={`text-xs font-semibold mb-1 ${
+                            achievement.unlocked ? 'text-white' : 'text-white/50'
+                          }`}>
+                            {achievement.title}
+                          </p>
+                          <p className={`text-xs ${
+                            achievement.unlocked ? 'text-white/70' : 'text-white/40'
+                          }`}>
+                            {achievement.description}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Recent Activity & Recommended Next Steps */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Recent Activity */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1.2 }}
+                >
+                  <div className="glass-card p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+                        <Activity className="w-5 h-5 text-white" />
+                      </div>
+                      <h3 className="text-lg font-bold text-white">Recent Activity</h3>
+                    </div>
+                    {recentActivity.length > 0 ? (
+                      <div className="space-y-3">
+                        {recentActivity.slice(0, 5).map((activity, idx) => (
+                          <div key={idx} className="flex items-center gap-3 p-2 rounded-lg bg-white/5">
+                            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                              {activity.type === 'module' ? (
+                                <Play className="w-4 h-4 text-white" />
+                              ) : activity.type === 'course' ? (
+                                <BookOpen className="w-4 h-4 text-white" />
+                              ) : (
+                                <Award className="w-4 h-4 text-white" />
+                              )}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm text-white font-medium truncate">{activity.title}</p>
+                              <p className="text-xs text-white/60">
+                                {new Date(activity.timestamp).toLocaleDateString()}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-sm text-white/60">No recent activity</p>
+                    )}
+                  </div>
+                </motion.div>
+
+                {/* Recommended Next Steps */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1.3 }}
+                >
+                  <div className="glass-card p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+                        <Sparkles className="w-5 h-5 text-white" />
+                      </div>
+                      <h3 className="text-lg font-bold text-white">Recommended Next</h3>
+                    </div>
+                    {learningStats.modulesCompleted < learningStats.totalModules ? (
+                      <div className="space-y-3">
+                        <div className="p-4 rounded-xl bg-white/5 border border-azure-blue/30">
+                          <div className="flex items-center gap-3 mb-2">
+                            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+                              <Play className="w-4 h-4 text-white" />
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-sm font-semibold text-white">
+                                Module {learningStats.modulesCompleted + 1}
+                              </p>
+                              <p className="text-xs text-white/60">
+                                Continue your learning journey
+                              </p>
+                            </div>
+                          </div>
+                          <Link href="/courses/cultural-intelligence">
+                            <motion.button
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                              className="w-full mt-3 px-4 py-2 rounded-full text-white text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2"
+                              style={{ background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)' }}
+                            >
+                              Start Next Module
+                            </motion.button>
+                          </Link>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/30">
+                        <div className="flex items-center gap-3 mb-2">
+                          <Trophy className="w-8 h-8 text-green-400" />
+                          <div className="flex-1">
+                            <p className="text-sm font-semibold text-white">
+                              Course Completed! 🎉
+                            </p>
+                            <p className="text-xs text-white/60">
+                              Great work! Consider exploring advanced courses.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Learning Goals & Calendar */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.4 }}
+              >
+                <div className="glass-card p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+                      <Calendar className="w-5 h-5 text-white" />
+                    </div>
+                    <h3 className="text-lg font-bold text-white">Learning Goals & Schedule</h3>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                      <div className="flex items-center gap-3 mb-3">
+                        <Target className="w-5 h-5 text-azure-blue" />
+                        <h4 className="text-sm font-semibold text-white">This Week's Goal</h4>
+                      </div>
+                      <p className="text-sm text-white/70 mb-2">
+                        Complete {Math.min(3, learningStats.totalModules - learningStats.modulesCompleted)} modules
+                      </p>
+                      <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-gradient-primary rounded-full"
+                          style={{ width: `${Math.min(100, (learningStats.modulesCompleted / learningStats.totalModules) * 100)}%` }}
+                        />
+                      </div>
+                    </div>
+                    <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                      <div className="flex items-center gap-3 mb-3">
+                        <Calendar className="w-5 h-5 text-azure-blue" />
+                        <h4 className="text-sm font-semibold text-white">Study Schedule</h4>
+                      </div>
+                      <p className="text-sm text-white/70 mb-2">
+                        Recommended: 2-3 modules per week
+                      </p>
+                      <p className="text-xs text-white/60">
+                        Self-paced learning - study at your own pace
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </main>
