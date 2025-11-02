@@ -20,7 +20,7 @@ export function Chatbot({ onWhatsAppRedirect }: ChatbotProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Hello! Nice to meet you! I'm YOUR Luxury Agent. How can I assist you today?",
+      text: "Hello! Nice to meet you! I'm The Orange Code. How can I assist you today?",
       isUser: false,
       timestamp: new Date()
     }
@@ -86,7 +86,7 @@ export function Chatbot({ onWhatsAppRedirect }: ChatbotProps) {
 
   const handleWhatsAppRedirect = () => {
     const phoneNumber = "971568786106" // UAE number
-    const message = encodeURIComponent("Hello! I'm interested in Your Luxury Agent services. Can you help me?")
+    const message = encodeURIComponent("Hello! I'm interested in The Orange Code services. Can you help me?")
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`
     window.open(whatsappUrl, '_blank')
     onWhatsAppRedirect?.()
@@ -163,7 +163,7 @@ export function Chatbot({ onWhatsAppRedirect }: ChatbotProps) {
                     <MessageCircle className="w-4 h-4" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm">YOUR Luxury Agent</h3>
+                    <h3 className="font-bold text-sm">The Orange Code</h3>
                     <p className="text-xs opacity-90">Online now</p>
                   </div>
                 </div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import { ChevronDown, Menu, X, Sparkles, Zap, Shield, Users, Settings, LogOut, LogIn, ShoppingBag } from 'lucide-react'
 import { MegaDropdown } from './MegaDropdown'
 import { AboutMegaDropdown } from './AboutMegaDropdown'
@@ -99,7 +100,7 @@ export function ModernNavbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <motion.div
@@ -112,13 +113,25 @@ export function ModernNavbar() {
             </div>
             <div>
               <h1 className="text-xl font-bold text-white font-montserrat">
-                Your Luxury Agent
+                The Orange Code
               </h1>
               <p className="text-xs text-azure-blue/80 font-montserrat">
                 AI-Powered Luxury
               </p>
             </div>
           </motion.div>
+          
+          {/* Logo at bottom left of header */}
+          <div className="absolute bottom-0 left-6 lg:left-8 z-50">
+            <Image
+              src="/coming-soon/logo-1.png"
+              alt="The Orange Code Logo"
+              width={80}
+              height={40}
+              className="h-8 sm:h-10 md:h-12 w-auto"
+              priority
+            />
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">

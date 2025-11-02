@@ -91,7 +91,7 @@ export function USPBar() {
           <h2 className="text-4xl md:text-5xl font-bold text-white font-montserrat mb-4">
             Why Choose{' '}
             <span className="text-gradient-primary bg-gradient-primary bg-clip-text text-transparent">
-              Your Luxury Agent
+              The Orange Code
             </span>
           </h2>
           <p className="text-white/70 text-lg font-montserrat max-w-2xl mx-auto">

@@ -460,7 +460,7 @@ export function ExtendedAdvantagesBanner() {
             >
               <Crown className="w-7 h-7 text-white" />
             </motion.div>
-            <span>Meet YOUR Luxury Agent Today!</span>
+            <span>Meet The Orange Code Today!</span>
             <motion.div
               animate={{ x: [0, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
