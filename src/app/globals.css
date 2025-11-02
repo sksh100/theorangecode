@@ -757,20 +757,52 @@
     min-height: 100vh;
     position: relative;
     padding: 1rem 0;
+    background-image: none !important;
+    background: transparent !important;
+  }
+  
+  .hero-section::before {
+    display: none !important;
+  }
+  
+  .hero-section::after {
+    display: none !important;
+  }
+  
+  /* Remove any background patterns or images from hero-section and its children on mobile */
+  .hero-section * {
+    background-image: none !important;
   }
   
   .hero-content {
     @apply w-[95%];
     padding-top: 5rem;
     padding-bottom: 2rem;
+    background-image: none !important;
+    background: transparent !important;
+  }
+  
+  .hero-content::before,
+  .hero-content::after {
+    display: none !important;
   }
   
   .hero-section .glass-card {
     @apply p-6 sm:p-8;
+    background-image: none !important;
+  }
+  
+  .hero-section .glass-card::before,
+  .hero-section .glass-card::after {
+    display: none !important;
   }
   
   .orb-1, .orb-2, .orb-3 {
     @apply hidden;
+  }
+  
+  .particles {
+    display: none !important;
   }
   
   /* Ensure text doesn't overflow on mobile */
@@ -799,11 +831,43 @@
   .hero-section {
     @apply min-h-screen;
     padding: 0.5rem 0;
+    background-image: none !important;
+    background: transparent !important;
+  }
+  
+  .hero-section::before,
+  .hero-section::after {
+    display: none !important;
+  }
+  
+  /* Remove any background patterns or images from hero-section and its children on mobile */
+  .hero-section * {
+    background-image: none !important;
   }
   
   .hero-content {
     padding-top: 4rem;
     padding-bottom: 1.5rem;
+    background-image: none !important;
+    background: transparent !important;
+  }
+  
+  .hero-content::before,
+  .hero-content::after {
+    display: none !important;
+  }
+  
+  .hero-section .glass-card {
+    background-image: none !important;
+  }
+  
+  .hero-section .glass-card::before,
+  .hero-section .glass-card::after {
+    display: none !important;
+  }
+  
+  .particles {
+    display: none !important;
   }
   
   .submit-btn {

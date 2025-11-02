@@ -145,37 +145,11 @@ export default function SignupPage() {
       <main className="relative z-10 pt-24 pb-16">
         <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative">
-            {/* Floating Particles Around Create Account Box - Positioned on Left and Right Sides */}
+            {/* Floating Particles on Left and Right Sides Only - Asymmetric Distribution */}
             {/* Floating Geometric Shapes - Left Side */}
+            {/* Left Top */}
             <motion.div
-              className="absolute top-1/4 -left-12 sm:-left-16 md:-left-20 w-10 h-10 sm:w-14 sm:h-14 md:w-18 md:h-18 border-2 border-azure-blue/30 rotate-45 z-0"
-              animate={{
-                rotate: [45, 405],
-                scale: [1, 1.2, 1],
-                y: [0, -20, 0],
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-            <motion.div
-              className="absolute top-1/2 -left-8 sm:-left-12 md:-left-16 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 border-2 border-orange/30 rounded-full z-0"
-              animate={{
-                scale: [1, 1.3, 1],
-                x: [0, -10, 0],
-                y: [0, -15, 0],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1,
-              }}
-            />
-            <motion.div
-              className="absolute bottom-1/4 -left-10 sm:-left-14 md:-left-18 w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-br from-azure-blue/20 to-orange/20 rotate-12 z-0"
+              className="absolute top-[8%] -left-6 sm:-left-10 md:-left-14 lg:-left-18 xl:-left-22 w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-br from-azure-blue/20 to-orange/20 rotate-12 z-0"
               animate={{
                 rotate: [12, 372],
                 scale: [1, 1.4, 1],
@@ -186,10 +160,83 @@ export default function SignupPage() {
                 ease: "linear",
               }}
             />
+            {/* Left Upper */}
+            <motion.div
+              className="absolute top-[22%] -left-12 sm:-left-16 md:-left-20 lg:-left-26 xl:-left-30 w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 border-2 border-orange/30 rounded-full z-0"
+              animate={{
+                scale: [1, 1.3, 1],
+                x: [0, -10, 0],
+                y: [0, -15, 0],
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.5,
+              }}
+            />
+            {/* Left Middle-Top */}
+            <motion.div
+              className="absolute top-[38%] -left-8 sm:-left-12 md:-left-16 lg:-left-20 xl:-left-24 w-10 h-10 sm:w-14 sm:h-14 md:w-18 md:h-18 border-2 border-azure-blue/30 rotate-45 z-0"
+              animate={{
+                rotate: [45, 405],
+                scale: [1, 1.2, 1],
+              }}
+              transition={{
+                duration: 18,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.8,
+              }}
+            />
+            {/* Left Middle-Bottom */}
+            <motion.div
+              className="absolute bottom-[38%] -left-14 sm:-left-18 md:-left-22 lg:-left-28 xl:-left-34 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 border-2 border-bright-blue/25 rounded-full z-0"
+              animate={{
+                scale: [1, 1.3, 1],
+                x: [0, -15, 0],
+                y: [0, 10, 0],
+              }}
+              transition={{
+                duration: 12,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2,
+              }}
+            />
+            {/* Left Lower */}
+            <motion.div
+              className="absolute bottom-[18%] -left-10 sm:-left-14 md:-left-18 lg:-left-22 xl:-left-26 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 border-2 border-orange/25 rotate-12 z-0"
+              animate={{
+                rotate: [12, 372],
+                scale: [1, 1.4, 1],
+              }}
+              transition={{
+                duration: 16,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.2,
+              }}
+            />
+            {/* Left Bottom */}
+            <motion.div
+              className="absolute bottom-[5%] -left-8 sm:-left-12 md:-left-16 lg:-left-20 xl:-left-24 w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 border-2 border-azure-blue/25 rotate-45 z-0"
+              animate={{
+                rotate: [45, 405],
+                scale: [1, 1.4, 1],
+              }}
+              transition={{
+                duration: 14,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.5,
+              }}
+            />
             
             {/* Floating Geometric Shapes - Right Side */}
+            {/* Right Top */}
             <motion.div
-              className="absolute top-1/4 -right-12 sm:-right-16 md:-right-20 w-10 h-10 sm:w-14 sm:h-14 md:w-18 md:h-18 border-2 border-bright-blue/30 rotate-45 z-0"
+              className="absolute top-[3%] -right-10 sm:-right-14 md:-right-18 lg:-right-22 xl:-right-28 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 border-2 border-bright-blue/30 rotate-45 z-0"
               animate={{
                 rotate: [45, 405],
                 scale: [1, 1.2, 1],
@@ -202,22 +249,53 @@ export default function SignupPage() {
                 delay: 0.5,
               }}
             />
+            {/* Right Upper */}
             <motion.div
-              className="absolute top-1/2 -right-8 sm:-right-12 md:-right-16 w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 border-2 border-azure-blue/25 rounded-full z-0"
+              className="absolute top-[28%] -right-8 sm:-right-12 md:-right-16 lg:-right-20 xl:-right-26 w-10 h-10 sm:w-14 sm:h-14 md:w-18 md:h-18 border-2 border-azure-blue/25 rounded-full z-0"
               animate={{
                 scale: [1, 1.3, 1],
                 x: [0, 10, 0],
                 y: [0, 15, 0],
               }}
               transition={{
-                duration: 10,
+                duration: 12,
                 repeat: Infinity,
                 ease: "easeInOut",
                 delay: 1.2,
               }}
             />
+            {/* Right Middle */}
             <motion.div
-              className="absolute bottom-1/3 -right-10 sm:-right-14 md:-right-18 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 border-2 border-orange/25 rotate-12 z-0"
+              className="absolute top-[52%] -right-16 sm:-right-20 md:-right-24 lg:-right-28 xl:-right-32 w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 bg-gradient-to-br from-orange/20 to-azure-blue/20 rotate-12 z-0"
+              animate={{
+                rotate: [12, 372],
+                scale: [1, 1.4, 1],
+              }}
+              transition={{
+                duration: 14,
+                repeat: Infinity,
+                ease: "linear",
+                delay: 1,
+              }}
+            />
+            {/* Right Lower */}
+            <motion.div
+              className="absolute bottom-[28%] -right-12 sm:-right-16 md:-right-20 lg:-right-24 xl:-right-30 w-10 h-10 sm:w-14 sm:h-14 md:w-18 md:h-18 border-2 border-bright-blue/30 rounded-full z-0"
+              animate={{
+                scale: [1, 1.3, 1],
+                x: [0, 15, 0],
+                y: [0, -10, 0],
+              }}
+              transition={{
+                duration: 11,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.8,
+              }}
+            />
+            {/* Right Bottom */}
+            <motion.div
+              className="absolute bottom-[2%] -right-8 sm:-right-12 md:-right-16 lg:-right-20 xl:-right-24 w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 border-2 border-orange/25 rotate-12 z-0"
               animate={{
                 rotate: [12, 372],
                 scale: [1, 1.4, 1],
@@ -231,8 +309,9 @@ export default function SignupPage() {
             />
             
             {/* Floating Gradient Orbs - Left Side */}
+            {/* Left Top Orb */}
             <motion.div
-              className="absolute top-1/3 -left-16 sm:-left-20 md:-left-24 w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 bg-gradient-radial from-azure-blue/20 to-transparent rounded-full blur-2xl z-0"
+              className="absolute top-[12%] -left-18 sm:-left-22 md:-left-26 lg:-left-30 xl:-left-34 w-18 h-18 sm:w-26 sm:h-26 md:w-34 md:h-34 bg-gradient-radial from-azure-blue/20 to-transparent rounded-full blur-2xl z-0"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.3, 0.5, 0.3],
@@ -243,10 +322,44 @@ export default function SignupPage() {
                 duration: 6,
                 repeat: Infinity,
                 ease: "easeInOut",
+                delay: 0.5,
               }}
             />
+            {/* Left Upper Orb */}
             <motion.div
-              className="absolute bottom-1/3 -left-12 sm:-left-16 md:-left-20 w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 bg-gradient-radial from-orange/20 to-transparent rounded-full blur-2xl z-0"
+              className="absolute top-[32%] -left-14 sm:-left-18 md:-left-22 lg:-left-26 xl:-left-30 w-16 h-16 sm:w-22 sm:h-22 md:w-28 md:h-28 bg-gradient-radial from-orange/20 to-transparent rounded-full blur-xl z-0"
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.2, 0.5, 0.2],
+                x: [0, -20, 0],
+                y: [0, -10, 0],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.5,
+              }}
+            />
+            {/* Left Middle Orb */}
+            <motion.div
+              className="absolute top-[55%] -left-16 sm:-left-20 md:-left-24 lg:-left-28 xl:-left-32 w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 bg-gradient-radial from-azure-blue/15 to-transparent rounded-full blur-xl z-0"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.5, 0.3],
+                x: [0, -15, 0],
+                y: [0, 10, 0],
+              }}
+              transition={{
+                duration: 7,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2.5,
+              }}
+            />
+            {/* Left Lower Orb */}
+            <motion.div
+              className="absolute bottom-[32%] -left-12 sm:-left-16 md:-left-20 lg:-left-24 xl:-left-28 w-22 h-22 sm:w-30 sm:h-30 md:w-38 md:h-38 bg-gradient-radial from-orange/20 to-transparent rounded-full blur-2xl z-0"
               animate={{
                 scale: [1, 1.3, 1],
                 opacity: [0.3, 0.6, 0.3],
@@ -260,10 +373,27 @@ export default function SignupPage() {
                 delay: 2,
               }}
             />
+            {/* Left Bottom Orb */}
+            <motion.div
+              className="absolute bottom-[8%] -left-16 sm:-left-20 md:-left-24 lg:-left-28 xl:-left-32 w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 bg-gradient-radial from-azure-blue/15 to-transparent rounded-full blur-xl z-0"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.5, 0.3],
+                x: [0, -15, 0],
+                y: [0, 15, 0],
+              }}
+              transition={{
+                duration: 9,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.2,
+              }}
+            />
             
             {/* Floating Gradient Orbs - Right Side */}
+            {/* Right Top Orb */}
             <motion.div
-              className="absolute top-1/3 -right-16 sm:-right-20 md:-right-24 w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 bg-gradient-radial from-bright-blue/20 to-transparent rounded-full blur-2xl z-0"
+              className="absolute top-[8%] -right-14 sm:-right-18 md:-right-22 lg:-right-26 xl:-right-30 w-14 h-14 sm:w-20 sm:h-20 md:w-28 md:h-28 bg-gradient-radial from-bright-blue/20 to-transparent rounded-full blur-2xl z-0"
               animate={{
                 scale: [1, 1.25, 1],
                 opacity: [0.3, 0.5, 0.3],
@@ -277,8 +407,9 @@ export default function SignupPage() {
                 delay: 1.5,
               }}
             />
+            {/* Right Upper Orb */}
             <motion.div
-              className="absolute bottom-1/4 -right-12 sm:-right-16 md:-right-20 w-18 h-18 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-gradient-radial from-azure-blue/15 to-transparent rounded-full blur-xl z-0"
+              className="absolute top-[35%] -right-16 sm:-right-20 md:-right-24 lg:-right-28 xl:-right-32 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-gradient-radial from-azure-blue/15 to-transparent rounded-full blur-xl z-0"
               animate={{
                 scale: [1, 1.3, 1],
                 opacity: [0.2, 0.5, 0.2],
@@ -291,8 +422,9 @@ export default function SignupPage() {
                 delay: 0.8,
               }}
             />
+            {/* Right Middle Orb */}
             <motion.div
-              className="absolute top-1/2 -right-14 sm:-right-18 md:-right-22 w-14 h-14 sm:w-18 sm:h-18 md:w-22 md:h-22 bg-gradient-radial from-orange/15 to-transparent rounded-full blur-xl z-0"
+              className="absolute top-[58%] -right-14 sm:-right-18 md:-right-22 lg:-right-26 xl:-right-30 w-20 h-20 sm:w-28 sm:h-28 md:w-34 md:h-34 bg-gradient-radial from-orange/15 to-transparent rounded-full blur-xl z-0"
               animate={{
                 scale: [1, 1.25, 1],
                 opacity: [0.2, 0.4, 0.2],
@@ -303,6 +435,38 @@ export default function SignupPage() {
                 repeat: Infinity,
                 ease: "easeInOut",
                 delay: 1.2,
+              }}
+            />
+            {/* Right Lower Orb */}
+            <motion.div
+              className="absolute bottom-[35%] -right-18 sm:-right-22 md:-right-26 lg:-right-30 xl:-right-34 w-18 h-18 sm:w-26 sm:h-26 md:w-34 md:h-34 bg-gradient-radial from-bright-blue/20 to-transparent rounded-full blur-2xl z-0"
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.3, 0.6, 0.3],
+                x: [0, 15, 0],
+                y: [0, 12, 0],
+              }}
+              transition={{
+                duration: 7,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.8,
+              }}
+            />
+            {/* Right Bottom Orb */}
+            <motion.div
+              className="absolute bottom-[10%] -right-12 sm:-right-16 md:-right-20 lg:-right-24 xl:-right-28 w-14 h-14 sm:w-20 sm:h-20 md:w-26 md:h-26 bg-gradient-radial from-azure-blue/15 to-transparent rounded-full blur-xl z-0"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.5, 0.3],
+                x: [0, 15, 0],
+                y: [0, -15, 0],
+              }}
+              transition={{
+                duration: 9,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2.2,
               }}
             />
 
