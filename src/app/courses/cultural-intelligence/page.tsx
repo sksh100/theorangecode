@@ -225,7 +225,7 @@ export default function CulturalIntelligenceCourse() {
           </motion.div>
 
           {/* Modules Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 mb-12">
             {modules.map((module, index) => {
               const coverImage = moduleCoverImages[module.id] || module.coverImage
               
