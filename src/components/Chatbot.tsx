@@ -96,7 +96,8 @@ export function Chatbot({ onWhatsAppRedirect }: ChatbotProps) {
     <>
       {/* Floating Chat Button */}
       <motion.button
-        className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-gradient-to-r from-orange to-bright-blue rounded-full shadow-2xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group"
+        className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group"
+        style={{ background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)' }}
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
@@ -156,7 +157,7 @@ export function Chatbot({ onWhatsAppRedirect }: ChatbotProps) {
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
             {/* Chat Header */}
-            <div className="bg-gradient-to-r from-orange to-bright-blue p-4 text-white">
+            <div className="p-4 text-white" style={{ background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)' }}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
@@ -191,9 +192,10 @@ export function Chatbot({ onWhatsAppRedirect }: ChatbotProps) {
                     <div
                       className={`max-w-xs px-3 py-2 rounded-2xl text-sm ${
                         message.isUser
-                          ? 'bg-gradient-to-r from-orange to-bright-blue text-white'
+                          ? 'text-white'
                           : 'bg-gray-100 text-gray-800'
                       }`}
+                      style={message.isUser ? { background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)' } : undefined}
                     >
                       {message.text}
                     </div>
@@ -252,7 +254,8 @@ export function Chatbot({ onWhatsAppRedirect }: ChatbotProps) {
                 />
                 <motion.button
                   onClick={() => handleSendMessage(inputValue)}
-                  className="px-3 py-2 bg-gradient-to-r from-orange to-bright-blue text-white rounded-lg hover:opacity-90 transition-opacity"
+                  className="px-3 py-2 text-white rounded-lg hover:opacity-90 transition-opacity"
+                  style={{ background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)' }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
