@@ -219,11 +219,11 @@ export default function CulturalIntelligenceCourse() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="glass-card h-full cursor-pointer group hover:scale-[1.02] transition-all duration-300 !py-10 !px-8"
+                  className="glass-card h-full cursor-pointer group hover:scale-[1.02] transition-all duration-300 !py-12 !px-8"
                 >
                   <div className="flex items-start gap-4">
                     {/* Module Number Badge */}
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                    <div className={`w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 ${
                       completedModules.has(module.id)
                         ? 'bg-green-500/20 border border-green-500/40'
                         : 'bg-azure-blue/20 border border-azure-blue/40'
@@ -237,7 +237,7 @@ export default function CulturalIntelligenceCourse() {
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-xl font-bold text-white group-hover:text-azure-blue transition-colors">
+                        <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-azure-blue transition-colors">
                           {module.title}
                         </h3>
                         <ChevronRight className="w-5 h-5 text-white/50 group-hover:text-azure-blue group-hover:translate-x-1 transition-all" />
