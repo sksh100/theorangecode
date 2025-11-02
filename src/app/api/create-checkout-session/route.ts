@@ -1,12 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-10-29.clover', // Latest Stripe API version
-})
-
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.STRIPE_SECRET_KEY) {
+      console.error('❌ STRIPE_SECRET_KEY is not configured')
+      return NextResponse.json(
+        { error: 'Stripe is not configured' },
+        { status: 500 }
+      )
+    }
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2025-10-29.clover', // Latest Stripe API version
+    })
+
     const body = await request.json()
     const { price, currency = 'aed' } = body
 
@@ -14,14 +22,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: 'Price is required' },
         { status: 400 }
-      )
-    }
-
-    if (!process.env.STRIPE_SECRET_KEY) {
-      console.error('❌ STRIPE_SECRET_KEY is not configured')
-      return NextResponse.json(
-        { error: 'Stripe is not configured' },
-        { status: 500 }
       )
     }
 
