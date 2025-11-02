@@ -20,7 +20,14 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    if (!email || !email.trim() || !email.includes('@')) {
+    const emailTrimmed = email.trim()
+    
+    if (!emailTrimmed) {
+      setMessage({ type: 'error', text: 'Please enter your email address' })
+      return
+    }
+    
+    if (!emailTrimmed.includes('@') || !emailTrimmed.includes('.')) {
       setMessage({ type: 'error', text: 'Please enter a valid email address' })
       return
     }
@@ -35,7 +42,7 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: email.trim(),
+          email: emailTrimmed,
           name: '',
           phone: '',
           timestamp: new Date().toISOString(),
@@ -43,18 +50,24 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
         })
       })
 
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'Server error' }))
+        setMessage({ type: 'error', text: errorData?.error || 'Something went wrong. Please try again.' })
+        return
+      }
+
       const data = await response.json()
 
-      if (response.ok && data.success) {
-      setIsSubscribed(true)
-      setEmail('')
+      if (data.success) {
+        setIsSubscribed(true)
+        setEmail('')
         setMessage({ type: 'success', text: 'Thank you for subscribing!' })
       } else {
         setMessage({ type: 'error', text: data?.error || 'Something went wrong. Please try again.' })
       }
     } catch (error) {
       console.error('Subscription error:', error)
-      setMessage({ type: 'error', text: 'Network error. Please try again.' })
+      setMessage({ type: 'error', text: 'Network error. Please check your connection and try again.' })
     } finally {
       setIsSubmitting(false)
     }

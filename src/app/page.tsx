@@ -307,8 +307,12 @@ export default function Home() {
             {/* CTA Button */}
             <div className="flex flex-col items-center gap-3 sm:gap-4">
               <button
+                type="button"
                 onClick={async () => {
+                  if (isLoadingCheckout) return
+                  
                   setIsLoadingCheckout(true)
+                  
                   try {
                     const response = await fetch('/api/create-checkout-session', {
                       method: 'POST',
@@ -322,27 +326,30 @@ export default function Home() {
                     })
                     
                     if (!response.ok) {
-                      const errorData = await response.json().catch(() => ({ error: 'Network error' }))
+                      const errorData = await response.json().catch(() => ({ error: 'Server error' }))
                       console.error('Checkout API error:', errorData)
-                      alert(errorData.error || `Server error (${response.status}). Please check your Stripe configuration.`)
+                      alert(errorData.error || `Server error (${response.status}). Please check your Stripe configuration or try again later.`)
+                      setIsLoadingCheckout(false)
                       return
                     }
                     
                     const data = await response.json()
                     
                     if (data.url) {
+                      // Redirect to Stripe checkout
                       window.location.href = data.url
                     } else if (data.error) {
                       console.error('Checkout error:', data.error)
                       alert(`Checkout error: ${data.error}`)
+                      setIsLoadingCheckout(false)
                     } else {
                       console.error('Unexpected response:', data)
                       alert('Unable to start checkout. Please try again or contact support.')
+                      setIsLoadingCheckout(false)
                     }
                   } catch (error: any) {
                     console.error('Checkout error:', error)
                     alert(`Checkout failed: ${error.message || 'Network error. Please check your connection and try again.'}`)
-                  } finally {
                     setIsLoadingCheckout(false)
                   }
                 }}
