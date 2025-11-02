@@ -27,7 +27,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            Experience the future of luxury with AI-powered precision
+            Transforming cultural barriers into bridges of trust through refined knowledge and authentic presence.
           </motion.p>
           
           <motion.div 
