@@ -242,7 +242,33 @@ export function ModernNavbar() {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                onClick={() => setIsLoggedIn(!isLoggedIn)}
+                onClick={() => {
+                  const newLoggedInState = !isLoggedIn
+                  setIsLoggedIn(newLoggedInState)
+                  if (newLoggedInState) {
+                    // Load user profile to get current name
+                    const saved = localStorage.getItem('user-profile')
+                    if (saved) {
+                      try {
+                        const profile = JSON.parse(saved)
+                        const name = profile.firstName || profile.lastName 
+                          ? `${profile.firstName || ''} ${profile.lastName || ''}`.trim()
+                          : 'there'
+                        setUserName(name || 'there')
+                      } catch (e) {
+                        setUserName('there')
+                      }
+                    } else {
+                      setUserName('there')
+                    }
+                    // Show welcome message when logging in
+                    setShowWelcomeMessage(true)
+                    // Auto-hide after 5 seconds
+                    setTimeout(() => {
+                      setShowWelcomeMessage(false)
+                    }, 5000)
+                  }
+                }}
               >
                 <LogIn className="w-4 h-4 group-hover:text-azure-blue transition-colors duration-300" />
                 <span className="font-montserrat font-medium text-sm">Login</span>
