@@ -4,7 +4,7 @@
 
 ✅ Stripe checkout integration is complete and ready to use. The "Enroll Now" button will redirect users to Stripe's secure checkout page.
 
-## What You Need to Do
+## What You Need to https://buy.stripe.com/5kQ3cv79cfH3byHdO08k800Do
 
 ### 1. Create a Stripe Account
 1. Go to [https://stripe.com](https://stripe.com)

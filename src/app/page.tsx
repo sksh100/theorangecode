@@ -4,10 +4,8 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { ModernFooter } from '@/components/ModernFooter'
 import { ArrowRight, Clock, Check, Sparkles } from 'lucide-react'
-import { useState } from 'react'
 
 export default function Home() {
-  const [isLoadingCheckout, setIsLoadingCheckout] = useState(false)
 
   const countryCodes = [
     { code: '+971', flag: '🇦🇪', name: 'UAE' },
@@ -163,7 +161,7 @@ export default function Home() {
         <div className="hero-content pt-1 sm:pt-4 md:pt-4 pb-1 sm:pb-0">
 
           <motion.div
-            className="glass-card mt-0 relative overflow-visible py-4 sm:py-8 md:py-16 lg:py-32 xl:py-40 z-10"
+            className="glass-card mt-0 relative overflow-hidden py-4 sm:py-8 md:py-16 lg:py-32 xl:py-40 z-10"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -197,6 +195,14 @@ export default function Home() {
             >
               Transforming cultural barriers into bridges of trust through refined knowledge and authentic presence.
             </motion.p>
+
+            {/* Mobile-visible launch date (duplicate for small screens to ensure visibility) */}
+            <div className="sm:hidden mt-2 mb-4">
+              <p className="font-sofia text-base text-white/90 text-center">
+                <span className="uppercase text-white/70 tracking-wider mr-2">Launch Date</span>
+                <span className="font-bold text-gradient-primary">November 28, 2025</span>
+              </p>
+            </div>
             
             <motion.div 
               className="countdown-section mt-6 sm:mt-6 md:mt-8 flex justify-center sm:justify-end"
@@ -223,7 +229,7 @@ export default function Home() {
           {/* 3D Floating Objects Around Glass Box */}
           {/* Floating Geometric Shapes */}
           <motion.div
-            className="absolute -top-8 right-10 sm:top-10 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 border-2 border-azure-blue/30 rotate-45 z-0"
+            className="hidden absolute -top-8 right-10 sm:top-10 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 border-2 border-azure-blue/30 rotate-45 z-0"
             animate={{
               rotate: [45, 405],
               scale: [1, 1.2, 1],
@@ -236,7 +242,7 @@ export default function Home() {
             }}
           />
           <motion.div
-            className="absolute -bottom-12 left-10 sm:-bottom-5 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 border-2 border-orange/30 rounded-full z-0"
+            className="hidden absolute -bottom-12 left-10 sm:-bottom-5 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 border-2 border-orange/30 rounded-full z-0"
             animate={{
               scale: [1, 1.3, 1],
               x: [0, 15, 0],
@@ -250,7 +256,7 @@ export default function Home() {
             }}
           />
           <motion.div
-            className="absolute -top-12 left-1/4 sm:-top-5 w-10 h-10 sm:w-14 sm:h-14 md:w-18 md:h-18 bg-gradient-to-br from-azure-blue/20 to-orange/20 rotate-12 z-0"
+            className="hidden absolute -top-12 left-1/4 sm:-top-5 w-10 h-10 sm:w-14 sm:h-14 md:w-18 md:h-18 bg-gradient-to-br from-azure-blue/20 to-orange/20 rotate-12 z-0"
             animate={{
               rotate: [12, 372],
               scale: [1, 1.4, 1],
@@ -264,7 +270,7 @@ export default function Home() {
           
           {/* Floating Gradient Orbs */}
           <motion.div
-            className="absolute -top-16 left-10 sm:-top-10 w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 bg-gradient-radial from-azure-blue/20 to-transparent rounded-full blur-2xl z-0"
+            className="hidden absolute -top-16 left-10 sm:-top-10 w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 bg-gradient-radial from-azure-blue/20 to-transparent rounded-full blur-2xl z-0"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.3, 0.5, 0.3],
@@ -278,7 +284,7 @@ export default function Home() {
             }}
           />
           <motion.div
-            className="absolute -bottom-16 right-10 sm:-bottom-10 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-gradient-radial from-orange/20 to-transparent rounded-full blur-2xl z-0"
+            className="hidden absolute -bottom-16 right-10 sm:-bottom-10 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-gradient-radial from-orange/20 to-transparent rounded-full blur-2xl z-0"
             animate={{
               scale: [1, 1.3, 1],
               opacity: [0.3, 0.6, 0.3],
@@ -293,7 +299,7 @@ export default function Home() {
             }}
           />
           <motion.div
-            className="absolute top-1/3 right-1/4 w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 bg-gradient-radial from-bright-blue/15 to-transparent rounded-full blur-xl z-0"
+            className="hidden absolute top-1/3 right-1/4 w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 bg-gradient-radial from-bright-blue/15 to-transparent rounded-full blur-xl z-0"
             animate={{
               scale: [1, 1.25, 1],
               opacity: [0.2, 0.4, 0.2],
@@ -437,70 +443,28 @@ export default function Home() {
             <div className="flex flex-col items-center gap-3 sm:gap-4">
               <button
                 type="button"
-                onClick={async (e) => {
+                onClick={(e) => {
                   e.preventDefault()
                   e.stopPropagation()
                   
-                  if (isLoadingCheckout) return
+                  // Redirect to Stripe Payment Link - no card details stored on our site
+                  // All payment processing handled securely by Stripe
+                  const paymentLink = 'https://buy.stripe.com/5kQ3cv79cfH3byHdO08k800'
                   
-                  setIsLoadingCheckout(true)
-                  
+                  // Ensure redirect works (fallback for any edge cases)
                   try {
-                    const response = await fetch('/api/create-checkout-session', {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json',
-                      },
-                      body: JSON.stringify({
-                        price: 99900, // 999 AED in fils (smallest currency unit)
-                        currency: 'aed'
-                      })
-                    })
-                    
-                    if (!response.ok) {
-                      const errorData = await response.json().catch(() => ({ error: 'Server error' }))
-                      console.error('Checkout API error:', errorData)
-                      alert(errorData.error || `Server error (${response.status}). Please check your Stripe configuration or try again later.`)
-                      setIsLoadingCheckout(false)
-                      return
-                    }
-                    
-                    const data = await response.json()
-                    
-                    if (data.url) {
-                      // Redirect to Stripe checkout
-                      window.location.href = data.url
-                    } else if (data.error) {
-                      console.error('Checkout error:', data.error)
-                      alert(`Checkout error: ${data.error}`)
-                      setIsLoadingCheckout(false)
-                    } else {
-                      console.error('Unexpected response:', data)
-                      alert('Unable to start checkout. Please try again or contact support.')
-                      setIsLoadingCheckout(false)
-                    }
-                  } catch (error: any) {
-                    console.error('Checkout error:', error)
-                    alert(`Checkout failed: ${error.message || 'Network error. Please check your connection and try again.'}`)
-                    setIsLoadingCheckout(false)
+                    window.location.href = paymentLink
+                  } catch (error) {
+                    // Fallback: open in same window
+                    window.location.assign(paymentLink)
                   }
                 }}
                 onMouseDown={(e) => e.preventDefault()}
-                disabled={isLoadingCheckout}
-                className="flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-full cursor-pointer hover:shadow-glow transition-all duration-300 group disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto min-h-[48px] touch-manipulation"
+                className="flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 rounded-full cursor-pointer hover:shadow-glow transition-all duration-300 group w-full sm:w-auto min-h-[48px] touch-manipulation active:scale-95"
                 style={{ background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)' }}
               >
-                {isLoadingCheckout ? (
-                  <>
-                    <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    <span className="text-white font-semibold text-base sm:text-lg">Processing...</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="text-white font-semibold text-base sm:text-lg">Enroll Now - Secure Checkout</span>
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:translate-x-1 transition-transform duration-300" />
-                  </>
-                )}
+                <span className="text-white font-semibold text-base sm:text-lg">Enroll Now - Secure Checkout</span>
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:translate-x-1 transition-transform duration-300" />
               </button>
               <p className="text-white/60 text-xs text-center px-4">
                 Secure payment powered by Stripe • Limited to first 30 registrations

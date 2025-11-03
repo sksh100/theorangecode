@@ -6,6 +6,20 @@ export const metadata: Metadata = {
   description: 'The Orange Code - Premium AI-powered luxury services coming soon. Register your interest for our exclusive event on Thursday, October 9, 2025.',
   keywords: ['luxury', 'ai', 'coming-soon', 'glass-morphism', 'futuristic'],
   authors: [{ name: 'The Orange Code' }],
+  icons: {
+    icon: [
+      { url: '/flavicon/favicon.ico?v=2' },
+      { url: '/flavicon/favicon-16x16.png?v=2', sizes: '16x16', type: 'image/png' },
+      { url: '/flavicon/favicon-32x32.png?v=2', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/flavicon/apple-touch-icon.png?v=2',
+    other: [
+      { rel: 'android-chrome', url: '/flavicon/android-chrome-192x192.png?v=2', sizes: '192x192' },
+      { rel: 'android-chrome', url: '/flavicon/android-chrome-512x512.png?v=2', sizes: '512x512' },
+    ],
+    shortcut: '/flavicon/favicon.ico?v=2',
+  },
+  themeColor: '#01011e',
   openGraph: {
     title: 'The Orange Code - Coming Soon',
     description: 'Experience the future of luxury with AI-powered precision',
