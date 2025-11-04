@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { kv } from '@vercel/kv'
-import { google } from 'googleapis'
+import { MailerLite } from '@mailerlite/mailerlite-nodejs'
 
 interface FormData {
   firstName?: string
@@ -13,112 +13,102 @@ interface FormData {
   source?: string
 }
 
-async function appendToGoogleSheets(data: {
+async function addToMailerLite(data: {
+  firstName?: string
+  lastName?: string
   name: string
   email: string
+  phone?: string
   timestamp: string
   source: string
-  phone?: string
 }) {
   try {
-    // Try to parse the credentials - handle both string and object format
-    let credentials: any = {}
+    const apiKey = process.env.MAILERLITE_API_KEY
+    const groupId = process.env.MAILERLITE_GROUP_ID
     
-    const serviceAccountKey = process.env.GOOGLE_SERVICE_ACCOUNT_KEY
-    const spreadsheetId = process.env.GOOGLE_SHEET_ID
-    
-    console.log('📋 Google Sheets config check:', {
-      hasServiceAccountKey: !!serviceAccountKey,
-      hasSpreadsheetId: !!spreadsheetId,
-      spreadsheetId: spreadsheetId ? `${spreadsheetId.substring(0, 10)}...` : 'missing'
+    console.log('📧 MailerLite config check:', {
+      hasApiKey: !!apiKey,
+      hasGroupId: !!groupId,
+      groupId: groupId || 'missing'
     })
     
-    if (!serviceAccountKey || !spreadsheetId) {
-      console.log('⚠️ Google Sheets not configured - missing environment variables:', {
-        hasServiceAccountKey: !!serviceAccountKey,
-        hasSpreadsheetId: !!spreadsheetId
-      })
+    if (!apiKey) {
+      console.log('⚠️ MailerLite not configured - missing API key')
       return false
     }
-    
-    try {
-      // If it's already a string, parse it
-      if (typeof serviceAccountKey === 'string') {
-        credentials = JSON.parse(serviceAccountKey)
-      } else {
-        credentials = serviceAccountKey
+
+    const mailerlite = new MailerLite({
+      api_key: apiKey,
+    })
+
+    // Prepare subscriber data
+    const subscriberData: any = {
+      email: data.email,
+      status: 'active', // Subscriber will be active and receive welcome email
+      subscribed_at: data.timestamp || new Date().toISOString(),
+      fields: {},
+    }
+
+    // Add name fields if available
+    if (data.firstName) {
+      subscriberData.fields.name = data.firstName
+      subscriberData.fields.first_name = data.firstName
+    }
+
+    if (data.lastName) {
+      subscriberData.fields.last_name = data.lastName
+      if (subscriberData.fields.name) {
+        subscriberData.fields.name = `${data.firstName} ${data.lastName}`
       }
-    } catch (parseError) {
-      console.error('❌ Failed to parse GOOGLE_SERVICE_ACCOUNT_KEY:', parseError)
-      return false
     }
 
-    if (!credentials.private_key || !credentials.client_email) {
-      console.log('❌ Google Sheets credentials incomplete:', {
-        hasPrivateKey: !!credentials.private_key,
-        hasClientEmail: !!credentials.client_email,
-        hasProjectId: !!credentials.project_id
-      })
-      return false
+    // Add phone if available
+    if (data.phone) {
+      subscriberData.fields.phone = data.phone
     }
 
-    // Handle escaped newlines in private key (common when storing in env vars)
-    const privateKey = credentials.private_key.replace(/\\n/g, '\n')
+    // Add source/utm tracking
+    subscriberData.fields.source = data.source
 
-    const auth = new google.auth.GoogleAuth({
-      credentials: {
-        client_email: credentials.client_email,
-        private_key: privateKey,
-        project_id: credentials.project_id,
-      },
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    // If group ID is provided, add subscriber to that group
+    // This will trigger the welcome email automation if configured
+    if (groupId) {
+      subscriberData.groups = [groupId]
+    }
+
+    console.log('📝 Adding subscriber to MailerLite:', {
+      email: data.email,
+      groupId: groupId || 'none',
+      hasName: !!data.name,
+      hasPhone: !!data.phone
     })
 
-    const sheets = google.sheets({ version: 'v4', auth })
-    
-    // Append data to the sheet
-    console.log('📝 Appending to sheet:', {
-      spreadsheetId: spreadsheetId.substring(0, 10) + '...',
-      range: 'The Orange Code Form Responses!A:E',
-      data: { name: data.name, email: data.email, phone: data.phone }
-    })
-    
-    const response = await sheets.spreadsheets.values.append({
-      spreadsheetId,
-      range: 'The Orange Code Form Responses!A:E',
-      valueInputOption: 'USER_ENTERED',
-      requestBody: {
-        values: [[
-          data.timestamp,
-          data.name || 'Anonymous',
-          data.email,
-          data.phone || '',
-          data.source
-        ]],
-      },
-    })
+    // Add subscriber to MailerLite (createOrUpdate will create if new, update if exists)
+    const response = await mailerlite.subscribers.createOrUpdate(subscriberData)
 
-    console.log('✅ Data appended to Google Sheets successfully:', {
-      updatedCells: response.data.updates?.updatedCells,
-      updatedRange: response.data.updates?.updatedRange
+    console.log('✅ Subscriber added to MailerLite successfully:', {
+      email: data.email,
+      subscriberId: response.data?.data?.id || 'unknown',
+      groups: response.data?.data?.groups || []
     })
     
     return true
   } catch (error: any) {
-    console.error('❌ Google Sheets error:', {
+    console.error('❌ MailerLite error:', {
       message: error.message,
-      code: error.code,
       status: error.response?.status,
       statusText: error.response?.statusText,
       details: error.response?.data || error.toString()
     })
     
-    // Check if it's a permissions error
-    if (error.message?.includes('permission') || error.code === 403) {
-      console.error('💡 Make sure the service account email has edit access to the spreadsheet')
+    // Check if subscriber already exists (not an error, just informational)
+    if (error.message?.includes('already exists') || error.response?.status === 409) {
+      console.log('ℹ️ Subscriber already exists in MailerLite')
+      // Still return true as this is not a failure
+      return true
     }
     
-    // Don't throw - allow submission to continue even if Sheets fails
+    // Don't throw - allow submission to continue even if MailerLite fails
     return false
   }
 }
@@ -194,9 +184,11 @@ export async function POST(request: NextRequest) {
       submittedAt: new Date().toISOString()
     }
     
-    // Save to Google Sheets
-    console.log('📊 Attempting to save to Google Sheets...', { name: displayName, email: cleanEmail, phone: cleanPhone })
-    const sheetsSuccess = await appendToGoogleSheets({
+    // Save to MailerLite
+    console.log('📧 Attempting to add subscriber to MailerLite...', { name: displayName, email: cleanEmail, phone: cleanPhone })
+    const mailerliteSuccess = await addToMailerLite({
+      firstName: firstName || '',
+      lastName: lastName || '',
       name: displayName,
       email: cleanEmail,
       phone: cleanPhone,
@@ -204,10 +196,10 @@ export async function POST(request: NextRequest) {
       source: finalSource
     })
     
-    if (sheetsSuccess) {
-      console.log('✅ Successfully saved to Google Sheets')
+    if (mailerliteSuccess) {
+      console.log('✅ Successfully added subscriber to MailerLite')
     } else {
-      console.warn('⚠️ Google Sheets append failed, but submission will continue')
+      console.warn('⚠️ MailerLite add failed, but submission will continue')
     }
     
     try {

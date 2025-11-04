@@ -249,10 +249,6 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                    }}
                     className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-white text-sm font-semibold hover:shadow-lg hover:shadow-orange/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)' }}
                     whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
