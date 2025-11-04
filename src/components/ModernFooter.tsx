@@ -209,7 +209,8 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
-              className="lg:col-span-1"
+              className="lg:col-span-1 relative z-10"
+              style={{ pointerEvents: 'auto' }}
             >
               <h4 className="text-lg font-semibold text-white mb-6 tracking-tight">Stay Connected</h4>
               <p className="text-white/70 text-sm mb-6 leading-relaxed">
@@ -219,12 +220,13 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
               {!isSubscribed ? (
                 <form 
                   onSubmit={handleSubscribe} 
-                  className="space-y-3"
+                  className="space-y-3 relative z-10"
                   noValidate
                   onInvalid={(e) => {
                     e.preventDefault()
                     e.stopPropagation()
                   }}
+                  style={{ pointerEvents: 'auto' }}
                 >
                   <div className="relative">
                     <input
@@ -249,8 +251,13 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-white text-sm font-semibold hover:shadow-lg hover:shadow-orange/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                    style={{ background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)' }}
+                    className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-white text-sm font-semibold hover:shadow-lg hover:shadow-orange/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                    style={{ 
+                      background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)',
+                      pointerEvents: isSubmitting ? 'none' : 'auto',
+                      zIndex: 10,
+                      position: 'relative'
+                    }}
                     whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                     whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                   >
