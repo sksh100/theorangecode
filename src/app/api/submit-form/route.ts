@@ -77,14 +77,47 @@ async function addToMailerLite(data: {
       subscriberData
     })
 
-    // Add groups to subscriber data if group ID is provided
-    // MailerLite expects groups as an array of group IDs (as integers)
-    if (groupId) {
-      subscriberData.groups = [parseInt(groupId)]
-    }
+    // Create subscriber first WITHOUT groups (to avoid 422 error)
+    // This was the working version where subscribers appeared in the list
+    const subscriberPayload = { ...subscriberData }
+    delete subscriberPayload.groups
     
-    // Add subscriber to MailerLite with groups included (this triggers automation)
-    const response = await mailerlite.subscribers.createOrUpdate(subscriberData)
+    // Add subscriber to MailerLite (this creates the subscriber successfully)
+    const response = await mailerlite.subscribers.createOrUpdate(subscriberPayload)
+    
+    // Now add subscriber to group separately to trigger automation
+    // Update subscriber with groups field (this should trigger the automation)
+    if (groupId && response.data?.data?.id) {
+      try {
+        // Update the subscriber to include them in the group
+        // This is done after creation to avoid 422 error, but triggers automation
+        const updatePayload = {
+          email: data.email,
+          groups: [parseInt(groupId)]
+        }
+        
+        console.log('📝 Adding subscriber to group:', {
+          subscriberId: response.data.data.id,
+          groupId: parseInt(groupId),
+          updatePayload
+        })
+        
+        const updateResponse = await mailerlite.subscribers.update(updatePayload, response.data.data.id)
+        
+        console.log('✅ Subscriber assigned to group successfully:', {
+          subscriberId: response.data.data.id,
+          groupId: parseInt(groupId),
+          groups: updateResponse.data?.data?.groups || []
+        })
+      } catch (groupError: any) {
+        console.error('❌ Failed to assign subscriber to group:', {
+          error: groupError.message,
+          status: groupError.response?.status,
+          details: groupError.response?.data || groupError.toString()
+        })
+        // Log but don't fail - subscriber is already created and will appear in list
+      }
+    }
 
     console.log('✅ Subscriber added to MailerLite successfully:', {
       email: data.email,
