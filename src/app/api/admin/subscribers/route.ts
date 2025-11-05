@@ -121,21 +121,99 @@ export async function GET(request: NextRequest) {
     
     console.log(`✅ Returning ${subscribersList.length} subscribers (limited to ${limit})`)
     
+    // Fetch detailed subscriber info with email stats
+    // Note: MailerLite API may not support all methods in the SDK, so we'll use what's available
+    const subscribersWithStats = await Promise.all(
+      subscribersList.slice(0, limit).map(async (sub: any) => {
+        try {
+          // Try to fetch individual subscriber details to get email stats
+          let subscriberDetails: any = null
+          try {
+            subscriberDetails = await mailerlite.subscribers.find(sub.id || sub.email)
+          } catch (error: any) {
+            // If find fails, use the data we already have
+            console.log(`⚠️ Could not fetch details for ${sub.email}, using existing data`)
+          }
+          
+          const details = subscriberDetails?.data || sub
+          
+          // Check welcome email status from subscriber fields or automation data
+          // MailerLite stores this in custom fields or we can check if opens_count > 0 shortly after subscription
+          let welcomeEmailReceived = false
+          let welcomeEmailOpened = false
+          let welcomeEmailClicked = false
+          
+          // Heuristic: If subscriber has opens/clicks and was recently subscribed, likely received welcome email
+          // Also check if there's a custom field indicating welcome email sent
+          const hasRecentActivity = (details.opens_count > 0 || details.clicks_count > 0)
+          const subscribedDate = new Date(details.subscribed_at || details.subscribed || details.created_at || details.created)
+          const daysSinceSubscription = (Date.now() - subscribedDate.getTime()) / (1000 * 60 * 60 * 24)
+          
+          // If subscribed within last 7 days and has activity, likely received welcome email
+          if (daysSinceSubscription <= 7 && hasRecentActivity) {
+            welcomeEmailReceived = true
+            welcomeEmailOpened = details.opens_count > 0
+            welcomeEmailClicked = details.clicks_count > 0
+          }
+          
+          // Check custom fields for welcome email status
+          if (details.fields?.welcome_email_sent === true || details.fields?.welcome_email === 'sent') {
+            welcomeEmailReceived = true
+          }
+          if (details.fields?.welcome_email_opened === true || details.fields?.welcome_email === 'opened') {
+            welcomeEmailReceived = true
+            welcomeEmailOpened = true
+          }
+          
+          return {
+            id: sub.id || sub.email || 'unknown',
+            email: sub.email || 'N/A',
+            name: sub.fields?.name || sub.fields?.first_name || sub.name || details.fields?.name || details.name || 'N/A',
+            firstName: sub.fields?.first_name || sub.first_name || details.fields?.first_name || '',
+            lastName: sub.fields?.last_name || sub.last_name || details.fields?.last_name || '',
+            phone: sub.fields?.phone || sub.phone || details.fields?.phone || '',
+            status: sub.status || details.status || 'active',
+            source: sub.fields?.source || sub.source || details.fields?.source || 'N/A',
+            createdAt: sub.created_at || sub.created || details.created_at || new Date().toISOString(),
+            subscribedAt: sub.subscribed_at || sub.subscribed || details.subscribed_at || sub.created_at || sub.created || details.created_at || new Date().toISOString(),
+            // Email engagement stats - MailerLite provides these in the subscriber object
+            sent: details.sent || sub.sent || 0,
+            opensCount: details.opens_count || sub.opens_count || details.opens || 0,
+            clicksCount: details.clicks_count || sub.clicks_count || details.clicks || 0,
+            // Welcome email status
+            welcomeEmailReceived,
+            welcomeEmailOpened,
+            welcomeEmailClicked,
+          }
+        } catch (error: any) {
+          console.log(`⚠️ Error processing subscriber ${sub.email}:`, error.message)
+          // Return basic data if processing fails
+          return {
+            id: sub.id || sub.email || 'unknown',
+            email: sub.email || 'N/A',
+            name: sub.fields?.name || sub.fields?.first_name || sub.name || 'N/A',
+            firstName: sub.fields?.first_name || sub.first_name || '',
+            lastName: sub.fields?.last_name || sub.last_name || '',
+            phone: sub.fields?.phone || sub.phone || '',
+            status: sub.status || 'active',
+            source: sub.fields?.source || sub.source || 'N/A',
+            createdAt: sub.created_at || sub.created || new Date().toISOString(),
+            subscribedAt: sub.subscribed_at || sub.subscribed || sub.created_at || sub.created || new Date().toISOString(),
+            sent: sub.sent || 0,
+            opensCount: sub.opens_count || sub.opens || 0,
+            clicksCount: sub.clicks_count || sub.clicks || 0,
+            welcomeEmailReceived: false,
+            welcomeEmailOpened: false,
+            welcomeEmailClicked: false,
+          }
+        }
+      })
+    )
+    
     return NextResponse.json({
       success: true,
       data: {
-        subscribers: subscribersList.slice(0, limit).map((sub: any) => ({
-          id: sub.id || sub.email || 'unknown',
-          email: sub.email || 'N/A',
-          name: sub.fields?.name || sub.fields?.first_name || sub.name || 'N/A',
-          firstName: sub.fields?.first_name || sub.first_name || '',
-          lastName: sub.fields?.last_name || sub.last_name || '',
-          phone: sub.fields?.phone || sub.phone || '',
-          status: sub.status || 'active',
-          source: sub.fields?.source || sub.source || 'N/A',
-          createdAt: sub.created_at || sub.created || new Date().toISOString(),
-          subscribedAt: sub.subscribed_at || sub.subscribed || sub.created_at || sub.created || new Date().toISOString(),
-        })),
+        subscribers: subscribersWithStats,
         stats: {
           totalSubscribers,
           todaySubscribers,

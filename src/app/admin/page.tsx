@@ -69,6 +69,12 @@ interface Subscriber {
   source: string
   createdAt: string
   subscribedAt: string
+  sent: number
+  opensCount: number
+  clicksCount: number
+  welcomeEmailReceived: boolean
+  welcomeEmailOpened: boolean
+  welcomeEmailClicked: boolean
 }
 
 interface Analytics {
@@ -742,9 +748,10 @@ export default function AdminDashboard() {
                         <tr>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">Name</th>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">Email</th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Phone</th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Source</th>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">Subscribed</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Email Stats</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Welcome Email</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Source</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -756,16 +763,72 @@ export default function AdminDashboard() {
                             transition={{ delay: index * 0.05 }}
                             className="border-t border-white/5 hover:bg-white/5 transition-colors"
                           >
-                            <td className="px-6 py-4 text-white font-medium">{subscriber.name}</td>
+                            <td className="px-6 py-4">
+                              <div>
+                                <p className="text-white font-medium">{subscriber.name}</p>
+                                {subscriber.phone && (
+                                  <p className="text-white/60 text-xs">{subscriber.phone}</p>
+                                )}
+                              </div>
+                            </td>
                             <td className="px-6 py-4 text-white/90">{subscriber.email}</td>
-                            <td className="px-6 py-4 text-white/70">{subscriber.phone || 'N/A'}</td>
+                            <td className="px-6 py-4">
+                              <div className="text-white/70 text-sm">
+                                <p>{new Date(subscriber.subscribedAt).toLocaleDateString()}</p>
+                                <p className="text-xs text-white/50">
+                                  {new Date(subscriber.subscribedAt).toLocaleTimeString()}
+                                </p>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex flex-col gap-1 text-xs">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-white/70">Sent:</span>
+                                  <span className="text-white font-semibold">{subscriber.sent || 0}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Eye className="w-3 h-3 text-azure-blue" />
+                                  <span className="text-white/70">Opens:</span>
+                                  <span className="text-azure-blue font-semibold">{subscriber.opensCount || 0}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <Activity className="w-3 h-3 text-orange" />
+                                  <span className="text-white/70">Clicks:</span>
+                                  <span className="text-orange font-semibold">{subscriber.clicksCount || 0}</span>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4">
+                              {subscriber.welcomeEmailReceived ? (
+                                <div className="flex flex-col gap-1">
+                                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs">
+                                    <CheckCircle className="w-3 h-3" />
+                                    Received
+                                  </span>
+                                  {subscriber.welcomeEmailOpened && (
+                                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-azure-blue/20 text-azure-blue rounded-full text-xs mt-1">
+                                      <Eye className="w-3 h-3" />
+                                      Opened
+                                    </span>
+                                  )}
+                                  {subscriber.welcomeEmailClicked && (
+                                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-orange/20 text-orange rounded-full text-xs mt-1">
+                                      <Activity className="w-3 h-3" />
+                                      Clicked
+                                    </span>
+                                  )}
+                                </div>
+                              ) : (
+                                <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-500/20 text-gray-400 rounded-full text-xs">
+                                  <XCircle className="w-3 h-3" />
+                                  Not Sent
+                                </span>
+                              )}
+                            </td>
                             <td className="px-6 py-4">
                               <span className="px-2 py-1 bg-azure-blue/20 text-azure-blue rounded-full text-xs">
                                 {subscriber.source}
                               </span>
-                            </td>
-                            <td className="px-6 py-4 text-white/70 text-sm">
-                              {new Date(subscriber.createdAt).toLocaleDateString()}
                             </td>
                           </motion.tr>
                         ))}
@@ -985,6 +1048,52 @@ export default function AdminDashboard() {
                 </div>
               )}
 
+              {/* World Map Visualization */}
+              {topCountries.length > 0 && (
+                <motion.div
+                  whileHover={{ scale: 1.01 }}
+                  className="glass-card p-6"
+                >
+                  <h3 className="text-xl font-bold text-white mb-4">Visitor Distribution by Country</h3>
+                  <div className="space-y-3">
+                    {topCountries.map((country, index) => {
+                      const total = topCountries.reduce((sum, c) => sum + c.count, 0)
+                      const percentage = ((country.count / total) * 100).toFixed(1)
+                      return (
+                        <motion.div
+                          key={country.country}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.05 }}
+                          className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10"
+                        >
+                          <div className="flex items-center gap-3 flex-1">
+                            <MapPin className="w-4 h-4 text-azure-blue" />
+                            <span className="text-white font-medium">{country.country}</span>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <div className="w-32 h-2 bg-white/10 rounded-full overflow-hidden">
+                              <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: `${percentage}%` }}
+                                transition={{ delay: index * 0.1, duration: 0.5 }}
+                                className="h-full bg-gradient-to-r from-azure-blue to-bright-blue"
+                              />
+                            </div>
+                            <span className="text-azure-blue font-semibold text-sm w-16 text-right">
+                              {percentage}%
+                            </span>
+                            <span className="text-white/70 text-sm w-12 text-right">
+                              {country.count}
+                            </span>
+                          </div>
+                        </motion.div>
+                      )
+                    })}
+                  </div>
+                </motion.div>
+              )}
+
               {/* Charts */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Visitor Trend Chart */}
@@ -1076,31 +1185,60 @@ export default function AdminDashboard() {
                     </span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {activeSessions.map((session, index) => (
+                    {activeSessions.filter((s: any) => s.isActive).map((session: any, index: number) => (
                       <motion.div
                         key={session.sessionId}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05 }}
-                        className="p-4 bg-white/5 rounded-lg border border-white/10"
+                        className="p-4 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors"
                       >
-                        <div className="flex items-center gap-3 mb-2">
-                          <div className="p-2 bg-azure-blue/20 rounded-lg">
-                            <Monitor className="w-4 h-4 text-azure-blue" />
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="p-2 bg-green-500/20 rounded-lg">
+                            <Monitor className="w-4 h-4 text-green-400" />
                           </div>
                           <div className="flex-1">
-                            <p className="text-white font-medium text-sm">{session.page}</p>
+                            <p className="text-white font-medium text-sm truncate">{session.page}</p>
                             {session.country && (
                               <p className="text-white/60 text-xs flex items-center gap-1 mt-1">
-                                <MapPin className="w-3 h-3" />
+                                <MapPin className="w-3 h-3 text-azure-blue" />
                                 {session.city ? `${session.city}, ` : ''}{session.country}
                               </p>
                             )}
                           </div>
                         </div>
-                        <p className="text-white/50 text-xs mt-2">
-                          Last seen: {new Date(session.lastSeen).toLocaleTimeString()}
-                        </p>
+                        <div className="space-y-1.5 text-xs">
+                          <div className="flex items-center justify-between">
+                            <span className="text-white/70">Time on page:</span>
+                            <span className="text-white font-semibold">
+                              {session.timeOnPage ? `${Math.floor(session.timeOnPage / 60)}m ${session.timeOnPage % 60}s` : '0s'}
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-white/70">Clicks:</span>
+                            <span className="text-azure-blue font-semibold">{session.clicks || 0}</span>
+                          </div>
+                          {session.scrollDepth > 0 && (
+                            <div className="flex items-center justify-between">
+                              <span className="text-white/70">Scroll:</span>
+                              <span className="text-orange font-semibold">{Math.round(session.scrollDepth)}%</span>
+                            </div>
+                          )}
+                          {session.lastClick && (
+                            <div className="pt-1 border-t border-white/10">
+                              <p className="text-white/60 text-xs truncate">
+                                Last click: {session.lastClick.target || 'Element'}
+                              </p>
+                            </div>
+                          )}
+                          <div className="flex items-center justify-between pt-1 border-t border-white/10">
+                            <span className="text-white/50 text-xs">
+                              {session.timeSinceLastActivity < 60 
+                                ? `Active ${session.timeSinceLastActivity}s ago` 
+                                : `Last seen ${Math.floor(session.timeSinceLastActivity / 60)}m ago`}
+                            </span>
+                          </div>
+                        </div>
                       </motion.div>
                     ))}
                   </div>
@@ -1158,10 +1296,10 @@ export default function AdminDashboard() {
                       <thead className="bg-white/5">
                         <tr>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">Time</th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Page</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">IP Address</th>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">Location</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Page</th>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">Referrer</th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">IP</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1176,11 +1314,8 @@ export default function AdminDashboard() {
                             <td className="px-6 py-4 text-white/70 text-sm">
                               {new Date(visitor.timestamp).toLocaleString()}
                             </td>
-                            <td className="px-6 py-4">
-                              <div className="flex items-center gap-2">
-                                <ExternalLink className="w-3 h-3 text-white/50" />
-                                <span className="text-white text-sm">{visitor.page}</span>
-                              </div>
+                            <td className="px-6 py-4 text-white/90 text-sm font-mono">
+                              {visitor.ip || 'Unknown'}
                             </td>
                             <td className="px-6 py-4">
                               {visitor.country ? (
@@ -1195,6 +1330,12 @@ export default function AdminDashboard() {
                               )}
                             </td>
                             <td className="px-6 py-4">
+                              <div className="flex items-center gap-2">
+                                <ExternalLink className="w-3 h-3 text-white/50" />
+                                <span className="text-white text-sm">{visitor.page}</span>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4">
                               {visitor.referrer ? (
                                 <a
                                   href={visitor.referrer}
@@ -1207,9 +1348,6 @@ export default function AdminDashboard() {
                               ) : (
                                 <span className="text-white/50 text-sm">Direct</span>
                               )}
-                            </td>
-                            <td className="px-6 py-4 text-white/70 text-sm font-mono">
-                              {visitor.ip}
                             </td>
                           </motion.tr>
                         ))}

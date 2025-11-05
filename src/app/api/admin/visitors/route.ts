@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Get active sessions (last 5 minutes)
+    // Get active sessions (last 5 minutes) with activity data
     const allKeys = await kv.keys('visitor:session:*')
     const activeSessions = []
 
@@ -31,7 +31,36 @@ export async function GET(request: NextRequest) {
       try {
         const sessionData = await kv.get(key)
         if (sessionData) {
-          activeSessions.push(JSON.parse(sessionData as string))
+          const session = JSON.parse(sessionData as string)
+          const sessionId = session.sessionId || key.replace('visitor:session:', '')
+          
+          // Get activity data for this session
+          const activityKey = `visitor:activity:${sessionId}`
+          const activityData = await kv.get(activityKey)
+          const activities = activityData ? (JSON.parse(activityData as string) as any[]) : []
+          
+          // Calculate time on page
+          const timeOnPage = session.timeOnPage || 0
+          const lastActivity = session.lastActivity || session.lastSeen
+          const timeSinceLastActivity = lastActivity ? Math.floor((Date.now() - new Date(lastActivity).getTime()) / 1000) : 0
+          
+          // Get clicks
+          const clicks = activities.filter((a: any) => a.type === 'click').length
+          const lastClick = activities.findLast((a: any) => a.type === 'click')
+          
+          // Get scroll depth
+          const scrollDepth = session.scrollDepth || 0
+          
+          activeSessions.push({
+            ...session,
+            timeOnPage,
+            timeSinceLastActivity,
+            clicks,
+            lastClick: lastClick?.data || null,
+            scrollDepth,
+            activities: activities.slice(-10), // Last 10 activities
+            isActive: timeSinceLastActivity < 60, // Active if activity within last minute
+          })
         }
       } catch (error) {
         console.error(`Error fetching session ${key}:`, error)
