@@ -218,7 +218,12 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-white/60 text-xs font-medium uppercase tracking-wider mb-1">Location</p>
-                  <p className="text-white text-sm">Etihad Towers, Tower 3, Floor 36, Abu Dhabi, United Arab Emirates</p>
+                    <p className="text-white text-sm leading-relaxed">
+                      Etihad Towers<br />
+                      Tower 3, Floor 36,<br />
+                      Abu Dhabi,<br />
+                      United Arab Emirates
+                    </p>
                   </div>
                 </div>
               </div>
