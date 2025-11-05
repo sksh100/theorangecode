@@ -34,13 +34,18 @@ export async function GET(request: NextRequest) {
       const now = new Date()
       const today = new Date()
       
+      // Handle MailerLite response - data might be an array or object
+      const subscribersArray = Array.isArray(allSubscribers.data) 
+        ? allSubscribers.data 
+        : (allSubscribers.data as any)?.data || []
+      
       subscriberStats = {
-        total: allSubscribers.data?.length || 0,
-        today: allSubscribers.data?.filter((sub: any) => {
+        total: subscribersArray.length || 0,
+        today: subscribersArray.filter((sub: any) => {
           const date = new Date(sub.created_at)
           return date.toDateString() === today.toDateString()
         }).length || 0,
-        monthly: allSubscribers.data?.filter((sub: any) => {
+        monthly: subscribersArray.filter((sub: any) => {
           const date = new Date(sub.created_at)
           return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
         }).length || 0,
