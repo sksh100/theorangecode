@@ -1300,7 +1300,12 @@ export default function AdminDashboard() {
               {/* Recent Visitors Table */}
               <div className="glass-card overflow-hidden">
                 <div className="p-6 border-b border-white/10 flex items-center justify-between">
-                  <h2 className="text-xl font-bold text-white">Recent Visitors</h2>
+                  <div>
+                    <h2 className="text-xl font-bold text-white">Recent Visitors</h2>
+                    <p className="text-white/50 text-xs mt-1">
+                      Visitor tracking is active. Open your website in another tab to see yourself here!
+                    </p>
+                  </div>
                   <button
                     onClick={fetchVisitors}
                     className="px-4 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue transition-all flex items-center gap-2"
@@ -1312,8 +1317,17 @@ export default function AdminDashboard() {
                 {visitorsLoading ? (
                   <div className="p-8 text-center text-white/70">Loading visitors...</div>
                 ) : visitors.length === 0 ? (
-                  <div className="p-8 text-center text-white/70">No visitors yet. Data will appear here once visitors start browsing your site.</div>
-              ) : (
+                  <div className="p-8 text-center text-white/70">
+                    <Globe className="w-12 h-12 mx-auto mb-4 text-white/30" />
+                    <p className="mb-2">No visitors yet.</p>
+                    <p className="text-sm text-white/50">
+                      Visitor tracking is active! Open your website ({process.env.NEXT_PUBLIC_BASE_URL || 'theorangecode.com'}) in another tab or share it with someone to see visitor data appear here.
+                    </p>
+                    <p className="text-xs text-white/40 mt-4">
+                      The tracker automatically records: page views, location, IP address, clicks, scroll depth, and time on page.
+                    </p>
+                  </div>
+                ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full">
                       <thead className="bg-white/5">

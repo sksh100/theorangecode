@@ -100,12 +100,24 @@ export async function POST(request: NextRequest) {
       lastSeen: new Date().toISOString(),
     }))
 
+    console.log('✅ Visitor tracked:', {
+      id: visitorData.id,
+      ip: visitorData.ip,
+      country: visitorData.country,
+      page: visitorData.page,
+      sessionId,
+    })
+
     return NextResponse.json({
       success: true,
       sessionId,
     })
   } catch (error: any) {
-    console.error('Error tracking visitor:', error)
+    console.error('❌ Error tracking visitor:', error)
+    console.error('Error details:', {
+      message: error.message,
+      hasKV: typeof kv !== 'undefined',
+    })
     // Return success even on error to not break the site
     return NextResponse.json({
       success: true,
