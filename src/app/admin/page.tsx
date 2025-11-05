@@ -1966,15 +1966,17 @@ function ContentPlannerTab() {
             onClick={() => {
               setShowCreateModal(true)
               setEditingContent(null)
-              setFormData({
-                caption: '',
-                hashtags: '',
-                altText: '',
-                mediaUrl: '',
-                platforms: [],
-                scheduledDate: '',
-                status: 'draft',
-              })
+            setFormData({
+              caption: '',
+              hashtags: '',
+              altText: '',
+              mediaUrl: '',
+              platforms: [],
+              scheduledDate: '',
+              status: 'draft',
+              location: '',
+              tags: '',
+            })
             }}
             className="px-4 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue transition-all flex items-center gap-2"
           >
@@ -2180,15 +2182,17 @@ function ContentPlannerTab() {
               onClick={() => {
                 setShowCreateModal(true)
                 setEditingContent(null)
-                setFormData({
-                  caption: '',
-                  hashtags: '',
-                  altText: '',
-                  mediaUrl: '',
-                  platforms: [],
-                  scheduledDate: '',
-                  status: 'draft',
-                })
+            setFormData({
+              caption: '',
+              hashtags: '',
+              altText: '',
+              mediaUrl: '',
+              platforms: [],
+              scheduledDate: '',
+              status: 'draft',
+              location: '',
+              tags: '',
+            })
               }}
               className="px-6 py-3 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue transition-all flex items-center gap-2 mx-auto"
             >
