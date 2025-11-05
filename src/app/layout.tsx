@@ -24,7 +24,6 @@ export const metadata: Metadata = {
     ],
     shortcut: ['/favicon.ico', '/flavicon/favicon.ico'],
   },
-  themeColor: '#01011e',
   openGraph: {
     title: 'The Orange Code - Coming Soon',
     description: 'Experience the future of luxury with AI-powered precision',
@@ -46,6 +45,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
+  themeColor: '#01011e',
 }
 
 export default function RootLayout({
