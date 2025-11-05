@@ -1747,25 +1747,28 @@ function ContentPlannerTab() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.05 }}
                   className="aspect-square rounded-lg overflow-hidden bg-white/5 border border-white/10 cursor-move hover:border-azure-blue/50 transition-all group relative"
-                  draggable
-                  onDragStart={(e: React.DragEvent) => {
-                    e.dataTransfer.setData('text/plain', item.id)
-                  }}
-                  onDragOver={(e: React.DragEvent) => {
-                    e.preventDefault()
-                    e.currentTarget.classList.add('border-azure-blue')
-                  }}
-                  onDragLeave={(e: React.DragEvent) => {
-                    e.currentTarget.classList.remove('border-azure-blue')
-                  }}
-                  onDrop={(e: React.DragEvent) => {
-                    e.preventDefault()
-                    const draggedId = e.dataTransfer.getData('text/plain')
-                    const dropIndex = index
-                    // Reorder logic would go here
-                    e.currentTarget.classList.remove('border-azure-blue')
-                  }}
                 >
+                  <div
+                    draggable
+                    onDragStart={(e: React.DragEvent) => {
+                      e.dataTransfer.setData('text/plain', item.id)
+                    }}
+                    onDragOver={(e: React.DragEvent) => {
+                      e.preventDefault()
+                      e.currentTarget.classList.add('border-azure-blue')
+                    }}
+                    onDragLeave={(e: React.DragEvent) => {
+                      e.currentTarget.classList.remove('border-azure-blue')
+                    }}
+                    onDrop={(e: React.DragEvent) => {
+                      e.preventDefault()
+                      const draggedId = e.dataTransfer.getData('text/plain')
+                      const dropIndex = index
+                      // Reorder logic would go here
+                      e.currentTarget.classList.remove('border-azure-blue')
+                    }}
+                    className="w-full h-full"
+                  >
                   {item.mediaUrl ? (
                     <img
                       src={item.mediaUrl}
@@ -1777,8 +1780,9 @@ function ContentPlannerTab() {
                       <ImageIcon className="w-8 h-8" />
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <p className="text-white text-xs text-center px-2 line-clamp-2">{item.caption}</p>
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <p className="text-white text-xs text-center px-2 line-clamp-2">{item.caption}</p>
+                    </div>
                   </div>
                 </motion.div>
               ))}

@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
     let lastPaymentIntentId: string | undefined = undefined
     
     while (hasMorePIs) {
-      const paymentIntents = await stripe.paymentIntents.list({
+      const paymentIntents: any = await stripe.paymentIntents.list({
         limit: 100,
         ...(lastPaymentIntentId ? { starting_after: lastPaymentIntentId } : {}),
       })
@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
     let lastChargeId: string | undefined = undefined
     
     while (hasMoreCharges) {
-      const charges = await stripe.charges.list({
+      const charges: any = await stripe.charges.list({
         limit: 100,
         ...(lastChargeId ? { starting_after: lastChargeId } : {}),
       })
