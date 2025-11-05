@@ -123,6 +123,15 @@ export async function POST(request: NextRequest) {
     )
   }
 
+  const stripe = getStripeClient()
+  if (!stripe) {
+    console.error('❌ STRIPE_SECRET_KEY not configured')
+    return NextResponse.json(
+      { error: 'Stripe not configured' },
+      { status: 500 }
+    )
+  }
+
   let event: Stripe.Event
 
   try {
