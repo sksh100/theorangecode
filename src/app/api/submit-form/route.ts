@@ -99,10 +99,10 @@ async function addToMailerLite(data: {
     
     // Log automation trigger info
     const groups = response.data?.data?.groups || []
-    const isInGroup = Array.isArray(groups) && groups.some((g: any) => 
+    const isInGroup = groupId && Array.isArray(groups) && groups.some((g: any) => 
       (typeof g === 'string' && g === groupId) || 
-      (typeof g === 'number' && g === parseInt(groupId)) ||
-      (g?.id && (g.id.toString() === groupId || g.id === parseInt(groupId)))
+      (typeof g === 'number' && groupId && g === parseInt(groupId)) ||
+      (g?.id && groupId && (g.id.toString() === groupId || g.id === parseInt(groupId)))
     )
     
     if (groupId && isInGroup) {
