@@ -37,24 +37,34 @@ export async function GET(request: NextRequest) {
       limit: 10000,
     })
     
+    // Handle MailerLite response - data might be an array or object
+    const subscribersArray = Array.isArray(allSubscribers.data) 
+      ? allSubscribers.data 
+      : (allSubscribers.data as any)?.data || []
+    
     // Calculate statistics
-    const totalSubscribers = allSubscribers.data?.length || 0
-    const todaySubscribers = allSubscribers.data?.filter((sub: any) => {
+    const totalSubscribers = subscribersArray.length || 0
+    const todaySubscribers = subscribersArray.filter((sub: any) => {
       const date = new Date(sub.created_at)
       const today = new Date()
       return date.toDateString() === today.toDateString()
     }).length || 0
     
-    const monthlySubscribers = allSubscribers.data?.filter((sub: any) => {
+    const monthlySubscribers = subscribersArray.filter((sub: any) => {
       const date = new Date(sub.created_at)
       const now = new Date()
       return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
     }).length || 0
     
+    // Handle MailerLite response for subscribersResponse
+    const subscribersList = Array.isArray(subscribersResponse.data) 
+      ? subscribersResponse.data 
+      : (subscribersResponse.data as any)?.data || []
+    
     return NextResponse.json({
       success: true,
       data: {
-        subscribers: subscribersResponse.data?.map((sub: any) => ({
+        subscribers: subscribersList.map((sub: any) => ({
           id: sub.id,
           email: sub.email,
           name: sub.fields?.name || sub.fields?.first_name || 'N/A',
@@ -65,7 +75,7 @@ export async function GET(request: NextRequest) {
           source: sub.fields?.source || 'N/A',
           createdAt: sub.created_at,
           subscribedAt: sub.subscribed_at,
-        })) || [],
+        })),
         stats: {
           totalSubscribers,
           todaySubscribers,
@@ -77,6 +87,7 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching subscribers:', error)
     
     // If MailerLite is not configured, return empty data instead of error
+    const apiKey = process.env.MAILERLITE_API_KEY
     if (!apiKey || error.message?.includes('api_key')) {
       return NextResponse.json({
         success: true,
