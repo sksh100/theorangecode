@@ -26,7 +26,9 @@ export function VisitorTracker() {
         const referrer = document.referrer || ''
         const userAgent = navigator.userAgent
 
-        await fetch('/api/track-visitor', {
+        console.log('📍 Tracking page view:', { page, sessionId })
+        
+        const response = await fetch('/api/track-visitor', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -38,16 +40,22 @@ export function VisitorTracker() {
             sessionId,
           }),
         })
+
+        const data = await response.json()
+        console.log('✅ Visitor tracking response:', data)
+        
+        if (!data.success) {
+          console.error('❌ Visitor tracking failed:', data.error)
+        }
       } catch (error) {
-        // Silently fail - don't break the site
-        console.error('Visitor tracking error:', error)
+        console.error('❌ Visitor tracking error:', error)
       }
     }
 
     // Track activity
     const trackActivity = async (type: string, data: any) => {
       try {
-        await fetch('/api/track-activity', {
+        const response = await fetch('/api/track-activity', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -58,8 +66,12 @@ export function VisitorTracker() {
             data,
           }),
         })
+        
+        if (!response.ok) {
+          console.error(`❌ Activity tracking failed for ${type}:`, await response.text())
+        }
       } catch (error) {
-        // Silently fail
+        console.error(`❌ Activity tracking error for ${type}:`, error)
       }
     }
 

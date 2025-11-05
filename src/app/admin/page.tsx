@@ -1412,9 +1412,18 @@ export default function AdminDashboard() {
               >
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-xl font-bold text-white">Active Visitors Right Now</h3>
-                  <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-semibold">
-                    {activeSessions.filter((s: any) => s.isActive !== false && s.isActive !== undefined).length} Active
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={fetchVisitors}
+                      className="px-2 py-1 bg-azure-blue/20 hover:bg-azure-blue/30 rounded border border-azure-blue/30 text-azure-blue text-xs transition-all"
+                      title="Refresh visitors"
+                    >
+                      <RefreshCw className="w-3 h-3" />
+                    </button>
+                    <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-semibold">
+                      {activeSessions.filter((s: any) => s.isActive !== false && s.isActive !== undefined).length} Active
+                    </span>
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {activeSessions.filter((s: any) => s.isActive !== false && s.isActive !== undefined).length > 0 ? (
@@ -1481,9 +1490,15 @@ export default function AdminDashboard() {
                         <p className="text-sm text-white/50 mb-2">
                           Open your website in another tab to see yourself as a visitor!
                         </p>
-                        <p className="text-xs text-white/40">
+                        <p className="text-xs text-white/40 mb-4">
                           Active visitors are tracked in real-time. Refresh this page to see updates.
                         </p>
+                        <div className="text-xs text-white/40 space-y-1">
+                          <p>💡 Troubleshooting:</p>
+                          <p>1. Check browser console (F12) for tracking logs</p>
+                          <p>2. Verify KV_REST_API_URL and KV_REST_API_TOKEN are set in Vercel</p>
+                          <p>3. Make sure VisitorTracker is loaded (check Network tab for /api/track-visitor calls)</p>
+                        </div>
                       </div>
                     )}
                   </div>

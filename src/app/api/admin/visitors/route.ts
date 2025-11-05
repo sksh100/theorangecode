@@ -5,11 +5,37 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
   try {
+    // Check if KV is configured
+    if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
+      console.error('⚠️ Vercel KV not configured! Please set KV_REST_API_URL and KV_REST_API_TOKEN in Vercel environment variables.')
+      return NextResponse.json({
+        success: true,
+        data: {
+          visitors: [],
+          activeSessions: [],
+          countries: [],
+          pages: [],
+          dailyStats: [],
+          stats: {
+            totalVisitors: 0,
+            uniqueVisitors: 0,
+            todayVisitors: 0,
+            monthlyVisitors: 0,
+            activeNow: 0,
+          },
+        },
+      })
+    }
+
     const searchParams = request.nextUrl.searchParams
     const limit = parseInt(searchParams.get('limit') || '100')
 
+    console.log('👥 Fetching visitors from KV...')
+
     // Get recent visitors
     const visitorIds = await kv.zrange('visitors:list', -limit, -1, { rev: true })
+    console.log(`📊 Found ${visitorIds.length} visitor IDs in KV`)
+    
     const visitors = []
 
     for (const id of visitorIds) {
@@ -25,6 +51,7 @@ export async function GET(request: NextRequest) {
 
     // Get active sessions (last 5 minutes) with activity data
     const allKeys = await kv.keys('visitor:session:*')
+    console.log(`📊 Found ${allKeys.length} active session keys in KV`)
     const activeSessions = []
 
     for (const key of allKeys) {

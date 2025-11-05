@@ -116,11 +116,20 @@ export async function POST(request: NextRequest) {
     console.error('❌ Error tracking visitor:', error)
     console.error('Error details:', {
       message: error.message,
+      stack: error.stack,
       hasKV: typeof kv !== 'undefined',
+      kvType: typeof kv,
     })
+    
+    // Check if KV is configured
+    if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
+      console.error('⚠️ Vercel KV not configured! Please set KV_REST_API_URL and KV_REST_API_TOKEN in Vercel environment variables.')
+    }
+    
     // Return success even on error to not break the site
     return NextResponse.json({
-      success: true,
+      success: false,
+      error: error.message || 'Unknown error',
       sessionId: `session_${Date.now()}`,
     })
   }
