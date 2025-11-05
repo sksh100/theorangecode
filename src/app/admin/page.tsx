@@ -156,6 +156,18 @@ export default function AdminDashboard() {
     }
   }, [])
 
+  // Auto-refresh data every 30 seconds
+  useEffect(() => {
+    if (!isAuthenticated) return
+
+    const interval = setInterval(() => {
+      console.log('🔄 Auto-refreshing data...')
+      fetchData()
+    }, 30000) // Refresh every 30 seconds
+
+    return () => clearInterval(interval)
+  }, [isAuthenticated])
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
