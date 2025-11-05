@@ -221,6 +221,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: 'Interest registered successfully',
+      mailerliteSuccess,
       data: {
         id: submissionId,
         name: displayName,

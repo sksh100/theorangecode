@@ -85,7 +85,7 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
       if (data.success) {
         setIsSubscribed(true)
         setEmail('')
-        setMessage({ type: 'success', text: 'Thank you for subscribing!' })
+        setMessage({ type: 'success', text: data.mailerliteSuccess ? 'Thank you for subscribing! You are added to our list.' : 'Thank you for subscribing! (We will add you shortly.)' })
         setIsSubmitting(false)
       } else {
         setMessage({ type: 'error', text: data?.error || 'Something went wrong. Please try again.' })
