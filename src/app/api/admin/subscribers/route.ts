@@ -20,7 +20,6 @@ export async function GET(request: NextRequest) {
     
     const searchParams = request.nextUrl.searchParams
     const limit = parseInt(searchParams.get('limit') || '50')
-    const offset = parseInt(searchParams.get('offset') || '0')
     
     // Fetch subscribers from MailerLite
     const subscribersResponse = await mailerlite.subscribers.get({
@@ -28,7 +27,6 @@ export async function GET(request: NextRequest) {
         status: 'active',
       },
       limit,
-      offset,
     })
     
     // Get total subscriber count
