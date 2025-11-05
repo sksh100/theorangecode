@@ -8,16 +8,21 @@ export const metadata: Metadata = {
   authors: [{ name: 'The Orange Code' }],
   icons: {
     icon: [
-      { url: '/flavicon/favicon.ico?v=2' },
-      { url: '/flavicon/favicon-16x16.png?v=2', sizes: '16x16', type: 'image/png' },
-      { url: '/flavicon/favicon-32x32.png?v=2', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.ico' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/flavicon/favicon.ico' },
+      { url: '/flavicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/flavicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
     ],
-    apple: '/flavicon/apple-touch-icon.png?v=2',
+    apple: ['/apple-touch-icon.png', '/flavicon/apple-touch-icon.png'],
     other: [
-      { rel: 'android-chrome', url: '/flavicon/android-chrome-192x192.png?v=2', sizes: '192x192' },
-      { rel: 'android-chrome', url: '/flavicon/android-chrome-512x512.png?v=2', sizes: '512x512' },
+      { rel: 'android-chrome', url: '/android-chrome-192x192.png', sizes: '192x192' },
+      { rel: 'android-chrome', url: '/android-chrome-512x512.png', sizes: '512x512' },
+      { rel: 'android-chrome', url: '/flavicon/android-chrome-192x192.png', sizes: '192x192' },
+      { rel: 'android-chrome', url: '/flavicon/android-chrome-512x512.png', sizes: '512x512' },
     ],
-    shortcut: '/flavicon/favicon.ico?v=2',
+    shortcut: ['/favicon.ico', '/flavicon/favicon.ico'],
   },
   themeColor: '#01011e',
   openGraph: {
