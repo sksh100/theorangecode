@@ -212,10 +212,14 @@ export default function AdminDashboard() {
   }
 
   const fetchData = async () => {
-    fetchPayments()
-    fetchSubscribers()
+    // Fetch in parallel, then calculate analytics from actual data
+    await Promise.all([
+      fetchPayments(),
+      fetchSubscribers(),
+      fetchVisitors(),
+    ])
+    // Calculate analytics after we have payments and subscribers data
     fetchAnalytics()
-    fetchVisitors()
   }
 
   const fetchVisitors = async () => {
@@ -305,16 +309,86 @@ export default function AdminDashboard() {
   const fetchAnalytics = async () => {
     setAnalyticsLoading(true)
     try {
-      const response = await fetch('/api/admin/analytics')
-      const data = await response.json()
-      if (data.success) {
-        setAnalytics(data.data)
-      } else {
-        console.error('Failed to fetch analytics:', data.error)
-        setAnalytics(null)
+      // Use actual data from payments and subscribers for consistency
+      // This ensures Overview tab matches other tabs exactly
+      const currentPayments = payments
+      const currentSubscribers = subscribers
+      
+      const analyticsData = {
+        revenue: {
+          total: currentPayments.reduce((sum, p) => sum + p.amount, 0),
+          today: currentPayments.filter(p => {
+            const date = new Date(p.createdAt)
+            const today = new Date()
+            return date.toDateString() === today.toDateString()
+          }).reduce((sum, p) => sum + p.amount, 0),
+          monthly: currentPayments.filter(p => {
+            const date = new Date(p.createdAt)
+            const now = new Date()
+            return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
+          }).reduce((sum, p) => sum + p.amount, 0),
+          byDate: [] as Array<{ date: string; amount: number }>,
+        },
+        subscribers: {
+          total: currentSubscribers.length,
+          today: currentSubscribers.filter(s => {
+            const date = new Date(s.subscribedAt)
+            const today = new Date()
+            return date.toDateString() === today.toDateString()
+          }).length,
+          monthly: currentSubscribers.filter(s => {
+            const date = new Date(s.subscribedAt)
+            const now = new Date()
+            return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
+          }).length,
+        },
+        payments: {
+          total: currentPayments.length,
+          today: currentPayments.filter(p => {
+            const date = new Date(p.createdAt)
+            const today = new Date()
+            return date.toDateString() === today.toDateString()
+          }).length,
+          monthly: currentPayments.filter(p => {
+            const date = new Date(p.createdAt)
+            const now = new Date()
+            return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
+          }).length,
+        },
       }
+
+      // Calculate revenue by date (last 30 days)
+      const revenueByDate: { [key: string]: number } = {}
+      const last30Days = Array.from({ length: 30 }, (_, i) => {
+        const date = new Date()
+        date.setDate(date.getDate() - i)
+        return date.toISOString().split('T')[0]
+      })
+
+      last30Days.forEach(date => {
+        revenueByDate[date] = 0
+      })
+
+      currentPayments.forEach(payment => {
+        const date = new Date(payment.createdAt).toISOString().split('T')[0]
+        if (revenueByDate[date] !== undefined) {
+          revenueByDate[date] += payment.amount
+        }
+      })
+
+      analyticsData.revenue.byDate = Object.entries(revenueByDate)
+        .map(([date, amount]) => ({ date, amount }))
+        .reverse()
+
+      console.log('✅ Analytics calculated:', {
+        revenueTotal: analyticsData.revenue.total,
+        subscribersTotal: analyticsData.subscribers.total,
+        paymentsTotal: analyticsData.payments.total,
+      })
+
+      setAnalytics(analyticsData)
     } catch (error) {
-      console.error('Error fetching analytics:', error)
+      console.error('Error calculating analytics:', error)
       setAnalytics(null)
     } finally {
       setAnalyticsLoading(false)
@@ -1426,6 +1500,16 @@ function ContentPlannerTab() {
     scheduledDate: '',
     status: 'draft' as 'draft' | 'scheduled' | 'published',
   })
+  const [showBrandModal, setShowBrandModal] = useState(false)
+  const [brandProfile, setBrandProfile] = useState({
+    name: 'The Orange Code',
+    colors: ['#E89F6B', '#A7A7A7', '#50A0F0', '#00d4ff', '#ff914d'],
+    toneOfVoice: 'Professional, inspiring, culturally intelligent, empowering, sophisticated',
+    targetAudience: 'Professionals seeking cultural intelligence and leadership development in international environments',
+    bannedTopics: [] as string[],
+    examplePosts: [] as Array<{ caption: string; hashtags: string[] }>,
+  })
+  const [brandLoading, setBrandLoading] = useState(false)
 
   const platforms = [
     { id: 'instagram', name: 'Instagram', icon: Instagram, color: 'bg-gradient-to-r from-purple-500 to-pink-500' },
@@ -1437,6 +1521,7 @@ function ContentPlannerTab() {
   useEffect(() => {
     fetchContent()
     fetchConnections()
+    fetchBrandProfile()
     
     // Check for OAuth success/error messages in URL
     const urlParams = new URLSearchParams(window.location.search)
@@ -1467,6 +1552,50 @@ function ContentPlannerTab() {
       }
     } catch (error) {
       console.error('Error fetching connections:', error)
+    }
+  }
+
+  const fetchBrandProfile = async () => {
+    try {
+      const response = await fetch('/api/admin/brand')
+      const data = await response.json()
+      if (data.success && data.data) {
+        setBrandProfile({
+          name: data.data.name || 'The Orange Code',
+          colors: data.data.colors || ['#E89F6B', '#A7A7A7', '#50A0F0', '#00d4ff', '#ff914d'],
+          toneOfVoice: data.data.toneOfVoice || 'Professional, inspiring, culturally intelligent, empowering, sophisticated',
+          targetAudience: data.data.targetAudience || 'Professionals seeking cultural intelligence and leadership development in international environments',
+          bannedTopics: data.data.bannedTopics || [],
+          examplePosts: data.data.examplePosts || [],
+        })
+      }
+    } catch (error) {
+      console.error('Error fetching brand profile:', error)
+    }
+  }
+
+  const handleSaveBrandProfile = async () => {
+    setBrandLoading(true)
+    try {
+      const response = await fetch('/api/admin/brand', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(brandProfile),
+      })
+
+      const data = await response.json()
+      if (data.success) {
+        setShowBrandModal(false)
+        // Refresh brand profile display
+        await fetchBrandProfile()
+      } else {
+        alert(`Failed to save brand profile: ${data.error}`)
+      }
+    } catch (error) {
+      console.error('Error saving brand profile:', error)
+      alert('Failed to save brand profile')
+    } finally {
+      setBrandLoading(false)
     }
   }
 
@@ -1646,10 +1775,7 @@ function ContentPlannerTab() {
             <p className="text-white/70 text-sm">Configure your brand identity for AI-powered content generation</p>
           </div>
           <button
-            onClick={() => {
-              // Open brand settings modal (we'll add this)
-              alert('Brand settings modal coming soon! For now, AI generation uses default brand settings.')
-            }}
+            onClick={() => setShowBrandModal(true)}
             className="px-4 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue text-sm transition-all flex items-center gap-2"
           >
             <Settings className="w-4 h-4" />
@@ -1659,17 +1785,18 @@ function ContentPlannerTab() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
           <div className="p-3 bg-white/5 rounded-lg border border-white/10">
             <p className="text-white/50 text-xs mb-1">Tone of Voice</p>
-            <p className="text-white text-sm">Professional, inspiring, culturally intelligent</p>
+            <p className="text-white text-sm">{brandProfile.toneOfVoice}</p>
           </div>
           <div className="p-3 bg-white/5 rounded-lg border border-white/10">
             <p className="text-white/50 text-xs mb-1">Target Audience</p>
-            <p className="text-white text-sm">Professionals seeking cultural intelligence</p>
+            <p className="text-white text-sm">{brandProfile.targetAudience}</p>
           </div>
           <div className="p-3 bg-white/5 rounded-lg border border-white/10">
             <p className="text-white/50 text-xs mb-1">Brand Colors</p>
-            <div className="flex gap-2 mt-1">
-              <div className="w-6 h-6 rounded bg-gradient-to-r from-[#E89F6B] to-[#A7A7A7] to-[#50A0F0]"></div>
-              <span className="text-white text-xs">Brand Palette</span>
+            <div className="flex gap-2 mt-1 flex-wrap">
+              {brandProfile.colors.map((color, idx) => (
+                <div key={idx} className="w-6 h-6 rounded border border-white/20" style={{ backgroundColor: color }} title={color} />
+              ))}
             </div>
           </div>
         </div>
