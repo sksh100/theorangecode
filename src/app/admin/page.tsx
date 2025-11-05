@@ -265,12 +265,19 @@ export default function AdminDashboard() {
     setPaymentsLoading(true)
     try {
       console.log('📊 Fetching payments...')
-      const response = await fetch('/api/admin/payments')
+      const response = await fetch('/api/admin/payments?limit=1000')
       const data = await response.json()
-      console.log('📊 Payments response:', { success: data.success, paymentsCount: data.data?.payments?.length || 0 })
+      console.log('📊 Payments response:', { 
+        success: data.success, 
+        paymentsCount: data.data?.payments?.length || 0,
+        totalRevenue: data.data?.stats?.totalRevenue || 0,
+        todayRevenue: data.data?.stats?.todayRevenue || 0,
+        samplePayments: data.data?.payments?.slice(0, 3) || []
+      })
       if (data.success) {
         const paymentsList = data.data.payments || []
         console.log(`✅ Loaded ${paymentsList.length} payments`)
+        console.log('📊 Sample payments:', paymentsList.slice(0, 3))
         setPayments(paymentsList)
       } else {
         console.error('❌ Failed to fetch payments:', data.error)

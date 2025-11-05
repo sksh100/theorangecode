@@ -228,6 +228,23 @@ export async function GET(request: NextRequest) {
       status: p.status,
     })))
     
+    // Convert amounts from smallest currency unit to currency units
+    // AED uses fils (1 AED = 100 fils), same as cents for USD
+    // For AED, divide by 100. For other currencies, check if they use cents/fils
+    const convertAmount = (amount: number, currency: string) => {
+      // AED, USD, EUR, GBP, etc. all use 100 subunits
+      const currenciesWithSubunits = ['aed', 'usd', 'eur', 'gbp', 'cad', 'aud'] // JPY uses 1, but Stripe stores it as 100
+      const lowerCurrency = currency.toLowerCase()
+      if (lowerCurrency === 'jpy') {
+        return amount // JPY doesn't use subunits in Stripe
+      }
+      if (currenciesWithSubunits.includes(lowerCurrency)) {
+        return amount / 100
+      }
+      // Default to dividing by 100 for most currencies
+      return amount / 100
+    }
+
     // Calculate statistics
     const successfulPayments = allPayments
     const totalRevenue = successfulPayments.reduce((sum, p) => sum + p.amount, 0)
@@ -247,12 +264,17 @@ export async function GET(request: NextRequest) {
       })
       .reduce((sum, p) => sum + p.amount, 0)
     
+    console.log(`💰 Total revenue (raw): ${totalRevenue}, Converted: ${convertAmount(totalRevenue, 'aed')} AED`)
+    console.log(`💰 Today revenue (raw): ${todayRevenue}, Converted: ${convertAmount(todayRevenue, 'aed')} AED`)
+    console.log(`💰 Monthly revenue (raw): ${monthlyRevenue}, Converted: ${convertAmount(monthlyRevenue, 'aed')} AED`)
+    console.log(`💰 Total payments: ${successfulPayments.length}`)
+    
     return NextResponse.json({
       success: true,
       data: {
         payments: allPayments.slice(0, limit).map(p => ({
           id: p.id,
-          amount: p.amount / 100, // Convert from cents to currency units
+          amount: convertAmount(p.amount, p.currency),
           currency: p.currency.toUpperCase(),
           status: p.status,
           customerEmail: p.customerEmail,
@@ -262,9 +284,9 @@ export async function GET(request: NextRequest) {
           type: p.type,
         })),
         stats: {
-          totalRevenue: totalRevenue / 100,
-          todayRevenue: todayRevenue / 100,
-          monthlyRevenue: monthlyRevenue / 100,
+          totalRevenue: convertAmount(totalRevenue, 'aed'),
+          todayRevenue: convertAmount(todayRevenue, 'aed'),
+          monthlyRevenue: convertAmount(monthlyRevenue, 'aed'),
           totalPayments: successfulPayments.length,
           todayPayments: successfulPayments.filter(p => {
             const date = new Date(p.createdAt * 1000)
