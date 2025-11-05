@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { Instagram, Twitter, Pinterest, Linkedin, Mail, Phone, MapPin, Send, Crown } from 'lucide-react'
+import { Instagram, Twitter, Linkedin, Mail, Phone, MapPin, Send, Crown } from 'lucide-react'
 import Link from 'next/link'
 
 interface ModernFooterProps {
@@ -16,6 +16,19 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
   const [isSubscribed, setIsSubscribed] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+
+  // Minimal Pinterest SVG icon to avoid dependency/version issues
+  const PinterestIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      {...props}
+    >
+      <path d="M12 2C6.48 2 2 6.25 2 11.58c0 3.74 2.33 6.96 5.64 8.1-.08-.69-.15-1.75.03-2.51.16-.69 1.06-4.42 1.06-4.42s-.27-.53-.27-1.31c0-1.23.71-2.14 1.6-2.14.75 0 1.11.57 1.11 1.26 0 .77-.49 1.92-.74 2.99-.21.88.44 1.6 1.31 1.6 1.58 0 2.8-1.67 2.8-4.08 0-2.13-1.53-3.63-3.71-3.63-2.53 0-4.02 1.9-4.02 3.86 0 .77.3 1.6.68 2.06.07.09.08.17.06.26-.07.28-.22.88-.25 1.01-.04.16-.13.19-.31.11-1.16-.54-1.89-2.23-1.89-3.59 0-2.92 2.12-5.6 6.12-5.6 3.21 0 5.71 2.29 5.71 5.36 0 3.2-2.02 5.77-4.83 5.77-0.94 0-1.83-.49-2.13-1.07l-.58 2.21c-.21.81-.78 1.82-1.16 2.44.87.27 1.79.42 2.74.42 5.52 0 10-4.25 10-9.58C22 6.25 17.52 2 12 2z" />
+    </svg>
+  )
 
   const handleSubscribe = async (e?: React.FormEvent | React.MouseEvent) => {
     if (e) {
@@ -88,7 +101,7 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
   const socialLinks = [
     { icon: Instagram, href: 'https://www.instagram.com/the.orangecode/?next=%2F', label: 'Instagram' },
     { icon: Twitter, href: 'https://x.com/TheOrangeCode', label: 'Twitter' },
-    { icon: Pinterest, href: 'https://www.pinterest.com/theorangecode/?actingBusinessId=939141465953854064', label: 'Pinterest' },
+    { icon: PinterestIcon, href: 'https://www.pinterest.com/theorangecode/?actingBusinessId=939141465953854064', label: 'Pinterest' },
     { icon: Linkedin, href: 'https://www.linkedin.com/in/the-orange-code-070849395/', label: 'LinkedIn' }
   ]
 
