@@ -1907,6 +1907,8 @@ function ContentPlannerTab() {
       platforms: item.platforms || [],
       scheduledDate: item.scheduledDate || '',
       status: item.status || 'draft',
+      location: item.location || '',
+      tags: item.tags || '',
     })
     setShowCreateModal(true)
   }
