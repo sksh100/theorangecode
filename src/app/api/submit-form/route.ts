@@ -21,7 +21,7 @@ async function addToMailerLite(data: {
   phone?: string
   timestamp: string
   source: string
-}) {
+}): Promise<{ success: boolean; error?: string }> {
   try {
     const apiKey = process.env.MAILERLITE_API_KEY
     const groupId = process.env.MAILERLITE_GROUP_ID
@@ -34,7 +34,7 @@ async function addToMailerLite(data: {
     
     if (!apiKey) {
       console.log('⚠️ MailerLite not configured - missing API key')
-      return false
+      return { success: false, error: 'Missing API key' }
     }
 
     const mailerlite = new MailerLite({
@@ -73,14 +73,15 @@ async function addToMailerLite(data: {
     // If group ID is provided, add subscriber to that group
     // This will trigger the welcome email automation if configured
     if (groupId) {
-      subscriberData.groups = [groupId]
+      subscriberData.groups = [parseInt(groupId)]
     }
 
     console.log('📝 Adding subscriber to MailerLite:', {
       email: data.email,
       groupId: groupId || 'none',
       hasName: !!data.name,
-      hasPhone: !!data.phone
+      hasPhone: !!data.phone,
+      subscriberData
     })
 
     // Add subscriber to MailerLite (createOrUpdate will create if new, update if exists)
@@ -89,27 +90,36 @@ async function addToMailerLite(data: {
     console.log('✅ Subscriber added to MailerLite successfully:', {
       email: data.email,
       subscriberId: response.data?.data?.id || 'unknown',
-      groups: response.data?.data?.groups || []
+      groups: response.data?.data?.groups || [],
+      fullResponse: JSON.stringify(response.data, null, 2)
     })
     
-    return true
+    return { success: true }
   } catch (error: any) {
+    const errorMessage = error.message || error.toString()
+    const errorStatus = error.response?.status
+    const errorDetails = error.response?.data || error.toString()
+    
     console.error('❌ MailerLite error:', {
-      message: error.message,
-      status: error.response?.status,
+      message: errorMessage,
+      status: errorStatus,
       statusText: error.response?.statusText,
-      details: error.response?.data || error.toString()
+      details: errorDetails,
+      fullError: JSON.stringify(error, null, 2)
     })
     
     // Check if subscriber already exists (not an error, just informational)
-    if (error.message?.includes('already exists') || error.response?.status === 409) {
+    if (errorMessage?.includes('already exists') || errorStatus === 409) {
       console.log('ℹ️ Subscriber already exists in MailerLite')
       // Still return true as this is not a failure
-      return true
+      return { success: true }
     }
     
     // Don't throw - allow submission to continue even if MailerLite fails
-    return false
+    return { 
+      success: false, 
+      error: `${errorMessage}${errorStatus ? ` (Status: ${errorStatus})` : ''}` 
+    }
   }
 }
 
@@ -191,7 +201,7 @@ export async function POST(request: NextRequest) {
       groupId: (process.env.MAILERLITE_GROUP_ID || '').trim(),
     }
     console.log('📧 Attempting to add subscriber to MailerLite...', { name: displayName, email: cleanEmail, phone: cleanPhone })
-    const mailerliteSuccess = await addToMailerLite({
+    const mailerliteResult = await addToMailerLite({
       firstName: firstName || '',
       lastName: lastName || '',
       name: displayName,
@@ -200,6 +210,8 @@ export async function POST(request: NextRequest) {
       timestamp: submissionData.submittedAt,
       source: finalSource
     })
+    const mailerliteSuccess = mailerliteResult.success
+    const mailerliteError = mailerliteResult.error
     
     if (mailerliteSuccess) {
       console.log('✅ Successfully added subscriber to MailerLite')
@@ -227,6 +239,7 @@ export async function POST(request: NextRequest) {
       success: true,
       message: 'Interest registered successfully',
       mailerliteSuccess,
+      mailerliteError: mailerliteError || null,
       mailerliteEnv,
       data: {
         id: submissionId,
