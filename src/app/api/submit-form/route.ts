@@ -98,7 +98,14 @@ async function addToMailerLite(data: {
     })
     
     // Log automation trigger info
-    if (groupId && response.data?.data?.groups?.includes(parseInt(groupId))) {
+    const groups = response.data?.data?.groups || []
+    const isInGroup = Array.isArray(groups) && groups.some((g: any) => 
+      (typeof g === 'string' && g === groupId) || 
+      (typeof g === 'number' && g === parseInt(groupId)) ||
+      (g?.id && (g.id.toString() === groupId || g.id === parseInt(groupId)))
+    )
+    
+    if (groupId && isInGroup) {
       console.log('✅ Subscriber is in group - automation should trigger:', {
         email: data.email,
         groupId: groupId,
@@ -109,7 +116,7 @@ async function addToMailerLite(data: {
       console.warn('⚠️ Subscriber may not be in group - automation may not trigger:', {
         email: data.email,
         groupId: groupId,
-        actualGroups: response.data?.data?.groups || [],
+        actualGroups: groups,
         subscriberStatus: response.data?.data?.status
       })
     }
