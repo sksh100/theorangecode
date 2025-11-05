@@ -25,11 +25,12 @@ export async function POST(request: NextRequest) {
     }
 
     const content = JSON.parse(contentData as string)
-
-    // Get access token for the platform
-    const { kv } = await import('@vercel/kv')
     
-    let postResult = {
+    let postResult: {
+      success: boolean
+      postId: string | null
+      error: string | null
+    } = {
       success: false,
       postId: null,
       error: null,

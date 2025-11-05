@@ -104,7 +104,7 @@ Return only the hashtags, comma-separated, without # symbols:`
             .slice(0, 5) || []
         : []
 
-      const hashtags = [...new Set([...baseHashtags, ...contentHashtags])].slice(0, 20)
+      const hashtags = Array.from(new Set([...baseHashtags, ...contentHashtags])).slice(0, 20)
 
       return NextResponse.json({
         success: true,
