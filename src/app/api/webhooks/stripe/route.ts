@@ -2,10 +2,16 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import twilio from 'twilio'
 
-// Initialize Stripe with secret key
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2025-10-29.clover',
-})
+// Lazy initialization of Stripe to handle missing env vars
+function getStripeClient() {
+  const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+  if (!stripeSecretKey) {
+    return null
+  }
+  return new Stripe(stripeSecretKey, {
+    apiVersion: '2025-10-29.clover',
+  })
+}
 
 // Initialize Twilio client (lazy initialization to handle missing env vars)
 function getTwilioClient() {
