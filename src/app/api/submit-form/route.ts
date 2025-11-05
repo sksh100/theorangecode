@@ -102,7 +102,7 @@ async function addToMailerLite(data: {
           updatePayload
         })
         
-        const updateResponse = await mailerlite.subscribers.update(updatePayload, response.data.data.id)
+        const updateResponse = await mailerlite.subscribers.update(response.data.data.id, updatePayload)
         
         console.log('✅ Subscriber assigned to group successfully:', {
           subscriberId: response.data.data.id,
