@@ -25,37 +25,37 @@ export async function GET(request: NextRequest) {
     })
 
     // Fetch ALL payments (same logic as payments API)
-    const allPaymentIntents = []
+    const allPaymentIntents: any[] = []
     let hasMorePIs = true
     let lastPaymentIntentId: string | undefined = undefined
     
     while (hasMorePIs) {
-      const paymentIntents: any = await stripe.paymentIntents.list({
+      const paymentIntentsResult: any = await stripe.paymentIntents.list({
         limit: 100,
         ...(lastPaymentIntentId ? { starting_after: lastPaymentIntentId } : {}),
       })
-      allPaymentIntents.push(...paymentIntents.data)
-      hasMorePIs = paymentIntents.has_more
-      if (paymentIntents.data.length > 0) {
-        lastPaymentIntentId = paymentIntents.data[paymentIntents.data.length - 1].id
+      allPaymentIntents.push(...paymentIntentsResult.data)
+      hasMorePIs = paymentIntentsResult.has_more
+      if (paymentIntentsResult.data.length > 0) {
+        lastPaymentIntentId = paymentIntentsResult.data[paymentIntentsResult.data.length - 1].id
       } else {
         hasMorePIs = false
       }
     }
     
-    const allCharges = []
+    const allCharges: any[] = []
     let hasMoreCharges = true
     let lastChargeId: string | undefined = undefined
     
     while (hasMoreCharges) {
-      const charges: any = await stripe.charges.list({
+      const chargesResult: any = await stripe.charges.list({
         limit: 100,
         ...(lastChargeId ? { starting_after: lastChargeId } : {}),
       })
-      allCharges.push(...charges.data)
-      hasMoreCharges = charges.has_more
-      if (charges.data.length > 0) {
-        lastChargeId = charges.data[charges.data.length - 1].id
+      allCharges.push(...chargesResult.data)
+      hasMoreCharges = chargesResult.has_more
+      if (chargesResult.data.length > 0) {
+        lastChargeId = chargesResult.data[chargesResult.data.length - 1].id
       } else {
         hasMoreCharges = false
       }
