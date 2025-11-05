@@ -180,7 +180,7 @@ export default function AdminDashboard() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)
+      setLoading(true)
     setAuthError('')
 
     try {
@@ -345,7 +345,7 @@ export default function AdminDashboard() {
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-white mb-2">Admin Dashboard</h1>
             <p className="text-white/70 text-sm">Enter password to access</p>
-          </div>
+        </div>
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
@@ -383,7 +383,7 @@ export default function AdminDashboard() {
   }
 
   // Main dashboard
-  return (
+    return (
     <div className="min-h-screen bg-primary-dark">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-primary-dark/95 backdrop-blur-lg border-b border-white/10">
@@ -394,7 +394,7 @@ export default function AdminDashboard() {
               <p className="text-white/70 text-sm mt-1">The Orange Code</p>
             </div>
             <div className="flex items-center gap-4">
-              <button
+          <button 
                 onClick={fetchData}
                 className="p-2 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 transition-all"
                 title="Refresh data"
@@ -407,9 +407,9 @@ export default function AdminDashboard() {
               >
                 <LogOut className="w-4 h-4" />
                 <span className="hidden sm:inline">Logout</span>
-              </button>
-            </div>
-          </div>
+          </button>
+        </div>
+      </div>
         </div>
       </header>
 
@@ -425,7 +425,7 @@ export default function AdminDashboard() {
               { id: 'visitors', label: 'Visitors', icon: Globe },
               { id: 'content', label: 'Content Planner', icon: Calendar },
             ].map((tab) => (
-              <button
+            <button 
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`px-6 py-4 flex items-center gap-2 border-b-2 transition-all ${
@@ -648,8 +648,8 @@ export default function AdminDashboard() {
                     className="px-4 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue transition-all flex items-center gap-2"
                   >
                     <RefreshCw className="w-4 h-4" />
-                    Refresh
-                  </button>
+              Refresh
+            </button>
                 </div>
               </div>
 
@@ -745,15 +745,15 @@ export default function AdminDashboard() {
                       className="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50"
                     />
                   </div>
-                  <button
+            <button 
                     onClick={fetchSubscribers}
                     className="px-4 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue transition-all flex items-center gap-2"
-                  >
+            >
                     <RefreshCw className="w-4 h-4" />
                     Refresh
-                  </button>
-                </div>
-              </div>
+            </button>
+          </div>
+        </div>
 
               {/* Subscribers Table */}
               <div className="glass-card overflow-hidden">
@@ -917,16 +917,16 @@ export default function AdminDashboard() {
                         <div className="flex justify-between">
                           <span className="text-white/70">Total</span>
                           <span className="text-white font-semibold">{analytics.revenue.total.toLocaleString()} AED</span>
-                        </div>
+              </div>
                         <div className="flex justify-between">
                           <span className="text-white/70">This Month</span>
                           <span className="text-white font-semibold">{analytics.revenue.monthly.toLocaleString()} AED</span>
-                        </div>
+              </div>
                         <div className="flex justify-between">
                           <span className="text-white/70">Today</span>
                           <span className="text-white font-semibold">{analytics.revenue.today.toLocaleString()} AED</span>
-                        </div>
-                      </div>
+              </div>
+            </div>
                     </motion.div>
 
                     <motion.div
@@ -938,7 +938,7 @@ export default function AdminDashboard() {
                         <div className="flex justify-between">
                           <span className="text-white/70">Total</span>
                           <span className="text-white font-semibold">{analytics.subscribers.total.toLocaleString()}</span>
-                        </div>
+              </div>
                         <div className="flex justify-between">
                           <span className="text-white/70">This Month</span>
                           <span className="text-white font-semibold">{analytics.subscribers.monthly}</span>
@@ -959,7 +959,7 @@ export default function AdminDashboard() {
                         <div className="flex justify-between">
                           <span className="text-white/70">Total</span>
                           <span className="text-white font-semibold">{analytics.payments.total.toLocaleString()}</span>
-                        </div>
+                </div>
                         <div className="flex justify-between">
                           <span className="text-white/70">This Month</span>
                           <span className="text-white font-semibold">{analytics.payments.monthly}</span>
@@ -1313,9 +1313,9 @@ export default function AdminDashboard() {
                   <div className="p-8 text-center text-white/70">Loading visitors...</div>
                 ) : visitors.length === 0 ? (
                   <div className="p-8 text-center text-white/70">No visitors yet. Data will appear here once visitors start browsing your site.</div>
-                ) : (
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
                       <thead className="bg-white/5">
                         <tr>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">Time</th>
@@ -1323,9 +1323,9 @@ export default function AdminDashboard() {
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">Location</th>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">Page</th>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">Referrer</th>
-                        </tr>
-                      </thead>
-                      <tbody>
+                      </tr>
+                    </thead>
+                    <tbody>
                         {visitors.slice(0, 50).map((visitor, index) => (
                           <motion.tr
                             key={visitor.id}
@@ -1336,10 +1336,10 @@ export default function AdminDashboard() {
                           >
                             <td className="px-6 py-4 text-white/70 text-sm">
                               {new Date(visitor.timestamp).toLocaleString()}
-                            </td>
+                          </td>
                             <td className="px-6 py-4 text-white/90 text-sm font-mono">
                               {visitor.ip || 'Unknown'}
-                            </td>
+                          </td>
                             <td className="px-6 py-4">
                               {visitor.country ? (
                                 <div className="flex items-center gap-2">
@@ -1373,12 +1373,12 @@ export default function AdminDashboard() {
                               )}
                             </td>
                           </motion.tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </div>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
             </motion.div>
           )}
 
@@ -1397,6 +1397,12 @@ function ContentPlannerTab() {
   const [loading, setLoading] = useState(false)
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [editingContent, setEditingContent] = useState<any>(null)
+  const [connections, setConnections] = useState({
+    instagram: { connected: false },
+    linkedin: { connected: false },
+    pinterest: { connected: false },
+    twitter: { connected: false },
+  })
   const [formData, setFormData] = useState({
     caption: '',
     hashtags: '',
@@ -1416,7 +1422,60 @@ function ContentPlannerTab() {
 
   useEffect(() => {
     fetchContent()
+    fetchConnections()
+    
+    // Check for OAuth success/error messages in URL
+    const urlParams = new URLSearchParams(window.location.search)
+    const success = urlParams.get('success')
+    const error = urlParams.get('error')
+    
+    if (success) {
+      const platform = success.replace('_connected', '')
+      alert(`${platform.charAt(0).toUpperCase() + platform.slice(1)} account connected successfully!`)
+      fetchConnections()
+      // Clean URL
+      window.history.replaceState({}, '', window.location.pathname)
+    }
+    
+    if (error) {
+      const platform = error.replace('_auth_failed', '').replace('_token_failed', '').replace('_auth_error', '')
+      alert(`Failed to connect ${platform}: ${error}`)
+      window.history.replaceState({}, '', window.location.pathname)
+    }
   }, [])
+
+  const fetchConnections = async () => {
+    try {
+      const response = await fetch('/api/admin/connections')
+      const data = await response.json()
+      if (data.success) {
+        setConnections(data.data)
+      }
+    } catch (error) {
+      console.error('Error fetching connections:', error)
+    }
+  }
+
+  const handleConnect = (platform: string) => {
+    window.location.href = `/api/auth/${platform}`
+  }
+
+  const handleDisconnect = async (platform: string) => {
+    if (!confirm(`Are you sure you want to disconnect ${platform}?`)) return
+    
+    try {
+      const response = await fetch(`/api/admin/connections?platform=${platform}`, {
+        method: 'DELETE',
+      })
+      
+      const data = await response.json()
+      if (data.success) {
+        await fetchConnections()
+      }
+    } catch (error) {
+      console.error('Error disconnecting:', error)
+    }
+  }
 
   const fetchContent = async () => {
     setLoading(true)
@@ -1535,7 +1594,7 @@ function ContentPlannerTab() {
       className="space-y-6"
     >
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-2xl font-bold text-white">Content Planner</h2>
           <p className="text-white/70 text-sm mt-1">Create and schedule posts for all your social media platforms</p>
@@ -1560,6 +1619,59 @@ function ContentPlannerTab() {
           Create Post
         </button>
       </div>
+
+      {/* Social Media Connections */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="glass-card p-6 mb-6"
+      >
+        <h3 className="text-lg font-bold text-white mb-4">Social Media Accounts</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {platforms.map((platform) => {
+            const Icon = platform.icon
+            const isConnected = connections[platform.id as keyof typeof connections]?.connected
+            
+            return (
+              <div
+                key={platform.id}
+                className={`p-4 rounded-lg border-2 transition-all ${
+                  isConnected
+                    ? 'border-green-500/50 bg-green-500/10'
+                    : 'border-white/10 bg-white/5 hover:bg-white/10'
+                }`}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className={`p-2 rounded-lg ${platform.color} text-white`}>
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-white font-medium text-sm">{platform.name}</p>
+                    <p className={`text-xs ${isConnected ? 'text-green-400' : 'text-white/50'}`}>
+                      {isConnected ? 'Connected' : 'Not connected'}
+                    </p>
+                  </div>
+                </div>
+                {isConnected ? (
+                  <button
+                    onClick={() => handleDisconnect(platform.id)}
+                    className="w-full px-3 py-2 bg-red-500/20 hover:bg-red-500/30 rounded-lg border border-red-500/30 text-red-400 text-sm transition-all"
+                  >
+                    Disconnect
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleConnect(platform.id)}
+                    className="w-full px-3 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue text-sm transition-all"
+                  >
+                    Connect Account
+                  </button>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      </motion.div>
 
       {/* Content Grid */}
       {loading ? (
@@ -1661,18 +1773,18 @@ function ContentPlannerTab() {
                         <Send className="w-3 h-3" />
                       </button>
                     ))}
-                  </>
-                )}
+          </>
+        )}
                 <button
                   onClick={() => handleDelete(item.id)}
                   className="px-3 py-2 bg-red-500/20 hover:bg-red-500/30 rounded-lg border border-red-500/30 text-red-400 transition-all"
                 >
                   <Trash2 className="w-3 h-3" />
                 </button>
-              </div>
+      </div>
             </motion.div>
           ))}
-        </div>
+    </div>
       )}
 
       {/* Create/Edit Modal */}
