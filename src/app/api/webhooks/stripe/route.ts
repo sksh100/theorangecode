@@ -1,17 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import * as twilio from 'twilio'
+import twilio from 'twilio'
 
 // Initialize Stripe with secret key
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2024-12-18.acacia',
 })
 
-// Initialize Twilio client
-const twilioClient = twilio.default(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-)
+// Initialize Twilio client (lazy initialization to handle missing env vars)
+function getTwilioClient() {
+  const accountSid = process.env.TWILIO_ACCOUNT_SID
+  const authToken = process.env.TWILIO_AUTH_TOKEN
+  
+  if (!accountSid || !authToken) {
+    return null
+  }
+  
+  return twilio(accountSid, authToken)
+}
 
 export const dynamic = 'force-dynamic'
 
@@ -25,6 +31,12 @@ async function sendWhatsAppNotification(message: string): Promise<boolean> {
 
     if (!whatsappNumber || !twilioWhatsAppNumber) {
       console.error('⚠️ WhatsApp configuration missing')
+      return false
+    }
+
+    const twilioClient = getTwilioClient()
+    if (!twilioClient) {
+      console.error('⚠️ Twilio client not initialized')
       return false
     }
 
