@@ -46,7 +46,8 @@ export async function GET(request: NextRequest) {
           
           // Get clicks
           const clicks = activities.filter((a: any) => a.type === 'click').length
-          const lastClick = activities.findLast((a: any) => a.type === 'click')
+          const clickActivities = activities.filter((a: any) => a.type === 'click')
+          const lastClick = clickActivities.length > 0 ? clickActivities[clickActivities.length - 1] : null
           
           // Get scroll depth
           const scrollDepth = session.scrollDepth || 0
