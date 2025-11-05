@@ -30,6 +30,16 @@ import {
   MapPin,
   Monitor,
   ExternalLink,
+  Calendar,
+  Image as ImageIcon,
+  Hash,
+  Send,
+  Plus,
+  Edit,
+  Trash2,
+  Instagram,
+  Linkedin,
+  Twitter,
 } from 'lucide-react'
 import {
   LineChart,
@@ -131,7 +141,7 @@ export default function AdminDashboard() {
   const [password, setPassword] = useState('')
   const [authError, setAuthError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [activeTab, setActiveTab] = useState<'overview' | 'payments' | 'subscribers' | 'analytics' | 'visitors'>('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'payments' | 'subscribers' | 'analytics' | 'visitors' | 'content'>('overview')
   const [payments, setPayments] = useState<Payment[]>([])
   const [subscribers, setSubscribers] = useState<Subscriber[]>([])
   const [analytics, setAnalytics] = useState<Analytics | null>(null)
@@ -413,6 +423,7 @@ export default function AdminDashboard() {
               { id: 'subscribers', label: 'Subscribers', icon: Users },
               { id: 'analytics', label: 'Analytics', icon: Activity },
               { id: 'visitors', label: 'Visitors', icon: Globe },
+              { id: 'content', label: 'Content Planner', icon: Calendar },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -1370,8 +1381,458 @@ export default function AdminDashboard() {
               </div>
             </motion.div>
           )}
+
+          {activeTab === 'content' && (
+            <ContentPlannerTab />
+          )}
         </AnimatePresence>
       </main>
     </div>
+  )
+}
+
+// Content Planner Component
+function ContentPlannerTab() {
+  const [content, setContent] = useState<any[]>([])
+  const [loading, setLoading] = useState(false)
+  const [showCreateModal, setShowCreateModal] = useState(false)
+  const [editingContent, setEditingContent] = useState<any>(null)
+  const [formData, setFormData] = useState({
+    caption: '',
+    hashtags: '',
+    altText: '',
+    mediaUrl: '',
+    platforms: [] as string[],
+    scheduledDate: '',
+    status: 'draft' as 'draft' | 'scheduled' | 'published',
+  })
+
+  const platforms = [
+    { id: 'instagram', name: 'Instagram', icon: Instagram, color: 'bg-gradient-to-r from-purple-500 to-pink-500' },
+    { id: 'linkedin', name: 'LinkedIn', icon: Linkedin, color: 'bg-blue-600' },
+    { id: 'pinterest', name: 'Pinterest', icon: ImageIcon, color: 'bg-red-600' },
+    { id: 'twitter', name: 'X (Twitter)', icon: Twitter, color: 'bg-black' },
+  ]
+
+  useEffect(() => {
+    fetchContent()
+  }, [])
+
+  const fetchContent = async () => {
+    setLoading(true)
+    try {
+      const response = await fetch('/api/admin/content')
+      const data = await response.json()
+      if (data.success) {
+        setContent(data.data.content || [])
+      }
+    } catch (error) {
+      console.error('Error fetching content:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handlePlatformToggle = (platformId: string) => {
+    setFormData(prev => ({
+      ...prev,
+      platforms: prev.platforms.includes(platformId)
+        ? prev.platforms.filter(p => p !== platformId)
+        : [...prev.platforms, platformId],
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      const url = editingContent ? '/api/admin/content' : '/api/admin/content'
+      const method = editingContent ? 'PUT' : 'POST'
+      const body = editingContent ? { id: editingContent.id, ...formData } : formData
+
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+
+      const data = await response.json()
+      if (data.success) {
+        await fetchContent()
+        setShowCreateModal(false)
+        setEditingContent(null)
+        setFormData({
+          caption: '',
+          hashtags: '',
+          altText: '',
+          mediaUrl: '',
+          platforms: [],
+          scheduledDate: '',
+          status: 'draft',
+        })
+      }
+    } catch (error) {
+      console.error('Error saving content:', error)
+    }
+  }
+
+  const handlePublish = async (contentId: string, platform: string) => {
+    try {
+      const response = await fetch('/api/admin/content/publish', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contentId, platform }),
+      })
+
+      const data = await response.json()
+      if (data.success) {
+        await fetchContent()
+      } else {
+        alert(`Failed to publish: ${data.error}`)
+      }
+    } catch (error) {
+      console.error('Error publishing:', error)
+      alert('Failed to publish content')
+    }
+  }
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this content?')) return
+
+    try {
+      const response = await fetch(`/api/admin/content?id=${id}`, {
+        method: 'DELETE',
+      })
+
+      const data = await response.json()
+      if (data.success) {
+        await fetchContent()
+      }
+    } catch (error) {
+      console.error('Error deleting content:', error)
+    }
+  }
+
+  const handleEdit = (item: any) => {
+    setEditingContent(item)
+    setFormData({
+      caption: item.caption || '',
+      hashtags: Array.isArray(item.hashtags) ? item.hashtags.join(', ') : item.hashtags || '',
+      altText: item.altText || '',
+      mediaUrl: item.mediaUrl || '',
+      platforms: item.platforms || [],
+      scheduledDate: item.scheduledDate || '',
+      status: item.status || 'draft',
+    })
+    setShowCreateModal(true)
+  }
+
+  return (
+    <motion.div
+      key="content"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      className="space-y-6"
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-white">Content Planner</h2>
+          <p className="text-white/70 text-sm mt-1">Create and schedule posts for all your social media platforms</p>
+        </div>
+        <button
+          onClick={() => {
+            setShowCreateModal(true)
+            setEditingContent(null)
+            setFormData({
+              caption: '',
+              hashtags: '',
+              altText: '',
+              mediaUrl: '',
+              platforms: [],
+              scheduledDate: '',
+              status: 'draft',
+            })
+          }}
+          className="px-4 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue transition-all flex items-center gap-2"
+        >
+          <Plus className="w-4 h-4" />
+          Create Post
+        </button>
+      </div>
+
+      {/* Content Grid */}
+      {loading ? (
+        <div className="glass-card p-8 text-center text-white/70">Loading content...</div>
+      ) : content.length === 0 ? (
+        <div className="glass-card p-8 text-center text-white/70">
+          <Calendar className="w-12 h-12 mx-auto mb-4 text-white/30" />
+          <p>No content yet. Create your first post to get started!</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {content.map((item) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="glass-card p-6"
+            >
+              {/* Media Preview */}
+              {item.mediaUrl && (
+                <div className="mb-4 rounded-lg overflow-hidden bg-white/5">
+                  <img
+                    src={item.mediaUrl}
+                    alt={item.altText}
+                    className="w-full h-48 object-cover"
+                  />
+                </div>
+              )}
+
+              {/* Platforms */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {item.platforms.map((platform: string) => {
+                  const platformInfo = platforms.find(p => p.id === platform)
+                  if (!platformInfo) return null
+                  const Icon = platformInfo.icon
+                  return (
+                    <span
+                      key={platform}
+                      className={`px-2 py-1 rounded-full text-xs flex items-center gap-1 ${platformInfo.color} text-white`}
+                    >
+                      <Icon className="w-3 h-3" />
+                      {platformInfo.name}
+                    </span>
+                  )
+                })}
+              </div>
+
+              {/* Caption */}
+              <p className="text-white text-sm mb-3 line-clamp-3">{item.caption}</p>
+
+              {/* Hashtags */}
+              {item.hashtags && item.hashtags.length > 0 && (
+                <div className="flex flex-wrap gap-1 mb-3">
+                  {item.hashtags.slice(0, 5).map((tag: string, idx: number) => (
+                    <span key={idx} className="text-azure-blue text-xs">
+                      #{tag}
+                    </span>
+                  ))}
+                  {item.hashtags.length > 5 && (
+                    <span className="text-white/50 text-xs">+{item.hashtags.length - 5} more</span>
+                  )}
+                </div>
+              )}
+
+              {/* Status & Date */}
+              <div className="flex items-center justify-between mb-4 pt-3 border-t border-white/10">
+                <span className={`px-2 py-1 rounded-full text-xs ${
+                  item.status === 'published' ? 'bg-green-500/20 text-green-400' :
+                  item.status === 'scheduled' ? 'bg-blue-500/20 text-blue-400' :
+                  'bg-gray-500/20 text-gray-400'
+                }`}>
+                  {item.status}
+                </span>
+                {item.scheduledDate && (
+                  <span className="text-white/50 text-xs">
+                    {new Date(item.scheduledDate).toLocaleDateString()}
+                  </span>
+                )}
+              </div>
+
+              {/* Actions */}
+              <div className="flex gap-2">
+                {item.status !== 'published' && (
+                  <>
+                    <button
+                      onClick={() => handleEdit(item)}
+                      className="flex-1 px-3 py-2 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 text-white text-sm transition-all flex items-center justify-center gap-2"
+                    >
+                      <Edit className="w-3 h-3" />
+                      Edit
+                    </button>
+                    {item.platforms.map((platform: string) => (
+                      <button
+                        key={platform}
+                        onClick={() => handlePublish(item.id, platform)}
+                        className="px-3 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue text-sm transition-all"
+                        title={`Publish to ${platform}`}
+                      >
+                        <Send className="w-3 h-3" />
+                      </button>
+                    ))}
+                  </>
+                )}
+                <button
+                  onClick={() => handleDelete(item.id)}
+                  className="px-3 py-2 bg-red-500/20 hover:bg-red-500/30 rounded-lg border border-red-500/30 text-red-400 transition-all"
+                >
+                  <Trash2 className="w-3 h-3" />
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      )}
+
+      {/* Create/Edit Modal */}
+      {showCreateModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="glass-card p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold text-white">
+                {editingContent ? 'Edit Content' : 'Create New Post'}
+              </h3>
+              <button
+                onClick={() => {
+                  setShowCreateModal(false)
+                  setEditingContent(null)
+                }}
+                className="text-white/70 hover:text-white"
+              >
+                <XCircle className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Platforms Selection */}
+              <div>
+                <label className="block text-white/70 text-sm mb-2">Select Platforms</label>
+                <div className="grid grid-cols-2 gap-3">
+                  {platforms.map((platform) => {
+                    const Icon = platform.icon
+                    const isSelected = formData.platforms.includes(platform.id)
+                    return (
+                      <button
+                        key={platform.id}
+                        type="button"
+                        onClick={() => handlePlatformToggle(platform.id)}
+                        className={`p-3 rounded-lg border-2 transition-all flex items-center gap-2 ${
+                          isSelected
+                            ? 'border-azure-blue bg-azure-blue/20'
+                            : 'border-white/10 bg-white/5 hover:bg-white/10'
+                        }`}
+                      >
+                        <Icon className={`w-5 h-5 ${isSelected ? 'text-azure-blue' : 'text-white/50'}`} />
+                        <span className={`text-sm ${isSelected ? 'text-white' : 'text-white/70'}`}>
+                          {platform.name}
+                        </span>
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Media URL */}
+              <div>
+                <label className="block text-white/70 text-sm mb-2">Media URL</label>
+                <input
+                  type="url"
+                  value={formData.mediaUrl}
+                  onChange={(e) => setFormData({ ...formData, mediaUrl: e.target.value })}
+                  placeholder="https://example.com/image.jpg"
+                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50"
+                />
+              </div>
+
+              {/* Caption */}
+              <div>
+                <label className="block text-white/70 text-sm mb-2">Caption</label>
+                <textarea
+                  value={formData.caption}
+                  onChange={(e) => setFormData({ ...formData, caption: e.target.value })}
+                  placeholder="Write your caption here..."
+                  rows={6}
+                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50 resize-none"
+                  required
+                />
+              </div>
+
+              {/* Hashtags */}
+              <div>
+                <label className="block text-white/70 text-sm mb-2 flex items-center gap-2">
+                  <Hash className="w-4 h-4" />
+                  Hashtags (comma-separated)
+                </label>
+                <input
+                  type="text"
+                  value={formData.hashtags}
+                  onChange={(e) => setFormData({ ...formData, hashtags: e.target.value })}
+                  placeholder="marketing, business, leadership"
+                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50"
+                />
+              </div>
+
+              {/* Alt Text */}
+              <div>
+                <label className="block text-white/70 text-sm mb-2">Alt Text (for accessibility)</label>
+                <input
+                  type="text"
+                  value={formData.altText}
+                  onChange={(e) => setFormData({ ...formData, altText: e.target.value })}
+                  placeholder="Describe the image for screen readers"
+                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50"
+                />
+              </div>
+
+              {/* Scheduled Date */}
+              <div>
+                <label className="block text-white/70 text-sm mb-2 flex items-center gap-2">
+                  <Clock className="w-4 h-4" />
+                  Schedule Date & Time
+                </label>
+                <input
+                  type="datetime-local"
+                  value={formData.scheduledDate}
+                  onChange={(e) => setFormData({ ...formData, scheduledDate: e.target.value, status: e.target.value ? 'scheduled' : 'draft' })}
+                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-azure-blue/50"
+                />
+              </div>
+
+              {/* Status */}
+              <div>
+                <label className="block text-white/70 text-sm mb-2">Status</label>
+                <select
+                  value={formData.status}
+                  onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
+                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-azure-blue/50"
+                >
+                  <option value="draft">Draft</option>
+                  <option value="scheduled">Scheduled</option>
+                  <option value="published">Published</option>
+                </select>
+              </div>
+
+              {/* Submit Button */}
+              <div className="flex gap-3 pt-4">
+                <button
+                  type="submit"
+                  className="flex-1 px-6 py-3 rounded-lg text-white font-semibold transition-all"
+                  style={{
+                    background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)',
+                  }}
+                >
+                  {editingContent ? 'Update Content' : 'Create Content'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowCreateModal(false)
+                    setEditingContent(null)
+                  }}
+                  className="px-6 py-3 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 text-white transition-all"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      )}
+    </motion.div>
   )
 }
