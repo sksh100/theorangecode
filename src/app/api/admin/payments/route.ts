@@ -68,6 +68,24 @@ export async function GET(request: NextRequest) {
     })
   } catch (error: any) {
     console.error('Error fetching payments:', error)
+    
+    // If Stripe is not configured, return empty data instead of error
+    if (error.message?.includes('api_key') || !process.env.STRIPE_SECRET_KEY) {
+      return NextResponse.json({
+        success: true,
+        data: {
+          payments: [],
+          stats: {
+            totalRevenue: 0,
+            todayRevenue: 0,
+            monthlyRevenue: 0,
+            totalPayments: 0,
+            todayPayments: 0,
+          },
+        },
+      })
+    }
+    
     return NextResponse.json(
       { success: false, error: error.message || 'Failed to fetch payments' },
       { status: 500 }

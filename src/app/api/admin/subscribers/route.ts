@@ -77,6 +77,22 @@ export async function GET(request: NextRequest) {
     })
   } catch (error: any) {
     console.error('Error fetching subscribers:', error)
+    
+    // If MailerLite is not configured, return empty data instead of error
+    if (!apiKey || error.message?.includes('api_key')) {
+      return NextResponse.json({
+        success: true,
+        data: {
+          subscribers: [],
+          stats: {
+            totalSubscribers: 0,
+            todaySubscribers: 0,
+            monthlySubscribers: 0,
+          },
+        },
+      })
+    }
+    
     return NextResponse.json(
       { success: false, error: error.message || 'Failed to fetch subscribers' },
       { status: 500 }

@@ -156,10 +156,14 @@ export default function AdminDashboard() {
       const response = await fetch('/api/admin/payments')
       const data = await response.json()
       if (data.success) {
-        setPayments(data.data.payments)
+        setPayments(data.data.payments || [])
+      } else {
+        console.error('Failed to fetch payments:', data.error)
+        setPayments([])
       }
     } catch (error) {
       console.error('Error fetching payments:', error)
+      setPayments([])
     } finally {
       setPaymentsLoading(false)
     }
@@ -171,10 +175,14 @@ export default function AdminDashboard() {
       const response = await fetch('/api/admin/subscribers')
       const data = await response.json()
       if (data.success) {
-        setSubscribers(data.data.subscribers)
+        setSubscribers(data.data.subscribers || [])
+      } else {
+        console.error('Failed to fetch subscribers:', data.error)
+        setSubscribers([])
       }
     } catch (error) {
       console.error('Error fetching subscribers:', error)
+      setSubscribers([])
     } finally {
       setSubscribersLoading(false)
     }
@@ -187,9 +195,13 @@ export default function AdminDashboard() {
       const data = await response.json()
       if (data.success) {
         setAnalytics(data.data)
+      } else {
+        console.error('Failed to fetch analytics:', data.error)
+        setAnalytics(null)
       }
     } catch (error) {
       console.error('Error fetching analytics:', error)
+      setAnalytics(null)
     } finally {
       setAnalyticsLoading(false)
     }
