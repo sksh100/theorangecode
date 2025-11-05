@@ -40,6 +40,7 @@ import {
   Instagram,
   Linkedin,
   Twitter,
+  Sparkles,
 } from 'lucide-react'
 import {
   LineChart,
@@ -1620,6 +1621,28 @@ function ContentPlannerTab() {
         </button>
       </div>
 
+      {/* Brand Profile Settings */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="glass-card p-6 mb-6"
+      >
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-bold text-white">Brand Profile</h3>
+          <button
+            onClick={() => {
+              // Open brand settings modal (we'll add this)
+              alert('Brand settings coming soon!')
+            }}
+            className="px-3 py-1 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 text-white text-sm transition-all"
+          >
+            <Settings className="w-4 h-4 inline mr-1" />
+            Configure
+          </button>
+        </div>
+        <p className="text-white/70 text-sm">Configure your brand colors, tone of voice, and target audience for AI-powered content generation.</p>
+      </motion.div>
+
       {/* Social Media Connections */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
@@ -1672,6 +1695,67 @@ function ContentPlannerTab() {
           })}
         </div>
       </motion.div>
+
+      {/* Visual Feed Preview (Instagram Grid) */}
+      {content.filter((c: any) => c.platforms.includes('instagram')).length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="glass-card p-6 mb-6"
+        >
+          <h3 className="text-lg font-bold text-white mb-4">Instagram Feed Preview</h3>
+          <div className="grid grid-cols-3 gap-2 max-w-2xl mx-auto">
+            {content
+              .filter((c: any) => c.platforms.includes('instagram') && c.status !== 'published')
+              .slice(0, 9)
+              .map((item: any, index: number) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.05 }}
+                  className="aspect-square rounded-lg overflow-hidden bg-white/5 border border-white/10 cursor-move hover:border-azure-blue/50 transition-all group relative"
+                  draggable
+                  onDragStart={(e) => {
+                    e.dataTransfer.setData('text/plain', item.id)
+                  }}
+                  onDragOver={(e) => {
+                    e.preventDefault()
+                    e.currentTarget.classList.add('border-azure-blue')
+                  }}
+                  onDragLeave={(e) => {
+                    e.currentTarget.classList.remove('border-azure-blue')
+                  }}
+                  onDrop={(e) => {
+                    e.preventDefault()
+                    const draggedId = e.dataTransfer.getData('text/plain')
+                    const dropIndex = index
+                    // Reorder logic would go here
+                    e.currentTarget.classList.remove('border-azure-blue')
+                  }}
+                >
+                  {item.mediaUrl ? (
+                    <img
+                      src={item.mediaUrl}
+                      alt={item.altText || item.caption}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-white/30">
+                      <ImageIcon className="w-8 h-8" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <p className="text-white text-xs text-center px-2 line-clamp-2">{item.caption}</p>
+                  </div>
+                </motion.div>
+              ))}
+          </div>
+          <p className="text-white/50 text-xs text-center mt-4">
+            Drag to reorder • This preview shows your upcoming Instagram feed
+          </p>
+        </motion.div>
+      )}
 
       {/* Content Grid */}
       {loading ? (
@@ -1839,42 +1923,145 @@ function ContentPlannerTab() {
                 </div>
               </div>
 
-              {/* Media URL */}
+              {/* Media Upload */}
               <div>
-                <label className="block text-white/70 text-sm mb-2">Media URL</label>
-                <input
-                  type="url"
-                  value={formData.mediaUrl}
-                  onChange={(e) => setFormData({ ...formData, mediaUrl: e.target.value })}
-                  placeholder="https://example.com/image.jpg"
-                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50"
-                />
+                <label className="block text-white/70 text-sm mb-2 flex items-center gap-2">
+                  <ImageIcon className="w-4 h-4" />
+                  Media (Image/Video)
+                </label>
+                <div className="space-y-2">
+                  <input
+                    type="file"
+                    accept="image/*,video/*"
+                    multiple
+                    onChange={async (e) => {
+                      const files = e.target.files
+                      if (files && files.length > 0) {
+                        const file = files[0]
+                        // In production, upload to storage (Vercel Blob, Supabase Storage, etc.)
+                        // For now, create a local URL for preview
+                        const url = URL.createObjectURL(file)
+                        setFormData({ ...formData, mediaUrl: url })
+                        
+                        // Analyze image for brand fit
+                        try {
+                          const analyzeResponse = await fetch('/api/admin/analyze-image', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ imageUrl: url }),
+                          })
+                          const analyzeData = await analyzeResponse.json()
+                          if (analyzeData.success) {
+                            console.log('Brand fit score:', analyzeData.data.brandFitScore)
+                            // Show brand fit score in UI
+                          }
+                        } catch (error) {
+                          console.error('Error analyzing image:', error)
+                        }
+                      }
+                    }}
+                    className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-azure-blue/20 file:text-azure-blue hover:file:bg-azure-blue/30"
+                  />
+                  <input
+                    type="url"
+                    value={formData.mediaUrl}
+                    onChange={(e) => setFormData({ ...formData, mediaUrl: e.target.value })}
+                    placeholder="Or enter image URL (https://example.com/image.jpg)"
+                    className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50"
+                  />
+                  {formData.mediaUrl && (
+                    <div className="mt-2 rounded-lg overflow-hidden bg-white/5">
+                      <img
+                        src={formData.mediaUrl}
+                        alt="Preview"
+                        className="w-full h-48 object-cover"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Caption */}
               <div>
-                <label className="block text-white/70 text-sm mb-2">Caption</label>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-white/70 text-sm">Caption</label>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      try {
+                        const response = await fetch('/api/admin/generate-caption', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            imageUrl: formData.mediaUrl,
+                            existingCaption: formData.caption,
+                          }),
+                        })
+                        const data = await response.json()
+                        if (data.success) {
+                          setFormData({ ...formData, caption: data.data.caption })
+                        }
+                      } catch (error) {
+                        console.error('Error generating caption:', error)
+                      }
+                    }}
+                    className="px-3 py-1 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue text-xs transition-all flex items-center gap-1"
+                    disabled={!formData.mediaUrl}
+                  >
+                    <Sparkles className="w-3 h-3" />
+                    AI Generate
+                  </button>
+                </div>
                 <textarea
                   value={formData.caption}
                   onChange={(e) => setFormData({ ...formData, caption: e.target.value })}
-                  placeholder="Write your caption here..."
+                  placeholder="Write your caption here... or click 'AI Generate' to create one automatically based on your brand voice"
                   rows={6}
                   className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50 resize-none"
                   required
                 />
+                <p className="text-white/50 text-xs mt-1">{formData.caption.length} characters</p>
               </div>
 
               {/* Hashtags */}
               <div>
-                <label className="block text-white/70 text-sm mb-2 flex items-center gap-2">
-                  <Hash className="w-4 h-4" />
-                  Hashtags (comma-separated)
-                </label>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-white/70 text-sm flex items-center gap-2">
+                    <Hash className="w-4 h-4" />
+                    Hashtags (comma-separated)
+                  </label>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      try {
+                        const response = await fetch('/api/admin/generate-hashtags', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            caption: formData.caption,
+                            platform: formData.platforms[0] || 'instagram',
+                          }),
+                        })
+                        const data = await response.json()
+                        if (data.success) {
+                          setFormData({ ...formData, hashtags: data.data.hashtags.join(', ') })
+                        }
+                      } catch (error) {
+                        console.error('Error generating hashtags:', error)
+                      }
+                    }}
+                    className="px-3 py-1 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue text-xs transition-all flex items-center gap-1"
+                    disabled={!formData.caption}
+                  >
+                    <Sparkles className="w-3 h-3" />
+                    AI Generate
+                  </button>
+                </div>
                 <input
                   type="text"
                   value={formData.hashtags}
                   onChange={(e) => setFormData({ ...formData, hashtags: e.target.value })}
-                  placeholder="marketing, business, leadership"
+                  placeholder="marketing, business, leadership (or click 'AI Generate' for automatic hashtags)"
                   className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50"
                 />
               </div>
