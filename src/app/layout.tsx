@@ -39,6 +39,11 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  verification: {
+    other: {
+      'msvalidate.01': '921E75E6C38B18D9E7FB8DBB0EEFA22F',
+    },
+  },
 }
 
 export const viewport: Viewport = {
