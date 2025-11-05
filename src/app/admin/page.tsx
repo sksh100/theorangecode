@@ -1638,22 +1638,41 @@ function ContentPlannerTab() {
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="glass-card p-6 mb-6"
+        className="glass-card p-6 mb-6 border-2 border-azure-blue/30"
       >
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-bold text-white">Brand Profile</h3>
+          <div>
+            <h3 className="text-lg font-bold text-white mb-1">Brand Profile</h3>
+            <p className="text-white/70 text-sm">Configure your brand identity for AI-powered content generation</p>
+          </div>
           <button
             onClick={() => {
               // Open brand settings modal (we'll add this)
-              alert('Brand settings coming soon!')
+              alert('Brand settings modal coming soon! For now, AI generation uses default brand settings.')
             }}
-            className="px-3 py-1 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 text-white text-sm transition-all"
+            className="px-4 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue text-sm transition-all flex items-center gap-2"
           >
-            <Settings className="w-4 h-4 inline mr-1" />
+            <Settings className="w-4 h-4" />
             Configure
           </button>
         </div>
-        <p className="text-white/70 text-sm">Configure your brand colors, tone of voice, and target audience for AI-powered content generation.</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+          <div className="p-3 bg-white/5 rounded-lg border border-white/10">
+            <p className="text-white/50 text-xs mb-1">Tone of Voice</p>
+            <p className="text-white text-sm">Professional, inspiring, culturally intelligent</p>
+          </div>
+          <div className="p-3 bg-white/5 rounded-lg border border-white/10">
+            <p className="text-white/50 text-xs mb-1">Target Audience</p>
+            <p className="text-white text-sm">Professionals seeking cultural intelligence</p>
+          </div>
+          <div className="p-3 bg-white/5 rounded-lg border border-white/10">
+            <p className="text-white/50 text-xs mb-1">Brand Colors</p>
+            <div className="flex gap-2 mt-1">
+              <div className="w-6 h-6 rounded bg-gradient-to-r from-[#E89F6B] to-[#A7A7A7] to-[#50A0F0]"></div>
+              <span className="text-white text-xs">Brand Palette</span>
+            </div>
+          </div>
+        </div>
       </motion.div>
 
       {/* Social Media Connections */}
@@ -1774,10 +1793,61 @@ function ContentPlannerTab() {
       {loading ? (
         <div className="glass-card p-8 text-center text-white/70">Loading content...</div>
       ) : content.length === 0 ? (
-        <div className="glass-card p-8 text-center text-white/70">
-          <Calendar className="w-12 h-12 mx-auto mb-4 text-white/30" />
-          <p>No content yet. Create your first post to get started!</p>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="glass-card p-12 text-center"
+        >
+          <div className="max-w-md mx-auto">
+            <div className="p-4 bg-azure-blue/20 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+              <Calendar className="w-12 h-12 text-azure-blue" />
+            </div>
+            <h3 className="text-2xl font-bold text-white mb-3">No Content Yet</h3>
+            <p className="text-white/70 mb-6">
+              Start creating amazing social media posts! Click the "Create Post" button above to get started.
+            </p>
+            <button
+              onClick={() => {
+                setShowCreateModal(true)
+                setEditingContent(null)
+                setFormData({
+                  caption: '',
+                  hashtags: '',
+                  altText: '',
+                  mediaUrl: '',
+                  platforms: [],
+                  scheduledDate: '',
+                  status: 'draft',
+                })
+              }}
+              className="px-6 py-3 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue transition-all flex items-center gap-2 mx-auto"
+            >
+              <Plus className="w-5 h-5" />
+              Create Your First Post
+            </button>
+            <div className="mt-8 pt-8 border-t border-white/10">
+              <p className="text-white/50 text-sm mb-4">Quick Start Guide:</p>
+              <div className="space-y-3 text-left max-w-xs mx-auto">
+                <div className="flex items-start gap-3">
+                  <div className="p-1.5 bg-azure-blue/20 rounded text-azure-blue text-xs font-bold mt-0.5">1</div>
+                  <p className="text-white/70 text-sm">Connect your social media accounts (Instagram, LinkedIn, Pinterest, X)</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="p-1.5 bg-azure-blue/20 rounded text-azure-blue text-xs font-bold mt-0.5">2</div>
+                  <p className="text-white/70 text-sm">Click "Create Post" and upload an image</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="p-1.5 bg-azure-blue/20 rounded text-azure-blue text-xs font-bold mt-0.5">3</div>
+                  <p className="text-white/70 text-sm">Use AI to generate captions and hashtags automatically</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="p-1.5 bg-azure-blue/20 rounded text-azure-blue text-xs font-bold mt-0.5">4</div>
+                  <p className="text-white/70 text-sm">Schedule or publish to all your connected platforms</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {content.map((item) => (
