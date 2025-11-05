@@ -1715,17 +1715,17 @@ function ContentPlannerTab() {
                   transition={{ delay: index * 0.05 }}
                   className="aspect-square rounded-lg overflow-hidden bg-white/5 border border-white/10 cursor-move hover:border-azure-blue/50 transition-all group relative"
                   draggable
-                  onDragStart={(e) => {
+                  onDragStart={(e: React.DragEvent) => {
                     e.dataTransfer.setData('text/plain', item.id)
                   }}
-                  onDragOver={(e) => {
+                  onDragOver={(e: React.DragEvent) => {
                     e.preventDefault()
                     e.currentTarget.classList.add('border-azure-blue')
                   }}
-                  onDragLeave={(e) => {
+                  onDragLeave={(e: React.DragEvent) => {
                     e.currentTarget.classList.remove('border-azure-blue')
                   }}
-                  onDrop={(e) => {
+                  onDrop={(e: React.DragEvent) => {
                     e.preventDefault()
                     const draggedId = e.dataTransfer.getData('text/plain')
                     const dropIndex = index
