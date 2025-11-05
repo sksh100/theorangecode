@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { Instagram, Twitter, Facebook, Linkedin, Mail, Phone, MapPin, Send, Crown } from 'lucide-react'
+import { Instagram, Twitter, Pinterest, Linkedin, Mail, Phone, MapPin, Send, Crown } from 'lucide-react'
 import Link from 'next/link'
 
 interface ModernFooterProps {
@@ -17,9 +17,16 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
+  const handleSubscribe = async (e?: React.FormEvent | React.MouseEvent) => {
+    if (e) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    
+    // Prevent double submission
+    if (isSubmitting) {
+      return
+    }
     
     const emailTrimmed = email.trim()
     
@@ -66,6 +73,7 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
         setIsSubscribed(true)
         setEmail('')
         setMessage({ type: 'success', text: 'Thank you for subscribing!' })
+        setIsSubmitting(false)
       } else {
         setMessage({ type: 'error', text: data?.error || 'Something went wrong. Please try again.' })
         setIsSubmitting(false)
@@ -80,12 +88,12 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
   const socialLinks = [
     { icon: Instagram, href: 'https://www.instagram.com/the.orangecode/?next=%2F', label: 'Instagram' },
     { icon: Twitter, href: 'https://x.com/TheOrangeCode', label: 'Twitter' },
-    { icon: Facebook, href: 'https://facebook.com/theorangecode', label: 'Facebook' },
-    { icon: Linkedin, href: 'https://linkedin.com/company/theorangecode', label: 'LinkedIn' }
+    { icon: Pinterest, href: 'https://www.pinterest.com/theorangecode/?actingBusinessId=939141465953854064', label: 'Pinterest' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/the-orange-code-070849395/', label: 'LinkedIn' }
   ]
 
   return (
-    <footer className="relative bg-gradient-to-br from-primary-dark via-primary-dark/95 to-primary-dark border-t border-white/10">
+    <footer className="relative z-[9999] bg-gradient-to-br from-primary-dark via-primary-dark/95 to-primary-dark border-t border-white/10" style={{ pointerEvents: 'auto' }}>
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 opacity-20">
@@ -197,7 +205,7 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-white/60 text-xs font-medium uppercase tracking-wider mb-1">Location</p>
-                    <p className="text-white text-sm">Abu Dhabi, UAE</p>
+                  <p className="text-white text-sm">Etihad Towers, Tower 2, Floor 36, Abu Dhabi, United Arab Emirates</p>
                   </div>
                 </div>
               </div>
@@ -209,8 +217,7 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
-              className="lg:col-span-1 relative z-10"
-              style={{ pointerEvents: 'auto' }}
+              className="lg:col-span-1 relative z-10 pb-8"
             >
               <h4 className="text-lg font-semibold text-white mb-6 tracking-tight">Stay Connected</h4>
               <p className="text-white/70 text-sm mb-6 leading-relaxed">
@@ -226,7 +233,6 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                     e.preventDefault()
                     e.stopPropagation()
                   }}
-                  style={{ pointerEvents: 'auto' }}
                 >
                   <div className="relative">
                     <input
@@ -250,16 +256,30 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                   )}
                   <motion.button
                     type="submit"
-                    disabled={isSubmitting}
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-white text-sm font-semibold hover:shadow-lg hover:shadow-orange/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                    disabled={isSubmitting || !email.trim()}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      handleSubscribe(e)
+                    }}
+                    onTouchEnd={(e) => {
+                      if (!isSubmitting && email.trim()) {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        handleSubscribe(e)
+                      }
+                    }}
+                    aria-label="Subscribe to our newsletter"
+                    className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-white text-sm font-semibold hover:shadow-lg hover:shadow-orange/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer active:scale-95"
                     style={{ 
                       background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)',
-                      pointerEvents: isSubmitting ? 'none' : 'auto',
-                      zIndex: 10,
-                      position: 'relative'
+                      zIndex: 9999,
+                      position: 'relative',
+                      WebkitTapHighlightColor: 'transparent',
+                      touchAction: 'manipulation'
                     }}
-                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                    whileHover={{ scale: isSubmitting || !email.trim() ? 1 : 1.02 }}
+                    whileTap={{ scale: isSubmitting || !email.trim() ? 1 : 0.98 }}
                   >
                     {isSubmitting ? (
                       <>
@@ -268,8 +288,8 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                       </>
                     ) : (
                       <>
-                    <Send className="w-4 h-4" />
-                    Subscribe
+                        <Send className="w-4 h-4" />
+                        <span>Subscribe</span>
                       </>
                     )}
                   </motion.button>

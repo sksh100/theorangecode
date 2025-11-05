@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { kv } from '@vercel/kv'
-import { MailerLite } from '@mailerlite/mailerlite-nodejs'
+import MailerLite from '@mailerlite/mailerlite-nodejs'
 
 interface FormData {
   firstName?: string

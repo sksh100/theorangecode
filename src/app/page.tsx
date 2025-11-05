@@ -196,12 +196,13 @@ export default function Home() {
               Transforming cultural barriers into bridges of trust through refined knowledge and authentic presence.
             </motion.p>
 
-            {/* Mobile-visible launch date (duplicate for small screens to ensure visibility) */}
-            <div className="sm:hidden mt-2 mb-4">
-              <p className="font-sofia text-base text-white/90 text-center">
-                <span className="uppercase text-white/70 tracking-wider mr-2">Launch Date</span>
-                <span className="font-bold text-gradient-primary">November 28, 2025</span>
-              </p>
+            {/* Mobile-visible launch date (high-contrast chip for small screens) */}
+            <div className="sm:hidden mt-3 mb-4 flex justify-center relative z-20">
+              <div className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-primary-dark/70 backdrop-blur-[8px] border border-white/10 shadow-glass">
+                <Clock className="w-4 h-4 text-azure-blue" />
+                <span className="uppercase text-white/70 tracking-wider text-xs">Launch Date</span>
+                <span className="font-semibold text-white">November 28, 2025</span>
+              </div>
             </div>
             
             <motion.div 
@@ -217,7 +218,7 @@ export default function Home() {
                     Launch Date
                   </span>
                 </div>
-                <span className="date-value font-sofia text-xl sm:text-2xl md:text-3xl text-gradient-primary font-bold">
+                <span className="date-value font-sofia text-xl sm:text-2xl md:text-3xl font-bold text-white sm:text-gradient-primary">
                   November 28, 2025
                 </span>
               </div>
