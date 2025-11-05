@@ -41,39 +41,32 @@ async function addToMailerLite(data: {
       api_key: apiKey,
     })
 
-    // Prepare subscriber data
+    // Prepare subscriber data - simplified format
     const subscriberData: any = {
       email: data.email,
-      status: 'active', // Subscriber will be active and receive welcome email
-      subscribed_at: data.timestamp || new Date().toISOString(),
+      status: 'active',
       fields: {},
     }
 
     // Add name fields if available
+    if (data.name && data.name !== 'Anonymous') {
+      subscriberData.fields.name = data.name
+    }
     if (data.firstName) {
-      subscriberData.fields.name = data.firstName
       subscriberData.fields.first_name = data.firstName
     }
-
     if (data.lastName) {
       subscriberData.fields.last_name = data.lastName
-      if (subscriberData.fields.name) {
-        subscriberData.fields.name = `${data.firstName} ${data.lastName}`
-      }
     }
 
     // Add phone if available
-    if (data.phone) {
-      subscriberData.fields.phone = data.phone
+    if (data.phone && data.phone.trim()) {
+      subscriberData.fields.phone = data.phone.trim()
     }
 
     // Add source/utm tracking
-    subscriberData.fields.source = data.source
-
-    // If group ID is provided, add subscriber to that group
-    // This will trigger the welcome email automation if configured
-    if (groupId) {
-      subscriberData.groups = [parseInt(groupId)]
+    if (data.source) {
+      subscriberData.fields.source = data.source
     }
 
     console.log('📝 Adding subscriber to MailerLite:', {
@@ -84,8 +77,23 @@ async function addToMailerLite(data: {
       subscriberData
     })
 
+    // Create subscriber first without groups (to avoid 422)
+    const subscriberPayload = { ...subscriberData }
+    delete subscriberPayload.groups
+    
     // Add subscriber to MailerLite (createOrUpdate will create if new, update if exists)
-    const response = await mailerlite.subscribers.createOrUpdate(subscriberData)
+    const response = await mailerlite.subscribers.createOrUpdate(subscriberPayload)
+    
+    // If group ID is provided, add subscriber to group separately
+    if (groupId && response.data?.data?.id) {
+      try {
+        await mailerlite.groups.assignSubscriber(groupId, response.data.data.id)
+        console.log('✅ Subscriber assigned to group:', groupId)
+      } catch (groupError: any) {
+        console.warn('⚠️ Failed to assign subscriber to group:', groupError.message)
+        // Don't fail the whole operation if group assignment fails
+      }
+    }
 
     console.log('✅ Subscriber added to MailerLite successfully:', {
       email: data.email,
