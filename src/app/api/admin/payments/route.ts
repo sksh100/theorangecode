@@ -111,9 +111,16 @@ export async function GET(request: NextRequest) {
     // Process PaymentIntents
     allPaymentIntents.forEach(p => {
       if (p.status === 'succeeded' && p.amount) {
+        console.log(`📊 Processing PaymentIntent ${p.id}:`, {
+          amount: p.amount,
+          currency: p.currency,
+          status: p.status,
+          receipt_email: p.receipt_email,
+          metadata: p.metadata,
+        })
         allPayments.push({
           id: p.id,
-          amount: p.amount,
+          amount: p.amount, // Stripe amounts are in smallest currency unit (cents for USD, fils for AED)
           currency: p.currency,
           status: p.status,
           customerEmail: p.receipt_email || (p.metadata as any)?.email || 'N/A',
@@ -135,9 +142,16 @@ export async function GET(request: NextRequest) {
         const linkedToPI = c.payment_intent && typeof c.payment_intent === 'string' && paymentIntentIds.has(c.payment_intent)
         if (!linkedToPI && !processedChargeIds.has(c.id)) {
           processedChargeIds.add(c.id)
+          console.log(`📊 Processing Charge ${c.id}:`, {
+            amount: c.amount,
+            currency: c.currency,
+            status: c.status,
+            billing_email: c.billing_details?.email,
+            metadata: c.metadata,
+          })
           allPayments.push({
             id: c.id,
-            amount: c.amount,
+            amount: c.amount, // Stripe amounts are in smallest currency unit
             currency: c.currency,
             status: c.status,
             customerEmail: c.billing_details?.email || c.receipt_email || (c.metadata as any)?.email || 'N/A',
@@ -179,9 +193,17 @@ export async function GET(request: NextRequest) {
         )
         
         if (!alreadyProcessed && !processedChargeIds.has(sessionId)) {
+          console.log(`📊 Processing Checkout Session ${sessionId}:`, {
+            amount_total: s.amount_total,
+            currency: s.currency,
+            payment_status: s.payment_status,
+            customerEmail,
+            customerName,
+            metadata: s.metadata,
+          })
           allPayments.push({
             id: sessionId,
-            amount: s.amount_total,
+            amount: s.amount_total, // Stripe amounts are in smallest currency unit
             currency: s.currency || 'aed',
             status: s.payment_status,
             customerEmail,

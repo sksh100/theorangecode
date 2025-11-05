@@ -1213,18 +1213,18 @@ export default function AdminDashboard() {
                 </div>
               )}
 
-              {/* World Map Visualization */}
-              {topCountries.length > 0 && (
-                <motion.div
-                  whileHover={{ scale: 1.01 }}
-                  className="glass-card p-6"
-                >
-                  <h3 className="text-xl font-bold text-white mb-4">World Map - Visitor Distribution</h3>
-                  
-                  {/* Interactive World Map */}
-                  <div className="relative w-full h-96 bg-white/5 rounded-lg border border-white/10 overflow-hidden mb-6">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      {/* World Map Visualization */}
+              {/* World Map Visualization - Always show */}
+              <motion.div
+                whileHover={{ scale: 1.01 }}
+                className="glass-card p-6"
+              >
+                <h3 className="text-xl font-bold text-white mb-4">World Map - Visitor Distribution</h3>
+                
+                {/* Interactive World Map */}
+                <div className="relative w-full h-96 bg-white/5 rounded-lg border border-white/10 overflow-hidden mb-6">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    {topCountries.length > 0 ? (
+                      /* World Map Visualization */
                       <div className="grid grid-cols-6 gap-2 p-4 w-full h-full">
                         {topCountries.slice(0, 20).map((country, index) => {
                           const total = topCountries.reduce((sum, c) => sum + c.count, 0)
@@ -1267,17 +1267,19 @@ export default function AdminDashboard() {
                           )
                         })}
                       </div>
-                      {topCountries.length === 0 && (
-                        <div className="text-center text-white/50">
-                          <Globe className="w-16 h-16 mx-auto mb-4 opacity-30" />
-                          <p>No visitor data yet</p>
-                          <p className="text-xs mt-2">Open your website in another tab to see visitor tracking</p>
-                        </div>
-                      )}
-                    </div>
+                    ) : (
+                      <div className="text-center text-white/50">
+                        <Globe className="w-16 h-16 mx-auto mb-4 opacity-30" />
+                        <p className="text-lg mb-2">No visitor data yet</p>
+                        <p className="text-xs mt-2">Open your website in another tab to see visitor tracking</p>
+                        <p className="text-xs mt-1 text-white/40">Visitor tracking will appear here once you have visitors</p>
+                      </div>
+                    )}
                   </div>
+                </div>
 
-                  {/* Country List with Percentages */}
+                {/* Country List with Percentages */}
+                {topCountries.length > 0 && (
                   <div className="space-y-2">
                     <h4 className="text-white/70 text-sm mb-3">Top Countries by Visitor Count</h4>
                     {topCountries.slice(0, 10).map((country, index) => {
@@ -1315,8 +1317,8 @@ export default function AdminDashboard() {
                       )
                     })}
                   </div>
-                </motion.div>
-              )}
+                )}
+              </motion.div>
 
               {/* Charts */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -1396,21 +1398,20 @@ export default function AdminDashboard() {
                 )}
               </div>
 
-              {/* Active Sessions */}
-              {(activeSessions.length > 0 || activeSessions.filter((s: any) => s.isActive !== false).length > 0) && (
-                <motion.div
-                  whileHover={{ scale: 1.01 }}
-                  className="glass-card p-6"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-bold text-white">Active Visitors Right Now</h3>
-                    <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-semibold">
-                      {activeSessions.filter((s: any) => s.isActive !== false).length} Active
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {activeSessions.filter((s: any) => s.isActive !== false).length > 0 ? (
-                      activeSessions.filter((s: any) => s.isActive !== false).map((session: any, index: number) => (
+              {/* Active Sessions - Always show */}
+              <motion.div
+                whileHover={{ scale: 1.01 }}
+                className="glass-card p-6"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-bold text-white">Active Visitors Right Now</h3>
+                  <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-semibold">
+                    {activeSessions.filter((s: any) => s.isActive !== false && s.isActive !== undefined).length} Active
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {activeSessions.filter((s: any) => s.isActive !== false && s.isActive !== undefined).length > 0 ? (
+                    activeSessions.filter((s: any) => s.isActive !== false && s.isActive !== undefined).map((session: any, index: number) => (
                       <motion.div
                         key={session.sessionId}
                         initial={{ opacity: 0, y: 10 }}
@@ -1469,15 +1470,17 @@ export default function AdminDashboard() {
                     ) : (
                       <div className="col-span-full p-8 text-center text-white/70">
                         <Activity className="w-12 h-12 mx-auto mb-4 text-white/30" />
-                        <p className="mb-2">No active visitors right now</p>
-                        <p className="text-sm text-white/50">
-                          Open your website ({process.env.NEXT_PUBLIC_BASE_URL || 'theorangecode.com'}) in another tab to see yourself as a visitor!
+                        <p className="mb-2 text-lg">No active visitors right now</p>
+                        <p className="text-sm text-white/50 mb-2">
+                          Open your website in another tab to see yourself as a visitor!
+                        </p>
+                        <p className="text-xs text-white/40">
+                          Active visitors are tracked in real-time. Refresh this page to see updates.
                         </p>
                       </div>
                     )}
                   </div>
                 </motion.div>
-              )}
 
               {/* Top Pages */}
               {topPages.length > 0 && (
