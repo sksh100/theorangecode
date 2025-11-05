@@ -196,12 +196,18 @@ export default function Home() {
               Transforming cultural barriers into bridges of trust through refined knowledge and authentic presence.
             </motion.p>
 
-            {/* Mobile-visible launch date (high-contrast chip for small screens) */}
+            {/* Mobile-visible launch date (matches desktop version exactly) */}
             <div className="sm:hidden mt-3 mb-4 flex justify-center relative z-20">
-              <div className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-primary-dark/70 backdrop-blur-[8px] border border-white/10 shadow-glass">
-                <Clock className="w-4 h-4 text-azure-blue" />
-                <span className="uppercase text-white/70 tracking-wider text-xs">Launch Date</span>
-                <span className="font-semibold text-white">November 28, 2025</span>
+              <div className="event-info inline-flex flex-col items-center gap-2 p-3 px-4 bg-bright-blue/10 border border-light-blue/30 rounded-xl backdrop-blur-[10px]">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-azure-blue" />
+                  <span className="date-label font-sofia text-xs text-white/70 uppercase tracking-wider font-medium">
+                    Launch Date
+                  </span>
+                </div>
+                <span className="date-value font-sofia text-xl font-bold text-gradient-primary">
+                  November 28, 2025
+                </span>
               </div>
             </div>
             
