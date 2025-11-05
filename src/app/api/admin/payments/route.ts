@@ -154,8 +154,22 @@ export async function GET(request: NextRequest) {
     allCheckoutSessions.forEach(s => {
       if (s.payment_status === 'paid' && s.amount_total) {
         // Get customer email from customer_details or metadata
-        const customerEmail = s.customer_details?.email || s.customer_email || (s.metadata as any)?.email || 'N/A'
-        const customerName = s.customer_details?.name || (s.metadata as any)?.customer_name || (s.metadata as any)?.name || 'N/A'
+        let customerEmail = s.customer_details?.email || s.customer_email || (s.metadata as any)?.email || 'N/A'
+        let customerName = s.customer_details?.name || (s.metadata as any)?.customer_name || (s.metadata as any)?.name || 'N/A'
+        
+        // Try to get customer name from shipping_details if available
+        if (customerName === 'N/A' && s.shipping_details?.name) {
+          customerName = s.shipping_details.name
+        }
+        
+        // If customer name is still N/A, try to extract from email
+        if (customerName === 'N/A' && customerEmail !== 'N/A') {
+          // Extract name from email if possible (e.g., "nalini.test@example.com" -> "Nalini Test")
+          const emailParts = customerEmail.split('@')
+          if (emailParts[0]) {
+            customerName = emailParts[0].replace(/[._]/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())
+          }
+        }
         
         // Only add if we haven't already processed this payment via charge or payment intent
         const sessionId = s.id
