@@ -13,6 +13,8 @@ interface ContentPost {
   scheduledDate?: string
   publishedDate?: string
   status: 'draft' | 'scheduled' | 'published'
+  location?: string
+  tags?: string
   createdAt: string
   updatedAt: string
 }
@@ -76,6 +78,8 @@ export async function POST(request: NextRequest) {
       platforms,
       scheduledDate,
       status = 'draft',
+      location,
+      tags,
     } = body
 
     if (!caption || !platforms || platforms.length === 0) {
@@ -98,6 +102,8 @@ export async function POST(request: NextRequest) {
       scheduledDate: scheduledDate || undefined,
       publishedDate: undefined,
       status: status || 'draft',
+      location: location || undefined,
+      tags: tags || undefined,
       createdAt: now,
       updatedAt: now,
     }

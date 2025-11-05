@@ -23,6 +23,7 @@ import {
   Eye,
   CheckCircle,
   XCircle,
+  X,
   Clock,
   ArrowUpRight,
   ArrowDownRight,
@@ -1635,6 +1636,8 @@ function ContentPlannerTab() {
     platforms: [] as string[],
     scheduledDate: '',
     status: 'draft' as 'draft' | 'scheduled' | 'published',
+    location: '',
+    tags: '', // comma-separated usernames/handles to tag
   })
   const [showBrandModal, setShowBrandModal] = useState(false)
   const [brandProfile, setBrandProfile] = useState({
@@ -1647,6 +1650,15 @@ function ContentPlannerTab() {
   })
   const [brandLoading, setBrandLoading] = useState(false)
   const [viewMode, setViewMode] = useState<'grid' | 'calendar'>('grid')
+  const [showConnectionModal, setShowConnectionModal] = useState(false)
+  const [selectedPlatform, setSelectedPlatform] = useState<string>('')
+  const [connectionCredentials, setConnectionCredentials] = useState({
+    apiKey: '',
+    apiSecret: '',
+    accessToken: '',
+    username: '',
+    password: '',
+  })
 
   const platforms = [
     { id: 'instagram', name: 'Instagram', icon: Instagram, color: 'bg-gradient-to-r from-purple-500 to-pink-500' },
@@ -1737,7 +1749,39 @@ function ContentPlannerTab() {
   }
 
   const handleConnect = (platform: string) => {
-    window.location.href = `/api/auth/${platform}`
+    setSelectedPlatform(platform)
+    setConnectionCredentials({
+      apiKey: '',
+      apiSecret: '',
+      accessToken: '',
+      username: '',
+      password: '',
+    })
+    setShowConnectionModal(true)
+  }
+
+  const handleSaveConnection = async () => {
+    try {
+      const response = await fetch('/api/admin/connections', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          platform: selectedPlatform,
+          credentials: connectionCredentials,
+        }),
+      })
+
+      const data = await response.json()
+      if (data.success) {
+        setShowConnectionModal(false)
+        await fetchConnections()
+      } else {
+        alert(`Failed to connect: ${data.error}`)
+      }
+    } catch (error) {
+      console.error('Error connecting:', error)
+      alert('Failed to connect account')
+    }
   }
 
   const handleDisconnect = async (platform: string) => {
@@ -1807,6 +1851,8 @@ function ContentPlannerTab() {
           platforms: [],
           scheduledDate: '',
           status: 'draft',
+          location: '',
+          tags: '',
         })
       }
     } catch (error) {
@@ -2475,6 +2521,37 @@ function ContentPlannerTab() {
                 />
               </div>
 
+              {/* Location */}
+              <div>
+                <label className="block text-white/70 text-sm mb-2 flex items-center gap-2">
+                  <MapPin className="w-4 h-4" />
+                  Location
+                </label>
+                <input
+                  type="text"
+                  value={formData.location}
+                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  placeholder="Add location (e.g., Abu Dhabi, UAE)"
+                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50"
+                />
+              </div>
+
+              {/* Tags (Mentions) */}
+              <div>
+                <label className="block text-white/70 text-sm mb-2 flex items-center gap-2">
+                  <Users className="w-4 h-4" />
+                  Tag People (comma-separated usernames/handles)
+                </label>
+                <input
+                  type="text"
+                  value={formData.tags}
+                  onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                  placeholder="@username1, @username2 (without @ also works)"
+                  className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50"
+                />
+                <p className="text-white/50 text-xs mt-1">Enter usernames separated by commas. Use @ for Instagram/Twitter, or just the username.</p>
+              </div>
+
               {/* Scheduled Date */}
               <div>
                 <label className="block text-white/70 text-sm mb-2 flex items-center gap-2">
@@ -2529,7 +2606,395 @@ function ContentPlannerTab() {
           </motion.div>
         </div>
       )}
+
+      {/* Connection Modal */}
+      {showConnectionModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="glass-card p-6 max-w-md w-full"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-bold text-white">Connect {selectedPlatform.charAt(0).toUpperCase() + selectedPlatform.slice(1)}</h3>
+              <button
+                onClick={() => setShowConnectionModal(false)}
+                className="text-white/70 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              {selectedPlatform === 'instagram' && (
+                <div>
+                  <label className="block text-white/70 text-sm mb-2">Instagram Access Token</label>
+                  <input
+                    type="password"
+                    value={connectionCredentials.accessToken}
+                    onChange={(e) => setConnectionCredentials({ ...connectionCredentials, accessToken: e.target.value })}
+                    placeholder="Enter your Instagram access token"
+                    className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50"
+                  />
+                  <p className="text-white/50 text-xs mt-1">Get your access token from Instagram Graph API</p>
+                </div>
+              )}
+              
+              {selectedPlatform === 'linkedin' && (
+                <div>
+                  <label className="block text-white/70 text-sm mb-2">LinkedIn Access Token</label>
+                  <input
+                    type="password"
+                    value={connectionCredentials.accessToken}
+                    onChange={(e) => setConnectionCredentials({ ...connectionCredentials, accessToken: e.target.value })}
+                    placeholder="Enter your LinkedIn access token"
+                    className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50"
+                  />
+                  <p className="text-white/50 text-xs mt-1">Get your access token from LinkedIn API</p>
+                </div>
+              )}
+              
+              {selectedPlatform === 'pinterest' && (
+                <div>
+                  <label className="block text-white/70 text-sm mb-2">Pinterest Access Token</label>
+                  <input
+                    type="password"
+                    value={connectionCredentials.accessToken}
+                    onChange={(e) => setConnectionCredentials({ ...connectionCredentials, accessToken: e.target.value })}
+                    placeholder="Enter your Pinterest access token"
+                    className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50"
+                  />
+                  <p className="text-white/50 text-xs mt-1">Get your access token from Pinterest API</p>
+                </div>
+              )}
+              
+              {selectedPlatform === 'twitter' && (
+                <>
+                  <div>
+                    <label className="block text-white/70 text-sm mb-2">Twitter API Key</label>
+                    <input
+                      type="password"
+                      value={connectionCredentials.apiKey}
+                      onChange={(e) => setConnectionCredentials({ ...connectionCredentials, apiKey: e.target.value })}
+                      placeholder="Enter your Twitter API key"
+                      className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-white/70 text-sm mb-2">Twitter API Secret</label>
+                    <input
+                      type="password"
+                      value={connectionCredentials.apiSecret}
+                      onChange={(e) => setConnectionCredentials({ ...connectionCredentials, apiSecret: e.target.value })}
+                      placeholder="Enter your Twitter API secret"
+                      className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-white/70 text-sm mb-2">Twitter Access Token</label>
+                    <input
+                      type="password"
+                      value={connectionCredentials.accessToken}
+                      onChange={(e) => setConnectionCredentials({ ...connectionCredentials, accessToken: e.target.value })}
+                      placeholder="Enter your Twitter access token"
+                      className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-azure-blue/50"
+                    />
+                  </div>
+                </>
+              )}
+              
+              <div className="flex gap-3 pt-4">
+                <button
+                  onClick={handleSaveConnection}
+                  className="flex-1 px-6 py-3 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue transition-all"
+                >
+                  Connect
+                </button>
+                <button
+                  onClick={() => setShowConnectionModal(false)}
+                  className="px-6 py-3 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 text-white transition-all"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Platform Previews */}
+      {formData.mediaUrl && formData.platforms.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="glass-card p-6"
+        >
+          <h3 className="text-xl font-bold text-white mb-4">Platform Previews</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {formData.platforms.includes('instagram') && (
+              <InstagramPreview post={formData} />
+            )}
+            {formData.platforms.includes('twitter') && (
+              <TwitterPreview post={formData} />
+            )}
+            {formData.platforms.includes('linkedin') && (
+              <LinkedInPreview post={formData} />
+            )}
+            {formData.platforms.includes('pinterest') && (
+              <PinterestPreview post={formData} />
+            )}
+          </div>
+        </motion.div>
+      )}
     </motion.div>
+  )
+}
+
+// Instagram Preview Component
+function InstagramPreview({ post }: { post: any }) {
+  return (
+    <div className="bg-white rounded-lg overflow-hidden shadow-lg max-w-sm mx-auto">
+      {/* Instagram Header */}
+      <div className="flex items-center gap-3 p-3 border-b border-gray-200">
+        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 flex items-center justify-center">
+          <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center">
+            <span className="text-xs font-bold text-gray-800">TC</span>
+          </div>
+        </div>
+        <div className="flex-1">
+          <p className="text-sm font-semibold text-gray-900">theorangecode</p>
+          {post.location && (
+            <p className="text-xs text-gray-500">{post.location}</p>
+          )}
+        </div>
+        <div className="text-gray-600">
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+          </svg>
+        </div>
+      </div>
+      
+      {/* Image */}
+      {post.mediaUrl && (
+        <div className="aspect-square bg-gray-100">
+          <img src={post.mediaUrl} alt={post.altText || 'Post'} className="w-full h-full object-cover" />
+        </div>
+      )}
+      
+      {/* Actions */}
+      <div className="p-3 flex items-center gap-4">
+        <svg className="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+        <svg className="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+        <svg className="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+        </svg>
+        <svg className="w-6 h-6 text-gray-900 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+        </svg>
+      </div>
+      
+      {/* Caption */}
+      <div className="px-3 pb-2">
+        <p className="text-sm text-gray-900">
+          <span className="font-semibold">theorangecode</span>{' '}
+          {post.caption && (
+            <span>{post.caption.substring(0, 100)}{post.caption.length > 100 ? '...' : ''}</span>
+          )}
+        </p>
+        {post.tags && (
+          <p className="text-sm text-blue-600 mt-1">
+            {post.tags.split(',').map((tag: string) => tag.trim()).filter(Boolean).map((tag: string) => 
+              tag.startsWith('@') ? tag : `@${tag}`
+            ).join(' ')}
+          </p>
+        )}
+        {post.hashtags && (
+          <p className="text-sm text-blue-600 mt-1">
+            {post.hashtags.split(',').map((tag: string) => tag.trim()).filter(Boolean).map((tag: string) => 
+              tag.startsWith('#') ? tag : `#${tag}`
+            ).join(' ')}
+          </p>
+        )}
+        <p className="text-xs text-gray-500 mt-2">View all comments</p>
+      </div>
+    </div>
+  )
+}
+
+// Twitter/X Preview Component
+function TwitterPreview({ post }: { post: any }) {
+  return (
+    <div className="bg-white rounded-lg overflow-hidden shadow-lg max-w-sm mx-auto p-4">
+      <div className="flex items-start gap-3">
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center flex-shrink-0">
+          <span className="text-white font-bold">TC</span>
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="font-bold text-gray-900">The Orange Code</span>
+            <span className="text-gray-500">@theorangecode</span>
+            <span className="text-gray-500">·</span>
+            <span className="text-gray-500 text-sm">2h</span>
+          </div>
+          {post.caption && (
+            <p className="text-gray-900 mb-3 whitespace-pre-wrap">{post.caption}</p>
+          )}
+          {post.mediaUrl && (
+            <div className="rounded-2xl overflow-hidden mb-3 border border-gray-200">
+              <img src={post.mediaUrl} alt={post.altText || 'Post'} className="w-full h-48 object-cover" />
+            </div>
+          )}
+          {post.tags && (
+            <p className="text-blue-600 text-sm mb-2">
+              {post.tags.split(',').map((tag: string) => tag.trim()).filter(Boolean).map((tag: string) => 
+                tag.startsWith('@') ? tag : `@${tag}`
+              ).join(' ')}
+            </p>
+          )}
+          {post.hashtags && (
+            <p className="text-blue-600 text-sm mb-3">
+              {post.hashtags.split(',').map((tag: string) => tag.trim()).filter(Boolean).map((tag: string) => 
+                tag.startsWith('#') ? tag : `#${tag}`
+              ).join(' ')}
+            </p>
+          )}
+          <div className="flex items-center justify-between text-gray-500 text-sm pt-2 border-t border-gray-100">
+            <div className="flex items-center gap-1 hover:text-blue-500 cursor-pointer">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+            </div>
+            <div className="flex items-center gap-1 hover:text-green-500 cursor-pointer">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+              </svg>
+            </div>
+            <div className="flex items-center gap-1 hover:text-red-500 cursor-pointer">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </div>
+            <div className="flex items-center gap-1 hover:text-blue-500 cursor-pointer">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// LinkedIn Preview Component
+function LinkedInPreview({ post }: { post: any }) {
+  return (
+    <div className="bg-white rounded-lg overflow-hidden shadow-lg max-w-sm mx-auto">
+      <div className="p-4">
+        <div className="flex items-center gap-3 mb-3">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+            <span className="text-white font-bold text-lg">TC</span>
+          </div>
+          <div>
+            <p className="font-semibold text-gray-900">The Orange Code</p>
+            <p className="text-sm text-gray-600">Company · 2h</p>
+          </div>
+        </div>
+        {post.caption && (
+          <p className="text-gray-900 mb-3 whitespace-pre-wrap">{post.caption}</p>
+        )}
+        {post.mediaUrl && (
+          <div className="rounded-lg overflow-hidden mb-3 border border-gray-200">
+            <img src={post.mediaUrl} alt={post.altText || 'Post'} className="w-full h-48 object-cover" />
+          </div>
+        )}
+        {post.location && (
+          <div className="flex items-center gap-2 text-gray-600 text-sm mb-2">
+            <MapPin className="w-4 h-4" />
+            <span>{post.location}</span>
+          </div>
+        )}
+        {post.hashtags && (
+          <div className="flex flex-wrap gap-2 mb-3">
+            {post.hashtags.split(',').slice(0, 3).map((tag: string) => (
+              <span key={tag} className="text-blue-600 text-sm hover:underline cursor-pointer">
+                #{tag.trim()}
+              </span>
+            ))}
+          </div>
+        )}
+        <div className="flex items-center justify-between text-gray-600 text-sm pt-3 border-t border-gray-200">
+          <button className="flex items-center gap-2 hover:text-blue-600">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+            </svg>
+            <span>Like</span>
+          </button>
+          <button className="flex items-center gap-2 hover:text-blue-600">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <span>Comment</span>
+          </button>
+          <button className="flex items-center gap-2 hover:text-blue-600">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+            </svg>
+            <span>Share</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Pinterest Preview Component
+function PinterestPreview({ post }: { post: any }) {
+  return (
+    <div className="bg-white rounded-lg overflow-hidden shadow-lg max-w-xs mx-auto">
+      {post.mediaUrl && (
+        <div className="relative">
+          <img src={post.mediaUrl} alt={post.altText || 'Post'} className="w-full object-cover" />
+          <div className="absolute top-2 right-2 bg-red-500 rounded-full p-2 cursor-pointer">
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2a6 6 0 00-6 6c0 4.314 4.38 7.5 6 7.5s6-3.186 6-7.5a6 6 0 00-6-6zM10 15a1 1 0 100 2 1 1 0 000-2z" />
+            </svg>
+          </div>
+        </div>
+      )}
+      <div className="p-4">
+        <div className="flex items-center gap-2 mb-2">
+          <div className="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center">
+            <span className="text-white text-xs font-bold">TC</span>
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="font-semibold text-gray-900 text-sm truncate">The Orange Code</p>
+          </div>
+        </div>
+        {post.caption && (
+          <p className="text-gray-900 text-sm mb-2 line-clamp-3">{post.caption}</p>
+        )}
+        {post.location && (
+          <div className="flex items-center gap-1 text-gray-600 text-xs mb-2">
+            <MapPin className="w-3 h-3" />
+            <span>{post.location}</span>
+          </div>
+        )}
+        {post.hashtags && (
+          <div className="flex flex-wrap gap-1">
+            {post.hashtags.split(',').slice(0, 3).map((tag: string) => (
+              <span key={tag} className="text-blue-600 text-xs hover:underline cursor-pointer">
+                #{tag.trim()}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
 
