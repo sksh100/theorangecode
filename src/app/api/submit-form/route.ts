@@ -93,7 +93,7 @@ async function addToMailerLite(data: {
         // This is done after creation to avoid 422 error, but triggers automation
         const updatePayload = {
           email: data.email,
-          groups: [parseInt(groupId)]
+          groups: [groupId]
         }
         
         console.log('📝 Adding subscriber to group:', {
