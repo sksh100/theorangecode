@@ -184,6 +184,13 @@ export async function GET(request: NextRequest) {
     allPayments.sort((a, b) => b.createdAt - a.createdAt)
     
     console.log(`✅ Total processed payments: ${allPayments.length}`)
+    console.log('📊 Sample payment data:', allPayments.slice(0, 3).map(p => ({
+      id: p.id,
+      amount: p.amount,
+      customerEmail: p.customerEmail,
+      customerName: p.customerName,
+      status: p.status,
+    })))
     
     // Calculate statistics
     const successfulPayments = allPayments

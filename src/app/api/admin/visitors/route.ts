@@ -52,6 +52,9 @@ export async function GET(request: NextRequest) {
           // Get scroll depth
           const scrollDepth = session.scrollDepth || 0
           
+          // Consider session active if activity within last 5 minutes (300 seconds)
+          const isActiveSession = timeSinceLastActivity < 300
+          
           activeSessions.push({
             ...session,
             timeOnPage,
@@ -60,7 +63,7 @@ export async function GET(request: NextRequest) {
             lastClick: lastClick?.data || null,
             scrollDepth,
             activities: activities.slice(-10), // Last 10 activities
-            isActive: timeSinceLastActivity < 60, // Active if activity within last minute
+            isActive: isActiveSession, // Active if activity within last 5 minutes
           })
         }
       } catch (error) {
@@ -138,7 +141,7 @@ export async function GET(request: NextRequest) {
           uniqueVisitors,
           todayVisitors,
           monthlyVisitors,
-          activeNow: activeSessions.length,
+          activeNow: activeSessions.filter((s: any) => s.isActive).length,
         },
       },
     })

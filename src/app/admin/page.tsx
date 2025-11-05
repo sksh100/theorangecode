@@ -527,89 +527,131 @@ export default function AdminDashboard() {
               exit={{ opacity: 0, y: -20 }}
               className="space-y-6"
             >
-              {/* Stats Cards */}
-              {analytics && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    className="glass-card p-6"
-                  >
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 bg-azure-blue/20 rounded-lg">
-                        <DollarSign className="w-6 h-6 text-azure-blue" />
-                      </div>
-                      <ArrowUpRight className="w-5 h-5 text-green-400" />
+              {/* Stats Cards - Use actual data from payments and subscribers */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="glass-card p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-azure-blue/20 rounded-lg">
+                      <DollarSign className="w-6 h-6 text-azure-blue" />
                     </div>
-                    <h3 className="text-white/70 text-sm mb-1">Total Revenue</h3>
-                    <p className="text-3xl font-bold text-white">
-                      {analytics.revenue.total.toLocaleString()} AED
-                    </p>
-                    <p className="text-xs text-white/50 mt-2">
-                      {analytics.revenue.monthly.toLocaleString()} AED this month
-                    </p>
-                  </motion.div>
+                    <ArrowUpRight className="w-5 h-5 text-green-400" />
+                  </div>
+                  <h3 className="text-white/70 text-sm mb-1">Total Revenue</h3>
+                  <p className="text-3xl font-bold text-white">
+                    {paymentsLoading ? '...' : payments.reduce((sum, p) => sum + p.amount, 0).toFixed(2)} AED
+                  </p>
+                  <p className="text-xs text-white/50 mt-2">
+                    {paymentsLoading ? '...' : payments.filter(p => {
+                      const date = new Date(p.createdAt)
+                      const now = new Date()
+                      return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
+                    }).reduce((sum, p) => sum + p.amount, 0).toFixed(2)} AED this month
+                  </p>
+                </motion.div>
 
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    className="glass-card p-6"
-                  >
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 bg-orange/20 rounded-lg">
-                        <Users className="w-6 h-6 text-orange" />
-                      </div>
-                      <ArrowUpRight className="w-5 h-5 text-green-400" />
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="glass-card p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-orange/20 rounded-lg">
+                      <Users className="w-6 h-6 text-orange" />
                     </div>
-                    <h3 className="text-white/70 text-sm mb-1">Total Subscribers</h3>
-                    <p className="text-3xl font-bold text-white">
-                      {analytics.subscribers.total.toLocaleString()}
-                    </p>
-                    <p className="text-xs text-white/50 mt-2">
-                      {analytics.subscribers.monthly} this month
-                    </p>
-                  </motion.div>
+                    <ArrowUpRight className="w-5 h-5 text-green-400" />
+                  </div>
+                  <h3 className="text-white/70 text-sm mb-1">Total Subscribers</h3>
+                  <p className="text-3xl font-bold text-white">
+                    {subscribersLoading ? '...' : subscribers.length.toLocaleString()}
+                  </p>
+                  <p className="text-xs text-white/50 mt-2">
+                    {subscribersLoading ? '...' : subscribers.filter(s => {
+                      const date = new Date(s.subscribedAt)
+                      const now = new Date()
+                      return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
+                    }).length} this month
+                  </p>
+                </motion.div>
 
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    className="glass-card p-6"
-                  >
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 bg-bright-blue/20 rounded-lg">
-                        <CreditCard className="w-6 h-6 text-bright-blue" />
-                      </div>
-                      <ArrowUpRight className="w-5 h-5 text-green-400" />
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="glass-card p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-bright-blue/20 rounded-lg">
+                      <CreditCard className="w-6 h-6 text-bright-blue" />
                     </div>
-                    <h3 className="text-white/70 text-sm mb-1">Total Payments</h3>
-                    <p className="text-3xl font-bold text-white">
-                      {analytics.payments.total.toLocaleString()}
-                    </p>
-                    <p className="text-xs text-white/50 mt-2">
-                      {analytics.payments.today} today
-                    </p>
-                  </motion.div>
+                    <ArrowUpRight className="w-5 h-5 text-green-400" />
+                  </div>
+                  <h3 className="text-white/70 text-sm mb-1">Total Payments</h3>
+                  <p className="text-3xl font-bold text-white">
+                    {paymentsLoading ? '...' : payments.length.toLocaleString()}
+                  </p>
+                  <p className="text-xs text-white/50 mt-2">
+                    {paymentsLoading ? '...' : payments.filter(p => {
+                      const date = new Date(p.createdAt)
+                      const today = new Date()
+                      return date.toDateString() === today.toDateString()
+                    }).length} today
+                  </p>
+                </motion.div>
 
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    className="glass-card p-6"
-                  >
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 bg-green-500/20 rounded-lg">
-                        <TrendingUp className="w-6 h-6 text-green-400" />
-                      </div>
-                      <ArrowUpRight className="w-5 h-5 text-green-400" />
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="glass-card p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="p-3 bg-green-500/20 rounded-lg">
+                      <TrendingUp className="w-6 h-6 text-green-400" />
                     </div>
-                    <h3 className="text-white/70 text-sm mb-1">Today's Revenue</h3>
-                    <p className="text-3xl font-bold text-white">
-                      {analytics.revenue.today.toLocaleString()} AED
-                    </p>
-                    <p className="text-xs text-white/50 mt-2">
-                      {analytics.payments.today} payments today
-                    </p>
-                  </motion.div>
-                </div>
-              )}
+                    <ArrowUpRight className="w-5 h-5 text-green-400" />
+                  </div>
+                  <h3 className="text-white/70 text-sm mb-1">Today's Revenue</h3>
+                  <p className="text-3xl font-bold text-white">
+                    {paymentsLoading ? '...' : payments.filter(p => {
+                      const date = new Date(p.createdAt)
+                      const today = new Date()
+                      return date.toDateString() === today.toDateString()
+                    }).reduce((sum, p) => sum + p.amount, 0).toFixed(2)} AED
+                  </p>
+                  <p className="text-xs text-white/50 mt-2">
+                    {paymentsLoading ? '...' : payments.filter(p => {
+                      const date = new Date(p.createdAt)
+                      const today = new Date()
+                      return date.toDateString() === today.toDateString()
+                    }).length} payments today
+                  </p>
+                </motion.div>
+              </div>
 
               {/* Charts */}
-              {analytics && analytics.revenue.byDate.length > 0 && (
+              {(() => {
+                // Calculate revenue by date from actual payments
+                const revenueByDate: { [key: string]: number } = {}
+                const last30Days = Array.from({ length: 30 }, (_, i) => {
+                  const date = new Date()
+                  date.setDate(date.getDate() - i)
+                  return date.toISOString().split('T')[0]
+                })
+
+                last30Days.forEach(date => {
+                  revenueByDate[date] = 0
+                })
+
+                payments.forEach(payment => {
+                  const date = new Date(payment.createdAt).toISOString().split('T')[0]
+                  if (revenueByDate[date] !== undefined) {
+                    revenueByDate[date] += payment.amount
+                  }
+                })
+
+                const chartData = Object.entries(revenueByDate)
+                  .map(([date, amount]) => ({ date, amount }))
+                  .reverse()
+
+                return chartData.length > 0 && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <motion.div
                     whileHover={{ scale: 1.01 }}
@@ -617,7 +659,7 @@ export default function AdminDashboard() {
                   >
                     <h3 className="text-xl font-bold text-white mb-4">Revenue Trend (30 Days)</h3>
                     <ResponsiveContainer width="100%" height={300}>
-                      <LineChart data={analytics.revenue.byDate}>
+                      <LineChart data={chartData}>
                         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
                         <XAxis
                           dataKey="date"
@@ -655,11 +697,23 @@ export default function AdminDashboard() {
                     <ResponsiveContainer width="100%" height={300}>
                       <RechartsPieChart>
                         <Pie
-                          data={[
-                            { name: 'Today', value: analytics.payments.today },
-                            { name: 'This Month', value: analytics.payments.monthly - analytics.payments.today },
-                            { name: 'Total', value: analytics.payments.total - analytics.payments.monthly },
-                          ]}
+                          data={(() => {
+                            const todayPayments = payments.filter(p => {
+                              const date = new Date(p.createdAt)
+                              const today = new Date()
+                              return date.toDateString() === today.toDateString()
+                            }).length
+                            const monthlyPayments = payments.filter(p => {
+                              const date = new Date(p.createdAt)
+                              const now = new Date()
+                              return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
+                            }).length
+                            return [
+                              { name: 'Today', value: todayPayments },
+                              { name: 'This Month', value: monthlyPayments - todayPayments },
+                              { name: 'Total', value: payments.length - monthlyPayments },
+                            ]
+                          })()}
                           cx="50%"
                           cy="50%"
                           labelLine={false}
@@ -672,13 +726,25 @@ export default function AdminDashboard() {
                           fill="#8884d8"
                           dataKey="value"
                         >
-                          {[
-                            { name: 'Today', value: analytics.payments.today },
-                            { name: 'This Month', value: analytics.payments.monthly - analytics.payments.today },
-                            { name: 'Total', value: analytics.payments.total - analytics.payments.monthly },
-                          ].map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                          ))}
+                          {(() => {
+                            const todayPayments = payments.filter(p => {
+                              const date = new Date(p.createdAt)
+                              const today = new Date()
+                              return date.toDateString() === today.toDateString()
+                            }).length
+                            const monthlyPayments = payments.filter(p => {
+                              const date = new Date(p.createdAt)
+                              const now = new Date()
+                              return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
+                            }).length
+                            return [
+                              { name: 'Today', value: todayPayments },
+                              { name: 'This Month', value: monthlyPayments - todayPayments },
+                              { name: 'Total', value: payments.length - monthlyPayments },
+                            ].map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))
+                          })()}
                         </Pie>
                         <Tooltip
                           contentStyle={{
@@ -692,7 +758,8 @@ export default function AdminDashboard() {
                     </ResponsiveContainer>
                   </motion.div>
                 </div>
-              )}
+                )
+              })()}
             </motion.div>
           )}
 
@@ -1151,9 +1218,68 @@ export default function AdminDashboard() {
                   whileHover={{ scale: 1.01 }}
                   className="glass-card p-6"
                 >
-                  <h3 className="text-xl font-bold text-white mb-4">Visitor Distribution by Country</h3>
-                  <div className="space-y-3">
-                    {topCountries.map((country, index) => {
+                  <h3 className="text-xl font-bold text-white mb-4">World Map - Visitor Distribution</h3>
+                  
+                  {/* Interactive World Map */}
+                  <div className="relative w-full h-96 bg-white/5 rounded-lg border border-white/10 overflow-hidden mb-6">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      {/* World Map Visualization */}
+                      <div className="grid grid-cols-6 gap-2 p-4 w-full h-full">
+                        {topCountries.slice(0, 20).map((country, index) => {
+                          const total = topCountries.reduce((sum, c) => sum + c.count, 0)
+                          const percentage = ((country.count / total) * 100)
+                          const intensity = Math.min(percentage / 10, 1) // Normalize to 0-1
+                          return (
+                            <motion.div
+                              key={country.country}
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{ delay: index * 0.05 }}
+                              className="relative group cursor-pointer"
+                              title={`${country.country}: ${country.count} visitors (${percentage.toFixed(1)}%)`}
+                            >
+                              <div 
+                                className="w-full h-20 rounded-lg border-2 transition-all"
+                                style={{
+                                  backgroundColor: `rgba(0, 212, 255, ${intensity * 0.6})`,
+                                  borderColor: `rgba(0, 212, 255, ${intensity * 0.8})`,
+                                  boxShadow: intensity > 0.5 ? `0 0 20px rgba(0, 212, 255, ${intensity * 0.5})` : 'none',
+                                }}
+                              >
+                                <div className="absolute inset-0 flex flex-col items-center justify-center p-2">
+                                  <MapPin className="w-4 h-4 text-azure-blue mb-1" />
+                                  <span className="text-white text-xs font-semibold truncate w-full text-center">
+                                    {country.country.length > 8 ? country.country.substring(0, 8) + '...' : country.country}
+                                  </span>
+                                  <span className="text-azure-blue text-xs font-bold">{country.count}</span>
+                                </div>
+                              </div>
+                              {/* Tooltip on hover */}
+                              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block z-10">
+                                <div className="bg-primary-dark border border-azure-blue/50 rounded-lg p-3 shadow-xl min-w-[150px]">
+                                  <p className="text-white font-semibold text-sm">{country.country}</p>
+                                  <p className="text-azure-blue text-xs mt-1">{country.count} visitors</p>
+                                  <p className="text-white/70 text-xs mt-1">{percentage.toFixed(1)}% of total</p>
+                                </div>
+                              </div>
+                            </motion.div>
+                          )
+                        })}
+                      </div>
+                      {topCountries.length === 0 && (
+                        <div className="text-center text-white/50">
+                          <Globe className="w-16 h-16 mx-auto mb-4 opacity-30" />
+                          <p>No visitor data yet</p>
+                          <p className="text-xs mt-2">Open your website in another tab to see visitor tracking</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Country List with Percentages */}
+                  <div className="space-y-2">
+                    <h4 className="text-white/70 text-sm mb-3">Top Countries by Visitor Count</h4>
+                    {topCountries.slice(0, 10).map((country, index) => {
                       const total = topCountries.reduce((sum, c) => sum + c.count, 0)
                       const percentage = ((country.count / total) * 100).toFixed(1)
                       return (
@@ -1162,7 +1288,7 @@ export default function AdminDashboard() {
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.05 }}
-                          className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10"
+                          className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors"
                         >
                           <div className="flex items-center gap-3 flex-1">
                             <MapPin className="w-4 h-4 text-azure-blue" />
@@ -1270,7 +1396,7 @@ export default function AdminDashboard() {
               </div>
 
               {/* Active Sessions */}
-              {activeSessions.length > 0 && (
+              {(activeSessions.length > 0 || activeSessions.filter((s: any) => s.isActive !== false).length > 0) && (
                 <motion.div
                   whileHover={{ scale: 1.01 }}
                   className="glass-card p-6"
@@ -1278,11 +1404,12 @@ export default function AdminDashboard() {
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xl font-bold text-white">Active Visitors Right Now</h3>
                     <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-semibold">
-                      {activeSessions.length} Active
+                      {activeSessions.filter((s: any) => s.isActive !== false).length} Active
                     </span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {activeSessions.filter((s: any) => s.isActive).map((session: any, index: number) => (
+                    {activeSessions.filter((s: any) => s.isActive !== false).length > 0 ? (
+                      activeSessions.filter((s: any) => s.isActive !== false).map((session: any, index: number) => (
                       <motion.div
                         key={session.sessionId}
                         initial={{ opacity: 0, y: 10 }}
@@ -1337,7 +1464,16 @@ export default function AdminDashboard() {
                           </div>
                         </div>
                       </motion.div>
-                    ))}
+                      ))
+                    ) : (
+                      <div className="col-span-full p-8 text-center text-white/70">
+                        <Activity className="w-12 h-12 mx-auto mb-4 text-white/30" />
+                        <p className="mb-2">No active visitors right now</p>
+                        <p className="text-sm text-white/50">
+                          Open your website ({process.env.NEXT_PUBLIC_BASE_URL || 'theorangecode.com'}) in another tab to see yourself as a visitor!
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               )}
@@ -1510,6 +1646,7 @@ function ContentPlannerTab() {
     examplePosts: [] as Array<{ caption: string; hashtags: string[] }>,
   })
   const [brandLoading, setBrandLoading] = useState(false)
+  const [viewMode, setViewMode] = useState<'grid' | 'calendar'>('grid')
 
   const platforms = [
     { id: 'instagram', name: 'Instagram', icon: Instagram, color: 'bg-gradient-to-r from-purple-500 to-pink-500' },
@@ -1742,25 +1879,51 @@ function ContentPlannerTab() {
           <h2 className="text-2xl font-bold text-white">Content Planner</h2>
           <p className="text-white/70 text-sm mt-1">Create and schedule posts for all your social media platforms</p>
         </div>
-        <button
-          onClick={() => {
-            setShowCreateModal(true)
-            setEditingContent(null)
-            setFormData({
-              caption: '',
-              hashtags: '',
-              altText: '',
-              mediaUrl: '',
-              platforms: [],
-              scheduledDate: '',
-              status: 'draft',
-            })
-          }}
-          className="px-4 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue transition-all flex items-center gap-2"
-        >
-          <Plus className="w-4 h-4" />
-          Create Post
-        </button>
+        <div className="flex items-center gap-3">
+          {/* View Toggle */}
+          <div className="flex items-center gap-2 bg-white/5 rounded-lg border border-white/10 p-1">
+            <button
+              onClick={() => setViewMode('grid')}
+              className={`px-3 py-1.5 rounded text-sm transition-all ${
+                viewMode === 'grid'
+                  ? 'bg-azure-blue/20 text-azure-blue border border-azure-blue/30'
+                  : 'text-white/70 hover:text-white'
+              }`}
+            >
+              Grid
+            </button>
+            <button
+              onClick={() => setViewMode('calendar')}
+              className={`px-3 py-1.5 rounded text-sm transition-all ${
+                viewMode === 'calendar'
+                  ? 'bg-azure-blue/20 text-azure-blue border border-azure-blue/30'
+                  : 'text-white/70 hover:text-white'
+              }`}
+            >
+              <Calendar className="w-4 h-4 inline mr-1" />
+              Calendar
+            </button>
+          </div>
+          <button
+            onClick={() => {
+              setShowCreateModal(true)
+              setEditingContent(null)
+              setFormData({
+                caption: '',
+                hashtags: '',
+                altText: '',
+                mediaUrl: '',
+                platforms: [],
+                scheduledDate: '',
+                status: 'draft',
+              })
+            }}
+            className="px-4 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue transition-all flex items-center gap-2"
+          >
+            <Plus className="w-4 h-4" />
+            Create Post
+          </button>
+        </div>
       </div>
 
       {/* Brand Profile Settings */}
@@ -1920,10 +2083,28 @@ function ContentPlannerTab() {
         </motion.div>
       )}
 
+      {/* Calendar View */}
+      {viewMode === 'calendar' && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="glass-card p-6"
+        >
+          <h3 className="text-xl font-bold text-white mb-4">Scheduled Posts Calendar</h3>
+          {loading ? (
+            <div className="p-8 text-center text-white/70">Loading calendar...</div>
+          ) : (
+            <CalendarView content={content} onEdit={handleEdit} />
+          )}
+        </motion.div>
+      )}
+
       {/* Content Grid */}
-      {loading ? (
-        <div className="glass-card p-8 text-center text-white/70">Loading content...</div>
-      ) : content.length === 0 ? (
+      {viewMode === 'grid' && (
+        <>
+          {loading ? (
+            <div className="glass-card p-8 text-center text-white/70">Loading content...</div>
+          ) : content.length === 0 ? (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -2083,6 +2264,8 @@ function ContentPlannerTab() {
             </motion.div>
           ))}
     </div>
+          )}
+        </>
       )}
 
       {/* Create/Edit Modal */}
@@ -2347,5 +2530,218 @@ function ContentPlannerTab() {
         </div>
       )}
     </motion.div>
+  )
+}
+
+// Calendar View Component for Scheduled Posts
+function CalendarView({ content, onEdit }: { content: any[]; onEdit: (item: any) => void }) {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
+  const [currentMonth, setCurrentMonth] = useState(new Date())
+
+  // Get scheduled posts for the selected date
+  const scheduledPosts = content.filter((item: any) => {
+    if (!item.scheduledDate) return false
+    const postDate = new Date(item.scheduledDate)
+    const selected = selectedDate || new Date()
+    return postDate.toDateString() === selected.toDateString()
+  })
+
+  // Get all posts grouped by date
+  const postsByDate: { [key: string]: any[] } = {}
+  content.forEach((item: any) => {
+    if (item.scheduledDate) {
+      const date = new Date(item.scheduledDate).toISOString().split('T')[0]
+      if (!postsByDate[date]) {
+        postsByDate[date] = []
+      }
+      postsByDate[date].push(item)
+    }
+  })
+
+  // Generate calendar days
+  const year = currentMonth.getFullYear()
+  const month = currentMonth.getMonth()
+  const firstDay = new Date(year, month, 1)
+  const lastDay = new Date(year, month + 1, 0)
+  const daysInMonth = lastDay.getDate()
+  const startingDayOfWeek = firstDay.getDay()
+
+  const days = []
+  // Empty cells for days before month starts
+  for (let i = 0; i < startingDayOfWeek; i++) {
+    days.push(null)
+  }
+  // Days of the month
+  for (let day = 1; day <= daysInMonth; day++) {
+    days.push(new Date(year, month, day))
+  }
+
+  const prevMonth = () => {
+    setCurrentMonth(new Date(year, month - 1, 1))
+  }
+
+  const nextMonth = () => {
+    setCurrentMonth(new Date(year, month + 1, 1))
+  }
+
+  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
+  return (
+    <div className="space-y-6">
+      {/* Calendar Header */}
+      <div className="flex items-center justify-between mb-4">
+        <button
+          onClick={prevMonth}
+          className="p-2 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 text-white transition-all"
+        >
+          <ArrowDownRight className="w-5 h-5 rotate-90" />
+        </button>
+        <h4 className="text-xl font-bold text-white">
+          {monthNames[month]} {year}
+        </h4>
+        <button
+          onClick={nextMonth}
+          className="p-2 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 text-white transition-all"
+        >
+          <ArrowUpRight className="w-5 h-5 rotate-90" />
+        </button>
+      </div>
+
+      {/* Calendar Grid */}
+      <div className="grid grid-cols-7 gap-2">
+        {/* Day Headers */}
+        {dayNames.map((day) => (
+          <div key={day} className="p-2 text-center text-white/70 text-sm font-semibold">
+            {day}
+          </div>
+        ))}
+
+        {/* Calendar Days */}
+        {days.map((date, index) => {
+          if (!date) {
+            return <div key={`empty-${index}`} className="p-2" />
+          }
+
+          const dateStr = date.toISOString().split('T')[0]
+          const postsOnDay = postsByDate[dateStr] || []
+          const isToday = date.toDateString() === new Date().toDateString()
+          const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString()
+
+          return (
+            <button
+              key={dateStr}
+              onClick={() => setSelectedDate(date)}
+              className={`p-2 rounded-lg border-2 transition-all text-left min-h-[80px] ${
+                isSelected
+                  ? 'border-azure-blue bg-azure-blue/20'
+                  : isToday
+                  ? 'border-orange/50 bg-orange/10'
+                  : 'border-white/10 bg-white/5 hover:bg-white/10'
+              }`}
+            >
+              <div className={`text-sm font-semibold mb-1 ${isToday ? 'text-orange' : 'text-white'}`}>
+                {date.getDate()}
+              </div>
+              {postsOnDay.length > 0 && (
+                <div className="space-y-1">
+                  {postsOnDay.slice(0, 2).map((post: any) => (
+                    <div
+                      key={post.id}
+                      className="text-xs bg-azure-blue/30 text-azure-blue px-1.5 py-0.5 rounded truncate"
+                      title={post.caption?.substring(0, 50)}
+                    >
+                      {post.platforms?.slice(0, 2).join(', ')} {postsOnDay.length > 2 ? '...' : ''}
+                    </div>
+                  ))}
+                  {postsOnDay.length > 2 && (
+                    <div className="text-xs text-azure-blue font-semibold">
+                      +{postsOnDay.length - 2} more
+                    </div>
+                  )}
+                </div>
+              )}
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Selected Date Posts */}
+      {selectedDate && scheduledPosts.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-6 glass-card p-6"
+        >
+          <h4 className="text-lg font-bold text-white mb-4">
+            Posts Scheduled for {selectedDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+          </h4>
+          <div className="space-y-4">
+            {scheduledPosts.map((item: any) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="p-4 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors"
+              >
+                <div className="flex items-start gap-4">
+                  {item.mediaUrl && (
+                    <img
+                      src={item.mediaUrl}
+                      alt={item.altText}
+                      className="w-20 h-20 object-cover rounded-lg"
+                    />
+                  )}
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      {item.platforms?.map((platform: string) => {
+                        const platformInfo = [
+                          { id: 'instagram', name: 'Instagram', icon: Instagram, color: 'bg-gradient-to-r from-purple-500 to-pink-500' },
+                          { id: 'linkedin', name: 'LinkedIn', icon: Linkedin, color: 'bg-blue-600' },
+                          { id: 'pinterest', name: 'Pinterest', icon: ImageIcon, color: 'bg-red-600' },
+                          { id: 'twitter', name: 'X (Twitter)', icon: Twitter, color: 'bg-black' },
+                        ].find(p => p.id === platform)
+                        if (!platformInfo) return null
+                        const Icon = platformInfo.icon
+                        return (
+                          <span
+                            key={platform}
+                            className={`px-2 py-1 rounded-full text-xs flex items-center gap-1 ${platformInfo.color} text-white`}
+                          >
+                            <Icon className="w-3 h-3" />
+                            {platformInfo.name}
+                          </span>
+                        )
+                      })}
+                      <span className="text-white/50 text-xs ml-auto">
+                        {new Date(item.scheduledDate).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                    </div>
+                    <p className="text-white text-sm line-clamp-2">{item.caption}</p>
+                    <button
+                      onClick={() => onEdit(item)}
+                      className="mt-2 text-azure-blue text-xs hover:underline"
+                    >
+                      Edit post
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      )}
+
+      {selectedDate && scheduledPosts.length === 0 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="mt-6 glass-card p-8 text-center"
+        >
+          <Calendar className="w-12 h-12 mx-auto mb-4 text-white/30" />
+          <p className="text-white/70">No posts scheduled for {selectedDate.toLocaleDateString()}</p>
+        </motion.div>
+      )}
+    </div>
   )
 }
