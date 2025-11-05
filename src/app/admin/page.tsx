@@ -153,16 +153,20 @@ export default function AdminDashboard() {
   const fetchPayments = async () => {
     setPaymentsLoading(true)
     try {
+      console.log('📊 Fetching payments...')
       const response = await fetch('/api/admin/payments')
       const data = await response.json()
+      console.log('📊 Payments response:', { success: data.success, paymentsCount: data.data?.payments?.length || 0 })
       if (data.success) {
-        setPayments(data.data.payments || [])
+        const paymentsList = data.data.payments || []
+        console.log(`✅ Loaded ${paymentsList.length} payments`)
+        setPayments(paymentsList)
       } else {
-        console.error('Failed to fetch payments:', data.error)
+        console.error('❌ Failed to fetch payments:', data.error)
         setPayments([])
       }
     } catch (error) {
-      console.error('Error fetching payments:', error)
+      console.error('❌ Error fetching payments:', error)
       setPayments([])
     } finally {
       setPaymentsLoading(false)
@@ -172,16 +176,20 @@ export default function AdminDashboard() {
   const fetchSubscribers = async () => {
     setSubscribersLoading(true)
     try {
+      console.log('📧 Fetching subscribers...')
       const response = await fetch('/api/admin/subscribers')
       const data = await response.json()
+      console.log('📧 Subscribers response:', { success: data.success, subscribersCount: data.data?.subscribers?.length || 0 })
       if (data.success) {
-        setSubscribers(data.data.subscribers || [])
+        const subscribersList = data.data.subscribers || []
+        console.log(`✅ Loaded ${subscribersList.length} subscribers`)
+        setSubscribers(subscribersList)
       } else {
-        console.error('Failed to fetch subscribers:', data.error)
+        console.error('❌ Failed to fetch subscribers:', data.error)
         setSubscribers([])
       }
     } catch (error) {
-      console.error('Error fetching subscribers:', error)
+      console.error('❌ Error fetching subscribers:', error)
       setSubscribers([])
     } finally {
       setSubscribersLoading(false)

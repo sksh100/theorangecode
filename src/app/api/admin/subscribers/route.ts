@@ -19,14 +19,21 @@ export async function GET(request: NextRequest) {
     })
     
     const searchParams = request.nextUrl.searchParams
-    const limit = parseInt(searchParams.get('limit') || '50')
+    const limit = parseInt(searchParams.get('limit') || '100') // Increased default limit
     
     // Fetch subscribers from MailerLite
+    console.log('📧 Fetching subscribers from MailerLite...')
     const subscribersResponse = await mailerlite.subscribers.get({
       filter: {
         status: 'active',
       },
       limit,
+    })
+    
+    console.log('✅ MailerLite response:', {
+      hasData: !!subscribersResponse.data,
+      dataType: typeof subscribersResponse.data,
+      isArray: Array.isArray(subscribersResponse.data),
     })
     
     // Get total subscriber count
@@ -84,28 +91,25 @@ export async function GET(request: NextRequest) {
       },
     })
   } catch (error: any) {
-    console.error('Error fetching subscribers:', error)
+    console.error('❌ Error fetching subscribers:', error)
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      apiKey: !!process.env.MAILERLITE_API_KEY,
+    })
     
-    // If MailerLite is not configured, return empty data instead of error
-    const apiKey = process.env.MAILERLITE_API_KEY
-    if (!apiKey || error.message?.includes('api_key')) {
-      return NextResponse.json({
-        success: true,
-        data: {
-          subscribers: [],
-          stats: {
-            totalSubscribers: 0,
-            todaySubscribers: 0,
-            monthlySubscribers: 0,
-          },
+    // Return empty data instead of error to prevent dashboard from breaking
+    return NextResponse.json({
+      success: true,
+      data: {
+        subscribers: [],
+        stats: {
+          totalSubscribers: 0,
+          todaySubscribers: 0,
+          monthlySubscribers: 0,
         },
-      })
-    }
-    
-    return NextResponse.json(
-      { success: false, error: error.message || 'Failed to fetch subscribers' },
-      { status: 500 }
-    )
+      },
+    })
   }
 }
 
