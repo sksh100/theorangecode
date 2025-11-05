@@ -92,8 +92,27 @@ async function addToMailerLite(data: {
       email: data.email,
       subscriberId: response.data?.data?.id || 'unknown',
       groups: response.data?.data?.groups || [],
+      status: response.data?.data?.status || 'unknown',
+      subscribed_at: response.data?.data?.subscribed_at || 'unknown',
       fullResponse: JSON.stringify(response.data, null, 2)
     })
+    
+    // Log automation trigger info
+    if (groupId && response.data?.data?.groups?.includes(parseInt(groupId))) {
+      console.log('✅ Subscriber is in group - automation should trigger:', {
+        email: data.email,
+        groupId: groupId,
+        subscriberStatus: response.data?.data?.status,
+        isInGroup: true
+      })
+    } else {
+      console.warn('⚠️ Subscriber may not be in group - automation may not trigger:', {
+        email: data.email,
+        groupId: groupId,
+        actualGroups: response.data?.data?.groups || [],
+        subscriberStatus: response.data?.data?.status
+      })
+    }
     
     return { success: true }
   } catch (error: any) {
