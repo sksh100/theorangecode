@@ -206,7 +206,7 @@ export default function Home() {
             </div>
             
             <motion.div 
-              className="countdown-section mt-6 sm:mt-6 md:mt-8 flex justify-center sm:justify-end"
+              className="countdown-section mt-6 sm:mt-6 md:mt-8 hidden sm:flex justify-center sm:justify-end"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.1 }}
