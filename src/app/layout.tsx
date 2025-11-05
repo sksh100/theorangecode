@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
+import { VisitorTracker } from '@/components/VisitorTracker'
 
 export const metadata: Metadata = {
   title: 'The Orange Code - Coming Soon',
@@ -66,6 +67,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body style={{ fontFamily: "'Inter', 'Glacial Indifference', sans-serif" }} className="antialiased">
+        <VisitorTracker />
         {children}
       </body>
     </html>

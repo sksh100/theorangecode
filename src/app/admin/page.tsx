@@ -26,6 +26,10 @@ import {
   Clock,
   ArrowUpRight,
   ArrowDownRight,
+  Globe,
+  MapPin,
+  Monitor,
+  ExternalLink,
 } from 'lucide-react'
 import {
   LineChart,
@@ -86,6 +90,34 @@ interface Analytics {
   }
 }
 
+interface Visitor {
+  id: string
+  ip: string
+  userAgent: string
+  referrer: string
+  page: string
+  country?: string
+  city?: string
+  timestamp: string
+  sessionId: string
+}
+
+interface ActiveSession {
+  sessionId: string
+  page: string
+  country?: string
+  city?: string
+  lastSeen: string
+}
+
+interface VisitorStats {
+  totalVisitors: number
+  uniqueVisitors: number
+  todayVisitors: number
+  monthlyVisitors: number
+  activeNow: number
+}
+
 const COLORS = ['#00d4ff', '#ff914d', '#0099ff', '#00ffff']
 
 export default function AdminDashboard() {
@@ -93,13 +125,20 @@ export default function AdminDashboard() {
   const [password, setPassword] = useState('')
   const [authError, setAuthError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [activeTab, setActiveTab] = useState<'overview' | 'payments' | 'subscribers' | 'analytics'>('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'payments' | 'subscribers' | 'analytics' | 'visitors'>('overview')
   const [payments, setPayments] = useState<Payment[]>([])
   const [subscribers, setSubscribers] = useState<Subscriber[]>([])
   const [analytics, setAnalytics] = useState<Analytics | null>(null)
+  const [visitors, setVisitors] = useState<Visitor[]>([])
+  const [activeSessions, setActiveSessions] = useState<ActiveSession[]>([])
+  const [visitorStats, setVisitorStats] = useState<VisitorStats | null>(null)
+  const [topCountries, setTopCountries] = useState<Array<{ country: string; count: number }>>([])
+  const [topPages, setTopPages] = useState<Array<{ page: string; views: number }>>([])
+  const [dailyVisitorStats, setDailyVisitorStats] = useState<Array<{ date: string; visitors: number }>>([])
   const [paymentsLoading, setPaymentsLoading] = useState(false)
   const [subscribersLoading, setSubscribersLoading] = useState(false)
   const [analyticsLoading, setAnalyticsLoading] = useState(false)
+  const [visitorsLoading, setVisitorsLoading] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 
   // Check if already authenticated
@@ -148,6 +187,45 @@ export default function AdminDashboard() {
     fetchPayments()
     fetchSubscribers()
     fetchAnalytics()
+    fetchVisitors()
+  }
+
+  const fetchVisitors = async () => {
+    setVisitorsLoading(true)
+    try {
+      console.log('👥 Fetching visitors...')
+      const response = await fetch('/api/admin/visitors')
+      const data = await response.json()
+      console.log('👥 Visitors response:', { success: data.success, visitorsCount: data.data?.visitors?.length || 0 })
+      if (data.success) {
+        const visitorsList = data.data.visitors || []
+        const activeSessionsList = data.data.activeSessions || []
+        const stats = data.data.stats || {}
+        const countries = data.data.countries || []
+        const pages = data.data.pages || []
+        const daily = data.data.dailyStats || []
+        
+        console.log(`✅ Loaded ${visitorsList.length} visitors, ${activeSessionsList.length} active sessions`)
+        setVisitors(visitorsList)
+        setActiveSessions(activeSessionsList)
+        setVisitorStats(stats)
+        setTopCountries(countries)
+        setTopPages(pages)
+        setDailyVisitorStats(daily)
+      } else {
+        console.error('❌ Failed to fetch visitors:', data.error)
+        setVisitors([])
+        setActiveSessions([])
+        setVisitorStats(null)
+      }
+    } catch (error) {
+      console.error('❌ Error fetching visitors:', error)
+      setVisitors([])
+      setActiveSessions([])
+      setVisitorStats(null)
+    } finally {
+      setVisitorsLoading(false)
+    }
   }
 
   const fetchPayments = async () => {
@@ -316,6 +394,7 @@ export default function AdminDashboard() {
               { id: 'payments', label: 'Payments', icon: CreditCard },
               { id: 'subscribers', label: 'Subscribers', icon: Users },
               { id: 'analytics', label: 'Analytics', icon: Activity },
+              { id: 'visitors', label: 'Visitors', icon: Globe },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -810,6 +889,335 @@ export default function AdminDashboard() {
               ) : (
                 <div className="glass-card p-8 text-center text-white/70">No analytics data available</div>
               )}
+            </motion.div>
+          )}
+
+          {activeTab === 'visitors' && (
+            <motion.div
+              key="visitors"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="space-y-6"
+            >
+              {/* Stats Cards */}
+              {visitorStats && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="glass-card p-6"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-3 bg-azure-blue/20 rounded-lg">
+                        <Globe className="w-6 h-6 text-azure-blue" />
+                      </div>
+                      <ArrowUpRight className="w-5 h-5 text-green-400" />
+                    </div>
+                    <h3 className="text-white/70 text-sm mb-1">Total Visitors</h3>
+                    <p className="text-3xl font-bold text-white">
+                      {visitorStats.totalVisitors.toLocaleString()}
+                    </p>
+                  </motion.div>
+
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="glass-card p-6"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-3 bg-orange/20 rounded-lg">
+                        <Users className="w-6 h-6 text-orange" />
+                      </div>
+                      <ArrowUpRight className="w-5 h-5 text-green-400" />
+                    </div>
+                    <h3 className="text-white/70 text-sm mb-1">Unique Visitors</h3>
+                    <p className="text-3xl font-bold text-white">
+                      {visitorStats.uniqueVisitors.toLocaleString()}
+                    </p>
+                  </motion.div>
+
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="glass-card p-6"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-3 bg-bright-blue/20 rounded-lg">
+                        <Activity className="w-6 h-6 text-bright-blue" />
+                      </div>
+                      <ArrowUpRight className="w-5 h-5 text-green-400" />
+                    </div>
+                    <h3 className="text-white/70 text-sm mb-1">Active Now</h3>
+                    <p className="text-3xl font-bold text-white">
+                      {visitorStats.activeNow.toLocaleString()}
+                    </p>
+                  </motion.div>
+
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="glass-card p-6"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-3 bg-green-500/20 rounded-lg">
+                        <Calendar className="w-6 h-6 text-green-400" />
+                      </div>
+                      <ArrowUpRight className="w-5 h-5 text-green-400" />
+                    </div>
+                    <h3 className="text-white/70 text-sm mb-1">Today</h3>
+                    <p className="text-3xl font-bold text-white">
+                      {visitorStats.todayVisitors.toLocaleString()}
+                    </p>
+                  </motion.div>
+
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="glass-card p-6"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-3 bg-purple-500/20 rounded-lg">
+                        <TrendingUp className="w-6 h-6 text-purple-400" />
+                      </div>
+                      <ArrowUpRight className="w-5 h-5 text-green-400" />
+                    </div>
+                    <h3 className="text-white/70 text-sm mb-1">This Month</h3>
+                    <p className="text-3xl font-bold text-white">
+                      {visitorStats.monthlyVisitors.toLocaleString()}
+                    </p>
+                  </motion.div>
+                </div>
+              )}
+
+              {/* Charts */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Visitor Trend Chart */}
+                {dailyVisitorStats.length > 0 && (
+                  <motion.div
+                    whileHover={{ scale: 1.01 }}
+                    className="glass-card p-6"
+                  >
+                    <h3 className="text-xl font-bold text-white mb-4">Visitor Trend (30 Days)</h3>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <LineChart data={dailyVisitorStats}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                        <XAxis
+                          dataKey="date"
+                          stroke="rgba(255,255,255,0.5)"
+                          tick={{ fill: 'rgba(255,255,255,0.7)', fontSize: 12 }}
+                        />
+                        <YAxis
+                          stroke="rgba(255,255,255,0.5)"
+                          tick={{ fill: 'rgba(255,255,255,0.7)', fontSize: 12 }}
+                        />
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: 'rgba(1, 1, 30, 0.95)',
+                            border: '1px solid rgba(0, 212, 255, 0.3)',
+                            borderRadius: '8px',
+                            color: '#fff',
+                          }}
+                        />
+                        <Line
+                          type="monotone"
+                          dataKey="visitors"
+                          stroke="#00d4ff"
+                          strokeWidth={2}
+                          dot={{ fill: '#00d4ff', r: 4 }}
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </motion.div>
+                )}
+
+                {/* Top Countries Chart */}
+                {topCountries.length > 0 && (
+                  <motion.div
+                    whileHover={{ scale: 1.01 }}
+                    className="glass-card p-6"
+                  >
+                    <h3 className="text-xl font-bold text-white mb-4">Top Countries</h3>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <BarChart data={topCountries.slice(0, 10)}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                        <XAxis
+                          dataKey="country"
+                          stroke="rgba(255,255,255,0.5)"
+                          tick={{ fill: 'rgba(255,255,255,0.7)', fontSize: 12 }}
+                          angle={-45}
+                          textAnchor="end"
+                          height={80}
+                        />
+                        <YAxis
+                          stroke="rgba(255,255,255,0.5)"
+                          tick={{ fill: 'rgba(255,255,255,0.7)', fontSize: 12 }}
+                        />
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: 'rgba(1, 1, 30, 0.95)',
+                            border: '1px solid rgba(0, 212, 255, 0.3)',
+                            borderRadius: '8px',
+                            color: '#fff',
+                          }}
+                        />
+                        <Bar dataKey="count" fill="#ff914d" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </motion.div>
+                )}
+              </div>
+
+              {/* Active Sessions */}
+              {activeSessions.length > 0 && (
+                <motion.div
+                  whileHover={{ scale: 1.01 }}
+                  className="glass-card p-6"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-bold text-white">Active Visitors Right Now</h3>
+                    <span className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-semibold">
+                      {activeSessions.length} Active
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {activeSessions.map((session, index) => (
+                      <motion.div
+                        key={session.sessionId}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        className="p-4 bg-white/5 rounded-lg border border-white/10"
+                      >
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="p-2 bg-azure-blue/20 rounded-lg">
+                            <Monitor className="w-4 h-4 text-azure-blue" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-white font-medium text-sm">{session.page}</p>
+                            {session.country && (
+                              <p className="text-white/60 text-xs flex items-center gap-1 mt-1">
+                                <MapPin className="w-3 h-3" />
+                                {session.city ? `${session.city}, ` : ''}{session.country}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <p className="text-white/50 text-xs mt-2">
+                          Last seen: {new Date(session.lastSeen).toLocaleTimeString()}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Top Pages */}
+              {topPages.length > 0 && (
+                <motion.div
+                  whileHover={{ scale: 1.01 }}
+                  className="glass-card p-6"
+                >
+                  <h3 className="text-xl font-bold text-white mb-4">Top Pages</h3>
+                  <div className="space-y-2">
+                    {topPages.slice(0, 10).map((page, index) => (
+                      <motion.div
+                        key={page.page}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors"
+                      >
+                        <div className="flex items-center gap-3 flex-1 min-w-0">
+                          <ExternalLink className="w-4 h-4 text-white/50 flex-shrink-0" />
+                          <p className="text-white text-sm truncate">{page.page}</p>
+                        </div>
+                        <span className="text-azure-blue font-semibold text-sm ml-4">
+                          {page.views.toLocaleString()} views
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Recent Visitors Table */}
+              <div className="glass-card overflow-hidden">
+                <div className="p-6 border-b border-white/10 flex items-center justify-between">
+                  <h2 className="text-xl font-bold text-white">Recent Visitors</h2>
+                  <button
+                    onClick={fetchVisitors}
+                    className="px-4 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue transition-all flex items-center gap-2"
+                  >
+                    <RefreshCw className="w-4 h-4" />
+                    Refresh
+                  </button>
+                </div>
+                {visitorsLoading ? (
+                  <div className="p-8 text-center text-white/70">Loading visitors...</div>
+                ) : visitors.length === 0 ? (
+                  <div className="p-8 text-center text-white/70">No visitors yet. Data will appear here once visitors start browsing your site.</div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead className="bg-white/5">
+                        <tr>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Time</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Page</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Location</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Referrer</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">IP</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {visitors.slice(0, 50).map((visitor, index) => (
+                          <motion.tr
+                            key={visitor.id}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.02 }}
+                            className="border-t border-white/5 hover:bg-white/5 transition-colors"
+                          >
+                            <td className="px-6 py-4 text-white/70 text-sm">
+                              {new Date(visitor.timestamp).toLocaleString()}
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex items-center gap-2">
+                                <ExternalLink className="w-3 h-3 text-white/50" />
+                                <span className="text-white text-sm">{visitor.page}</span>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4">
+                              {visitor.country ? (
+                                <div className="flex items-center gap-2">
+                                  <MapPin className="w-3 h-3 text-azure-blue" />
+                                  <span className="text-white text-sm">
+                                    {visitor.city ? `${visitor.city}, ` : ''}{visitor.country}
+                                  </span>
+                                </div>
+                              ) : (
+                                <span className="text-white/50 text-sm">Unknown</span>
+                              )}
+                            </td>
+                            <td className="px-6 py-4">
+                              {visitor.referrer ? (
+                                <a
+                                  href={visitor.referrer}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-azure-blue text-sm hover:underline truncate max-w-xs block"
+                                >
+                                  {visitor.referrer}
+                                </a>
+                              ) : (
+                                <span className="text-white/50 text-sm">Direct</span>
+                              )}
+                            </td>
+                            <td className="px-6 py-4 text-white/70 text-sm font-mono">
+                              {visitor.ip}
+                            </td>
+                          </motion.tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
