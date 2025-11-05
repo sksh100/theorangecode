@@ -30,7 +30,6 @@ import {
   MapPin,
   Monitor,
   ExternalLink,
-  Calendar,
   Image as ImageIcon,
   Hash,
   Send,
