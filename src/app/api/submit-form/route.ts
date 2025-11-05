@@ -185,6 +185,11 @@ export async function POST(request: NextRequest) {
     }
     
     // Save to MailerLite
+    const mailerliteEnv = {
+      hasApiKey: !!process.env.MAILERLITE_API_KEY,
+      hasGroupId: !!process.env.MAILERLITE_GROUP_ID,
+      groupId: (process.env.MAILERLITE_GROUP_ID || '').trim(),
+    }
     console.log('📧 Attempting to add subscriber to MailerLite...', { name: displayName, email: cleanEmail, phone: cleanPhone })
     const mailerliteSuccess = await addToMailerLite({
       firstName: firstName || '',
@@ -222,6 +227,7 @@ export async function POST(request: NextRequest) {
       success: true,
       message: 'Interest registered successfully',
       mailerliteSuccess,
+      mailerliteEnv,
       data: {
         id: submissionId,
         name: displayName,
