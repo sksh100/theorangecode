@@ -4,6 +4,11 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
+        userAgent: 'Baiduspider',
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/'],
+      },
+      {
         userAgent: '*',
         allow: '/',
         disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/'],
