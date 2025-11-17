@@ -184,7 +184,7 @@ export default function Home() {
             </motion.div>
             <div className="relative z-20 px-4 sm:px-6 md:px-0 mb-4 sm:mb-6 md:mb-8 lg:mb-0 pb-20 sm:pb-24 md:pb-0">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-6 md:mb-6 leading-tight tracking-tight text-center sm:text-right text-orange">
-              Launching Soon
+              New Website Launching Soon
             </h1>
             
             <motion.p 

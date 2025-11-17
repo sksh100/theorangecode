@@ -13,6 +13,7 @@
   "dependencies": {
     "@mailerlite/mailerlite-nodejs": "^1.5.0",
     "@stripe/stripe-js": "^8.2.0",
+    "@upstash/redis": "^1.34.0",
     "@vercel/kv": "^3.0.0",
     "date-fns": "^4.1.0",
     "framer-motion": "^10.16.0",

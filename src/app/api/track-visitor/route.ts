@@ -1,137 +1,73 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { kv } from '@vercel/kv'
+import { NextRequest, NextResponse } from "next/server";
+import { redis } from "@/lib/redis";
 
 export const dynamic = 'force-dynamic'
 
-interface VisitorData {
-  id: string
-  ip: string
-  userAgent: string
-  referrer: string
-  page: string
-  country?: string
-  city?: string
-  timestamp: string
-  sessionId: string
-}
-
-async function getLocationFromIP(ip: string): Promise<{ country?: string; city?: string }> {
+export async function POST(req: NextRequest) {
   try {
-    // Skip localhost/private IPs
-    if (ip === '127.0.0.1' || ip.startsWith('192.168.') || ip.startsWith('10.')) {
-      return {}
-    }
+    const body = await req.json().catch(() => ({}));
 
-    // Use ipapi.co free service (1000 requests/day free)
-    const response = await fetch(`https://ipapi.co/${ip}/json/`, {
-      headers: {
-        'User-Agent': 'TheOrangeCode-Analytics',
-      },
-    })
+    const now = Date.now();
 
-    if (response.ok) {
-      const data = await response.json()
-      return {
-        country: data.country_name || data.country_code || undefined,
-        city: data.city || undefined,
-      }
-    }
-  } catch (error) {
-    console.error('Error fetching location:', error)
-  }
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+      req.headers.get("x-real-ip") ??
+      "unknown";
 
-  return {}
-}
+    const country = req.headers.get("x-vercel-ip-country") ?? "Unknown";
+    const city = req.headers.get("x-vercel-ip-city") ?? "Unknown";
+    const region = req.headers.get("x-vercel-ip-country-region") ?? "Unknown";
 
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json()
-    const { page = '/', referrer = '', userAgent = '' } = body
+    const userAgent = body.userAgent ?? req.headers.get("user-agent") ?? "Unknown";
+    const path = body.path ?? "/";
+    const referrer = body.referrer ?? req.headers.get("referer") ?? "Direct";
 
-    // Get visitor IP
-    const forwarded = request.headers.get('x-forwarded-for')
-    const ip = forwarded ? forwarded.split(',')[0].trim() : request.headers.get('x-real-ip') || 'unknown'
-
-    // Get location from IP
-    const location = await getLocationFromIP(ip)
-
-    // Generate session ID (use existing or create new)
-    const sessionId = body.sessionId || `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-
-    // Create visitor data
-    const visitorData: VisitorData = {
-      id: `visitor_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+    const visitor = {
       ip,
+      country,
+      city,
+      region,
       userAgent,
+      path,
       referrer,
-      page,
-      country: location.country,
-      city: location.city,
-      timestamp: new Date().toISOString(),
-      sessionId,
-    }
+      time: now,
+    };
 
-    // Store visitor data in Vercel KV
-    const visitorKey = `visitor:${visitorData.id}`
-    await kv.setex(visitorKey, 86400 * 7, JSON.stringify(visitorData)) // Store for 7 days
+    // Store in "recent visitors" history
+    await redis.lpush("visitors:recent", JSON.stringify(visitor));
+    await redis.ltrim("visitors:recent", 0, 200);
 
-    // Add to visitors list (sorted set by timestamp)
-    await kv.zadd('visitors:list', { score: Date.now(), member: visitorData.id })
+    // Real-time "active" visitors (last 60 seconds)
+    await redis.zadd("visitors:active", {
+      score: now,
+      member: JSON.stringify(visitor),
+    });
 
-    // Add to daily visitors
-    const today = new Date().toISOString().split('T')[0]
-    await kv.zadd(`visitors:daily:${today}`, { score: Date.now(), member: visitorData.id })
+    // Clean up very old scores
+    const cutoff = now - 5 * 60_000; // 5 minutes ago
+    await redis.zremrangebyscore("visitors:active", 0, cutoff);
 
-    // Track by country
-    if (location.country) {
-      await kv.zincrby('visitors:countries', 1, location.country)
-    }
-
-    // Track by page
-    await kv.zincrby('visitors:pages', 1, page)
-
-    // Track active sessions (last 5 minutes)
-    const activeSessionKey = `visitor:session:${sessionId}`
-    await kv.setex(activeSessionKey, 300, JSON.stringify({ // 5 minutes
-      sessionId,
-      page,
-      country: location.country,
-      city: location.city,
-      lastSeen: new Date().toISOString(),
-    }))
+    // Simple counters
+    await redis.incr("visitors:total");
 
     console.log('✅ Visitor tracked:', {
-      id: visitorData.id,
-      ip: visitorData.ip,
-      country: visitorData.country,
-      page: visitorData.page,
-      sessionId,
-    })
+      ip,
+      country,
+      city,
+      path,
+      referrer: referrer.substring(0, 50),
+    });
 
-    return NextResponse.json({
-      success: true,
-      sessionId,
-    })
+    return NextResponse.json({ ok: true });
   } catch (error: any) {
-    console.error('❌ Error tracking visitor:', error)
-    console.error('Error details:', {
-      message: error.message,
-      stack: error.stack,
-      hasKV: typeof kv !== 'undefined',
-      kvType: typeof kv,
-    })
+    console.error('❌ Error tracking visitor:', error);
     
-    // Check if KV is configured
+    // Check if Redis is configured
     if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
-      console.error('⚠️ Vercel KV not configured! Please set KV_REST_API_URL and KV_REST_API_TOKEN in Vercel environment variables.')
+      console.error('⚠️ Upstash Redis not configured! Please set KV_REST_API_URL and KV_REST_API_TOKEN in Vercel environment variables.');
     }
     
     // Return success even on error to not break the site
-    return NextResponse.json({
-      success: false,
-      error: error.message || 'Unknown error',
-      sessionId: `session_${Date.now()}`,
-    })
+    return NextResponse.json({ ok: false, error: error.message || 'Unknown error' });
   }
 }
-

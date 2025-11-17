@@ -1,13 +1,13 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { kv } from '@vercel/kv'
+import { NextRequest, NextResponse } from "next/server";
+import { redis } from "@/lib/redis";
 
 export const dynamic = 'force-dynamic'
 
-export async function GET(request: NextRequest) {
+export async function GET(_req: NextRequest) {
   try {
-    // Check if KV is configured
+    // Check if Redis is configured
     if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
-      console.error('⚠️ Vercel KV not configured! Please set KV_REST_API_URL and KV_REST_API_TOKEN in Vercel environment variables.')
+      console.error('⚠️ Upstash Redis not configured! Please set KV_REST_API_URL and KV_REST_API_TOKEN in Vercel environment variables.');
       return NextResponse.json({
         success: true,
         data: {
@@ -19,161 +19,145 @@ export async function GET(request: NextRequest) {
           stats: {
             totalVisitors: 0,
             uniqueVisitors: 0,
+            currentVisitors: 0,
+            last24HoursVisitors: 0,
+            lastWeekVisitors: 0,
+            lastMonthVisitors: 0,
             todayVisitors: 0,
             monthlyVisitors: 0,
             activeNow: 0,
           },
         },
-      })
+      });
     }
 
-    const searchParams = request.nextUrl.searchParams
-    const limit = parseInt(searchParams.get('limit') || '100')
+    const now = Date.now();
+    const cutoff = now - 60_000; // active in last 60s
 
-    console.log('👥 Fetching visitors from KV...')
+    const [activeRaw, recentRaw, total] = await Promise.all([
+      redis.zrange<string>("visitors:active", cutoff, now, {
+        byScore: true,
+        rev: true,
+      }),
+      redis.lrange<string>("visitors:recent", 0, 200),
+      redis.get<number>("visitors:total"),
+    ]);
 
-    // Get recent visitors
-    const visitorIds = await kv.zrange('visitors:list', -limit, -1, { rev: true })
-    console.log(`📊 Found ${visitorIds.length} visitor IDs in KV`)
-    
-    const visitors = []
+    const active = activeRaw.map((v) => JSON.parse(v));
+    const recent = recentRaw.map((v) => JSON.parse(v));
 
-    for (const id of visitorIds) {
-      try {
-        const visitorData = await kv.get(`visitor:${id}`)
-        if (visitorData) {
-          visitors.push(JSON.parse(visitorData as string))
-        }
-      } catch (error) {
-        console.error(`Error fetching visitor ${id}:`, error)
+    // Calculate statistics with accurate time-based filtering
+    const oneDayAgo = now - (24 * 60 * 60 * 1000);
+    const oneWeekAgo = now - (7 * 24 * 60 * 60 * 1000);
+    const oneMonthAgo = now - (30 * 24 * 60 * 60 * 1000);
+
+    // Filter recent visitors by time periods
+    const last24HoursVisitors = recent.filter((v: any) => v.time >= oneDayAgo).length;
+    const lastWeekVisitors = recent.filter((v: any) => v.time >= oneWeekAgo).length;
+    const lastMonthVisitors = recent.filter((v: any) => v.time >= oneMonthAgo).length;
+
+    // Today's visitors
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayVisitors = recent.filter((v: any) => {
+      const date = new Date(v.time);
+      return date >= today;
+    }).length;
+
+    // Monthly visitors (current calendar month)
+    const monthlyVisitors = recent.filter((v: any) => {
+      const date = new Date(v.time);
+      const now = new Date();
+      return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+    }).length;
+
+    // Get unique visitors (by IP)
+    const uniqueVisitors = new Set(recent.map((v: any) => v.ip)).size;
+
+    // Calculate top countries
+    const countryCounts: { [key: string]: number } = {};
+    recent.forEach((v: any) => {
+      if (v.country && v.country !== 'Unknown') {
+        countryCounts[v.country] = (countryCounts[v.country] || 0) + 1;
       }
-    }
+    });
+    const topCountries = Object.entries(countryCounts)
+      .map(([country, count]) => ({ country, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 10);
 
-    // Get active sessions (last 5 minutes) with activity data
-    const allKeys = await kv.keys('visitor:session:*')
-    console.log(`📊 Found ${allKeys.length} active session keys in KV`)
-    const activeSessions = []
+    // Calculate top pages
+    const pageCounts: { [key: string]: number } = {};
+    recent.forEach((v: any) => {
+      const page = v.path || '/';
+      pageCounts[page] = (pageCounts[page] || 0) + 1;
+    });
+    const topPages = Object.entries(pageCounts)
+      .map(([page, views]) => ({ page, views }))
+      .sort((a, b) => b.views - a.views)
+      .slice(0, 10);
 
-    for (const key of allKeys) {
-      try {
-        const sessionData = await kv.get(key)
-        if (sessionData) {
-          const session = JSON.parse(sessionData as string)
-          const sessionId = session.sessionId || key.replace('visitor:session:', '')
-          
-          // Get activity data for this session
-          const activityKey = `visitor:activity:${sessionId}`
-          const activityData = await kv.get(activityKey)
-          const activities = activityData ? (JSON.parse(activityData as string) as any[]) : []
-          
-          // Calculate time on page
-          const timeOnPage = session.timeOnPage || 0
-          const lastActivity = session.lastActivity || session.lastSeen
-          const timeSinceLastActivity = lastActivity ? Math.floor((Date.now() - new Date(lastActivity).getTime()) / 1000) : 0
-          
-          // Get clicks
-          const clicks = activities.filter((a: any) => a.type === 'click').length
-          const clickActivities = activities.filter((a: any) => a.type === 'click')
-          const lastClick = clickActivities.length > 0 ? clickActivities[clickActivities.length - 1] : null
-          
-          // Get scroll depth
-          const scrollDepth = session.scrollDepth || 0
-          
-          // Consider session active if activity within last 5 minutes (300 seconds)
-          const isActiveSession = timeSinceLastActivity < 300
-          
-          activeSessions.push({
-            ...session,
-            timeOnPage,
-            timeSinceLastActivity,
-            clicks,
-            lastClick: lastClick?.data || null,
-            scrollDepth,
-            activities: activities.slice(-10), // Last 10 activities
-            isActive: isActiveSession, // Active if activity within last 5 minutes
-          })
-        }
-      } catch (error) {
-        console.error(`Error fetching session ${key}:`, error)
-      }
-    }
-
-    // Get top countries
-    const topCountries = await kv.zrange('visitors:countries', 0, -1, { rev: true, withScores: true })
-    const countries = []
-    for (let i = 0; i < topCountries.length; i += 2) {
-      countries.push({
-        country: topCountries[i],
-        count: Math.round(topCountries[i + 1] as number),
-      })
-    }
-
-    // Get top pages
-    const topPages = await kv.zrange('visitors:pages', 0, -1, { rev: true, withScores: true })
-    const pages = []
-    for (let i = 0; i < topPages.length; i += 2) {
-      pages.push({
-        page: topPages[i],
-        views: Math.round(topPages[i + 1] as number),
-      })
-    }
-
-    // Get daily statistics (last 30 days)
-    const dailyStats = []
-    const today = new Date()
+    // Calculate daily stats (last 30 days)
+    const dailyStats = [];
     for (let i = 0; i < 30; i++) {
-      const date = new Date(today)
-      date.setDate(date.getDate() - i)
-      const dateStr = date.toISOString().split('T')[0]
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      const dateStr = date.toISOString().split('T')[0];
+      const dayStart = date.setHours(0, 0, 0, 0);
+      const dayEnd = date.setHours(23, 59, 59, 999);
       
-      try {
-        const dailyVisitors = await kv.zcard(`visitors:daily:${dateStr}`)
-        dailyStats.push({
-          date: dateStr,
-          visitors: dailyVisitors,
-        })
-      } catch (error) {
-        dailyStats.push({
-          date: dateStr,
-          visitors: 0,
-        })
-      }
+      const dayVisitors = recent.filter((v: any) => v.time >= dayStart && v.time <= dayEnd).length;
+      dailyStats.push({
+        date: dateStr,
+        visitors: dayVisitors,
+      });
     }
+    dailyStats.reverse();
 
-    // Calculate statistics
-    const totalVisitors = visitors.length
-    const uniqueVisitors = new Set(visitors.map((v: any) => v.sessionId)).size
-    const todayVisitors = visitors.filter((v: any) => {
-      const date = new Date(v.timestamp)
-      const today = new Date()
-      return date.toDateString() === today.toDateString()
-    }).length
+    // Format visitors for dashboard (convert time to timestamp ISO string)
+    const formattedRecent = recent.map((v: any) => ({
+      id: `visitor_${v.time}_${v.ip}`,
+      ip: v.ip,
+      userAgent: v.userAgent,
+      referrer: v.referrer,
+      page: v.path,
+      country: v.country !== 'Unknown' ? v.country : undefined,
+      city: v.city !== 'Unknown' ? v.city : undefined,
+      timestamp: new Date(v.time).toISOString(),
+      sessionId: `session_${v.time}`,
+    }));
 
-    const monthlyVisitors = visitors.filter((v: any) => {
-      const date = new Date(v.timestamp)
-      const now = new Date()
-      return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear()
-    }).length
+    const formattedActive = active.map((v: any) => ({
+      sessionId: `session_${v.time}`,
+      page: v.path,
+      country: v.country !== 'Unknown' ? v.country : undefined,
+      city: v.city !== 'Unknown' ? v.city : undefined,
+      lastSeen: new Date(v.time).toISOString(),
+    }));
 
     return NextResponse.json({
       success: true,
       data: {
-        visitors: visitors.slice(0, limit),
-        activeSessions,
-        countries: countries.slice(0, 10),
-        pages: pages.slice(0, 10),
-        dailyStats: dailyStats.reverse(),
+        visitors: formattedRecent,
+        activeSessions: formattedActive,
+        countries: topCountries,
+        pages: topPages,
+        dailyStats,
         stats: {
-          totalVisitors,
+          totalVisitors: total ?? 0,
           uniqueVisitors,
+          currentVisitors: active.length,
+          last24HoursVisitors,
+          lastWeekVisitors,
+          lastMonthVisitors,
           todayVisitors,
           monthlyVisitors,
-          activeNow: activeSessions.filter((s: any) => s.isActive).length,
+          activeNow: active.length,
         },
       },
-    })
+    });
   } catch (error: any) {
-    console.error('Error fetching visitors:', error)
+    console.error('Error fetching visitors:', error);
     
     // Return empty data instead of error
     return NextResponse.json({
@@ -187,12 +171,15 @@ export async function GET(request: NextRequest) {
         stats: {
           totalVisitors: 0,
           uniqueVisitors: 0,
+          currentVisitors: 0,
+          last24HoursVisitors: 0,
+          lastWeekVisitors: 0,
+          lastMonthVisitors: 0,
           todayVisitors: 0,
           monthlyVisitors: 0,
           activeNow: 0,
         },
       },
-    })
+    });
   }
 }
-

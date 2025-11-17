@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { AdminLiveUpdates } from '@/components/AdminLiveUpdates'
 import {
   DollarSign,
   Users,
@@ -130,6 +131,10 @@ interface ActiveSession {
 interface VisitorStats {
   totalVisitors: number
   uniqueVisitors: number
+  currentVisitors: number
+  last24HoursVisitors: number
+  lastWeekVisitors: number
+  lastMonthVisitors: number
   todayVisitors: number
   monthlyVisitors: number
   activeNow: number
@@ -144,6 +149,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState<'overview' | 'payments' | 'subscribers' | 'analytics' | 'visitors' | 'content'>('overview')
   const [payments, setPayments] = useState<Payment[]>([])
+  const [paymentStats, setPaymentStats] = useState<{ totalRevenue: number; count: number }>({ totalRevenue: 0, count: 0 })
   const [subscribers, setSubscribers] = useState<Subscriber[]>([])
   const [analytics, setAnalytics] = useState<Analytics | null>(null)
   const [visitors, setVisitors] = useState<Visitor[]>([])
@@ -152,11 +158,116 @@ export default function AdminDashboard() {
   const [topCountries, setTopCountries] = useState<Array<{ country: string; count: number }>>([])
   const [topPages, setTopPages] = useState<Array<{ page: string; views: number }>>([])
   const [dailyVisitorStats, setDailyVisitorStats] = useState<Array<{ date: string; visitors: number }>>([])
+  const [comingSoonVisitors, setComingSoonVisitors] = useState<Visitor[]>([])
+  const [comingSoonStats, setComingSoonStats] = useState<{ total: number; today: number; thisWeek: number; thisMonth: number } | null>(null)
+  const [topSources, setTopSources] = useState<Array<{ source: string; count: number }>>([])
+  const [sourceTypes, setSourceTypes] = useState<Array<{ type: string; count: number }>>([])
+  const [utmCampaigns, setUtmCampaigns] = useState<Array<{ campaign: string; count: number }>>([])
   const [paymentsLoading, setPaymentsLoading] = useState(false)
   const [subscribersLoading, setSubscribersLoading] = useState(false)
   const [analyticsLoading, setAnalyticsLoading] = useState(false)
   const [visitorsLoading, setVisitorsLoading] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true)
+  const [soundEnabled, setSoundEnabled] = useState(true)
+  const [previousCounts, setPreviousCounts] = useState({
+    visitors: 0,
+    payments: 0,
+    subscribers: 0,
+  })
+
+  // Request browser notification permission
+  useEffect(() => {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission()
+    }
+  }, [])
+
+  // Play notification sound
+  const playNotificationSound = () => {
+    if (!soundEnabled) return
+    
+    try {
+      // Create a simple notification sound using Web Audio API
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
+      const oscillator = audioContext.createOscillator()
+      const gainNode = audioContext.createGain()
+      
+      oscillator.connect(gainNode)
+      gainNode.connect(audioContext.destination)
+      
+      oscillator.frequency.value = 800
+      oscillator.type = 'sine'
+      
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime)
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3)
+      
+      oscillator.start(audioContext.currentTime)
+      oscillator.stop(audioContext.currentTime + 0.3)
+    } catch (error) {
+      console.log('Could not play notification sound:', error)
+    }
+  }
+
+  // Show browser notification
+  const showBrowserNotification = (title: string, body: string, icon?: string) => {
+    if (!notificationsEnabled || !('Notification' in window)) return
+    
+    if (Notification.permission === 'granted') {
+      new Notification(title, {
+        body,
+        icon: icon || '/favicon.ico',
+        badge: '/favicon.ico',
+        tag: 'admin-notification',
+      })
+    }
+  }
+
+  // Check for new events and trigger notifications
+  useEffect(() => {
+    if (!isAuthenticated) return
+
+    const newVisitors = visitors.length - previousCounts.visitors
+    const newPayments = payments.length - previousCounts.payments
+    const newSubscribers = subscribers.length - previousCounts.subscribers
+
+    if (newVisitors > 0 && previousCounts.visitors > 0) {
+      playNotificationSound()
+      showBrowserNotification(
+        'New Visitor!',
+        `${newVisitors} new visitor${newVisitors > 1 ? 's' : ''} on your site`,
+        '/favicon.ico'
+      )
+    }
+
+    if (newPayments > 0 && previousCounts.payments > 0) {
+      playNotificationSound()
+      const latestPayment = payments[0]
+      showBrowserNotification(
+        'New Payment! 💰',
+        `${latestPayment.customerName || 'Customer'} paid ${latestPayment.currency} ${latestPayment.amount.toFixed(2)}`,
+        '/favicon.ico'
+      )
+    }
+
+    if (newSubscribers > 0 && previousCounts.subscribers > 0) {
+      playNotificationSound()
+      showBrowserNotification(
+        'New Subscriber!',
+        `${newSubscribers} new subscriber${newSubscribers > 1 ? 's' : ''} joined`,
+        '/favicon.ico'
+      )
+    }
+
+    // Update previous counts
+    if (visitors.length > 0 || payments.length > 0 || subscribers.length > 0) {
+      setPreviousCounts({
+        visitors: visitors.length,
+        payments: payments.length,
+        subscribers: subscribers.length,
+      })
+    }
+  }, [visitors.length, payments.length, subscribers.length, isAuthenticated, notificationsEnabled, soundEnabled])
 
   // Check if already authenticated
   useEffect(() => {
@@ -167,7 +278,7 @@ export default function AdminDashboard() {
     }
   }, [])
 
-  // Auto-refresh data every 30 seconds
+  // Auto-refresh data every 30 seconds (general data)
   useEffect(() => {
     if (!isAuthenticated) return
 
@@ -178,6 +289,18 @@ export default function AdminDashboard() {
 
     return () => clearInterval(interval)
   }, [isAuthenticated])
+
+  // Poll visitors more frequently when on Visitors tab (every 5 seconds)
+  useEffect(() => {
+    if (!isAuthenticated || activeTab !== 'visitors') return
+
+    const interval = setInterval(() => {
+      console.log('🔄 Polling visitors...')
+      fetchVisitors()
+    }, 5000) // Refresh every 5 seconds when on Visitors tab
+
+    return () => clearInterval(interval)
+  }, [isAuthenticated, activeTab])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -198,7 +321,7 @@ export default function AdminDashboard() {
         localStorage.setItem('admin_authenticated', 'true')
         fetchData()
       } else {
-        setAuthError('Invalid password')
+        setAuthError(data.error || 'Invalid password')
       }
     } catch (error) {
       setAuthError('Authentication failed')
@@ -245,6 +368,11 @@ export default function AdminDashboard() {
         setTopCountries(countries)
         setTopPages(pages)
         setDailyVisitorStats(daily)
+        setComingSoonVisitors(data.data.comingSoonVisitors || [])
+        setComingSoonStats(data.data.comingSoonStats || { total: 0, today: 0, thisWeek: 0, thisMonth: 0 })
+        setTopSources(data.data.sources || [])
+        setSourceTypes(data.data.sourceTypes || [])
+        setUtmCampaigns(data.data.campaigns || [])
       } else {
         console.error('❌ Failed to fetch visitors:', data.error)
         setVisitors([])
@@ -265,20 +393,22 @@ export default function AdminDashboard() {
     setPaymentsLoading(true)
     try {
       console.log('📊 Fetching payments...')
-      const response = await fetch('/api/admin/payments?limit=1000')
+      const response = await fetch('/api/admin/payments')
       const data = await response.json()
       console.log('📊 Payments response:', { 
         success: data.success, 
-        paymentsCount: data.data?.payments?.length || 0,
-        totalRevenue: data.data?.stats?.totalRevenue || 0,
-        todayRevenue: data.data?.stats?.todayRevenue || 0,
-        samplePayments: data.data?.payments?.slice(0, 3) || []
+        paymentsCount: data.payments?.length || 0,
+        totalRevenue: data.stats?.totalRevenue || 0,
+        count: data.stats?.count || 0,
+        samplePayments: data.payments?.slice(0, 3) || []
       })
-      if (data.success) {
-        const paymentsList = data.data.payments || []
+      if (data.success !== false) {
+        const paymentsList = data.payments || []
+        const stats = data.stats || { totalRevenue: 0, count: 0 }
         console.log(`✅ Loaded ${paymentsList.length} payments`)
         console.log('📊 Sample payments:', paymentsList.slice(0, 3))
         setPayments(paymentsList)
+        setPaymentStats(stats)
       } else {
         console.error('❌ Failed to fetch payments:', data.error)
         setPayments([])
@@ -467,6 +597,42 @@ export default function AdminDashboard() {
   // Main dashboard
     return (
     <div className="min-h-screen bg-primary-dark">
+      {/* Live Updates Component */}
+      {isAuthenticated && (
+        <AdminLiveUpdates
+          pollMs={5000}
+          onVisitorsUpdate={(data) => {
+            if (data.success !== false && data.data) {
+              const visitorsList = data.data.visitors || []
+              const activeSessionsList = data.data.activeSessions || []
+              const stats = data.data.stats || {}
+              const countries = data.data.countries || []
+              const pages = data.data.pages || []
+              const daily = data.data.dailyStats || []
+              
+              setVisitors(visitorsList)
+              setActiveSessions(activeSessionsList)
+              setVisitorStats(stats)
+              setTopCountries(countries)
+              setTopPages(pages)
+              setDailyVisitorStats(daily)
+              setComingSoonVisitors(data.data.comingSoonVisitors || [])
+              setComingSoonStats(data.data.comingSoonStats || { total: 0, today: 0, thisWeek: 0, thisMonth: 0 })
+              setTopSources(data.data.sources || [])
+              setSourceTypes(data.data.sourceTypes || [])
+              setUtmCampaigns(data.data.campaigns || [])
+            }
+          }}
+          onPaymentsUpdate={(data) => {
+            if (data.success !== false) {
+              const paymentsList = data.payments || []
+              const stats = data.stats || { totalRevenue: 0, count: 0 }
+              setPayments(paymentsList)
+              setPaymentStats(stats)
+            }
+          }}
+        />
+      )}
       {/* Header */}
       <header className="sticky top-0 z-50 bg-primary-dark/95 backdrop-blur-lg border-b border-white/10">
         <div className="container mx-auto px-4 sm:px-6 py-4">
@@ -476,7 +642,37 @@ export default function AdminDashboard() {
               <p className="text-white/70 text-sm mt-1">The Orange Code</p>
             </div>
             <div className="flex items-center gap-4">
-          <button 
+              {/* Notification Controls */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setSoundEnabled(!soundEnabled)}
+                  className={`p-2 rounded-lg border transition-all ${
+                    soundEnabled
+                      ? 'bg-azure-blue/20 border-azure-blue/30 text-azure-blue'
+                      : 'bg-white/5 border-white/10 text-white/50'
+                  }`}
+                  title={soundEnabled ? 'Sound notifications ON' : 'Sound notifications OFF'}
+                >
+                  <Bell className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => {
+                    if (!notificationsEnabled && 'Notification' in window) {
+                      Notification.requestPermission()
+                    }
+                    setNotificationsEnabled(!notificationsEnabled)
+                  }}
+                  className={`p-2 rounded-lg border transition-all ${
+                    notificationsEnabled
+                      ? 'bg-green-500/20 border-green-500/30 text-green-400'
+                      : 'bg-white/5 border-white/10 text-white/50'
+                  }`}
+                  title={notificationsEnabled ? 'Browser notifications ON' : 'Browser notifications OFF'}
+                >
+                  <Bell className={`w-5 h-5 ${notificationsEnabled ? 'fill-current' : ''}`} />
+                </button>
+              </div>
+              <button 
                 onClick={fetchData}
                 className="p-2 bg-white/5 hover:bg-white/10 rounded-lg border border-white/10 transition-all"
                 title="Refresh data"
@@ -549,7 +745,7 @@ export default function AdminDashboard() {
                   </div>
                   <h3 className="text-white/70 text-sm mb-1">Total Revenue</h3>
                   <p className="text-3xl font-bold text-white">
-                    {paymentsLoading ? '...' : payments.reduce((sum, p) => sum + p.amount, 0).toFixed(2)} AED
+                    {paymentsLoading ? '...' : paymentStats.totalRevenue.toFixed(2)} AED
                   </p>
                   <p className="text-xs text-white/50 mt-2">
                     {paymentsLoading ? '...' : payments.filter(p => {
@@ -595,7 +791,7 @@ export default function AdminDashboard() {
                   </div>
                   <h3 className="text-white/70 text-sm mb-1">Total Payments</h3>
                   <p className="text-3xl font-bold text-white">
-                    {paymentsLoading ? '...' : payments.length.toLocaleString()}
+                    {paymentsLoading ? '...' : paymentStats.count.toLocaleString()}
                   </p>
                   <p className="text-xs text-white/50 mt-2">
                     {paymentsLoading ? '...' : payments.filter(p => {
@@ -1135,18 +1331,182 @@ export default function AdminDashboard() {
               exit={{ opacity: 0, y: -20 }}
               className="space-y-6"
             >
-              {/* Stats Cards */}
+              {/* Coming Soon Page Analytics */}
+              {comingSoonStats && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="glass-card p-6 mb-6 border-2 border-azure-blue/30"
+                >
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                        <Sparkles className="w-6 h-6 text-azure-blue" />
+                        Coming Soon Page Analytics
+                      </h2>
+                      <p className="text-white/60 text-sm mt-1">
+                        Track how many people visit your coming soon page and where they come from
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      className="p-4 bg-white/5 rounded-lg border border-white/10"
+                    >
+                      <h3 className="text-white/70 text-sm mb-1">Total Visits</h3>
+                      <p className="text-2xl font-bold text-white">{comingSoonStats.total.toLocaleString()}</p>
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      className="p-4 bg-white/5 rounded-lg border border-white/10"
+                    >
+                      <h3 className="text-white/70 text-sm mb-1">Today</h3>
+                      <p className="text-2xl font-bold text-azure-blue">{comingSoonStats.today.toLocaleString()}</p>
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      className="p-4 bg-white/5 rounded-lg border border-white/10"
+                    >
+                      <h3 className="text-white/70 text-sm mb-1">This Week</h3>
+                      <p className="text-2xl font-bold text-orange">{comingSoonStats.thisWeek.toLocaleString()}</p>
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      className="p-4 bg-white/5 rounded-lg border border-white/10"
+                    >
+                      <h3 className="text-white/70 text-sm mb-1">This Month</h3>
+                      <p className="text-2xl font-bold text-green-400">{comingSoonStats.thisMonth.toLocaleString()}</p>
+                    </motion.div>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Top Sources */}
+                    {topSources.length > 0 && (
+                      <div>
+                        <h3 className="text-lg font-bold text-white mb-4">Top Traffic Sources</h3>
+                        <div className="space-y-2">
+                          {topSources.slice(0, 10).map((source, index) => (
+                            <motion.div
+                              key={source.source}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: index * 0.05 }}
+                              className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10"
+                            >
+                              <span className="text-white text-sm">{source.source}</span>
+                              <span className="text-azure-blue font-semibold">{source.count}</span>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Source Types */}
+                    {sourceTypes.length > 0 && (
+                      <div>
+                        <h3 className="text-lg font-bold text-white mb-4">Source Types</h3>
+                        <div className="space-y-2">
+                          {sourceTypes.map((type, index) => (
+                            <motion.div
+                              key={type.type}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: index * 0.05 }}
+                              className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10"
+                            >
+                              <span className="text-white text-sm capitalize">{type.type}</span>
+                              <span className="text-orange font-semibold">{type.count}</span>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* UTM Campaigns */}
+                  {utmCampaigns.length > 0 && (
+                    <div className="mt-6">
+                      <h3 className="text-lg font-bold text-white mb-4">UTM Campaigns</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {utmCampaigns.slice(0, 9).map((campaign, index) => (
+                          <motion.div
+                            key={campaign.campaign}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.05 }}
+                            className="p-3 bg-white/5 rounded-lg border border-white/10"
+                          >
+                            <p className="text-white text-sm font-medium truncate">{campaign.campaign}</p>
+                            <p className="text-azure-blue text-xs mt-1">{campaign.count} visits</p>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Recent Coming Soon Visitors */}
+                  {comingSoonVisitors.length > 0 && (
+                    <div className="mt-6">
+                      <h3 className="text-lg font-bold text-white mb-4">Recent Coming Soon Visitors</h3>
+                      <div className="overflow-x-auto">
+                        <table className="w-full">
+                          <thead className="bg-white/5">
+                            <tr>
+                              <th className="px-4 py-3 text-left text-sm font-semibold text-white">Time</th>
+                              <th className="px-4 py-3 text-left text-sm font-semibold text-white">Source</th>
+                              <th className="px-4 py-3 text-left text-sm font-semibold text-white">Location</th>
+                              <th className="px-4 py-3 text-left text-sm font-semibold text-white">Campaign</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {comingSoonVisitors.slice(0, 20).map((visitor, index) => (
+                              <motion.tr
+                                key={visitor.id}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.02 }}
+                                className="border-t border-white/5 hover:bg-white/5"
+                              >
+                                <td className="px-4 py-3 text-white/70 text-sm">
+                                  {new Date(visitor.timestamp).toLocaleString()}
+                                </td>
+                                <td className="px-4 py-3 text-white text-sm">
+                                  {(visitor as any).source || 'direct'}
+                                </td>
+                                <td className="px-4 py-3 text-white/70 text-sm">
+                                  {visitor.country ? (
+                                    <span>{visitor.city ? `${visitor.city}, ` : ''}{visitor.country}</span>
+                                  ) : (
+                                    <span className="text-white/40">Unknown</span>
+                                  )}
+                                </td>
+                                <td className="px-4 py-3 text-white/70 text-sm">
+                                  {(visitor as any).utmCampaign || '-'}
+                                </td>
+                              </motion.tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
+              )}
+
+              {/* Stats Cards - Visitor Statistics */}
               {visitorStats && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                  {/* Total Visitors */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="glass-card p-6"
+                    className="glass-card p-6 border-2 border-azure-blue/30"
                   >
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-3 bg-azure-blue/20 rounded-lg">
                         <Globe className="w-6 h-6 text-azure-blue" />
                       </div>
-                      <ArrowUpRight className="w-5 h-5 text-green-400" />
                     </div>
                     <h3 className="text-white/70 text-sm mb-1">Total Visitors</h3>
                     <p className="text-3xl font-bold text-white">
@@ -1154,68 +1514,59 @@ export default function AdminDashboard() {
                     </p>
                   </motion.div>
 
+                  {/* Unique Visitors */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="glass-card p-6"
+                    className="glass-card p-6 border-2 border-orange/30"
                   >
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-3 bg-orange/20 rounded-lg">
                         <Users className="w-6 h-6 text-orange" />
                       </div>
-                      <ArrowUpRight className="w-5 h-5 text-green-400" />
                     </div>
                     <h3 className="text-white/70 text-sm mb-1">Unique Visitors</h3>
                     <p className="text-3xl font-bold text-white">
-                      {visitorStats.uniqueVisitors.toLocaleString()}
+                      {(visitorStats.uniqueVisitors || visitorStats.totalVisitors || 0).toLocaleString()}
                     </p>
+                    <p className="text-xs text-white/50 mt-2">Currently = Total</p>
                   </motion.div>
 
+                  {/* Active Now */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="glass-card p-6"
-                  >
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 bg-bright-blue/20 rounded-lg">
-                        <Activity className="w-6 h-6 text-bright-blue" />
-                      </div>
-                      <ArrowUpRight className="w-5 h-5 text-green-400" />
-                    </div>
-                    <h3 className="text-white/70 text-sm mb-1">Active Now</h3>
-                    <p className="text-3xl font-bold text-white">
-                      {visitorStats.activeNow.toLocaleString()}
-                    </p>
-                  </motion.div>
-
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    className="glass-card p-6"
+                    className="glass-card p-6 border-2 border-green-500/30"
                   >
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-3 bg-green-500/20 rounded-lg">
-                        <Calendar className="w-6 h-6 text-green-400" />
+                        <Activity className="w-6 h-6 text-green-400" />
                       </div>
-                      <ArrowUpRight className="w-5 h-5 text-green-400" />
+                      <div className="flex items-center gap-1">
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span className="text-xs text-green-400 font-semibold">Live</span>
+                      </div>
                     </div>
-                    <h3 className="text-white/70 text-sm mb-1">Today</h3>
+                    <h3 className="text-white/70 text-sm mb-1">Active Now</h3>
                     <p className="text-3xl font-bold text-white">
-                      {visitorStats.todayVisitors.toLocaleString()}
+                      {(visitorStats.currentVisitors || visitorStats.activeNow || 0).toLocaleString()}
                     </p>
+                    <p className="text-xs text-white/50 mt-2">Last 60 seconds</p>
                   </motion.div>
 
+                  {/* Today */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="glass-card p-6"
+                    className="glass-card p-6 border-2 border-purple-500/30"
                   >
                     <div className="flex items-center justify-between mb-4">
                       <div className="p-3 bg-purple-500/20 rounded-lg">
-                        <TrendingUp className="w-6 h-6 text-purple-400" />
+                        <Calendar className="w-6 h-6 text-purple-400" />
                       </div>
-                      <ArrowUpRight className="w-5 h-5 text-green-400" />
                     </div>
-                    <h3 className="text-white/70 text-sm mb-1">This Month</h3>
+                    <h3 className="text-white/70 text-sm mb-1">Today</h3>
                     <p className="text-3xl font-bold text-white">
-                      {visitorStats.monthlyVisitors.toLocaleString()}
+                      {(visitorStats.todayVisitors || 0).toLocaleString()}
                     </p>
+                    <p className="text-xs text-white/50 mt-2">This month: {(visitorStats.monthlyVisitors || 0).toLocaleString()}</p>
                   </motion.div>
                 </div>
               )}
@@ -1568,11 +1919,12 @@ export default function AdminDashboard() {
                   <table className="w-full">
                       <thead className="bg-white/5">
                         <tr>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Time</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Timestamp</th>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">IP Address</th>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">Location</th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Page</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Page/Path</th>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">Referrer</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">User Agent</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1615,12 +1967,24 @@ export default function AdminDashboard() {
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-azure-blue text-sm hover:underline truncate max-w-xs block"
+                                  title={visitor.referrer}
                                 >
-                                  {visitor.referrer}
+                                  {visitor.referrer.length > 50 ? `${visitor.referrer.substring(0, 50)}...` : visitor.referrer}
                                 </a>
                               ) : (
                                 <span className="text-white/50 text-sm">Direct</span>
                               )}
+                            </td>
+                            <td className="px-6 py-4">
+                              <span className="text-xs text-white/60 truncate max-w-xs block" title={visitor.userAgent || 'Unknown'}>
+                                {visitor.userAgent ? (
+                                  visitor.userAgent.length > 60 
+                                    ? `${visitor.userAgent.substring(0, 60)}...` 
+                                    : visitor.userAgent
+                                ) : (
+                                  'Unknown'
+                                )}
+                              </span>
                             </td>
                           </motion.tr>
                       ))}

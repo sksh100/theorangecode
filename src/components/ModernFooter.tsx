@@ -152,7 +152,7 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                 <h3 className="text-2xl font-bold text-white tracking-tight">The Orange Code</h3>
               </div>
               <p className="text-white/70 text-sm leading-relaxed mb-8 max-w-sm">
-                Bridging minds, cultures & intelligence.
+                Bridging people, cultures and intelligence.
               </p>
               
               {/* Social Links */}
