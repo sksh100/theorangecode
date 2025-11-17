@@ -737,8 +737,8 @@ export default function AdminDashboard() {
 
       {/* Tabs */}
       <div className="border-b border-white/10 bg-primary-dark/50 backdrop-blur-sm sticky top-[73px] z-40">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex gap-1 overflow-x-auto">
+        <div className="container mx-auto px-2 sm:px-4 md:px-6">
+          <div className="flex gap-1 overflow-x-auto scrollbar-hide scroll-smooth -mx-2 px-2 sm:mx-0 sm:px-0">
             {[
               { id: 'overview', label: 'Overview', icon: BarChart3 },
               { id: 'payments', label: 'Payments', icon: CreditCard },
@@ -750,14 +750,14 @@ export default function AdminDashboard() {
             <button 
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`px-6 py-4 flex items-center gap-2 border-b-2 transition-all ${
+                className={`px-3 sm:px-4 md:px-6 py-3 sm:py-4 flex items-center gap-1.5 sm:gap-2 border-b-2 transition-all flex-shrink-0 ${
                   activeTab === tab.id
                     ? 'border-azure-blue text-azure-blue'
                     : 'border-transparent text-white/70 hover:text-white hover:border-white/20'
                 }`}
               >
-                <tab.icon className="w-4 h-4" />
-                <span className="whitespace-nowrap">{tab.label}</span>
+                <tab.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                <span className="whitespace-nowrap text-sm sm:text-base">{tab.label}</span>
               </button>
             ))}
           </div>
