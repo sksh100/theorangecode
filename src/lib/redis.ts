@@ -16,6 +16,12 @@ const createRedisClient = () => {
       zremrangebyscore: async (): Promise<number> => 0,
       incr: async (): Promise<number> => 0,
       incrbyfloat: async (): Promise<number> => 0,
+      hset: async (): Promise<number> => 0,
+      expire: async (): Promise<number> => 0,
+      pfadd: async (): Promise<number> => 0,
+      pfcount: async (): Promise<number> => 0,
+      scan: async (): Promise<[string, string[]]> => ["0", []],
+      hgetall: async (): Promise<Record<string, string> | null> => null,
     } as any;
   }
   

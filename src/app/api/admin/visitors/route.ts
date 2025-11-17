@@ -32,12 +32,37 @@ export async function GET(_req: NextRequest) {
     }
 
     const now = Date.now();
-    const activeCutoff = now - 60_000; // active in last 60 seconds
 
-    // Get recent visitors (last 500 is enough for dashboard)
-    // Note: lpush adds to front, so lrange(0, 500) gets the most recent 500
-    const recentRaw = (await redis.lrange("visitors:recent", 0, 500)) as string[];
-    const total = (await redis.get("visitors:total")) as number | null;
+    // Active now: count all visitors:active:* keys using SCAN
+    let cursor = 0;
+    let activeCount = 0;
+    do {
+      try {
+        const [nextCursor, keys] = await redis.scan(cursor, {
+          match: "visitors:active:*",
+          count: 100,
+        } as any);
+        cursor = Number(nextCursor);
+        activeCount += Array.isArray(keys) ? keys.length : 0;
+      } catch (error) {
+        console.error('Error scanning active visitors:', error);
+        break;
+      }
+    } while (cursor !== 0);
+
+    // Total visitors
+    const total = Number((await redis.get("visitors:total")) || 0);
+
+    // Unique visitors (HyperLogLog)
+    const unique = Number((await redis.pfcount("visitors:unique")) || 0);
+
+    // Today visitors (by day key)
+    const todayKey = `visitors:by-day:${new Date().toISOString().slice(0, 10)}`;
+    const today = Number((await redis.get(todayKey)) || 0);
+
+    // Get recent visitors from log (last 500 is enough for dashboard)
+    // Note: track-visitor uses "visitors:log" key
+    const recentRaw = (await redis.lrange("visitors:log", 0, 500)) as string[];
 
     // Parse JSON strings safely
     const recent = (recentRaw || []).map((v: string) => {
@@ -48,48 +73,101 @@ export async function GET(_req: NextRequest) {
       }
     }).filter(Boolean);
 
-    // Calculate active visitors from recent list (visitors in last 60 seconds)
-    // Filter and ensure time is a valid number
+    // Get active sessions from visitors:active:* keys
+    // We'll fetch a sample of active visitor data
+    let activeSessionsData: any[] = [];
+    try {
+      // Get a few active keys to populate active sessions
+      const [_, sampleKeys] = await redis.scan(0, {
+        match: "visitors:active:*",
+        count: 50,
+      } as any);
+      
+      if (Array.isArray(sampleKeys) && sampleKeys.length > 0) {
+        // Fetch hash data for sample keys
+        const activePromises = sampleKeys.slice(0, 20).map(async (key: string) => {
+          try {
+            const data = await redis.hgetall(key);
+            if (data && typeof data === 'object') {
+              return {
+                sessionId: key.replace('visitors:active:', ''),
+                page: (data as any).path || '/',
+                country: undefined, // Not stored in new format
+                city: undefined, // Not stored in new format
+                lastSeen: new Date(Number((data as any).lastSeen) * 1000).toISOString(),
+              };
+            }
+          } catch (e) {
+            // Ignore errors for individual keys
+          }
+          return null;
+        });
+        activeSessionsData = (await Promise.all(activePromises)).filter(Boolean);
+      }
+    } catch (error) {
+      console.error('Error fetching active sessions:', error);
+    }
+
+    // For backward compatibility, create active array from recent (filtered by timestamp)
+    const activeCutoff = now - 60_000; // active in last 60 seconds
     const active = recent.filter((v: any) => {
-      if (!v || typeof v.time !== 'number') return false;
-      return v.time >= activeCutoff;
+      if (!v || typeof v.timestamp !== 'number') return false;
+      return v.timestamp >= Math.floor(activeCutoff / 1000);
     });
 
     console.log('👥 Visitors API:', {
       recentCount: recent.length,
-      activeCount: active.length,
+      activeCount: activeCount,
+      total,
+      unique,
+      today,
       now,
-      activeCutoff,
-      oldestRecent: recent[recent.length - 1]?.time,
-      newestRecent: recent[0]?.time,
-      sampleActive: active[0]
     });
 
     // Calculate statistics with accurate time-based filtering
-    const oneDayAgo = now - (24 * 60 * 60 * 1000);
-    const oneWeekAgo = now - (7 * 24 * 60 * 60 * 1000);
-    const oneMonthAgo = now - (30 * 24 * 60 * 60 * 1000);
+    const oneDayAgo = Math.floor((now - (24 * 60 * 60 * 1000)) / 1000);
+    const oneWeekAgo = Math.floor((now - (7 * 24 * 60 * 60 * 1000)) / 1000);
+    const oneMonthAgo = Math.floor((now - (30 * 24 * 60 * 60 * 1000)) / 1000);
 
-    // Filter recent visitors by time periods
-    const last24HoursVisitors = recent.filter((v: any) => v.time >= oneDayAgo).length;
-    const lastWeekVisitors = recent.filter((v: any) => v.time >= oneWeekAgo).length;
-    const lastMonthVisitors = recent.filter((v: any) => v.time >= oneMonthAgo).length;
+    // Filter recent visitors by time periods (using timestamp in seconds)
+    const last24HoursVisitors = recent.filter((v: any) => v.timestamp >= oneDayAgo).length;
+    const lastWeekVisitors = recent.filter((v: any) => v.timestamp >= oneWeekAgo).length;
+    const lastMonthVisitors = recent.filter((v: any) => v.timestamp >= oneMonthAgo).length;
 
-    // Today's visitors (from midnight)
-    const startOfDay = new Date();
-    startOfDay.setHours(0, 0, 0, 0);
-    const todayCutoff = startOfDay.getTime();
-    const todayVisitors = recent.filter((v: any) => v.time >= todayCutoff).length;
+    // Today's visitors - use the today count from Redis key
+    const todayVisitors = today;
 
-    // This month's visitors (from first of month)
+    // This month's visitors - sum up all days in current month
     const firstOfMonth = new Date();
     firstOfMonth.setDate(1);
     firstOfMonth.setHours(0, 0, 0, 0);
-    const monthCutoff = firstOfMonth.getTime();
-    const monthlyVisitors = recent.filter((v: any) => v.time >= monthCutoff).length;
+    const monthStart = firstOfMonth.toISOString().slice(0, 10);
+    const todayDate = new Date().toISOString().slice(0, 10);
+    
+    let monthlyVisitors = 0;
+    try {
+      // Get all day keys for current month
+      const currentDate = new Date(firstOfMonth);
+      const monthKeys: string[] = [];
+      while (currentDate.toISOString().slice(0, 10) <= todayDate) {
+        monthKeys.push(`visitors:by-day:${currentDate.toISOString().slice(0, 10)}`);
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+      
+      // Fetch all month day counts
+      const monthCounts = await Promise.all(
+        monthKeys.map(key => redis.get(key).then(v => Number(v || 0)))
+      );
+      monthlyVisitors = monthCounts.reduce((sum, count) => sum + count, 0);
+    } catch (error) {
+      console.error('Error calculating monthly visitors:', error);
+      // Fallback to counting from recent list
+      const monthCutoff = Math.floor(firstOfMonth.getTime() / 1000);
+      monthlyVisitors = recent.filter((v: any) => v.timestamp >= monthCutoff).length;
+    }
 
-    // Get unique visitors (by IP)
-    const uniqueVisitors = new Set(recent.map((v: any) => v.ip)).size;
+    // Use unique from HyperLogLog
+    const uniqueVisitors = unique;
 
     // Calculate top countries
     const countryCounts: { [key: string]: number } = {};
@@ -117,43 +195,53 @@ export async function GET(_req: NextRequest) {
       .sort((a, b) => b.views - a.views)
       .slice(0, 10);
 
-    // Calculate daily stats (last 30 days)
+    // Calculate daily stats (last 30 days) from Redis keys
     const dailyStats = [];
     for (let i = 0; i < 30; i++) {
       const date = new Date();
       date.setDate(date.getDate() - i);
       const dateStr = date.toISOString().split('T')[0];
-      const dayStart = date.setHours(0, 0, 0, 0);
-      const dayEnd = date.setHours(23, 59, 59, 999);
+      const dayKey = `visitors:by-day:${dateStr}`;
       
-      const dayVisitors = recent.filter((v: any) => v.time >= dayStart && v.time <= dayEnd).length;
-      dailyStats.push({
-        date: dateStr,
-        visitors: dayVisitors,
-      });
+      try {
+        const dayVisitors = Number((await redis.get(dayKey)) || 0);
+        dailyStats.push({
+          date: dateStr,
+          visitors: dayVisitors,
+        });
+      } catch (error) {
+        // Fallback to 0 if key doesn't exist
+        dailyStats.push({
+          date: dateStr,
+          visitors: 0,
+        });
+      }
     }
     dailyStats.reverse();
 
-    // Format visitors for dashboard (convert time to timestamp ISO string)
+    // Format visitors for dashboard (convert timestamp to ISO string)
     const formattedRecent = recent.map((v: any) => ({
-      id: `visitor_${v.time}_${v.ip}`,
+      id: `visitor_${v.timestamp}_${v.ip}`,
       ip: v.ip,
-      userAgent: v.userAgent,
-      referrer: v.referrer,
-      page: v.path,
-      country: v.country !== 'Unknown' ? v.country : undefined,
-      city: v.city !== 'Unknown' ? v.city : undefined,
-      timestamp: new Date(v.time).toISOString(),
-      sessionId: `session_${v.time}`,
+      userAgent: v.userAgent || '',
+      referrer: v.referrer || '',
+      page: v.path || '/',
+      country: undefined, // Not stored in new format
+      city: undefined, // Not stored in new format
+      timestamp: new Date(v.timestamp * 1000).toISOString(),
+      sessionId: `session_${v.timestamp}`,
     }));
 
-    const formattedActive = active.map((v: any) => ({
-      sessionId: `session_${v.time}`,
-      page: v.path,
-      country: v.country !== 'Unknown' ? v.country : undefined,
-      city: v.city !== 'Unknown' ? v.city : undefined,
-      lastSeen: new Date(v.time).toISOString(),
-    }));
+    // Use activeSessionsData if available, otherwise fall back to active array
+    const formattedActive = activeSessionsData.length > 0 
+      ? activeSessionsData 
+      : active.map((v: any) => ({
+          sessionId: `session_${v.timestamp}`,
+          page: v.path || '/',
+          country: undefined,
+          city: undefined,
+          lastSeen: new Date(v.timestamp * 1000).toISOString(),
+        }));
 
     return NextResponse.json({
       success: true,
@@ -165,15 +253,15 @@ export async function GET(_req: NextRequest) {
         pages: topPages,
         dailyStats,
         stats: {
-          totalVisitors: total ?? 0,
+          totalVisitors: total,
           uniqueVisitors,
-          currentVisitors: active.length,
+          currentVisitors: activeCount,
           last24HoursVisitors,
           lastWeekVisitors,
           lastMonthVisitors,
-          todayVisitors,
+          todayVisitors: today,
           monthlyVisitors,
-          activeNow: active.length, // This is the key fix - active visitors from recent list
+          activeNow: activeCount, // Count from visitors:active:* keys
         },
       },
     });

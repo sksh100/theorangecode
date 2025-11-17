@@ -5,70 +5,55 @@ export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json().catch(() => ({}));
+    const { path, referrer, userAgent } = await req.json();
 
-    const now = Date.now();
-
+    // Basic visitor identity
     const ip =
+      req.ip ??
       req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-      req.headers.get("x-real-ip") ??
       "unknown";
 
-    const country = req.headers.get("x-vercel-ip-country") ?? "Unknown";
-    const city = req.headers.get("x-vercel-ip-city") ?? "Unknown";
-    const region = req.headers.get("x-vercel-ip-country-region") ?? "Unknown";
+    const now = Date.now();
+    const nowSeconds = Math.floor(now / 1000);
 
-    const userAgent = body.userAgent ?? req.headers.get("user-agent") ?? "Unknown";
-    const path = body.path ?? "/";
-    const referrer = body.referrer ?? req.headers.get("referer") ?? "Direct";
+    // Key for "active visitor" with short TTL (5 minutes)
+    const activeKey = `visitors:active:${ip}`;
 
-    const visitor = {
+    // Store as a hash or JSON, but with an expiry
+    await redis.hset(activeKey, {
       ip,
-      country,
-      city,
-      region,
-      userAgent,
-      path,
-      referrer,
-      time: now,
-    };
-
-    // Store in "recent visitors" history
-    await redis.lpush("visitors:recent", JSON.stringify(visitor));
-    await redis.ltrim("visitors:recent", 0, 200);
-
-    // Real-time "active" visitors (last 60 seconds)
-    // Upstash Redis zadd format: zadd(key, { score, member })
-    await redis.zadd("visitors:active", {
-      score: now,
-      member: JSON.stringify(visitor),
-    } as any);
-
-    // Clean up very old scores
-    const cutoff = now - 5 * 60_000; // 5 minutes ago
-    await redis.zremrangebyscore("visitors:active", 0, cutoff);
-
-    // Simple counters
-    await redis.incr("visitors:total");
-
-    console.log('✅ Visitor tracked:', {
-      ip,
-      country,
-      city,
-      path,
-      referrer: referrer.substring(0, 50),
+      path: path || "/",
+      referrer: referrer || "",
+      userAgent: userAgent || "",
+      lastSeen: nowSeconds.toString(),
     });
 
+    await redis.expire(activeKey, 60 * 5); // 5 minutes
+
+    // Log for recent visitors list (optional but nice for the table)
+    const logKey = "visitors:log";
+    await redis.lpush(
+      logKey,
+      JSON.stringify({
+        ip,
+        path: path || "/",
+        referrer: referrer || "",
+        userAgent: userAgent || "",
+        timestamp: nowSeconds,
+      }),
+    );
+
+    // Keep only the most recent 500 entries
+    await redis.ltrim(logKey, 0, 499);
+
+    // Increment some simple counters
+    await redis.incr("visitors:total");
+    await redis.pfadd("visitors:unique", ip); // HyperLogLog for unique visitors
+    await redis.incr(`visitors:by-day:${new Date().toISOString().slice(0, 10)}`);
+
     return NextResponse.json({ ok: true });
-  } catch (error: any) {
-    console.error('❌ Error tracking visitor:', error);
-    
-    // Check if Redis is configured
-    if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
-      console.error('⚠️ Upstash Redis not configured! Please set KV_REST_API_URL and KV_REST_API_TOKEN in Vercel environment variables.');
-    }
-    
-    // Return success even on error to not break the site
-    return NextResponse.json({ ok: false, error: error.message || 'Unknown error' });
+  } catch (err) {
+    console.error("[track-visitor] error", err);
+    return NextResponse.json({ ok: false }, { status: 500 });
   }
 }
