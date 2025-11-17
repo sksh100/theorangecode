@@ -8,6 +8,9 @@ type VisitorPayload = {
   ip?: string | null;
   userAgent?: string | null;
   path?: string | null;
+  referrer?: string | null;
+  country?: string | null;
+  city?: string | null;
   ts: number;
 };
 
@@ -18,11 +21,17 @@ export async function POST(req: Request) {
     const now = Date.now();
     const id = body.id ?? `anon:${now}`;
 
+    // Get IP from headers if not provided
+    const ip = body.ip ?? req.headers.get("x-forwarded-for")?.split(",")[0] ?? req.headers.get("x-real-ip") ?? null;
+
     const payload: VisitorPayload = {
       id,
-      ip: body.ip ?? null,
+      ip,
       userAgent: body.userAgent ?? null,
       path: body.path ?? null,
+      referrer: body.referrer ?? null,
+      country: body.country ?? null,
+      city: body.city ?? null,
       ts: now,
     };
 
