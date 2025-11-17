@@ -32,30 +32,13 @@ export async function GET(_req: NextRequest) {
     }
 
     const now = Date.now();
-    const cutoff = now - 60_000; // active in last 60s
+    const activeCutoff = now - 60_000; // active in last 60 seconds
 
-    // Get active visitors - use zrangebyscore for Upstash Redis
-    let activeRaw: string[] = [];
-    try {
-      // Get all active sessions within the time range
-      activeRaw = (await redis.zrange("visitors:active", cutoff, now, { byScore: true, rev: true })) as string[];
-    } catch (error) {
-      console.error('Error fetching active visitors:', error);
-      activeRaw = [];
-    }
-    
-    const recentRaw = (await redis.lrange("visitors:recent", 0, 200)) as string[];
+    // Get recent visitors (last 500 is enough for dashboard)
+    const recentRaw = (await redis.lrange("visitors:recent", 0, 500)) as string[];
     const total = (await redis.get("visitors:total")) as number | null;
 
     // Parse JSON strings safely
-    const active = (activeRaw || []).map((v: string) => {
-      try {
-        return typeof v === 'string' ? JSON.parse(v) : v;
-      } catch {
-        return null;
-      }
-    }).filter(Boolean);
-    
     const recent = (recentRaw || []).map((v: string) => {
       try {
         return typeof v === 'string' ? JSON.parse(v) : v;
@@ -63,6 +46,9 @@ export async function GET(_req: NextRequest) {
         return null;
       }
     }).filter(Boolean);
+
+    // Calculate active visitors from recent list (visitors in last 60 seconds)
+    const active = recent.filter((v: any) => v.time >= activeCutoff);
 
     // Calculate statistics with accurate time-based filtering
     const oneDayAgo = now - (24 * 60 * 60 * 1000);
@@ -74,20 +60,18 @@ export async function GET(_req: NextRequest) {
     const lastWeekVisitors = recent.filter((v: any) => v.time >= oneWeekAgo).length;
     const lastMonthVisitors = recent.filter((v: any) => v.time >= oneMonthAgo).length;
 
-    // Today's visitors
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const todayVisitors = recent.filter((v: any) => {
-      const date = new Date(v.time);
-      return date >= today;
-    }).length;
+    // Today's visitors (from midnight)
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+    const todayCutoff = startOfDay.getTime();
+    const todayVisitors = recent.filter((v: any) => v.time >= todayCutoff).length;
 
-    // Monthly visitors (current calendar month)
-    const monthlyVisitors = recent.filter((v: any) => {
-      const date = new Date(v.time);
-      const now = new Date();
-      return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
-    }).length;
+    // This month's visitors (from first of month)
+    const firstOfMonth = new Date();
+    firstOfMonth.setDate(1);
+    firstOfMonth.setHours(0, 0, 0, 0);
+    const monthCutoff = firstOfMonth.getTime();
+    const monthlyVisitors = recent.filter((v: any) => v.time >= monthCutoff).length;
 
     // Get unique visitors (by IP)
     const uniqueVisitors = new Set(recent.map((v: any) => v.ip)).size;
@@ -170,7 +154,7 @@ export async function GET(_req: NextRequest) {
           lastMonthVisitors,
           todayVisitors,
           monthlyVisitors,
-          activeNow: active.length,
+          activeNow: active.length, // This is the key fix - active visitors from recent list
         },
       },
     });
