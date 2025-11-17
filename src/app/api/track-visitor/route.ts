@@ -1,59 +1,29 @@
-import { NextRequest, NextResponse } from "next/server";
-
+import { NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
 
-const redis = new Redis({
-  url: process.env.KV_REST_API_URL!,
-  token: process.env.KV_REST_API_TOKEN!,
-});
+const redis = Redis.fromEnv();
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   try {
-    const ip =
-      req.ip ??
-      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-      "unknown";
+    const data = await req.json();
 
-    const userAgent = req.headers.get("user-agent") || "unknown";
+    const visitor = {
+      ip: req.headers.get("x-forwarded-for")?.split(",")[0] ?? "unknown",
+      ua: req.headers.get("user-agent") ?? "unknown",
+      ts: Date.now(),
+      path: data.path || "/",
+    };
 
-    const timestamp = Date.now();
+    // Save to list of recent visitors
+    await redis.lpush("visitors", JSON.stringify(visitor));
+    await redis.ltrim("visitors", 0, 200);  // keep last 200 visitors
 
-    // Key structure:
-    // visitors:active:<ip>
-    // visitors:log  (list)
-    // visitors:total (number)
-    // visitors:unique (hyperloglog)
-    // visitors:today:YYYY-MM-DD (number)
-
-    // 1. Mark active visitor (TTL 5 min)
-    const activeKey = `visitors:active:${ip}`;
-
-    await redis.hset(activeKey, {
-      ip,
-      userAgent,
-      lastSeen: timestamp,
-    });
-
-    await redis.expire(activeKey, 300);
-
-    // 2. Add to recent visitor log
-    await redis.lpush(
-      "visitors:log",
-      JSON.stringify({ ip, timestamp, userAgent })
-    );
-
-    await redis.ltrim("visitors:log", 0, 499);
-
-    // 3. Increment counters
-    await redis.incr("visitors:total");
-    await redis.pfadd("visitors:unique", ip);
-
-    const today = new Date().toISOString().slice(0, 10);
-    await redis.incr(`visitors:today:${today}`);
+    // Mark as active for live visitors
+    await redis.set(`active:${visitor.ip}`, JSON.stringify(visitor), { ex: 60 });
 
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("track-visitor error:", err);
-    return NextResponse.json({ ok: false }, { status: 500 });
+    return NextResponse.json({ ok: false, error: String(err) }, { status: 500 });
   }
 }
