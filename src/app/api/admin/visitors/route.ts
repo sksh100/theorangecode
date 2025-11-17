@@ -35,6 +35,7 @@ export async function GET(_req: NextRequest) {
     const activeCutoff = now - 60_000; // active in last 60 seconds
 
     // Get recent visitors (last 500 is enough for dashboard)
+    // Note: lpush adds to front, so lrange(0, 500) gets the most recent 500
     const recentRaw = (await redis.lrange("visitors:recent", 0, 500)) as string[];
     const total = (await redis.get("visitors:total")) as number | null;
 
@@ -48,7 +49,21 @@ export async function GET(_req: NextRequest) {
     }).filter(Boolean);
 
     // Calculate active visitors from recent list (visitors in last 60 seconds)
-    const active = recent.filter((v: any) => v.time >= activeCutoff);
+    // Filter and ensure time is a valid number
+    const active = recent.filter((v: any) => {
+      if (!v || typeof v.time !== 'number') return false;
+      return v.time >= activeCutoff;
+    });
+
+    console.log('👥 Visitors API:', {
+      recentCount: recent.length,
+      activeCount: active.length,
+      now,
+      activeCutoff,
+      oldestRecent: recent[recent.length - 1]?.time,
+      newestRecent: recent[0]?.time,
+      sampleActive: active[0]
+    });
 
     // Calculate statistics with accurate time-based filtering
     const oneDayAgo = now - (24 * 60 * 60 * 1000);

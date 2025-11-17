@@ -70,13 +70,28 @@ export async function POST(req: NextRequest) {
       await redis.ltrim("payments:list", 0, 100);
 
       // Update revenue and count - ensure they're numbers
-      const currentRevenue = (await redis.get("payments:total_revenue")) as number || 0;
-      const revenue = (typeof currentRevenue === 'number' ? currentRevenue : parseFloat(String(currentRevenue || 0))) + amount;
+      const currentRevenueRaw = await redis.get("payments:total_revenue");
+      const currentRevenue = typeof currentRevenueRaw === 'string' 
+        ? parseFloat(currentRevenueRaw) || 0 
+        : (currentRevenueRaw as number) || 0;
+      const revenue = currentRevenue + amount;
       await redis.set("payments:total_revenue", revenue.toString());
       
-      const currentCount = (await redis.get("payments:count")) as number || 0;
-      const newCount = (typeof currentCount === 'number' ? currentCount : parseInt(String(currentCount || 0), 10)) + 1;
+      const currentCountRaw = await redis.get("payments:count");
+      const currentCount = typeof currentCountRaw === 'string' 
+        ? parseInt(currentCountRaw, 10) || 0 
+        : (currentCountRaw as number) || 0;
+      const newCount = currentCount + 1;
       await redis.set("payments:count", newCount.toString());
+      
+      console.log('💰 Payment stats updated:', {
+        previousRevenue: currentRevenue,
+        newRevenue: revenue,
+        previousCount: currentCount,
+        newCount,
+        amount,
+        currency
+      });
 
       // You can also push to "events" for notification
       await redis.lpush("events", JSON.stringify({ type: "payment", ...payment }));

@@ -18,7 +18,7 @@ export async function GET(_req: NextRequest) {
       });
     }
 
-    const [listRaw, totalRevenue, count] = await Promise.all([
+    const [listRaw, totalRevenueRaw, countRaw] = await Promise.all([
       redis.lrange("payments:list", 0, 50),
       redis.get("payments:total_revenue"),
       redis.get("payments:count"),
@@ -33,6 +33,15 @@ export async function GET(_req: NextRequest) {
       }
     }).filter(Boolean);
 
+    // Parse revenue and count - handle both string and number types
+    const totalRevenue = typeof totalRevenueRaw === 'string' 
+      ? parseFloat(totalRevenueRaw) || 0 
+      : (totalRevenueRaw as number) || 0;
+    
+    const count = typeof countRaw === 'string' 
+      ? parseInt(countRaw, 10) || 0 
+      : (countRaw as number) || 0;
+
     // Format payments for dashboard (convert time to ISO string, add customerName field)
     const formattedPayments = payments.map((p: any) => ({
       id: p.id,
@@ -45,12 +54,19 @@ export async function GET(_req: NextRequest) {
       description: `Payment - ${p.currency} ${p.amount}`,
     }));
 
+    console.log('📊 Payments API response:', {
+      paymentsCount: formattedPayments.length,
+      totalRevenue,
+      count,
+      samplePayment: formattedPayments[0]
+    });
+
     return NextResponse.json({
       success: true,
       payments: formattedPayments,
       stats: {
-        totalRevenue: totalRevenue ?? 0,
-        count: count ?? 0,
+        totalRevenue,
+        count,
       },
     });
   } catch (error: any) {
