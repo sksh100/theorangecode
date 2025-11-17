@@ -156,7 +156,7 @@ export async function GET(_req: NextRequest) {
       
       // Fetch all month day counts
       const monthCounts = await Promise.all(
-        monthKeys.map(key => redis.get(key).then(v => Number(v || 0)))
+        monthKeys.map(key => redis.get(key).then((v: any) => Number(v || 0)))
       );
       monthlyVisitors = monthCounts.reduce((sum, count) => sum + count, 0);
     } catch (error) {
