@@ -49,19 +49,24 @@ export default function ComingSoonPage() {
             </motion.p>
 
             {/* Mobile-visible launch date (matches desktop version exactly) */}
-            <div className="sm:hidden mt-3 mb-4 flex justify-center relative z-20">
-              <div className="event-info inline-flex flex-col items-center gap-2 p-3 px-4 bg-bright-blue/10 border border-light-blue/30 rounded-xl backdrop-blur-[10px]">
+            <motion.div 
+              className="sm:hidden mt-4 mb-6 flex justify-center relative z-30"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.1 }}
+            >
+              <div className="event-info inline-flex flex-col items-center gap-2 p-4 px-5 bg-bright-blue/10 border border-light-blue/30 rounded-xl backdrop-blur-[10px]">
                 <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-azure-blue" />
+                  <Clock className="w-5 h-5 text-azure-blue" />
                   <span className="date-label font-sofia text-xs text-white/70 uppercase tracking-wider font-medium">
                     Launch Date
                   </span>
                 </div>
-                <span className="date-value font-sofia text-xl font-bold text-gradient-primary">
+                <span className="date-value font-sofia text-2xl font-bold text-gradient-primary">
                   November 28, 2025
                 </span>
               </div>
-            </div>
+            </motion.div>
             
             <motion.div 
               className="countdown-section mt-6 sm:mt-6 md:mt-8 hidden sm:flex justify-center sm:justify-end"
