@@ -2,19 +2,37 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { redis } from "@/lib/redis";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-06-20",
-});
+// Initialize Stripe only if secret key is available
+const getStripe = () => {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return null;
+  }
+  return new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2025-10-29.clover",
+  });
+};
 
 export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
   try {
+    const stripe = getStripe();
+    
+    if (!stripe) {
+      console.error("Stripe not configured - missing STRIPE_SECRET_KEY");
+      return new NextResponse("Stripe not configured", { status: 500 });
+    }
+
     const body = await req.text();
     const sig = req.headers.get("stripe-signature");
 
     if (!sig) {
       return new NextResponse("Missing signature", { status: 400 });
+    }
+
+    if (!process.env.STRIPE_WEBHOOK_SECRET) {
+      console.error("Stripe webhook secret not configured");
+      return new NextResponse("Webhook secret not configured", { status: 500 });
     }
 
     let event: Stripe.Event;
@@ -23,7 +41,7 @@ export async function POST(req: NextRequest) {
       event = stripe.webhooks.constructEvent(
         body,
         sig,
-        process.env.STRIPE_WEBHOOK_SECRET!
+        process.env.STRIPE_WEBHOOK_SECRET
       );
     } catch (err: any) {
       console.error("Stripe webhook error", err.message);

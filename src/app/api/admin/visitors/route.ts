@@ -34,17 +34,14 @@ export async function GET(_req: NextRequest) {
     const now = Date.now();
     const cutoff = now - 60_000; // active in last 60s
 
-    const [activeRaw, recentRaw, total] = await Promise.all([
-      redis.zrange<string>("visitors:active", cutoff, now, {
-        byScore: true,
-        rev: true,
-      }),
-      redis.lrange<string>("visitors:recent", 0, 200),
-      redis.get<number>("visitors:total"),
-    ]);
+    // Get active visitors - use zrange with byScore option
+    const activeRaw = await redis.zrange("visitors:active", cutoff, now, { byScore: true, rev: true }) as unknown as string[];
+    const recentRaw = await redis.lrange("visitors:recent", 0, 200) as unknown as string[];
+    const total = await redis.get("visitors:total") as unknown as number | null;
 
-    const active = activeRaw.map((v) => JSON.parse(v));
-    const recent = recentRaw.map((v) => JSON.parse(v));
+    // Parse JSON strings
+    const active = (activeRaw || []).map((v) => JSON.parse(v));
+    const recent = (recentRaw || []).map((v) => JSON.parse(v));
 
     // Calculate statistics with accurate time-based filtering
     const oneDayAgo = now - (24 * 60 * 60 * 1000);

@@ -19,9 +19,9 @@ export async function GET(_req: NextRequest) {
     }
 
     const [listRaw, totalRevenue, count] = await Promise.all([
-      redis.lrange<string>("payments:list", 0, 50),
-      redis.get<number>("payments:total_revenue"),
-      redis.get<number>("payments:count"),
+      redis.lrange("payments:list", 0, 50),
+      redis.get("payments:total_revenue"),
+      redis.get("payments:count"),
     ]);
 
     const payments = listRaw.map((p) => JSON.parse(p));
