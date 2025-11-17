@@ -205,7 +205,7 @@ export default function RootLayout({
         
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#0f172a" />
+        <meta name="theme-color" content="#0A2244" />
       </head>
       <body style={{ fontFamily: "'Inter', 'Glacial Indifference', sans-serif" }} className="antialiased">
         <VisitorTracker />

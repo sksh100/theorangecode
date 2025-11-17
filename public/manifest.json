@@ -3,8 +3,8 @@
   "short_name": "TOC Admin",
   "start_url": "/admin/mobile",
   "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#f97316",
+  "background_color": "#0A2244",
+  "theme_color": "#0A2244",
   "icons": [
     {
       "src": "/toc-app-icon.png",
