@@ -655,8 +655,10 @@ export default function AdminDashboard() {
             }
           }}
           onSubscribersUpdate={(data) => {
-            if (data.success !== false && data.data) {
-              const subscribersList = data.data.subscribers || []
+            // Only update if we have valid data structure
+            if (data.success !== false && (data.data || data.subscribers)) {
+              const subscribersList = data.data?.subscribers || data.subscribers || []
+              console.log(`✅ AdminLiveUpdates: Updating ${subscribersList.length} subscribers`)
               setSubscribers(subscribersList)
             }
           }}
