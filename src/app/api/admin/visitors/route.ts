@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 
 import { Redis } from "@upstash/redis";
 
-const redis = Redis.fromEnv();
+const redis = new Redis({
+  url: process.env.KV_REST_API_URL!,
+  token: process.env.KV_REST_API_TOKEN!,
+});
 
 export async function GET() {
   try {
@@ -11,14 +14,12 @@ export async function GET() {
     const activeVisitors: any[] = [];
 
     for (const key of keys) {
-      // Tell TypeScript this is a string value stored in Redis
       const data = await redis.get<string>(key);
       if (data) {
         activeVisitors.push(JSON.parse(data));
       }
     }
 
-    // Same here: list of JSON strings
     const recentVisitorsRaw = await redis.lrange<string>("visitors", 0, 50);
 
     const recentVisitors = recentVisitorsRaw.map((v) => JSON.parse(v));

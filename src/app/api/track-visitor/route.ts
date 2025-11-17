@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
+
 import { Redis } from "@upstash/redis";
 
-const redis = Redis.fromEnv();
+const redis = new Redis({
+  url: process.env.KV_REST_API_URL!,
+  token: process.env.KV_REST_API_TOKEN!,
+});
 
 export async function POST(req: Request) {
   try {
@@ -14,11 +18,9 @@ export async function POST(req: Request) {
       path: data.path || "/",
     };
 
-    // Save to list of recent visitors
     await redis.lpush("visitors", JSON.stringify(visitor));
-    await redis.ltrim("visitors", 0, 200);  // keep last 200 visitors
+    await redis.ltrim("visitors", 0, 200);
 
-    // Mark as active for live visitors
     await redis.set(`active:${visitor.ip}`, JSON.stringify(visitor), { ex: 60 });
 
     return NextResponse.json({ ok: true });
