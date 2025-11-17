@@ -5,28 +5,29 @@ import { useEffect, useRef } from "react";
 type VisitorsResponse = {
   success?: boolean;
   data?: {
-    visitors?: any[];
-    activeSessions?: any[];
     stats?: {
       total?: number;
       totalVisitors?: number;
       unique?: number;
       uniqueVisitors?: number;
       activeNow?: number;
-      currentVisitors?: number;
       today?: number;
       todayVisitors?: number;
       thisMonth?: number;
       monthlyVisitors?: number;
+      currentVisitors?: number;
       last24HoursVisitors?: number;
       lastWeekVisitors?: number;
       lastMonthVisitors?: number;
-      [key: string]: any;
     };
     countries?: Array<{ country: string; count: number }>;
     countriesRecord?: Record<string, number>;
     pages?: any[];
     dailyStats?: any[];
+    active?: any[];
+    activeSessions?: any[];
+    recent?: any[];
+    visitors?: any[];
     [key: string]: any;
   };
   stats?: {
@@ -36,6 +37,10 @@ type VisitorsResponse = {
     today?: number;
     thisMonth?: number;
   };
+  countries?: Record<string, number>;
+  active?: any[];
+  recent?: any[];
+  [key: string]: any;
 };
 
 type PaymentsResponse = {
@@ -79,17 +84,18 @@ export function AdminLiveUpdates({
   const prevActiveNow = useRef(0);
   const prevPaymentCount = useRef(0);
   const prevSubscriberCount = useRef(0);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const dingSound = useRef<HTMLAudioElement | null>(null);
+  const cashSound = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Prepare sound
-    audioRef.current = new Audio("/Ding.mp3");
-    
-    // Ask for notification permission
-    if (typeof window !== "undefined" && "Notification" in window) {
-      if (Notification.permission === "default") {
-        Notification.requestPermission().catch(() => {});
-      }
+    // Load sounds
+    dingSound.current = new Audio("/Ding.mp3");
+    cashSound.current = new Audio("/Cash.mp3");
+
+    // Ask for push notification permission
+    if ("Notification" in window && Notification.permission === "default") {
+      Notification.requestPermission().catch(() => {});
     }
   }, []);
 
@@ -108,55 +114,51 @@ export function AdminLiveUpdates({
         const payments: PaymentsResponse = await payRes.json();
         const subscribers: SubscribersResponse = await subRes.json();
 
+        // send data to UI
         onVisitorsUpdate?.(visitors);
         onPaymentsUpdate?.(payments);
         onSubscribersUpdate?.(subscribers);
 
-        // Extract stats from different response formats
-        const visitorTotal = visitors.data?.stats?.total ?? visitors.data?.stats?.totalVisitors ?? visitors.stats?.total ?? 0;
+        // extract stats - handle both response formats
+        const visitorTotal = visitors.data?.stats?.totalVisitors ?? visitors.data?.stats?.total ?? visitors.stats?.total ?? 0;
         const activeNow = visitors.data?.stats?.activeNow ?? visitors.stats?.activeNow ?? 0;
         const paymentCount = payments.stats?.count ?? 0;
         const subscriberCount = subscribers.data?.stats?.totalSubscribers ?? subscribers.data?.stats?.count ?? subscribers.stats?.count ?? 0;
 
         const newVisitor = visitorTotal > prevVisitorTotal.current;
-        const moreActiveUsers = activeNow > prevActiveNow.current;
+        const newActiveUser = activeNow > prevActiveNow.current;
         const newPayment = paymentCount > prevPaymentCount.current;
         const newSubscriber = subscriberCount > prevSubscriberCount.current;
 
-        if (newVisitor || moreActiveUsers || newPayment || newSubscriber) {
-          // Play sound
-          if (audioRef.current) {
-            audioRef.current.play().catch(() => {});
-          }
+        // --- Play Sounds ---
+        if (newPayment) {
+          cashSound.current?.play().catch(() => {});
+        } else if (newVisitor || newActiveUser || newSubscriber) {
+          dingSound.current?.play().catch(() => {});
+        }
 
-          // Browser notification
-          if (
-            typeof window !== "undefined" &&
-            "Notification" in window &&
-            Notification.permission === "granted"
-          ) {
-            let title = "Orange Code dashboard";
-            let body = "";
-
-            if (newPayment) {
-              title = "New payment";
-              body = `Total payments: ${paymentCount}`;
-            } else if (newSubscriber) {
-              title = "New subscriber";
-              body = `Total subscribers: ${subscriberCount}`;
-            } else if (newVisitor) {
-              title = "New visitor";
-              body = `Total visitors: ${visitorTotal}`;
-            } else if (moreActiveUsers) {
-              title = "More active users";
-              body = `Active now: ${activeNow}`;
-            }
-
-            // Fire notification
-            new Notification(title, { body });
+        // --- Browser Notification ---
+        if ("Notification" in window && Notification.permission === "granted") {
+          if (newPayment) {
+            new Notification("💸 New Payment Received!", {
+              body: `Payments total: ${paymentCount}`,
+            });
+          } else if (newSubscriber) {
+            new Notification("🧡 New Subscriber!", {
+              body: `Total subscribers: ${subscriberCount}`,
+            });
+          } else if (newVisitor) {
+            new Notification("👀 New Visitor!", {
+              body: `Visitors: ${visitorTotal}`,
+            });
+          } else if (newActiveUser) {
+            new Notification("🔥 New Active User!", {
+              body: `Active now: ${activeNow}`,
+            });
           }
         }
 
+        // update previous counts
         prevVisitorTotal.current = visitorTotal;
         prevActiveNow.current = activeNow;
         prevPaymentCount.current = paymentCount;
@@ -171,12 +173,9 @@ export function AdminLiveUpdates({
     tick();
 
     return () => {
-      if (timer) {
-        window.clearTimeout(timer);
-      }
+      if (timer) clearTimeout(timer);
     };
   }, [pollMs, onVisitorsUpdate, onPaymentsUpdate, onSubscribersUpdate]);
 
   return null;
 }
-
