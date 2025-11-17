@@ -83,7 +83,7 @@ export function AdminLiveUpdates({
 
   useEffect(() => {
     // Prepare sound
-    audioRef.current = new Audio("/ding.mp3");
+    audioRef.current = new Audio("/Ding.mp3");
     
     // Ask for notification permission
     if (typeof window !== "undefined" && "Notification" in window) {
