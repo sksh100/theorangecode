@@ -1,31 +1,46 @@
+// src/app/api/track-visitor/route.ts
+
 import { NextResponse } from "next/server";
+import { redis } from "@/lib/redis";
 
-import { Redis } from "@upstash/redis";
-
-const redis = new Redis({
-  url: process.env.KV_REST_API_URL!,
-  token: process.env.KV_REST_API_TOKEN!,
-});
+type VisitorPayload = {
+  id: string;        // some unique id from client
+  ip?: string | null;
+  userAgent?: string | null;
+  path?: string | null;
+  ts: number;
+};
 
 export async function POST(req: Request) {
   try {
-    const data = await req.json();
+    const body = (await req.json()) as Partial<VisitorPayload>;
 
-    const visitor = {
-      ip: req.headers.get("x-forwarded-for")?.split(",")[0] ?? "unknown",
-      ua: req.headers.get("user-agent") ?? "unknown",
-      ts: Date.now(),
-      path: data.path || "/",
+    const now = Date.now();
+    const id = body.id ?? `anon:${now}`;
+
+    const payload: VisitorPayload = {
+      id,
+      ip: body.ip ?? null,
+      userAgent: body.userAgent ?? null,
+      path: body.path ?? null,
+      ts: now,
     };
 
-    await redis.lpush("visitors", JSON.stringify(visitor));
-    await redis.ltrim("visitors", 0, 200);
+    const key = `active:${id}`;
 
-    await redis.set(`active:${visitor.ip}`, JSON.stringify(visitor), { ex: 60 });
+    // store active visitor with TTL 60 seconds
+    await redis.set(key, JSON.stringify(payload), { ex: 60 });
+
+    // push into recent visitors list, keep only last 200
+    await redis.lpush("visitors", JSON.stringify(payload));
+    await redis.ltrim("visitors", 0, 199);
 
     return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error("track-visitor error:", err);
-    return NextResponse.json({ ok: false, error: String(err) }, { status: 500 });
+  } catch (error: any) {
+    console.error("track-visitor error", error);
+    return NextResponse.json(
+      { ok: false, error: String(error?.message ?? error) },
+      { status: 500 }
+    );
   }
 }

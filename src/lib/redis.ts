@@ -1,35 +1,12 @@
+// src/lib/redis.ts
+
 import { Redis } from "@upstash/redis";
 
-// Create a conditional Redis client that handles missing env vars gracefully
-const createRedisClient = () => {
-  if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
-    // Return a mock client that doesn't throw errors and supports generics
-    return {
-      get: async <T = any>(): Promise<T | null> => null,
-      set: async (_key: string, _value: string): Promise<string> => "OK",
-      lpush: async (): Promise<number> => 0,
-      ltrim: async (): Promise<string> => "OK",
-      lrange: async <T = string>(): Promise<T[]> => [],
-      lrem: async (): Promise<number> => 0,
-      zadd: async (): Promise<number> => 0,
-      zrange: async <T = string>(): Promise<T[]> => [],
-      zremrangebyscore: async (): Promise<number> => 0,
-      incr: async (): Promise<number> => 0,
-      incrbyfloat: async (): Promise<number> => 0,
-      hset: async (): Promise<number> => 0,
-      expire: async (): Promise<number> => 0,
-      pfadd: async (): Promise<number> => 0,
-      pfcount: async (): Promise<number> => 0,
-      scan: async (): Promise<[string, string[]]> => ["0", []],
-      hgetall: async (): Promise<Record<string, string> | null> => null,
-    } as any;
-  }
-  
-  return new Redis({
-    url: process.env.KV_REST_API_URL,
-    token: process.env.KV_REST_API_TOKEN,
-  });
-};
+if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+  throw new Error("Missing UPSTASH_REDIS_REST_URL or UPSTASH_REDIS_REST_TOKEN");
+}
 
-export const redis = createRedisClient();
-
+export const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});

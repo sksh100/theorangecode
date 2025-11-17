@@ -1,38 +1,50 @@
+// src/app/api/admin/visitors/route.ts
+
 import { NextResponse } from "next/server";
+import { redis } from "@/lib/redis";
 
-import { Redis } from "@upstash/redis";
-
-const redis = new Redis({
-  url: process.env.KV_REST_API_URL!,
-  token: process.env.KV_REST_API_TOKEN!,
-});
+type VisitorPayload = {
+  id: string;
+  ip?: string | null;
+  userAgent?: string | null;
+  path?: string | null;
+  ts: number;
+};
 
 export async function GET() {
   try {
+    // active visitors
     const keys = await redis.keys("active:*");
-
-    const activeVisitors: any[] = [];
+    const activeVisitors: VisitorPayload[] = [];
 
     for (const key of keys) {
       const data = await redis.get<string>(key);
       if (data) {
-        activeVisitors.push(JSON.parse(data));
+        try {
+          activeVisitors.push(JSON.parse(data) as VisitorPayload);
+        } catch {
+          // ignore parse errors
+        }
       }
     }
 
-    const recentVisitorsRaw = await redis.lrange<string>("visitors", 0, 50);
+    // recent visitors
+    const recentRaw = (await redis.lrange("visitors", 0, 50)) as string[];
+    const recentVisitors: VisitorPayload[] = [];
 
-    const recentVisitors = recentVisitorsRaw.map((v) => JSON.parse(v));
+    for (const item of recentRaw ?? []) {
+      try {
+        recentVisitors.push(JSON.parse(item) as VisitorPayload);
+      } catch {
+        // ignore
+      }
+    }
 
-    return NextResponse.json({
-      ok: true,
-      activeVisitors,
-      recentVisitors,
-    });
-  } catch (err) {
-    console.error("admin visitors error:", err);
+    return NextResponse.json({ ok: true, activeVisitors, recentVisitors });
+  } catch (error: any) {
+    console.error("admin/visitors error", error);
     return NextResponse.json(
-      { ok: false, error: String(err) },
+      { ok: false, error: String(error?.message ?? error) },
       { status: 500 }
     );
   }
