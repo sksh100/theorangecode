@@ -1,11 +1,11 @@
 {
   "name": "The Orange Code Admin",
   "short_name": "TOC Admin",
-  "start_url": "/admin/mobile?v=2",
+  "start_url": "/admin/mobile?v=3",
   "display": "standalone",
   "background_color": "#0A2244",
   "theme_color": "#0A2244",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "icons": [
     {
       "src": "/toc-app-1.png",

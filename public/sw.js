@@ -1,5 +1,5 @@
 // Service Worker Version - Update this to force service worker refresh
-const SW_VERSION = '2.0.0';
+const SW_VERSION = '3.0.0';
 
 // Force service worker to update immediately
 self.addEventListener('install', event => {
