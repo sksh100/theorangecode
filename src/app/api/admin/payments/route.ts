@@ -24,7 +24,14 @@ export async function GET(_req: NextRequest) {
       redis.get("payments:count"),
     ]);
 
-    const payments = listRaw.map((p) => JSON.parse(p));
+    // Parse payments safely
+    const payments = (listRaw || []).map((p) => {
+      try {
+        return typeof p === 'string' ? JSON.parse(p) : p;
+      } catch {
+        return null;
+      }
+    }).filter(Boolean);
 
     // Format payments for dashboard (convert time to ISO string, add customerName field)
     const formattedPayments = payments.map((p: any) => ({

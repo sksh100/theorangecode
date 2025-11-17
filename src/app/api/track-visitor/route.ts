@@ -38,10 +38,11 @@ export async function POST(req: NextRequest) {
     await redis.ltrim("visitors:recent", 0, 200);
 
     // Real-time "active" visitors (last 60 seconds)
+    // Upstash Redis zadd format: zadd(key, { score, member })
     await redis.zadd("visitors:active", {
       score: now,
       member: JSON.stringify(visitor),
-    });
+    } as any);
 
     // Clean up very old scores
     const cutoff = now - 5 * 60_000; // 5 minutes ago

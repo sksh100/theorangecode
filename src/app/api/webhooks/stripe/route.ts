@@ -64,11 +64,18 @@ export async function POST(req: NextRequest) {
         status: session.payment_status,
       };
 
+      // Store payment in Redis list
       await redis.lpush("payments:list", JSON.stringify(payment));
       await redis.ltrim("payments:list", 0, 100);
 
-      await redis.incrbyfloat("payments:total_revenue", amount);
-      await redis.incr("payments:count");
+      // Update revenue and count - ensure they're numbers
+      const currentRevenue = (await redis.get("payments:total_revenue")) as number || 0;
+      const revenue = (typeof currentRevenue === 'number' ? currentRevenue : parseFloat(String(currentRevenue || 0))) + amount;
+      await redis.set("payments:total_revenue", revenue.toString());
+      
+      const currentCount = (await redis.get("payments:count")) as number || 0;
+      const newCount = (typeof currentCount === 'number' ? currentCount : parseInt(String(currentCount || 0), 10)) + 1;
+      await redis.set("payments:count", newCount.toString());
 
       // You can also push to "events" for notification
       await redis.lpush("events", JSON.stringify({ type: "payment", ...payment }));

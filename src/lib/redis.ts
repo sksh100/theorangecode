@@ -6,7 +6,7 @@ const createRedisClient = () => {
     // Return a mock client that doesn't throw errors and supports generics
     return {
       get: async <T = any>(): Promise<T | null> => null,
-      set: async (): Promise<string> => "OK",
+      set: async (_key: string, _value: string): Promise<string> => "OK",
       lpush: async (): Promise<number> => 0,
       ltrim: async (): Promise<string> => "OK",
       lrange: async <T = string>(): Promise<T[]> => [],

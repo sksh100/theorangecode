@@ -34,14 +34,35 @@ export async function GET(_req: NextRequest) {
     const now = Date.now();
     const cutoff = now - 60_000; // active in last 60s
 
-    // Get active visitors - use zrange with byScore option
-    const activeRaw = await redis.zrange("visitors:active", cutoff, now, { byScore: true, rev: true }) as unknown as string[];
-    const recentRaw = await redis.lrange("visitors:recent", 0, 200) as unknown as string[];
-    const total = await redis.get("visitors:total") as unknown as number | null;
+    // Get active visitors - use zrangebyscore for Upstash Redis
+    let activeRaw: string[] = [];
+    try {
+      // Get all active sessions within the time range
+      activeRaw = (await redis.zrange("visitors:active", cutoff, now, { byScore: true, rev: true })) as string[];
+    } catch (error) {
+      console.error('Error fetching active visitors:', error);
+      activeRaw = [];
+    }
+    
+    const recentRaw = (await redis.lrange("visitors:recent", 0, 200)) as string[];
+    const total = (await redis.get("visitors:total")) as number | null;
 
-    // Parse JSON strings
-    const active = (activeRaw || []).map((v) => JSON.parse(v));
-    const recent = (recentRaw || []).map((v) => JSON.parse(v));
+    // Parse JSON strings safely
+    const active = (activeRaw || []).map((v) => {
+      try {
+        return typeof v === 'string' ? JSON.parse(v) : v;
+      } catch {
+        return null;
+      }
+    }).filter(Boolean);
+    
+    const recent = (recentRaw || []).map((v) => {
+      try {
+        return typeof v === 'string' ? JSON.parse(v) : v;
+      } catch {
+        return null;
+      }
+    }).filter(Boolean);
 
     // Calculate statistics with accurate time-based filtering
     const oneDayAgo = now - (24 * 60 * 60 * 1000);
