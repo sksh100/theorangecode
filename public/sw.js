@@ -10,8 +10,8 @@ self.addEventListener("push", event => {
   const title = data.title || "Orange Code";
   const options = {
     body: data.body || "",
-    icon: "/icon-192.png",
-    badge: "/icon-192.png",
+    icon: "/toc-app-icon.png",
+    badge: "/toc-app-icon.png",
     data: data.data || {}
   };
   event.waitUntil(self.registration.showNotification(title, options));
