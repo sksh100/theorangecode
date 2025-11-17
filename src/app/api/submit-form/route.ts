@@ -246,8 +246,8 @@ export async function POST(request: NextRequest) {
       
       // Send push notification for new subscriber
       await sendPushToAll({
-        title: "🧡 New Subscriber!",
-        body: cleanEmail ? `New subscriber: ${cleanEmail}` : "You have a new subscriber",
+        title: "New subscriber",
+        body: cleanEmail ? `New subscriber: ${cleanEmail}` : "Someone just subscribed",
         url: "/admin/mobile"
       }).catch(err => {
         console.error('Push notification error:', err);

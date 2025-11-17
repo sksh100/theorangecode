@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { AdminLiveUpdates } from "@/components/AdminLiveUpdates";
+import { PushRegistration } from "@/components/PushRegistration";
 
 type VisitorsStats = {
   total?: number;
@@ -24,9 +26,15 @@ export default function MobileAdminPage() {
   const [visitors, setVisitors] = useState<VisitorsStats | null>(null);
   const [payments, setPayments] = useState<PaymentsStats | null>(null);
   const [subscribers, setSubscribers] = useState<SubscribersStats | null>(null);
+  const router = useRouter();
+
+  function openTab(tab: "visitors" | "payments" | "subscribers") {
+    router.push(`/admin?tab=${tab}`);
+  }
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 px-4 py-5 flex flex-col gap-4">
+      <PushRegistration />
       <AdminLiveUpdates
         pollMs={5000}
         onVisitorsUpdate={data => {
@@ -68,18 +76,22 @@ export default function MobileAdminPage() {
           label="Active now"
           value={visitors?.activeNow ?? 0}
           highlight
+          onClick={() => openTab("visitors")}
         />
         <StatCard
           label="Today visitors"
           value={visitors?.today ?? 0}
+          onClick={() => openTab("visitors")}
         />
         <StatCard
           label="Subscribers"
           value={subscribers?.count ?? 0}
+          onClick={() => openTab("subscribers")}
         />
         <StatCard
           label="Payments"
           value={payments?.count ?? 0}
+          onClick={() => openTab("payments")}
         />
       </section>
 
@@ -87,15 +99,18 @@ export default function MobileAdminPage() {
         <StatCard
           label="Total visitors"
           value={visitors?.total ?? 0}
+          onClick={() => openTab("visitors")}
         />
         <StatCard
           label="Unique visitors"
           value={visitors?.unique ?? 0}
+          onClick={() => openTab("visitors")}
         />
         <StatCard
           label="Total revenue"
           value={payments ? (payments.totalRevenue ?? 0).toFixed(2) : "0.00"}
           prefix="AED "
+          onClick={() => openTab("payments")}
         />
       </section>
 
@@ -106,25 +121,39 @@ export default function MobileAdminPage() {
   );
 }
 
-function StatCard(props: {
+type StatCardProps = {
   label: string;
   value: string | number;
   prefix?: string;
   highlight?: boolean;
-}) {
+  onClick?: () => void;
+};
+
+function StatCard({ label, value, prefix, highlight, onClick }: StatCardProps) {
+  const clickable = Boolean(onClick);
+
+  const baseClasses =
+    "rounded-2xl px-3 py-3 flex flex-col justify-center border transition transform";
+
+  const variantClasses = highlight
+    ? "bg-emerald-500/20 border-emerald-500/40"
+    : "bg-slate-800/60 border-slate-700/60";
+
+  const interactiveClasses = clickable
+    ? "cursor-pointer active:scale-[0.97] hover:border-sky-400/60"
+    : "";
+
   return (
     <div
-      className={[
-        "rounded-2xl px-3 py-3 flex flex-col justify-center",
-        props.highlight ? "bg-emerald-500/20 border border-emerald-500/40" : "bg-slate-800/60 border border-slate-700/60"
-      ].join(" ")}
+      className={`${baseClasses} ${variantClasses} ${interactiveClasses}`}
+      onClick={onClick}
     >
       <span className="text-[11px] uppercase tracking-wide text-slate-400">
-        {props.label}
+        {label}
       </span>
       <span className="mt-1 text-xl font-semibold">
-        {props.prefix ?? ""}
-        {props.value}
+        {prefix ?? ""}
+        {value}
       </span>
     </div>
   );

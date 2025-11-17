@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AdminLiveUpdates } from '@/components/AdminLiveUpdates'
 import { VisitorsWorldMap } from '@/components/VisitorsWorldMap'
@@ -145,6 +146,7 @@ interface VisitorStats {
 const COLORS = ['#00d4ff', '#ff914d', '#0099ff', '#00ffff']
 
 export default function AdminDashboard() {
+  const router = useRouter()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [password, setPassword] = useState('')
   const [authError, setAuthError] = useState('')
@@ -271,6 +273,17 @@ export default function AdminDashboard() {
       })
     }
   }, [visitors.length, payments.length, subscribers.length, isAuthenticated, notificationsEnabled, soundEnabled])
+
+  // Check URL for tab parameter
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search)
+      const tabParam = urlParams.get('tab')
+      if (tabParam && ['visitors', 'payments', 'subscribers', 'analytics', 'overview', 'content'].includes(tabParam)) {
+        setActiveTab(tabParam as typeof activeTab)
+      }
+    }
+  }, [])
 
   // Check if already authenticated
   useEffect(() => {

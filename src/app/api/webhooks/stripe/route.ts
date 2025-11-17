@@ -99,9 +99,12 @@ export async function POST(req: NextRequest) {
 
       // Send push notification
       await sendPushToAll({
-        title: "💸 New Payment Received!",
-        body: `${amount} ${currency} from ${email}`,
+        title: "New payment received",
+        body: `${amount} ${currency} from ${email || "Customer"}`,
         url: "/admin/mobile"
+      }).catch(err => {
+        console.error('Push notification error:', err);
+        // Don't fail the webhook if push fails
       });
 
       console.log('✅ Payment stored in Redis:', payment);
