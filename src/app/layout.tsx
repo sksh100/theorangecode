@@ -48,14 +48,12 @@ export const metadata: Metadata = {
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
     ],
-    apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
+    apple: '/apple-touch-icon.png',
+    shortcut: '/favicon.ico',
     other: [
       { rel: 'icon', url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
       { rel: 'icon', url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
     ],
-    shortcut: ['/favicon.ico'],
   },
   openGraph: {
     title: 'The Orange Code - Cultural Intelligence & Leadership Training | UAE',
@@ -203,9 +201,32 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
         
+        {/* Favicon Links */}
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#0A2244" />
+        
+        {/* Google Search Organization Logo Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "The Orange Code",
+              "url": "https://www.theorangecode.com",
+              "logo": "https://www.theorangecode.com/android-chrome-512x512.png",
+              "sameAs": [
+                "https://www.instagram.com/the.orangecode"
+              ]
+            })
+          }}
+        />
       </head>
       <body style={{ fontFamily: "'Inter', 'Glacial Indifference', sans-serif" }} className="antialiased">
         <VisitorTracker />
