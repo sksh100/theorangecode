@@ -48,7 +48,7 @@ export async function GET(_req: NextRequest) {
     const total = (await redis.get("visitors:total")) as number | null;
 
     // Parse JSON strings safely
-    const active = (activeRaw || []).map((v) => {
+    const active = (activeRaw || []).map((v: string) => {
       try {
         return typeof v === 'string' ? JSON.parse(v) : v;
       } catch {
@@ -56,7 +56,7 @@ export async function GET(_req: NextRequest) {
       }
     }).filter(Boolean);
     
-    const recent = (recentRaw || []).map((v) => {
+    const recent = (recentRaw || []).map((v: string) => {
       try {
         return typeof v === 'string' ? JSON.parse(v) : v;
       } catch {

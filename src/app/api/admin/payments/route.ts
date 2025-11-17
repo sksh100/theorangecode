@@ -25,7 +25,7 @@ export async function GET(_req: NextRequest) {
     ]);
 
     // Parse payments safely
-    const payments = (listRaw || []).map((p) => {
+    const payments = (listRaw || []).map((p: string) => {
       try {
         return typeof p === 'string' ? JSON.parse(p) : p;
       } catch {
