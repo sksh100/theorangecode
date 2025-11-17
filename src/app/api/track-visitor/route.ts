@@ -1,59 +1,59 @@
 import { NextRequest, NextResponse } from "next/server";
-import { redis } from "@/lib/redis";
 
-export const dynamic = 'force-dynamic'
+import { Redis } from "@upstash/redis";
+
+const redis = new Redis({
+  url: process.env.KV_REST_API_URL!,
+  token: process.env.KV_REST_API_TOKEN!,
+});
 
 export async function POST(req: NextRequest) {
   try {
-    const { path, referrer, userAgent } = await req.json();
-
-    // Basic visitor identity
     const ip =
       req.ip ??
       req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
       "unknown";
 
-    const now = Date.now();
-    const nowSeconds = Math.floor(now / 1000);
+    const userAgent = req.headers.get("user-agent") || "unknown";
 
-    // Key for "active visitor" with short TTL (5 minutes)
+    const timestamp = Date.now();
+
+    // Key structure:
+    // visitors:active:<ip>
+    // visitors:log  (list)
+    // visitors:total (number)
+    // visitors:unique (hyperloglog)
+    // visitors:today:YYYY-MM-DD (number)
+
+    // 1. Mark active visitor (TTL 5 min)
     const activeKey = `visitors:active:${ip}`;
 
-    // Store as a hash or JSON, but with an expiry
     await redis.hset(activeKey, {
       ip,
-      path: path || "/",
-      referrer: referrer || "",
-      userAgent: userAgent || "",
-      lastSeen: nowSeconds.toString(),
+      userAgent,
+      lastSeen: timestamp,
     });
 
-    await redis.expire(activeKey, 60 * 5); // 5 minutes
+    await redis.expire(activeKey, 300);
 
-    // Log for recent visitors list (optional but nice for the table)
-    const logKey = "visitors:log";
+    // 2. Add to recent visitor log
     await redis.lpush(
-      logKey,
-      JSON.stringify({
-        ip,
-        path: path || "/",
-        referrer: referrer || "",
-        userAgent: userAgent || "",
-        timestamp: nowSeconds,
-      }),
+      "visitors:log",
+      JSON.stringify({ ip, timestamp, userAgent })
     );
 
-    // Keep only the most recent 500 entries
-    await redis.ltrim(logKey, 0, 499);
+    await redis.ltrim("visitors:log", 0, 499);
 
-    // Increment some simple counters
+    // 3. Increment counters
     await redis.incr("visitors:total");
-    await redis.pfadd("visitors:unique", ip); // HyperLogLog for unique visitors
-    await redis.incr(`visitors:by-day:${new Date().toISOString().slice(0, 10)}`);
+    await redis.pfadd("visitors:unique", ip);
+
+    const today = new Date().toISOString().slice(0, 10);
+    await redis.incr(`visitors:today:${today}`);
 
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error("[track-visitor] error", err);
+    console.error("track-visitor error:", err);
     return NextResponse.json({ ok: false }, { status: 500 });
   }
 }
