@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AdminLiveUpdates } from '@/components/AdminLiveUpdates'
+import { VisitorsWorldMap } from '@/components/VisitorsWorldMap'
 import {
   DollarSign,
   Users,
@@ -156,6 +157,7 @@ export default function AdminDashboard() {
   const [activeSessions, setActiveSessions] = useState<ActiveSession[]>([])
   const [visitorStats, setVisitorStats] = useState<VisitorStats | null>(null)
   const [topCountries, setTopCountries] = useState<Array<{ country: string; count: number }>>([])
+  const [countriesRecord, setCountriesRecord] = useState<Record<string, number>>({})
   const [topPages, setTopPages] = useState<Array<{ page: string; views: number }>>([])
   const [dailyVisitorStats, setDailyVisitorStats] = useState<Array<{ date: string; visitors: number }>>([])
   const [comingSoonVisitors, setComingSoonVisitors] = useState<Visitor[]>([])
@@ -358,6 +360,7 @@ export default function AdminDashboard() {
         const activeSessionsList = data.data.activeSessions || []
         const stats = data.data.stats || {}
         const countries = data.data.countries || []
+        const countriesRec = data.data.countriesRecord || {}
         const pages = data.data.pages || []
         const daily = data.data.dailyStats || []
         
@@ -366,6 +369,7 @@ export default function AdminDashboard() {
         setActiveSessions(activeSessionsList)
         setVisitorStats(stats)
         setTopCountries(countries)
+        setCountriesRecord(countriesRec)
         setTopPages(pages)
         setDailyVisitorStats(daily)
         setComingSoonVisitors(data.data.comingSoonVisitors || [])
@@ -607,13 +611,25 @@ export default function AdminDashboard() {
               const activeSessionsList = data.data.activeSessions || []
               const stats = data.data.stats || {}
               const countries = data.data.countries || []
+              const countriesRec = data.data.countriesRecord || {}
               const pages = data.data.pages || []
               const daily = data.data.dailyStats || []
               
               setVisitors(visitorsList)
               setActiveSessions(activeSessionsList)
-              setVisitorStats(stats)
+              setVisitorStats({
+                totalVisitors: stats.totalVisitors ?? (stats as any).total ?? 0,
+                uniqueVisitors: stats.uniqueVisitors ?? (stats as any).unique ?? 0,
+                currentVisitors: stats.currentVisitors ?? stats.activeNow ?? 0,
+                last24HoursVisitors: stats.last24HoursVisitors ?? 0,
+                lastWeekVisitors: stats.lastWeekVisitors ?? 0,
+                lastMonthVisitors: stats.lastMonthVisitors ?? 0,
+                todayVisitors: stats.todayVisitors ?? (stats as any).today ?? 0,
+                monthlyVisitors: stats.monthlyVisitors ?? (stats as any).thisMonth ?? 0,
+                activeNow: stats.activeNow ?? 0,
+              })
               setTopCountries(countries)
+              setCountriesRecord(countriesRec)
               setTopPages(pages)
               setDailyVisitorStats(daily)
               setComingSoonVisitors(data.data.comingSoonVisitors || [])
@@ -626,9 +642,18 @@ export default function AdminDashboard() {
           onPaymentsUpdate={(data) => {
             if (data.success !== false) {
               const paymentsList = data.payments || []
-              const stats = data.stats || { totalRevenue: 0, count: 0 }
+              const stats = data.stats || {}
               setPayments(paymentsList)
-              setPaymentStats(stats)
+              setPaymentStats({
+                totalRevenue: stats.totalRevenue ?? 0,
+                count: stats.count ?? 0,
+              })
+            }
+          }}
+          onSubscribersUpdate={(data) => {
+            if (data.success !== false && data.data) {
+              const subscribersList = data.data.subscribers || []
+              setSubscribers(subscribersList)
             }
           }}
         />
@@ -1579,61 +1604,8 @@ export default function AdminDashboard() {
                 <h3 className="text-xl font-bold text-white mb-4">World Map - Visitor Distribution</h3>
                 
                 {/* Interactive World Map */}
-                <div className="relative w-full h-96 bg-white/5 rounded-lg border border-white/10 overflow-hidden mb-6">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    {topCountries.length > 0 ? (
-                      /* World Map Visualization */
-                      <div className="grid grid-cols-6 gap-2 p-4 w-full h-full">
-                        {topCountries.slice(0, 20).map((country, index) => {
-                          const total = topCountries.reduce((sum, c) => sum + c.count, 0)
-                          const percentage = ((country.count / total) * 100)
-                          const intensity = Math.min(percentage / 10, 1) // Normalize to 0-1
-                          return (
-                            <motion.div
-                              key={country.country}
-                              initial={{ opacity: 0, scale: 0.8 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{ delay: index * 0.05 }}
-                              className="relative group cursor-pointer"
-                              title={`${country.country}: ${country.count} visitors (${percentage.toFixed(1)}%)`}
-                            >
-                              <div 
-                                className="w-full h-20 rounded-lg border-2 transition-all"
-                                style={{
-                                  backgroundColor: `rgba(0, 212, 255, ${intensity * 0.6})`,
-                                  borderColor: `rgba(0, 212, 255, ${intensity * 0.8})`,
-                                  boxShadow: intensity > 0.5 ? `0 0 20px rgba(0, 212, 255, ${intensity * 0.5})` : 'none',
-                                }}
-                              >
-                                <div className="absolute inset-0 flex flex-col items-center justify-center p-2">
-                                  <MapPin className="w-4 h-4 text-azure-blue mb-1" />
-                                  <span className="text-white text-xs font-semibold truncate w-full text-center">
-                                    {country.country.length > 8 ? country.country.substring(0, 8) + '...' : country.country}
-                                  </span>
-                                  <span className="text-azure-blue text-xs font-bold">{country.count}</span>
-                                </div>
-                              </div>
-                              {/* Tooltip on hover */}
-                              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block z-10">
-                                <div className="bg-primary-dark border border-azure-blue/50 rounded-lg p-3 shadow-xl min-w-[150px]">
-                                  <p className="text-white font-semibold text-sm">{country.country}</p>
-                                  <p className="text-azure-blue text-xs mt-1">{country.count} visitors</p>
-                                  <p className="text-white/70 text-xs mt-1">{percentage.toFixed(1)}% of total</p>
-                                </div>
-                              </div>
-                            </motion.div>
-                          )
-                        })}
-                      </div>
-                    ) : (
-                      <div className="text-center text-white/50">
-                        <Globe className="w-16 h-16 mx-auto mb-4 opacity-30" />
-                        <p className="text-lg mb-2">No visitor data yet</p>
-                        <p className="text-xs mt-2">Open your website in another tab to see visitor tracking</p>
-                        <p className="text-xs mt-1 text-white/40">Visitor tracking will appear here once you have visitors</p>
-                      </div>
-                    )}
-                  </div>
+                <div className="relative w-full h-96 bg-white/5 rounded-lg border border-white/10 overflow-hidden mb-6 p-4">
+                  <VisitorsWorldMap countries={countriesRecord} />
                 </div>
 
                 {/* Country List with Percentages */}

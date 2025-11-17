@@ -87,6 +87,9 @@ export async function GET(_req: NextRequest) {
       .map(([country, count]) => ({ country, count }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 10);
+    
+    // Countries as Record for world map component
+    const countriesRecord: Record<string, number> = countryCounts;
 
     // Calculate top pages
     const pageCounts: { [key: string]: number } = {};
@@ -143,6 +146,7 @@ export async function GET(_req: NextRequest) {
         visitors: formattedRecent,
         activeSessions: formattedActive,
         countries: topCountries,
+        countriesRecord: countriesRecord, // For world map component
         pages: topPages,
         dailyStats,
         stats: {
