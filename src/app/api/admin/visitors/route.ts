@@ -8,14 +8,18 @@ export async function GET() {
   try {
     const keys = await redis.keys("active:*");
 
-    const activeVisitors = [];
+    const activeVisitors: any[] = [];
 
     for (const key of keys) {
-      const data = await redis.get(key);
-      if (data) activeVisitors.push(JSON.parse(data));
+      // Tell TypeScript this is a string value stored in Redis
+      const data = await redis.get<string>(key);
+      if (data) {
+        activeVisitors.push(JSON.parse(data));
+      }
     }
 
-    const recentVisitorsRaw = await redis.lrange("visitors", 0, 50);
+    // Same here: list of JSON strings
+    const recentVisitorsRaw = await redis.lrange<string>("visitors", 0, 50);
 
     const recentVisitors = recentVisitorsRaw.map((v) => JSON.parse(v));
 
@@ -26,6 +30,9 @@ export async function GET() {
     });
   } catch (err) {
     console.error("admin visitors error:", err);
-    return NextResponse.json({ ok: false, error: String(err) }, { status: 500 });
+    return NextResponse.json(
+      { ok: false, error: String(err) },
+      { status: 500 }
+    );
   }
 }
