@@ -1,3 +1,15 @@
+// Service Worker Version - Update this to force service worker refresh
+const SW_VERSION = '2.0.0';
+
+// Force service worker to update immediately
+self.addEventListener('install', event => {
+  self.skipWaiting(); // Activate immediately
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(self.clients.claim()); // Take control of all pages immediately
+});
+
 self.addEventListener("push", event => {
   let data = {};
   try {

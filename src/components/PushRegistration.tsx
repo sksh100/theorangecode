@@ -13,8 +13,37 @@ export function PushRegistration() {
 
     const register = async () => {
       try {
-        const reg = await navigator.serviceWorker.register("/sw.js");
+        // Force service worker update by unregistering first if needed
+        const existing = await navigator.serviceWorker.getRegistration("/sw.js");
+        if (existing) {
+          // Check if update is available
+          await existing.update();
+          // Force activation if there's a waiting worker
+          if (existing.waiting) {
+            existing.waiting.postMessage({ type: 'SKIP_WAITING' });
+            // Reload after update
+            window.location.reload();
+            return;
+          }
+        }
+
+        const reg = await navigator.serviceWorker.register("/sw.js", {
+          updateViaCache: 'none' // Always check for updates
+        });
         console.log("[SW] registered", reg);
+        
+        // Check for updates periodically
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          if (newWorker) {
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                // New service worker available, reload to activate
+                window.location.reload();
+              }
+            });
+          }
+        });
 
         const permission = await Notification.requestPermission();
         if (permission !== "granted") {
@@ -28,8 +57,8 @@ export function PushRegistration() {
           return;
         }
 
-        const existing = await reg.pushManager.getSubscription();
-        if (!existing) {
+        const pushSubscription = await reg.pushManager.getSubscription();
+        if (!pushSubscription) {
           const sub = await reg.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: urlBase64ToUint8Array(PUBLIC_VAPID_KEY)
