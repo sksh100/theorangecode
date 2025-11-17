@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { kv } from '@vercel/kv'
 import MailerLite from '@mailerlite/mailerlite-nodejs'
+import { sendPushToAll } from '@/lib/webPush'
 
 interface FormData {
   firstName?: string
@@ -242,6 +243,16 @@ export async function POST(request: NextRequest) {
     
     if (mailerliteSuccess) {
       console.log('✅ Successfully added subscriber to MailerLite')
+      
+      // Send push notification for new subscriber
+      await sendPushToAll({
+        title: "🧡 New Subscriber!",
+        body: cleanEmail ? `New subscriber: ${cleanEmail}` : "You have a new subscriber",
+        url: "/admin/mobile"
+      }).catch(err => {
+        console.error('Push notification error:', err);
+        // Don't fail the request if push fails
+      });
     } else {
       console.warn('⚠️ MailerLite add failed, but submission will continue')
     }

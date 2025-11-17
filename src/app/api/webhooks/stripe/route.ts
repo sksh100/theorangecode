@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { redis } from "@/lib/redis";
+import { sendPushToAll } from "@/lib/webPush";
 
 // Initialize Stripe only if secret key is available
 const getStripe = () => {
@@ -80,6 +81,13 @@ export async function POST(req: NextRequest) {
       // You can also push to "events" for notification
       await redis.lpush("events", JSON.stringify({ type: "payment", ...payment }));
       await redis.ltrim("events", 0, 100);
+
+      // Send push notification
+      await sendPushToAll({
+        title: "💸 New Payment Received!",
+        body: `${amount} ${currency} from ${email}`,
+        url: "/admin/mobile"
+      });
 
       console.log('✅ Payment stored in Redis:', payment);
     }

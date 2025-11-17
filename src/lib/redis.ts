@@ -10,6 +10,7 @@ const createRedisClient = () => {
       lpush: async (): Promise<number> => 0,
       ltrim: async (): Promise<string> => "OK",
       lrange: async <T = string>(): Promise<T[]> => [],
+      lrem: async (): Promise<number> => 0,
       zadd: async (): Promise<number> => 0,
       zrange: async <T = string>(): Promise<T[]> => [],
       zremrangebyscore: async (): Promise<number> => 0,

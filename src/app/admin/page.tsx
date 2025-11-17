@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AdminLiveUpdates } from '@/components/AdminLiveUpdates'
 import { VisitorsWorldMap } from '@/components/VisitorsWorldMap'
+import { PushRegistration } from '@/components/PushRegistration'
 import {
   DollarSign,
   Users,
@@ -601,6 +602,9 @@ export default function AdminDashboard() {
   // Main dashboard
     return (
     <div className="min-h-screen bg-primary-dark">
+      {/* Push Registration for PWA */}
+      {isAuthenticated && <PushRegistration />}
+      
       {/* Live Updates Component */}
       {isAuthenticated && (
         <AdminLiveUpdates
