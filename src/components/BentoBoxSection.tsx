@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Star, Users, BookOpen, Globe, MessageSquare, Calendar, Sparkles, Target, Zap } from 'lucide-react'
+import Link from 'next/link'
 
 interface BentoBoxItem {
   id: string
@@ -22,13 +23,14 @@ export function BentoBoxSection() {
   const bentoItems: BentoBoxItem[] = [
     {
       id: 'why-matters',
-      title: 'Why This Matters',
-      description: 'Understanding the importance of cultural intelligence in today\'s globalized world',
+      title: 'Why Cultural Intelligence Matters',
+      description: 'People succeed because they know how to communicate across cultures, interpret subtle signals, and build trust quickly. Cultural intelligence gives you this advantage. It helps you move with confidence, avoid misunderstandings, and create the relationships that drive real success in UAE and wider Gulf Region.',
       icon: <Target className="w-8 h-8" />,
       size: 'large',
       gradient: 'from-orange/20 to-orange/5',
       borderColor: 'border-orange/40',
-      glowColor: 'from-orange/30 to-orange/10'
+      glowColor: 'from-orange/30 to-orange/10',
+      link: '/why-cultural-intelligence'
     },
     {
       id: 'transformation',
@@ -245,7 +247,7 @@ export function BentoBoxSection() {
               />
               
               {/* Main Bento Box */}
-              <div className={`relative bg-gradient-to-br ${item.gradient} backdrop-blur-[40px] border ${item.borderColor} rounded-3xl ${index < 3 ? 'p-6' : 'p-4'} h-full transition-all duration-500 group-hover:border-opacity-60 shadow-2xl cursor-pointer`}>
+              <div className={`relative bg-gradient-to-br ${item.gradient} backdrop-blur-[40px] border ${item.borderColor} rounded-3xl ${index < 3 ? 'p-6' : 'p-4'} h-full transition-all duration-500 group-hover:border-opacity-60 shadow-2xl cursor-pointer flex flex-col`}>
                 
                 {/* Icon */}
                 <motion.div 
@@ -271,9 +273,23 @@ export function BentoBoxSection() {
                 </motion.h3>
 
                 {/* Description */}
-                <p className={`text-white/80 leading-relaxed ${index < 3 ? 'text-sm md:text-base' : 'text-xs md:text-sm'}`}>
+                <p className={`text-white/80 leading-relaxed ${index < 3 ? 'text-sm md:text-base mb-4' : 'text-xs md:text-sm mb-3'}`}>
                   {item.description}
                 </p>
+
+                {/* Read More Button / Link */}
+                {item.link && (
+                  <Link href={item.link} className="mt-auto">
+                    <motion.button
+                      className="flex items-center gap-2 text-white/70 hover:text-orange transition-colors duration-300 text-sm font-medium group/button"
+                      whileHover={{ x: 5 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <span>Read More</span>
+                      <ArrowRight className="w-4 h-4 group-hover/button:text-orange transition-colors duration-300" />
+                    </motion.button>
+                  </Link>
+                )}
 
                 {/* Arrow for clickable items */}
                 {item.link && (
