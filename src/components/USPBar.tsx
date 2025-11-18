@@ -16,32 +16,32 @@ export function USPBar() {
   const pillars: USPPillar[] = [
     {
       id: 'knowledge',
-      title: 'Refined Knowledge',
-      subtitle: 'Emirati Customs & Protocols',
+      title: 'Deep Regional Insight',
+      subtitle: 'Expert guidance on Emirati, GCC, and Middle Eastern cultural expectations.',
       icon: Crown,
       gradient: 'from-orange to-orange-luminous',
       delay: 0
     },
     {
       id: 'certified',
-      title: 'Certified by',
-      subtitle: 'Washington School of Protocol',
+      title: 'Internationally Recognised Standards',
+      subtitle: 'Trained and certified through leading global protocol and cultural training institutions.',
       icon: Award,
       gradient: 'from-azure-blue to-azure-luminous',
       delay: 0.2
     },
     {
       id: 'trusted',
-      title: 'Trusted by',
-      subtitle: 'Embassies & Global Entrepreneurs',
+      title: 'Trusted by Leaders Across the Gulf',
+      subtitle: 'Preferred by embassies, family offices, and high growth global companies entering the UAE and Saudi Arabia.',
       icon: Shield,
       gradient: 'from-bright-blue to-blue-luminous',
       delay: 0.4
     },
     {
       id: 'transformation',
-      title: 'Fast-Track Transformation',
-      subtitle: 'in 4 Weeks',
+      title: 'Rapid and Measurable Growth',
+      subtitle: 'A transformation path that strengthens communication, confidence, and cultural intelligence in four weeks.',
       icon: Zap,
       gradient: 'from-orange to-azure-blue',
       delay: 0.6
