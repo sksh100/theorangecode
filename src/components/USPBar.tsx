@@ -49,7 +49,25 @@ export function USPBar() {
   ]
 
   return (
-        <section className="relative py-20 bg-primary-dark overflow-hidden section-separator advanced-bg-pattern">
+    <motion.section 
+      className="relative py-20 bg-primary-dark overflow-hidden section-separator advanced-bg-pattern"
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+    >
+      {/* Distinguished Divider - Animated Entrance */}
+      <motion.div
+        className="absolute top-0 left-0 right-0 h-[2px] z-20"
+        initial={{ scaleX: 0, opacity: 0 }}
+        whileInView={{ scaleX: 1, opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-orange/80 via-azure-blue/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-azure-blue/50 via-orange/50 to-transparent blur-md" />
+      </motion.div>
+
       {/* Floating Geometric Shapes - State of Art */}
       <div className="floating-geometry top-10 right-10 w-20 h-20 rotate-45" style={{ animationDelay: '1s' }} />
       <div className="floating-geometry bottom-20 left-10 w-16 h-16 rounded-full" style={{ animationDelay: '3s' }} />
@@ -57,7 +75,6 @@ export function USPBar() {
       <div className="floating-geometry top-1/2 left-1/3 w-8 h-8 rotate-45" style={{ animationDelay: '7s' }} />
       {/* Background Effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-azure-blue/50 to-transparent" />
         <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-orange/50 to-transparent" />
         
         {/* Floating Orbs */}
@@ -67,13 +84,13 @@ export function USPBar() {
       </div>
 
       <div className="container max-w-7xl mx-auto px-6 relative z-10">
-        {/* Section Header */}
+        {/* Section Header - Distinguished Entrance */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
+          viewport={{ once: true, margin: "-50px" }}
         >
           <motion.div
             className="inline-flex items-center space-x-2 px-4 py-2 bg-azure-blue-transparent border border-azure-blue/30 rounded-full mb-6"
@@ -170,6 +187,6 @@ export function USPBar() {
           </motion.button>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   )
 }

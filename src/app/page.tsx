@@ -5,8 +5,8 @@ import { useScroll, useSpring, useMotionValue } from 'framer-motion'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { HeroSection } from '@/components/HeroSection'
 import { WhyCulturalIntelligenceSection } from '@/components/WhyCulturalIntelligenceSection'
-import { BentoBoxSection } from '@/components/BentoBoxSection'
-import { ExtendedAdvantagesBanner } from '@/components/ExtendedAdvantagesBanner'
+import { TestimonialCarousel } from '@/components/TestimonialCarousel'
+import { ContactFormSection } from '@/components/ContactFormSection'
 import { ProgramsOverview } from '@/components/ProgramsOverview'
 import { USPBar } from '@/components/USPBar'
 import { ModernFooter } from '@/components/ModernFooter'
@@ -72,9 +72,9 @@ export default function Home() {
           <HeroSection />
           <WhyCulturalIntelligenceSection />
           <ProgramsOverview />
-          <BentoBoxSection />
           <USPBar />
-          <ExtendedAdvantagesBanner />
+          <TestimonialCarousel />
+          <ContactFormSection />
         </main>
         <ModernFooter />
       </div>

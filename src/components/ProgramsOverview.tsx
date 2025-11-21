@@ -40,7 +40,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
       title: "UAE Cultural Foundations",
       description: "Step into your full potential with a program that refines how you think, speak, move, and lead. From table manners and royal protocols to body language, tone of voice, and setting boundaries, this journey transforms ambition into presence.",
       gradient: "from-orange/20 to-bright-blue/20",
-      imagePlaceholder: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&crop=face&auto=format&q=80",
+      imagePlaceholder: "/programs/program 1.png",
       learnMoreLink: "#born-to-lead"
     },
     {
@@ -48,7 +48,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
       title: "Cultural Intelligence For Expatriat",
       description: "Belong socially and culturally in the Emirates. Learn Islamic etiquette, modesty codes, hospitality rituals, Arabic phrases, and the art of building lasting friendships with Emiratis. Break isolation and thrive with cultural confidence.",
       gradient: "from-bright-blue/20 to-light-blue/20",
-      imagePlaceholder: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800&h=600&fit=crop&auto=format&q=80",
+      imagePlaceholder: "/programs/program 2.png",
       learnMoreLink: "#uae-expats"
     },
     {
@@ -56,7 +56,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
       title: "Business Cultural Intelligence in the UAE & GCC",
       description: "Unlock the unspoken rules of GCC business culture. From trust-building and negotiation rhythms to gifting, attire, and majlis etiquette, this program gives executives and entrepreneurs the keys to succeed in UAE, Saudi Arabia, Qatar, and beyond.",
       gradient: "from-light-blue/20 to-orange/20",
-      imagePlaceholder: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=600&fit=crop&auto=format&q=80",
+      imagePlaceholder: "/programs/program 3.png",
       learnMoreLink: "#middle-east-business"
     }
   ]
@@ -280,94 +280,62 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
                         transition={{ duration: 0.3 }}
                       />
                       
-                      {/* Main Cyberpunk Panel */}
-                      <div className={`relative bg-gradient-to-br ${colors.bg} backdrop-blur-[40px] border ${colors.border} rounded-3xl p-8 md:p-12 transition-all duration-500 group-hover:border-opacity-60 shadow-2xl overflow-hidden`}>
+                      {/* Main Cyberpunk Panel - Compact Height, No Overflow Hidden */}
+                      <div className={`relative bg-gradient-to-br ${colors.bg} backdrop-blur-[40px] border ${colors.border} rounded-3xl p-6 md:p-8 transition-all duration-500 group-hover:border-opacity-60 shadow-2xl overflow-visible`}>
                         
-                        {/* Horizontal Layout: Left (Title + Image) | Right (Description + CTA) */}
-                        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+                        {/* Vertical Layout: Title -> Image -> Description */}
+                        <div className="flex flex-col gap-4 md:gap-6">
                           
-                          {/* Left Side: Title and Image */}
-                          <div className="w-full lg:w-2/5 xl:w-1/3 flex-shrink-0 flex flex-col gap-6">
-                            {/* Title - Above Image */}
-                            <motion.h3 
-                              className="text-3xl md:text-4xl lg:text-5xl font-black text-white group-hover:text-orange transition-colors duration-300"
-                              whileHover={{ 
-                                textShadow: "0 0 30px rgba(255, 145, 77, 0.8)"
-                              }}
-                            >
-                              {program.title}
-                            </motion.h3>
+                          {/* Title */}
+                          <motion.h3 
+                            className="text-2xl md:text-3xl lg:text-4xl font-black text-white group-hover:text-orange transition-colors duration-300"
+                            whileHover={{ 
+                              textShadow: "0 0 30px rgba(255, 145, 77, 0.8)"
+                            }}
+                          >
+                            {program.title}
+                          </motion.h3>
 
-                            {/* Image Section - More Vertical */}
-                            <motion.div 
-                              className="w-full max-w-sm mx-auto lg:mx-0"
-                              whileHover={{ scale: 1.02 }}
-                            >
-                              {/* Cyberpunk Image Placeholder - Vertical Aspect Ratio */}
-                              <div className={`relative w-full aspect-[3/4] bg-gradient-to-br ${colors.bg} backdrop-blur-[20px] border ${colors.border} rounded-2xl overflow-hidden group-hover:border-opacity-60 transition-all duration-300`}>
-                                <img 
-                                  src={program.imagePlaceholder} 
-                                  alt={program.title}
-                                  className="w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-opacity duration-300"
-                                />
-                                {/* Cyberpunk Overlay Effect */}
-                                <motion.div
-                                  className={`absolute inset-0 bg-gradient-to-br ${colors.glow} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-                                />
-                                
-                                {/* Cyberpunk Grid Overlay */}
-                                <div className="absolute inset-0 opacity-20">
-                                  <div className="cyberpunk-grid" />
-                                </div>
-                              </div>
-                            </motion.div>
-                          </div>
-
-                          {/* Right Side: Description Text Box and CTA */}
-                          <div className="w-full lg:w-3/5 xl:w-2/3 flex flex-col gap-6">
-                            {/* Description Text Box */}
-                            <div className="relative bg-primary-dark border-2 border-azure-blue/60 rounded-2xl p-6 md:p-8 lg:p-10 flex flex-col gap-4 min-h-[400px] shadow-2xl z-10">
-                              <h4 className="text-xl md:text-2xl font-bold text-white mb-4">About This Program</h4>
-                              <div className="text-white leading-relaxed text-base md:text-lg lg:text-xl">
-                                {program.description}
-                              </div>
-                              
-                              {/* Read More Button */}
-                              <motion.a
-                                href={program.learnMoreLink}
-                                className={`inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r ${colors.glow} border ${colors.border} rounded-xl text-white hover:text-orange transition-all duration-300 font-semibold text-sm group-hover:border-opacity-80 self-start`}
-                                whileHover={{ 
-                                  x: 10,
-                                  scale: 1.05,
-                                  boxShadow: "0 10px 30px rgba(255, 145, 77, 0.3)"
-                                }}
-                                whileTap={{ scale: 0.95 }}
-                                transition={{ duration: 0.3 }}
-                              >
-                                <span>Read More</span>
-                                <ArrowRight className="w-4 h-4" />
-                              </motion.a>
+                          {/* Image Section - Elegant and Visible */}
+                          <motion.div 
+                            className="w-48 h-36 md:w-64 md:h-48 mx-auto"
+                            whileHover={{ scale: 1.05 }}
+                          >
+                            {/* Elegant Image Card */}
+                            <div className={`relative w-full h-full bg-gradient-to-br ${colors.bg} backdrop-blur-[20px] border-2 ${colors.border} rounded-xl overflow-hidden group-hover:border-opacity-80 transition-all duration-300 shadow-xl`}>
+                              <img 
+                                src={program.imagePlaceholder} 
+                                alt={program.title}
+                                className="w-full h-full object-cover"
+                              />
+                              {/* Subtle Overlay Effect */}
+                              <motion.div
+                                className={`absolute inset-0 bg-gradient-to-br ${colors.glow} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}
+                              />
                             </div>
+                          </motion.div>
 
-                            {/* Cyberpunk CTA Button */}
+                          {/* Description Below Image */}
+                          <div className="flex flex-col gap-4">
+                            {/* Description Text - Full Text Visible, No Cutoff */}
+                            <p className="text-white/90 text-sm md:text-base leading-relaxed whitespace-normal break-words">
+                              {program.description}
+                            </p>
+                            
+                            {/* CTA Button */}
                             <motion.a
                               href={program.learnMoreLink}
-                              className={`inline-flex items-center gap-4 px-8 py-5 bg-gradient-to-r ${colors.glow} border ${colors.border} rounded-2xl text-white hover:text-orange transition-all duration-300 font-bold text-lg group-hover:border-opacity-80 group-hover:shadow-2xl self-start`}
+                              className={`inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r ${colors.glow} border ${colors.border} rounded-xl text-white hover:text-orange transition-all duration-300 font-semibold text-sm group-hover:border-opacity-80 self-start`}
                               whileHover={{ 
-                                x: 15,
+                                x: 10,
                                 scale: 1.05,
-                                boxShadow: "0 15px 40px rgba(255, 145, 77, 0.4)"
+                                boxShadow: "0 10px 30px rgba(255, 145, 77, 0.3)"
                               }}
                               whileTap={{ scale: 0.95 }}
                               transition={{ duration: 0.3 }}
                             >
-                              <span>[Learn More]</span>
-                              <motion.div
-                                animate={{ x: [0, 8, 0] }}
-                                transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
-                              >
-                                <Rocket className="w-6 h-6" />
-                              </motion.div>
+                              <span>Learn More</span>
+                              <ArrowRight className="w-4 h-4" />
                             </motion.a>
                           </div>
                         </div>
