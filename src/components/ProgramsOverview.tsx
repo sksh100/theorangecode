@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform, useSpring, PanInfo } from 'framer-motion'
-import { ArrowRight, Star, Globe, Sparkles, Target, Rocket, ChevronLeft, ChevronRight } from 'lucide-react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 
 interface ProgramCard {
   id: number
@@ -21,9 +21,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const [activeCard, setActiveCard] = useState<number | null>(null)
-  const [currentIndex, setCurrentIndex] = useState(0)
   const sectionRef = useRef<HTMLElement>(null)
-  const carouselRef = useRef<HTMLDivElement>(null)
   
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -45,7 +43,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
     },
     {
       id: 2,
-      title: "Cultural Intelligence For Expatriat",
+      title: "Cultural Intelligence\nFor Expats",
       description: "Belong socially and culturally in the Emirates. Learn Islamic etiquette, modesty codes, hospitality rituals, Arabic phrases, and the art of building lasting friendships with Emiratis. Break isolation and thrive with cultural confidence.",
       gradient: "from-bright-blue/20 to-light-blue/20",
       imagePlaceholder: "/programs/program 2.png",
@@ -53,7 +51,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
     },
     {
       id: 3,
-      title: "Business Cultural Intelligence in the UAE & GCC",
+      title: "Cultural Intelligence\nIn Business",
       description: "Unlock the unspoken rules of GCC business culture. From trust-building and negotiation rhythms to gifting, attire, and majlis etiquette, this program gives executives and entrepreneurs the keys to succeed in UAE, Saudi Arabia, Qatar, and beyond.",
       gradient: "from-light-blue/20 to-orange/20",
       imagePlaceholder: "/programs/program 3.png",
@@ -149,25 +147,21 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Futuristic Section Header */}
+        {/* Section Header - Matching "Why Cultural Intelligence Matters" Style */}
         <motion.div 
           className="text-center mb-20"
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          {/* Animated Badge */}
-          <motion.div 
-            className="inline-flex items-center gap-2 px-4 py-2 mb-6"
-            initial={{ opacity: 0, scale: 0.8, y: -20 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ 
-              duration: 0.8,
-              delay: 0.2,
-              ease: [0.34, 1.56, 0.64, 1]
-            }}
+          {/* Badge with bullets */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-azure-blue/10 border border-azure-blue/30 rounded-full mb-6"
           >
             <motion.div 
               className="w-2 h-2 bg-orange rounded-full"
@@ -177,7 +171,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
               viewport={{ once: true }}
             />
             <span className="text-azure-blue font-semibold text-sm uppercase tracking-wider">
-              The Orange Code Programs
+              WORKSHOPS
             </span>
             <motion.div 
               className="w-2 h-2 bg-azure-blue rounded-full"
@@ -187,10 +181,24 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
               viewport={{ once: true }}
             />
           </motion.div>
+
+          {/* Main Title: "Our Workshops" with gradient on "Workshops" */}
+          <motion.h1 
+            className="text-4xl md:text-6xl font-bold mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <span className="text-white">Our </span>
+            <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+              Workshops
+            </span>
+          </motion.h1>
           
           {/* Subtitle */}
           <motion.p 
-            className="text-xl md:text-2xl text-text-secondary max-w-4xl mx-auto font-light mb-8"
+            className="text-xl md:text-2xl text-white/80 max-w-5xl mx-auto leading-relaxed mb-6 md:whitespace-nowrap"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -200,7 +208,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
           </motion.p>
         </motion.div>
 
-        {/* Horizontal Carousel Layout */}
+        {/* Three Glass Morphic Boxes Layout */}
         <motion.div 
           className="relative mb-20"
           initial={{ opacity: 0, y: 100 }}
@@ -208,166 +216,109 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
           transition={{ duration: 1, delay: 0.8 }}
           viewport={{ once: true }}
         >
-          {/* Carousel Container */}
-          <div className="relative overflow-hidden rounded-3xl">
-            <motion.div 
-              ref={carouselRef}
-              className="flex"
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.2}
-              onDragEnd={(e, info: PanInfo) => {
-                const threshold = 50
-                if (info.offset.x > threshold && currentIndex > 0) {
-                  setCurrentIndex(currentIndex - 1)
-                } else if (info.offset.x < -threshold && currentIndex < programs.length - 1) {
-                  setCurrentIndex(currentIndex + 1)
-                }
-              }}
-              animate={{ x: `-${currentIndex * 100}%` }}
-              transition={{ type: "spring", stiffness: 50, damping: 30, duration: 1.2 }}
-              style={{ width: `${programs.length * 100}%` }}
-            >
-              {programs.map((program, index) => {
-                const panelColors = [
-                  { bg: 'from-orange/15 to-orange/5', border: 'border-orange/40', glow: 'from-orange/30 to-orange/10' },
-                  { bg: 'from-bright-blue/15 to-bright-blue/5', border: 'border-bright-blue/40', glow: 'from-bright-blue/30 to-bright-blue/10' },
-                  { bg: 'from-light-blue/15 to-light-blue/5', border: 'border-light-blue/40', glow: 'from-light-blue/30 to-light-blue/10' }
-                ]
-                const colors = panelColors[index]
+          {/* Grid Container for 3 Boxes */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+            {programs.map((program, index) => {
+              const panelColors = [
+                { bg: 'from-orange/15 to-orange/5', border: 'border-orange/40', glow: 'from-orange/30 to-orange/10' },
+                { bg: 'from-bright-blue/15 to-bright-blue/5', border: 'border-bright-blue/40', glow: 'from-bright-blue/30 to-bright-blue/10' },
+                { bg: 'from-light-blue/15 to-light-blue/5', border: 'border-light-blue/40', glow: 'from-light-blue/30 to-light-blue/10' }
+              ]
+              const colors = panelColors[index]
 
-                return (
+              return (
+                <motion.div
+                  key={program.id}
+                  className="group relative flex flex-col"
+                  initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                  onMouseEnter={() => {
+                    setHoveredCard(program.id)
+                    setActiveCard(program.id)
+                  }}
+                  onMouseLeave={() => {
+                    setHoveredCard(null)
+                    setActiveCard(null)
+                  }}
+                >
+                  {/* Panel Glow Effect */}
                   <motion.div
-                    key={program.id}
-                    className="w-full flex-shrink-0 px-4 md:px-8"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: currentIndex === index ? 1 : 0.7, scale: currentIndex === index ? 1 : 0.98 }}
-                    transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-                  >
-                    <div
-                      className="group relative"
-                      onMouseEnter={() => {
-                        setHoveredCard(program.id)
-                        setActiveCard(program.id)
-                      }}
-                      onMouseLeave={() => {
-                        setHoveredCard(null)
-                        setActiveCard(null)
-                      }}
-                    >
-                      {/* Panel Glow Effect */}
-                      <motion.div
-                        className={`absolute -inset-2 bg-gradient-to-r ${colors.glow} rounded-3xl opacity-0 group-hover:opacity-100 blur-lg`}
-                        animate={{ 
-                          opacity: activeCard === program.id ? 0.3 : 0,
-                          scale: activeCard === program.id ? 1.02 : 1
-                        }}
-                        transition={{ duration: 0.3 }}
-                      />
+                    className={`absolute -inset-2 bg-gradient-to-r ${colors.glow} rounded-3xl opacity-0 group-hover:opacity-100 blur-xl`}
+                    animate={{ 
+                      opacity: activeCard === program.id ? 0.4 : 0,
+                      scale: activeCard === program.id ? 1.02 : 1
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  
+                  {/* Glass Morphic Box */}
+                  <div className={`relative bg-gradient-to-br ${colors.bg} backdrop-blur-[40px] border ${colors.border} rounded-3xl p-6 md:p-8 transition-all duration-500 group-hover:border-opacity-80 shadow-2xl flex flex-col flex-grow`}>
+                    
+                    {/* Vertical Layout: Title -> Image -> Description */}
+                    <div className="flex flex-col gap-6 flex-grow">
                       
-                      {/* Main Cyberpunk Panel - Compact Height, No Overflow Hidden */}
-                      <div className={`relative bg-gradient-to-br ${colors.bg} backdrop-blur-[40px] border ${colors.border} rounded-3xl p-6 md:p-8 transition-all duration-500 group-hover:border-opacity-60 shadow-2xl overflow-visible`}>
-                        
-                        {/* Vertical Layout: Title -> Image -> Description */}
-                        <div className="flex flex-col gap-4 md:gap-6">
-                          
-                          {/* Title */}
-                          <motion.h3 
-                            className="text-2xl md:text-3xl lg:text-4xl font-black text-white group-hover:text-orange transition-colors duration-300"
-                            whileHover={{ 
-                              textShadow: "0 0 30px rgba(255, 145, 77, 0.8)"
-                            }}
-                          >
-                            {program.title}
-                          </motion.h3>
+                      {/* Title Above Image - Fixed Height */}
+                      <motion.h3 
+                        className="text-xl md:text-2xl font-black text-white group-hover:text-orange transition-colors duration-300 text-center min-h-[3rem] md:min-h-[3.5rem] flex items-center justify-center"
+                        whileHover={{ 
+                          textShadow: "0 0 30px rgba(255, 145, 77, 0.8)"
+                        }}
+                      >
+                        {program.title.split('\n').map((line, i) => (
+                          <React.Fragment key={i}>
+                            {line}
+                            {i < program.title.split('\n').length - 1 && <br />}
+                          </React.Fragment>
+                        ))}
+                      </motion.h3>
 
-                          {/* Image Section - Elegant and Visible */}
-                          <motion.div 
-                            className="w-48 h-36 md:w-64 md:h-48 mx-auto"
-                            whileHover={{ scale: 1.05 }}
-                          >
-                            {/* Elegant Image Card */}
-                            <div className={`relative w-full h-full bg-gradient-to-br ${colors.bg} backdrop-blur-[20px] border-2 ${colors.border} rounded-xl overflow-hidden group-hover:border-opacity-80 transition-all duration-300 shadow-xl`}>
-                              <img 
-                                src={program.imagePlaceholder} 
-                                alt={program.title}
-                                className="w-full h-full object-cover"
-                              />
-                              {/* Subtle Overlay Effect */}
-                              <motion.div
-                                className={`absolute inset-0 bg-gradient-to-br ${colors.glow} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}
-                              />
-                            </div>
-                          </motion.div>
-
-                          {/* Description Below Image */}
-                          <div className="flex flex-col gap-4">
-                            {/* Description Text - Full Text Visible, No Cutoff */}
-                            <p className="text-white/90 text-sm md:text-base leading-relaxed whitespace-normal break-words">
-                              {program.description}
-                            </p>
-                            
-                            {/* CTA Button */}
-                            <motion.a
-                              href={program.learnMoreLink}
-                              className={`inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r ${colors.glow} border ${colors.border} rounded-xl text-white hover:text-orange transition-all duration-300 font-semibold text-sm group-hover:border-opacity-80 self-start`}
-                              whileHover={{ 
-                                x: 10,
-                                scale: 1.05,
-                                boxShadow: "0 10px 30px rgba(255, 145, 77, 0.3)"
-                              }}
-                              whileTap={{ scale: 0.95 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              <span>Learn More</span>
-                              <ArrowRight className="w-4 h-4" />
-                            </motion.a>
-                          </div>
+                      {/* Image Placeholder - Fixed Height for Alignment */}
+                      <motion.div 
+                        className="w-full h-48 md:h-64 flex-shrink-0"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className={`relative w-full h-full bg-gradient-to-br ${colors.bg} backdrop-blur-[20px] border-2 ${colors.border} rounded-xl overflow-hidden group-hover:border-opacity-80 transition-all duration-300 shadow-xl`}>
+                          <img 
+                            src={program.imagePlaceholder} 
+                            alt={program.title}
+                            className="w-full h-full object-cover object-left"
+                          />
+                          {/* Subtle Overlay Effect */}
+                          <motion.div
+                            className={`absolute inset-0 bg-gradient-to-br ${colors.glow} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}
+                          />
                         </div>
+                      </motion.div>
+
+                      {/* Description Below Image */}
+                      <div className="flex flex-col gap-4 flex-grow">
+                        <p className="text-white/90 text-sm md:text-base leading-relaxed text-center flex-grow">
+                          {program.description}
+                        </p>
+                        
+                        {/* CTA Button */}
+                        <motion.a
+                          href={program.learnMoreLink}
+                          className={`inline-flex items-center justify-center gap-3 px-6 py-3 bg-gradient-to-r ${colors.glow} border ${colors.border} rounded-xl text-white hover:text-orange transition-all duration-300 font-semibold text-sm group-hover:border-opacity-80 mt-auto`}
+                          whileHover={{ 
+                            scale: 1.05,
+                            boxShadow: "0 10px 30px rgba(255, 145, 77, 0.3)"
+                          }}
+                          whileTap={{ scale: 0.95 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <span>Learn More</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </motion.a>
                       </div>
                     </div>
-                  </motion.div>
-                )
-              })}
-            </motion.div>
-          </div>
-
-          {/* Navigation Buttons */}
-          <div className="flex items-center justify-center gap-4 mt-8">
-            <motion.button
-              onClick={() => setCurrentIndex((prev) => (prev === 0 ? programs.length - 1 : prev - 1))}
-              className="w-14 h-14 rounded-full bg-gradient-to-r from-azure-blue/20 to-orange/20 border border-azure-blue/40 backdrop-blur-sm flex items-center justify-center text-white hover:border-azure-blue/60 transition-all duration-300 cursor-pointer"
-              whileHover={{ scale: 1.1, boxShadow: "0 0 20px rgba(0, 212, 255, 0.5)" }}
-              whileTap={{ scale: 0.9 }}
-              type="button"
-            >
-              <ChevronLeft className="w-6 h-6 pointer-events-none" />
-            </motion.button>
-
-            {/* Dots Indicator */}
-            <div className="flex gap-3">
-              {programs.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    currentIndex === index
-                      ? 'bg-azure-blue w-8'
-                      : 'bg-white/30 hover:bg-white/50'
-                  }`}
-                />
-              ))}
-            </div>
-
-            <motion.button
-              onClick={() => setCurrentIndex((prev) => (prev === programs.length - 1 ? 0 : prev + 1))}
-              className="w-14 h-14 rounded-full bg-gradient-to-r from-azure-blue/20 to-orange/20 border border-azure-blue/40 backdrop-blur-sm flex items-center justify-center text-white hover:border-azure-blue/60 transition-all duration-300 cursor-pointer"
-              whileHover={{ scale: 1.1, boxShadow: "0 0 20px rgba(0, 212, 255, 0.5)" }}
-              whileTap={{ scale: 0.9 }}
-              type="button"
-            >
-              <ChevronRight className="w-6 h-6 pointer-events-none" />
-            </motion.button>
+                  </div>
+                </motion.div>
+              )
+            })}
           </div>
         </motion.div>
       </div>

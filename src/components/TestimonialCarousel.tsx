@@ -1,8 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, Quote } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Quote, Shield } from 'lucide-react'
 
 interface Testimonial {
   id: number
@@ -14,31 +13,29 @@ interface Testimonial {
 }
 
 export function TestimonialCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-
   const testimonials: Testimonial[] = [
     {
       id: 1,
-      name: 'Sarah Mitchell',
-      role: 'Executive Director',
-      company: 'Global Tech Solutions',
-      content: 'The Orange Code transformed how our team communicates in the UAE. The cultural insights we gained have been invaluable for building authentic relationships with our Emirati partners. This program is essential for anyone serious about business in the Gulf.',
+      name: 'Regional Project Lead',
+      role: 'Dutch Construction Leader Managing Major Projects in the Gulf Region',
+      company: '',
+      content: 'Working in the Gulf taught me that what feels natural in my own culture doesn\'t always land the same here. Once I understood the unspoken expectations and subtle ways people build trust, my whole approach shifted. I feel more grounded, more respectful and far more effective in every conversation I have.',
       rating: 5
     },
     {
       id: 2,
-      name: 'James Anderson',
-      role: 'Regional Manager',
-      company: 'International Finance Corp',
-      content: 'I\'ve attended many cultural training programs, but The Orange Code stands out. The practical approach and deep understanding of GCC business culture helped me navigate complex negotiations with confidence. Highly recommended!',
+      name: 'Ciara K. Al-J.',
+      role: 'Irish professional married to an Emirati',
+      company: '',
+      content: 'Understanding the culture around me changed everything. It brought calm into my marriage, clarity into my daily life and a sense of belonging I didn\'t know I could feel. I understand my husband\'s world so much better now and I\'m genuinely grateful for how much lighter and more connected life here feels after what I\'ve learned.',
       rating: 5
     },
     {
       id: 3,
-      name: 'Emma Thompson',
-      role: 'Founder & CEO',
-      company: 'Dubai Ventures',
-      content: 'As an expat entrepreneur, understanding cultural nuances was crucial for my success. The Orange Code provided exactly what I needed - real, actionable insights that helped me build trust and grow my business in the UAE.',
+      name: 'Sophie Turner',
+      role: 'British Expat Living in Dubai',
+      company: '',
+      content: 'I joined The Orange Code out of pure curiosity. I wanted to understand the culture I was living in and hoped to learn a few basics. The Cultural Foundations Workshop and the Workshop dedicated to Expatriates gave me so much more. I finally understood the values that shape life in the UAE and the meaning behind the way people communicate here. It made me feel more at home and more connected to the country. I see the culture with new appreciation and I no longer feel like an outsider.',
       rating: 5
     },
     {
@@ -58,18 +55,6 @@ export function TestimonialCarousel() {
       rating: 5
     }
   ]
-
-  const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))
-  }
-
-  const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))
-  }
-
-  const goToTestimonial = (index: number) => {
-    setCurrentIndex(index)
-  }
 
   return (
     <section className="relative py-24 md:py-32 bg-gradient-to-br from-primary-dark via-primary-dark/95 to-primary-dark overflow-hidden">
@@ -122,7 +107,7 @@ export function TestimonialCarousel() {
           </motion.div>
 
           <motion.h2 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 md:mb-10"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ 
@@ -147,8 +132,8 @@ export function TestimonialCarousel() {
               Clients Say
             </motion.span>
           </motion.h2>
-          <motion.p 
-            className="text-white/70 text-lg max-w-2xl mx-auto"
+          <motion.div 
+            className="text-white/70 text-lg max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ 
@@ -158,11 +143,16 @@ export function TestimonialCarousel() {
             }}
             viewport={{ once: true }}
           >
-            Real experiences from professionals who transformed their cultural intelligence
-          </motion.p>
+            <p className="mb-4">
+              Honest reflections from the people who walked this journey with us.
+            </p>
+            <p>
+              Several clients, marked with a shield, prefer to remain anonymous because of NDA requirements, but still offered to share their experience. We are truly thankful for every participant who chooses to tell us how the workshops shaped their understanding of the culture. Here is a small selection.
+            </p>
+          </motion.div>
         </motion.div>
 
-        {/* Testimonial Carousel */}
+        {/* Testimonials Grid - All 5 on One Page */}
         <motion.div 
           className="relative"
           initial={{ opacity: 0, y: 60, scale: 0.95 }}
@@ -174,98 +164,75 @@ export function TestimonialCarousel() {
           }}
           viewport={{ once: true, margin: "-50px" }}
         >
-          {/* Carousel Container */}
-          <div className="relative overflow-hidden rounded-3xl">
-            <AnimatePresence mode="wait">
+          {/* Grid Container - 3 testimonials per row */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {testimonials.slice(0, 3).map((testimonial, index) => (
               <motion.div
-                key={currentIndex}
-                initial={{ opacity: 0, x: 100, scale: 0.95 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -100, scale: 0.95 }}
+                key={testimonial.id}
+                initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ 
                   duration: 0.6, 
+                  delay: index * 0.1,
                   ease: [0.25, 0.1, 0.25, 1]
                 }}
-                className="glass-card p-8 md:p-12"
+                viewport={{ once: true }}
+                className="glass-card p-6 md:p-8 h-full flex flex-col relative"
               >
+                {/* NDA Indicator - Only for first testimonial */}
+                {index === 0 && (
+                  <div className="absolute top-4 right-4 z-10">
+                    <div className="w-6 h-6 bg-orange/20 rounded-full flex items-center justify-center border border-orange/40 backdrop-blur-sm">
+                      <Shield className="w-3.5 h-3.5 text-orange" />
+                    </div>
+                  </div>
+                )}
+                
                 {/* Quote Icon */}
-                <div className="flex justify-center mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-orange/20 to-azure-blue/20 rounded-full flex items-center justify-center">
-                    <Quote className="w-8 h-8 text-orange" />
+                <div className="flex justify-center mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-orange/20 to-azure-blue/20 rounded-full flex items-center justify-center">
+                    <Quote className="w-6 h-6 text-orange" />
                   </div>
                 </div>
 
                 {/* Testimonial Content */}
-                <blockquote className="text-center mb-8">
-                  <p className="text-white text-lg md:text-xl lg:text-2xl leading-relaxed font-light italic mb-6">
-                    "{testimonials[currentIndex].content}"
+                <blockquote className="flex-grow mb-4">
+                  <p className="text-white text-sm md:text-base leading-relaxed font-light italic mb-3">
+                    "{testimonial.content}"
                   </p>
                 </blockquote>
 
                 {/* Rating Stars */}
-                <div className="flex justify-center gap-1 mb-6">
-                  {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
+                <div className="flex justify-center gap-1 mb-3">
+                  {[...Array(testimonial.rating)].map((_, i) => (
                     <motion.div
                       key={i}
                       initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
+                      whileInView={{ scale: 1 }}
                       transition={{ delay: i * 0.1, type: "spring" }}
+                      viewport={{ once: true }}
                     >
-                      <span className="text-orange text-2xl">★</span>
+                      <span className="text-orange text-base">★</span>
                     </motion.div>
                   ))}
                 </div>
 
                 {/* Author Info */}
-                <div className="text-center">
-                  <h4 className="text-white text-xl md:text-2xl font-bold mb-2">
-                    {testimonials[currentIndex].name}
+                <div className="text-center mt-auto">
+                  <h4 className="text-white text-base md:text-lg font-bold mb-1">
+                    {testimonial.name}
                   </h4>
-                  <p className="text-white/70 text-base md:text-lg">
-                    {testimonials[currentIndex].role} at {testimonials[currentIndex].company}
-                  </p>
+                  {(testimonial.role || testimonial.company) && (
+                    <p className="text-white/70 text-xs md:text-sm">
+                      {testimonial.role && testimonial.company 
+                        ? `${testimonial.role} at ${testimonial.company}`
+                        : testimonial.role || testimonial.company
+                      }
+                    </p>
+                  )}
                 </div>
               </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Navigation Controls */}
-          <div className="flex items-center justify-center gap-4 mt-8">
-            <motion.button
-              onClick={prevTestimonial}
-              className="w-14 h-14 rounded-full bg-gradient-to-r from-azure-blue/20 to-orange/20 border border-azure-blue/40 backdrop-blur-sm flex items-center justify-center text-white hover:border-azure-blue/60 transition-all duration-300 cursor-pointer"
-              whileHover={{ scale: 1.1, boxShadow: "0 0 20px rgba(0, 212, 255, 0.5)" }}
-              whileTap={{ scale: 0.9 }}
-              type="button"
-            >
-              <ChevronLeft className="w-6 h-6 pointer-events-none" />
-            </motion.button>
-
-            {/* Dots Indicator */}
-            <div className="flex gap-3">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToTestimonial(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    currentIndex === index
-                      ? 'bg-azure-blue w-8'
-                      : 'bg-white/30 hover:bg-white/50'
-                  }`}
-                  type="button"
-                />
-              ))}
-            </div>
-
-            <motion.button
-              onClick={nextTestimonial}
-              className="w-14 h-14 rounded-full bg-gradient-to-r from-azure-blue/20 to-orange/20 border border-azure-blue/40 backdrop-blur-sm flex items-center justify-center text-white hover:border-azure-blue/60 transition-all duration-300 cursor-pointer"
-              whileHover={{ scale: 1.1, boxShadow: "0 0 20px rgba(0, 212, 255, 0.5)" }}
-              whileTap={{ scale: 0.9 }}
-              type="button"
-            >
-              <ChevronRight className="w-6 h-6 pointer-events-none" />
-            </motion.button>
+            ))}
           </div>
         </motion.div>
       </div>
