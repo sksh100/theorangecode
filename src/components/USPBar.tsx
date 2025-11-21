@@ -93,16 +93,33 @@ export function USPBar() {
           viewport={{ once: true, margin: "-50px" }}
         >
           <motion.div
-            className="inline-flex items-center space-x-2 px-4 py-2 bg-azure-blue-transparent border border-azure-blue/30 rounded-full mb-6"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            className="inline-flex items-center gap-2 px-4 py-2 mb-6"
+            initial={{ opacity: 0, scale: 0.8, y: -20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ 
+              duration: 0.8,
+              delay: 0.2,
+              ease: [0.34, 1.56, 0.64, 1]
+            }}
             viewport={{ once: true }}
           >
-            <Star className="w-4 h-4 text-azure-blue" />
-            <span className="text-azure-blue font-montserrat font-semibold text-sm uppercase tracking-wider">
+            <motion.div 
+              className="w-2 h-2 bg-orange rounded-full"
+              initial={{ scale: 0 }}
+              whileInView={{ scale: [0, 1.2, 1] }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+            />
+            <span className="text-azure-blue font-semibold text-sm uppercase tracking-wider">
               Our Excellence
             </span>
+            <motion.div 
+              className="w-2 h-2 bg-azure-blue rounded-full"
+              initial={{ scale: 0 }}
+              whileInView={{ scale: [0, 1.2, 1] }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              viewport={{ once: true }}
+            />
           </motion.div>
           
           <h2 className="text-4xl md:text-5xl font-bold text-white font-montserrat mb-4">

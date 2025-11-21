@@ -48,6 +48,14 @@ export function TestimonialCarousel() {
       company: 'Strategic Partners Group',
       content: 'The depth of knowledge and practical application in The Orange Code program is exceptional. It\'s not just theory - it\'s real-world wisdom that immediately improved my interactions and business outcomes in the region.',
       rating: 5
+    },
+    {
+      id: 5,
+      name: 'Dutch Operations Lead',
+      role: 'Operations Lead',
+      company: 'Ballast Nedam',
+      content: 'Coming from a Dutch background I assumed honesty and directness created trust. In the Gulf this sometimes sounded too blunt. The Orange Code helped me adapt my communication to the UAE and Saudi ecosystem. I learned how warmth and respect shape business here. The results were immediate. Our projects moved faster and partnerships became effortless.',
+      rating: 5
     }
   ]
 

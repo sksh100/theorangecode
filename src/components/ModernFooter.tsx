@@ -129,15 +129,14 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
       <div className="relative z-10">
         {/* Main Footer Content */}
         <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-20 md:py-24 mt-8 sm:mt-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 lg:gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 lg:gap-8">
             
-            {/* Company Info - Left Column */}
+            {/* Company Info - Column 1 */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
               viewport={{ once: true }}
-              className="lg:col-span-1"
             >
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-12 h-12 relative">
@@ -179,7 +178,7 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
               </div>
             </motion.div>
 
-            {/* Contact Information - Middle Column */}
+            {/* Contact Information - Column 2 */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -229,13 +228,42 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
               </div>
             </motion.div>
 
-            {/* Newsletter Subscription - Right Column */}
+            {/* Quick Links - Column 3 */}
+            {!hideQuickLinks && (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               viewport={{ once: true }}
-              className="lg:col-span-1 relative z-10 pb-8"
+            >
+              <h4 className="text-lg font-semibold text-white mb-6 tracking-tight">Quick Links</h4>
+              <div className="space-y-3">
+                <a href="#programs" className="block text-white/70 text-sm hover:text-orange transition-colors">
+                  Programs
+                </a>
+                <a href="#about" className="block text-white/70 text-sm hover:text-orange transition-colors">
+                  About Us
+                </a>
+                <a href="#services" className="block text-white/70 text-sm hover:text-orange transition-colors">
+                  Services
+                </a>
+                <a href="#contact" className="block text-white/70 text-sm hover:text-orange transition-colors">
+                  Contact
+                </a>
+                <Link href="/faq" className="block text-white/70 text-sm hover:text-orange transition-colors">
+                  FAQ
+                </Link>
+              </div>
+            </motion.div>
+            )}
+
+            {/* Newsletter Subscription - Column 4 (Last Column) */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="relative z-10 pb-8"
             >
               <h4 className="text-lg font-semibold text-white mb-6 tracking-tight">Stay Connected</h4>
               <p className="text-white/70 text-sm mb-6 leading-relaxed">
@@ -324,35 +352,6 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
               )}
             </motion.div>
 
-            {/* Quick Links - Additional Column when not hidden */}
-            {!hideQuickLinks && (
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              viewport={{ once: true }}
-                className="md:col-span-2 lg:col-span-1 lg:col-start-1 lg:row-start-2"
-            >
-                <h4 className="text-lg font-semibold text-white mb-6 tracking-tight">Quick Links</h4>
-                <div className="grid grid-cols-2 md:grid-cols-1 gap-3">
-                  <a href="#programs" className="text-white/70 text-sm hover:text-orange transition-colors">
-                  Programs
-                </a>
-                  <a href="#about" className="text-white/70 text-sm hover:text-orange transition-colors">
-                  About Us
-                </a>
-                  <a href="#services" className="text-white/70 text-sm hover:text-orange transition-colors">
-                  Services
-                </a>
-                  <a href="#contact" className="text-white/70 text-sm hover:text-orange transition-colors">
-                  Contact
-                </a>
-                  <Link href="/faq" className="text-white/70 text-sm hover:text-orange transition-colors">
-                  FAQ
-                </Link>
-              </div>
-            </motion.div>
-            )}
           </div>
         </div>
 

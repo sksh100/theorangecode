@@ -159,59 +159,44 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
         >
           {/* Animated Badge */}
           <motion.div 
-            className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-azure-blue/10 to-orange/10 border border-azure-blue/30 rounded-full mb-8 backdrop-blur-sm"
-            initial={{ opacity: 0, scale: 0.8, rotateX: -90 }}
-            whileInView={{ opacity: 1, scale: 1, rotateX: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            viewport={{ once: true }}
-            whileHover={{ scale: 1.05, rotateY: 5 }}
-          >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            >
-              <Sparkles className="w-5 h-5 text-azure-blue" />
-            </motion.div>
-            <span className="text-sm font-bold text-text-primary uppercase tracking-widest">
-              Programs Overview
-            </span>
-            <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            >
-              <Target className="w-5 h-5 text-orange" />
-            </motion.div>
-          </motion.div>
-          
-          {/* Main Title with 3D Effect */}
-          <motion.h2 
-            className="text-5xl md:text-7xl font-black mb-8"
-            initial={{ opacity: 0, y: 30, rotateX: -15 }}
-            whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-            transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-            viewport={{ once: true }}
-            style={{
-              textShadow: `
-                0 0 20px rgba(0, 212, 255, 0.5),
-                0 0 40px rgba(0, 212, 255, 0.3),
-                0 0 60px rgba(0, 212, 255, 0.1)
-              `
+            className="inline-flex items-center gap-2 px-4 py-2 mb-6"
+            initial={{ opacity: 0, scale: 0.8, y: -20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ 
+              duration: 0.8,
+              delay: 0.2,
+              ease: [0.34, 1.56, 0.64, 1]
             }}
+            viewport={{ once: true }}
           >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-azure-blue via-white to-orange">
+            <motion.div 
+              className="w-2 h-2 bg-orange rounded-full"
+              initial={{ scale: 0 }}
+              whileInView={{ scale: [0, 1.2, 1] }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+            />
+            <span className="text-azure-blue font-semibold text-sm uppercase tracking-wider">
               The Orange Code Programs
             </span>
-          </motion.h2>
+            <motion.div 
+              className="w-2 h-2 bg-azure-blue rounded-full"
+              initial={{ scale: 0 }}
+              whileInView={{ scale: [0, 1.2, 1] }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              viewport={{ once: true }}
+            />
+          </motion.div>
           
-          {/* Subtitle with Typewriter Effect */}
+          {/* Subtitle */}
           <motion.p 
-            className="text-xl md:text-2xl text-text-secondary max-w-4xl mx-auto font-light"
+            className="text-xl md:text-2xl text-text-secondary max-w-4xl mx-auto font-light mb-8"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             viewport={{ once: true }}
           >
-            Transform your potential with our signature programs designed for excellence
+            Transform your potential with our signature workshops designed for excellence
           </motion.p>
         </motion.div>
 
