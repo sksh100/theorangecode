@@ -7,6 +7,8 @@ import { CulturalIntelligence3DBackground } from './CulturalIntelligence3DBackgr
 
 export function WhyCulturalIntelligenceSection() {
   const [scrollY, setScrollY] = useState(0)
+  const [nationalitiesCount, setNationalitiesCount] = useState(100)
+  const [hasAnimated, setHasAnimated] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -24,6 +26,48 @@ export function WhyCulturalIntelligenceSection() {
     handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Count-up animation from 100 to 200 - triggers when section appears on screen
+  useEffect(() => {
+    if (!sectionRef.current || hasAnimated) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true)
+            const duration = 2000 // 2 seconds
+            const startValue = 100
+            const endValue = 200
+            const steps = 100
+            const increment = (endValue - startValue) / steps
+            const stepDuration = duration / steps
+            let current = startValue
+
+            const timer = setInterval(() => {
+              current += increment
+              if (current >= endValue) {
+                setNationalitiesCount(endValue)
+                clearInterval(timer)
+              } else {
+                setNationalitiesCount(Math.floor(current))
+              }
+            }, stepDuration)
+
+            // Stop observing once animation starts
+            observer.disconnect()
+          }
+        })
+      },
+      { threshold: 0.1 } // Trigger as soon as 10% of element is visible
+    )
+
+    observer.observe(sectionRef.current)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [hasAnimated])
 
   const personalBenefits = [
     {
@@ -77,40 +121,144 @@ export function WhyCulturalIntelligenceSection() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Hero Header - Flowing Design */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+          viewport={{ once: true, margin: "-100px" }}
           className="text-center mb-24 md:mb-32"
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, scale: 0.8, y: -20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ 
+              duration: 0.8,
+              ease: [0.34, 1.56, 0.64, 1],
+              delay: 0.2
+            }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 mb-8"
+            className="inline-flex items-center gap-2 px-4 py-2 mb-8 relative"
           >
-            <div className="w-2 h-2 bg-orange rounded-full animate-pulse" />
-            <span className="text-azure-blue font-semibold text-sm uppercase tracking-wider">
+            <motion.div 
+              className="w-2 h-2 bg-orange rounded-full"
+              initial={{ scale: 0, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              animate={{ scale: [1, 1.3, 1], opacity: [1, 0.8, 1] }}
+              transition={{ 
+                duration: 0.8, 
+                delay: 0.4,
+                repeat: Infinity,
+                repeatDelay: 1.2,
+                ease: "easeInOut"
+              }}
+            />
+            <motion.span 
+              className="text-azure-blue font-semibold text-sm uppercase tracking-wider"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              viewport={{ once: true }}
+            >
               Cultural Intelligence
-            </span>
-            <div className="w-2 h-2 bg-azure-blue rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
+            </motion.span>
+            <motion.div 
+              className="w-2 h-2 bg-azure-blue rounded-full"
+              initial={{ scale: 0, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              animate={{ scale: [1, 1.3, 1], opacity: [1, 0.8, 1] }}
+              transition={{ 
+                duration: 0.8, 
+                delay: 0.6,
+                repeat: Infinity,
+                repeatDelay: 1.2,
+                ease: "easeInOut"
+              }}
+            />
+            {/* Glow effect */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-orange/20 via-azure-blue/20 to-orange/20 rounded-full blur-xl -z-10"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: [0.5, 1, 0.5], scale: 1 }}
+              transition={{ duration: 3, repeat: Infinity }}
+              viewport={{ once: true }}
+            />
           </motion.div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-white max-w-5xl mx-auto leading-tight whitespace-nowrap">
-            Why Cultural Intelligence{' '}
-            <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+          <motion.h2 
+            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-white max-w-5xl mx-auto leading-tight whitespace-nowrap"
+            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ 
+              duration: 1,
+              delay: 0.3,
+              ease: [0.25, 0.1, 0.25, 1]
+            }}
+            viewport={{ once: true }}
+          >
+            <motion.span
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              viewport={{ once: true }}
+            >
+              Why Cultural Intelligence{' '}
+            </motion.span>
+            <motion.span 
+              className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent relative inline-block"
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ 
+                duration: 0.8,
+                delay: 0.7,
+                ease: [0.34, 1.56, 0.64, 1]
+              }}
+              viewport={{ once: true }}
+              animate={{ 
+                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+              }}
+              style={{
+                backgroundSize: '200% 200%',
+              }}
+            >
               Matters
-            </span>
-          </h2>
+              <motion.span
+                className="absolute inset-0 bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent opacity-50 blur-sm"
+                animate={{ opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                Matters
+              </motion.span>
+            </motion.span>
+          </motion.h2>
           
           <div className="max-w-4xl mx-auto space-y-6">
-            <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+            <motion.p 
+              className="text-lg md:text-xl text-white/90 leading-relaxed"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 0.8,
+                delay: 0.9,
+                ease: [0.25, 0.1, 0.25, 1]
+              }}
+              viewport={{ once: true }}
+            >
               People succeed because they know how to communicate across cultures, interpret subtle signals, and build trust quickly. Cultural intelligence gives you this advantage.
-            </p>
-            <p className="text-lg md:text-xl text-white/70 leading-relaxed">
+            </motion.p>
+            <motion.p 
+              className="text-lg md:text-xl text-white/70 leading-relaxed"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 0.8,
+                delay: 1.1,
+                ease: [0.25, 0.1, 0.25, 1]
+              }}
+              viewport={{ once: true }}
+            >
               It helps you move with confidence, avoid misunderstandings, and create the relationships that drive real success in the UAE and wider Gulf Region.
-            </p>
+            </motion.p>
           </div>
         </motion.div>
 
@@ -125,52 +273,194 @@ export function WhyCulturalIntelligenceSection() {
           className="mb-32 md:mb-40"
         >
           {/* Section Header with Icon */}
-          <div className="flex items-center gap-6 mb-12">
-            <div className="relative">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange to-orange-luminous rounded-2xl flex items-center justify-center">
-                <Heart className="w-8 h-8 text-white" />
-              </div>
-              <div className="absolute -inset-2 bg-orange/20 rounded-2xl blur-xl -z-10" />
-            </div>
-            <div>
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-2">
+          <motion.div 
+            className="flex items-center gap-6 mb-12"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ 
+              duration: 0.8,
+              ease: [0.25, 0.1, 0.25, 1]
+            }}
+            viewport={{ once: true }}
+          >
+            <motion.div 
+              className="relative"
+              initial={{ scale: 0, rotate: -180 }}
+              whileInView={{ scale: 1, rotate: 0 }}
+              transition={{ 
+                duration: 0.8,
+                delay: 0.2,
+                type: "spring",
+                stiffness: 200
+              }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.1, rotate: 5 }}
+            >
+              <motion.div 
+                className="w-16 h-16 bg-gradient-to-br from-orange to-orange-luminous rounded-2xl flex items-center justify-center relative overflow-hidden"
+                animate={{ 
+                  boxShadow: [
+                    "0 0 20px rgba(255, 145, 77, 0.5)",
+                    "0 0 40px rgba(255, 145, 77, 0.8)",
+                    "0 0 20px rgba(255, 145, 77, 0.5)"
+                  ]
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <Heart className="w-8 h-8 text-white relative z-10" />
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"
+                  animate={{ opacity: [0, 1, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+              </motion.div>
+              <motion.div 
+                className="absolute -inset-2 bg-orange/20 rounded-2xl blur-xl -z-10"
+                animate={{ 
+                  opacity: [0.3, 0.6, 0.3],
+                  scale: [1, 1.2, 1]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ 
+                duration: 0.8,
+                delay: 0.4,
+                ease: [0.25, 0.1, 0.25, 1]
+              }}
+              viewport={{ once: true }}
+            >
+              <motion.h3 
+                className="text-3xl md:text-4xl font-bold text-white mb-2"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                viewport={{ once: true }}
+              >
                 In Personal Settings
-              </h3>
-              <div className="h-1 w-24 bg-gradient-to-r from-orange to-transparent rounded-full" />
-            </div>
-          </div>
+              </motion.h3>
+              <motion.div 
+                className="h-1 w-24 bg-gradient-to-r from-orange to-transparent rounded-full relative overflow-hidden"
+                initial={{ width: 0 }}
+                whileInView={{ width: 96 }}
+                transition={{ duration: 1, delay: 0.7, ease: "easeOut" }}
+                viewport={{ once: true }}
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent"
+                  animate={{ x: ['-100%', '200%'] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                />
+              </motion.div>
+            </motion.div>
+          </motion.div>
 
-          <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-16 max-w-3xl">
-            Cultural intelligence transforms your personal life by helping you connect authentically with people from over 200 nationalities in the UAE.
-          </p>
+          <motion.p 
+            className="text-lg md:text-xl text-white/80 leading-relaxed mb-16 max-w-3xl"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 0.8,
+              delay: 0.8,
+              ease: [0.25, 0.1, 0.25, 1]
+            }}
+            viewport={{ once: true }}
+          >
+            Cultural intelligence transforms your personal life by helping you connect authentically with people from over{' '}
+            <motion.span 
+              className="inline-block font-bold text-orange relative"
+              key={nationalitiesCount}
+              initial={{ scale: 1.2, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              {nationalitiesCount}
+              <motion.span
+                className="absolute inset-0 text-orange-luminous blur-sm opacity-50"
+                initial={{ scale: 1.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 0.5 }}
+                transition={{ duration: 0.5 }}
+              >
+                {nationalitiesCount}
+              </motion.span>
+            </motion.span>
+            {' '}nationalities in the UAE.
+          </motion.p>
 
           {/* Benefits - Flowing List Design */}
           <div className="space-y-12">
             {personalBenefits.map((benefit, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-                viewport={{ once: true }}
+                initial={{ opacity: 0, x: -50, scale: 0.95 }}
+                whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                transition={{ 
+                  duration: 0.8, 
+                  delay: index * 0.2,
+                  ease: [0.25, 0.1, 0.25, 1]
+                }}
+                viewport={{ once: true, margin: "-50px" }}
                 className="flex flex-col md:flex-row gap-6 md:gap-8 group"
+                whileHover={{ x: 10 }}
               >
-                <div className="flex-shrink-0">
+                <motion.div 
+                  className="flex-shrink-0"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
                   <div className="relative">
-                    <div className="w-16 h-16 bg-gradient-to-br from-orange/30 to-azure-blue/30 rounded-xl flex items-center justify-center backdrop-blur-sm border border-orange/20 group-hover:border-orange/50 transition-all duration-300">
-                      <benefit.icon className="w-8 h-8 text-orange" />
-                    </div>
-                    <div className="absolute -inset-1 bg-orange/10 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <motion.div 
+                      className="w-16 h-16 bg-gradient-to-br from-orange/30 to-azure-blue/30 rounded-xl flex items-center justify-center backdrop-blur-sm border border-orange/20 group-hover:border-orange/50 transition-all duration-300 relative overflow-hidden"
+                      whileHover={{ 
+                        boxShadow: "0 0 30px rgba(255, 145, 77, 0.6)",
+                        scale: 1.05
+                      }}
+                    >
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"
+                        animate={{ opacity: [0, 1, 0] }}
+                        transition={{ duration: 3, repeat: Infinity, delay: index * 0.5 }}
+                      />
+                      <benefit.icon className="w-8 h-8 text-orange relative z-10" />
+                    </motion.div>
+                    <motion.div 
+                      className="absolute -inset-1 bg-orange/10 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      animate={{ 
+                        opacity: [0, 0.5, 0],
+                        scale: [1, 1.2, 1]
+                      }}
+                      transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
+                    />
                   </div>
-                </div>
-                <div className="flex-1 pt-2">
-                  <h4 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-orange transition-colors duration-300">
+                </motion.div>
+                <motion.div 
+                  className="flex-1 pt-2"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 + 0.3 }}
+                  viewport={{ once: true }}
+                >
+                  <motion.h4 
+                    className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-orange transition-colors duration-300"
+                    whileHover={{ 
+                      textShadow: "0 0 20px rgba(255, 145, 77, 0.8)"
+                    }}
+                  >
                     {benefit.title}
-                  </h4>
-                  <p className="text-lg text-white/70 leading-relaxed">
+                  </motion.h4>
+                  <motion.p 
+                    className="text-lg text-white/70 leading-relaxed"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.2 + 0.4 }}
+                    viewport={{ once: true }}
+                  >
                     {benefit.description}
-                  </p>
-                </div>
+                  </motion.p>
+                </motion.div>
               </motion.div>
             ))}
           </div>
