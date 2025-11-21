@@ -70,7 +70,7 @@ export function ResourcesSection() {
             duration: 1,
             ease: [0.25, 0.1, 0.25, 1]
           }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "0px" }}
         >
           <motion.div
             className="inline-flex items-center gap-2 px-4 py-2 mb-6"
@@ -81,14 +81,14 @@ export function ResourcesSection() {
               delay: 0.2,
               ease: [0.34, 1.56, 0.64, 1]
             }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "0px" }}
           >
             <motion.div 
               className="w-2 h-2 bg-orange rounded-full"
               initial={{ scale: 0 }}
               whileInView={{ scale: [0, 1.2, 1] }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "0px" }}
             />
             <span className="text-azure-blue font-semibold text-sm uppercase tracking-wider">
               Resources & Services
@@ -98,7 +98,7 @@ export function ResourcesSection() {
               initial={{ scale: 0 }}
               whileInView={{ scale: [0, 1.2, 1] }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "0px" }}
             />
           </motion.div>
 
@@ -111,7 +111,7 @@ export function ResourcesSection() {
               delay: 0.3,
               ease: [0.25, 0.1, 0.25, 1]
             }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "0px" }}
           >
             Explore Our{' '}
             <motion.span 
@@ -123,7 +123,7 @@ export function ResourcesSection() {
                 delay: 0.5,
                 ease: [0.34, 1.56, 0.64, 1]
               }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "0px" }}
             >
               Resources
             </motion.span>
@@ -135,8 +135,9 @@ export function ResourcesSection() {
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, margin: "0px" }}
           variants={{
+            hidden: {},
             visible: {
               transition: {
                 staggerChildren: 0.15,
@@ -167,7 +168,7 @@ export function ResourcesSection() {
                 duration: 0.8,
                 ease: [0.25, 0.1, 0.25, 1]
               }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "0px" }}
               className="group"
             >
               <Link href={resource.link || '#'} className="block h-full">
@@ -216,7 +217,7 @@ export function ResourcesSection() {
               duration: 1,
               ease: [0.25, 0.1, 0.25, 1]
             }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "0px" }}
             className="md:col-span-2 group"
           >
             <Link href={resources[2].link || '#'} className="block h-full">
