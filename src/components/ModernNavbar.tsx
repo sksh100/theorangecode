@@ -131,23 +131,23 @@ export function ModernNavbar() {
         />
       </div>
       
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
+          {/* Logo with text */}
           <motion.div
-            className="flex items-center space-x-3"
+            className="flex items-center flex-shrink-0 min-w-0 -ml-2 sm:-ml-4"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <div>
-              <h1 className="text-xl font-bold text-white font-montserrat">
+            <div className="flex-shrink-0">
+              <h1 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white font-montserrat whitespace-nowrap">
                 The Orange Code
               </h1>
             </div>
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-6 xl:space-x-8 flex-1 justify-center mx-4">
             {navItems.map((item) => (
               <div key={item.label} className="relative">
                 <motion.button
@@ -200,17 +200,17 @@ export function ModernNavbar() {
             ))}
           </div>
 
-          {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center space-x-3">
+          {/* CTA Buttons - Always right aligned */}
+          <div className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0 ml-auto">
             {/* Shopping Basket */}
             <motion.button
-              className="relative p-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300 group"
+              className="relative p-2 sm:p-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300 group"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
               onClick={addToCart}
             >
-              <ShoppingBag className="w-5 h-5" />
+              <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
               {cartItems > 0 && (
                 <motion.span
                   className="cart-badge"
@@ -227,18 +227,18 @@ export function ModernNavbar() {
             {isLoggedIn ? (
               <Link href="/dashboard">
                 <motion.button
-                  className="flex items-center space-x-2 px-4 py-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300 group"
+                  className="hidden sm:flex items-center space-x-2 px-3 sm:px-4 py-2 sm:py-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300 group"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
                   <LogIn className="w-4 h-4 group-hover:text-azure-blue transition-colors duration-300" />
-                  <span className="font-montserrat font-medium text-sm">Dashboard</span>
+                  <span className="font-montserrat font-medium text-xs sm:text-sm">Dashboard</span>
                 </motion.button>
               </Link>
             ) : (
               <motion.button
-                className="flex items-center space-x-2 px-4 py-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300 group"
+                className="hidden sm:flex items-center space-x-2 px-3 sm:px-4 py-2 sm:py-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300 group"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -271,14 +271,14 @@ export function ModernNavbar() {
                 }}
               >
                 <LogIn className="w-4 h-4 group-hover:text-azure-blue transition-colors duration-300" />
-                <span className="font-montserrat font-medium text-sm">Login</span>
+                <span className="font-montserrat font-medium text-xs sm:text-sm">Login</span>
               </motion.button>
             )}
 
             {/* Get Started Button */}
             <Link href="/signup">
               <motion.button
-                className="px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
+                className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-xs sm:text-sm md:text-base"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -288,9 +288,9 @@ export function ModernNavbar() {
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Only show when menu items need to be hidden */}
           <motion.button
-            className="lg:hidden p-2 text-white/80 hover:text-white transition-colors duration-300"
+            className="lg:hidden p-2 text-white/80 hover:text-white transition-colors duration-300 ml-2"
             onClick={handleMobileMenuToggle}
             whileTap={{ scale: 0.95 }}
           >

@@ -1,23 +1,34 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Redis } from "@upstash/redis";
+import { redis } from "@/lib/redis";
 
-const redis = new Redis({
-  url: process.env.KV_REST_API_URL!,
-  token: process.env.KV_REST_API_TOKEN!,
-});
+export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
-  const sub = await req.json();
+  try {
+    // Check if Redis is configured
+    if (!process.env.UPSTASH_REDIS_REST_URL && !process.env.KV_REST_API_URL) {
+      console.warn("Redis not configured - push subscription disabled");
+      return NextResponse.json({ ok: true, message: "Push subscription disabled - Redis not configured" });
+    }
 
-  // avoid duplicates by storing as a set-like list
-  const raw = JSON.stringify(sub);
-  const existing = await redis.lrange<string>("push:subs", 0, -1);
+    const sub = await req.json();
 
-  if (!existing.includes(raw)) {
-    await redis.lpush("push:subs", raw);
-    await redis.ltrim("push:subs", 0, 200);
+    // avoid duplicates by storing as a set-like list
+    const raw = JSON.stringify(sub);
+    const existing = await redis.lrange<string>("push:subs", 0, -1);
+
+    if (!existing.includes(raw)) {
+      await redis.lpush("push:subs", raw);
+      await redis.ltrim("push:subs", 0, 200);
+    }
+
+    return NextResponse.json({ ok: true });
+  } catch (error: any) {
+    console.error("push/subscribe error", error);
+    return NextResponse.json(
+      { ok: true, error: String(error?.message ?? error) },
+      { status: 200 }
+    );
   }
-
-  return NextResponse.json({ ok: true });
 }
 

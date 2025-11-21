@@ -151,6 +151,21 @@ export function BentoBoxSection() {
           transition={{ duration: 1, ease: "easeOut" }}
           viewport={{ once: true }}
         >
+          {/* Cultural Intelligence Header */}
+          <motion.div
+            className="inline-flex items-center gap-2 mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            viewport={{ once: true }}
+          >
+            <div className="w-2 h-2 bg-orange rounded-full" />
+            <span className="text-azure-blue font-semibold text-sm uppercase tracking-wider whitespace-nowrap">
+              CULTURAL INTELLIGENCE
+            </span>
+            <div className="w-2 h-2 bg-azure-blue rounded-full" />
+          </motion.div>
+
           <motion.div 
             className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-azure-blue/10 to-orange/10 border border-azure-blue/30 rounded-full mb-8 backdrop-blur-sm"
             initial={{ opacity: 0, scale: 0.8, rotateX: -90 }}

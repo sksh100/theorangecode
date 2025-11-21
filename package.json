@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@mailerlite/mailerlite-nodejs": "^1.5.0",
+    "@react-three/drei": "9.88.13",
+    "@react-three/fiber": "8.15.19",
     "@stripe/stripe-js": "^8.2.0",
     "@upstash/redis": "^1.34.0",
     "@vercel/kv": "^3.0.0",
@@ -27,6 +29,7 @@
     "recharts": "^3.3.0",
     "speakeasy": "^2.0.0",
     "stripe": "^19.2.0",
+    "three": "^0.181.1",
     "twilio": "^5.10.4",
     "web-push": "^3.6.7"
   },
@@ -34,6 +37,7 @@
     "@types/node": "^20.19.24",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
+    "@types/three": "^0.181.0",
     "@types/web-push": "^3.6.4",
     "autoprefixer": "^10.4.0",
     "eslint": "^8.0.0",

@@ -3,6 +3,8 @@
 import { NextResponse } from "next/server";
 import { redis } from "@/lib/redis";
 
+export const dynamic = 'force-dynamic'
+
 type VisitorPayload = {
   id: string;
   ip?: string | null;
@@ -16,6 +18,24 @@ type VisitorPayload = {
 
 export async function GET() {
   try {
+    // Check if Redis is configured
+    if (!process.env.UPSTASH_REDIS_REST_URL && !process.env.KV_REST_API_URL) {
+      return NextResponse.json({
+        activeVisitors: [],
+        recentVisitors: [],
+        stats: {
+          total: 0,
+          unique: 0,
+          today: 0,
+          thisMonth: 0,
+          activeNow: 0,
+        },
+        countries: {},
+        pages: {},
+        trends: [],
+      });
+    }
+
     const now = Date.now();
     const cutoff = now - 60_000; // active in last 60s
 

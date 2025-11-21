@@ -4,6 +4,7 @@ const nextConfig = {
     domains: ['localhost'],
     unoptimized: true,
   },
+  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
   async rewrites() {
     return [
       { source: '/favicon.ico', destination: '/flavicon/favicon.ico' },
