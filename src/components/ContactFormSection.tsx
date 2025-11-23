@@ -45,7 +45,7 @@ export function ContactFormSection() {
       });
 
       if (res.ok) {
-        setStatusMessage("Thank you, your message has been sent.");
+        setStatusMessage("Thank you. Your message has been received and our team will be in touch very soon.");
         form.reset();
         setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       } else {
