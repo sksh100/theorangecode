@@ -238,8 +238,8 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
             >
               <h4 className="text-lg font-semibold text-white mb-6 tracking-tight">Quick Links</h4>
               <div className="space-y-3">
-                <a href="#programs" className="block text-white/70 text-sm hover:text-orange transition-colors">
-                  Programs
+                <a href="/workshops" className="block text-white/70 text-sm hover:text-orange transition-colors">
+                  Workshops
                 </a>
                 <a href="#about" className="block text-white/70 text-sm hover:text-orange transition-colors">
                   About Us
@@ -303,18 +303,6 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                   <motion.button
                     type="submit"
                     disabled={isSubmitting || !email.trim()}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                      handleSubscribe(e)
-                    }}
-                    onTouchEnd={(e) => {
-                      if (!isSubmitting && email.trim()) {
-                        e.preventDefault()
-                        e.stopPropagation()
-                        handleSubscribe(e)
-                      }
-                    }}
                     aria-label="Subscribe to our newsletter"
                     className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-white text-sm font-semibold hover:shadow-lg hover:shadow-orange/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer active:scale-95"
                     style={{ 

@@ -20,7 +20,7 @@ export default function FAQ() {
   const faqItems: FAQItem[] = [
     {
       id: '1',
-      question: 'What makes Your Luxury Agent different from other cultural training programs?',
+      question: 'What makes The Orange Code different from other cultural training programs?',
       answer: 'We are certified by the Washington School of Protocol and trusted by embassies worldwide. Our programs combine refined knowledge of Emirati customs with authentic presence training, offering fast-track transformation in just 4 weeks. Unlike generic programs, we provide personalized cultural intelligence specifically designed for the UAE and broader Middle East region.',
       category: 'general',
       icon: <Award className="w-5 h-5" />
@@ -56,7 +56,7 @@ export default function FAQ() {
     {
       id: '6',
       question: 'How do I book a consultation session?',
-      answer: 'You can book a consultation through our website, contact us directly at +971 56 878 6106, or email info@yourluxuryagent.com. We offer both in-person sessions in Abu Dhabi and virtual consultations for international clients.',
+      answer: 'You can book a consultation through our website, contact us directly at +971 56 878 6106, or email contact@theorangecode.com. We offer both in-person sessions in Abu Dhabi and virtual consultations for international clients.',
       category: 'booking',
       icon: <Phone className="w-5 h-5" />
     },
@@ -282,7 +282,7 @@ export default function FAQ() {
           >
             <div className="text-center">
               <h3 className="text-2xl font-bold text-white mb-4">Still have questions?</h3>
-              <p className="text-white/80 mb-6">Our luxury agent team is here to help you with personalized guidance</p>
+              <p className="text-white/80 mb-6">Our Orange Code team is here to help you with personalized guidance</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <motion.a
                   href="tel:+971568786106"
@@ -294,7 +294,7 @@ export default function FAQ() {
                   Call Us: +971 56 878 6106
                 </motion.a>
                 <motion.a
-                  href="mailto:info@yourluxuryagent.com"
+                  href="mailto:contact@theorangecode.com"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 border border-white/20 text-white rounded-xl hover:bg-white/20 transition-colors font-medium"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
