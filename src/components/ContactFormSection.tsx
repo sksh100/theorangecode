@@ -13,7 +13,7 @@ export function ContactFormSection() {
     message: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [statusMessage, setStatusMessage] = useState<string | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData(prev => ({
@@ -22,21 +22,40 @@ export function ContactFormSection() {
     }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitStatus('idle')
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setStatusMessage(null);
 
-    // Simulate form submission
+    const form = e.currentTarget;
+
+    const submissionData = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
+      subject: (form.elements.namedItem("subject") as HTMLInputElement | HTMLSelectElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+    };
+
     try {
-      // TODO: Replace with actual API endpoint
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      setSubmitStatus('success')
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(submissionData),
+      });
+
+      if (res.ok) {
+        setStatusMessage("Thank you, your message has been sent.");
+        form.reset();
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      } else {
+        setStatusMessage("Something went wrong, please try again.");
+      }
     } catch (error) {
-      setSubmitStatus('error')
+      console.error(error);
+      setStatusMessage("Something went wrong, please try again.");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
   }
 
@@ -276,25 +295,11 @@ export function ContactFormSection() {
                   </span>
                 </motion.button>
 
-                {/* Status Messages */}
-                {submitStatus === 'success' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-4 bg-green-500/20 border border-green-500/50 rounded-xl text-green-300 text-center"
-                  >
-                    ✓ Thank you! Your message has been sent successfully. We'll get back to you soon.
-                  </motion.div>
-                )}
-
-                {submitStatus === 'error' && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-4 bg-red-500/20 border border-red-500/50 rounded-xl text-red-300 text-center"
-                  >
-                    ✗ Something went wrong. Please try again or contact us directly.
-                  </motion.div>
+                {/* Status Message */}
+                {statusMessage && (
+                  <p className="mt-4 text-sm text-neutral-200">
+                    {statusMessage}
+                  </p>
                 )}
               </form>
             </div>

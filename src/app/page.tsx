@@ -11,6 +11,7 @@ import { ProgramsOverview } from '@/components/ProgramsOverview'
 import { USPBar } from '@/components/USPBar'
 import { ModernFooter } from '@/components/ModernFooter'
 import { AtmosphericBackground } from '@/components/AtmosphericBackground'
+import { StartTodayCTA } from '@/components/StartTodayCTA'
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -74,6 +75,7 @@ export default function Home() {
           <ProgramsOverview />
           <USPBar />
           <TestimonialCarousel />
+          <StartTodayCTA />
           <ContactFormSection />
         </main>
         <ModernFooter />
