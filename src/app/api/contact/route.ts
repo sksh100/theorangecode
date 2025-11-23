@@ -1,42 +1,57 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import { Resend } from "resend";
+import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const data = await req.json();
+    const body = await request.json();
 
-    const { name, email, phone, subject, message } = data;
+    const { name, email, phone, subject, message } = body;
 
-    const html = `
-      <div style="font-family: sans-serif; font-size: 16px; line-height: 1.5;">
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
-        <p><strong>Subject:</strong> ${subject}</p>
-        <p style="margin-top: 20px;"><strong>Message:</strong><br/>${message}</p>
-      </div>
-    `;
+    if (!name || !email || !subject || !message) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
 
-    const response = await resend.emails.send({
-      from: "The Orange Code <contact@theorangecode.com>",
-      to: ["hello@theorangecode.com"],
-      subject: `New Contact Form Inquiry – ${subject}`,
-      html,
-    });
-
-    return NextResponse.json(
-      { success: true, response },
-      { status: 200 }
+    console.log(
+      'RESEND key used (first 8 chars):',
+      process.env.RESEND_API_KEY?.slice(0, 8)
     );
 
-  } catch (error) {
-    console.error(error);
+    const { error } = await resend.emails.send({
+      from: 'The Orange Code <contact@theorangecode.com>', // pretty sender
+      to: ['hello@theorangecode.com'],                      // real inbox
+      reply_to: email,
+      subject: `New contact form message: ${subject}`,
+      html: `
+        <h2>New contact form message</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
+        <p><strong>Subject:</strong> ${subject}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, '<br>')}</p>
+      `,
+    });
+
+    if (error) {
+      console.error('Resend error:', error);
+      return NextResponse.json(
+        { error: 'Email send failed' },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({ message: 'sent' }, { status: 200 });
+
+  } catch (err) {
+    console.error('Contact route error:', err);
     return NextResponse.json(
-      { success: false, error },
+      { error: 'Server error' },
       { status: 500 }
     );
   }
