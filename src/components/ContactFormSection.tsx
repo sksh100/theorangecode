@@ -44,15 +44,18 @@ export function ContactFormSection() {
         body: JSON.stringify(submissionData),
       });
 
+      const data = await res.json();
+
       if (res.ok) {
         setStatusMessage("Thank you. Your message has been received and our team will be in touch very soon.");
         form.reset();
         setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       } else {
-        setStatusMessage("Something went wrong, please try again.");
+        console.error('API error:', data);
+        setStatusMessage(data.error || "Something went wrong, please try again.");
       }
     } catch (error) {
-      console.error(error);
+      console.error('Fetch error:', error);
       setStatusMessage("Something went wrong, please try again.");
     } finally {
       setIsSubmitting(false);

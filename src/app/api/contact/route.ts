@@ -17,14 +17,12 @@ export async function POST(request: Request) {
       );
     }
 
-    console.log(
-      'RESEND key used (first 8 chars):',
-      process.env.RESEND_API_KEY?.slice(0, 8)
-    );
-
     const { error } = await resend.emails.send({
-      from: 'The Orange Code <contact@theorangecode.com>', // pretty sender
-      to: ['hello@theorangecode.com'],                      // real inbox
+      // MUST match the verified domain: contact.theorangecode.com
+      from: 'The Orange Code <noreply@contact.theorangecode.com>',
+      // Your real inbox
+      to: ['hello@theorangecode.com'],
+      // So when you click Reply, it goes to the visitor
       reply_to: email,
       subject: `New contact form message: ${subject}`,
       html: `
@@ -40,19 +38,13 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error('Resend error:', error);
-      return NextResponse.json(
-        { error: 'Email send failed' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Email send failed' }, { status: 500 });
     }
 
     return NextResponse.json({ message: 'sent' }, { status: 200 });
 
   } catch (err) {
     console.error('Contact route error:', err);
-    return NextResponse.json(
-      { error: 'Server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
