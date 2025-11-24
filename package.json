@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "verify-ga": "node scripts/verify-ga-setup.js"
+    "verify-ga": "node scripts/verify-ga-setup.js",
+    "get-ip": "bash scripts/get-my-ip.sh"
   },
   "dependencies": {
     "@mailerlite/mailerlite-nodejs": "^1.5.0",

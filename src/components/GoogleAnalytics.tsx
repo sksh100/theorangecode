@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, Suspense } from 'react'
+import React, { useEffect, Suspense, useState } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import Script from 'next/script'
 
@@ -17,12 +17,48 @@ declare global {
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''
 
+// IP addresses to exclude from tracking
+const EXCLUDED_IPS = [
+  '94.59.182.192', // Your IP address
+  // Add more IPs here if needed
+]
+
 function GoogleAnalyticsInner() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const [shouldTrack, setShouldTrack] = useState<boolean | null>(null)
+
+  // Check if IP should be excluded
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const checkIP = async () => {
+      try {
+        const response = await fetch('/api/get-ip')
+        const data = await response.json()
+        const userIP = data.ip
+
+        // Check if IP is in excluded list
+        if (EXCLUDED_IPS.includes(userIP)) {
+          console.log('🚫 Google Analytics disabled for excluded IP:', userIP)
+          setShouldTrack(false)
+        } else {
+          setShouldTrack(true)
+        }
+      } catch (error) {
+        // If IP check fails, allow tracking (fail open)
+        console.warn('Could not check IP, allowing tracking:', error)
+        setShouldTrack(true)
+      }
+    }
+
+    checkIP()
+  }, [])
 
   useEffect(() => {
     if (!GA_MEASUREMENT_ID || typeof window === 'undefined') return
+    if (shouldTrack === false) return // Don't track if IP is excluded
+    if (shouldTrack === null) return // Wait for IP check to complete
 
     // Track page view
     const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '')
@@ -65,6 +101,8 @@ function GoogleAnalyticsInner() {
   // Track all clicks on the page
   useEffect(() => {
     if (!GA_MEASUREMENT_ID || typeof window === 'undefined') return
+    if (shouldTrack === false) return // Don't track if IP is excluded
+    if (shouldTrack === null) return // Wait for IP check to complete
 
     const trackClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement
@@ -199,6 +237,8 @@ function GoogleAnalyticsInner() {
   // Track user engagement metrics
   useEffect(() => {
     if (!GA_MEASUREMENT_ID || typeof window === 'undefined') return
+    if (shouldTrack === false) return // Don't track if IP is excluded
+    if (shouldTrack === null) return // Wait for IP check to complete
 
     // Track page visibility changes
     const handleVisibilityChange = () => {
@@ -227,6 +267,16 @@ function GoogleAnalyticsInner() {
     if (process.env.NODE_ENV === 'development') {
       console.warn('Google Analytics: NEXT_PUBLIC_GA_MEASUREMENT_ID is not set')
     }
+    return null
+  }
+
+  // Don't load GA scripts if IP is excluded
+  if (shouldTrack === false) {
+    return null
+  }
+
+  // Wait for IP check before loading scripts
+  if (shouldTrack === null) {
     return null
   }
 
