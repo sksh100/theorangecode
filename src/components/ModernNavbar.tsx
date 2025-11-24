@@ -45,6 +45,10 @@ export function ModernNavbar() {
 
   const navItems = [
     {
+      label: 'Home',
+      href: '/preview',
+    },
+    {
       label: 'Masterclasses',
       href: '/masterclasses',
     },

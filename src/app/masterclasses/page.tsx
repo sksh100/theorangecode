@@ -518,24 +518,22 @@ export default function MasterclassesPage() {
                     <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white">
                       Need a Tailormade Course or Different Time?
                     </h2>
-                    <p className="text-white/80 text-lg leading-relaxed">
+                    <p className="text-white/80 text-lg leading-relaxed mb-4">
                       We understand that schedules can be challenging and that every organization and individual has unique needs. If you require a custom masterclass tailored to specific topics, industries, or learning objectives, or if you need a different time slot than what's available, we're here to work with you to find the perfect solution.
+                    </p>
+                    <p className="text-white/70 text-base">
+                      Contact us at{' '}
+                      <a 
+                        href="mailto:hello@theorangecode.com" 
+                        className="text-orange hover:text-orange/80 transition-colors font-semibold"
+                      >
+                        hello@theorangecode.com
+                      </a>
                     </p>
                   </div>
                 </div>
 
-                {!showTailormadeForm ? (
-                  <motion.button
-                    onClick={() => setShowTailormadeForm(true)}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="w-full md:w-auto inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange to-azure-blue text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-orange/30 transition-all duration-300"
-                  >
-                    <Mail className="w-5 h-5" />
-                    <span>Request a Tailormade Course</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </motion.button>
-                ) : (
+                {showTailormadeForm && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
