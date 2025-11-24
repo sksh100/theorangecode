@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Calendar, Clock, MapPin, Video, Mail, ArrowRight, Check } from 'lucide-react'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
@@ -42,7 +42,7 @@ const masterclasses: Masterclass[] = [
   }
 ]
 
-// Generate available dates for the next 4 weeks
+// Generate available dates for the next 4 weeks - compact format
 const generateAvailableDates = (): TimeSlot[] => {
   const slots: TimeSlot[] = []
   const today = new Date()
@@ -51,7 +51,7 @@ const generateAvailableDates = (): TimeSlot[] => {
 
   // Online slots: Monday, Wednesday, Saturday mornings (10:00 AM - 1:00 PM Dubai time)
   const onlineDays = [1, 3, 6] // Monday, Wednesday, Saturday
-  const onlineTime = '10:00 AM - 1:00 PM (Dubai Time)'
+  const onlineTime = '10:00 AM - 1:00 PM'
 
   // Offline slots: Tuesday, Thursday (11:00 AM - 2:00 PM)
   const offlineDays = [2, 4] // Tuesday, Thursday
@@ -59,11 +59,11 @@ const generateAvailableDates = (): TimeSlot[] => {
 
   for (let d = new Date(today); d <= fourWeeksLater; d.setDate(d.getDate() + 1)) {
     const dayOfWeek = d.getDay()
-    const dateStr = d.toISOString().split('T')[0]
+    
+    // Compact date format
     const formattedDate = d.toLocaleDateString('en-US', { 
-      weekday: 'long', 
-      year: 'numeric', 
-      month: 'long', 
+      weekday: 'short', 
+      month: 'short', 
       day: 'numeric' 
     })
 
@@ -95,18 +95,24 @@ export default function MasterclassesPage() {
   const [selectedMasterclass, setSelectedMasterclass] = useState<number | null>(null)
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null)
   const [filterType, setFilterType] = useState<'all' | 'online' | 'offline'>('all')
-  const [isBooking, setIsBooking] = useState(false)
+  const [showSummary, setShowSummary] = useState(false)
 
   const availableSlots = generateAvailableDates()
   const filteredSlots = filterType === 'all' 
     ? availableSlots 
     : availableSlots.filter(slot => slot.type === filterType)
 
+  // Show summary when both are selected
+  useEffect(() => {
+    setShowSummary(selectedMasterclass !== null && selectedSlot !== null)
+  }, [selectedMasterclass, selectedSlot])
+
   const handleBookNow = () => {
     if (selectedMasterclass && selectedSlot) {
-      setIsBooking(true)
-      // Here you would integrate with your booking system
-      // For now, we'll redirect to contact form with pre-filled data
+      // Redirect directly to Stripe checkout
+      const paymentLink = 'https://buy.stripe.com/5kQ3cv79cfH3byHdO08k800'
+      
+      // Store booking data for reference
       const masterclassName = masterclasses.find(m => m.id === selectedMasterclass)?.title
       const bookingData = {
         masterclass: masterclassName,
@@ -114,11 +120,16 @@ export default function MasterclassesPage() {
         time: selectedSlot.time,
         type: selectedSlot.type
       }
-      // Store in sessionStorage and redirect to contact form
       sessionStorage.setItem('bookingData', JSON.stringify(bookingData))
-      window.location.href = '/#contact'
+      
+      // Immediate redirect to checkout
+      window.location.href = paymentLink
     }
   }
+
+  const selectedMasterclassData = selectedMasterclass 
+    ? masterclasses.find(m => m.id === selectedMasterclass) 
+    : null
 
 
   return (
@@ -168,20 +179,31 @@ export default function MasterclassesPage() {
               {masterclasses.map((masterclass, index) => (
                 <motion.button
                   key={masterclass.id}
-                  onClick={() => setSelectedMasterclass(masterclass.id)}
+                  onClick={() => {
+                    setSelectedMasterclass(masterclass.id)
+                    // Reset slot when masterclass changes
+                    if (selectedMasterclass !== masterclass.id) {
+                      setSelectedSlot(null)
+                    }
+                  }}
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  animate={{ 
+                    opacity: 1, 
+                    y: 0,
+                    scale: selectedMasterclass === masterclass.id ? 1.02 : 1
+                  }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
                   className={`relative p-6 rounded-2xl border-2 transition-all duration-300 text-left ${
                     selectedMasterclass === masterclass.id
-                      ? 'border-orange bg-gradient-to-br from-orange/20 to-orange/5 shadow-2xl shadow-orange/20'
+                      ? 'border-orange bg-gradient-to-br from-orange/20 to-orange/5 shadow-2xl shadow-orange/20 ring-2 ring-orange/30'
                       : 'border-white/10 bg-gradient-to-br from-primary-dark/80 to-primary-dark/60 hover:border-orange/50'
                   }`}
                 >
                   {selectedMasterclass === masterclass.id && (
                     <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: "spring", stiffness: 200 }}
                       className="absolute top-4 right-4 w-6 h-6 bg-orange rounded-full flex items-center justify-center"
                     >
                       <Check className="w-4 h-4 text-white" />
@@ -199,179 +221,170 @@ export default function MasterclassesPage() {
           </div>
         </section>
 
-        {/* Date & Time Selection */}
+        {/* Sticky Summary Bar - Shows when both selected */}
+        <AnimatePresence>
+          {showSummary && selectedMasterclassData && selectedSlot && (
+            <motion.div
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 100, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-r from-primary-dark via-primary-dark/95 to-primary-dark border-t border-orange/30 backdrop-blur-xl shadow-2xl"
+            >
+              <div className="container mx-auto px-6 py-4">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                  <div className="flex-1 flex flex-col md:flex-row items-start md:items-center gap-4 text-sm">
+                    <div className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-orange" />
+                      <span className="text-white/90 font-semibold">{selectedMasterclassData.title}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-white/70">
+                      <Calendar className="w-4 h-4" />
+                      <span>{selectedSlot.date}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-white/70">
+                      <Clock className="w-4 h-4" />
+                      <span>{selectedSlot.time}</span>
+                    </div>
+                    {selectedSlot.type === 'offline' && (
+                      <div className="flex items-center gap-2 text-white/70">
+                        <MapPin className="w-4 h-4" />
+                        <span>Abu Dhabi</span>
+                      </div>
+                    )}
+                  </div>
+                  <motion.button
+                    onClick={handleBookNow}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-orange via-azure-blue to-orange text-white font-bold rounded-xl shadow-2xl hover:shadow-orange/50 transition-all duration-300 flex items-center justify-center gap-2"
+                  >
+                    <span>Secure Your Spot → Checkout</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Date & Time Selection - Compact */}
         {selectedMasterclass && (
           <motion.section
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="py-16 relative"
+            className="py-12 relative pb-24 md:pb-12"
           >
             <div className="container mx-auto px-6">
-              {/* Filter Tabs */}
-              <div className="flex flex-wrap justify-center gap-4 mb-12">
-                <button
-                  onClick={() => setFilterType('all')}
-                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                    filterType === 'all'
-                      ? 'bg-gradient-to-r from-orange to-azure-blue text-white'
-                      : 'bg-white/5 text-white/70 hover:bg-white/10'
-                  }`}
-                >
-                  All Sessions
-                </button>
-                <button
-                  onClick={() => setFilterType('online')}
-                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${
-                    filterType === 'online'
-                      ? 'bg-gradient-to-r from-azure-blue to-bright-blue text-white'
-                      : 'bg-white/5 text-white/70 hover:bg-white/10'
-                  }`}
-                >
-                  <Video className="w-4 h-4" />
-                  Online
-                </button>
-                <button
-                  onClick={() => setFilterType('offline')}
-                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${
-                    filterType === 'offline'
-                      ? 'bg-gradient-to-r from-orange to-light-blue text-white'
-                      : 'bg-white/5 text-white/70 hover:bg-white/10'
-                  }`}
-                >
-                  <MapPin className="w-4 h-4" />
-                  In-Person (Abu Dhabi)
-                </button>
-              </div>
-
-              {/* Available Slots */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
-                {filteredSlots.map((slot, index) => (
-                  <motion.button
-                    key={`${slot.date}-${slot.type}-${index}`}
-                    onClick={() => setSelectedSlot(slot)}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                    className={`relative p-5 rounded-xl border-2 transition-all duration-300 text-left ${
-                      selectedSlot?.date === slot.date && selectedSlot?.type === slot.type
-                        ? 'border-orange bg-gradient-to-br from-orange/20 to-orange/5 shadow-xl shadow-orange/20'
-                        : 'border-white/10 bg-white/5 hover:border-orange/50 hover:bg-white/10'
-                    } ${!slot.available ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    disabled={!slot.available}
+              <div className="max-w-4xl mx-auto">
+                {/* Filter Tabs - Compact */}
+                <div className="flex flex-wrap justify-center gap-3 mb-8">
+                  <button
+                    onClick={() => setFilterType('all')}
+                    className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
+                      filterType === 'all'
+                        ? 'bg-gradient-to-r from-orange to-azure-blue text-white'
+                        : 'bg-white/5 text-white/70 hover:bg-white/10'
+                    }`}
                   >
-                    {selectedSlot?.date === slot.date && selectedSlot?.type === slot.type && (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="absolute top-3 right-3 w-5 h-5 bg-orange rounded-full flex items-center justify-center"
-                      >
-                        <Check className="w-3 h-3 text-white" />
-                      </motion.div>
-                    )}
-                    
-                    <div className="flex items-start gap-3 mb-2">
-                      {slot.type === 'online' ? (
-                        <Video className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-                      ) : (
-                        <MapPin className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
-                      )}
-                      <div className="flex-1">
-                        <p className="font-semibold text-white text-sm mb-1">
-                          {slot.type === 'online' ? 'Online Session' : 'In-Person Session'}
-                        </p>
-                        <p className="text-white/80 text-xs mb-2">{slot.date}</p>
-                        <div className="flex items-center gap-2 text-white/70 text-xs">
-                          <Clock className="w-3 h-3" />
-                          <span>{slot.time}</span>
-                        </div>
-                        {slot.type === 'offline' && (
-                          <div className="flex items-center gap-2 text-white/70 text-xs mt-2">
-                            <MapPin className="w-3 h-3" />
-                            <span>Etihad Towers, Abu Dhabi</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </motion.button>
-                ))}
-              </div>
-
-              {/* Abu Dhabi Location Image */}
-              {filterType === 'offline' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                  className="mt-12 max-w-4xl mx-auto"
-                >
-                  <div className="relative rounded-2xl overflow-hidden border border-white/10">
-                    <div className="aspect-video bg-gradient-to-br from-orange/20 to-light-blue/20 flex items-center justify-center">
-                      <div className="text-center">
-                        <MapPin className="w-16 h-16 text-orange/50 mx-auto mb-4" />
-                        <p className="text-white/70 text-lg">Etihad Towers Boardroom</p>
-                        <p className="text-white/50 text-sm mt-2">Abu Dhabi, UAE</p>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </div>
-          </motion.section>
-        )}
-
-        {/* Booking CTA */}
-        {selectedMasterclass && selectedSlot && (
-          <motion.section
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="py-16 relative"
-          >
-            <div className="container mx-auto px-6">
-              <div className="max-w-2xl mx-auto text-center">
-                <div className="bg-gradient-to-br from-orange/20 via-azure-blue/20 to-orange/20 rounded-3xl p-8 md:p-12 border border-white/10">
-                  <h3 className="text-3xl font-bold mb-4">Ready to Secure Your Spot?</h3>
-                  <p className="text-white/80 mb-8 text-lg">
-                    {selectedSlot.type === 'online' 
-                      ? 'Join us online from anywhere in the world'
-                      : 'Experience our masterclass in our premium Abu Dhabi location'}
-                  </p>
-                  
-                  <div className="space-y-4 mb-8">
-                    <div className="flex items-center justify-center gap-3 text-white/90">
-                      <Calendar className="w-5 h-5 text-orange" />
-                      <span>{selectedSlot.date}</span>
-                    </div>
-                    <div className="flex items-center justify-center gap-3 text-white/90">
-                      <Clock className="w-5 h-5 text-azure-blue" />
-                      <span>{selectedSlot.time}</span>
-                    </div>
-                    {selectedSlot.type === 'offline' && (
-                      <div className="flex items-center justify-center gap-3 text-white/90">
-                        <MapPin className="w-5 h-5 text-orange" />
-                        <span>Etihad Towers, Abu Dhabi</span>
-                      </div>
-                    )}
-                  </div>
-
-                  <motion.button
-                    onClick={handleBookNow}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full md:w-auto px-10 py-4 bg-gradient-to-r from-orange via-azure-blue to-orange text-white font-bold text-lg rounded-xl shadow-2xl hover:shadow-orange/50 transition-all duration-300 flex items-center justify-center gap-3 mx-auto"
+                    All
+                  </button>
+                  <button
+                    onClick={() => setFilterType('online')}
+                    className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
+                      filterType === 'online'
+                        ? 'bg-gradient-to-r from-azure-blue to-bright-blue text-white'
+                        : 'bg-white/5 text-white/70 hover:bg-white/10'
+                    }`}
                   >
-                    <span>Secure Your Spot</span>
-                    <ArrowRight className="w-5 h-5" />
-                  </motion.button>
+                    <Video className="w-3 h-3" />
+                    Online
+                  </button>
+                  <button
+                    onClick={() => setFilterType('offline')}
+                    className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
+                      filterType === 'offline'
+                        ? 'bg-gradient-to-r from-orange to-light-blue text-white'
+                        : 'bg-white/5 text-white/70 hover:bg-white/10'
+                    }`}
+                  >
+                    <MapPin className="w-3 h-3" />
+                    In-Person
+                  </button>
                 </div>
+
+                {/* Compact Time Slots - Grid Layout */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+                  {filteredSlots.map((slot, index) => (
+                    <motion.button
+                      key={`${slot.date}-${slot.type}-${index}`}
+                      onClick={() => {
+                        setSelectedSlot(slot)
+                        // Scroll to show summary
+                        setTimeout(() => {
+                          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+                        }, 100)
+                      }}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.2, delay: index * 0.02 }}
+                      className={`relative p-3 rounded-lg border-2 transition-all duration-200 text-center ${
+                        selectedSlot?.date === slot.date && selectedSlot?.type === slot.type
+                          ? 'border-orange bg-gradient-to-br from-orange/30 to-orange/10 shadow-lg shadow-orange/30 scale-105'
+                          : 'border-white/10 bg-white/5 hover:border-orange/50 hover:bg-white/10'
+                      } ${!slot.available ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      disabled={!slot.available}
+                    >
+                      {selectedSlot?.date === slot.date && selectedSlot?.type === slot.type && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="absolute -top-1 -right-1 w-4 h-4 bg-orange rounded-full flex items-center justify-center border-2 border-primary-dark"
+                        >
+                          <Check className="w-2.5 h-2.5 text-white" />
+                        </motion.div>
+                      )}
+                      
+                      <div className="flex flex-col items-center gap-1">
+                        {slot.type === 'online' ? (
+                          <Video className="w-4 h-4 text-azure-blue" />
+                        ) : (
+                          <MapPin className="w-4 h-4 text-orange" />
+                        )}
+                        <p className="text-white text-xs font-semibold leading-tight">{slot.date}</p>
+                        <p className="text-white/60 text-[10px] leading-tight">{slot.time}</p>
+                      </div>
+                    </motion.button>
+                  ))}
+                </div>
+
+                {/* Abu Dhabi Location - Only show when offline selected */}
+                {filterType === 'offline' && selectedSlot?.type === 'offline' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-8 max-w-2xl mx-auto"
+                  >
+                    <div className="relative rounded-xl overflow-hidden border border-white/10">
+                      <div className="aspect-video bg-gradient-to-br from-orange/20 to-light-blue/20 flex items-center justify-center">
+                        <div className="text-center">
+                          <MapPin className="w-12 h-12 text-orange/50 mx-auto mb-2" />
+                          <p className="text-white/70">Etihad Towers Boardroom</p>
+                          <p className="text-white/50 text-sm mt-1">Abu Dhabi, UAE</p>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
               </div>
             </div>
           </motion.section>
         )}
+
 
         {/* Alternative Booking Option */}
-        <section className="py-16 relative">
+        <section className="py-16 relative pb-32 md:pb-24">
           <div className="container mx-auto px-6">
             <div className="max-w-3xl mx-auto text-center">
               <h3 className="text-2xl md:text-3xl font-bold mb-6">
