@@ -25,19 +25,19 @@ export async function POST(request: Request) {
     );
 
     const { error } = await resend.emails.send({
-      from: "The Orange Code <contact@theorangecode.com>",
-      to: ["hello@theorangecode.com"],
+      from: "The Orange Code <hello@theorangecode.com>",
+      to: ["hello@theorangecode.com", "sksh.ae100@gmail.com"],
       reply_to: email,
       subject: `New contact form message: ${subject}`,
       html: `
-        <h2>New contact form message</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
-        <p><strong>Subject:</strong> ${subject}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, "<br>")}</p>
-      `,
+    <h2>New contact form message</h2>
+    <p><strong>Name:</strong> ${name}</p>
+    <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
+    <p><strong>Subject:</strong> ${subject}</p>
+    <p><strong>Message:</strong></p>
+    <p>${message.replace(/\n/g, "<br>")}</p>
+  `,
     });
 
     if (error) {
