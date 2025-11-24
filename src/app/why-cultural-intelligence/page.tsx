@@ -3,308 +3,405 @@
 import { motion } from 'framer-motion'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
-import { Background } from '@/components/Background'
-import { ArrowLeft, Users, Briefcase, Target, Heart, TrendingUp, CheckCircle2, Globe, Shield, Zap } from 'lucide-react'
-import Link from 'next/link'
+import { TrendingUp, Users, Globe, Target, CheckCircle, ArrowRight, BarChart3, Lightbulb, Shield, Zap, Heart } from 'lucide-react'
+import Image from 'next/image'
 
 export default function WhyCulturalIntelligencePage() {
-  const personalBenefits = [
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12
+      }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, ease: "easeOut" }
+    }
+  }
+
+  const communicationExamples = [
     {
-      icon: Heart,
-      title: 'Build Authentic Relationships',
-      description: 'Connect genuinely with people from diverse backgrounds, creating meaningful friendships and personal networks that enrich your life.'
+      region: 'Western Professionals',
+      countries: 'Netherlands, Germany, United States',
+      style: 'Direct clarity',
+      perception: 'May be perceived as too sharp or transactional in the Gulf'
     },
     {
-      icon: Users,
-      title: 'Navigate Social Situations',
-      description: 'Feel confident in any social setting, understanding cultural nuances that help you communicate respectfully and appropriately.'
-    },
-    {
-      icon: Globe,
-      title: 'Expand Your Worldview',
-      description: 'Gain deeper appreciation for different perspectives, traditions, and ways of thinking that broaden your personal growth.'
+      region: 'Asian Professionals',
+      countries: 'Japan, Singapore, South Asia',
+      style: 'Subtle suggestions, polite pauses',
+      perception: 'May be misinterpreted as uncertainty or lack of clarity'
     }
   ]
 
-  const businessBenefits = [
-    {
-      icon: Briefcase,
-      title: 'Successful Business Outcomes',
-      description: 'Close deals faster, build stronger partnerships, and create lasting business relationships that drive measurable results.'
-    },
-    {
-      icon: Users,
-      title: 'High-Performing Teams',
-      description: 'Foster collaboration and trust in diverse teams, reducing misunderstandings and increasing productivity across cultural boundaries.'
-    },
-    {
-      icon: Target,
-      title: 'Strategic Advantage',
-      description: 'Gain competitive edge by understanding local markets, client expectations, and business protocols in the UAE and Gulf Region.'
-    },
-    {
-      icon: Shield,
-      title: 'Risk Mitigation',
-      description: 'Avoid costly cultural missteps that can damage relationships, reputation, and business opportunities in the region.'
-    }
+  const benefits = [
+    'Reduces misunderstandings',
+    'Strengthens teams',
+    'Improves client interactions',
+    'Increases effectiveness in multicultural environments',
+    'Supports every part of your life in the Middle East'
   ]
 
-  const appreciationPoints = [
-    'Demonstrates respect and genuine interest in local culture',
-    'Shows professionalism and emotional intelligence',
-    'Builds trust faster with clients, partners, and colleagues',
-    'Creates positive first impressions that last',
-    'Opens doors to opportunities that others miss'
+  const practicalApplications = [
+    { icon: Users, title: 'Leading Teams', description: 'Across multiple nationalities' },
+    { icon: Target, title: 'Negotiating', description: 'With local partners' },
+    { icon: Heart, title: 'Forming Friendships', description: 'Building meaningful connections' }
   ]
 
   return (
     <div className="min-h-screen bg-primary-dark text-white">
-      <Background />
       <ModernNavbar />
       
-      <main className="relative z-10 pt-24 pb-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Back Button */}
-          <Link href="/">
+      <motion.main
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className="relative"
+      >
+        {/* Hero Section */}
+        <section className="relative overflow-hidden pt-32 pb-20">
+          <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5" />
+          <div className="container mx-auto px-6 relative z-10">
             <motion.div
-              className="mb-8 inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors"
-              whileHover={{ x: -5 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl mx-auto text-center"
             >
-              <ArrowLeft className="w-5 h-5" />
-              <span className="font-medium">Back to Home</span>
-            </motion.div>
-          </Link>
-
-          {/* Hero Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="mb-16"
-          >
-            <div className="glass-card p-8 md:p-12">
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ scale: 0.9 }}
+                animate={{ scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-azure-blue/10 border border-azure-blue/30 rounded-full mb-6"
+                className="inline-block mb-6"
               >
-                <Target className="w-5 h-5 text-azure-blue" />
-                <span className="text-azure-blue font-semibold text-sm uppercase tracking-wider">
-                  Cultural Intelligence
+                <span className="text-orange text-sm font-semibold tracking-wider uppercase">
+                  The Strategic Advantage
                 </span>
               </motion.div>
-
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gradient-primary">
-                Why Cultural Intelligence Matters
+              <h1 className="text-5xl md:text-7xl font-bold mb-6">
+                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                  WHY Cultural Intelligence Matters
+                </span>
               </h1>
-              
-              <p className="text-xl md:text-2xl text-white/80 leading-relaxed mb-6">
-                People succeed because they know how to communicate across cultures, interpret subtle signals, and build trust quickly. Cultural intelligence gives you this advantage.
-              </p>
+            </motion.div>
+          </div>
+        </section>
 
-              <p className="text-lg text-white/70 leading-relaxed">
-                It helps you move with confidence, avoid misunderstandings, and create the relationships that drive real success in the UAE and wider Gulf Region.
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Personal Settings Section */}
-          <motion.section
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="mb-16"
-          >
-            <div className="glass-card p-8 md:p-12">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-12 h-12 bg-gradient-to-br from-orange to-orange-luminous rounded-xl flex items-center justify-center">
-                  <Heart className="w-6 h-6 text-white" />
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white">
-                  In Personal Settings
-                </h2>
-              </div>
-
-              <p className="text-lg text-white/80 mb-8 leading-relaxed">
-                Cultural intelligence transforms your personal life by helping you connect authentically with people from over 200 nationalities in the UAE. Whether you're attending social events, building friendships, or navigating daily interactions, understanding cultural nuances makes all the difference.
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {personalBenefits.map((benefit, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="p-6 bg-white/5 border border-white/10 rounded-2xl hover:border-orange/40 transition-all duration-300"
-                  >
-                    <div className="w-12 h-12 bg-gradient-to-br from-orange/20 to-azure-blue/20 rounded-xl flex items-center justify-center mb-4">
-                      <benefit.icon className="w-6 h-6 text-orange" />
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-3">
-                      {benefit.title}
-                    </h3>
-                    <p className="text-white/70 leading-relaxed">
-                      {benefit.description}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </motion.section>
-
-          {/* Business & Teams Section */}
-          <motion.section
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="mb-16"
-          >
-            <div className="glass-card p-8 md:p-12">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-12 h-12 bg-gradient-to-br from-azure-blue to-azure-luminous rounded-xl flex items-center justify-center">
-                  <Briefcase className="w-6 h-6 text-white" />
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white">
-                  In Business & Teams
-                </h2>
-              </div>
-
-              <p className="text-lg text-white/80 mb-8 leading-relaxed">
-                Cultural intelligence is not just nice to have. It's essential for successful business outcomes. In the UAE and Gulf Region, where business relationships are built on trust and respect, cultural intelligence directly impacts your ability to close deals, lead teams, and achieve strategic goals.
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                {businessBenefits.map((benefit, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="p-6 bg-white/5 border border-white/10 rounded-2xl hover:border-azure-blue/40 transition-all duration-300"
-                  >
-                    <div className="w-12 h-12 bg-gradient-to-br from-azure-blue/20 to-bright-blue/20 rounded-xl flex items-center justify-center mb-4">
-                      <benefit.icon className="w-6 h-6 text-azure-blue" />
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-3">
-                      {benefit.title}
-                    </h3>
-                    <p className="text-white/70 leading-relaxed">
-                      {benefit.description}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
-
-              <div className="p-6 bg-gradient-to-r from-azure-blue/10 to-orange/10 border border-azure-blue/30 rounded-2xl">
-                <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-                  <TrendingUp className="w-6 h-6 text-azure-blue" />
-                  The Bottom Line
-                </h3>
-                <p className="text-lg text-white/90 leading-relaxed">
-                  Teams with high cultural intelligence see <span className="font-bold text-orange">40% better collaboration</span>, <span className="font-bold text-orange">faster decision-making</span>, and <span className="font-bold text-orange">stronger client relationships</span>. In a region where relationships drive business, cultural intelligence is your competitive advantage.
+        {/* Main Content Section */}
+        <section className="relative py-16 md:py-24">
+          <div className="container mx-auto px-6">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              className="max-w-5xl mx-auto space-y-20"
+            >
+              {/* Opening Statement */}
+              <motion.div variants={itemVariants} className="space-y-6">
+                <p className="text-xl md:text-2xl leading-relaxed text-white/90 font-medium">
+                  Success in the UAE and the wider GCC is built on <span className="text-orange font-bold">trust</span>, <span className="text-azure-blue font-bold">clarity</span>, and <span className="text-orange font-bold">respect</span>.
                 </p>
-              </div>
-            </div>
-          </motion.section>
-
-          {/* Appreciation Section */}
-          <motion.section
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="mb-16"
-          >
-            <div className="glass-card p-8 md:p-12">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-12 h-12 bg-gradient-to-br from-orange to-azure-blue rounded-xl flex items-center justify-center">
-                  <CheckCircle2 className="w-6 h-6 text-white" />
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white">
-                  Cultural Intelligence is Appreciated
-                </h2>
-              </div>
-
-              <p className="text-lg text-white/80 mb-8 leading-relaxed">
-                When you demonstrate cultural intelligence, people notice. It shows respect, professionalism, and genuine interest in building meaningful connections. This appreciation translates into opportunities, trust, and lasting relationships.
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                {appreciationPoints.map((point, index) => (
+                <p className="text-lg leading-relaxed text-white/80">
+                  This region brings together more than <span className="text-orange font-semibold">two hundred nationalities</span>. Every day you interact with people shaped by different communication styles, values, leadership expectations, and social behaviours.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
                   <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-start gap-3 p-4 bg-white/5 border border-white/10 rounded-xl"
+                    whileHover={{ scale: 1.02, y: -5 }}
+                    className="p-6 rounded-xl border border-red-500/30 bg-red-500/10"
                   >
-                    <CheckCircle2 className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-                    <p className="text-white/90 leading-relaxed">
-                      {point}
+                    <p className="text-white/90 font-semibold">
+                      <span className="text-red-400">Without cultural intelligence:</span> These differences create misunderstandings that slow progress and weaken relationships.
                     </p>
                   </motion.div>
-                ))}
-              </div>
+                  <motion.div
+                    whileHover={{ scale: 1.02, y: -5 }}
+                    className="p-6 rounded-xl border border-green-500/30 bg-green-500/10"
+                  >
+                    <p className="text-white/90 font-semibold">
+                      <span className="text-green-400">With cultural intelligence:</span> They become an advantage.
+                    </p>
+                  </motion.div>
+                </div>
+              </motion.div>
 
-              <div className="p-6 bg-gradient-to-r from-orange/10 to-azure-blue/10 border border-orange/30 rounded-2xl">
-                <p className="text-lg text-white/90 leading-relaxed italic">
-                  "In the UAE and Gulf Region, cultural intelligence isn't just appreciated. It's expected. Those who invest in understanding local customs, communication styles, and business protocols are the ones who succeed. It's the difference between being tolerated and being welcomed, between closing a deal and building a partnership."
+              {/* Research Section with Image Placeholder */}
+              <motion.div variants={itemVariants} className="space-y-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <BarChart3 className="w-8 h-8 text-orange" />
+                  <h2 className="text-3xl md:text-4xl font-bold text-white">The Research</h2>
+                </div>
+                <p className="text-lg leading-relaxed text-white/80">
+                  Research in intercultural management shows that people interpret behaviour through the logic of their own culture. For example, communication styles vary significantly around the world.
                 </p>
-              </div>
-            </div>
-          </motion.section>
+                
+                {/* Image Placeholder for Research Graph */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  className="relative w-full h-64 md:h-80 rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/5 to-white/0"
+                >
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center">
+                      <BarChart3 className="w-16 h-16 text-white/30 mx-auto mb-4" />
+                      <p className="text-white/50 text-sm">Research Graph Placeholder</p>
+                      <p className="text-white/40 text-xs mt-2">Visual representation of communication style variations</p>
+                    </div>
+                  </div>
+                </motion.div>
 
-          {/* CTA Section */}
-          <motion.section
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <div className="glass-card p-8 md:p-12">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange to-azure-blue rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Zap className="w-8 h-8 text-white" />
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                Ready to Develop Your Cultural Intelligence?
-              </h2>
-              <p className="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
-                Join The Orange Code's comprehensive program designed to transform your cultural intelligence in just four weeks. Learn from certified experts and gain the skills that drive success in the UAE and Gulf Region.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-8 py-4 rounded-full text-white font-semibold transition-all duration-300 flex items-center justify-center gap-2"
-                    style={{ background: 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)' }}
+                <div className="p-6 rounded-xl bg-gradient-to-r from-orange/10 to-azure-blue/10 border-l-4 border-orange">
+                  <p className="text-white/90 leading-relaxed">
+                    Studies highlight that <span className="font-semibold text-white">Western professionals often value direct clarity</span>, while many cultures in the Middle East express meaning through <span className="font-semibold text-white">context, tone, intention, and relationship</span>. Both approaches are valid. They simply follow different cultural rules. Without understanding these rules, meaning gets lost.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Communication Examples Section */}
+              <motion.div variants={itemVariants} className="space-y-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <Globe className="w-8 h-8 text-azure-blue" />
+                  <h2 className="text-3xl md:text-4xl font-bold text-white">Real-World Examples</h2>
+                </div>
+                <p className="text-lg leading-relaxed text-white/80 mb-8">
+                  Consider a few examples relevant to the region.
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {communicationExamples.map((example, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      whileHover={{ y: -5 }}
+                      className="p-6 rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm"
+                    >
+                      <h3 className="text-xl font-bold text-white mb-3">{example.region}</h3>
+                      <p className="text-orange text-sm font-semibold mb-2">{example.countries}</p>
+                      <p className="text-white/80 mb-3">
+                        <span className="font-semibold text-white">Style:</span> {example.style}
+                      </p>
+                      <p className="text-white/70 text-sm italic">
+                        {example.perception}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <motion.div
+                  whileHover={{ scale: 1.02, x: 10 }}
+                  className="p-6 rounded-xl bg-gradient-to-r from-orange/10 to-azure-blue/10 border-l-4 border-azure-blue mt-8"
+                >
+                  <p className="text-white/90 leading-relaxed">
+                    These differences appear small but they influence <span className="font-semibold text-white">decisions, timelines, trust, and long term cooperation</span>.
+                  </p>
+                </motion.div>
+              </motion.div>
+
+              {/* Leadership Section with Video Placeholder */}
+              <motion.div variants={itemVariants} className="space-y-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <TrendingUp className="w-8 h-8 text-orange" />
+                  <h2 className="text-3xl md:text-4xl font-bold text-white">Leadership Expectations</h2>
+                </div>
+                
+                {/* Video Placeholder */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  className="relative w-full aspect-video rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/5 to-white/0"
+                >
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4">
+                        <Zap className="w-10 h-10 text-white/30" />
+                      </div>
+                      <p className="text-white/50 text-sm">Video Placeholder</p>
+                      <p className="text-white/40 text-xs mt-2">Leadership styles across cultures</p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <p className="text-lg leading-relaxed text-white/80">
+                  Research shows that some cultures value <span className="text-orange font-semibold">flat hierarchies and informal interactions</span>, while others expect <span className="text-azure-blue font-semibold">structured decision making, respect for seniority, and clear roles</span>.
+                </p>
+                <div className="p-6 rounded-xl bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10 border border-white/10">
+                  <p className="text-white/90 leading-relaxed font-medium">
+                    In the Gulf, leadership often blends <span className="text-white font-bold">professionalism with relational warmth</span>. When expatriates do not recognise this blend, teams may experience tension that has nothing to do with performance and everything to do with cultural expectations.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* What Cultural Intelligence Provides */}
+              <motion.div variants={itemVariants} className="relative">
+                <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-orange via-azure-blue to-orange opacity-40" />
+                <div className="pl-8 space-y-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Lightbulb className="w-8 h-8 text-orange" />
+                    <h2 className="text-3xl font-bold text-white">What Cultural Intelligence Provides</h2>
+                  </div>
+                  <p className="text-lg leading-relaxed text-white/80">
+                    Cultural intelligence provides the ability to navigate these dynamics with confidence. It helps you understand:
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                    {[
+                      'Why people behave the way they do',
+                      'How they interpret respect',
+                      'How they manage time',
+                      'How they build trust'
+                    ].map((item, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.1 }}
+                        className="flex items-center gap-3 p-4 rounded-lg bg-white/5 border border-white/10"
+                      >
+                        <CheckCircle className="w-5 h-5 text-orange flex-shrink-0" />
+                        <p className="text-white/90">{item}</p>
+                      </motion.div>
+                    ))}
+                  </div>
+                  <p className="text-lg leading-relaxed text-white/80 mt-6">
+                    It gives you the awareness to <span className="text-orange font-semibold">adapt your communication without losing your authenticity</span>. This is essential in a region where your <span className="text-azure-blue font-semibold">network is often as valuable as your skill set</span>.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Practical Benefits with Image Placeholder */}
+              <motion.div variants={itemVariants} className="space-y-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <Shield className="w-8 h-8 text-azure-blue" />
+                  <h2 className="text-3xl md:text-4xl font-bold text-white">Practical Benefits</h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                  <div className="space-y-4">
+                    <p className="text-lg leading-relaxed text-white/80">
+                      In practical terms, cultural intelligence:
+                    </p>
+                    <div className="space-y-3">
+                      {benefits.map((benefit, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.1 }}
+                          className="flex items-start gap-3"
+                        >
+                          <ArrowRight className="w-5 h-5 text-orange flex-shrink-0 mt-1" />
+                          <p className="text-white/90">{benefit}</p>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Image Placeholder for Benefits Visualization */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    className="relative w-full h-64 rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/5 to-white/0"
                   >
-                    Explore Our Programs
-                  </motion.button>
-                </Link>
-                <Link href="/#book-session">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-8 py-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold transition-all duration-300 hover:bg-white/20"
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-center">
+                        <TrendingUp className="w-16 h-16 text-white/30 mx-auto mb-4" />
+                        <p className="text-white/50 text-sm">Benefits Visualization</p>
+                        <p className="text-white/40 text-xs mt-2">Impact of cultural intelligence</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              </motion.div>
+
+              {/* Practical Applications */}
+              <motion.div variants={itemVariants} className="space-y-8">
+                <h2 className="text-3xl md:text-4xl font-bold text-white text-center">
+                  <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                    Supporting Every Part of Your Life
+                  </span>
+                </h2>
+                <p className="text-lg leading-relaxed text-white/80 text-center max-w-3xl mx-auto">
+                  From leading teams across nationalities to negotiating with local partners or simply forming friendships, cultural intelligence allows you to connect in a meaningful, respectful, and strategic way.
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                  {practicalApplications.map((app, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.15 }}
+                      whileHover={{ y: -10, scale: 1.02 }}
+                      className="p-6 rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm text-center group"
+                    >
+                      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-orange/20 to-azure-blue/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                        <app.icon className="w-7 h-7 text-orange" />
+                      </div>
+                      <h3 className="text-xl font-bold text-white mb-2">{app.title}</h3>
+                      <p className="text-white/70">{app.description}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Closing Statement */}
+              <motion.div
+                variants={itemVariants}
+                className="relative p-10 md:p-16 rounded-2xl overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-orange/15 via-azure-blue/15 to-orange/15" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,145,77,0.1)_0%,_transparent_70%)]" />
+                <div className="relative z-10 text-center space-y-6">
+                  <motion.div
+                    initial={{ scale: 0.9 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    className="inline-block"
                   >
-                    Book a Session
-                  </motion.button>
-                </Link>
-              </div>
-            </div>
-          </motion.section>
-        </div>
-      </main>
+                    <Target className="w-16 h-16 text-orange mx-auto mb-6" />
+                  </motion.div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-white">
+                    The Gulf Region Rewards Understanding
+                  </h2>
+                  <p className="text-xl md:text-2xl leading-relaxed text-white/90 max-w-3xl mx-auto">
+                    The Gulf region rewards those who understand its cultural landscape. When you learn how to navigate it, <span className="text-orange font-bold">opportunities expand</span>, <span className="text-azure-blue font-bold">relationships deepen</span>, and <span className="text-orange font-bold">success becomes sustainable</span>.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* CTA Section */}
+              <motion.div
+                variants={itemVariants}
+                className="text-center py-8"
+              >
+                <motion.a
+                  href="/masterclasses"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center gap-3 px-8 py-4 rounded-xl cta-button-glow text-white font-bold text-lg"
+                >
+                  <span>Start Your Cultural Intelligence Journey</span>
+                  <ArrowRight className="w-5 h-5" />
+                </motion.a>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+      </motion.main>
 
       <ModernFooter />
     </div>

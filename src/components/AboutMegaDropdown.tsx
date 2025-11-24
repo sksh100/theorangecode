@@ -31,14 +31,14 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
       title: 'What is Cultural Intelligence (CQ)',
       description: 'Discover the power of cultural intelligence and how it transforms your interactions',
       icon: Sparkles,
-      href: '#what-is-cq'
+      href: '/what-is-cq'
     },
     {
       id: 'why-matters',
       title: 'WHY Cultural Intelligence Matters',
       description: 'Understand why cultural intelligence is essential for success in the GCC region',
       icon: Zap,
-      href: '#why-cultural-intelligence'
+      href: '/why-cultural-intelligence'
     }
   ]
 

@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { FileText, X, BookOpen } from 'lucide-react'
+import Image from 'next/image'
 
 interface ResourcesMegaDropdownProps {
   isOpen: boolean
@@ -53,12 +54,14 @@ export function ResourcesMegaDropdown({ isOpen, onClose }: ResourcesMegaDropdown
                   className="relative"
                 >
                   <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10">
-                    {/* Image Placeholder */}
-                    <div className="relative w-full aspect-[3/4] bg-gradient-to-br from-orange/20 to-azure-blue/20 flex items-center justify-center">
-                      <div className="text-center">
-                        <BookOpen className="w-16 h-16 text-white/30 mx-auto mb-4" />
-                        <div className="w-32 h-40 bg-white/5 rounded-lg mx-auto border-2 border-dashed border-white/20" />
-                      </div>
+                    {/* Ebook Image */}
+                    <div className="relative w-full aspect-[3/4]">
+                      <Image
+                        src="/e-book.png"
+                        alt="Ebook Coming Soon"
+                        fill
+                        className="object-cover"
+                      />
                     </div>
 
                     {/* Content */}

@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
-import { Sparkles, Target, Heart, Eye, Users, Globe, ArrowRight, CheckCircle } from 'lucide-react'
+import { Sparkles, Target, Heart, Eye, Users, Globe, ArrowRight, CheckCircle, Zap } from 'lucide-react'
 
 export default function AboutPage() {
   const containerVariants = {
@@ -191,30 +191,31 @@ export default function AboutPage() {
                 </div>
               </motion.div>
 
-              {/* Mission, Vision, Values Section */}
-              <motion.div variants={itemVariants}>
+              {/* Mission and Vision Section */}
+              <motion.div variants={itemVariants} className="space-y-12">
                 <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
                   <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                    Mission, Vision and Values
+                    Mission & Vision
                   </span>
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                   {/* Mission */}
                   <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    whileHover={{ y: -8 }}
-                    className="relative p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm group"
+                    whileHover={{ y: -10, scale: 1.02 }}
+                    className="relative p-10 rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 via-orange/5 to-white/5 backdrop-blur-sm group overflow-hidden"
                   >
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-orange/10 rounded-full blur-3xl opacity-50 group-hover:opacity-75 transition-opacity" />
+                    <div className="absolute top-0 right-0 w-40 h-40 bg-orange/20 rounded-full blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute bottom-0 left-0 w-32 h-32 bg-orange/10 rounded-full blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
                     <div className="relative z-10">
-                      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-orange/20 to-orange/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <Target className="w-7 h-7 text-orange" />
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange/30 to-orange/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg shadow-orange/20">
+                        <Target className="w-8 h-8 text-orange" />
                       </div>
-                      <h3 className="text-xl font-bold text-white mb-4">Our Mission</h3>
-                      <p className="text-white/80 leading-relaxed">
+                      <h3 className="text-2xl font-bold text-white mb-5">Our Mission</h3>
+                      <p className="text-white/90 leading-relaxed text-lg">
                         To empower individuals, teams, and organizations with the cultural intelligence they need to communicate effectively, build trust, and thrive in multicultural environments across the UAE and GCC.
                       </p>
                     </div>
@@ -222,64 +223,111 @@ export default function AboutPage() {
 
                   {/* Vision */}
                   <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.1 }}
-                    whileHover={{ y: -8 }}
-                    className="relative p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm group"
+                    whileHover={{ y: -10, scale: 1.02 }}
+                    className="relative p-10 rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 via-azure-blue/5 to-white/5 backdrop-blur-sm group overflow-hidden"
                   >
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-azure-blue/10 rounded-full blur-3xl opacity-50 group-hover:opacity-75 transition-opacity" />
+                    <div className="absolute top-0 right-0 w-40 h-40 bg-azure-blue/20 rounded-full blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute bottom-0 left-0 w-32 h-32 bg-azure-blue/10 rounded-full blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
                     <div className="relative z-10">
-                      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-azure-blue/20 to-azure-blue/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <Eye className="w-7 h-7 text-azure-blue" />
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-azure-blue/30 to-azure-blue/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg shadow-azure-blue/20">
+                        <Eye className="w-8 h-8 text-azure-blue" />
                       </div>
-                      <h3 className="text-xl font-bold text-white mb-4">Our Vision</h3>
-                      <p className="text-white/80 leading-relaxed">
+                      <h3 className="text-2xl font-bold text-white mb-5">Our Vision</h3>
+                      <p className="text-white/90 leading-relaxed text-lg">
                         A world where people understand one another beyond stereotypes. A region where collaboration rises naturally because people know how to navigate cultural differences with respect, clarity, and emotional intelligence.
                       </p>
                     </div>
                   </motion.div>
+                </div>
+              </motion.div>
 
-                  {/* Values */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
-                    whileHover={{ y: -8 }}
-                    className="relative p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm group"
-                  >
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-orange/10 rounded-full blur-3xl opacity-50 group-hover:opacity-75 transition-opacity" />
-                    <div className="relative z-10">
-                      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-orange/20 to-azure-blue/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <Heart className="w-7 h-7 text-orange" />
+              {/* Values Section */}
+              <motion.div variants={itemVariants} className="space-y-8">
+                <div className="text-center">
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                    <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                      Our Values
+                    </span>
+                  </h2>
+                  <p className="text-white/60 text-lg">The principles that guide everything we do</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                  {[
+                    { 
+                      title: 'Respect', 
+                      description: 'Every culture has its own logic. We honor it.',
+                      icon: Heart,
+                      colorClass: 'orange',
+                      bgGradient: 'from-orange/20 to-orange/10',
+                      iconBg: 'from-orange/20 to-orange/10',
+                      iconColor: 'text-orange',
+                      glowColor: 'bg-orange/10'
+                    },
+                    { 
+                      title: 'Curiosity', 
+                      description: 'We seek to understand before we judge.',
+                      icon: Sparkles,
+                      colorClass: 'azure-blue',
+                      bgGradient: 'from-azure-blue/20 to-azure-blue/10',
+                      iconBg: 'from-azure-blue/20 to-azure-blue/10',
+                      iconColor: 'text-azure-blue',
+                      glowColor: 'bg-azure-blue/10'
+                    },
+                    { 
+                      title: 'Professionalism', 
+                      description: 'Evidence based, structured, and globally recognized training.',
+                      icon: Target,
+                      colorClass: 'orange',
+                      bgGradient: 'from-orange/20 to-orange/10',
+                      iconBg: 'from-orange/20 to-orange/10',
+                      iconColor: 'text-orange',
+                      glowColor: 'bg-orange/10'
+                    },
+                    { 
+                      title: 'Connection', 
+                      description: 'Real relationships are built on cultural understanding.',
+                      icon: Users,
+                      colorClass: 'azure-blue',
+                      bgGradient: 'from-azure-blue/20 to-azure-blue/10',
+                      iconBg: 'from-azure-blue/20 to-azure-blue/10',
+                      iconColor: 'text-azure-blue',
+                      glowColor: 'bg-azure-blue/10'
+                    },
+                    { 
+                      title: 'Authenticity', 
+                      description: 'We teach the truth about how the region works, not the superficial version.',
+                      icon: Heart,
+                      colorClass: 'orange',
+                      bgGradient: 'from-orange/20 to-orange/10',
+                      iconBg: 'from-orange/20 to-orange/10',
+                      iconColor: 'text-orange',
+                      glowColor: 'bg-orange/10'
+                    }
+                  ].map((value, index) => (
+                    <motion.div
+                      key={value.title}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      whileHover={{ y: -8, scale: 1.03 }}
+                      className="relative p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm group overflow-hidden"
+                    >
+                      <div className={`absolute top-0 right-0 w-24 h-24 ${value.glowColor} rounded-full blur-2xl opacity-50 group-hover:opacity-75 transition-opacity`} />
+                      <div className="relative z-10">
+                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${value.iconBg} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                          <value.icon className={`w-6 h-6 ${value.iconColor}`} />
+                        </div>
+                        <h3 className="text-xl font-bold text-white mb-3">{value.title}</h3>
+                        <p className="text-white/80 leading-relaxed">{value.description}</p>
                       </div>
-                      <h3 className="text-xl font-bold text-white mb-4">Our Values</h3>
-                      <div className="space-y-3 text-white/80">
-                        <div className="flex items-start gap-2">
-                          <ArrowRight className="w-4 h-4 text-orange mt-1 flex-shrink-0" />
-                          <p><span className="font-semibold text-white">Respect.</span> Every culture has its own logic. We honor it.</p>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <ArrowRight className="w-4 h-4 text-azure-blue mt-1 flex-shrink-0" />
-                          <p><span className="font-semibold text-white">Curiosity.</span> We seek to understand before we judge.</p>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <ArrowRight className="w-4 h-4 text-orange mt-1 flex-shrink-0" />
-                          <p><span className="font-semibold text-white">Professionalism.</span> Evidence based, structured, and globally recognized training.</p>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <ArrowRight className="w-4 h-4 text-azure-blue mt-1 flex-shrink-0" />
-                          <p><span className="font-semibold text-white">Connection.</span> Real relationships are built on cultural understanding.</p>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <ArrowRight className="w-4 h-4 text-orange mt-1 flex-shrink-0" />
-                          <p><span className="font-semibold text-white">Authenticity.</span> We teach the truth about how the region works, not the superficial version.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
+                    </motion.div>
+                  ))}
                 </div>
               </motion.div>
 
