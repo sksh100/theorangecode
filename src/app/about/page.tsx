@@ -307,6 +307,16 @@ export default function AboutPage() {
                       iconBg: 'from-orange/20 to-orange/10',
                       iconColor: 'text-orange',
                       glowColor: 'bg-orange/10'
+                    },
+                    { 
+                      title: 'Empathy', 
+                      description: 'We put ourselves in others\' shoes to truly understand their perspective and experiences.',
+                      icon: Eye,
+                      colorClass: 'azure-blue',
+                      bgGradient: 'from-azure-blue/20 to-azure-blue/10',
+                      iconBg: 'from-azure-blue/20 to-azure-blue/10',
+                      iconColor: 'text-azure-blue',
+                      glowColor: 'bg-azure-blue/10'
                     }
                   ].map((value, index) => (
                     <motion.div
