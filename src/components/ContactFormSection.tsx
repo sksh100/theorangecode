@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Send, Mail, Phone, MapPin, MessageSquare } from 'lucide-react'
+import { trackFormStart, trackFormComplete } from '@/lib/analytics'
 
 export function ContactFormSection() {
   const [formData, setFormData] = useState({
