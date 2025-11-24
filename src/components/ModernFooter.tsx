@@ -377,6 +377,12 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                 >
                   Privacy Policy
                 </Link>
+                <Link 
+                  href="/cookie-policy" 
+                    className="text-white/50 hover:text-orange transition-colors text-xs"
+                >
+                  Cookie Policy
+                </Link>
               </motion.div>
               )}
             </div>

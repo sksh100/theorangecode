@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowLeft, Shield, Lock, Eye, Database, UserCheck, AlertTriangle, Globe, FileText, Users } from 'lucide-react'
+import { ArrowLeft, Shield, Lock, Eye, Database, UserCheck, AlertTriangle, Globe, FileText, Users, Target, Mail } from 'lucide-react'
 import Link from 'next/link'
 
 export default function PrivacyPolicy() {
@@ -177,8 +177,172 @@ export default function PrivacyPolicy() {
               </div>
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
+                <Database className="w-8 h-8 text-azure-blue" />
+                4. Third-Party Services & Data Processors
+              </h2>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                We use trusted third-party services to operate our website and provide services. These services may process your personal 
+                information on our behalf. All third-party services are GDPR-compliant and bound by strict data processing agreements:
+              </p>
+              
+              <div className="space-y-4 mb-8">
+                <div className="bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl p-6">
+                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                    <Target className="w-5 h-5 text-azure-blue" />
+                    Google Analytics 4
+                  </h4>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Purpose:</strong> Website analytics, user behavior tracking, conversion measurement, and performance monitoring.
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Collected:</strong> IP address (anonymized), page views, clicks, scroll depth, time on page, device type, 
+                    browser information, referrer, UTM parameters, and custom events.
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Processing:</strong> Google LLC (USA) - Data is processed with appropriate safeguards including Standard 
+                    Contractual Clauses (SCCs) for EU data transfers.
+                  </p>
+                  <p className="text-white/60 text-xs">
+                    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
+                      Google Privacy Policy
+                    </a>
+                    {' | '}
+                    <a href="https://support.google.com/analytics/answer/6004245" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
+                      Google Analytics Privacy
+                    </a>
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl p-6">
+                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                    <Lock className="w-5 h-5 text-orange" />
+                    Stripe
+                  </h4>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Purpose:</strong> Secure payment processing for masterclass bookings, course purchases, and ebook sales.
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Collected:</strong> Payment card information (encrypted), billing address, email, phone number, transaction 
+                    details, and fraud prevention data.
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Processing:</strong> Stripe, Inc. (USA) - PCI DSS Level 1 certified, GDPR compliant with Data Processing 
+                    Agreement (DPA).
+                  </p>
+                  <p className="text-white/60 text-xs">
+                    <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
+                      Stripe Privacy Policy
+                    </a>
+                    {' | '}
+                    <a href="https://stripe.com/legal/dpa" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
+                      Stripe DPA
+                    </a>
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-r from-bright-blue/10 to-bright-blue/5 border border-bright-blue/20 rounded-xl p-6">
+                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                    <Mail className="w-5 h-5 text-bright-blue" />
+                    Resend
+                  </h4>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Purpose:</strong> Sending transactional emails, contact form notifications, booking confirmations, and service communications.
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Collected:</strong> Email address, name, message content, and email engagement metrics (opens, clicks).
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Processing:</strong> Resend, Inc. (USA) - GDPR compliant with appropriate data processing safeguards.
+                  </p>
+                  <p className="text-white/60 text-xs">
+                    <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
+                      Resend Privacy Policy
+                    </a>
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-r from-light-blue/10 to-light-blue/5 border border-light-blue/20 rounded-xl p-6">
+                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                    <Users className="w-5 h-5 text-light-blue" />
+                    MailerLite
+                  </h4>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Purpose:</strong> Email marketing, newsletter management, subscriber segmentation, and marketing automation.
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Collected:</strong> Email address, name, subscription preferences, email engagement data, and subscriber tags.
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Processing:</strong> MailerLite UAB (Lithuania/EU) - GDPR compliant, EU-based data processing.
+                  </p>
+                  <p className="text-white/60 text-xs">
+                    <a href="https://www.mailerlite.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
+                      MailerLite Privacy Policy
+                    </a>
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-r from-white/5 to-white/10 border border-white/20 rounded-xl p-6">
+                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                    <Globe className="w-5 h-5 text-white/70" />
+                    Vercel (Hosting & Infrastructure)
+                  </h4>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Purpose:</strong> Website hosting, content delivery network (CDN), serverless functions, and performance monitoring.
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Collected:</strong> IP addresses, request logs, error logs, performance metrics, and visitor analytics.
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Processing:</strong> Vercel, Inc. (USA) - GDPR compliant with DPA, data stored in multiple regions including EU.
+                  </p>
+                  <p className="text-white/60 text-xs">
+                    <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
+                      Vercel Privacy Policy
+                    </a>
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-r from-white/5 to-white/10 border border-white/20 rounded-xl p-6">
+                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                    <Database className="w-5 h-5 text-white/70" />
+                    Vercel KV / Upstash Redis
+                  </h4>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Purpose:</strong> Data storage for visitor tracking, session management, and application state.
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Collected:</strong> Visitor session data, tracking information, and temporary application data.
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Processing:</strong> Upstash, Inc. (USA) - GDPR compliant with appropriate safeguards.
+                  </p>
+                  <p className="text-white/60 text-xs">
+                    <a href="https://upstash.com/legal/privacy" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
+                      Upstash Privacy Policy
+                    </a>
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-azure-blue/10 to-bright-blue/10 border border-azure-blue/30 rounded-2xl p-6 mb-8">
+                <h4 className="text-white font-semibold mb-3">Data Processing Safeguards</h4>
+                <p className="text-white/80 text-sm leading-relaxed mb-3">
+                  All third-party service providers are required to:
+                </p>
+                <ul className="text-white/70 text-sm space-y-2">
+                  <li>• Comply with GDPR and applicable data protection laws</li>
+                  <li>• Process data only for specified purposes</li>
+                  <li>• Implement appropriate technical and organizational security measures</li>
+                  <li>• Notify us of any data breaches</li>
+                  <li>• Delete or return data upon termination of services</li>
+                  <li>• Use Standard Contractual Clauses (SCCs) for international data transfers</li>
+                </ul>
+              </div>
+
+              <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <Shield className="w-8 h-8 text-azure-blue" />
-                4. Data Security & Protection
+                5. Data Security & Protection
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
                 We implement comprehensive security measures to protect your personal information:
@@ -207,7 +371,7 @@ export default function PrivacyPolicy() {
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <UserCheck className="w-8 h-8 text-orange" />
-                5. Your Data Protection Rights
+                6. Your Data Protection Rights
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
                 Under UAE data protection laws, you have the following rights:
@@ -264,10 +428,12 @@ export default function PrivacyPolicy() {
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <Globe className="w-8 h-8 text-bright-blue" />
-                6. Cookies & Tracking Technologies
+                7. Cookies & Tracking Technologies
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                We use cookies and similar technologies to enhance your experience. You can control cookie preferences through our cookie banner or browser settings.
+                We use cookies and similar technologies to enhance your experience. You can control cookie preferences through our cookie banner or browser settings. 
+                For detailed information about our use of cookies, please see our{' '}
+                <Link href="/cookie-policy" className="text-orange hover:underline">Cookie Policy</Link>.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
@@ -277,7 +443,7 @@ export default function PrivacyPolicy() {
                 </div>
                 <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl p-4">
                   <h4 className="text-white font-semibold mb-2">Analytics Cookies</h4>
-                  <p className="text-white/70 text-sm">Help us understand website usage and performance</p>
+                  <p className="text-white/70 text-sm">Help us understand website usage and performance (Google Analytics)</p>
                 </div>
                 <div className="bg-gradient-to-r from-light-blue/10 to-light-blue/5 border border-light-blue/20 rounded-xl p-4">
                   <h4 className="text-white font-semibold mb-2">Personalization Cookies</h4>
@@ -291,7 +457,7 @@ export default function PrivacyPolicy() {
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <FileText className="w-8 h-8 text-azure-blue" />
-                7. Data Retention & Storage
+                8. Data Retention & Storage
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
                 We retain your personal information only as long as necessary for the purposes outlined in this policy:
@@ -316,7 +482,7 @@ export default function PrivacyPolicy() {
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <Lock className="w-8 h-8 text-orange" />
-                8. International Data Transfers
+                9. International Data Transfers
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
                 Your data is primarily stored and processed within the UAE. Any international transfers are conducted with appropriate safeguards and in compliance with UAE data protection laws.
@@ -324,7 +490,7 @@ export default function PrivacyPolicy() {
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <Shield className="w-8 h-8 text-bright-blue" />
-                9. Contact Information
+                10. Contact Information
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
                 For privacy-related questions or to exercise your rights, contact our Data Protection Officer:

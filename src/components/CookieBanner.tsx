@@ -3,101 +3,72 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Cookie, Settings, Check, X, Shield, Eye, Target } from 'lucide-react'
-
-interface CookiePreferences {
-  essential: boolean
-  analytics: boolean
-  marketing: boolean
-  personalization: boolean
-}
+import { getCookieConsent, saveCookieConsent, updateGoogleConsentMode, type CookieConsent } from '@/lib/consent'
+import Link from 'next/link'
 
 export function CookieBanner() {
   const [isVisible, setIsVisible] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
-  const [preferences, setPreferences] = useState<CookiePreferences>({
+  const [preferences, setPreferences] = useState<CookieConsent>({
     essential: true, // Always true, can't be disabled
     analytics: false,
     marketing: false,
-    personalization: false
+    personalization: false,
+    timestamp: new Date().toISOString()
   })
 
   useEffect(() => {
     // Check if user has already made a choice
-    const cookieConsent = localStorage.getItem('cookieConsent')
-    if (!cookieConsent) {
+    const existingConsent = getCookieConsent()
+    if (!existingConsent) {
       // Show banner after a short delay
       const timer = setTimeout(() => {
         setIsVisible(true)
-      }, 2000)
+      }, 1000)
       return () => clearTimeout(timer)
+    } else {
+      // User already consented, update consent mode
+      updateGoogleConsentMode(existingConsent)
     }
   }, [])
 
   const handleAcceptAll = () => {
-    const allAccepted = {
+    const allAccepted: CookieConsent = {
       essential: true,
       analytics: true,
       marketing: true,
-      personalization: true
+      personalization: true,
+      timestamp: new Date().toISOString()
     }
     setPreferences(allAccepted)
-    savePreferences(allAccepted)
+    saveCookieConsent(allAccepted)
     setIsVisible(false)
   }
 
   const handleRejectAll = () => {
-    const onlyEssential = {
+    const onlyEssential: CookieConsent = {
       essential: true,
       analytics: false,
       marketing: false,
-      personalization: false
+      personalization: false,
+      timestamp: new Date().toISOString()
     }
     setPreferences(onlyEssential)
-    savePreferences(onlyEssential)
+    saveCookieConsent(onlyEssential)
     setIsVisible(false)
   }
 
   const handleSavePreferences = () => {
-    savePreferences(preferences)
+    const consent: CookieConsent = {
+      ...preferences,
+      timestamp: new Date().toISOString()
+    }
+    saveCookieConsent(consent)
     setIsVisible(false)
   }
 
-  const savePreferences = (prefs: CookiePreferences) => {
-    localStorage.setItem('cookieConsent', JSON.stringify(prefs))
-    localStorage.setItem('cookieConsentDate', new Date().toISOString())
-    
-    // Initialize tracking based on preferences
-    if (prefs.analytics) {
-      initializeAnalytics()
-    }
-    if (prefs.marketing) {
-      initializeMarketing()
-    }
-    if (prefs.personalization) {
-      initializePersonalization()
-    }
-  }
-
-  const initializeAnalytics = () => {
-    // Google Analytics or other analytics tracking
-    console.log('Analytics tracking initialized')
-    // Add your analytics code here
-  }
-
-  const initializeMarketing = () => {
-    // Marketing tracking (Facebook Pixel, etc.)
-    console.log('Marketing tracking initialized')
-    // Add your marketing tracking code here
-  }
-
-  const initializePersonalization = () => {
-    // Personalization features
-    console.log('Personalization features enabled')
-    // Add your personalization code here
-  }
-
-  const togglePreference = (key: keyof CookiePreferences) => {
-    if (key === 'essential') return // Can't disable essential cookies
+  const togglePreference = (key: keyof CookieConsent) => {
+    if (key === 'essential' || key === 'timestamp') return // Can't disable essential cookies
     setPreferences(prev => ({
       ...prev,
       [key]: !prev[key]
@@ -131,8 +102,11 @@ export function CookieBanner() {
                     </h3>
                     <p className="text-white/80 leading-relaxed mb-4">
                       We use cookies to enhance your experience, analyze site traffic, and personalize content. 
-                      By continuing to use our site, you consent to our use of cookies in accordance with our 
-                      <a href="/privacy-policy" className="text-orange hover:text-bright-blue transition-colors"> Privacy Policy</a>.
+                      By continuing to use our site, you consent to our use of cookies in accordance with our{' '}
+                      <Link href="/privacy-policy" className="text-orange hover:text-bright-blue transition-colors underline">Privacy Policy</Link>
+                      {' '}and{' '}
+                      <Link href="/cookie-policy" className="text-orange hover:text-bright-blue transition-colors underline">Cookie Policy</Link>.
+                      We respect your privacy and comply with GDPR regulations.
                     </p>
                     
                     <div className="flex flex-col sm:flex-row gap-3">

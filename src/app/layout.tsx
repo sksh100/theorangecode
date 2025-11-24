@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { VisitorTracker } from '@/components/VisitorTracker'
 import { GoogleAnalytics } from '@/components/GoogleAnalytics'
+import { CookieBanner } from '@/components/CookieBanner'
 
 export const metadata: Metadata = {
   title: {
@@ -233,6 +234,7 @@ export default function RootLayout({
         <GoogleAnalytics />
         {children}
         <VisitorTracker />
+        <CookieBanner />
       </body>
     </html>
   )
