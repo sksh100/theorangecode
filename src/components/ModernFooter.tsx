@@ -244,9 +244,6 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                 <a href="#about" className="block text-white/70 text-sm hover:text-orange transition-colors">
                   About Us
                 </a>
-                <a href="#services" className="block text-white/70 text-sm hover:text-orange transition-colors">
-                  Services
-                </a>
                 <Link href="/preview#contact" className="block text-white/70 text-sm hover:text-orange transition-colors">
                   Contact
                 </Link>
