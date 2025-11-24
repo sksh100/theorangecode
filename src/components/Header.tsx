@@ -17,7 +17,7 @@ export function Header() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          Your Luxury Agent
+          The Orange Code
         </motion.h1>
         <motion.span 
           className="font-sofia text-base text-text-muted font-normal tracking-wider"
@@ -25,7 +25,7 @@ export function Header() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          www.yourluxuryagent.ai
+          www.theorangecode.com
         </motion.span>
       </div>
     </motion.header>

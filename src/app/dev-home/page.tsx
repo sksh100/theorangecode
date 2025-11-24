@@ -53,7 +53,7 @@ export default function DevHomePage() {
           className="text-center mb-12"
         >
           <h1 className="text-6xl font-bold mb-6 bg-gradient-luminous bg-clip-text text-transparent">
-            Your Luxury Agent
+            The Orange Code
           </h1>
           <p className="text-xl text-white/80 max-w-3xl mx-auto">
             Welcome to the development version of your real home page. 

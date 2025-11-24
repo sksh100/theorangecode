@@ -629,55 +629,55 @@
       0 25px 50px rgba(0, 0, 0, 0.3);
   }
 
-  /* Program Cards Enhancements */
-  .program-card {
+  /* Masterclass Cards Enhancements */
+  .masterclass-card {
     @apply relative bg-gradient-to-br from-primary-dark/80 to-primary-dark/60 backdrop-blur-[20px] border border-azure-blue/20 rounded-2xl p-8 h-full transition-all duration-500;
   }
 
-  .program-card:hover {
+  .masterclass-card:hover {
     @apply border-azure-blue/40 shadow-2xl;
     box-shadow: 
       0 25px 50px rgba(0, 212, 255, 0.2),
       0 0 0 1px rgba(0, 212, 255, 0.3);
   }
 
-  .program-card-number {
+  .masterclass-card-number {
     @apply absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-br from-azure-blue to-orange rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg;
   }
 
-  .program-card-icon {
+  .masterclass-card-icon {
     @apply w-16 h-16 bg-gradient-to-br from-azure-blue/20 to-orange/20 rounded-2xl flex items-center justify-center mb-6 text-azure-blue transition-colors duration-300;
   }
 
-  .program-card-icon:hover {
+  .masterclass-card-icon:hover {
     @apply text-orange;
   }
 
-  .program-card-image {
+  .masterclass-card-image {
     @apply w-full h-48 bg-gradient-to-br from-primary-dark/60 to-primary-dark/40 rounded-xl mb-6 overflow-hidden border border-azure-blue/20 transition-all duration-300;
   }
 
-  .program-card-image:hover {
+  .masterclass-card-image:hover {
     @apply border-azure-blue/40;
   }
 
-  .program-card-title {
+  .masterclass-card-title {
     @apply text-2xl font-bold text-text-primary mb-4 transition-colors duration-300;
   }
 
-  .program-card-title:hover {
+  .masterclass-card-title:hover {
     @apply text-azure-blue;
   }
 
-  .program-card-link {
+  .masterclass-card-link {
     @apply inline-flex items-center gap-2 text-azure-blue hover:text-orange transition-colors duration-300 font-medium;
   }
 
-  .program-card-link:hover {
+  .masterclass-card-link:hover {
     @apply gap-3;
   }
 
-  /* Cutting-Edge Programs Overview Styles */
+  /* Cutting-Edge Masterclasses Overview Styles */
   .grid-pattern-animated {
     background-image: 
       linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),

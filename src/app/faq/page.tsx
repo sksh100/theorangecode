@@ -20,37 +20,37 @@ export default function FAQ() {
   const faqItems: FAQItem[] = [
     {
       id: '1',
-      question: 'What makes The Orange Code different from other cultural training programs?',
-      answer: 'We are certified by the Washington School of Protocol and trusted by embassies worldwide. Our programs combine refined knowledge of Emirati customs with authentic presence training, offering fast-track transformation in just 4 weeks. Unlike generic programs, we provide personalized cultural intelligence specifically designed for the UAE and broader Middle East region.',
+      question: 'What makes The Orange Code different from other cultural training masterclasses?',
+      answer: 'We are certified by the Washington School of Protocol and trusted by embassies worldwide. Our masterclasses combine refined knowledge of Emirati customs with authentic presence training, offering fast-track transformation in just 4 weeks. Unlike generic masterclasses, we provide personalized cultural intelligence specifically designed for the UAE and broader Middle East region.',
       category: 'general',
       icon: <Award className="w-5 h-5" />
     },
     {
       id: '2',
-      question: 'How long does the transformation program take?',
-      answer: 'Our signature programs are designed for fast-track transformation in just 4 weeks. This includes intensive cultural intelligence training, protocol mastery, and practical application sessions. The program is structured to fit into your busy schedule while ensuring maximum impact.',
-      category: 'programs',
+      question: 'How long does the transformation masterclass take?',
+      answer: 'Our signature masterclasses are designed for fast-track transformation in just 4 weeks. This includes intensive cultural intelligence training, protocol mastery, and practical application sessions. The masterclass is structured to fit into your busy schedule while ensuring maximum impact.',
+      category: 'masterclasses',
       icon: <Calendar className="w-5 h-5" />
     },
     {
       id: '3',
       question: 'What cultural aspects do you cover for UAE expats?',
-      answer: 'We cover Islamic etiquette, modesty codes, hospitality rituals, Arabic phrases, and the art of building lasting friendships with Emiratis. Our program helps you break isolation and thrive with cultural confidence, understanding both traditional values and modern UAE society.',
+      answer: 'We cover Islamic etiquette, modesty codes, hospitality rituals, Arabic phrases, and the art of building lasting friendships with Emiratis. Our masterclass helps you break isolation and thrive with cultural confidence, understanding both traditional values and modern UAE society.',
       category: 'cultural',
       icon: <Globe className="w-5 h-5" />
     },
     {
       id: '4',
       question: 'Do you offer business protocol training for the Middle East?',
-      answer: 'Yes! Our "Doing Business in the Middle East" program covers trust-building, negotiation rhythms, gifting protocols, attire guidelines, and majlis etiquette. We prepare executives and entrepreneurs for success in UAE, Saudi Arabia, Qatar, and other GCC countries.',
+      answer: 'Yes! Our "Doing Business in the Middle East" masterclass covers trust-building, negotiation rhythms, gifting protocols, attire guidelines, and majlis etiquette. We prepare executives and entrepreneurs for success in UAE, Saudi Arabia, Qatar, and other GCC countries.',
       category: 'business',
       icon: <Users className="w-5 h-5" />
     },
     {
       id: '5',
-      question: 'What is included in the "Born to Lead" program?',
-      answer: 'This program refines how you think, speak, move, and lead. It covers table manners, royal protocols, body language, tone of voice, and setting boundaries. The journey transforms ambition into authentic presence, preparing you for leadership roles in any cultural context.',
-      category: 'programs',
+      question: 'What is included in the "Born to Lead" masterclass?',
+      answer: 'This masterclass refines how you think, speak, move, and lead. It covers table manners, royal protocols, body language, tone of voice, and setting boundaries. The journey transforms ambition into authentic presence, preparing you for leadership roles in any cultural context.',
+      category: 'masterclasses',
       icon: <Shield className="w-5 h-5" />
     },
     {
@@ -63,15 +63,15 @@ export default function FAQ() {
     {
       id: '7',
       question: 'What are your payment terms and refund policy?',
-      answer: 'We require a 50% deposit upon booking confirmation, with the remaining balance due 7 days before program commencement. All prices include 5% VAT. Our refund policy allows 100% refund (minus 5% processing fee) for cancellations 14+ days before start, with decreasing percentages for closer cancellations.',
+      answer: 'We require a 50% deposit upon booking confirmation, with the remaining balance due 7 days before masterclass commencement. All prices include 5% VAT. Our refund policy allows 100% refund (minus 5% processing fee) for cancellations 14+ days before start, with decreasing percentages for closer cancellations.',
       category: 'payment',
       icon: <Award className="w-5 h-5" />
     },
     {
       id: '8',
-      question: 'Do you provide materials and resources after the program?',
+      question: 'Do you provide materials and resources after the masterclass?',
       answer: 'Yes, all participants receive comprehensive materials including cultural guides, protocol checklists, Arabic phrase books, and ongoing access to our digital resource library. We also provide 3 months of follow-up support to ensure successful implementation.',
-      category: 'programs',
+      category: 'masterclasses',
       icon: <HelpCircle className="w-5 h-5" />
     },
     {
@@ -91,14 +91,14 @@ export default function FAQ() {
     {
       id: '11',
       question: 'Do you offer group training for companies?',
-      answer: 'Yes, we provide corporate training programs tailored for teams and organizations. These include group sessions, team-building exercises, and customized content for specific industries. We can accommodate groups of various sizes and provide on-site training at your location.',
+      answer: 'Yes, we provide corporate training masterclasses tailored for teams and organizations. These include group sessions, team-building exercises, and customized content for specific industries. We can accommodate groups of various sizes and provide on-site training at your location.',
       category: 'business',
       icon: <Users className="w-5 h-5" />
     },
     {
       id: '12',
       question: 'What is your success rate and client satisfaction?',
-      answer: 'We maintain a 98% client satisfaction rate with over 500 successful transformations. Our clients include embassy staff, international executives, and expat families who have successfully integrated into UAE society and advanced their careers through our programs.',
+      answer: 'We maintain a 98% client satisfaction rate with over 500 successful transformations. Our clients include embassy staff, international executives, and expat families who have successfully integrated into UAE society and advanced their careers through our masterclasses.',
       category: 'general',
       icon: <Award className="w-5 h-5" />
     }
@@ -107,7 +107,7 @@ export default function FAQ() {
   const categories = [
     { id: 'all', name: 'All Questions', icon: <HelpCircle className="w-4 h-4" /> },
     { id: 'general', name: 'General', icon: <Award className="w-4 h-4" /> },
-    { id: 'programs', name: 'Programs', icon: <Calendar className="w-4 h-4" /> },
+    { id: 'masterclasses', name: 'Masterclasses', icon: <Calendar className="w-4 h-4" /> },
     { id: 'cultural', name: 'Cultural', icon: <Globe className="w-4 h-4" /> },
     { id: 'business', name: 'Business', icon: <Users className="w-4 h-4" /> },
     { id: 'booking', name: 'Booking', icon: <Phone className="w-4 h-4" /> },
@@ -189,7 +189,7 @@ export default function FAQ() {
             </div>
             <div>
               <h1 className="text-5xl font-bold text-white mb-2">Frequently Asked Questions</h1>
-              <p className="text-white/70 text-xl">Find answers to common questions about our luxury cultural intelligence programs</p>
+              <p className="text-white/70 text-xl">Find answers to common questions about our luxury cultural intelligence masterclasses</p>
             </div>
           </motion.div>
 

@@ -292,7 +292,7 @@ export default function ComingSoonPage() {
                   "Immersive live modules guided by Dutch-led expertise",
                   "Bonus: One-on-One Q&A Session (personalized cultural insight consultation)",
                   "Extra Bonus Session: Impeccable Introductions — how to present yourself across cultures with confidence",
-                  "Priority Invitation to upcoming in-person sessions & GCC workshops",
+                  "Priority Invitation to upcoming in-person sessions & GCC masterclasses",
                   "15% Discount on private consulting packages with The Orange Code team"
                 ].map((benefit, index) => (
                   <li key={index} className="flex items-start gap-2 sm:gap-3">

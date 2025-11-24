@@ -148,7 +148,7 @@ export default function NewHomePage() {
               whileTap={{ scale: 0.95 }}
               className="px-10 py-5 rounded-full bg-white/10 backdrop-blur-sm border-2 border-white/20 text-white font-bold text-xl transition-all duration-300 hover:bg-white/20 hover:border-azure-blue/50"
             >
-              Explore Programs
+              Explore Masterclasses
             </motion.button>
           </motion.div>
 
@@ -226,7 +226,7 @@ export default function NewHomePage() {
               >
                 {[
                   { icon: Target, text: 'Strategic Excellence' },
-                  { icon: Award, text: 'Certified Programs' },
+                  { icon: Award, text: 'Certified Masterclasses' },
                   { icon: TrendingUp, text: 'Measurable Results' }
                 ].map((item, i) => (
                   <div key={i} className="glass-card p-4 backdrop-blur-[20px] border border-white/10 flex items-center gap-3">
@@ -247,7 +247,7 @@ export default function NewHomePage() {
               {[
                 { icon: Globe, number: '200+', label: 'Nationalities' },
                 { icon: Users, number: '10K+', label: 'Professionals Trained' },
-                { icon: BookOpen, number: '50+', label: 'Programs' },
+                { icon: BookOpen, number: '50+', label: 'Masterclasses' },
                 { icon: Award, number: '98%', label: 'Success Rate' }
               ].map((stat, i) => (
                 <motion.div
@@ -424,7 +424,7 @@ export default function NewHomePage() {
         </div>
       </motion.section>
 
-      {/* Programs Section */}
+      {/* Masterclasses Section */}
       <motion.section 
         style={{ y: programsY }}
         className="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-32"
@@ -438,7 +438,7 @@ export default function NewHomePage() {
             className="text-center mb-20"
           >
             <h2 className="text-6xl md:text-8xl font-black mb-6 text-gradient-primary">
-              Our Programs
+              Our Masterclasses
             </h2>
             <p className="text-2xl md:text-3xl text-white/80 max-w-3xl mx-auto">
               Transform your cultural intelligence in just four weeks
@@ -448,7 +448,7 @@ export default function NewHomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                title: 'Foundation Program',
+                title: 'Foundation Masterclass',
                 duration: '4 Weeks',
                 description: 'Master the fundamentals of cultural intelligence and build authentic cross-cultural connections.',
                 features: ['Cultural Awareness', 'Communication Skills', 'Business Protocols', 'UAE & Gulf Focus']
@@ -462,7 +462,7 @@ export default function NewHomePage() {
               {
                 title: 'Executive Immersion',
                 duration: '12 Weeks',
-                description: 'Comprehensive program for C-suite executives seeking cultural mastery in international business.',
+                description: 'Comprehensive masterclass for C-suite executives seeking cultural mastery in international business.',
                 features: ['Executive Coaching', 'Custom Strategy', 'Network Building', 'Ongoing Support']
               }
             ].map((program, i) => (

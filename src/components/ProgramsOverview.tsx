@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 
-interface ProgramCard {
+interface MasterclassCard {
   id: number
   title: string
   description: string
@@ -13,11 +13,11 @@ interface ProgramCard {
   learnMoreLink: string
 }
 
-interface ProgramsOverviewProps {
+interface MasterclassesOverviewProps {
   onExpand?: () => void
 }
 
-export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
+export function MasterclassesOverview({ onExpand }: MasterclassesOverviewProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const [activeCard, setActiveCard] = useState<number | null>(null)
@@ -32,11 +32,11 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8])
 
-  const programs: ProgramCard[] = [
+  const masterclasses: MasterclassCard[] = [
     {
       id: 1,
       title: "UAE Cultural Foundations",
-      description: "Step into your full potential with a program that refines how you think, speak, move, and lead. From table manners and royal protocols to body language, tone of voice, and setting boundaries, this journey transforms ambition into presence.",
+      description: "Step into your full potential with a masterclass that refines how you think, speak, move, and lead. From table manners and royal protocols to body language, tone of voice, and setting boundaries, this journey transforms ambition into presence.",
       gradient: "from-orange/20 to-bright-blue/20",
       imagePlaceholder: "/programs/program 1.png",
       learnMoreLink: "#born-to-lead"
@@ -52,7 +52,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
     {
       id: 3,
       title: "Cultural Intelligence\nIn Business",
-      description: "Unlock the unspoken rules of GCC business culture. From trust-building and negotiation rhythms to gifting, attire, and majlis etiquette, this program gives executives and entrepreneurs the keys to succeed in UAE, Saudi Arabia, Qatar, and beyond.",
+      description: "Unlock the unspoken rules of GCC business culture. From trust-building and negotiation rhythms to gifting, attire, and majlis etiquette, this masterclass gives executives and entrepreneurs the keys to succeed in UAE, Saudi Arabia, Qatar, and beyond.",
       gradient: "from-light-blue/20 to-orange/20",
       imagePlaceholder: "/programs/program 3.png",
       learnMoreLink: "#middle-east-business"
@@ -61,7 +61,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      const element = document.getElementById('programs-overview')
+      const element = document.getElementById('masterclasses-overview')
       if (element) {
         const rect = element.getBoundingClientRect()
         const isVisible = rect.top < window.innerHeight && rect.bottom > 0
@@ -82,7 +82,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
   return (
     <motion.section
       ref={sectionRef}
-      id="programs-overview"
+      id="masterclasses-overview"
       className="relative py-32 bg-gradient-to-br from-primary-dark via-primary-dark/95 to-primary-dark overflow-hidden"
       style={{ opacity, scale }}
     >
@@ -171,7 +171,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
               viewport={{ once: true }}
             />
             <span className="text-azure-blue font-semibold text-sm uppercase tracking-wider">
-              WORKSHOPS
+              MASTERCLASSES
             </span>
             <motion.div 
               className="w-2 h-2 bg-azure-blue rounded-full"
@@ -182,7 +182,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
             />
           </motion.div>
 
-          {/* Main Title: "Our Workshops" with gradient on "Workshops" */}
+          {/* Main Title: "Our Masterclasses" with gradient on "Masterclasses" */}
           <motion.h1 
             className="text-4xl md:text-6xl font-bold mb-6"
             initial={{ opacity: 0, y: 20 }}
@@ -192,7 +192,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
           >
             <span className="text-white">Our </span>
             <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-              Workshops
+              Masterclasses
             </span>
           </motion.h1>
           
@@ -204,7 +204,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
             transition={{ duration: 0.8, delay: 0.6 }}
             viewport={{ once: true }}
           >
-            Transform your potential with our signature workshops designed for excellence
+            Transform your potential with our signature masterclasses designed for excellence
           </motion.p>
         </motion.div>
 
@@ -218,7 +218,7 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
         >
           {/* Grid Container for 3 Boxes */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-            {programs.map((program, index) => {
+            {masterclasses.map((masterclass, index) => {
               const panelColors = [
                 { bg: 'from-orange/15 to-orange/5', border: 'border-orange/40', glow: 'from-orange/30 to-orange/10' },
                 { bg: 'from-bright-blue/15 to-bright-blue/5', border: 'border-bright-blue/40', glow: 'from-bright-blue/30 to-bright-blue/10' },
@@ -228,15 +228,15 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
 
               return (
                 <motion.div
-                  key={program.id}
+                  key={masterclass.id}
                   className="group relative flex flex-col"
                   initial={{ opacity: 0, y: 50, scale: 0.95 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
                   viewport={{ once: true }}
                   onMouseEnter={() => {
-                    setHoveredCard(program.id)
-                    setActiveCard(program.id)
+                    setHoveredCard(masterclass.id)
+                    setActiveCard(masterclass.id)
                   }}
                   onMouseLeave={() => {
                     setHoveredCard(null)
@@ -247,8 +247,8 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
                   <motion.div
                     className={`absolute -inset-2 bg-gradient-to-r ${colors.glow} rounded-3xl opacity-0 group-hover:opacity-100 blur-xl`}
                     animate={{ 
-                      opacity: activeCard === program.id ? 0.4 : 0,
-                      scale: activeCard === program.id ? 1.02 : 1
+                      opacity: activeCard === masterclass.id ? 0.4 : 0,
+                      scale: activeCard === masterclass.id ? 1.02 : 1
                     }}
                     transition={{ duration: 0.3 }}
                   />
@@ -266,10 +266,10 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
                           textShadow: "0 0 30px rgba(255, 145, 77, 0.8)"
                         }}
                       >
-                        {program.title.split('\n').map((line, i) => (
+                        {masterclass.title.split('\n').map((line, i) => (
                           <React.Fragment key={i}>
                             {line}
-                            {i < program.title.split('\n').length - 1 && <br />}
+                            {i < masterclass.title.split('\n').length - 1 && <br />}
                           </React.Fragment>
                         ))}
                       </motion.h3>
@@ -282,8 +282,8 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
                       >
                         <div className={`relative w-full h-full bg-gradient-to-br ${colors.bg} backdrop-blur-[20px] border-2 ${colors.border} rounded-xl overflow-hidden group-hover:border-opacity-80 transition-all duration-300 shadow-xl`}>
                           <img 
-                            src={program.imagePlaceholder} 
-                            alt={program.title}
+                            src={masterclass.imagePlaceholder} 
+                            alt={masterclass.title}
                             className="w-full h-full object-cover object-left"
                           />
                           {/* Subtle Overlay Effect */}
@@ -296,12 +296,12 @@ export function ProgramsOverview({ onExpand }: ProgramsOverviewProps) {
                       {/* Description Below Image */}
                       <div className="flex flex-col gap-4 flex-grow">
                         <p className="text-white/90 text-sm md:text-base leading-relaxed text-center flex-grow">
-                          {program.description}
+                          {masterclass.description}
                         </p>
                         
                         {/* CTA Button */}
                         <motion.a
-                          href={program.learnMoreLink}
+                          href={masterclass.learnMoreLink}
                           className={`inline-flex items-center justify-center gap-3 px-6 py-3 bg-gradient-to-r ${colors.glow} border ${colors.border} rounded-xl text-white hover:text-orange transition-all duration-300 font-semibold text-sm group-hover:border-opacity-80 mt-auto`}
                           whileHover={{ 
                             scale: 1.05,

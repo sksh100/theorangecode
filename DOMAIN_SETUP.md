@@ -1,4 +1,4 @@
-# Domain Setup Guide for Your Luxury Agent
+# Domain Setup Guide for The Orange Code
 
 This guide will help you connect your purchased domain to your website.
 

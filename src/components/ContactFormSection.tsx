@@ -241,10 +241,9 @@ export function ContactFormSection() {
                         }}
                       >
                         <option value="" disabled className="bg-primary-dark text-white/50">Select a subject</option>
-                        <option value="program-inquiry" className="bg-primary-dark text-white py-2">Program Inquiry</option>
+                        <option value="masterclass-inquiry" className="bg-primary-dark text-white py-2">Masterclass Inquiry</option>
                         <option value="booking" className="bg-primary-dark text-white py-2">Book a Session</option>
-                        <option value="workshop-inquiry" className="bg-primary-dark text-white py-2">Workshop Inquiry</option>
-                        <option value="private-workshop-inquiry" className="bg-primary-dark text-white py-2">Private Workshop Inquiry</option>
+                        <option value="private-masterclass-inquiry" className="bg-primary-dark text-white py-2">Private Masterclass Inquiry</option>
                         <option value="partnership" className="bg-primary-dark text-white py-2">Partnership</option>
                         <option value="general" className="bg-primary-dark text-white py-2">General Question</option>
                       </select>

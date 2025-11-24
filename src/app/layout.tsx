@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     'professional training UAE',
     'executive education',
     'cultural intelligence courses',
-    'leadership programs UAE'
+    'leadership masterclasses UAE'
   ],
   authors: [{ name: 'The Orange Code' }],
   creator: 'The Orange Code',
@@ -155,7 +155,7 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'EducationalOrganization',
               name: 'The Orange Code',
-              description: 'Cultural intelligence and leadership training programs in Abu Dhabi and Dubai, UAE.',
+              description: 'Cultural intelligence and leadership training masterclasses in Abu Dhabi and Dubai, UAE.',
               url: 'https://www.theorangecode.com',
               address: {
                 '@type': 'PostalAddress',

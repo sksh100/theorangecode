@@ -35,7 +35,7 @@ export function TestimonialCarousel() {
       name: 'Sophie Turner',
       role: 'British Expat Living in Dubai',
       company: '',
-      content: 'I joined The Orange Code out of pure curiosity. I wanted to understand the culture I was living in and hoped to learn a few basics. The Cultural Foundations Workshop and the Workshop dedicated to Expatriates gave me so much more. I finally understood the values that shape life in the UAE and the meaning behind the way people communicate here. It made me feel more at home and more connected to the country. I see the culture with new appreciation and I no longer feel like an outsider.',
+      content: 'I joined The Orange Code out of pure curiosity. I wanted to understand the culture I was living in and hoped to learn a few basics. The Cultural Foundations Masterclass and the Masterclass dedicated to Expatriates gave me so much more. I finally understood the values that shape life in the UAE and the meaning behind the way people communicate here. It made me feel more at home and more connected to the country. I see the culture with new appreciation and I no longer feel like an outsider.',
       rating: 5
     },
     {
@@ -43,7 +43,7 @@ export function TestimonialCarousel() {
       name: 'Michael Chen',
       role: 'Senior Consultant',
       company: 'Strategic Partners Group',
-      content: 'The depth of knowledge and practical application in The Orange Code program is exceptional. It\'s not just theory - it\'s real-world wisdom that immediately improved my interactions and business outcomes in the region.',
+      content: 'The depth of knowledge and practical application in The Orange Code masterclass is exceptional. It\'s not just theory - it\'s real-world wisdom that immediately improved my interactions and business outcomes in the region.',
       rating: 5
     },
     {
@@ -147,7 +147,7 @@ export function TestimonialCarousel() {
               Honest reflections from the people who walked this journey with us.
             </p>
             <p>
-              Several clients, marked with a shield, prefer to remain anonymous because of NDA requirements, but still offered to share their experience. We are truly thankful for every participant who chooses to tell us how the workshops shaped their understanding of the culture. Here is a small selection.
+              Several clients, marked with a shield, prefer to remain anonymous because of NDA requirements, but still offered to share their experience. We are truly thankful for every participant who chooses to tell us how the masterclasses shaped their understanding of the culture. Here is a small selection.
             </p>
           </motion.div>
         </motion.div>

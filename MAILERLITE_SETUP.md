@@ -71,7 +71,7 @@ This is the key feature that sends a newsletter automatically when someone subsc
    - Select the group you created in Step 3
 5. **Design your welcome email:**
    - Click on the email step
-   - Enter a subject line (e.g., "Welcome to Your Luxury Agent!")
+   - Enter a subject line (e.g., "Welcome to The Orange Code!")
    - Design your email content using the drag-and-drop editor
    - You can personalize it with subscriber fields like `{{name}}` or `{{email}}`
 6. **Save and Activate** the workflow
@@ -117,7 +117,7 @@ When someone subscribes, the following information is sent to MailerLite:
 - **First Name** (if provided)
 - **Last Name** (if provided)
 - **Phone Number** (if provided)
-- **Source** (tracks where the subscription came from, e.g., "Footer Newsletter Subscription" or "Your Luxury Agent Coming Soon Page")
+- **Source** (tracks where the subscription came from, e.g., "Footer Newsletter Subscription" or "The Orange Code Coming Soon Page")
 
 ## 🔍 Troubleshooting
 

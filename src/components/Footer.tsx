@@ -17,7 +17,7 @@ export function Footer() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          &copy; 2025 Your Luxury Agent. All rights reserved.
+          &copy; 2025 The Orange Code. All rights reserved.
         </motion.p>
         <motion.p 
           className="font-inter text-text-muted text-sm"

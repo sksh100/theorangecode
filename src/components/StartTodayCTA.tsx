@@ -90,7 +90,7 @@ export function StartTodayCTA() {
             transition={{ duration: 0.8, delay: 0.6 }}
             viewport={{ once: true }}
           >
-            Transform your cultural intelligence and unlock new possibilities in the UAE and Gulf Region. Join our workshops and start your journey today.
+            Transform your cultural intelligence and unlock new possibilities in the UAE and Gulf Region. Join our masterclasses and start your journey today.
           </motion.p>
 
           {/* CTA Button */}
@@ -125,7 +125,7 @@ export function StartTodayCTA() {
                     backgroundSize: '200% 200%',
                   }}
                 />
-                <span className="relative z-10">Explore Our Programs</span>
+                <span className="relative z-10">Explore Our Masterclasses</span>
                 <motion.div
                   className="relative z-10"
                   animate={{ x: [0, 5, 0] }}

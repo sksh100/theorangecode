@@ -94,7 +94,7 @@ export default function TermsConditions() {
                 1. Acceptance of Terms
               </h2>
               <p className="text-white/80 leading-relaxed mb-8 text-lg">
-                By accessing and using the services of Your Luxury Agent, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. 
+                By accessing and using the services of The Orange Code, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. 
                 These terms are governed by the laws of the United Arab Emirates and are subject to the jurisdiction of UAE courts.
               </p>
 
@@ -103,7 +103,7 @@ export default function TermsConditions() {
                 2. Services Description
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                Your Luxury Agent provides premium cultural intelligence, protocol training, and luxury lifestyle consulting services. Our programs include but are not limited to:
+                The Orange Code provides premium cultural intelligence, protocol training, and luxury lifestyle consulting services. Our masterclasses include but are not limited to:
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                 <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl p-4">
@@ -120,7 +120,7 @@ export default function TermsConditions() {
                 </div>
                 <div className="bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl p-4">
                   <p className="text-white font-semibold">Global Experience</p>
-                  <p className="text-white/70 text-sm">Multicultural competence programs</p>
+                  <p className="text-white/70 text-sm">Multicultural competence masterclasses</p>
                 </div>
               </div>
 
@@ -163,7 +163,7 @@ export default function TermsConditions() {
                 <ul className="text-white/80 leading-relaxed space-y-2">
                   <li>• All payments must be made in UAE Dirhams (AED)</li>
                   <li>• 50% deposit required upon booking confirmation</li>
-                  <li>• Remaining balance due 7 days before program commencement</li>
+                  <li>• Remaining balance due 7 days before masterclass commencement</li>
                   <li>• All prices include 5% VAT as per UAE Federal Tax Authority regulations</li>
                   <li>• Late payments may incur additional charges as per UAE commercial law</li>
                 </ul>
@@ -185,7 +185,7 @@ export default function TermsConditions() {
                 5. Limitation of Liability
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                Your Luxury Agent's liability is limited to the amount paid for services. We are not liable for indirect, consequential, or punitive damages. 
+                The Orange Code's liability is limited to the amount paid for services. We are not liable for indirect, consequential, or punitive damages. 
                 This limitation applies to the fullest extent permitted by UAE Federal Law No. 5 of 1985 (Civil Transactions Law).
               </p>
 
@@ -203,7 +203,7 @@ export default function TermsConditions() {
                 7. Intellectual Property
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                All training materials, methodologies, and proprietary content remain the intellectual property of Your Luxury Agent. 
+                All training materials, methodologies, and proprietary content remain the intellectual property of The Orange Code. 
                 Clients may not reproduce, distribute, or use such materials for commercial purposes without written consent.
               </p>
 
@@ -217,9 +217,9 @@ export default function TermsConditions() {
               <div className="bg-gradient-to-r from-orange/10 to-bright-blue/10 border border-orange/30 rounded-2xl p-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <p className="text-white font-bold text-xl mb-2">Your Luxury Agent</p>
+                    <p className="text-white font-bold text-xl mb-2">The Orange Code</p>
                     <p className="text-white/80 mb-1">Legal Department</p>
-                    <p className="text-white/80 mb-1">Email: legal@yourluxuryagent.com</p>
+                    <p className="text-white/80 mb-1">Email: legal@theorangecode.com</p>
                     <p className="text-white/80 mb-1">Phone: +971 56 878 6106</p>
                   </div>
                   <div>

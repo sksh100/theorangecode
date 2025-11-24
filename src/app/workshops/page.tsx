@@ -7,7 +7,7 @@ import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 import Link from 'next/link'
 
-interface WorkshopCard {
+interface MasterclassCard {
   id: number
   title: string
   description: string
@@ -16,7 +16,7 @@ interface WorkshopCard {
   learnMoreLink: string
 }
 
-export default function WorkshopsPage() {
+export default function MasterclassesPage() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const [activeCard, setActiveCard] = useState<number | null>(null)
   const sectionRef = useRef<HTMLElement>(null)
@@ -30,11 +30,11 @@ export default function WorkshopsPage() {
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8])
 
-  const workshops: WorkshopCard[] = [
+  const masterclasses: MasterclassCard[] = [
     {
       id: 1,
       title: "UAE Cultural Foundations",
-      description: "Step into your full potential with a program that refines how you think, speak, move, and lead. From table manners and royal protocols to body language, tone of voice, and setting boundaries, this journey transforms ambition into presence.",
+      description: "Step into your full potential with a masterclass that refines how you think, speak, move, and lead. From table manners and royal protocols to body language, tone of voice, and setting boundaries, this journey transforms ambition into presence.",
       gradient: "from-orange/20 to-bright-blue/20",
       imagePlaceholder: "/programs/program 1.png",
       learnMoreLink: "/courses/cultural-intelligence"
@@ -50,7 +50,7 @@ export default function WorkshopsPage() {
     {
       id: 3,
       title: "Cultural Intelligence\nIn Business",
-      description: "Unlock the unspoken rules of GCC business culture. From trust-building and negotiation rhythms to gifting, attire, and majlis etiquette, this program gives executives and entrepreneurs the keys to succeed in UAE, Saudi Arabia, Qatar, and beyond.",
+      description: "Unlock the unspoken rules of GCC business culture. From trust-building and negotiation rhythms to gifting, attire, and majlis etiquette, this masterclass gives executives and entrepreneurs the keys to succeed in UAE, Saudi Arabia, Qatar, and beyond.",
       gradient: "from-light-blue/20 to-orange/20",
       imagePlaceholder: "/programs/program 3.png",
       learnMoreLink: "/courses/cultural-intelligence"
@@ -123,7 +123,7 @@ export default function WorkshopsPage() {
                 viewport={{ once: true }}
               />
               <span className="text-azure-blue font-semibold text-sm uppercase tracking-wider">
-                Our Workshops
+                Our Masterclasses
               </span>
               <motion.div 
                 className="w-2 h-2 bg-azure-blue rounded-full"
@@ -144,7 +144,7 @@ export default function WorkshopsPage() {
             >
               <span className="text-white">Our </span>
               <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                Workshops
+                Masterclasses
               </span>
             </motion.h1>
             
@@ -156,7 +156,7 @@ export default function WorkshopsPage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               viewport={{ once: true }}
             >
-              Transform your potential with our signature workshops designed for excellence
+              Transform your potential with our signature masterclasses designed for excellence
             </motion.p>
           </motion.div>
 
@@ -170,7 +170,7 @@ export default function WorkshopsPage() {
           >
             {/* Grid Container for 3 Boxes */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-              {workshops.map((workshop, index) => {
+              {masterclasses.map((masterclass, index) => {
                 const panelColors = [
                   { bg: 'from-orange/15 to-orange/5', border: 'border-orange/40', glow: 'from-orange/30 to-orange/10' },
                   { bg: 'from-bright-blue/15 to-bright-blue/5', border: 'border-bright-blue/40', glow: 'from-bright-blue/30 to-bright-blue/10' },
@@ -180,15 +180,15 @@ export default function WorkshopsPage() {
 
                 return (
                   <motion.div
-                    key={workshop.id}
+                    key={masterclass.id}
                     className="group relative flex flex-col"
                     initial={{ opacity: 0, y: 50, scale: 0.95 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.6, delay: index * 0.2 }}
                     viewport={{ once: true }}
                     onMouseEnter={() => {
-                      setHoveredCard(workshop.id)
-                      setActiveCard(workshop.id)
+                      setHoveredCard(masterclass.id)
+                      setActiveCard(masterclass.id)
                     }}
                     onMouseLeave={() => {
                       setHoveredCard(null)
@@ -199,8 +199,8 @@ export default function WorkshopsPage() {
                     <motion.div
                       className={`absolute -inset-2 bg-gradient-to-r ${colors.glow} rounded-3xl opacity-0 group-hover:opacity-100 blur-xl`}
                       animate={{ 
-                        opacity: activeCard === workshop.id ? 0.4 : 0,
-                        scale: activeCard === workshop.id ? 1.02 : 1
+                        opacity: activeCard === masterclass.id ? 0.4 : 0,
+                        scale: activeCard === masterclass.id ? 1.02 : 1
                       }}
                       transition={{ duration: 0.3 }}
                     />
@@ -218,10 +218,10 @@ export default function WorkshopsPage() {
                             textShadow: "0 0 30px rgba(255, 145, 77, 0.8)"
                           }}
                         >
-                          {workshop.title.split('\n').map((line, i) => (
+                          {masterclass.title.split('\n').map((line, i) => (
                             <React.Fragment key={i}>
                               {line}
-                              {i < workshop.title.split('\n').length - 1 && <br />}
+                              {i < masterclass.title.split('\n').length - 1 && <br />}
                             </React.Fragment>
                           ))}
                         </motion.h3>
@@ -234,8 +234,8 @@ export default function WorkshopsPage() {
                         >
                           <div className={`relative w-full h-full bg-gradient-to-br ${colors.bg} backdrop-blur-[20px] border-2 ${colors.border} rounded-xl overflow-hidden group-hover:border-opacity-80 transition-all duration-300 shadow-xl`}>
                             <img 
-                              src={workshop.imagePlaceholder} 
-                              alt={workshop.title}
+                              src={masterclass.imagePlaceholder} 
+                              alt={masterclass.title}
                               className="w-full h-full object-cover object-left"
                             />
                             {/* Subtle Overlay Effect */}
@@ -248,11 +248,11 @@ export default function WorkshopsPage() {
                         {/* Description Below Image */}
                         <div className="flex flex-col gap-4 flex-grow">
                           <p className="text-white/90 text-sm md:text-base leading-relaxed text-center flex-grow">
-                            {workshop.description}
+                            {masterclass.description}
                           </p>
                           
                           {/* CTA Button */}
-                          <Link href={workshop.learnMoreLink}>
+                          <Link href={masterclass.learnMoreLink}>
                             <motion.button
                               className={`w-full inline-flex items-center justify-center gap-3 px-6 py-3 bg-gradient-to-r ${colors.glow} border ${colors.border} rounded-xl text-white hover:text-orange transition-all duration-300 font-semibold text-sm group-hover:border-opacity-80 mt-auto`}
                               whileHover={{ 

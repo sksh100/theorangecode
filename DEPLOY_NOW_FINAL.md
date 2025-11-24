@@ -24,7 +24,7 @@ Your project might be connected to a different GitHub repo!
 2. **Check** which repository is connected
 3. **If wrong repo**:
    - Disconnect current repo
-   - Connect to correct repo: `sksh100/yourluxuryagent`
+   - Connect to correct repo: `sksh100/theorangecode`
    - Or create new repo named `theorangecode`
 
 ## 📍 Check These Tabs:

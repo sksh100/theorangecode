@@ -136,14 +136,14 @@ export function FinalCTASection() {
             </Link>
 
             {/* Secondary CTA */}
-            <Link href="/programs">
+            <Link href="/masterclasses">
               <motion.button
                 className="hero-cta-secondary-glass px-10 py-5 rounded-xl font-bold text-lg md:text-xl"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.3 }}
               >
-                Explore Programs
+                Explore Masterclasses
               </motion.button>
             </Link>
           </motion.div>

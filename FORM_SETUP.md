@@ -38,7 +38,7 @@ Each form submission will include:
 - Phone Number
 - Event Date (2025-10-09)
 - Timestamp
-- Source (Your Luxury Agent Coming Soon Page)
+- Source (The Orange Code Coming Soon Page)
 
 ## 🔧 Current Status
 

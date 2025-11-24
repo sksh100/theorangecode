@@ -43,8 +43,8 @@ export function BentoBoxSection() {
       glowColor: 'from-bright-blue/30 to-bright-blue/10'
     },
     {
-      id: 'extended-programs',
-      title: 'Extended Programs',
+      id: 'extended-masterclasses',
+      title: 'Extended Masterclasses',
       description: 'Comprehensive learning paths for deeper mastery',
       icon: <BookOpen className="w-8 h-8" />,
       size: 'medium',

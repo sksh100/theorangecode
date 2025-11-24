@@ -238,8 +238,8 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
             >
               <h4 className="text-lg font-semibold text-white mb-6 tracking-tight">Quick Links</h4>
               <div className="space-y-3">
-                <a href="/workshops" className="block text-white/70 text-sm hover:text-orange transition-colors">
-                  Workshops
+                <a href="/masterclasses" className="block text-white/70 text-sm hover:text-orange transition-colors">
+                  Masterclasses
                 </a>
                 <a href="#about" className="block text-white/70 text-sm hover:text-orange transition-colors">
                   About Us

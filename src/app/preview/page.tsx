@@ -7,7 +7,7 @@ import { HeroSection } from '@/components/HeroSection'
 import { WhyCulturalIntelligenceSection } from '@/components/WhyCulturalIntelligenceSection'
 import { TestimonialCarousel } from '@/components/TestimonialCarousel'
 import { ContactFormSection } from '@/components/ContactFormSection'
-import { ProgramsOverview } from '@/components/ProgramsOverview'
+import { MasterclassesOverview } from '@/components/ProgramsOverview'
 import { USPBar } from '@/components/USPBar'
 import { ModernFooter } from '@/components/ModernFooter'
 import { AtmosphericBackground } from '@/components/AtmosphericBackground'
@@ -74,7 +74,7 @@ export default function Home() {
         <main>
           <HeroSection />
           <WhyCulturalIntelligenceSection />
-          <ProgramsOverview />
+          <MasterclassesOverview />
           <USPBar />
           <TestimonialCarousel />
           <StartTodayCTA />

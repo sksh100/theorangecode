@@ -4,7 +4,7 @@ import { ModernNavbar } from '@/components/ModernNavbar'
 import { HeroSection } from '@/components/HeroSection'
 import { BentoBoxSection } from '@/components/BentoBoxSection'
 import { ExtendedAdvantagesBanner } from '@/components/ExtendedAdvantagesBanner'
-import { ProgramsOverview } from '@/components/ProgramsOverview'
+import { MasterclassesOverview } from '@/components/ProgramsOverview'
 import { USPBar } from '@/components/USPBar'
 import { ModernFooter } from '@/components/ModernFooter'
 import { Background } from '@/components/Background'
@@ -19,7 +19,7 @@ export default function HomePage() {
         <USPBar />
         <BentoBoxSection />
         <ExtendedAdvantagesBanner />
-        <ProgramsOverview />
+        <MasterclassesOverview />
       </main>
       <ModernFooter />
     </div>

@@ -84,7 +84,7 @@ export default function PrivacyPolicy() {
                   <h3 className="text-xl font-bold text-white">Privacy Notice</h3>
                 </div>
                 <p className="text-white/80 leading-relaxed">
-                  This Privacy Policy explains how Your Luxury Agent collects, uses, and protects your personal information in compliance with UAE Federal Law No. 2 of 2019 
+                  This Privacy Policy explains how The Orange Code collects, uses, and protects your personal information in compliance with UAE Federal Law No. 2 of 2019 
                   and Dubai Law No. 26 of 2007. Your privacy is our priority.
                 </p>
               </div>
@@ -139,7 +139,7 @@ export default function PrivacyPolicy() {
                 <div className="bg-gradient-to-r from-light-blue/10 to-light-blue/5 border border-light-blue/20 rounded-xl p-4">
                   <h4 className="text-white font-semibold mb-2">Business Operations</h4>
                   <ul className="text-white/70 text-sm space-y-1">
-                    <li>• Improve our services and programs</li>
+                    <li>• Improve our services and masterclasses</li>
                     <li>• Conduct market research and analytics</li>
                     <li>• Comply with UAE legal requirements</li>
                     <li>• Maintain business records</li>
@@ -334,8 +334,8 @@ export default function PrivacyPolicy() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <p className="text-white font-bold text-xl mb-2">Data Protection Officer</p>
-                    <p className="text-white/80 mb-1">Your Luxury Agent</p>
-                    <p className="text-white/80 mb-1">Email: privacy@yourluxuryagent.com</p>
+                    <p className="text-white/80 mb-1">The Orange Code</p>
+                    <p className="text-white/80 mb-1">Email: privacy@theorangecode.com</p>
                     <p className="text-white/80 mb-1">Phone: +971 56 878 6106</p>
                   </div>
                   <div>
