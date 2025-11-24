@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Users, Sparkles, Zap, ArrowRight, X } from 'lucide-react'
 import Link from 'next/link'
+import { useEffect } from 'react'
 
 interface AboutCard {
   id: string
@@ -18,6 +19,17 @@ interface AboutMegaDropdownProps {
 }
 
 export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
+  useEffect(() => {
+    if (isOpen) {
+      const handleScroll = () => {
+        onClose()
+      }
+      window.addEventListener('scroll', handleScroll, true)
+      return () => {
+        window.removeEventListener('scroll', handleScroll, true)
+      }
+    }
+  }, [isOpen, onClose])
   const aboutSections: AboutCard[] = [
     {
       id: 'about-us',
@@ -48,7 +60,7 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
         <>
           {/* Backdrop */}
           <motion.div
-            className="fixed top-20 left-0 right-0 bottom-0 bg-black/20 backdrop-blur-sm z-40"
+            className="fixed top-20 left-0 right-0 bottom-0 bg-black/40 backdrop-blur-md z-40"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

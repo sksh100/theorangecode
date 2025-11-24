@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { FileText, X, BookOpen } from 'lucide-react'
 import Image from 'next/image'
+import { useEffect } from 'react'
 
 interface ResourcesMegaDropdownProps {
   isOpen: boolean
@@ -10,13 +11,24 @@ interface ResourcesMegaDropdownProps {
 }
 
 export function ResourcesMegaDropdown({ isOpen, onClose }: ResourcesMegaDropdownProps) {
+  useEffect(() => {
+    if (isOpen) {
+      const handleScroll = () => {
+        onClose()
+      }
+      window.addEventListener('scroll', handleScroll, true)
+      return () => {
+        window.removeEventListener('scroll', handleScroll, true)
+      }
+    }
+  }, [isOpen, onClose])
   return (
     <AnimatePresence>
       {isOpen && (
         <>
           {/* Backdrop */}
           <motion.div
-            className="fixed top-20 left-0 right-0 bottom-0 bg-black/20 backdrop-blur-sm z-40"
+            className="fixed top-20 left-0 right-0 bottom-0 bg-black/40 backdrop-blur-md z-40"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -56,12 +68,13 @@ export function ResourcesMegaDropdown({ isOpen, onClose }: ResourcesMegaDropdown
                 >
                   <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10">
                     {/* Ebook Image */}
-                    <div className="relative w-full aspect-[3/4]">
+                    <div className="relative w-full">
                       <Image
                         src="/e-book.png"
                         alt="Ebook Coming Soon"
-                        fill
-                        className="object-cover"
+                        width={400}
+                        height={600}
+                        className="w-full h-auto object-contain"
                       />
                     </div>
 

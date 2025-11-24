@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { Zap, Shield, Users, MessageCircle, Phone, Mail, ArrowRight, Star, Crown, X } from 'lucide-react'
+import { useEffect } from 'react'
 
 interface ContactCard {
   id: string
@@ -18,6 +19,17 @@ interface ContactMegaDropdownProps {
 }
 
 export function ContactMegaDropdown({ isOpen, onClose }: ContactMegaDropdownProps) {
+  useEffect(() => {
+    if (isOpen) {
+      const handleScroll = () => {
+        onClose()
+      }
+      window.addEventListener('scroll', handleScroll, true)
+      return () => {
+        window.removeEventListener('scroll', handleScroll, true)
+      }
+    }
+  }, [isOpen, onClose])
   const contactOptions: ContactCard[] = [
     {
       id: 'get-started',
@@ -58,7 +70,7 @@ export function ContactMegaDropdown({ isOpen, onClose }: ContactMegaDropdownProp
         <>
           {/* Backdrop - positioned below navbar */}
           <motion.div
-            className="fixed top-20 left-0 right-0 bottom-0 bg-black/20 backdrop-blur-sm z-40"
+            className="fixed top-20 left-0 right-0 bottom-0 bg-black/40 backdrop-blur-md z-40"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

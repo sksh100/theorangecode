@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, Users, Zap, ArrowRight, X } from 'lucide-react'
 import Link from 'next/link'
+import { useEffect } from 'react'
 
 interface MasterclassCard {
   id: string
@@ -19,6 +20,17 @@ interface MasterclassesMegaDropdownProps {
 }
 
 export function MasterclassesMegaDropdown({ isOpen, onClose }: MasterclassesMegaDropdownProps) {
+  useEffect(() => {
+    if (isOpen) {
+      const handleScroll = () => {
+        onClose()
+      }
+      window.addEventListener('scroll', handleScroll, true)
+      return () => {
+        window.removeEventListener('scroll', handleScroll, true)
+      }
+    }
+  }, [isOpen, onClose])
   const masterclasses: MasterclassCard[] = [
     {
       id: 'uae-foundations',
@@ -52,7 +64,7 @@ export function MasterclassesMegaDropdown({ isOpen, onClose }: MasterclassesMega
         <>
           {/* Backdrop */}
           <motion.div
-            className="fixed top-20 left-0 right-0 bottom-0 bg-black/20 backdrop-blur-sm z-40"
+            className="fixed top-20 left-0 right-0 bottom-0 bg-black/40 backdrop-blur-md z-40"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -160,7 +172,7 @@ export function MasterclassesMegaDropdown({ isOpen, onClose }: MasterclassesMega
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      <span>View All Masterclasses</span>
+                      <span>Start Your Cultural Intelligence Journey Now</span>
                       <ArrowRight className="w-5 h-5" />
                     </motion.button>
                   </Link>
