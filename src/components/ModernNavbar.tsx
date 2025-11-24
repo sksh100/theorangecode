@@ -52,11 +52,11 @@ export function ModernNavbar() {
     },
     {
       label: 'About',
-      href: '#about',
+      href: '/about',
       dropdown: [
-        { label: 'About Us', icon: Users, href: '#about' },
+        { label: 'About Us', icon: Users, href: '/about' },
         { label: 'What is Cultural Intelligence (CQ)', icon: Sparkles, href: '#what-is-cq' },
-        { label: 'Why Cultural Intelligence Matters', icon: Zap, href: '#why-cultural-intelligence' },
+        { label: 'WHY Cultural Intelligence Matters', icon: Zap, href: '#why-cultural-intelligence' },
       ]
     },
     {

@@ -68,7 +68,7 @@ export function MasterclassesMegaDropdown({ isOpen, onClose }: MasterclassesMega
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <div className="mega-dropdown-glass rounded-3xl overflow-hidden shadow-glow-luminous border border-white/10">
+            <div className="mega-dropdown-glass rounded-3xl overflow-hidden border border-white/10">
               <div className="p-8">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">

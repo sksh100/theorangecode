@@ -24,7 +24,7 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
       title: 'About Us',
       description: 'Learn about our mission, values, and the team behind The Orange Code',
       icon: Users,
-      href: '#about'
+      href: '/about'
     },
     {
       id: 'what-is-cq',
@@ -35,7 +35,7 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
     },
     {
       id: 'why-matters',
-      title: 'Why Cultural Intelligence Matters',
+      title: 'WHY Cultural Intelligence Matters',
       description: 'Understand why cultural intelligence is essential for success in the GCC region',
       icon: Zap,
       href: '#why-cultural-intelligence'
@@ -64,7 +64,7 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <div className="mega-dropdown-glass rounded-3xl overflow-hidden shadow-glow-luminous border border-white/10">
+            <div className="mega-dropdown-glass rounded-3xl overflow-hidden border border-white/10">
               <div className="p-8">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
