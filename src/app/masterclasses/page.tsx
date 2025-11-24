@@ -795,7 +795,7 @@ export default function MasterclassesPage() {
               {!showContactForm ? (
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
-                    href="mailto:contact@theorangecode.com"
+                    href="mailto:hello@theorangecode.com"
                     className="px-8 py-4 bg-white/5 border border-white/10 rounded-xl text-white font-semibold hover:bg-white/10 hover:border-orange/50 transition-all duration-300 flex items-center justify-center gap-3"
                   >
                     <Mail className="w-5 h-5" />
