@@ -100,7 +100,7 @@ export function StartTodayCTA() {
             transition={{ duration: 0.8, delay: 0.8 }}
             viewport={{ once: true }}
           >
-            <Link href="/courses/cultural-intelligence">
+            <Link href="/masterclasses">
               <motion.button
                 className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-orange via-azure-blue to-orange text-white font-semibold text-lg rounded-xl overflow-hidden shadow-2xl"
                 whileHover={{ 

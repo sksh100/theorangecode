@@ -39,7 +39,7 @@ export function MasterclassesOverview({ onExpand }: MasterclassesOverviewProps) 
       description: "Step into your full potential with a masterclass that refines how you think, speak, move, and lead. From table manners and royal protocols to body language, tone of voice, and setting boundaries, this journey transforms ambition into presence.",
       gradient: "from-orange/20 to-bright-blue/20",
       imagePlaceholder: "/programs/program 1.png",
-      learnMoreLink: "#born-to-lead"
+      learnMoreLink: "/masterclasses"
     },
     {
       id: 2,
@@ -47,7 +47,7 @@ export function MasterclassesOverview({ onExpand }: MasterclassesOverviewProps) 
       description: "Belong socially and culturally in the Emirates. Learn Islamic etiquette, modesty codes, hospitality rituals, Arabic phrases, and the art of building lasting friendships with Emiratis. Break isolation and thrive with cultural confidence.",
       gradient: "from-bright-blue/20 to-light-blue/20",
       imagePlaceholder: "/programs/program 2.png",
-      learnMoreLink: "#uae-expats"
+      learnMoreLink: "/masterclasses"
     },
     {
       id: 3,
@@ -55,7 +55,7 @@ export function MasterclassesOverview({ onExpand }: MasterclassesOverviewProps) 
       description: "Unlock the unspoken rules of GCC business culture. From trust-building and negotiation rhythms to gifting, attire, and majlis etiquette, this masterclass gives executives and entrepreneurs the keys to succeed in UAE, Saudi Arabia, Qatar, and beyond.",
       gradient: "from-light-blue/20 to-orange/20",
       imagePlaceholder: "/programs/program 3.png",
-      learnMoreLink: "#middle-east-business"
+      learnMoreLink: "/masterclasses"
     }
   ]
 

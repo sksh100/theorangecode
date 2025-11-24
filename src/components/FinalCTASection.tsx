@@ -143,7 +143,7 @@ export function FinalCTASection() {
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.3 }}
               >
-                Explore Masterclasses
+                Book Your Masterclass
               </motion.button>
             </Link>
           </motion.div>
