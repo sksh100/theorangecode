@@ -267,10 +267,10 @@ export function MasterclassesOverview({ onExpand }: MasterclassesOverviewProps) 
                         }}
                       >
                         {masterclass.title.split('\n').map((line, i) => (
-                          <React.Fragment key={i}>
+                          <span key={i}>
                             {line}
                             {i < masterclass.title.split('\n').length - 1 && <br />}
-                          </React.Fragment>
+                          </span>
                         ))}
                       </motion.h3>
 
