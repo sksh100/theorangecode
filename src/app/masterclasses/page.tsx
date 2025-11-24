@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Calendar, Clock, MapPin, Video, Mail, ArrowRight, Check, Sparkles } from 'lucide-react'
+import { Calendar, Clock, MapPin, Video, Mail, ArrowRight, Check, Sparkles, X, Sparkle } from 'lucide-react'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface Masterclass {
   id: number
@@ -88,6 +89,7 @@ export default function MasterclassesPage() {
   const [selectedMasterclass, setSelectedMasterclass] = useState<number | null>(null)
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null)
   const [filterType, setFilterType] = useState<'all' | 'online' | 'offline'>('all')
+  const [showMap, setShowMap] = useState(false)
 
   const availableSlots = generateAvailableDates()
   const filteredSlots = filterType === 'all' 
@@ -125,28 +127,72 @@ export default function MasterclassesPage() {
         transition={{ duration: 0.8 }}
         className="relative"
       >
-        {/* Hero Section */}
-        <section className="relative py-16 md:py-24 overflow-hidden">
-          <div className="absolute inset-0 opacity-20">
-            <div className="grid-pattern-animated" />
+        {/* Hero Image Section */}
+        <section className="relative overflow-hidden">
+          <div className="relative h-[60vh] md:h-[70vh] w-full">
+            <Image
+              src="/theorangecode-masterclass.jpg"
+              alt="The Orange Code Masterclass Boardroom"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/40 via-primary-dark/60 to-primary-dark/90" />
+            <div className="absolute inset-0 flex items-end">
+              <div className="container mx-auto px-6 pb-12 md:pb-16 relative z-10">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="max-w-4xl"
+                >
+                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+                    <span className="text-white">Book Your </span>
+                    <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                      Masterclass
+                    </span>
+                  </h1>
+                  <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+                    Experience our premium boardroom in Abu Dhabi or join us online. Choose your masterclass and preferred time. Secure your spot in seconds.
+                  </p>
+                </motion.div>
+              </div>
+            </div>
           </div>
-          
-          <div className="container mx-auto px-6 relative z-10">
+        </section>
+
+        {/* Tailormade Courses Section */}
+        <section className="py-12 md:py-16 relative border-b border-white/10">
+          <div className="container mx-auto px-6">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center max-w-4xl mx-auto"
+              transition={{ duration: 0.6 }}
+              className="max-w-4xl mx-auto"
             >
-              <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                <span className="text-white">Book Your </span>
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                  Masterclass
-                </span>
-              </h1>
-              <p className="text-lg md:text-xl text-white/80 leading-relaxed">
-                Choose your masterclass and preferred time. Secure your spot in seconds.
-              </p>
+              <div className="bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10 rounded-2xl p-8 md:p-10 border border-orange/20">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0">
+                    <Sparkle className="w-8 h-8 text-orange" />
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white">
+                      Need a Tailormade Course?
+                    </h2>
+                    <p className="text-white/80 text-lg mb-4 leading-relaxed">
+                      We understand that every organization and individual has unique needs. If you require a custom masterclass tailored to specific topics, industries, or learning objectives, we're here to create the perfect program for you.
+                    </p>
+                    <Link
+                      href="mailto:contact@theorangecode.com?subject=Tailormade Course Inquiry"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange to-azure-blue text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-orange/30 transition-all duration-300"
+                    >
+                      <Mail className="w-5 h-5" />
+                      <span>Email Us for Custom Courses</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -306,20 +352,26 @@ export default function MasterclassesPage() {
                       ))}
                     </div>
 
-                    {/* Location Image for Offline */}
+                    {/* Location for Offline */}
                     {filterType === 'offline' && selectedSlot?.type === 'offline' && (
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="mt-6 rounded-xl overflow-hidden border border-white/10"
+                        className="mt-6"
                       >
-                        <div className="aspect-video bg-gradient-to-br from-orange/20 to-light-blue/20 flex items-center justify-center">
-                          <div className="text-center">
-                            <MapPin className="w-10 h-10 text-orange/50 mx-auto mb-2" />
-                            <p className="text-white/70 text-sm">Etihad Towers Boardroom</p>
-                            <p className="text-white/50 text-xs mt-1">Abu Dhabi, UAE</p>
+                        <button
+                          onClick={() => setShowMap(true)}
+                          className="w-full p-4 rounded-xl border-2 border-orange/30 bg-gradient-to-br from-orange/10 to-orange/5 hover:border-orange/50 hover:from-orange/20 transition-all duration-300 flex items-center justify-between group"
+                        >
+                          <div className="flex items-center gap-3">
+                            <MapPin className="w-6 h-6 text-orange" />
+                            <div className="text-left">
+                              <p className="text-white font-semibold text-sm">Etihad Towers Boardroom</p>
+                              <p className="text-white/70 text-xs mt-0.5">Abu Dhabi, UAE</p>
+                            </div>
                           </div>
-                        </div>
+                          <ArrowRight className="w-5 h-5 text-orange group-hover:translate-x-1 transition-transform" />
+                        </button>
                       </motion.div>
                     )}
                   </motion.div>
@@ -367,10 +419,13 @@ export default function MasterclassesPage() {
                       <span>{selectedSlot.time}</span>
                     </div>
                     {selectedSlot.type === 'offline' && (
-                      <div className="flex items-center gap-2 text-white/70">
+                      <button
+                        onClick={() => setShowMap(true)}
+                        className="flex items-center gap-2 text-white/70 hover:text-orange transition-colors"
+                      >
                         <MapPin className="w-4 h-4" />
                         <span>Abu Dhabi</span>
-                      </div>
+                      </button>
                     )}
                   </div>
                   
@@ -387,6 +442,64 @@ export default function MasterclassesPage() {
                   </motion.button>
                 </div>
               </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Google Maps Modal */}
+        <AnimatePresence>
+          {showMap && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+              onClick={() => setShowMap(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                onClick={(e) => e.stopPropagation()}
+                className="relative bg-primary-dark rounded-2xl overflow-hidden border-2 border-orange/30 shadow-2xl w-full max-w-4xl max-h-[90vh]"
+              >
+                <button
+                  onClick={() => setShowMap(false)}
+                  className="absolute top-4 right-4 z-10 w-10 h-10 bg-primary-dark/90 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-orange transition-colors border border-white/10"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+                <div className="p-4 border-b border-white/10">
+                  <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                    <MapPin className="w-5 h-5 text-orange" />
+                    Etihad Towers, Abu Dhabi
+                  </h3>
+                  <p className="text-white/70 text-sm mt-1">Our premium boardroom location</p>
+                </div>
+                <div className="relative w-full h-[500px] md:h-[600px]">
+                  <iframe
+                    src="https://www.google.com/maps?q=Etihad+Towers+Abu+Dhabi&t=&z=17&ie=UTF8&iwloc=&output=embed"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full h-full"
+                  />
+                </div>
+                <div className="p-4 border-t border-white/10 bg-primary-dark/50">
+                  <a
+                    href="https://www.google.com/maps/search/etihad+towers/@24.4585838,54.3194686,17z/data=!3m1!4b1?entry=ttu"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-orange hover:text-orange/80 transition-colors text-sm font-semibold"
+                  >
+                    <span>Open in Google Maps</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
