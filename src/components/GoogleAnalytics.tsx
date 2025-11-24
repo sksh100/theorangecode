@@ -246,6 +246,7 @@ function GoogleAnalyticsInner() {
             gtag('js', new Date());
             
             // Initialize Consent Mode v2 (GDPR compliant)
+            // Default to denied - will be updated when user gives consent
             gtag('consent', 'default', {
               'ad_storage': 'denied',
               'ad_user_data': 'denied',
@@ -254,8 +255,27 @@ function GoogleAnalyticsInner() {
               'functionality_storage': 'granted',
               'personalization_storage': 'denied',
               'security_storage': 'granted',
-              'wait_for_update': 500,
+              'wait_for_update': 2000, // Wait 2 seconds for consent update
             });
+            
+            // Check for existing consent and update immediately if found
+            try {
+              const savedConsent = localStorage.getItem('cookieConsent');
+              if (savedConsent) {
+                const consent = JSON.parse(savedConsent);
+                gtag('consent', 'update', {
+                  'ad_storage': consent.marketing ? 'granted' : 'denied',
+                  'ad_user_data': consent.marketing ? 'granted' : 'denied',
+                  'ad_personalization': consent.marketing ? 'granted' : 'denied',
+                  'analytics_storage': consent.analytics ? 'granted' : 'denied',
+                  'functionality_storage': 'granted',
+                  'personalization_storage': consent.personalization ? 'granted' : 'denied',
+                  'security_storage': 'granted',
+                });
+              }
+            } catch (e) {
+              console.warn('Could not load saved consent:', e);
+            }
             
             gtag('config', '${GA_MEASUREMENT_ID}', {
               page_path: window.location.pathname,
