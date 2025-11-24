@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
+import Image from 'next/image'
 
 interface MasterclassCard {
   id: number
@@ -281,10 +282,12 @@ export function MasterclassesOverview({ onExpand }: MasterclassesOverviewProps) 
                         transition={{ duration: 0.3 }}
                       >
                         <div className={`relative w-full h-full bg-gradient-to-br ${colors.bg} backdrop-blur-[20px] border-2 ${colors.border} rounded-xl overflow-hidden group-hover:border-opacity-80 transition-all duration-300 shadow-xl`}>
-                          <img 
+                          <Image 
                             src={masterclass.imagePlaceholder} 
                             alt={masterclass.title}
-                            className="w-full h-full object-cover object-left"
+                            fill
+                            className="object-cover object-left"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
                           {/* Subtle Overlay Effect */}
                           <motion.div

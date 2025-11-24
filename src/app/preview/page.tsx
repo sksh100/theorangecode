@@ -2,16 +2,46 @@
 
 import { useState, useEffect, useRef, Suspense } from 'react'
 import { useScroll, useSpring, useMotionValue } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { HeroSection } from '@/components/HeroSection'
 import { WhyCulturalIntelligenceSection } from '@/components/WhyCulturalIntelligenceSection'
-import { TestimonialCarousel } from '@/components/TestimonialCarousel'
-import { ContactFormSection } from '@/components/ContactFormSection'
-import { MasterclassesOverview } from '@/components/ProgramsOverview'
 import { USPBar } from '@/components/USPBar'
 import { ModernFooter } from '@/components/ModernFooter'
-import { AtmosphericBackground } from '@/components/AtmosphericBackground'
 import { StartTodayCTA } from '@/components/StartTodayCTA'
+
+// Lazy load heavy components for better performance
+const TestimonialCarousel = dynamic(
+  () => import('@/components/TestimonialCarousel').then(mod => ({ default: mod.TestimonialCarousel })),
+  { 
+    ssr: false,
+    loading: () => <div className="h-64" />
+  }
+)
+
+const ContactFormSection = dynamic(
+  () => import('@/components/ContactFormSection').then(mod => ({ default: mod.ContactFormSection })),
+  { 
+    ssr: false,
+    loading: () => <div className="h-96" />
+  }
+)
+
+const MasterclassesOverview = dynamic(
+  () => import('@/components/ProgramsOverview').then(mod => ({ default: mod.MasterclassesOverview })),
+  { 
+    ssr: true, // Keep SSR for SEO
+    loading: () => <div className="h-96" />
+  }
+)
+
+const AtmosphericBackground = dynamic(
+  () => import('@/components/AtmosphericBackground').then(mod => ({ default: mod.AtmosphericBackground })),
+  { 
+    ssr: false,
+    loading: () => null
+  }
+)
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })

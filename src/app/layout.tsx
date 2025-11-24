@@ -121,7 +121,7 @@ export default function RootLayout({
         <meta name="msvalidate.01" content="921E75E6C38B18D9E7FB8DBB0EEFA22F" />
         <meta name="yandex-verification" content="b8b91753e1df7f39" />
         
-        {/* Structured Data for SEO */}
+        {/* Structured Data for SEO - Deferred for performance */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -149,6 +149,7 @@ export default function RootLayout({
               },
             }),
           }}
+          defer
         />
         <script
           type="application/ld+json"
@@ -171,6 +172,7 @@ export default function RootLayout({
               },
             }),
           }}
+          defer
         />
         <script
           type="application/ld+json"
@@ -190,6 +192,7 @@ export default function RootLayout({
               },
             }),
           }}
+          defer
         />
         
         {/* Bilingual SEO Meta Tags for Yandex (Russian/English) */}
@@ -201,7 +204,10 @@ export default function RootLayout({
         
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <link 
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" 
+          rel="stylesheet"
+        />
         
         {/* Favicon Links */}
         <link rel="icon" href="/favicon.ico" />
@@ -228,6 +234,7 @@ export default function RootLayout({
               ]
             })
           }}
+          defer
         />
       </head>
       <body style={{ fontFamily: "'Inter', 'Glacial Indifference', sans-serif" }} className="antialiased">
