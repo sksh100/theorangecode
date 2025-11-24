@@ -138,51 +138,65 @@ export function ModernNavbar() {
           <div className="hidden lg:flex items-center space-x-6 xl:space-x-8 flex-1 justify-center mx-4">
             {navItems.map((item) => (
               <div key={item.label} className="relative">
-                <motion.button
-                  className="flex items-center space-x-1 text-white/90 hover:text-white font-medium font-montserrat transition-colors duration-300 group"
-                  onClick={() => handleDropdownToggle(item.label)}
-                  whileHover={{ y: -2 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <span>{item.label}</span>
-                  <ChevronDown 
-                    className={`w-4 h-4 transition-transform duration-300 ${
-                      (activeDropdown === item.label || 
-                       (item.label === 'About' && isAboutMegaOpen) ||
-                       (item.label === 'Contact' && isContactMegaOpen)) ? 'rotate-180' : ''
-                    }`} 
-                  />
-                </motion.button>
-
-                {/* Dropdown Menu */}
-                <AnimatePresence>
-                  {activeDropdown === item.label && (
-                    <motion.div
-                      className="absolute top-full left-0 mt-2 w-64 dropdown-glass rounded-2xl overflow-hidden"
-                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                      transition={{ duration: 0.2, ease: "easeOut" }}
+                {item.dropdown ? (
+                  <>
+                    <motion.button
+                      className="flex items-center space-x-1 text-white/90 hover:text-white font-medium font-montserrat transition-colors duration-300 group"
+                      onClick={() => handleDropdownToggle(item.label)}
+                      whileHover={{ y: -2 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
                     >
-                      <div className="p-2">
-                        {item.dropdown?.map((dropdownItem, index) => (
-                          <motion.a
-                            key={dropdownItem.label}
-                            href={dropdownItem.href}
-                            className="flex items-center space-x-3 p-3 rounded-xl text-white/80 hover:text-white hover:bg-azure-blue-transparent transition-all duration-300 group"
-                            whileHover={{ x: 4 }}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.05 }}
-                          >
-                            <dropdownItem.icon className="w-5 h-5 text-azure-blue group-hover:text-azure-luminous transition-colors duration-300" />
-                            <span className="font-montserrat font-medium">{dropdownItem.label}</span>
-                          </motion.a>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      <span>{item.label}</span>
+                      <ChevronDown 
+                        className={`w-4 h-4 transition-transform duration-300 ${
+                          (activeDropdown === item.label || 
+                           (item.label === 'About' && isAboutMegaOpen) ||
+                           (item.label === 'Contact' && isContactMegaOpen)) ? 'rotate-180' : ''
+                        }`} 
+                      />
+                    </motion.button>
+
+                    {/* Dropdown Menu */}
+                    <AnimatePresence>
+                      {activeDropdown === item.label && (
+                        <motion.div
+                          className="absolute top-full left-0 mt-2 w-64 dropdown-glass rounded-2xl overflow-hidden"
+                          initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                          transition={{ duration: 0.2, ease: "easeOut" }}
+                        >
+                          <div className="p-2">
+                            {item.dropdown?.map((dropdownItem, index) => (
+                              <motion.a
+                                key={dropdownItem.label}
+                                href={dropdownItem.href}
+                                className="flex items-center space-x-3 p-3 rounded-xl text-white/80 hover:text-white hover:bg-azure-blue-transparent transition-all duration-300 group"
+                                whileHover={{ x: 4 }}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: index * 0.05 }}
+                              >
+                                <dropdownItem.icon className="w-5 h-5 text-azure-blue group-hover:text-azure-luminous transition-colors duration-300" />
+                                <span className="font-montserrat font-medium">{dropdownItem.label}</span>
+                              </motion.a>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </>
+                ) : (
+                  <Link href={item.href || '#'}>
+                    <motion.span
+                      className="flex items-center text-white/90 hover:text-white font-medium font-montserrat transition-colors duration-300 cursor-pointer"
+                      whileHover={{ y: -2 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                    >
+                      {item.label}
+                    </motion.span>
+                  </Link>
+                )}
               </div>
             ))}
           </div>
@@ -298,42 +312,55 @@ export function ModernNavbar() {
               <div className="p-4 space-y-2">
                 {navItems.map((item) => (
                   <div key={item.label}>
-                    <motion.button
-                      className="w-full flex items-center justify-between p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium"
-                      onClick={() => handleDropdownToggle(item.label)}
-                      whileHover={{ x: 4 }}
-                    >
-                      <span>{item.label}</span>
-                      <ChevronDown 
-                        className={`w-4 h-4 transition-transform duration-300 ${
-                          (activeDropdown === item.label) ? 'rotate-180' : ''
-                        }`} 
-                      />
-                    </motion.button>
-                    
-                    <AnimatePresence>
-                      {activeDropdown === item.label && (
-                        <motion.div
-                          className="ml-4 space-y-1"
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.2 }}
+                    {item.dropdown ? (
+                      <>
+                        <motion.button
+                          className="w-full flex items-center justify-between p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium"
+                          onClick={() => handleDropdownToggle(item.label)}
+                          whileHover={{ x: 4 }}
                         >
-                          {item.dropdown?.map((dropdownItem) => (
-                            <motion.a
-                              key={dropdownItem.label}
-                              href={dropdownItem.href}
-                              className="flex items-center space-x-3 p-2 text-white/60 hover:text-white hover:bg-azure-blue-transparent rounded-lg transition-all duration-300"
-                              whileHover={{ x: 4 }}
+                          <span>{item.label}</span>
+                          <ChevronDown 
+                            className={`w-4 h-4 transition-transform duration-300 ${
+                              (activeDropdown === item.label) ? 'rotate-180' : ''
+                            }`} 
+                          />
+                        </motion.button>
+                        
+                        <AnimatePresence>
+                          {activeDropdown === item.label && (
+                            <motion.div
+                              className="ml-4 space-y-1"
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: "auto" }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.2 }}
                             >
-                              <dropdownItem.icon className="w-4 h-4 text-azure-blue" />
-                              <span className="font-montserrat text-sm">{dropdownItem.label}</span>
-                            </motion.a>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                              {item.dropdown?.map((dropdownItem) => (
+                                <motion.a
+                                  key={dropdownItem.label}
+                                  href={dropdownItem.href}
+                                  className="flex items-center space-x-3 p-2 text-white/60 hover:text-white hover:bg-azure-blue-transparent rounded-lg transition-all duration-300"
+                                  whileHover={{ x: 4 }}
+                                >
+                                  <dropdownItem.icon className="w-4 h-4 text-azure-blue" />
+                                  <span className="font-montserrat text-sm">{dropdownItem.label}</span>
+                                </motion.a>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </>
+                    ) : (
+                      <Link href={item.href || '#'}>
+                        <motion.span
+                          className="block p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium"
+                          whileHover={{ x: 4 }}
+                        >
+                          {item.label}
+                        </motion.span>
+                      </Link>
+                    )}
                   </div>
                 ))}
                 
