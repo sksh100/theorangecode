@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronDown, Menu, X, Sparkles, Zap, Shield, Users, Settings, LogOut, LogIn, ShoppingBag, CheckCircle } from 'lucide-react'
+import { ChevronDown, Menu, X, Sparkles, Zap, Shield, Users, Settings, LogOut, LogIn, ShoppingBag, CheckCircle, FileText } from 'lucide-react'
 import { AboutMegaDropdown } from './AboutMegaDropdown'
 import { ContactMegaDropdown } from './ContactMegaDropdown'
+import { MasterclassesMegaDropdown } from './MasterclassesMegaDropdown'
+import { ResourcesMegaDropdown } from './ResourcesMegaDropdown'
 
 export function ModernNavbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -49,42 +51,88 @@ export function ModernNavbar() {
       href: '/preview',
     },
     {
-      label: 'Masterclasses',
-      href: '/masterclasses',
-    },
-    {
       label: 'About',
       href: '#about',
       dropdown: [
-        { label: 'Our Story', icon: Sparkles, href: '#story' },
-        { label: 'Team', icon: Users, href: '#team' },
-        { label: 'Mission', icon: Zap, href: '#mission' },
+        { label: 'About Us', icon: Users, href: '#about' },
+        { label: 'What is Cultural Intelligence (CQ)', icon: Sparkles, href: '#what-is-cq' },
+        { label: 'Why Cultural Intelligence Matters', icon: Zap, href: '#why-cultural-intelligence' },
+      ]
+    },
+    {
+      label: 'Masterclasses',
+      href: '/masterclasses',
+      dropdown: [
+        { 
+          label: 'UAE Cultural Foundations', 
+          icon: Sparkles, 
+          href: '/masterclasses',
+          price: '699 د.إ',
+          description: 'Step into your full potential with a masterclass that refines how you think, speak, move, and lead.'
+        },
+        { 
+          label: 'Cultural Intelligence For Expats', 
+          icon: Users, 
+          href: '/masterclasses',
+          price: '1799 د.إ',
+          description: 'Belong socially and culturally in the Emirates. Learn Islamic etiquette, modesty codes, and hospitality rituals.'
+        },
+        { 
+          label: 'Cultural Intelligence In Business', 
+          icon: Zap, 
+          href: '/masterclasses',
+          price: '2499 د.إ',
+          description: 'Unlock the unspoken rules of GCC business culture. From trust-building to negotiation rhythms.'
+        },
+      ]
+    },
+    {
+      label: 'Resources',
+      href: '#resources',
+      dropdown: [
+        { label: 'Ebook Coming Soon', icon: FileText, href: '#resources' },
       ]
     },
     {
       label: 'Contact',
-      href: '#contact',
-      dropdown: [
-        { label: 'Get Started', icon: Zap, href: '#get-started' },
-        { label: 'Support', icon: Shield, href: '#support' },
-        { label: 'Partnership', icon: Users, href: '#partnership' },
-      ]
+      href: '/preview#contact',
     }
   ]
+
+  const [isMasterclassesMegaOpen, setIsMasterclassesMegaOpen] = useState(false)
+  const [isResourcesMegaOpen, setIsResourcesMegaOpen] = useState(false)
 
   const handleDropdownToggle = (label: string) => {
     if (label === 'About') {
       setIsAboutMegaOpen(!isAboutMegaOpen)
       setActiveDropdown(null)
       setIsContactMegaOpen(false)
+      setIsMasterclassesMegaOpen(false)
+      setIsResourcesMegaOpen(false)
+    } else if (label === 'Masterclasses') {
+      setIsMasterclassesMegaOpen(!isMasterclassesMegaOpen)
+      setActiveDropdown(null)
+      setIsAboutMegaOpen(false)
+      setIsContactMegaOpen(false)
+      setIsResourcesMegaOpen(false)
+    } else if (label === 'Resources') {
+      setIsResourcesMegaOpen(!isResourcesMegaOpen)
+      setActiveDropdown(null)
+      setIsAboutMegaOpen(false)
+      setIsContactMegaOpen(false)
+      setIsMasterclassesMegaOpen(false)
     } else if (label === 'Contact') {
       setIsContactMegaOpen(!isContactMegaOpen)
       setActiveDropdown(null)
       setIsAboutMegaOpen(false)
+      setIsMasterclassesMegaOpen(false)
+      setIsResourcesMegaOpen(false)
     } else {
       setActiveDropdown(activeDropdown === label ? null : label)
       setIsAboutMegaOpen(false)
       setIsContactMegaOpen(false)
+      setIsMasterclassesMegaOpen(false)
+      setIsResourcesMegaOpen(false)
     }
   }
 
@@ -147,44 +195,44 @@ export function ModernNavbar() {
                       transition={{ type: "spring", stiffness: 400, damping: 10 }}
                     >
                       <span>{item.label}</span>
-                      <ChevronDown 
-                        className={`w-4 h-4 transition-transform duration-300 ${
-                          (activeDropdown === item.label || 
-                           (item.label === 'About' && isAboutMegaOpen) ||
-                           (item.label === 'Contact' && isContactMegaOpen)) ? 'rotate-180' : ''
-                        }`} 
-                      />
+                      {item.dropdown && (
+                        <ChevronDown 
+                          className={`w-4 h-4 transition-transform duration-300 ${
+                            (activeDropdown === item.label || 
+                             (item.label === 'About' && isAboutMegaOpen) ||
+                             (item.label === 'Masterclasses' && isMasterclassesMegaOpen) ||
+                             (item.label === 'Resources' && isResourcesMegaOpen) ||
+                             (item.label === 'Contact' && isContactMegaOpen)) ? 'rotate-180' : ''
+                          }`} 
+                        />
+                      )}
                     </motion.button>
 
-                    {/* Dropdown Menu */}
-                    <AnimatePresence>
-                      {activeDropdown === item.label && (
-                        <motion.div
-                          className="absolute top-full left-0 mt-2 w-64 dropdown-glass rounded-2xl overflow-hidden"
-                          initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                          transition={{ duration: 0.2, ease: "easeOut" }}
-                        >
-                          <div className="p-2">
-                            {item.dropdown?.map((dropdownItem, index) => (
-                              <motion.a
-                                key={dropdownItem.label}
-                                href={dropdownItem.href}
-                                className="flex items-center space-x-3 p-3 rounded-xl text-white/80 hover:text-white hover:bg-azure-blue-transparent transition-all duration-300 group"
-                                whileHover={{ x: 4 }}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: index * 0.05 }}
-                              >
-                                <dropdownItem.icon className="w-5 h-5 text-azure-blue group-hover:text-azure-luminous transition-colors duration-300" />
-                                <span className="font-montserrat font-medium">{dropdownItem.label}</span>
-                              </motion.a>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    {/* Mega Dropdowns */}
+                    {item.label === 'About' && (
+                      <AboutMegaDropdown 
+                        isOpen={isAboutMegaOpen} 
+                        onClose={() => setIsAboutMegaOpen(false)} 
+                      />
+                    )}
+                    {item.label === 'Masterclasses' && (
+                      <MasterclassesMegaDropdown 
+                        isOpen={isMasterclassesMegaOpen} 
+                        onClose={() => setIsMasterclassesMegaOpen(false)} 
+                      />
+                    )}
+                    {item.label === 'Resources' && (
+                      <ResourcesMegaDropdown 
+                        isOpen={isResourcesMegaOpen} 
+                        onClose={() => setIsResourcesMegaOpen(false)} 
+                      />
+                    )}
+                    {item.label === 'Contact' && (
+                      <ContactMegaDropdown 
+                        isOpen={isContactMegaOpen} 
+                        onClose={() => setIsContactMegaOpen(false)} 
+                      />
+                    )}
                   </>
                 ) : (
                   <Link href={item.href || '#'}>

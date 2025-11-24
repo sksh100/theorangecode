@@ -335,7 +335,7 @@ export default function PrivacyPolicy() {
                   <div>
                     <p className="text-white font-bold text-xl mb-2">Data Protection Officer</p>
                     <p className="text-white/80 mb-1">The Orange Code</p>
-                    <p className="text-white/80 mb-1">Email: privacy@theorangecode.com</p>
+                    <p className="text-white/80 mb-1">Email: legal@theorangecode.com</p>
                     <p className="text-white/80 mb-1">Phone: +971 56 878 6106</p>
                   </div>
                   <div>

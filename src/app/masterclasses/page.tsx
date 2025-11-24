@@ -524,10 +524,10 @@ export default function MasterclassesPage() {
                     <p className="text-white/70 text-base">
                       Contact us at{' '}
                       <a 
-                        href="mailto:hello@theorangecode.com" 
+                        href="mailto:contact@theorangecode.com" 
                         className="text-orange hover:text-orange/80 transition-colors font-semibold"
                       >
-                        hello@theorangecode.com
+                        contact@theorangecode.com
                       </a>
                     </p>
                   </div>
