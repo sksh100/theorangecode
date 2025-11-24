@@ -13,6 +13,25 @@
   scrollbar-width: none;  /* Firefox */
 }
 
+/* Custom scrollbar styling */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ff914d 0%, #00d4ff 100%);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ffaa66 0%, #33dfff 100%);
+}
+
 @layer base {
   html, body {
     @apply m-0 p-0 w-full overflow-x-hidden;
