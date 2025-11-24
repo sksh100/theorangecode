@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronDown, Menu, X, Sparkles, Zap, Shield, Users, Settings, LogOut, LogIn, ShoppingBag, CheckCircle } from 'lucide-react'
-import { MegaDropdown } from './MegaDropdown'
 import { AboutMegaDropdown } from './AboutMegaDropdown'
 import { ContactMegaDropdown } from './ContactMegaDropdown'
 
@@ -13,7 +12,6 @@ export function ModernNavbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
-  const [isMegaDropdownOpen, setIsMegaDropdownOpen] = useState(false)
   const [isAboutMegaOpen, setIsAboutMegaOpen] = useState(false)
   const [isContactMegaOpen, setIsContactMegaOpen] = useState(false)
   const [cartItems, setCartItems] = useState(0)
@@ -47,16 +45,6 @@ export function ModernNavbar() {
 
   const navItems = [
     {
-      label: 'Services',
-      href: '#services',
-      dropdown: [
-        { label: 'AI Concierge', icon: Sparkles, href: '#ai-concierge' },
-        { label: 'Luxury Travel', icon: Zap, href: '#luxury-travel' },
-        { label: 'Personal Assistant', icon: Users, href: '#personal-assistant' },
-        { label: 'Security & Privacy', icon: Shield, href: '#security' },
-      ]
-    },
-    {
       label: 'About',
       href: '#about',
       dropdown: [
@@ -77,24 +65,16 @@ export function ModernNavbar() {
   ]
 
   const handleDropdownToggle = (label: string) => {
-    if (label === 'Services') {
-      setIsMegaDropdownOpen(!isMegaDropdownOpen)
-      setActiveDropdown(null)
-      setIsAboutMegaOpen(false)
-      setIsContactMegaOpen(false)
-    } else if (label === 'About') {
+    if (label === 'About') {
       setIsAboutMegaOpen(!isAboutMegaOpen)
       setActiveDropdown(null)
-      setIsMegaDropdownOpen(false)
       setIsContactMegaOpen(false)
     } else if (label === 'Contact') {
       setIsContactMegaOpen(!isContactMegaOpen)
       setActiveDropdown(null)
-      setIsMegaDropdownOpen(false)
       setIsAboutMegaOpen(false)
     } else {
       setActiveDropdown(activeDropdown === label ? null : label)
-      setIsMegaDropdownOpen(false)
       setIsAboutMegaOpen(false)
       setIsContactMegaOpen(false)
     }
@@ -160,7 +140,6 @@ export function ModernNavbar() {
                   <ChevronDown 
                     className={`w-4 h-4 transition-transform duration-300 ${
                       (activeDropdown === item.label || 
-                       (item.label === 'Services' && isMegaDropdownOpen) ||
                        (item.label === 'About' && isAboutMegaOpen) ||
                        (item.label === 'Contact' && isContactMegaOpen)) ? 'rotate-180' : ''
                     }`} 
@@ -319,7 +298,7 @@ export function ModernNavbar() {
                       <span>{item.label}</span>
                       <ChevronDown 
                         className={`w-4 h-4 transition-transform duration-300 ${
-                          (activeDropdown === item.label || (item.label === 'Services' && isMegaDropdownOpen)) ? 'rotate-180' : ''
+                          (activeDropdown === item.label) ? 'rotate-180' : ''
                         }`} 
                       />
                     </motion.button>
@@ -478,10 +457,6 @@ export function ModernNavbar() {
       </AnimatePresence>
       
       {/* Mega Dropdowns */}
-      <MegaDropdown 
-        isOpen={isMegaDropdownOpen} 
-        onClose={() => setIsMegaDropdownOpen(false)} 
-      />
       <AboutMegaDropdown 
         isOpen={isAboutMegaOpen} 
         onClose={() => setIsAboutMegaOpen(false)} 
