@@ -9,6 +9,7 @@ import { AboutMegaDropdown } from './AboutMegaDropdown'
 import { ContactMegaDropdown } from './ContactMegaDropdown'
 import { MasterclassesMegaDropdown } from './MasterclassesMegaDropdown'
 import { ResourcesMegaDropdown } from './ResourcesMegaDropdown'
+import { trackDropdownOpen, trackDropdownItemClick, trackButtonClick } from '@/lib/analytics'
 
 export function ModernNavbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -104,35 +105,45 @@ export function ModernNavbar() {
 
   const handleDropdownToggle = (label: string) => {
     if (label === 'About') {
-      setIsAboutMegaOpen(!isAboutMegaOpen)
+      const isOpening = !isAboutMegaOpen
+      setIsAboutMegaOpen(isOpening)
       setActiveDropdown(null)
       setIsContactMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
       setIsResourcesMegaOpen(false)
+      if (isOpening) trackDropdownOpen('About')
     } else if (label === 'Masterclasses') {
-      setIsMasterclassesMegaOpen(!isMasterclassesMegaOpen)
+      const isOpening = !isMasterclassesMegaOpen
+      setIsMasterclassesMegaOpen(isOpening)
       setActiveDropdown(null)
       setIsAboutMegaOpen(false)
       setIsContactMegaOpen(false)
       setIsResourcesMegaOpen(false)
+      if (isOpening) trackDropdownOpen('Masterclasses')
     } else if (label === 'Resources') {
-      setIsResourcesMegaOpen(!isResourcesMegaOpen)
+      const isOpening = !isResourcesMegaOpen
+      setIsResourcesMegaOpen(isOpening)
       setActiveDropdown(null)
       setIsAboutMegaOpen(false)
       setIsContactMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
+      if (isOpening) trackDropdownOpen('Resources')
     } else if (label === 'Contact') {
-      setIsContactMegaOpen(!isContactMegaOpen)
+      const isOpening = !isContactMegaOpen
+      setIsContactMegaOpen(isOpening)
       setActiveDropdown(null)
       setIsAboutMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
       setIsResourcesMegaOpen(false)
+      if (isOpening) trackDropdownOpen('Contact')
     } else {
-      setActiveDropdown(activeDropdown === label ? null : label)
+      const isOpening = activeDropdown !== label
+      setActiveDropdown(isOpening ? label : null)
       setIsAboutMegaOpen(false)
       setIsContactMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
       setIsResourcesMegaOpen(false)
+      if (isOpening) trackDropdownOpen(label)
     }
   }
 

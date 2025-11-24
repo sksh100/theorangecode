@@ -107,10 +107,10 @@ export default function WhyCulturalIntelligencePage() {
               {/* Opening Statement */}
               <motion.div variants={itemVariants} className="space-y-6">
                 <p className="text-xl md:text-2xl leading-relaxed text-white/90 font-medium">
-                  Success in the UAE and the wider GCC is built on <span className="text-white font-bold">trust</span>, <span className="text-white font-bold">clarity</span>, and <span className="text-white font-bold">respect</span>.
+                  Success in the UAE and the wider GCC is built on <span className="text-orange font-bold">trust</span>, <span className="text-azure-blue font-bold">clarity</span>, and <span className="text-orange font-bold">respect</span>.
                 </p>
                 <p className="text-lg leading-relaxed text-white/80">
-                  This region brings together more than <span className="text-white/95 font-semibold">two hundred nationalities</span>. Every day you interact with people shaped by different communication styles, values, leadership expectations, and social behaviours.
+                  This region brings together more than <span className="text-orange font-semibold">two hundred nationalities</span>. Every day you interact with people shaped by different communication styles, values, leadership expectations, and social behaviours.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
                   <motion.div
@@ -160,7 +160,7 @@ export default function WhyCulturalIntelligencePage() {
 
                 <div className="p-6 rounded-xl bg-white/5 border-l-4 border-white/30 backdrop-blur-sm">
                   <p className="text-white/90 leading-relaxed">
-                    Studies highlight that <span className="font-semibold text-white">Western professionals often value direct clarity</span>, while many cultures in the Middle East express meaning through <span className="font-semibold text-white">context, tone, intention, and relationship</span>. Both approaches are valid. They simply follow different cultural rules. Without understanding these rules, meaning gets lost.
+                    Studies highlight that <span className="text-orange font-semibold">Western professionals often value direct clarity</span>, while many cultures in the Middle East express meaning through <span className="text-azure-blue font-semibold">context, tone, intention, and relationship</span>. Both approaches are valid. They simply follow different cultural rules. Without understanding these rules, meaning gets lost.
                   </p>
                 </div>
               </motion.div>
@@ -233,7 +233,7 @@ export default function WhyCulturalIntelligencePage() {
                 </motion.div>
 
                 <p className="text-lg leading-relaxed text-white/80">
-                  Research shows that some cultures value <span className="text-white font-semibold">flat hierarchies and informal interactions</span>, while others expect <span className="text-white font-semibold">structured decision making, respect for seniority, and clear roles</span>.
+                  Research shows that some cultures value <span className="text-orange font-semibold">flat hierarchies and informal interactions</span>, while others expect <span className="text-azure-blue font-semibold">structured decision making, respect for seniority, and clear roles</span>.
                 </p>
                 <div className="p-6 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
                   <p className="text-white/90 leading-relaxed font-medium">
@@ -274,7 +274,7 @@ export default function WhyCulturalIntelligencePage() {
                     ))}
                   </div>
                   <p className="text-lg leading-relaxed text-white/80 mt-6">
-                    It gives you the awareness to <span className="text-white font-semibold">adapt your communication without losing your authenticity</span>. This is essential in a region where your <span className="text-white font-semibold">network is often as valuable as your skill set</span>.
+                    It gives you the awareness to <span className="text-orange font-semibold">adapt your communication without losing your authenticity</span>. This is essential in a region where your <span className="text-azure-blue font-semibold">network is often as valuable as your skill set</span>.
                   </p>
                 </div>
               </motion.div>
@@ -374,7 +374,7 @@ export default function WhyCulturalIntelligencePage() {
                     The Gulf Region Rewards Understanding
                   </h2>
                   <p className="text-xl md:text-2xl leading-relaxed text-white/90 max-w-3xl mx-auto">
-                    The Gulf region rewards those who understand its cultural landscape. When you learn how to navigate it, <span className="text-white font-bold">opportunities expand</span>, <span className="text-white font-bold">relationships deepen</span>, and <span className="text-white font-bold">success becomes sustainable</span>.
+                    The Gulf region rewards those who understand its cultural landscape. When you learn how to navigate it, <span className="text-orange font-bold">opportunities expand</span>, <span className="text-azure-blue font-bold">relationships deepen</span>, and <span className="text-orange font-bold">success becomes sustainable</span>.
                   </p>
                 </div>
               </motion.div>

@@ -109,10 +109,10 @@ export default function WhatIsCQPage() {
                 <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-white/20 via-white/30 to-white/20 opacity-60" />
                 <div className="pl-8 space-y-6">
                   <p className="text-xl md:text-2xl leading-relaxed text-white/90 font-medium">
-                    Cultural intelligence is a <span className="text-white font-bold">scientifically recognised ability</span> that allows individuals to interpret, adapt to, and effectively engage with people from different cultural backgrounds.
+                    Cultural intelligence is a <span className="text-orange font-bold">scientifically recognised ability</span> that allows individuals to interpret, adapt to, and effectively engage with people from different cultural backgrounds.
                   </p>
                   <p className="text-lg leading-relaxed text-white/80">
-                    It is a structured skill built on <span className="text-white/95 font-semibold">cognitive understanding</span>, <span className="text-white/95 font-semibold">emotional awareness</span>, and <span className="text-white/95 font-semibold">behavioural flexibility</span>.
+                    It is a structured skill built on <span className="text-azure-blue font-semibold">cognitive understanding</span>, <span className="text-orange font-semibold">emotional awareness</span>, and <span className="text-azure-blue font-semibold">behavioural flexibility</span>.
                   </p>
                 </div>
               </motion.div>
@@ -193,7 +193,7 @@ export default function WhatIsCQPage() {
                       <h2 className="text-3xl font-bold text-white">In the UAE and GCC</h2>
                     </div>
                     <p className="text-lg leading-relaxed text-white/80">
-                      In the UAE and GCC, cultural intelligence is <span className="text-white font-bold">indispensable</span>. The region is shaped by Emirati traditions, Islamic values, and one of the most international populations in the world.
+                      In the UAE and GCC, cultural intelligence is <span className="text-orange font-bold">indispensable</span>. The region is shaped by Emirati traditions, Islamic values, and one of the most international populations in the world.
                     </p>
                     <motion.div
                       whileHover={{ scale: 1.02, x: 10 }}
@@ -259,13 +259,13 @@ export default function WhatIsCQPage() {
                   </h2>
                   <div className="max-w-3xl mx-auto space-y-4 text-lg leading-relaxed text-white/90">
                     <p>
-                      With cultural intelligence, your <span className="text-white font-semibold">interactions become clearer</span>, your <span className="text-white font-semibold">leadership becomes more effective</span>, and your <span className="text-white font-semibold">relationships become stronger</span>.
+                      With cultural intelligence, your <span className="text-orange font-semibold">interactions become clearer</span>, your <span className="text-azure-blue font-semibold">leadership becomes more effective</span>, and your <span className="text-orange font-semibold">relationships become stronger</span>.
                     </p>
                     <motion.p
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      className="text-2xl md:text-3xl font-bold text-white pt-4"
+                      className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent pt-4"
                     >
                       It is not an optional skill. It is a strategic advantage for anyone working, leading, or living in a multicultural environment.
                     </motion.p>

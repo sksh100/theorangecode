@@ -8,10 +8,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "verify-ga": "node scripts/verify-ga-setup.js"
   },
   "dependencies": {
     "@mailerlite/mailerlite-nodejs": "^1.5.0",
+    "@next/third-parties": "^16.0.3",
     "@react-three/drei": "9.88.13",
     "@react-three/fiber": "8.15.19",
     "@stripe/stripe-js": "^8.2.0",
@@ -25,9 +27,9 @@
     "qrcode": "^1.5.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "resend": "^3.2.0",
     "react-svg-worldmap": "^2.0.0-alpha.16",
     "recharts": "^3.3.0",
+    "resend": "^3.2.0",
     "speakeasy": "^2.0.0",
     "stripe": "^19.2.0",
     "three": "^0.181.1",

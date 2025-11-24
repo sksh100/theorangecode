@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Users, Sparkles, Zap, ArrowRight, X } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect } from 'react'
+import { trackDropdownItemClick } from '@/lib/analytics'
 
 interface AboutCard {
   id: string
@@ -104,7 +105,10 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
                     >
                       <Link
                         href={section.href}
-                        onClick={onClose}
+                        onClick={() => {
+                          trackDropdownItemClick('About', section.title, section.href)
+                          onClose()
+                        }}
                         className="block group"
                       >
                         <motion.div

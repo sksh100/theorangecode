@@ -24,6 +24,7 @@ export function ContactFormSection() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    trackFormStart('Contact Form', 'Contact Section');
     setIsSubmitting(true);
     setStatusMessage(null);
 
@@ -47,6 +48,11 @@ export function ContactFormSection() {
       const data = await res.json();
 
       if (res.ok) {
+        trackFormComplete('Contact Form', 'Contact Section', {
+          form_name: submissionData.name,
+          form_email: submissionData.email,
+          form_subject: submissionData.subject,
+        });
         setStatusMessage("Thank you. Your message has been received and our team will be in touch very soon.");
         form.reset();
         setFormData({ name: '', email: '', phone: '', subject: '', message: '' });

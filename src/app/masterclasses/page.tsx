@@ -7,6 +7,7 @@ import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 import Link from 'next/link'
 import Image from 'next/image'
+import { trackMasterclassSelect, trackTimeSlotSelect, trackCheckoutStart, trackButtonClick, trackFormStart, trackFormComplete } from '@/lib/analytics'
 
 interface Masterclass {
   id: number
@@ -138,20 +139,32 @@ export default function MasterclassesPage() {
     ? availableSlots 
     : availableSlots.filter(slot => slot.type === filterType)
 
-  const handleBookNow = () => {
-    if (selectedMasterclass && selectedSlot) {
-      const paymentLink = 'https://buy.stripe.com/5kQ3cv79cfH3byHdO08k800'
-      const masterclassName = masterclasses.find(m => m.id === selectedMasterclass)?.title
-      const bookingData = {
-        masterclass: masterclassName,
-        date: selectedSlot.date,
-        time: selectedSlot.time,
-        type: selectedSlot.type
-      }
-      sessionStorage.setItem('bookingData', JSON.stringify(bookingData))
-      window.location.href = paymentLink
-    }
-  }
+        const handleBookNow = () => {
+          if (selectedMasterclass && selectedSlot) {
+            const paymentLink = 'https://buy.stripe.com/5kQ3cv79cfH3byHdO08k800'
+            const masterclassData = masterclasses.find(m => m.id === selectedMasterclass)
+            const masterclassName = masterclassData?.title || ''
+            const bookingData = {
+              masterclass: masterclassName,
+              date: selectedSlot.date,
+              time: selectedSlot.time,
+              type: selectedSlot.type
+            }
+            sessionStorage.setItem('bookingData', JSON.stringify(bookingData))
+            
+            // Track checkout start
+            trackCheckoutStart(
+              masterclassName,
+              masterclassData?.price || 0,
+              selectedSlot.date,
+              selectedSlot.time
+            )
+            
+            trackButtonClick('Secure Your Spot', 'Masterclasses Page Checkout Bar')
+            
+            window.location.href = paymentLink
+          }
+        }
 
   const handleTailormadeFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setTailormadeFormData(prev => ({
@@ -169,6 +182,7 @@ export default function MasterclassesPage() {
 
   const handleTailormadeSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    trackFormStart('Tailormade Course Inquiry', 'Masterclasses Page')
     setIsSubmittingTailormade(true)
     setTailormadeStatusMessage(null)
 
@@ -188,6 +202,10 @@ export default function MasterclassesPage() {
       const data = await res.json()
 
       if (res.ok) {
+        trackFormComplete('Tailormade Course Inquiry', 'Masterclasses Page', {
+          form_name: tailormadeFormData.name,
+          form_email: tailormadeFormData.email,
+        })
         setTailormadeStatusMessage("Thank you! We've received your inquiry and will contact you soon to discuss your tailormade course needs.")
         setTailormadeFormData({ name: '', email: '', phone: '', message: '' })
         setShowTailormadeForm(false)
@@ -298,14 +316,15 @@ export default function MasterclassesPage() {
                 
                 <div className="space-y-4">
                   {masterclasses.map((masterclass, index) => (
-                    <motion.button
-                      key={masterclass.id}
-                      onClick={() => {
-                        setSelectedMasterclass(masterclass.id)
-                        if (selectedMasterclass !== masterclass.id) {
-                          setSelectedSlot(null)
-                        }
-                      }}
+                          <motion.button
+                            key={masterclass.id}
+                            onClick={() => {
+                              if (selectedMasterclass !== masterclass.id) {
+                                trackMasterclassSelect(masterclass.title, masterclass.id.toString(), masterclass.price)
+                                setSelectedSlot(null)
+                              }
+                              setSelectedMasterclass(masterclass.id)
+                            }}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ 
                         opacity: 1, 
@@ -403,12 +422,13 @@ export default function MasterclassesPage() {
                       {filteredSlots.map((slot, index) => (
                         <motion.button
                           key={`${slot.date}-${slot.type}-${index}`}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            if (slot.available) {
-                              setSelectedSlot(slot)
-                            }
-                          }}
+                            onClick={(e) => {
+                              e.preventDefault()
+                              if (slot.available) {
+                                trackTimeSlotSelect(slot.date, slot.time, slot.type)
+                                setSelectedSlot(slot)
+                              }
+                            }}
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.2, delay: index * 0.02 }}

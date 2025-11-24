@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { VisitorTracker } from '@/components/VisitorTracker'
+import { GoogleAnalytics } from '@/components/GoogleAnalytics'
 
 export const metadata: Metadata = {
   title: {
@@ -229,8 +230,9 @@ export default function RootLayout({
         />
       </head>
       <body style={{ fontFamily: "'Inter', 'Glacial Indifference', sans-serif" }} className="antialiased">
-        <VisitorTracker />
+        <GoogleAnalytics />
         {children}
+        <VisitorTracker />
       </body>
     </html>
   )

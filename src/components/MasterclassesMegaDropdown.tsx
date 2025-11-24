@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, Users, Zap, ArrowRight, X } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect } from 'react'
+import { trackDropdownItemClick, trackButtonClick, trackMasterclassView } from '@/lib/analytics'
 
 interface MasterclassCard {
   id: string
@@ -108,7 +109,11 @@ export function MasterclassesMegaDropdown({ isOpen, onClose }: MasterclassesMega
                     >
                       <Link
                         href="/masterclasses"
-                        onClick={onClose}
+                        onClick={() => {
+                          trackMasterclassView(masterclass.title, masterclass.id)
+                          trackDropdownItemClick('Masterclasses', masterclass.title, '/masterclasses')
+                          onClose()
+                        }}
                         className="block group"
                       >
                         <motion.div
@@ -164,7 +169,10 @@ export function MasterclassesMegaDropdown({ isOpen, onClose }: MasterclassesMega
                 >
                   <Link
                     href="/masterclasses"
-                    onClick={onClose}
+                    onClick={() => {
+                      trackButtonClick('Start Your Cultural Intelligence Journey Now', 'Masterclasses Dropdown')
+                      onClose()
+                    }}
                     className="block"
                   >
                     <motion.button
