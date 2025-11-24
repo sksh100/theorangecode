@@ -291,3 +291,15 @@ function GoogleAnalyticsInner() {
   )
 }
 
+export function GoogleAnalytics() {
+  if (!GA_MEASUREMENT_ID) {
+    return null
+  }
+
+  return (
+    <Suspense fallback={null}>
+      <GoogleAnalyticsInner />
+    </Suspense>
+  )
+}
+
