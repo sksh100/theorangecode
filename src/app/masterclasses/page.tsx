@@ -113,7 +113,6 @@ export default function MasterclassesPage() {
   const [selectedMasterclass, setSelectedMasterclass] = useState<number | null>(null)
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null)
   const [filterType, setFilterType] = useState<'all' | 'online' | 'offline'>('all')
-  const [showMap, setShowMap] = useState(false)
   const [showTailormadeForm, setShowTailormadeForm] = useState(false)
   const [showContactForm, setShowContactForm] = useState(false)
   const [tailormadeFormData, setTailormadeFormData] = useState({
@@ -457,19 +456,30 @@ export default function MasterclassesPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="mt-6"
                       >
-                        <button
-                          onClick={() => setShowMap(true)}
-                          className="w-full p-4 rounded-xl border-2 border-orange/30 bg-gradient-to-br from-orange/10 to-orange/5 hover:border-orange/50 hover:from-orange/20 transition-all duration-300 flex items-center justify-between group"
-                        >
-                          <div className="flex items-center gap-3">
-                            <MapPin className="w-6 h-6 text-orange" />
-                            <div className="text-left">
-                              <p className="text-white font-semibold text-sm">Etihad Towers Boardroom</p>
-                              <p className="text-white/70 text-xs mt-0.5">Etihad Towers, Abu Dhabi, UAE</p>
+                        <div className="rounded-xl overflow-hidden border border-white/10">
+                          <div className="relative w-full aspect-video">
+                            <Image
+                              src="/etihad-towers.jpg"
+                              alt="The Orange Code at Etihad Towers"
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                          <div className="p-4 bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10 border-t border-white/10">
+                            <div className="flex items-start gap-3">
+                              <MapPin className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
+                              <div className="text-left">
+                                <p className="text-white font-semibold text-sm mb-1">The Orange Code at Etihad Towers</p>
+                                <p className="text-white/70 text-xs leading-relaxed">
+                                  Etihad Towers<br />
+                                  Tower 3, Floor 36,<br />
+                                  Abu Dhabi,<br />
+                                  United Arab Emirates
+                                </p>
+                              </div>
                             </div>
                           </div>
-                          <ArrowRight className="w-5 h-5 text-orange group-hover:translate-x-1 transition-transform" />
-                        </button>
+                        </div>
                       </motion.div>
                     )}
                   </motion.div>
@@ -506,10 +516,10 @@ export default function MasterclassesPage() {
                   </div>
                   <div className="flex-1">
                     <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white">
-                      Need a Tailormade Course?
+                      Need a Tailormade Course or Different Time?
                     </h2>
                     <p className="text-white/80 text-lg leading-relaxed">
-                      We understand that every organization and individual has unique needs. If you require a custom masterclass tailored to specific topics, industries, or learning objectives, we're here to create the perfect program for you.
+                      We understand that schedules can be challenging and that every organization and individual has unique needs. If you require a custom masterclass tailored to specific topics, industries, or learning objectives, or if you need a different time slot than what's available, we're here to work with you to find the perfect solution.
                     </p>
                   </div>
                 </div>
@@ -695,13 +705,10 @@ export default function MasterclassesPage() {
                       <span>{selectedSlot.time}</span>
                     </div>
                     {selectedSlot.type === 'offline' && (
-                      <button
-                        onClick={() => setShowMap(true)}
-                        className="flex items-center gap-2 text-white/70 hover:text-orange transition-colors"
-                      >
+                      <div className="flex items-center gap-2 text-white/70">
                         <MapPin className="w-4 h-4" />
                         <span>Etihad Towers, Abu Dhabi</span>
-                      </button>
+                      </div>
                     )}
                   </div>
                   
@@ -723,75 +730,11 @@ export default function MasterclassesPage() {
           )}
         </AnimatePresence>
 
-        {/* Google Maps Modal */}
-        <AnimatePresence>
-          {showMap && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
-              onClick={() => setShowMap(false)}
-            >
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                onClick={(e) => e.stopPropagation()}
-                className="relative bg-primary-dark rounded-2xl overflow-hidden border-2 border-orange/30 shadow-2xl w-full max-w-4xl max-h-[90vh]"
-              >
-                <button
-                  onClick={() => setShowMap(false)}
-                  className="absolute top-4 right-4 z-10 w-10 h-10 bg-primary-dark/90 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-orange transition-colors border border-white/10"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-                <div className="p-4 border-b border-white/10">
-                  <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-orange" />
-                    Etihad Towers, Abu Dhabi
-                  </h3>
-                  <p className="text-white/70 text-sm mt-1">Our premium boardroom location</p>
-                </div>
-                <div className="relative w-full h-[500px] md:h-[600px]">
-                  <iframe
-                    src="https://www.google.com/maps?q=Etihad+Towers+Abu+Dhabi&t=&z=17&ie=UTF8&iwloc=&output=embed"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="w-full h-full"
-                  />
-                </div>
-                <div className="p-4 border-t border-white/10 bg-primary-dark/50">
-                  <a
-                    href="https://www.google.com/maps/search/etihad+towers/@24.4585838,54.3194686,17z/data=!3m1!4b1?entry=ttu"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-orange hover:text-orange/80 transition-colors text-sm font-semibold"
-                  >
-                    <span>Open in Google Maps</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
-        {/* Alternative Booking Option */}
+        {/* Alternative Booking Option - Combined with Tailormade */}
         <section className="py-16 relative pb-32 md:pb-28">
           <div className="container mx-auto px-6">
             <div className="max-w-3xl mx-auto text-center">
-              <h3 className="text-2xl md:text-3xl font-bold mb-6">
-                Need a Different Time?
-              </h3>
-              <p className="text-white/80 text-lg mb-8 leading-relaxed">
-                We understand that schedules can be challenging. Contact us directly and we'll work together to find the perfect slot for you.
-              </p>
-              
               {!showContactForm ? (
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
