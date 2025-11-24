@@ -291,7 +291,7 @@ export default function MasterclassesPage() {
                 <div>
                   <h2 className="text-2xl md:text-3xl font-bold mb-2 flex items-center gap-2">
                     <span className="w-2 h-2 bg-orange rounded-full"></span>
-                    Step 1: Choose Your Masterclass
+                    Step 1: <span className="text-orange">Choose</span> Your Masterclass
                   </h2>
                   <p className="text-white/60 text-sm mb-6">Select the masterclass that interests you most</p>
                 </div>
@@ -357,7 +357,7 @@ export default function MasterclassesPage() {
                     <div>
                       <h2 className="text-2xl md:text-3xl font-bold mb-2 flex items-center gap-2">
                         <span className="w-2 h-2 bg-azure-blue rounded-full"></span>
-                        Step 2: Choose Your Time
+                        Step 2: <span className="text-orange">Choose</span> Your Time
                       </h2>
                       <p className="text-white/60 text-sm mb-6">Select your preferred date and session type</p>
                     </div>
@@ -721,8 +721,7 @@ export default function MasterclassesPage() {
                     className="cta-button-glow w-full md:w-auto px-10 py-4 text-white font-bold text-lg rounded-xl relative overflow-hidden group flex items-center justify-center gap-3"
                   >
                     <Sparkles className="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform" />
-                    <span className="relative z-10">Secure Your Spot → Checkout</span>
-                    <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+                    <span className="relative z-10">Secure Your Spot</span>
                   </motion.button>
                 </div>
               </div>
@@ -731,193 +730,6 @@ export default function MasterclassesPage() {
         </AnimatePresence>
 
 
-        {/* Alternative Booking Option - Combined with Tailormade */}
-        <section className="py-16 relative pb-32 md:pb-28">
-          <div className="container mx-auto px-6">
-            <div className="max-w-3xl mx-auto text-center">
-              {!showContactForm ? (
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link
-                    href="mailto:hello@theorangecode.com"
-                    className="px-8 py-4 bg-white/5 border border-white/10 rounded-xl text-white font-semibold hover:bg-white/10 hover:border-orange/50 transition-all duration-300 flex items-center justify-center gap-3"
-                  >
-                    <Mail className="w-5 h-5" />
-                    <span>Email Us</span>
-                  </Link>
-                  <button
-                    onClick={() => setShowContactForm(true)}
-                    className="px-8 py-4 bg-gradient-to-r from-azure-blue/20 to-orange/20 border border-azure-blue/30 rounded-xl text-white font-semibold hover:from-azure-blue/30 hover:to-orange/30 transition-all duration-300 flex items-center justify-center gap-3"
-                  >
-                    <span>Contact Form</span>
-                    <ArrowRight className="w-5 h-5" />
-                  </button>
-                </div>
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ duration: 0.3 }}
-                  className="mt-8 bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10 rounded-2xl p-8 border border-orange/20"
-                >
-                  <div className="flex items-center justify-between mb-6">
-                    <h4 className="text-xl font-bold text-white flex items-center gap-2">
-                      <MessageSquare className="w-5 h-5 text-orange" />
-                      Contact Us
-                    </h4>
-                    <button
-                      onClick={() => {
-                        setShowContactForm(false)
-                        setContactFormData({ name: '', email: '', phone: '', subject: '', message: '' })
-                        setContactStatusMessage(null)
-                      }}
-                      className="text-white/70 hover:text-white transition-colors"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  </div>
-
-                  <form onSubmit={handleContactSubmit} className="space-y-4 text-left">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label htmlFor="contact-name" className="block text-white font-semibold mb-2 text-sm">
-                          Full Name *
-                        </label>
-                        <input
-                          type="text"
-                          id="contact-name"
-                          name="name"
-                          value={contactFormData.name}
-                          onChange={handleContactFormChange}
-                          required
-                          className="w-full px-4 py-3 bg-primary-dark/50 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-orange/50 focus:ring-2 focus:ring-orange/20 transition-all"
-                          placeholder="John Doe"
-                        />
-                      </div>
-
-                      <div>
-                        <label htmlFor="contact-email" className="block text-white font-semibold mb-2 text-sm">
-                          Email Address *
-                        </label>
-                        <input
-                          type="email"
-                          id="contact-email"
-                          name="email"
-                          value={contactFormData.email}
-                          onChange={handleContactFormChange}
-                          required
-                          className="w-full px-4 py-3 bg-primary-dark/50 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-orange/50 focus:ring-2 focus:ring-orange/20 transition-all"
-                          placeholder="john@example.com"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label htmlFor="contact-phone" className="block text-white font-semibold mb-2 text-sm">
-                          Phone Number
-                        </label>
-                        <input
-                          type="tel"
-                          id="contact-phone"
-                          name="phone"
-                          value={contactFormData.phone}
-                          onChange={handleContactFormChange}
-                          className="w-full px-4 py-3 bg-primary-dark/50 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-azure-blue/50 focus:ring-2 focus:ring-azure-blue/20 transition-all"
-                          placeholder="+971 50 123 4567"
-                        />
-                      </div>
-
-                      <div>
-                        <label htmlFor="contact-subject" className="block text-white font-semibold mb-2 text-sm">
-                          Subject *
-                        </label>
-                        <select
-                          id="contact-subject"
-                          name="subject"
-                          value={contactFormData.subject}
-                          onChange={handleContactFormChange}
-                          required
-                          className="w-full px-4 py-3 bg-primary-dark/50 border border-white/20 rounded-xl text-white focus:outline-none focus:border-azure-blue/50 focus:ring-2 focus:ring-azure-blue/20 transition-all appearance-none cursor-pointer"
-                          style={{
-                            backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e")`,
-                            backgroundRepeat: 'no-repeat',
-                            backgroundPosition: 'right 1rem center',
-                            backgroundSize: '16px'
-                          }}
-                        >
-                          <option value="" disabled className="bg-primary-dark text-white/50">Select a subject</option>
-                          <option value="masterclass-inquiry" className="bg-primary-dark text-white">Masterclass Inquiry</option>
-                          <option value="booking" className="bg-primary-dark text-white">Book a Session</option>
-                          <option value="general" className="bg-primary-dark text-white">General Question</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label htmlFor="contact-message" className="block text-white font-semibold mb-2 text-sm">
-                        Message *
-                      </label>
-                      <textarea
-                        id="contact-message"
-                        name="message"
-                        value={contactFormData.message}
-                        onChange={handleContactFormChange}
-                        required
-                        rows={4}
-                        className="w-full px-4 py-3 bg-primary-dark/50 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-orange/50 focus:ring-2 focus:ring-orange/20 transition-all resize-none"
-                        placeholder="Tell us about your preferred time and we'll work together to find the perfect slot for you..."
-                      />
-                    </div>
-
-                    <div className="flex gap-3">
-                      <motion.button
-                        type="submit"
-                        disabled={isSubmittingContact}
-                        className="flex-1 cta-button-glow px-6 py-3 rounded-xl font-semibold text-white disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group flex items-center justify-center gap-2"
-                        whileHover={{ scale: isSubmittingContact ? 1 : 1.02 }}
-                        whileTap={{ scale: isSubmittingContact ? 1 : 0.98 }}
-                      >
-                        <span className="relative z-10 flex items-center gap-2">
-                          {isSubmittingContact ? (
-                            <>
-                              <motion.div
-                                animate={{ rotate: 360 }}
-                                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                              >
-                                <Send className="w-4 h-4" />
-                              </motion.div>
-                              Sending...
-                            </>
-                          ) : (
-                            <>
-                              Send Message
-                              <Send className="w-4 h-4" />
-                            </>
-                          )}
-                        </span>
-                      </motion.button>
-                    </div>
-
-                    {contactStatusMessage && (
-                      <motion.p
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className={`mt-4 text-sm ${
-                          contactStatusMessage.includes('Thank you')
-                            ? 'text-green-400'
-                            : 'text-red-400'
-                        }`}
-                      >
-                        {contactStatusMessage}
-                      </motion.p>
-                    )}
-                  </form>
-                </motion.div>
-              )}
-            </div>
-          </div>
-        </section>
       </motion.main>
 
       <ModernFooter />
