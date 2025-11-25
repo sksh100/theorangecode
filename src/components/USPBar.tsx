@@ -1,5 +1,6 @@
 'use client'
 
+// USP Bar component with four pillars of excellence
 import { motion } from 'framer-motion'
 import { Crown, Shield, Globe, Zap, Star, Award, Users, Clock } from 'lucide-react'
 
