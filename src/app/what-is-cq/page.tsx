@@ -229,7 +229,7 @@ export default function WhatIsCQPage() {
                       <div className="space-y-4">
                         <div className="flex items-center gap-3">
                           <div className="w-3 h-3 rounded-full bg-orange" />
-                          <span className="text-white font-semibold">Emirati Traditions</span>
+                          <span className="text-white font-semibold">Emirati Cultural Foundations</span>
                         </div>
                         <div className="flex items-center gap-3">
                           <div className="w-3 h-3 rounded-full bg-azure-blue" />
@@ -237,11 +237,11 @@ export default function WhatIsCQPage() {
                         </div>
                         <div className="flex items-center gap-3">
                           <div className="w-3 h-3 rounded-full bg-orange" />
-                          <span className="text-white font-semibold">200+ Nationalities</span>
+                          <span className="text-white font-semibold">International Hub</span>
                         </div>
                         <div className="flex items-center gap-3">
                           <div className="w-3 h-3 rounded-full bg-azure-blue" />
-                          <span className="text-white font-semibold">Multicultural Environment</span>
+                          <span className="text-white font-semibold">Multilayered Social Codes</span>
                         </div>
                       </div>
                       <div className="mt-6 pt-6 border-t border-white/10">
