@@ -8,11 +8,6 @@ import { Sparkles, Target, Heart, Eye, Users, Globe, ArrowRight, CheckCircle, Za
 const ModernNavbar = dynamic(() => import('@/components/ModernNavbar').then(mod => ({ default: mod.ModernNavbar })), { ssr: false })
 const ModernFooter = dynamic(() => import('@/components/ModernFooter').then(mod => ({ default: mod.ModernFooter })), { ssr: false })
 
-const CulturalIntelligenceNetwork = dynamic(
-  () => import('@/components/CulturalIntelligenceNetwork').then(mod => ({ default: mod.CulturalIntelligenceNetwork })),
-  { ssr: false }
-)
-
 const ValuesTimeline = dynamic(
   () => import('@/components/ValuesTimeline').then(mod => ({ default: mod.ValuesTimeline })),
   { ssr: false }
@@ -39,7 +34,7 @@ export default function AboutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-primary-dark text-white" suppressHydrationWarning>
+    <div className="min-h-screen bg-primary-dark text-white">
       <ModernNavbar />
       
       <motion.main
@@ -69,12 +64,7 @@ export default function AboutPage() {
                 </span>
               </motion.div>
               <h1 className="text-5xl md:text-7xl font-bold mb-6">
-                <span 
-                  className="bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: 'linear-gradient(to right, #ff914d 0%, #00d4ff 50%, #ff914d 100%)'
-                  }}
-                >
+                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
                   The Orange Code
                 </span>
               </h1>
@@ -83,12 +73,8 @@ export default function AboutPage() {
         </section>
 
         {/* Main Content Section */}
-        <section className="relative py-16 md:py-24 overflow-hidden">
-          {/* WebGL Network Background */}
-          <div className="absolute inset-0 w-full h-full opacity-15" suppressHydrationWarning>
-            <CulturalIntelligenceNetwork />
-          </div>
-          <div className="container mx-auto px-6 relative z-10">
+        <section className="relative py-16 md:py-24">
+          <div className="container mx-auto px-6">
             <motion.div
               variants={containerVariants}
               initial="hidden"
