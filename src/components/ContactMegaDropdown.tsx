@@ -91,8 +91,10 @@ export function ContactMegaDropdown({ isOpen, onClose }: ContactMegaDropdownProp
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
                   <div>
-                    <h2 className="text-3xl font-bold text-white font-montserrat mb-2">
-                      Contact Us
+                    <h2 className="text-3xl font-bold font-montserrat mb-2">
+                      <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                        Contact Us
+                      </span>
                     </h2>
                     <p className="text-azure-blue/80 font-montserrat">
                       Get in touch with our luxury experts

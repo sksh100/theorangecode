@@ -83,7 +83,11 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h3 className="text-2xl font-bold text-orange mb-2">About</h3>
+                    <h3 className="text-2xl font-bold mb-2">
+                      <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                        About
+                      </span>
+                    </h3>
                   </div>
                   <button
                     onClick={onClose}

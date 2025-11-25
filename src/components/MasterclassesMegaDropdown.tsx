@@ -87,7 +87,11 @@ export function MasterclassesMegaDropdown({ isOpen, onClose }: MasterclassesMega
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h3 className="text-2xl font-bold text-white mb-2">Our Masterclasses</h3>
+                    <h3 className="text-2xl font-bold mb-2">
+                      <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                        Our Masterclasses
+                      </span>
+                    </h3>
                     <p className="text-white/70 text-sm">Choose the perfect masterclass for your journey</p>
                   </div>
                   <button

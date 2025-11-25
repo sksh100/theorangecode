@@ -50,7 +50,11 @@ export function ResourcesMegaDropdown({ isOpen, onClose }: ResourcesMegaDropdown
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h3 className="text-xl font-bold text-white mb-2">Resources</h3>
+                    <h3 className="text-xl font-bold mb-2">
+                      <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                        Resources
+                      </span>
+                    </h3>
                   </div>
                   <button
                     onClick={onClose}
