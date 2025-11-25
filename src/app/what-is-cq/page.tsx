@@ -166,7 +166,7 @@ export default function WhatIsCQPage() {
                       </h2>
                     </div>
                     <p className="text-lg leading-relaxed text-white/90 mb-6">
-                      In practice, cultural intelligence helps you recognise why people communicate the way they do, how they make decisions, what they find respectful, and which behaviours build trust. It enables you to adjust your approach with sensitivity while remaining authentic and professional.
+                      In practice, Cultural Intelligence helps you recognise why people communicate the way they do, how they make decisions, what they find respectful and which behaviours build trust. It enables you to adjust your approach with sensitivity while remaining authentic and professional.
                     </p>
                     
                     {/* Benefits Grid */}
