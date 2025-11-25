@@ -49,10 +49,8 @@ export default function AboutPage() {
         className="relative"
       >
         {/* Hero Section */}
-        <section 
-          className="relative overflow-hidden pt-32 pb-20 bg-primary-dark min-h-[400px] about-hero-bg"
-          suppressHydrationWarning
-        >
+        <section className="relative overflow-hidden pt-32 pb-20">
+          <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5" />
           <div className="container mx-auto px-6 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
