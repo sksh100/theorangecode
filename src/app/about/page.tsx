@@ -1,11 +1,22 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
-import { ModernNavbar } from '@/components/ModernNavbar'
-import { ModernFooter } from '@/components/ModernFooter'
-import { CulturalIntelligenceNetwork } from '@/components/CulturalIntelligenceNetwork'
-import { ValuesShowcase } from '@/components/ValuesShowcase'
 import { Sparkles, Target, Heart, Eye, Users, Globe, ArrowRight, CheckCircle, Zap } from 'lucide-react'
+
+// Dynamically import all components to prevent hydration issues
+const ModernNavbar = dynamic(() => import('@/components/ModernNavbar').then(mod => ({ default: mod.ModernNavbar })), { ssr: false })
+const ModernFooter = dynamic(() => import('@/components/ModernFooter').then(mod => ({ default: mod.ModernFooter })), { ssr: false })
+
+const CulturalIntelligenceNetwork = dynamic(
+  () => import('@/components/CulturalIntelligenceNetwork').then(mod => ({ default: mod.CulturalIntelligenceNetwork })),
+  { ssr: false }
+)
+
+const ValuesTimeline = dynamic(
+  () => import('@/components/ValuesTimeline').then(mod => ({ default: mod.ValuesTimeline })),
+  { ssr: false }
+)
 
 export default function AboutPage() {
   const containerVariants = {
@@ -28,7 +39,7 @@ export default function AboutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-primary-dark text-white">
+    <div className="min-h-screen bg-primary-dark text-white" suppressHydrationWarning>
       <ModernNavbar />
       
       <motion.main
@@ -38,8 +49,12 @@ export default function AboutPage() {
         className="relative"
       >
         {/* Hero Section */}
-        <section className="relative overflow-hidden pt-32 pb-20">
-          <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5" />
+        <section 
+          className="relative overflow-hidden pt-32 pb-20 bg-primary-dark min-h-[400px] about-hero-bg"
+          suppressHydrationWarning
+        >
+          {/* Additional overlay for orange/azure gradient */}
+          <div className="absolute inset-0 z-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5" />
           <div className="container mx-auto px-6 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -69,7 +84,7 @@ export default function AboutPage() {
         {/* Main Content Section */}
         <section className="relative py-16 md:py-24 overflow-hidden">
           {/* WebGL Network Background */}
-          <div className="absolute inset-0 w-full h-full opacity-30">
+          <div className="absolute inset-0 w-full h-full opacity-15" suppressHydrationWarning>
             <CulturalIntelligenceNetwork />
           </div>
           <div className="container mx-auto px-6 relative z-10">
@@ -231,7 +246,7 @@ export default function AboutPage() {
                   <p className="text-white/60 text-lg">The Culture Code — Our Six Core Values</p>
                 </div>
 
-                <ValuesShowcase />
+                <ValuesTimeline />
               </motion.div>
 
               {/* Slogan Section */}

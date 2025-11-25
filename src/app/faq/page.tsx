@@ -20,85 +20,85 @@ export default function FAQ() {
   const faqItems: FAQItem[] = [
     {
       id: '1',
-      question: 'What makes The Orange Code different from other cultural training masterclasses?',
-      answer: 'We are certified by the Washington School of Protocol and trusted by embassies worldwide. Our masterclasses combine refined knowledge of Emirati customs with authentic presence training, offering fast-track transformation in just 4 weeks. Unlike generic masterclasses, we provide personalized cultural intelligence specifically designed for the UAE and broader Middle East region.',
+      question: 'What makes The Orange Code different from other Masterclasses?',
+      answer: 'The Orange Code offers an experience that goes far beyond standard cultural training. Our programs are designed specifically for the realities of the UAE and the wider GCC. We blend cultural intelligence, leadership psychology, behaviour science, and region specific insights to help clients strengthen confidence, communication, and emotional awareness.\n\nEach session is crafted to bring immediate clarity and practical behavioural shifts that enhance the way clients live, work, and build relationships in the Emirates.',
       category: 'general',
       icon: <Award className="w-5 h-5" />
     },
     {
       id: '2',
-      question: 'How long does the transformation masterclass take?',
-      answer: 'Our signature masterclasses are designed for fast-track transformation in just 4 weeks. This includes intensive cultural intelligence training, protocol mastery, and practical application sessions. The masterclass is structured to fit into your busy schedule while ensuring maximum impact.',
+      question: 'How long do the Masterclasses take?',
+      answer: 'Our signature Masterclasses are designed to fit into a busy lifestyle. They run for 3 hours and deliver strong value in a short time.\n\nOne to one coaching can be scheduled according to the client\'s needs and availability.',
       category: 'masterclasses',
       icon: <Calendar className="w-5 h-5" />
     },
     {
       id: '3',
       question: 'What cultural aspects do you cover for UAE expats?',
-      answer: 'We cover Islamic etiquette, modesty codes, hospitality rituals, Arabic phrases, and the art of building lasting friendships with Emiratis. Our masterclass helps you break isolation and thrive with cultural confidence, understanding both traditional values and modern UAE society.',
+      answer: 'Our Foundations Masterclass includes the core cultural elements needed to feel confident and grounded in the UAE. We cover Islamic etiquette, modesty guidelines, hospitality rituals, communication styles, national identity, essential Arabic greetings, and the subtle social rules that shape daily life in the Emirates.\n\nClients also learn how to connect respectfully with Emiratis, navigate multicultural environments, and avoid common misunderstandings.',
       category: 'cultural',
       icon: <Globe className="w-5 h-5" />
     },
     {
       id: '4',
       question: 'Do you offer business protocol training for the Middle East?',
-      answer: 'Yes! Our "Doing Business in the Middle East" masterclass covers trust-building, negotiation rhythms, gifting protocols, attire guidelines, and majlis etiquette. We prepare executives and entrepreneurs for success in UAE, Saudi Arabia, Qatar, and other GCC countries.',
+      answer: 'Yes. Our business protocol Masterclass prepares executives, leaders, and teams to operate effectively in the UAE and GCC.\n\nWe cover trust building, negotiation styles, gifting etiquette, attire expectations, meeting behaviour, majlis etiquette, power distance awareness, and culturally aligned communication.\n\nClients who wish to explore deeper topics can continue in personalised private sessions.',
       category: 'business',
       icon: <Users className="w-5 h-5" />
     },
     {
       id: '5',
-      question: 'What is included in the "Born to Lead" masterclass?',
-      answer: 'This masterclass refines how you think, speak, move, and lead. It covers table manners, royal protocols, body language, tone of voice, and setting boundaries. The journey transforms ambition into authentic presence, preparing you for leadership roles in any cultural context.',
+      question: 'What is included in the leadership and presence development program?',
+      answer: 'This Masterclass refines the way you think, speak, behave, and lead.\n\nWe cover etiquette, royal and diplomatic protocols, posture and body language, tone of voice, boundaries, emotional regulation, and self presentation.\n\nClients learn to communicate with authority while maintaining calm, courtesy, and cultural awareness. The program builds a presence that matches the expectations of modern leadership within the UAE and beyond.',
       category: 'masterclasses',
       icon: <Shield className="w-5 h-5" />
     },
     {
       id: '6',
       question: 'How do I book a consultation session?',
-      answer: 'You can book a consultation through our website, contact us directly at +971 56 878 6106, or email contact@theorangecode.com. We offer both in-person sessions in Abu Dhabi and virtual consultations for international clients.',
+      answer: 'You can book directly through our website or contact us at:\n\ncontact@theorangecode.com or masterclasses@theorangecode.com\n\nWe offer in person sessions in Abu Dhabi and online sessions for international clients. Our team can assist you in choosing the right program based on your goals and lifestyle.',
       category: 'booking',
       icon: <Phone className="w-5 h-5" />
     },
     {
       id: '7',
       question: 'What are your payment terms and refund policy?',
-      answer: 'We require a 50% deposit upon booking confirmation, with the remaining balance due 7 days before masterclass commencement. All prices include 5% VAT. Our refund policy allows 100% refund (minus 5% processing fee) for cancellations 14+ days before start, with decreasing percentages for closer cancellations.',
+      answer: 'Payment is required in full before the Masterclass begins. This confirms your place and allows us to prepare your personalised materials and assessments.\n\nRefunds are considered when learning goals are not met and the client can provide clear and reasonable grounds for dissatisfaction.\n\nWhenever possible we resolve concerns through communication, additional support, or session adjustments. Because our Masterclasses include structured preparation, refunds are limited to cases where no resolution is possible.\n\nOur approach is built on fairness, transparency, and mutual respect.',
       category: 'payment',
       icon: <Award className="w-5 h-5" />
     },
     {
       id: '8',
-      question: 'Do you provide materials and resources after the masterclass?',
-      answer: 'Yes, all participants receive comprehensive materials including cultural guides, protocol checklists, Arabic phrase books, and ongoing access to our digital resource library. We also provide 3 months of follow-up support to ensure successful implementation.',
+      question: 'Do you provide materials and resources after the program?',
+      answer: 'Yes. Clients receive an Orange Code Cultural Intelligence Guide and a workbook.\n\nWe also offer follow up support to help you apply the new skills correctly in daily life.',
       category: 'masterclasses',
       icon: <HelpCircle className="w-5 h-5" />
     },
     {
       id: '9',
       question: 'Can you help with specific cultural situations or challenges?',
-      answer: 'Absolutely! Our cultural guidance covers specific scenarios like business meetings, social gatherings, religious observances, and family interactions. We provide practical solutions for real-world situations you\'ll encounter in the UAE and broader Middle East.',
+      answer: 'Yes. We offer private consultations for sensitive or personal situations.\n\nWe support clients with real world challenges such as business meetings, majlis invitations, social events, workplace dynamics, national celebrations, and family related cultural situations in the UAE, Saudi Arabia, Qatar, Oman, and Bahrain.\n\nGuidance is clear, practical, and tailored to help you respond with confidence and cultural sensitivity.',
       category: 'cultural',
       icon: <Globe className="w-5 h-5" />
     },
     {
       id: '10',
       question: 'What languages do you conduct sessions in?',
-      answer: 'Our primary language is English, but we also offer sessions in Arabic for native speakers. All our trainers are bilingual and understand the nuances of both languages in cultural contexts. We can accommodate specific language preferences based on your needs.',
+      answer: 'Our Core Masterclasses are delivered in English. Dutch support is available for Dutch speakers.\n\nIf a client prefers another language, we can arrange a certified translator or interpreter upon request.',
       category: 'general',
       icon: <MessageCircle className="w-5 h-5" />
     },
     {
       id: '11',
       question: 'Do you offer group training for companies?',
-      answer: 'Yes, we provide corporate training masterclasses tailored for teams and organizations. These include group sessions, team-building exercises, and customized content for specific industries. We can accommodate groups of various sizes and provide on-site training at your location.',
+      answer: 'Yes. We offer Masterclasses to companies, government entities, leadership teams, and multicultural groups.\n\nPrograms include interactive sessions, practical applications, and tailored modules for specific industries.\n\nSessions can be delivered on site or online. For corporate enquiries please contact contact@theorangecode.com.',
       category: 'business',
       icon: <Users className="w-5 h-5" />
     },
     {
       id: '12',
       question: 'What is your success rate and client satisfaction?',
-      answer: 'We maintain a 98% client satisfaction rate with over 500 successful transformations. Our clients include embassy staff, international executives, and expat families who have successfully integrated into UAE society and advanced their careers through our masterclasses.',
+      answer: 'We maintain a strong satisfaction rate across all Masterclasses. Our clients include embassy staff, executives, entrepreneurs, and expat families from around the world.\n\nMany describe the experience as transformative because it increases clarity, confidence, and cultural alignment both professionally and personally.\n\nOur mission is to deliver measurable growth and long term cultural intelligence.',
       category: 'general',
       icon: <Award className="w-5 h-5" />
     }

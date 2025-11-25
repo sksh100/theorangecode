@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Line, Sphere } from '@react-three/drei'
 import * as THREE from 'three'
@@ -63,7 +63,7 @@ function AnimatedSphere({ position, color, index }: { position: [number, number,
   })
 
   return (
-    <Sphere ref={meshRef} args={[0.1, 20, 20]} position={position}>
+    <Sphere ref={meshRef} args={[0.03, 10, 10]} position={position}>
       <meshStandardMaterial
         color={color}
         emissive={color}
@@ -71,7 +71,7 @@ function AnimatedSphere({ position, color, index }: { position: [number, number,
         metalness={0.7}
         roughness={0.3}
         transparent
-        opacity={0.8}
+        opacity={0.7}
       />
     </Sphere>
   )
@@ -91,8 +91,8 @@ function ConnectionLine({ from, to, color }: { from: Node; to: Node; color: stri
     <Line
       points={points}
       color={color}
-      lineWidth={1.5}
-      opacity={0.25}
+      lineWidth={2.5}
+      opacity={0.5}
       transparent
     />
   )
@@ -102,8 +102,8 @@ function ConnectionLine({ from, to, color }: { from: Node; to: Node; color: stri
 function CulturalNetwork() {
   const groupRef = useRef<THREE.Group>(null)
   
-  const nodes = useMemo(() => generateNetworkNodes(20, 1.8), []) // Reduced from 25 to 20, radius from 2.5 to 1.8
-  const connections = useMemo(() => generateConnections(nodes, 2.2), [nodes]) // Reduced from 2.8 to 2.2
+  const nodes = useMemo(() => generateNetworkNodes(6, 0.3), [])
+  const connections = useMemo(() => generateConnections(nodes, 0.6), [nodes])
 
   useFrame((state) => {
     if (groupRef.current) {
@@ -151,26 +151,38 @@ function CulturalNetwork() {
 }
 
 export function CulturalIntelligenceNetwork() {
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   return (
     <div className="absolute inset-0 w-full h-full -z-10 pointer-events-none">
-      <Canvas
-        camera={{ position: [0, 0, 5], fov: 45 }}
-        gl={{ 
-          alpha: true, 
-          antialias: true,
-          powerPreference: 'high-performance',
-          stencil: false,
-          depth: true
-        }}
-        style={{ background: 'transparent' }}
-        dpr={[1, 1.5]}
-      >
-        <ambientLight intensity={0.3} />
-        <pointLight position={[8, 8, 8]} intensity={0.6} />
-        <pointLight position={[-8, -8, -8]} intensity={0.3} color="#00d4ff" />
-        <pointLight position={[8, -8, 8]} intensity={0.3} color="#ff914d" />
-        <CulturalNetwork />
-      </Canvas>
+      <div className="absolute inset-0 w-full h-full">
+        {isMounted ? (
+          <Canvas
+            camera={{ position: [0, 0, 2.5], fov: 30 }}
+            gl={{ 
+              alpha: true, 
+              antialias: true,
+              powerPreference: 'high-performance',
+              stencil: false,
+              depth: true
+            }}
+            style={{ background: 'transparent' }}
+            dpr={[1, 1]}
+          >
+            <ambientLight intensity={0.3} />
+            <pointLight position={[4, 4, 4]} intensity={0.5} />
+            <pointLight position={[-4, -4, -4]} intensity={0.3} color="#00d4ff" />
+            <pointLight position={[4, -4, 4]} intensity={0.3} color="#ff914d" />
+            <CulturalNetwork />
+          </Canvas>
+        ) : (
+          <div className="absolute inset-0 w-full h-full" />
+        )}
+      </div>
     </div>
   )
 }
