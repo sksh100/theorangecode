@@ -17,7 +17,7 @@ export function USPBar() {
     {
       id: 'knowledge',
       title: 'Authentic Regional Insight',
-      subtitle: 'Receive clear guidance on Emirati culture, Gulf etiquette, and the subtle expectations that shape daily interactions. Our approach makes the region's social codes easy to understand and apply.',
+      subtitle: 'Receive clear guidance on Emirati culture, Gulf etiquette, and the subtle expectations that shape daily interactions. Our approach makes the region\'s social codes easy to understand and apply.',
       icon: Crown,
       gradient: 'from-orange via-azure-blue to-orange',
       delay: 0
