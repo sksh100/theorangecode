@@ -202,7 +202,7 @@ export default function WhatIsCQPage() {
                       <Globe className="w-10 h-10 text-azure-blue" />
                       <h2 className="text-3xl font-bold">
                         <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                          In the UAE and GCC
+                          In the United Arab Emirates
                         </span>
                       </h2>
                     </div>
@@ -247,9 +247,9 @@ export default function WhatIsCQPage() {
                       <div className="mt-6 pt-6 border-t border-white/10">
                         <div className="relative pl-6">
                           <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-orange via-azure-blue to-orange opacity-60" />
-                          <p className="text-white/90 text-base md:text-lg italic leading-relaxed font-medium">
+                          <p className="text-base md:text-lg italic leading-relaxed font-medium">
                             <span className="text-orange/80 text-2xl leading-none mr-1">"</span>
-                            A society built on deep roots, shared values, and an exceptional mix of global perspectives.
+                            <span className="text-orange">A society built on deep roots, shared values, and an exceptional mix of global perspectives.</span>
                             <span className="text-orange/80 text-2xl leading-none ml-1">"</span>
                           </p>
                         </div>
@@ -271,9 +271,9 @@ export default function WhatIsCQPage() {
                     viewport={{ once: true }}
                     className="inline-block"
                   >
-                    <Eye className="w-16 h-16 text-azure-blue mx-auto mb-6" />
+                    <Eye className="w-16 h-16 text-azure-blue mx-auto mb-3" />
                   </motion.div>
-                  <h2 className="text-3xl md:text-4xl font-bold">
+                  <h2 className="text-3xl md:text-4xl font-bold mb-8">
                     <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
                       The Strategic Advantage
                     </span>
@@ -305,7 +305,7 @@ export default function WhatIsCQPage() {
                   whileTap={{ scale: 0.95 }}
                   className="inline-flex items-center gap-3 px-8 py-4 rounded-xl cta-button-glow text-white font-bold text-lg"
                 >
-                  <span>Explore Our Masterclasses</span>
+                  <span>Elevate Your Cultural Intelligence</span>
                   <ArrowRight className="w-5 h-5" />
                 </motion.a>
               </motion.div>
