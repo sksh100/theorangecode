@@ -245,9 +245,14 @@ export default function WhatIsCQPage() {
                         </div>
                       </div>
                       <div className="mt-6 pt-6 border-t border-white/10">
-                        <p className="text-white/60 text-sm italic">
-                          "One of the most international populations in the world"
-                        </p>
+                        <div className="relative pl-6">
+                          <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-orange via-azure-blue to-orange opacity-60" />
+                          <p className="text-white/90 text-base md:text-lg italic leading-relaxed font-medium">
+                            <span className="text-orange/80 text-2xl leading-none mr-1">"</span>
+                            A society built on deep roots, shared values, and an exceptional mix of global perspectives.
+                            <span className="text-orange/80 text-2xl leading-none ml-1">"</span>
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </motion.div>
