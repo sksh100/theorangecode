@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 import { CulturalIntelligenceNetwork } from '@/components/CulturalIntelligenceNetwork'
-import { ExpandingValuesSphere } from '@/components/ExpandingValuesSphere'
+import { ValuesShowcase } from '@/components/ValuesShowcase'
 import { Sparkles, Target, Heart, Eye, Users, Globe, ArrowRight, CheckCircle, Zap } from 'lucide-react'
 
 export default function AboutPage() {
@@ -69,7 +69,7 @@ export default function AboutPage() {
         {/* Main Content Section */}
         <section className="relative py-16 md:py-24 overflow-hidden">
           {/* WebGL Network Background */}
-          <div className="absolute inset-0 w-full h-full opacity-40">
+          <div className="absolute inset-0 w-full h-full opacity-30">
             <CulturalIntelligenceNetwork />
           </div>
           <div className="container mx-auto px-6 relative z-10">
@@ -231,7 +231,7 @@ export default function AboutPage() {
                   <p className="text-white/60 text-lg">The Culture Code — Our Six Core Values</p>
                 </div>
 
-                <ExpandingValuesSphere />
+                <ValuesShowcase />
               </motion.div>
 
               {/* Slogan Section */}

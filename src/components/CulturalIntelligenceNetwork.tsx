@@ -15,7 +15,7 @@ interface Connection {
   to: Node
 }
 
-// Generate nodes in a network pattern
+// Generate nodes in a network pattern - smaller radius
 function generateNetworkNodes(count: number, radius: number): Node[] {
   const nodes: Node[] = []
   for (let i = 0; i < count; i++) {
@@ -47,7 +47,7 @@ function generateConnections(nodes: Node[], maxDistance: number): Connection[] {
   return connections
 }
 
-// Animated sphere component
+// Animated sphere component - smaller spheres
 function AnimatedSphere({ position, color, index }: { position: [number, number, number]; color: string; index: number }) {
   const meshRef = useRef<THREE.Mesh>(null)
   const basePosition = useRef(new THREE.Vector3(...position))
@@ -57,21 +57,21 @@ function AnimatedSphere({ position, color, index }: { position: [number, number,
       meshRef.current.rotation.x = state.clock.elapsedTime * 0.2
       meshRef.current.rotation.y = state.clock.elapsedTime * 0.3
       // Subtle floating animation
-      const floatOffset = Math.sin(state.clock.elapsedTime * 0.5 + index) * 0.1
+      const floatOffset = Math.sin(state.clock.elapsedTime * 0.5 + index) * 0.08
       meshRef.current.position.y = basePosition.current.y + floatOffset
     }
   })
 
   return (
-    <Sphere ref={meshRef} args={[0.15, 24, 24]} position={position}>
+    <Sphere ref={meshRef} args={[0.1, 20, 20]} position={position}> {/* Reduced from 0.15 to 0.1 */}
       <meshStandardMaterial
         color={color}
         emissive={color}
-        emissiveIntensity={0.4}
+        emissiveIntensity={0.3}
         metalness={0.7}
         roughness={0.3}
         transparent
-        opacity={0.9}
+        opacity={0.8}
       />
     </Sphere>
   )
@@ -102,8 +102,8 @@ function ConnectionLine({ from, to, color }: { from: Node; to: Node; color: stri
 function CulturalNetwork() {
   const groupRef = useRef<THREE.Group>(null)
   
-  const nodes = useMemo(() => generateNetworkNodes(25, 2.5), [])
-  const connections = useMemo(() => generateConnections(nodes, 2.8), [nodes])
+  const nodes = useMemo(() => generateNetworkNodes(20, 1.8), []) // Reduced from 25 to 20, radius from 2.5 to 1.8
+  const connections = useMemo(() => generateConnections(nodes, 2.2), [nodes]) // Reduced from 2.8 to 2.2
 
   useFrame((state) => {
     if (groupRef.current) {
@@ -154,7 +154,7 @@ export function CulturalIntelligenceNetwork() {
   return (
     <div className="absolute inset-0 w-full h-full -z-10 pointer-events-none">
       <Canvas
-        camera={{ position: [0, 0, 6], fov: 50 }}
+        camera={{ position: [0, 0, 5], fov: 45 }} {/* Closer camera, smaller FOV */}
         gl={{ 
           alpha: true, 
           antialias: true,
@@ -163,12 +163,12 @@ export function CulturalIntelligenceNetwork() {
           depth: true
         }}
         style={{ background: 'transparent' }}
-        dpr={[1, 2]} // Limit pixel ratio for performance
+        dpr={[1, 1.5]} // Reduced pixel ratio
       >
-        <ambientLight intensity={0.4} />
-        <pointLight position={[10, 10, 10]} intensity={0.8} />
-        <pointLight position={[-10, -10, -10]} intensity={0.4} color="#00d4ff" />
-        <pointLight position={[10, -10, 10]} intensity={0.4} color="#ff914d" />
+        <ambientLight intensity={0.3} />
+        <pointLight position={[8, 8, 8]} intensity={0.6} />
+        <pointLight position={[-8, -8, -8]} intensity={0.3} color="#00d4ff" />
+        <pointLight position={[8, -8, 8]} intensity={0.3} color="#ff914d" />
         <CulturalNetwork />
       </Canvas>
     </div>
