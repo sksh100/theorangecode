@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
+import { CulturalIntelligenceNetwork } from '@/components/CulturalIntelligenceNetwork'
 import { Sparkles, Target, Heart, Eye, Users, Globe, ArrowRight, CheckCircle, Zap } from 'lucide-react'
 
 export default function AboutPage() {
@@ -38,6 +39,10 @@ export default function AboutPage() {
         {/* Hero Section */}
         <section className="relative overflow-hidden pt-32 pb-20">
           <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5" />
+          {/* WebGL Network Background */}
+          <div className="absolute inset-0 w-full h-full opacity-50">
+            <CulturalIntelligenceNetwork />
+          </div>
           <div className="container mx-auto px-6 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -55,7 +60,7 @@ export default function AboutPage() {
                   About Us
                 </span>
               </motion.div>
-              <h1 className="text-5xl md:text-7xl font-bold mb-6">
+              <h1 className="text-5xl md:text-7xl font-bold mb-6 relative z-20">
                 <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
                   The Orange Code
                 </span>
@@ -77,7 +82,24 @@ export default function AboutPage() {
               {/* Introduction Paragraphs */}
               <motion.div variants={itemVariants} className="space-y-6 text-lg leading-relaxed text-white/90">
                 <p>
-                  The UAE and the wider GCC are places of extraordinary opportunity. Yet many expatriates arrive with the same question. <span className="text-orange font-semibold">How do I truly understand this region.</span> How do I build meaningful relationships. How do I communicate with confidence in a world shaped by traditions, values, and unspoken rules that are different from my own.
+                  The UAE and the wider GCC are regions of remarkable possibility. With millions of tourists, professionals and entrepreneurs arriving each year, the Gulf continues to establish itself as a global centre of innovation, luxury and ambition. Yet beneath the impressive skyline and world-class progress lies something far more intricate: a social fabric shaped by heritage, values, etiquette and silent cultural signals that cannot be learned through observation alone.
+                </p>
+                <p>
+                  Whether someone has just arrived or has lived here for many years, many still find themselves asking the same questions:
+                </p>
+                <div className="space-y-3 pl-6 border-l-2 border-orange/30">
+                  <p className="text-white/90">
+                    How do I truly understand the cultural rhythms of this region?
+                  </p>
+                  <p className="text-white/90">
+                    How do I communicate with confidence across diverse nationalities?
+                  </p>
+                  <p className="text-white/90">
+                    How do I build meaningful relationships in a society where traditions and expectations differ from my own?
+                  </p>
+                </div>
+                <p>
+                  The truth is simple: thriving in the UAE and wider Gulf is not about simply blending in. It is about developing the cultural intelligence to adapt, interpret and respond to the region's unique dynamics, from local Emirati customs to the multicultural interactions that shape everyday life.
                 </p>
                 <p className="text-xl font-semibold text-orange">
                   The Orange Code was created to answer these questions.
@@ -89,14 +111,14 @@ export default function AboutPage() {
                 <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-orange via-azure-blue to-orange opacity-30" />
                 <div className="pl-8 space-y-6 text-white/80 leading-relaxed">
                   <p>
-                    For years, our founders observed the same pattern. Highly skilled professionals struggled to connect with local partners. Companies misinterpreted social cues during important negotiations. Friendships and business opportunities faded simply because people spoke without understanding the cultural world behind the words.
+                    For years, our team witnessed the same pattern repeat itself. Brilliant professionals hesitated in conversations with local partners. Global companies misread subtle cues during key negotiations. Promising collaborations and friendships dissolved — not because of lack of expertise or intention, but because people communicated without understanding the cultural framework behind the words, gestures and expectations.
                   </p>
                   <motion.div
                     whileHover={{ scale: 1.02, x: 10 }}
                     className="bg-gradient-to-r from-orange/10 to-azure-blue/10 border-l-4 border-orange p-6 rounded-r-xl"
                   >
                     <p className="text-white font-semibold">
-                      At the same time, many newcomers overlooked a truth that defines life in the UAE. It is not only about interacting with Emiratis. The social fabric of this region is woven from more than two hundred nationalities. Every day you encounter layers of cultural expectations that are constantly in play. When we forget this, misunderstandings rise and collaboration becomes harder than it needs to be.
+                      At the same time, many newcomers overlooked a truth that defines life in the UAE. It is not only about interacting with Emiratis. The social fabric of this region is woven from more than two hundred nationalities. Each day, invisible cultural codes shape how conversations unfold, how trust is built and how people interpret one another. When we forget this, misunderstandings rise and collaboration becomes harder than it needs to be.
                     </p>
                   </motion.div>
                   <p className="text-xl font-bold text-orange">
@@ -105,62 +127,14 @@ export default function AboutPage() {
                 </div>
               </motion.div>
 
-              {/* Credentials Section */}
-              <motion.div
-                variants={itemVariants}
-                className="grid grid-cols-1 md:grid-cols-2 gap-6"
-              >
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  className="p-6 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm"
-                >
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange/20 to-azure-blue/20 flex items-center justify-center">
-                      <Globe className="w-6 h-6 text-orange" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-white">ESSEC France Professionals</h3>
-                      <p className="text-sm text-white/60">Training Partner</p>
-                    </div>
-                  </div>
-                </motion.div>
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  className="p-6 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm"
-                >
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-azure-blue/20 to-orange/20 flex items-center justify-center">
-                      <Users className="w-6 h-6 text-azure-blue" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-white">The School of Washington for Protocols</h3>
-                      <p className="text-sm text-white/60">Training Partner</p>
-                    </div>
-                  </div>
-                </motion.div>
-              </motion.div>
-
               {/* What We Do Section */}
               <motion.div variants={itemVariants} className="space-y-6">
                 <p className="text-white/80 leading-relaxed">
-                  Our team has been trained by ESSEC France Professionals and The School of Washington for Protocols. We work with individuals, global companies, and several European embassies to prepare their staff for life and business in the UAE and the wider Gulf region. With years of experience on the ground, we understand how culture influences communication, decision making, leadership, and trust in this part of the world. Our approach is practical, research based, and deeply connected to the realities of daily life here.
+                  The Orange Code is founded on internationally recognised training in protocol, management and intercultural communication, shaped through leading institutions in Europe and the United States. We support professionals, organisations, diplomats and expatriates who want to navigate the cultural landscape of the UAE and the wider Gulf with clarity and confidence.
                 </p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-                  {['Individuals', 'Global Companies', 'European Embassies', 'Teams'].map((item, index) => (
-                    <motion.div
-                      key={item}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      whileHover={{ scale: 1.05 }}
-                      className="text-center p-4 rounded-lg bg-white/5 border border-white/10"
-                    >
-                      <CheckCircle className="w-6 h-6 text-orange mx-auto mb-2" />
-                      <p className="text-sm font-semibold text-white">{item}</p>
-                    </motion.div>
-                  ))}
-                </div>
+                <p className="text-white/80 leading-relaxed">
+                  Thriving in this region requires more than expertise. It calls for the ability to read subtle cultural signals that influence communication, shape relationships and guide decisions. The Orange Code turns these insights into practical, applicable guidance that improves communication and strengthens connection across both professional and social environments.
+                </p>
               </motion.div>
 
               {/* Closing Statement */}
@@ -171,10 +145,10 @@ export default function AboutPage() {
                 <div className="absolute inset-0 bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10" />
                 <div className="relative z-10 space-y-4">
                   <p className="text-white/90 leading-relaxed text-lg">
-                    Whether you are relocating, expanding your business, strengthening your team, or preparing for diplomatic activities, The Orange Code guides you with clarity, precision, and cultural insight. Our goal is simple. To help you feel confident, connected, and at home in one of the most diverse regions on earth.
+                    Whether you are relocating, expanding into the region, developing your team or preparing for diplomatic engagement, The Orange Code provides the clarity, precision and cultural insight required to navigate with assurance. Our purpose is direct. To help you communicate thoughtfully, cultivate fruitful connections and feel genuinely anchored in a region where connection and trust drives progress.
                   </p>
                   <p className="text-2xl font-bold text-orange">
-                    Because success in the Gulf is not only about what you know. It is about how you connect.
+                    Because success in the Gulf is not only about expertise. It is about the way you connect.
                   </p>
                 </div>
               </motion.div>
@@ -214,9 +188,9 @@ export default function AboutPage() {
                       <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange/30 to-orange/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg shadow-orange/20">
                         <Target className="w-8 h-8 text-orange" />
                       </div>
-                      <h3 className="text-2xl font-bold text-white mb-5">Our Mission</h3>
+                      <h3 className="text-2xl font-bold text-white mb-5">MISSION</h3>
                       <p className="text-white/90 leading-relaxed text-lg">
-                        To empower individuals, teams, and organizations with the cultural intelligence they need to communicate effectively, build trust, and thrive in multicultural environments across the UAE and GCC.
+                        Our mission is to equip individuals, teams and organisations with the cultural intelligence needed to communicate with clarity, build lasting connections and operate confidently across the UAE and the wider Gulf. Through practical guidance and research driven insight, we enable people to navigate cultural dynamics with respect, purpose and professionalism.
                       </p>
                     </div>
                   </motion.div>
@@ -236,9 +210,9 @@ export default function AboutPage() {
                       <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-azure-blue/30 to-azure-blue/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg shadow-azure-blue/20">
                         <Eye className="w-8 h-8 text-azure-blue" />
                       </div>
-                      <h3 className="text-2xl font-bold text-white mb-5">Our Vision</h3>
+                      <h3 className="text-2xl font-bold text-white mb-5">VISION</h3>
                       <p className="text-white/90 leading-relaxed text-lg">
-                        A world where people understand one another beyond stereotypes. A region where collaboration rises naturally because people know how to navigate cultural differences with respect, clarity, and emotional intelligence.
+                        A Gulf region where cultural understanding guides how people interact, and where newcomers learn to engage with respect and genuine appreciation for local traditions. Our vision is to strengthen the social fabric by bridging people, cultures and intelligence — creating an environment where communication is clearer, relationships are stronger and every individual feels welcomed, respected and aligned with the values of the UAE and wider GCC.
                       </p>
                     </div>
                   </motion.div>
@@ -250,17 +224,17 @@ export default function AboutPage() {
                 <div className="text-center">
                   <h2 className="text-3xl md:text-4xl font-bold mb-4">
                     <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                      Our Values
+                      VALUES
                     </span>
                   </h2>
-                  <p className="text-white/60 text-lg">The principles that guide everything we do</p>
+                  <p className="text-white/60 text-lg">The Culture Code — Our Six Core Values</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                   {[
                     { 
-                      title: 'Respect', 
-                      description: 'Every culture has its own logic. We honor it.',
+                      title: 'Respect for Cultural Foundations', 
+                      description: 'We honour the traditions, values and social structures that define life in the UAE and the wider Gulf. Respect is the basis of trust, and trust is the starting point for every meaningful connection.',
                       icon: Heart,
                       colorClass: 'orange',
                       bgGradient: 'from-orange/20 to-orange/10',
@@ -269,29 +243,9 @@ export default function AboutPage() {
                       glowColor: 'bg-orange/10'
                     },
                     { 
-                      title: 'Curiosity', 
-                      description: 'We seek to understand before we judge.',
-                      icon: Sparkles,
-                      colorClass: 'azure-blue',
-                      bgGradient: 'from-azure-blue/20 to-azure-blue/10',
-                      iconBg: 'from-azure-blue/20 to-azure-blue/10',
-                      iconColor: 'text-azure-blue',
-                      glowColor: 'bg-azure-blue/10'
-                    },
-                    { 
-                      title: 'Professionalism', 
-                      description: 'Evidence based, structured, and globally recognized training.',
+                      title: 'Clarity in Communication', 
+                      description: 'We believe communication should be intentional, culturally attuned and mindful of context. Clear expression reduces misunderstandings and strengthens both professional and personal relationships.',
                       icon: Target,
-                      colorClass: 'orange',
-                      bgGradient: 'from-orange/20 to-orange/10',
-                      iconBg: 'from-orange/20 to-orange/10',
-                      iconColor: 'text-orange',
-                      glowColor: 'bg-orange/10'
-                    },
-                    { 
-                      title: 'Connection', 
-                      description: 'Real relationships are built on cultural understanding.',
-                      icon: Users,
                       colorClass: 'azure-blue',
                       bgGradient: 'from-azure-blue/20 to-azure-blue/10',
                       iconBg: 'from-azure-blue/20 to-azure-blue/10',
@@ -299,9 +253,9 @@ export default function AboutPage() {
                       glowColor: 'bg-azure-blue/10'
                     },
                     { 
-                      title: 'Authenticity', 
-                      description: 'We teach the truth about how the region works, not the superficial version.',
-                      icon: Heart,
+                      title: 'Connection Through Empathy', 
+                      description: 'We recognise that behind every interaction is a person shaped by their own experiences, norms and emotions. Empathy allows us to bridge distances, build rapport and foster genuine collaboration.',
+                      icon: Users,
                       colorClass: 'orange',
                       bgGradient: 'from-orange/20 to-orange/10',
                       iconBg: 'from-orange/20 to-orange/10',
@@ -309,8 +263,28 @@ export default function AboutPage() {
                       glowColor: 'bg-orange/10'
                     },
                     { 
-                      title: 'Empathy', 
-                      description: 'We put ourselves in others\' shoes to truly understand their perspective and experiences.',
+                      title: 'Integrity in Action', 
+                      description: 'We act with professionalism and sincerity, ensuring our behaviour reflects the values of the region and the standards of those we serve. Integrity drives credibility, and credibility builds long-term trust.',
+                      icon: CheckCircle,
+                      colorClass: 'azure-blue',
+                      bgGradient: 'from-azure-blue/20 to-azure-blue/10',
+                      iconBg: 'from-azure-blue/20 to-azure-blue/10',
+                      iconColor: 'text-azure-blue',
+                      glowColor: 'bg-azure-blue/10'
+                    },
+                    { 
+                      title: 'Adaptability Across Cultures', 
+                      description: 'We embrace the reality of a multicultural environment. Flexibility allows us to adjust, learn and thrive alongside diverse cultural norms, expectations and ways of thinking.',
+                      icon: Globe,
+                      colorClass: 'orange',
+                      bgGradient: 'from-orange/20 to-orange/10',
+                      iconBg: 'from-orange/20 to-orange/10',
+                      iconColor: 'text-orange',
+                      glowColor: 'bg-orange/10'
+                    },
+                    { 
+                      title: 'Openness to New Perspectives', 
+                      description: 'We remain open to perspectives beyond our own. By approaching each culture with curiosity rather than judgment, we build the bridge that leads to deeper understanding and more meaningful connection.',
                       icon: Eye,
                       colorClass: 'azure-blue',
                       bgGradient: 'from-azure-blue/20 to-azure-blue/10',
@@ -350,10 +324,17 @@ export default function AboutPage() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  className="text-2xl md:text-3xl font-bold"
+                  className="text-xl md:text-2xl leading-relaxed text-white/90 max-w-3xl mx-auto"
                 >
-                  <span className="text-white/60">Everything we do reflects our slogan.</span>
-                  <br />
+                  At every level of our work, we remain committed to one principle:
+                </motion.p>
+                <motion.p
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                  className="text-2xl md:text-3xl font-bold mt-4"
+                >
                   <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
                     Bridging people, cultures and intelligence.
                   </span>
