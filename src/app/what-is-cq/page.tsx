@@ -286,9 +286,9 @@ export default function WhatIsCQPage() {
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent pt-4"
+                      className="text-2xl md:text-3xl font-bold text-white pt-4"
                     >
-                      It is not an optional skill. It is a strategic advantage for anyone working, leading, or living in a multicultural environment.
+                      It is a <span className="text-orange">strategic advantage</span> for anyone navigating the cultural depth, ambition, and diversity of the UAE.
                     </motion.p>
                   </div>
                 </div>
