@@ -87,7 +87,7 @@ export default function WhatIsCQPage() {
               </motion.div>
               <h1 className="text-5xl md:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
-                  What is Cultural Intelligence
+                  What is <span className="whitespace-nowrap">Cultural Intelligence</span>
                 </span>
               </h1>
             </motion.div>
