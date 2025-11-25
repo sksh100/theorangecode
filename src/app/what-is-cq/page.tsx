@@ -119,30 +119,36 @@ export default function WhatIsCQPage() {
 
               {/* Three Pillars Section */}
               <motion.div variants={itemVariants}>
-                <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center text-white">
-                  The Three Pillars of CQ
+                <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">
+                  <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                    The Three Pillars of CQ
+                  </span>
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {pillars.map((pillar, index) => (
-                    <motion.div
-                      key={pillar.title}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.15 }}
-                      whileHover={{ y: -10, scale: 1.02 }}
-                      className="relative p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm group"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
-                      <div className="relative z-10">
-                        <div className="w-16 h-16 rounded-xl bg-white/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                          <pillar.icon className="w-8 h-8 text-white/80" />
+                  {pillars.map((pillar, index) => {
+                    const iconColor = index === 0 ? 'text-orange' : index === 1 ? 'text-azure-blue' : 'text-azure-blue'
+                    const hoverBg = index === 0 ? 'group-hover:bg-orange/20' : index === 1 ? 'group-hover:bg-azure-blue/20' : 'group-hover:bg-azure-blue/20'
+                    return (
+                      <motion.div
+                        key={pillar.title}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.15 }}
+                        whileHover={{ y: -10, scale: 1.02 }}
+                        className="relative p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm group"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+                        <div className="relative z-10">
+                          <div className={`w-16 h-16 rounded-xl bg-white/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform ${hoverBg}`}>
+                            <pillar.icon className={`w-8 h-8 ${iconColor}`} />
+                          </div>
+                          <h3 className="text-xl font-bold text-white mb-3">{pillar.title}</h3>
+                          <p className="text-white/70 leading-relaxed">{pillar.description}</p>
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-3">{pillar.title}</h3>
-                        <p className="text-white/70 leading-relaxed">{pillar.description}</p>
-                      </div>
-                    </motion.div>
-                  ))}
+                      </motion.div>
+                    )
+                  })}
                 </div>
               </motion.div>
 
@@ -152,8 +158,12 @@ export default function WhatIsCQPage() {
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-white/20 via-white/40 to-white/20" />
                   <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-6">
-                      <Sparkles className="w-8 h-8 text-white/80" />
-                      <h2 className="text-2xl md:text-3xl font-bold text-white">In Practice</h2>
+                      <Sparkles className="w-8 h-8 text-orange" />
+                      <h2 className="text-2xl md:text-3xl font-bold">
+                        <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                          In Practice
+                        </span>
+                      </h2>
                     </div>
                     <p className="text-lg leading-relaxed text-white/90 mb-6">
                       In practice, cultural intelligence helps you recognise why people communicate the way they do, how they make decisions, what they find respectful, and which behaviours build trust. It enables you to adjust your approach with sensitivity while remaining authentic and professional.
@@ -170,7 +180,7 @@ export default function WhatIsCQPage() {
                           transition={{ delay: index * 0.1 }}
                           className="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/10"
                         >
-                          <CheckCircle className="w-5 h-5 text-white/70 flex-shrink-0 mt-0.5" />
+                          <CheckCircle className={`w-5 h-5 flex-shrink-0 mt-0.5 ${index % 2 === 0 ? 'text-orange' : 'text-azure-blue'}`} />
                           <p className="text-white/80">{benefit}</p>
                         </motion.div>
                       ))}
@@ -189,8 +199,12 @@ export default function WhatIsCQPage() {
                     className="space-y-6"
                   >
                     <div className="flex items-center gap-3 mb-4">
-                      <Globe className="w-10 h-10 text-white/80" />
-                      <h2 className="text-3xl font-bold text-white">In the UAE and GCC</h2>
+                      <Globe className="w-10 h-10 text-azure-blue" />
+                      <h2 className="text-3xl font-bold">
+                        <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                          In the UAE and GCC
+                        </span>
+                      </h2>
                     </div>
                     <p className="text-lg leading-relaxed text-white/80">
                       In the UAE and GCC, cultural intelligence is <span className="text-orange font-bold">indispensable</span>. The region is shaped by Emirati traditions, Islamic values, and one of the most international populations in the world.
@@ -252,10 +266,12 @@ export default function WhatIsCQPage() {
                     viewport={{ once: true }}
                     className="inline-block"
                   >
-                    <Eye className="w-16 h-16 text-white/80 mx-auto mb-6" />
+                    <Eye className="w-16 h-16 text-azure-blue mx-auto mb-6" />
                   </motion.div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-white">
-                    The Strategic Advantage
+                  <h2 className="text-3xl md:text-4xl font-bold">
+                    <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                      The Strategic Advantage
+                    </span>
                   </h2>
                   <div className="max-w-3xl mx-auto space-y-4 text-lg leading-relaxed text-white/90">
                     <p>
