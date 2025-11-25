@@ -214,7 +214,7 @@ export default function WhatIsCQPage() {
                       className="p-6 rounded-xl bg-white/5 border-l-4 border-white/30 backdrop-blur-sm"
                     >
                       <p className="text-white/90 font-semibold">
-                        Without the ability to navigate these layers, misunderstandings become common, teams face unnecessary tension, and communication loses its impact.
+                        Without cultural understanding, confusion rises, relationships weaken, workplaces lose harmony, communication falls short. Cultural Intelligence helps individuals, families, and professionals navigate daily life with confidence, clarity, and natural ease.
                       </p>
                     </motion.div>
                   </motion.div>
