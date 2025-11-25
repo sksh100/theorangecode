@@ -83,8 +83,7 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h3 className="text-2xl font-bold text-white mb-2">About</h3>
-                    <p className="text-white/70 text-sm">Discover more about us and cultural intelligence</p>
+                    <h3 className="text-2xl font-bold text-orange mb-2">About</h3>
                   </div>
                   <button
                     onClick={onClose}
@@ -102,6 +101,7 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
+                      className="h-full"
                     >
                       <Link
                         href={section.href}
@@ -109,10 +109,10 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
                           trackDropdownItemClick('About', section.title, section.href)
                           onClose()
                         }}
-                        className="block group"
+                        className="block group h-full"
                       >
                         <motion.div
-                          className="relative h-full p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 hover:border-orange/50 transition-all duration-300 cursor-pointer overflow-hidden"
+                          className="relative h-full min-h-[280px] p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 hover:border-orange/50 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col"
                           whileHover={{ scale: 1.02, y: -4 }}
                           transition={{ type: "spring", stiffness: 300 }}
                         >
@@ -129,12 +129,12 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
                           </h4>
 
                           {/* Description */}
-                          <p className="text-white/70 text-sm mb-4 leading-relaxed">
+                          <p className="text-white/70 text-sm mb-4 leading-relaxed flex-grow">
                             {section.description}
                           </p>
 
                           {/* Arrow */}
-                          <div className="flex items-center gap-2 text-orange group-hover:gap-3 transition-all">
+                          <div className="flex items-center gap-2 text-orange group-hover:gap-3 transition-all mt-auto">
                             <span className="text-sm font-semibold">Learn more</span>
                             <ArrowRight className="w-4 h-4" />
                           </div>
