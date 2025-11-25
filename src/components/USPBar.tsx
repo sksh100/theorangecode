@@ -16,34 +16,34 @@ export function USPBar() {
   const pillars: USPPillar[] = [
     {
       id: 'knowledge',
-      title: 'Deep Regional Insight',
-      subtitle: 'Expert guidance on Emirati, GCC, and Middle Eastern cultural expectations.',
+      title: 'Authentic Regional Insight',
+      subtitle: 'Receive clear guidance on Emirati culture, Gulf etiquette, and the subtle expectations that shape daily interactions. Our approach makes the region's social codes easy to understand and apply.',
       icon: Crown,
-      gradient: 'from-orange to-orange-luminous',
+      gradient: 'from-orange via-azure-blue to-orange',
       delay: 0
     },
     {
       id: 'certified',
-      title: 'Internationally Recognised Standards',
-      subtitle: 'Trained and certified through leading global protocol and cultural training institutions.',
+      title: 'Practical Behavioural Transformation',
+      subtitle: 'We focus on real, visible change. You learn how to communicate, carry yourself and build trust in multicultural settings where presence and clarity matter.',
       icon: Award,
-      gradient: 'from-azure-blue to-azure-luminous',
+      gradient: 'from-orange via-azure-blue to-orange',
       delay: 0.2
     },
     {
       id: 'trusted',
-      title: 'Trusted by Leaders Across the Gulf',
-      subtitle: 'Preferred by embassies, family offices, and high growth global companies entering the UAE and Saudi Arabia.',
+      title: 'Trusted Across the Gulf',
+      subtitle: 'Individuals, families, executives, diplomats and organisations rely on The Orange Code for personal, discreet, and accurate guidance. Our work is grounded in real regional experience and human centred expertise.',
       icon: Shield,
-      gradient: 'from-bright-blue to-blue-luminous',
+      gradient: 'from-orange via-azure-blue to-orange',
       delay: 0.4
     },
     {
       id: 'transformation',
-      title: 'Rapid and Measurable Growth',
-      subtitle: 'A transformation path that strengthens communication, confidence, and cultural intelligence in four weeks.',
+      title: 'Noticeable Growth in Weeks',
+      subtitle: 'Clients experience meaningful improvement in communication, confidence, and relationships within a short period. The process brings clarity, refinement and ease in both personal and professional environments.',
       icon: Zap,
-      gradient: 'from-orange to-azure-blue',
+      gradient: 'from-orange via-azure-blue to-orange',
       delay: 0.6
     }
   ]
@@ -199,7 +199,7 @@ export function USPBar() {
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <span>Experience Excellence</span>
+            <span>Explore What's Possible</span>
             <Zap className="w-5 h-5" />
           </motion.button>
         </motion.div>
