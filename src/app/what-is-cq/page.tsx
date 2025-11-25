@@ -207,7 +207,7 @@ export default function WhatIsCQPage() {
                       </h2>
                     </div>
                     <p className="text-lg leading-relaxed text-white/80">
-                      In the UAE and GCC, Cultural Intelligence is <span className="text-orange font-bold">indispensable</span>. The region is shaped by local traditions, Islamic values and one of the most international populations in the world.
+                      In the United Arab Emirates, Cultural Intelligence is essential for anyone who wants to live, work, or build meaningful relationships in the region. Life here is shaped by Emirati traditions, Islamic values, and one of the most diverse international communities in the world. Understanding how these layers interact helps people feel grounded, respected, and confident in their daily interactions.
                     </p>
                     <motion.div
                       whileHover={{ scale: 1.02, x: 10 }}
