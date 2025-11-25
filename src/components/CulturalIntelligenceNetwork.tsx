@@ -63,7 +63,7 @@ function AnimatedSphere({ position, color, index }: { position: [number, number,
   })
 
   return (
-    <Sphere ref={meshRef} args={[0.1, 20, 20]} position={position}> {/* Reduced from 0.15 to 0.1 */}
+    <Sphere ref={meshRef} args={[0.1, 20, 20]} position={position}>
       <meshStandardMaterial
         color={color}
         emissive={color}
@@ -154,7 +154,7 @@ export function CulturalIntelligenceNetwork() {
   return (
     <div className="absolute inset-0 w-full h-full -z-10 pointer-events-none">
       <Canvas
-        camera={{ position: [0, 0, 5], fov: 45 }} {/* Closer camera, smaller FOV */}
+        camera={{ position: [0, 0, 5], fov: 45 }}
         gl={{ 
           alpha: true, 
           antialias: true,
@@ -163,7 +163,7 @@ export function CulturalIntelligenceNetwork() {
           depth: true
         }}
         style={{ background: 'transparent' }}
-        dpr={[1, 1.5]} // Reduced pixel ratio
+        dpr={[1, 1.5]}
       >
         <ambientLight intensity={0.3} />
         <pointLight position={[8, 8, 8]} intensity={0.6} />
