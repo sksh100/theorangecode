@@ -53,8 +53,6 @@ export default function AboutPage() {
           className="relative overflow-hidden pt-32 pb-20 bg-primary-dark min-h-[400px] about-hero-bg"
           suppressHydrationWarning
         >
-          {/* Additional overlay for orange/azure gradient */}
-          <div className="absolute inset-0 z-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5" />
           <div className="container mx-auto px-6 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -73,7 +71,12 @@ export default function AboutPage() {
                 </span>
               </motion.div>
               <h1 className="text-5xl md:text-7xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                <span 
+                  className="bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: 'linear-gradient(to right, #ff914d 0%, #00d4ff 50%, #ff914d 100%)'
+                  }}
+                >
                   The Orange Code
                 </span>
               </h1>
