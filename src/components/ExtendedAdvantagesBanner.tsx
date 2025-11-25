@@ -174,7 +174,7 @@ export function ExtendedAdvantagesBanner() {
           
           {/* Main Title with 3D Effect */}
           <motion.h2 
-            className="text-5xl md:text-7xl font-black mb-8"
+            className="text-4xl md:text-5xl lg:text-6xl font-black mb-8"
             initial={{ opacity: 0, y: 30, rotateX: -15 }}
             whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
