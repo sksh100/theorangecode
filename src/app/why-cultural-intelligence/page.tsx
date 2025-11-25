@@ -135,8 +135,12 @@ export default function WhyCulturalIntelligencePage() {
               {/* Research Section with Image Placeholder */}
               <motion.div variants={itemVariants} className="space-y-8">
                 <div className="flex items-center gap-3 mb-6">
-                  <BarChart3 className="w-8 h-8 text-white/80" />
-                  <h2 className="text-3xl md:text-4xl font-bold text-white">The Research</h2>
+                  <BarChart3 className="w-8 h-8 text-orange" />
+                  <h2 className="text-3xl md:text-4xl font-bold">
+                    <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                      The Research
+                    </span>
+                  </h2>
                 </div>
                 <p className="text-lg leading-relaxed text-white/80">
                   Research in intercultural management shows that people interpret behaviour through the logic of their own culture. For example, communication styles vary significantly around the world.
@@ -168,8 +172,12 @@ export default function WhyCulturalIntelligencePage() {
               {/* Communication Examples Section */}
               <motion.div variants={itemVariants} className="space-y-8">
                 <div className="flex items-center gap-3 mb-6">
-                  <Globe className="w-8 h-8 text-white/80" />
-                  <h2 className="text-3xl md:text-4xl font-bold text-white">Real-World Examples</h2>
+                  <Globe className="w-8 h-8 text-azure-blue" />
+                  <h2 className="text-3xl md:text-4xl font-bold">
+                    <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                      Real-World Examples
+                    </span>
+                  </h2>
                 </div>
                 <p className="text-lg leading-relaxed text-white/80 mb-8">
                   Consider a few examples relevant to the region.
@@ -210,8 +218,12 @@ export default function WhyCulturalIntelligencePage() {
               {/* Leadership Section with Video Placeholder */}
               <motion.div variants={itemVariants} className="space-y-8">
                 <div className="flex items-center gap-3 mb-6">
-                  <TrendingUp className="w-8 h-8 text-white/80" />
-                  <h2 className="text-3xl md:text-4xl font-bold text-white">Leadership Expectations</h2>
+                  <TrendingUp className="w-8 h-8 text-orange" />
+                  <h2 className="text-3xl md:text-4xl font-bold">
+                    <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                      Leadership Expectations
+                    </span>
+                  </h2>
                 </div>
                 
                 {/* Video Placeholder */}
@@ -247,8 +259,12 @@ export default function WhyCulturalIntelligencePage() {
                 <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-white/20 via-white/30 to-white/20 opacity-60" />
                 <div className="pl-8 space-y-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <Lightbulb className="w-8 h-8 text-white/80" />
-                    <h2 className="text-3xl font-bold text-white">What Cultural Intelligence Provides</h2>
+                    <Lightbulb className="w-8 h-8 text-orange" />
+                    <h2 className="text-3xl font-bold">
+                      <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                        What Cultural Intelligence Provides
+                      </span>
+                    </h2>
                   </div>
                   <p className="text-lg leading-relaxed text-white/80">
                     Cultural intelligence provides the ability to navigate these dynamics with confidence. It helps you understand:
@@ -268,7 +284,7 @@ export default function WhyCulturalIntelligencePage() {
                         transition={{ delay: index * 0.1 }}
                         className="flex items-start gap-3 p-4 rounded-lg bg-white/5 border border-white/10"
                       >
-                        <CheckCircle className="w-5 h-5 text-white/70 flex-shrink-0 mt-0.5" />
+                        <CheckCircle className={`w-5 h-5 flex-shrink-0 mt-0.5 ${index % 2 === 0 ? 'text-orange' : 'text-azure-blue'}`} />
                         <p className="text-white/80">{item}</p>
                       </motion.div>
                     ))}
@@ -282,8 +298,12 @@ export default function WhyCulturalIntelligencePage() {
               {/* Practical Benefits with Image Placeholder */}
               <motion.div variants={itemVariants} className="space-y-8">
                 <div className="flex items-center gap-3 mb-6">
-                  <Shield className="w-8 h-8 text-white/80" />
-                  <h2 className="text-3xl md:text-4xl font-bold text-white">Practical Benefits</h2>
+                  <Shield className="w-8 h-8 text-azure-blue" />
+                  <h2 className="text-3xl md:text-4xl font-bold">
+                    <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                      Practical Benefits
+                    </span>
+                  </h2>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -301,7 +321,7 @@ export default function WhyCulturalIntelligencePage() {
                           transition={{ delay: index * 0.1 }}
                           className="flex items-start gap-3"
                         >
-                          <ArrowRight className="w-5 h-5 text-white/70 flex-shrink-0 mt-1" />
+                          <ArrowRight className={`w-5 h-5 flex-shrink-0 mt-1 ${index % 2 === 0 ? 'text-orange' : 'text-azure-blue'}`} />
                           <p className="text-white/90">{benefit}</p>
                         </motion.div>
                       ))}
@@ -328,31 +348,37 @@ export default function WhyCulturalIntelligencePage() {
 
               {/* Practical Applications */}
               <motion.div variants={itemVariants} className="space-y-8">
-                <h2 className="text-3xl md:text-4xl font-bold text-white text-center">
-                  Supporting Every Part of Your Life
+                <h2 className="text-3xl md:text-4xl font-bold text-center">
+                  <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                    Supporting Every Part of Your Life
+                  </span>
                 </h2>
                 <p className="text-lg leading-relaxed text-white/80 text-center max-w-3xl mx-auto">
                   From leading teams across nationalities to negotiating with local partners or simply forming friendships, cultural intelligence allows you to connect in a meaningful, respectful, and strategic way.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                  {practicalApplications.map((app, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.15 }}
-                      whileHover={{ y: -10, scale: 1.02 }}
-                      className="p-6 rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm text-center group"
-                    >
-                      <div className="w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                        <app.icon className="w-7 h-7 text-white/80" />
-                      </div>
-                      <h3 className="text-xl font-bold text-white mb-2">{app.title}</h3>
-                      <p className="text-white/70">{app.description}</p>
-                    </motion.div>
-                  ))}
+                  {practicalApplications.map((app, index) => {
+                    const iconColor = index === 0 ? 'text-orange' : index === 1 ? 'text-azure-blue' : 'text-orange'
+                    const hoverBg = index === 0 ? 'group-hover:bg-orange/20' : index === 1 ? 'group-hover:bg-azure-blue/20' : 'group-hover:bg-orange/20'
+                    return (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.15 }}
+                        whileHover={{ y: -10, scale: 1.02 }}
+                        className="p-6 rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm text-center group"
+                      >
+                        <div className={`w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform ${hoverBg}`}>
+                          <app.icon className={`w-7 h-7 ${iconColor}`} />
+                        </div>
+                        <h3 className="text-xl font-bold text-white mb-2">{app.title}</h3>
+                        <p className="text-white/70">{app.description}</p>
+                      </motion.div>
+                    )
+                  })}
                 </div>
               </motion.div>
 
@@ -368,10 +394,12 @@ export default function WhyCulturalIntelligencePage() {
                     viewport={{ once: true }}
                     className="inline-block"
                   >
-                    <Target className="w-16 h-16 text-white/80 mx-auto mb-6" />
+                    <Target className="w-16 h-16 text-orange mx-auto mb-6" />
                   </motion.div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-white">
-                    The Gulf Region Rewards Understanding
+                  <h2 className="text-3xl md:text-4xl font-bold">
+                    <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                      The Gulf Region Rewards Understanding
+                    </span>
                   </h2>
                   <p className="text-xl md:text-2xl leading-relaxed text-white/90 max-w-3xl mx-auto">
                     The Gulf region rewards those who understand its cultural landscape. When you learn how to navigate it, <span className="text-orange font-bold">opportunities expand</span>, <span className="text-azure-blue font-bold">relationships deepen</span>, and <span className="text-orange font-bold">success becomes sustainable</span>.
