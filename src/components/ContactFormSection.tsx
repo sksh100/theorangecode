@@ -100,15 +100,40 @@ export function ContactFormSection() {
             <div className="w-2 h-2 bg-azure-blue rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
           </motion.div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
-            Let's Start Your{' '}
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            Have Questions?{' '}
             <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-              Transformation
+              We Are Here to Help
             </span>
           </h2>
-          <p className="text-white/70 text-lg md:text-xl max-w-2xl mx-auto">
-            Have questions? We're here to help. Reach out and let's discuss how we can support your cultural intelligence journey.
-          </p>
+          <div className="text-white/70 text-lg md:text-xl max-w-2xl mx-auto space-y-4 mb-8">
+            <p>
+              If you want <span className="text-orange font-semibold">clarity</span> before you begin or you feel <span className="text-azure-blue font-semibold">unsure</span> about the next step, reach out.
+            </p>
+            <p>
+              We answer every message with <span className="text-orange font-semibold">care</span> so you can move forward with <span className="text-azure-blue font-semibold">confidence</span>.
+            </p>
+          </div>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                Let's Connect
+              </span>
+            </h3>
+            <p className="text-white/70 text-lg max-w-2xl mx-auto">
+              Share your details below so our team can reply shortly.
+            </p>
+            <p className="text-white/70 text-lg max-w-2xl mx-auto mt-2">
+              Your message stays <span className="text-orange font-semibold">private</span>, <span className="text-azure-blue font-semibold">confidential</span>, <span className="text-orange font-semibold">safe</span>.
+            </p>
+          </div>
+          
+          <div className="flex items-center justify-center mb-8">
+            <div className="flex-1 max-w-md">
+              <div className="h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+            </div>
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
