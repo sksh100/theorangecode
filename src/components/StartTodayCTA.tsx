@@ -83,15 +83,26 @@ export function StartTodayCTA() {
           </motion.h2>
 
           {/* CTA Text */}
-          <motion.p
-            className="text-lg md:text-xl text-white/80 leading-relaxed mb-8 max-w-2xl mx-auto"
+          <motion.div
+            className="text-lg md:text-xl text-white/80 leading-relaxed mb-8 max-w-2xl mx-auto space-y-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             viewport={{ once: true }}
           >
-            Transform your cultural intelligence and unlock new possibilities in the UAE and Gulf Region. Join our masterclasses and start your journey today.
-          </motion.p>
+            <p>
+              Step into the UAE with <span className="text-orange font-semibold">clarity</span> instead of <span className="text-azure-blue font-semibold">guesswork</span>.
+            </p>
+            <p>
+              When you understand the <span className="text-orange font-semibold">culture</span>, everything changes. <span className="text-azure-blue font-semibold">Conversations flow</span>, <span className="text-orange font-semibold">opportunities open</span>, and you carry yourself with a <span className="text-azure-blue font-semibold">confidence</span> people feel immediately.
+            </p>
+            <p>
+              Most people rely on <span className="text-white/60">trial and error</span>. The ones who <span className="text-orange font-semibold">excel</span> choose to learn the <span className="text-azure-blue font-semibold">unwritten rules</span>, refine their <span className="text-orange font-semibold">presence</span>, and move with <span className="text-azure-blue font-semibold">intention</span>.
+            </p>
+            <p>
+              If you want your <span className="text-orange font-semibold">life</span>, <span className="text-azure-blue font-semibold">career</span>, or <span className="text-orange font-semibold">business</span> in the Gulf to feel <span className="text-azure-blue font-semibold">aligned</span>, <span className="text-orange font-semibold">respected</span>, and <span className="text-azure-blue font-semibold">effortless</span>, the first step begins here.
+            </p>
+          </motion.div>
 
           {/* CTA Button */}
           <motion.div
@@ -110,7 +121,7 @@ export function StartTodayCTA() {
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.3 }}
               >
-                <span className="relative z-10">Explore Our Masterclasses</span>
+                <span className="relative z-10">Begin Your Transformation</span>
                 <motion.div
                   className="relative z-10"
                   animate={{ x: [0, 5, 0] }}
