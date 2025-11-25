@@ -509,16 +509,18 @@ export function WhyCulturalIntelligenceSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group"
+                className="group flex flex-col h-full"
               >
-                <div className="mb-6">
-                  <div className="w-14 h-14 bg-gradient-to-br from-azure-blue/30 to-bright-blue/30 rounded-xl flex items-center justify-center backdrop-blur-sm border border-azure-blue/20 group-hover:border-azure-blue/50 transition-all duration-300 mb-4">
-                    <benefit.icon className="w-7 h-7 text-azure-blue" />
+                <div className="flex flex-col h-full">
+                  <div className="mb-6 flex-shrink-0">
+                    <div className="w-14 h-14 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center backdrop-blur-sm group-hover:bg-white/10 group-hover:border-white/20 transition-all duration-300">
+                      <benefit.icon className="w-7 h-7 text-white/90" />
+                    </div>
                   </div>
-                  <h4 className="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-azure-blue transition-colors duration-300">
+                  <h4 className="text-xl md:text-2xl font-bold text-white mb-3 min-h-[4rem] flex items-start group-hover:text-white transition-colors duration-300">
                     {benefit.title}
                   </h4>
-                  <p className="text-base text-white/70 leading-relaxed">
+                  <p className="text-base text-white/70 leading-relaxed flex-grow">
                     {benefit.description}
                   </p>
                 </div>

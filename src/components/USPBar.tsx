@@ -129,9 +129,17 @@ export function USPBar() {
               The Orange Code
             </span>
           </h2>
-          <p className="text-white/70 text-lg font-montserrat max-w-2xl mx-auto">
-            Four pillars of excellence that set us apart in the luxury service industry
-          </p>
+          <div className="text-white/70 text-lg font-montserrat max-w-4xl mx-auto space-y-6 leading-relaxed">
+            <p>
+              Choosing The Orange Code means choosing clarity in a region where culture, ambition, and identity shape every interaction. People come to us because they want to feel grounded in the UAE, understood in a multicultural environment, and confident in a place where expectations are high and unspoken norms influence daily life.
+            </p>
+            <p>
+              Our Masterclasses give individuals, families, and professionals a deeper understanding of Emirati culture, GCC etiquette, and their own behavioural patterns. Clients describe the experience as a shift. Communication becomes smoother, business conversations feel more natural, and living or working in the UAE gains purpose instead of uncertainty.
+            </p>
+            <p>
+              The Orange Code is the path for those who want to belong, excel, and strengthen their presence in the UAE and wider Gulf region. It is designed for people who value connection, self awareness, and the skills needed to succeed in multicultural and high performance environments.
+            </p>
+          </div>
         </motion.div>
 
         {/* USP Pillars Grid */}
@@ -139,48 +147,44 @@ export function USPBar() {
           {pillars.map((pillar, index) => (
             <motion.div
               key={pillar.id}
-              className="group relative"
+              className="group relative flex flex-col"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: pillar.delay }}
               viewport={{ once: true }}
             >
               {/* Card */}
-              <div className="relative h-full p-8 bg-primary-dark/80 backdrop-blur-[20px] border border-glass-border rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-azure-blue/50 group-hover:shadow-glow-azure">
+              <div className="relative h-full flex flex-col p-8 bg-primary-dark/80 backdrop-blur-[20px] border border-glass-border rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-white/30">
                 {/* Background Gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${pillar.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                <div className={`absolute inset-0 bg-gradient-to-br ${pillar.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
                 
                 {/* Top Border Glow */}
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-azure-blue/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 {/* Icon */}
-                <div className="relative mb-6">
-                  <div className={`w-16 h-16 bg-gradient-to-br ${pillar.gradient} rounded-2xl flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-500`}>
-                    <pillar.icon className="w-8 h-8 text-white" />
+                <div className="relative mb-6 flex-shrink-0">
+                  <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/10 group-hover:border-white/20 transition-all duration-500">
+                    <pillar.icon className="w-7 h-7 text-white/90" />
                   </div>
-                  
-                  {/* Floating Particles */}
-                  <div className="absolute -top-2 -right-2 w-3 h-3 bg-azure-blue rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" />
-                  <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-orange rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" style={{ animationDelay: '0.5s' }} />
                 </div>
 
-                {/* Content */}
-                <div className="relative">
-                  <h3 className="text-xl font-bold text-white font-montserrat mb-2 group-hover:text-azure-blue transition-colors duration-300">
+                {/* Content - Fixed alignment */}
+                <div className="relative flex flex-col flex-grow">
+                  <h3 className="text-xl font-bold text-white font-montserrat mb-3 min-h-[3rem] flex items-start">
                     {pillar.title}
                   </h3>
-                  <p className="text-white/70 font-montserrat leading-relaxed">
+                  <p className="text-white/70 font-montserrat leading-relaxed flex-grow">
                     {pillar.subtitle}
                   </p>
                 </div>
 
                 {/* Bottom Accent */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-azure-blue/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
 
               {/* Connection Line (for desktop) */}
               {index < pillars.length - 1 && (
-                <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-px bg-gradient-to-r from-azure-blue/50 to-transparent transform -translate-y-1/2" />
+                <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-px bg-gradient-to-r from-white/20 to-transparent transform -translate-y-1/2" />
               )}
             </motion.div>
           ))}
