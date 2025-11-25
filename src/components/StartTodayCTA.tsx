@@ -102,7 +102,7 @@ export function StartTodayCTA() {
           >
             <Link href="/masterclasses">
               <motion.button
-                className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-orange via-azure-blue to-orange text-white font-semibold text-lg rounded-xl overflow-hidden shadow-2xl"
+                className="group relative inline-flex items-center gap-3 px-8 py-4 cta-button-glow text-white font-semibold text-lg rounded-xl overflow-hidden"
                 whileHover={{ 
                   scale: 1.05,
                   boxShadow: "0 20px 40px rgba(255, 145, 77, 0.4)"
@@ -110,21 +110,6 @@ export function StartTodayCTA() {
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.3 }}
               >
-                {/* Animated background gradient */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-azure-blue via-orange to-azure-blue"
-                  animate={{
-                    backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                  style={{
-                    backgroundSize: '200% 200%',
-                  }}
-                />
                 <span className="relative z-10">Explore Our Masterclasses</span>
                 <motion.div
                   className="relative z-10"
@@ -133,18 +118,6 @@ export function StartTodayCTA() {
                 >
                   <ArrowRight className="w-5 h-5" />
                 </motion.div>
-                
-                {/* Glow effect */}
-                <motion.div
-                  className="absolute -inset-1 bg-gradient-to-r from-orange via-azure-blue to-orange rounded-xl blur-lg opacity-0 group-hover:opacity-75 transition-opacity duration-300 -z-10"
-                  animate={{
-                    opacity: [0, 0.5, 0],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                  }}
-                />
               </motion.button>
             </Link>
           </motion.div>
