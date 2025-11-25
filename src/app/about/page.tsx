@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 import { CulturalIntelligenceNetwork } from '@/components/CulturalIntelligenceNetwork'
+import { ExpandingValuesSphere } from '@/components/ExpandingValuesSphere'
 import { Sparkles, Target, Heart, Eye, Users, Globe, ArrowRight, CheckCircle, Zap } from 'lucide-react'
 
 export default function AboutPage() {
@@ -39,10 +40,6 @@ export default function AboutPage() {
         {/* Hero Section */}
         <section className="relative overflow-hidden pt-32 pb-20">
           <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5" />
-          {/* WebGL Network Background */}
-          <div className="absolute inset-0 w-full h-full opacity-50">
-            <CulturalIntelligenceNetwork />
-          </div>
           <div className="container mx-auto px-6 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -60,7 +57,7 @@ export default function AboutPage() {
                   About Us
                 </span>
               </motion.div>
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 relative z-20">
+              <h1 className="text-5xl md:text-7xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
                   The Orange Code
                 </span>
@@ -70,8 +67,12 @@ export default function AboutPage() {
         </section>
 
         {/* Main Content Section */}
-        <section className="relative py-16 md:py-24">
-          <div className="container mx-auto px-6">
+        <section className="relative py-16 md:py-24 overflow-hidden">
+          {/* WebGL Network Background */}
+          <div className="absolute inset-0 w-full h-full opacity-40">
+            <CulturalIntelligenceNetwork />
+          </div>
+          <div className="container mx-auto px-6 relative z-10">
             <motion.div
               variants={containerVariants}
               initial="hidden"
@@ -221,98 +222,16 @@ export default function AboutPage() {
 
               {/* Values Section */}
               <motion.div variants={itemVariants} className="space-y-8">
-                <div className="text-center">
+                <div className="text-center mb-16">
                   <h2 className="text-3xl md:text-4xl font-bold mb-4">
                     <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                      VALUES
+                      OUR CORE VALUES
                     </span>
                   </h2>
                   <p className="text-white/60 text-lg">The Culture Code — Our Six Core Values</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                  {[
-                    { 
-                      title: 'Respect for Cultural Foundations', 
-                      description: 'We honour the traditions, values and social structures that define life in the UAE and the wider Gulf. Respect is the basis of trust, and trust is the starting point for every meaningful connection.',
-                      icon: Heart,
-                      colorClass: 'orange',
-                      bgGradient: 'from-orange/20 to-orange/10',
-                      iconBg: 'from-orange/20 to-orange/10',
-                      iconColor: 'text-orange',
-                      glowColor: 'bg-orange/10'
-                    },
-                    { 
-                      title: 'Clarity in Communication', 
-                      description: 'We believe communication should be intentional, culturally attuned and mindful of context. Clear expression reduces misunderstandings and strengthens both professional and personal relationships.',
-                      icon: Target,
-                      colorClass: 'azure-blue',
-                      bgGradient: 'from-azure-blue/20 to-azure-blue/10',
-                      iconBg: 'from-azure-blue/20 to-azure-blue/10',
-                      iconColor: 'text-azure-blue',
-                      glowColor: 'bg-azure-blue/10'
-                    },
-                    { 
-                      title: 'Connection Through Empathy', 
-                      description: 'We recognise that behind every interaction is a person shaped by their own experiences, norms and emotions. Empathy allows us to bridge distances, build rapport and foster genuine collaboration.',
-                      icon: Users,
-                      colorClass: 'orange',
-                      bgGradient: 'from-orange/20 to-orange/10',
-                      iconBg: 'from-orange/20 to-orange/10',
-                      iconColor: 'text-orange',
-                      glowColor: 'bg-orange/10'
-                    },
-                    { 
-                      title: 'Integrity in Action', 
-                      description: 'We act with professionalism and sincerity, ensuring our behaviour reflects the values of the region and the standards of those we serve. Integrity drives credibility, and credibility builds long-term trust.',
-                      icon: CheckCircle,
-                      colorClass: 'azure-blue',
-                      bgGradient: 'from-azure-blue/20 to-azure-blue/10',
-                      iconBg: 'from-azure-blue/20 to-azure-blue/10',
-                      iconColor: 'text-azure-blue',
-                      glowColor: 'bg-azure-blue/10'
-                    },
-                    { 
-                      title: 'Adaptability Across Cultures', 
-                      description: 'We embrace the reality of a multicultural environment. Flexibility allows us to adjust, learn and thrive alongside diverse cultural norms, expectations and ways of thinking.',
-                      icon: Globe,
-                      colorClass: 'orange',
-                      bgGradient: 'from-orange/20 to-orange/10',
-                      iconBg: 'from-orange/20 to-orange/10',
-                      iconColor: 'text-orange',
-                      glowColor: 'bg-orange/10'
-                    },
-                    { 
-                      title: 'Openness to New Perspectives', 
-                      description: 'We remain open to perspectives beyond our own. By approaching each culture with curiosity rather than judgment, we build the bridge that leads to deeper understanding and more meaningful connection.',
-                      icon: Eye,
-                      colorClass: 'azure-blue',
-                      bgGradient: 'from-azure-blue/20 to-azure-blue/10',
-                      iconBg: 'from-azure-blue/20 to-azure-blue/10',
-                      iconColor: 'text-azure-blue',
-                      glowColor: 'bg-azure-blue/10'
-                    }
-                  ].map((value, index) => (
-                    <motion.div
-                      key={value.title}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      whileHover={{ y: -8, scale: 1.03 }}
-                      className="relative p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm group overflow-hidden"
-                    >
-                      <div className={`absolute top-0 right-0 w-24 h-24 ${value.glowColor} rounded-full blur-2xl opacity-50 group-hover:opacity-75 transition-opacity`} />
-                      <div className="relative z-10">
-                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${value.iconBg} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                          <value.icon className={`w-6 h-6 ${value.iconColor}`} />
-                        </div>
-                        <h3 className="text-xl font-bold text-white mb-3">{value.title}</h3>
-                        <p className="text-white/80 leading-relaxed">{value.description}</p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
+                <ExpandingValuesSphere />
               </motion.div>
 
               {/* Slogan Section */}
