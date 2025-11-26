@@ -760,16 +760,6 @@ export default function PrivacyPolicy() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-azure-blue/10 to-bright-blue/10 border border-azure-blue/30 rounded-2xl p-6 mb-8">
-                <h4 className="text-white font-semibold mb-3">Ministry of Economy</h4>
-                <p className="text-white/80 text-sm">
-                  <strong>UAE Ministry of Economy</strong><br/>
-                  For business registration and commercial licensing matters<br/>
-                  Email: info@economy.ae<br/>
-                  Website: <a href="https://www.moec.gov.ae" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">moec.gov.ae</a>
-                </p>
-              </div>
-
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <Shield className="w-8 h-8 text-bright-blue" />
                 15. Contact Information & Data Protection Officer
