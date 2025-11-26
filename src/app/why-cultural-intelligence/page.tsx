@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
+import { CulturalIntelligenceImpactChart } from '@/components/CulturalIntelligenceImpactChart'
 import { TrendingUp, Users, Globe, Target, CheckCircle, ArrowRight, BarChart3, Lightbulb, Shield, Zap, Heart } from 'lucide-react'
 import Image from 'next/image'
 
@@ -308,20 +309,13 @@ export default function WhyCulturalIntelligencePage() {
                     </div>
                   </div>
 
-                  {/* Image Placeholder for Benefits Visualization */}
+                  {/* Cultural Intelligence Impact Chart */}
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    className="relative w-full h-64 rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/5 to-white/0"
                   >
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center">
-                        <TrendingUp className="w-16 h-16 text-white/30 mx-auto mb-4" />
-                        <p className="text-white/50 text-sm">Benefits Visualization</p>
-                        <p className="text-white/40 text-xs mt-2">Impact of cultural intelligence</p>
-                      </div>
-                    </div>
+                    <CulturalIntelligenceImpactChart />
                   </motion.div>
                 </div>
               </motion.div>
