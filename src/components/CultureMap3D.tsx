@@ -9,6 +9,8 @@ interface Country {
   x: number
   y: number
   region: 'western' | 'mediterranean' | 'asia'
+  baselineY: number
+  baselineZ: number
 }
 
 export default function CultureMap3D() {
@@ -38,30 +40,30 @@ export default function CultureMap3D() {
     // Country data with regional grouping
     const COUNTRIES: Country[] = [
       // Western Europe and North America (orange cluster)
-      { name: "Netherlands", x: -4.5, y: 1.5, region: 'western' },
-      { name: "Germany", x: -4.0, y: 1.0, region: 'western' },
-      { name: "Denmark", x: -3.5, y: 0.5, region: 'western' },
-      { name: "US", x: 2.0, y: 1.5, region: 'western' },
-      { name: "Canada", x: 2.0, y: 1.0, region: 'western' },
-      { name: "UK", x: 1.5, y: 0.2, region: 'western' },
+      { name: "Netherlands", x: -4.5, y: 1.5, region: 'western', baselineY: 0, baselineZ: 8 },
+      { name: "Germany", x: -4.0, y: 1.0, region: 'western', baselineY: 0, baselineZ: 8 },
+      { name: "Denmark", x: -3.5, y: 0.5, region: 'western', baselineY: 0, baselineZ: 8 },
+      { name: "US", x: 2.0, y: 1.5, region: 'western', baselineY: 0, baselineZ: 8 },
+      { name: "Canada", x: 2.0, y: 1.0, region: 'western', baselineY: 0, baselineZ: 8 },
+      { name: "UK", x: 1.5, y: 0.2, region: 'western', baselineY: 0, baselineZ: 8 },
       
       // Mediterranean and Latin (bright blue cluster)
-      { name: "Israel", x: -4.2, y: -0.3, region: 'mediterranean' },
-      { name: "Russia", x: -3.8, y: -0.8, region: 'mediterranean' },
-      { name: "Spain", x: -3.0, y: -1.4, region: 'mediterranean' },
-      { name: "France", x: -2.5, y: -1.5, region: 'mediterranean' },
-      { name: "Italy", x: -1.5, y: -2.0, region: 'mediterranean' },
-      { name: "Brazil", x: 1.2, y: -0.5, region: 'mediterranean' },
-      { name: "Argentina", x: 1.4, y: -0.7, region: 'mediterranean' },
-      { name: "Mexico", x: 1.6, y: -0.9, region: 'mediterranean' },
+      { name: "Israel", x: -4.2, y: -0.3, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
+      { name: "Russia", x: -3.8, y: -0.8, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
+      { name: "Spain", x: -3.0, y: -1.4, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
+      { name: "France", x: -2.5, y: -1.5, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
+      { name: "Italy", x: -1.5, y: -2.0, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
+      { name: "Brazil", x: 1.2, y: -0.5, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
+      { name: "Argentina", x: 1.4, y: -0.7, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
+      { name: "Mexico", x: 1.6, y: -0.9, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
       
       // Middle East and Asia (azure blue cluster)
-      { name: "India", x: 3.5, y: -1.5, region: 'asia' },
-      { name: "Saudi Arabia", x: 4.0, y: -1.3, region: 'asia' },
-      { name: "Kenya", x: 3.0, y: -1.7, region: 'asia' },
-      { name: "China", x: 3.5, y: -2.0, region: 'asia' },
-      { name: "Thailand", x: 4.2, y: -2.2, region: 'asia' },
-      { name: "Japan", x: 4.5, y: -2.5, region: 'asia' }
+      { name: "India", x: 3.5, y: -1.5, region: 'asia', baselineY: 0, baselineZ: 8 },
+      { name: "Saudi Arabia", x: 4.0, y: -1.3, region: 'asia', baselineY: 0, baselineZ: 8 },
+      { name: "Kenya", x: 3.0, y: -1.7, region: 'asia', baselineY: 0, baselineZ: 8 },
+      { name: "China", x: 3.5, y: -2.0, region: 'asia', baselineY: 0, baselineZ: 8 },
+      { name: "Thailand", x: 4.2, y: -2.2, region: 'asia', baselineY: 0, baselineZ: 8 },
+      { name: "Japan", x: 4.5, y: -2.5, region: 'asia', baselineY: 0, baselineZ: 8 }
     ]
 
     // Scene setup
@@ -96,11 +98,11 @@ export default function CultureMap3D() {
     pointLight2.position.set(-10, -10, 10)
     scene.add(pointLight2)
 
-    // Create axes
+    // Create axes (more visible than grid)
     const axisLineMaterial = new THREE.LineBasicMaterial({ 
       color: COLORS.azureBlue, 
       transparent: true, 
-      opacity: 0.3 
+      opacity: 0.25 
     })
 
     // Horizontal axis (Direct to Indirect)
@@ -121,11 +123,11 @@ export default function CultureMap3D() {
     const verticalAxis = new THREE.Line(verticalGeometry, axisLineMaterial)
     scene.add(verticalAxis)
 
-    // Add subtle grid lines
+    // Add subtle grid lines (fainter for better dot visibility)
     const gridMaterial = new THREE.LineBasicMaterial({ 
       color: COLORS.azureBlue, 
       transparent: true, 
-      opacity: 0.08 
+      opacity: 0.05 
     })
 
     for (let i = -5; i <= 5; i++) {
@@ -154,7 +156,7 @@ export default function CultureMap3D() {
 
     // Create country nodes
     const nodes: THREE.Mesh[] = []
-    const nodeGeometry = new THREE.SphereGeometry(0.25, 32, 32)
+    const nodeGeometry = new THREE.SphereGeometry(0.35, 32, 32) // Slightly larger for visibility
 
     COUNTRIES.forEach((country) => {
       // Assign color based on region
@@ -175,17 +177,17 @@ export default function CultureMap3D() {
       const nodeMaterial = new THREE.MeshPhysicalMaterial({
         color: nodeColor,
         emissive: emissiveColor,
-        emissiveIntensity: 0.2,
+        emissiveIntensity: 0.3,
         metalness: 0.3,
         roughness: 0.4,
         transparent: true,
-        opacity: 0.9
+        opacity: 0.95
       })
 
       const node = new THREE.Mesh(nodeGeometry, nodeMaterial)
       
-      // Set initial position (baseline)
-      node.position.set(country.x, -4.5, 4)
+      // Set initial position at baseline (horizontal axis)
+      node.position.set(country.x, country.baselineY, country.baselineZ)
       node.scale.set(0.1, 0.1, 0.1)
       
       // Store target position in userData
@@ -201,20 +203,54 @@ export default function CultureMap3D() {
       nodes.push(node)
     })
 
-    sceneRef.current = { scene, camera, renderer, nodes, labels: [] }
+    // Create label elements for each country
+    const labels: HTMLElement[] = []
+    const labelsContainer = document.createElement('div')
+    labelsContainer.style.position = 'absolute'
+    labelsContainer.style.top = '0'
+    labelsContainer.style.left = '0'
+    labelsContainer.style.width = '100%'
+    labelsContainer.style.height = '100%'
+    labelsContainer.style.pointerEvents = 'none'
+    containerRef.current.appendChild(labelsContainer)
 
-    // Animate nodes flying into position
+    COUNTRIES.forEach((country, index) => {
+      const label = document.createElement('div')
+      label.textContent = country.name
+      label.style.position = 'absolute'
+      label.style.color = '#ffffff'
+      label.style.fontSize = '11px'
+      label.style.fontWeight = '500'
+      label.style.opacity = '0'
+      label.style.transition = 'opacity 0.5s'
+      label.style.textShadow = '0 0 4px rgba(0, 0, 0, 0.8)'
+      label.style.whiteSpace = 'nowrap'
+      labelsContainer.appendChild(label)
+      labels.push(label)
+    })
+
+    sceneRef.current = { scene, camera, renderer, nodes, labels }
+
+    // Animate nodes flying into position from baseline
     nodes.forEach((node, index) => {
-      // Stagger animation
-      gsap.to(node.position, {
-        x: node.userData.targetX,
-        y: node.userData.targetY,
-        z: node.userData.targetZ,
-        duration: 1.2,
-        delay: index * 0.15,
-        ease: 'power3.out'
-      })
+      // Position animation - from baseline to target
+      gsap.fromTo(node.position, 
+        { 
+          x: node.userData.targetX,
+          y: COUNTRIES[index].baselineY, 
+          z: COUNTRIES[index].baselineZ 
+        },
+        {
+          x: node.userData.targetX,
+          y: node.userData.targetY,
+          z: node.userData.targetZ,
+          duration: 1.2,
+          delay: index * 0.15,
+          ease: 'power3.out'
+        }
+      )
 
+      // Scale animation
       gsap.to(node.scale, {
         x: 1,
         y: 1,
@@ -224,9 +260,17 @@ export default function CultureMap3D() {
         ease: 'back.out(1.7)'
       })
 
+      // Fade in label after node arrives
+      gsap.to(labels[index], {
+        opacity: 0.8,
+        duration: 0.5,
+        delay: index * 0.15 + 1.0,
+        ease: 'power2.out'
+      })
+
       // Subtle pulse animation after settling
       gsap.to(node.material as THREE.MeshPhysicalMaterial, {
-        emissiveIntensity: 0.4,
+        emissiveIntensity: 0.5,
         duration: 1.5,
         delay: index * 0.15 + 1.2,
         yoyo: true,
@@ -253,9 +297,25 @@ export default function CultureMap3D() {
       delay: 2
     })
 
-    // Animation loop
+    // Animation loop with label position updates
     function animate() {
       requestAnimationFrame(animate)
+      
+      // Update label positions based on node positions
+      nodes.forEach((node, index) => {
+        const vector = new THREE.Vector3()
+        node.getWorldPosition(vector)
+        vector.project(camera)
+        
+        // Convert to screen coordinates
+        const x = (vector.x * 0.5 + 0.5) * containerRef.current!.clientWidth
+        const y = (-(vector.y * 0.5) + 0.5) * containerRef.current!.clientHeight
+        
+        // Position label with offset
+        labels[index].style.left = `${x + 15}px`
+        labels[index].style.top = `${y - 5}px`
+      })
+      
       renderer.render(scene, camera)
     }
     animate()
@@ -331,7 +391,12 @@ export default function CultureMap3D() {
       window.removeEventListener('resize', handleResize)
       if (containerRef.current) {
         containerRef.current.removeEventListener('mousemove', handleMouseMove)
-        containerRef.current.removeChild(renderer.domElement)
+        if (labelsContainer.parentNode) {
+          containerRef.current.removeChild(labelsContainer)
+        }
+        if (renderer.domElement.parentNode) {
+          containerRef.current.removeChild(renderer.domElement)
+        }
       }
       renderer.dispose()
       nodeGeometry.dispose()
