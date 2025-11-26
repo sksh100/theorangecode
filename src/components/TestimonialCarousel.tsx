@@ -2,6 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { Quote, Shield } from 'lucide-react'
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 
 interface Testimonial {
   id: number
@@ -13,6 +15,9 @@ interface Testimonial {
 }
 
 export function TestimonialCarousel() {
+  const marqueeRef = useRef<HTMLDivElement>(null)
+  const animationRef = useRef<gsap.core.Tween | null>(null)
+
   const testimonials: Testimonial[] = [
     {
       id: 1,
@@ -56,6 +61,52 @@ export function TestimonialCarousel() {
     }
   ]
 
+  // Duplicate testimonials for seamless infinite scroll
+  const duplicatedTestimonials = [...testimonials, ...testimonials]
+
+  useEffect(() => {
+    if (!marqueeRef.current) return
+
+    const marqueeContent = marqueeRef.current
+    const firstCard = marqueeContent.querySelector('.testimonial-card') as HTMLElement
+    
+    if (!firstCard) return
+
+    // Calculate the width needed to reset (half of total width since we duplicated)
+    const cardWidth = firstCard.offsetWidth
+    const gap = 32 // 2rem gap between cards
+    const totalWidth = (cardWidth + gap) * testimonials.length
+
+    // GSAP infinite marquee animation
+    animationRef.current = gsap.to(marqueeContent, {
+      x: -totalWidth,
+      duration: testimonials.length * 8, // 8 seconds per testimonial for slow, smooth motion
+      ease: 'none',
+      repeat: -1,
+      modifiers: {
+        x: gsap.utils.unitize((x) => parseFloat(x) % totalWidth)
+      }
+    })
+
+    return () => {
+      if (animationRef.current) {
+        animationRef.current.kill()
+      }
+    }
+  }, [testimonials.length])
+
+  const handleMouseEnter = () => {
+    if (animationRef.current) {
+      animationRef.current.pause()
+    }
+  }
+
+  const handleMouseLeave = () => {
+    if (animationRef.current) {
+      animationRef.current.resume()
+    }
+  }
+
   return (
     <section className="relative py-24 md:py-32 bg-gradient-to-br from-primary-dark via-primary-dark/95 to-primary-dark overflow-hidden">
       {/* Background decorative elements */}
@@ -64,7 +115,7 @@ export function TestimonialCarousel() {
         <div className="absolute bottom-20 right-10 w-80 h-80 bg-orange/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <motion.div
           className="text-center mb-16"
@@ -152,91 +203,75 @@ export function TestimonialCarousel() {
           </motion.div>
         </motion.div>
 
-        {/* Testimonials Grid - All 5 on One Page */}
-        <motion.div 
-          className="relative"
-          initial={{ opacity: 0, y: 60, scale: 0.95 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ 
-            duration: 1,
-            delay: 0.4,
-            ease: [0.25, 0.1, 0.25, 1]
-          }}
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          {/* Grid Container - 3 testimonials per row */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-            {testimonials.slice(0, 3).map((testimonial, index) => (
-              <motion.div
-                key={testimonial.id}
-                initial={{ opacity: 0, y: 50, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ 
-                  duration: 0.6, 
-                  delay: index * 0.1,
-                  ease: [0.25, 0.1, 0.25, 1]
-                }}
-                viewport={{ once: true }}
-                className="glass-card p-6 md:p-8 h-full flex flex-col relative"
-              >
-                {/* NDA Indicator - Only for first testimonial */}
-                {index === 0 && (
-                  <div className="absolute top-4 right-4 z-10">
-                    <div className="w-6 h-6 bg-orange/20 rounded-full flex items-center justify-center border border-orange/40 backdrop-blur-sm">
-                      <Shield className="w-3.5 h-3.5 text-orange" />
+        {/* Testimonials Marquee */}
+        <div className="relative -mx-4 sm:-mx-6 lg:-mx-8">
+          <div className="overflow-hidden">
+            <div 
+              ref={marqueeRef}
+              className="flex gap-8"
+              style={{ willChange: 'transform' }}
+            >
+              {duplicatedTestimonials.map((testimonial, index) => (
+                <motion.div
+                  key={`${testimonial.id}-${index}`}
+                  className="testimonial-card flex-shrink-0 w-[400px] glass-card p-6 md:p-8 flex flex-col relative cursor-pointer"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  whileHover={{ 
+                    y: -12,
+                    transition: { duration: 0.3, ease: "easeOut" }
+                  }}
+                >
+                  {/* NDA Indicator - Only for Regional Project Lead */}
+                  {testimonial.id === 1 && (
+                    <div className="absolute top-4 right-4 z-10">
+                      <div className="w-6 h-6 bg-orange/20 rounded-full flex items-center justify-center border border-orange/40 backdrop-blur-sm">
+                        <Shield className="w-3.5 h-3.5 text-orange" />
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Quote Icon */}
+                  <div className="flex justify-center mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange/20 to-azure-blue/20 rounded-full flex items-center justify-center">
+                      <Quote className="w-6 h-6 text-orange" />
                     </div>
                   </div>
-                )}
-                
-                {/* Quote Icon */}
-                <div className="flex justify-center mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-orange/20 to-azure-blue/20 rounded-full flex items-center justify-center">
-                    <Quote className="w-6 h-6 text-orange" />
-                  </div>
-                </div>
 
-                {/* Testimonial Content */}
-                <blockquote className="flex-grow mb-4">
-                  <p className="text-white text-sm md:text-base leading-relaxed font-light italic mb-3">
-                    "{testimonial.content}"
-                  </p>
-                </blockquote>
-
-                {/* Rating Stars */}
-                <div className="flex justify-center gap-1 mb-3">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      transition={{ delay: i * 0.1, type: "spring" }}
-                      viewport={{ once: true }}
-                    >
-                      <span className="text-orange text-base">★</span>
-                    </motion.div>
-                  ))}
-                </div>
-
-                {/* Author Info */}
-                <div className="text-center mt-auto">
-                  <h4 className="text-white text-base md:text-lg font-bold mb-1">
-                    {testimonial.name}
-                  </h4>
-                  {(testimonial.role || testimonial.company) && (
-                    <p className="text-white/70 text-xs md:text-sm">
-                      {testimonial.role && testimonial.company 
-                        ? `${testimonial.role} at ${testimonial.company}`
-                        : testimonial.role || testimonial.company
-                      }
+                  {/* Testimonial Content */}
+                  <blockquote className="flex-grow mb-4">
+                    <p className="text-white text-sm md:text-base leading-relaxed font-light italic mb-3">
+                      "{testimonial.content}"
                     </p>
-                  )}
-                </div>
-              </motion.div>
-            ))}
+                  </blockquote>
+
+                  {/* Rating Stars */}
+                  <div className="flex justify-center gap-1 mb-3">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <span key={i} className="text-orange text-base">★</span>
+                    ))}
+                  </div>
+
+                  {/* Author Info */}
+                  <div className="text-center mt-auto">
+                    <h4 className="text-white text-base md:text-lg font-bold mb-1">
+                      {testimonial.name}
+                    </h4>
+                    {(testimonial.role || testimonial.company) && (
+                      <p className="text-white/70 text-xs md:text-sm">
+                        {testimonial.role && testimonial.company 
+                          ? `${testimonial.role} at ${testimonial.company}`
+                          : testimonial.role || testimonial.company
+                        }
+                      </p>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )
 }
-
