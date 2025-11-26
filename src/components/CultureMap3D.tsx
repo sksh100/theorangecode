@@ -37,40 +37,40 @@ export default function CultureMap3D() {
       white: 0xffffff
     }
 
-    // Country data with regional grouping - precision-tuned positions to match Culture Map figure
+    // Country data with regional grouping - final positions matching Culture Map figure
     const COUNTRIES: Country[] = [
       // Top left: very direct, low-context
-      { name: "Netherlands", x: -3.9, y: 2.1, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
-      { name: "Germany", x: -3.6, y: 1.8, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
-      { name: "Denmark", x: -3.3, y: 1.3, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
+      { name: "Netherlands", x: -3.6, y: 2.1, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
+      { name: "Germany", x: -3.3, y: 1.8, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
+      { name: "Denmark", x: -3.0, y: 1.3, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
       
-      // Slightly left of center, top
-      { name: "Australia", x: -0.7, y: 1.7, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
+      // Slightly left of centre, top
+      { name: "Australia", x: -0.4, y: 1.5, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
       
-      // Around the vertical axis, top right
-      { name: "US", x: 0.3, y: 2.2, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
-      { name: "Canada", x: 0.3, y: 1.8, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
-      { name: "UK", x: 0.9, y: 1.0, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
+      // Clearly to the right of the vertical axis, top
+      { name: "US", x: 1.0, y: 2.2, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
+      { name: "Canada", x: 1.0, y: 1.8, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
+      { name: "UK", x: 1.6, y: 1.0, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
       
       // Bottom left: more high-context but still direct
-      { name: "Israel", x: -3.4, y: -0.3, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
-      { name: "Russia", x: -3.6, y: -0.8, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
-      { name: "Spain", x: -2.6, y: -0.9, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
-      { name: "France", x: -2.2, y: -1.25, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
-      { name: "Italy", x: -0.4, y: -1.9, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
+      { name: "Israel", x: -3.2, y: -0.2, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
+      { name: "Russia", x: -3.6, y: -0.7, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
+      { name: "Spain", x: -2.6, y: -0.8, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
+      { name: "France", x: -2.2, y: -1.1, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
+      { name: "Italy", x: 0.2, y: -1.8, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
       
-      // Middle right: Latin America, just to the right of the vertical axis
-      { name: "Brazil", x: 1.1, y: 0.2, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
-      { name: "Argentina", x: 1.3, y: -0.05, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
-      { name: "Mexico", x: 1.5, y: -0.3, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
+      // Middle right: Latin America, a bit to the right of the axis
+      { name: "Brazil", x: 2.0, y: 0.1, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
+      { name: "Argentina", x: 2.2, y: -0.2, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
+      { name: "Mexico", x: 2.4, y: -0.4, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
       
       // Bottom-right arc: Middle East / Asia
-      { name: "India", x: 2.2, y: -0.8, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
-      { name: "Saudi Arabia", x: 2.7, y: -0.9, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
-      { name: "Kenya", x: 1.9, y: -1.3, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
-      { name: "China", x: 2.3, y: -1.8, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
-      { name: "Thailand", x: 2.9, y: -1.9, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
-      { name: "Japan", x: 3.3, y: -2.0, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 }
+      { name: "India", x: 2.8, y: -0.6, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "Saudi Arabia", x: 3.2, y: -0.7, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "Kenya", x: 2.6, y: -1.0, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "China", x: 3.0, y: -1.4, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "Thailand", x: 3.3, y: -1.6, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "Japan", x: 3.6, y: -1.7, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 }
     ]
 
     // Scene setup
@@ -163,7 +163,7 @@ export default function CultureMap3D() {
 
     // Create country nodes
     const nodes: THREE.Mesh[] = []
-    const nodeGeometry = new THREE.SphereGeometry(0.17, 32, 32) // Reduced by ~30% for lighter feel
+    const nodeGeometry = new THREE.SphereGeometry(0.14, 32, 32) // Delicate size for maximum label space
 
     COUNTRIES.forEach((country) => {
       // Assign color based on region
@@ -307,16 +307,25 @@ export default function CultureMap3D() {
     // Label tweaks for fine-tuning positions to avoid overlaps
     const LABEL_TWEAKS: Record<string, { dx?: number; dy?: number }> = {
       'Netherlands': { dy: -4 },
-      'US': { dx: -40 },
-      'Canada': { dx: -45 },
-      'Saudi Arabia': { dy: 4 },
       'Germany': { dy: -2 },
       'Denmark': { dy: 2 },
+      'US': { dx: 0, dy: -10 },  // label just above the dot
+      'Canada': { dx: 0, dy: 10 },  // label just below the dot
+      'UK': { dx: -4, dy: -4 },
+      'Israel': { dx: 4, dy: -2 },
       'Russia': { dy: 2 },
       'Spain': { dy: 2 },
-      'Brazil': { dx: 2 },
+      'France': { dy: 2 },
+      'Italy': { dy: 4 },
+      'Brazil': { dx: 4 },
       'Argentina': { dy: 2 },
-      'Mexico': { dy: 2 }
+      'Mexico': { dy: 2 },
+      'India': { dy: -2 },
+      'Saudi Arabia': { dy: 4 },
+      'Kenya': { dy: 2 },
+      'China': { dy: 2 },
+      'Thailand': { dy: 2 },
+      'Japan': { dy: 2 }
     }
 
     // Animation loop with label position updates
