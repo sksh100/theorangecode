@@ -120,10 +120,34 @@ export default function PrivacyPolicy() {
                   <ul className="text-white/70 text-sm space-y-1">
                     <li>• Cultural background and preferences</li>
                     <li>• Training goals and objectives</li>
-                    <li>• Payment and billing information</li>
+                    <li>• Billing address and transaction details</li>
                     <li>• Communication preferences</li>
                   </ul>
                 </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/30 rounded-2xl p-6 mb-8">
+                <div className="flex items-center gap-3 mb-3">
+                  <Lock className="w-6 h-6 text-orange" />
+                  <h3 className="text-xl font-bold text-white">Important: Payment Information</h3>
+                </div>
+                <p className="text-white/80 leading-relaxed mb-3">
+                  <strong>We do NOT collect, store, or process your payment card information.</strong> All payment transactions are processed 
+                  securely through our third-party payment processor, Stripe, Inc. When you make a payment:
+                </p>
+                <ul className="text-white/70 text-sm space-y-2 ml-4">
+                  <li>• Your payment card details (card number, CVV, expiration date) are entered directly into Stripe's secure payment form</li>
+                  <li>• Payment information is transmitted directly to Stripe using industry-standard encryption (TLS/SSL)</li>
+                  <li>• We never have access to your full card details - only transaction confirmation and billing information</li>
+                  <li>• Stripe is PCI DSS Level 1 certified, the highest level of payment security certification</li>
+                  <li>• We only receive transaction IDs, payment status, and billing email from Stripe</li>
+                </ul>
+                <p className="text-white/70 text-sm mt-3">
+                  For more information about how Stripe handles your payment data, please see{' '}
+                  <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
+                    Stripe's Privacy Policy
+                  </a>.
+                </p>
               </div>
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
@@ -397,6 +421,50 @@ export default function PrivacyPolicy() {
                   <li>• Delete or return data upon termination of services</li>
                   <li>• Use Standard Contractual Clauses (SCCs) for international data transfers</li>
                 </ul>
+              </div>
+
+              <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/30 rounded-2xl p-6 mb-8">
+                <div className="flex items-center gap-3 mb-3">
+                  <AlertTriangle className="w-6 h-6 text-orange" />
+                  <h3 className="text-xl font-bold text-white">Third-Party Services Disclaimer</h3>
+                </div>
+                <p className="text-white/80 leading-relaxed mb-3">
+                  <strong>Limitation of Liability for Third-Party Data Breaches:</strong> While we carefully select and vet all third-party 
+                  service providers and require them to maintain high security standards, we cannot and do not guarantee the absolute security 
+                  of data processed by third-party services.
+                </p>
+                <p className="text-white/80 leading-relaxed mb-3">
+                  <strong>Third-Party Responsibility:</strong> Each third-party service provider (including but not limited to Google Analytics, 
+                  Stripe, Vercel, Resend, MailerLite, and Upstash) is independently responsible for:
+                </p>
+                <ul className="text-white/70 text-sm space-y-2 ml-4 mb-3">
+                  <li>• The security and protection of data they process on our behalf</li>
+                  <li>• Any data breaches, unauthorized access, or security incidents within their systems</li>
+                  <li>• Compliance with their own privacy policies and data protection obligations</li>
+                  <li>• Notification and remediation of any security incidents affecting their infrastructure</li>
+                </ul>
+                <p className="text-white/80 leading-relaxed mb-3">
+                  <strong>No Liability:</strong> The Orange Code shall not be held liable for any damages, losses, or unauthorized disclosure 
+                  of personal data resulting from:
+                </p>
+                <ul className="text-white/70 text-sm space-y-2 ml-4 mb-3">
+                  <li>• Security breaches or data breaches occurring within third-party service provider systems</li>
+                  <li>• Unauthorized access to third-party infrastructure beyond our control</li>
+                  <li>• Failures of third-party security measures, encryption, or access controls</li>
+                  <li>• Acts or omissions of third-party service providers</li>
+                  <li>• Force majeure events affecting third-party services</li>
+                </ul>
+                <p className="text-white/80 leading-relaxed">
+                  <strong>Your Acknowledgment:</strong> By using our services, you acknowledge and agree that we use third-party services 
+                  as described in this policy, and you accept that these third parties have independent responsibility for the security of 
+                  data they process. We will cooperate fully in investigating and responding to any third-party security incidents that may 
+                  affect your personal data and will notify affected users in accordance with applicable data protection laws.
+                </p>
+                <p className="text-white/70 text-sm mt-4">
+                  <strong>Note:</strong> This limitation does not affect our obligations under applicable data protection laws, including 
+                  our duty to select appropriate processors, ensure adequate contractual protections, and notify authorities and affected 
+                  individuals of personal data breaches where required by law.
+                </p>
               </div>
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">

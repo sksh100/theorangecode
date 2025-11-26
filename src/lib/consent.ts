@@ -14,16 +14,31 @@ const CONSENT_DATE_KEY = 'cookieConsentDate'
 export function getCookieConsent(): CookieConsent | null {
   if (typeof window === 'undefined') return null
   
-  const stored = localStorage.getItem(CONSENT_STORAGE_KEY)
-  if (!stored) return null
-  
   try {
+    const stored = localStorage.getItem(CONSENT_STORAGE_KEY)
+    if (!stored) return null
+    
     const consent = JSON.parse(stored)
+    const timestamp = localStorage.getItem(CONSENT_DATE_KEY) || new Date().toISOString()
+    
+    // Check if consent is older than 12 months (GDPR recommendation)
+    const consentDate = new Date(timestamp)
+    const twelveMonthsAgo = new Date()
+    twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12)
+    
+    // If consent is older than 12 months, clear it and return null to show banner again
+    if (consentDate < twelveMonthsAgo) {
+      clearConsent()
+      return null
+    }
+    
     return {
       ...consent,
-      timestamp: localStorage.getItem(CONSENT_DATE_KEY) || new Date().toISOString()
+      timestamp
     }
   } catch {
+    // If there's any error parsing, clear and return null
+    clearConsent()
     return null
   }
 }
