@@ -765,13 +765,13 @@ export default function PrivacyPolicy() {
                 15. Contact Information & Data Protection Officer
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                For privacy-related questions or to exercise your rights, contact our Data Protection Officer:
+                For privacy related questions feel free to contact us.
               </p>
               
               <div className="bg-gradient-to-r from-azure-blue/10 to-bright-blue/10 border border-azure-blue/30 rounded-2xl p-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <p className="text-white font-bold text-xl mb-2">Data Protection Officer</p>
+                    <p className="text-white font-bold text-xl mb-2">Legal Team</p>
                     <p className="text-white/80 mb-1">The Orange Code</p>
                     <p className="text-white/80 mb-1">Email: legal@theorangecode.com</p>
                     <p className="text-white/80 mb-1">Phone: +971 56 878 6106</p>
