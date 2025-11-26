@@ -143,7 +143,7 @@ export default function WhyCulturalIntelligencePage() {
                   </h2>
                 </div>
                 <p className="text-lg leading-relaxed text-white/80">
-                  Research in intercultural management shows that people interpret behaviour through the logic of their own culture. For example, communication styles vary significantly around the world.
+                  Studies have shown that time is perceived very differently across cultures. Many Western countries follow a linear view of time, where schedules stay strict, tasks occur in sequence, and interruptions are avoided. The UAE follows a more flexible view of time, where priorities shift naturally, conversations are not rushed, and relationships carry more weight than the clock.
                 </p>
                 
                 {/* Image Placeholder for Research Graph */}
