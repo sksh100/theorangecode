@@ -142,27 +142,7 @@ export default function WhyCulturalIntelligencePage() {
                     </span>
                   </h2>
                 </div>
-                <p className="text-lg leading-relaxed text-white/80">
-                  Studies have shown that time is perceived very differently across cultures. Many Western countries follow a linear view of time, where schedules stay strict, tasks occur in sequence, and interruptions are avoided. The UAE follows a more flexible view of time, where priorities shift naturally, conversations are not rushed, and relationships carry more weight than the clock.
-                </p>
-                
-                {/* Image Placeholder for Research Graph */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  className="relative w-full h-64 md:h-80 rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/5 to-white/0"
-                >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <BarChart3 className="w-16 h-16 text-white/30 mx-auto mb-4" />
-                      <p className="text-white/50 text-sm">Research Graph Placeholder</p>
-                      <p className="text-white/40 text-xs mt-2">Visual representation of communication style variations</p>
-                    </div>
-                  </div>
-                </motion.div>
-
-                <div className="p-6 rounded-xl bg-white/5 border-l-4 border-white/30 backdrop-blur-sm">
+                <div className="p-6 rounded-xl bg-white/5 border-l-4 border-orange/30 backdrop-blur-sm">
                   <p className="text-white/90 leading-relaxed">
                     Studies have shown that time is perceived very differently across cultures. Many Western countries follow a linear view of time, where schedules stay strict, tasks occur in sequence, and interruptions are avoided. The UAE follows a more flexible view of time, where priorities shift naturally, conversations are not rushed, and relationships carry more weight than the clock. Cultural intelligence helps you understand these differences without judgment, adjust with ease, and move through the region with clarity instead of confusion.
                   </p>
