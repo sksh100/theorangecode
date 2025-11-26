@@ -88,8 +88,8 @@ export default function PrivacyPolicy() {
                 </p>
                 <ul className="text-white/70 text-sm space-y-1 ml-4">
                   <li>• <strong>GDPR:</strong> EU General Data Protection Regulation (EU) 2016/679</li>
-                  <li>• <strong>UAE Law:</strong> Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data</li>
-                  <li>• <strong>ADGM:</strong> Abu Dhabi Global Market Data Protection Regulations 2021</li>
+                  <li>• <strong>UAE Federal Law:</strong> Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data</li>
+                  <li>• <strong>Ministry of Economy:</strong> UAE Ministry of Economy Regulations for Commercial Activities</li>
                   <li>• <strong>ePrivacy Directive:</strong> Directive 2002/58/EC (as amended)</li>
                 </ul>
                 <p className="text-white/80 leading-relaxed mt-3">
@@ -693,12 +693,12 @@ export default function PrivacyPolicy() {
               </div>
 
               <div className="bg-gradient-to-r from-azure-blue/10 to-bright-blue/10 border border-azure-blue/30 rounded-2xl p-6 mb-8">
-                <h4 className="text-white font-semibold mb-3">ADGM Residents</h4>
+                <h4 className="text-white font-semibold mb-3">Ministry of Economy</h4>
                 <p className="text-white/80 text-sm">
-                  <strong>Office of Data Protection - Abu Dhabi Global Market</strong><br/>
-                  Al Maryah Island, Abu Dhabi, UAE<br/>
-                  Email: dataprotection@adgm.com<br/>
-                  Website: <a href="https://www.adgm.com/operating-in-adgm/office-of-data-protection" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">ADGM Data Protection</a>
+                  <strong>UAE Ministry of Economy</strong><br/>
+                  For business registration and commercial licensing matters<br/>
+                  Email: info@economy.ae<br/>
+                  Website: <a href="https://www.moec.gov.ae" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">moec.gov.ae</a>
                 </p>
               </div>
 
@@ -720,7 +720,8 @@ export default function PrivacyPolicy() {
                   </div>
                   <div>
                     <p className="text-white font-bold text-xl mb-2">Business Address</p>
-                    <p className="text-white/80 mb-1">Abu Dhabi Global Market</p>
+                    <p className="text-white/80 mb-1">Etihad Towers</p>
+                    <p className="text-white/80 mb-1">Tower 3, Floor 36</p>
                     <p className="text-white/80 mb-1">Abu Dhabi, United Arab Emirates</p>
                     <p className="text-white/80 mb-1">Response Time: Within 30 days</p>
                   </div>
@@ -772,10 +773,14 @@ export default function PrivacyPolicy() {
                     <li>• <strong>GDPR:</strong> EU General Data Protection Regulation (EU) 2016/679</li>
                     <li>• <strong>ePrivacy Directive:</strong> Directive 2002/58/EC (as amended by Directive 2009/136/EC)</li>
                     <li>• <strong>UAE Federal Law:</strong> Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data</li>
-                    <li>• <strong>ADGM:</strong> Abu Dhabi Global Market Data Protection Regulations 2021</li>
-                    <li>• <strong>DIFC:</strong> Dubai International Financial Centre Data Protection Law No. 5 of 2020 (where applicable)</li>
+                    <li>• <strong>Ministry of Economy:</strong> UAE Ministry of Economy Regulations and ADRA Licensing Requirements</li>
                     <li>• <strong>PCI DSS:</strong> Payment Card Industry Data Security Standard (via Stripe)</li>
                   </ul>
+                  <div className="border-t border-white/20 my-4" />
+                  <p className="text-white/70 text-xs leading-relaxed">
+                    <strong>Business License:</strong> The Orange Code operates under a freelance license issued by the Abu Dhabi Registration Authority (ADRA) 
+                    under the UAE Ministry of Economic Development.
+                  </p>
                   <div className="border-t border-white/20 my-4" />
                   <p className="text-white/70 text-xs leading-relaxed">
                     The Orange Code is committed to maintaining the highest standards of data protection and privacy. This policy reflects 

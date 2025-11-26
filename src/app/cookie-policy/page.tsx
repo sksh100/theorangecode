@@ -90,7 +90,7 @@ export default function CookiePolicy() {
                 <ul className="text-white/70 text-sm space-y-1 ml-4 mb-3">
                   <li>• <strong>GDPR:</strong> EU General Data Protection Regulation (EU) 2016/679</li>
                   <li>• <strong>ePrivacy Directive:</strong> Directive 2002/58/EC (as amended by Directive 2009/136/EC)</li>
-                  <li>• <strong>UAE Law:</strong> Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data</li>
+                  <li>• <strong>UAE Federal Law:</strong> Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data</li>
                   <li>• <strong>PECR:</strong> Privacy and Electronic Communications Regulations 2003 (UK)</li>
                 </ul>
                 <p className="text-white/80 leading-relaxed">
@@ -492,8 +492,8 @@ export default function CookiePolicy() {
                   </div>
                   <div>
                     <p className="text-white font-bold text-xl mb-2">Business Address</p>
-                    <p className="text-white/80 mb-1">Abu Dhabi Global Market</p>
-                    <p className="text-white/80 mb-1">Al Maryah Island</p>
+                    <p className="text-white/80 mb-1">Etihad Towers</p>
+                    <p className="text-white/80 mb-1">Tower 3, Floor 36</p>
                     <p className="text-white/80 mb-1">Abu Dhabi, United Arab Emirates</p>
                     <p className="text-white/70 text-sm mt-3">
                       <Link href="/privacy-policy" className="text-orange hover:underline font-semibold">
@@ -528,9 +528,14 @@ export default function CookiePolicy() {
                     <li>• <strong>ePrivacy Directive:</strong> Directive 2002/58/EC (as amended by Directive 2009/136/EC)</li>
                     <li>• <strong>PECR:</strong> Privacy and Electronic Communications Regulations 2003 (UK)</li>
                     <li>• <strong>UAE Federal Law:</strong> Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data</li>
-                    <li>• <strong>ADGM:</strong> Abu Dhabi Global Market Data Protection Regulations 2021</li>
+                    <li>• <strong>Ministry of Economy:</strong> UAE Ministry of Economy Regulations and ADRA Licensing Requirements</li>
                     <li>• <strong>Cookie Law:</strong> EU Cookie Directive compliance</li>
                   </ul>
+                  <div className="border-t border-white/20 my-4" />
+                  <p className="text-white/70 text-xs leading-relaxed">
+                    <strong>Business License:</strong> The Orange Code operates under a freelance license issued by the Abu Dhabi Registration Authority (ADRA) 
+                    under the UAE Ministry of Economic Development.
+                  </p>
                   <div className="border-t border-white/20 my-4" />
                   <p className="text-white/70 text-xs leading-relaxed">
                     The Orange Code is committed to transparency in our use of cookies and tracking technologies. This policy provides 
