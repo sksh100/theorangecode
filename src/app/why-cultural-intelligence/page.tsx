@@ -1,11 +1,15 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 import { CulturalIntelligenceImpactChart } from '@/components/CulturalIntelligenceImpactChart'
 import { TrendingUp, Users, Globe, Target, CheckCircle, ArrowRight, BarChart3, Lightbulb, Shield, Zap, Heart } from 'lucide-react'
 import Image from 'next/image'
+
+// Dynamically import 3D component to avoid SSR issues
+const CultureMap3D = dynamic(() => import('@/components/CultureMap3D'), { ssr: false })
 
 export default function WhyCulturalIntelligencePage() {
   const containerVariants = {
@@ -207,22 +211,15 @@ export default function WhyCulturalIntelligencePage() {
                   </h2>
                 </div>
                 
-                {/* Video Placeholder */}
+                {/* 3D Cultural Map */}
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="relative w-full aspect-video rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/5 to-white/0"
+                  transition={{ duration: 0.8 }}
+                  className="my-8"
                 >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center mx-auto mb-4">
-                        <Zap className="w-10 h-10 text-white/30" />
-                      </div>
-                      <p className="text-white/50 text-sm">Video Placeholder</p>
-                      <p className="text-white/40 text-xs mt-2">Leadership styles across cultures</p>
-                    </div>
-                  </div>
+                  <CultureMap3D />
                 </motion.div>
 
                 <p className="text-lg leading-relaxed text-white/80">
