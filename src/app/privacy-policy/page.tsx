@@ -83,9 +83,17 @@ export default function PrivacyPolicy() {
                   <AlertTriangle className="w-6 h-6 text-azure-blue" />
                   <h3 className="text-xl font-bold text-white">Privacy Notice</h3>
                 </div>
-                <p className="text-white/80 leading-relaxed">
-                  This Privacy Policy explains how The Orange Code collects, uses, and protects your personal information in compliance with UAE Federal Law No. 2 of 2019 
-                  and Dubai Law No. 26 of 2007. Your privacy is our priority.
+                <p className="text-white/80 leading-relaxed mb-3">
+                  This Privacy Policy explains how The Orange Code ("we," "us," or "our") collects, uses, processes, and protects your personal data in compliance with:
+                </p>
+                <ul className="text-white/70 text-sm space-y-1 ml-4">
+                  <li>• <strong>GDPR:</strong> EU General Data Protection Regulation (EU) 2016/679</li>
+                  <li>• <strong>UAE Law:</strong> Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data</li>
+                  <li>• <strong>ADGM:</strong> Abu Dhabi Global Market Data Protection Regulations 2021</li>
+                  <li>• <strong>ePrivacy Directive:</strong> Directive 2002/58/EC (as amended)</li>
+                </ul>
+                <p className="text-white/80 leading-relaxed mt-3">
+                  Your privacy and data protection rights are our priority. This policy is transparent, clear, and explains your rights under applicable data protection laws.
                 </p>
               </div>
 
@@ -148,8 +156,59 @@ export default function PrivacyPolicy() {
               </div>
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
+                <Shield className="w-8 h-8 text-light-blue" />
+                3. Legal Basis for Processing (GDPR Article 6)
+              </h2>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                Under GDPR, we process your personal data based on the following legal grounds:
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <div className="bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl p-4">
+                  <h4 className="text-white font-semibold mb-2">Consent (Art. 6(1)(a))</h4>
+                  <ul className="text-white/70 text-sm space-y-1">
+                    <li>• Marketing communications and newsletters</li>
+                    <li>• Optional cookies (analytics, marketing)</li>
+                    <li>• Participation in surveys or research</li>
+                  </ul>
+                </div>
+                <div className="bg-gradient-to-r from-bright-blue/10 to-bright-blue/5 border border-bright-blue/20 rounded-xl p-4">
+                  <h4 className="text-white font-semibold mb-2">Contract Performance (Art. 6(1)(b))</h4>
+                  <ul className="text-white/70 text-sm space-y-1">
+                    <li>• Delivering masterclasses and training</li>
+                    <li>• Processing payments and bookings</li>
+                    <li>• Providing customer support</li>
+                  </ul>
+                </div>
+                <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl p-4">
+                  <h4 className="text-white font-semibold mb-2">Legal Obligation (Art. 6(1)(c))</h4>
+                  <ul className="text-white/70 text-sm space-y-1">
+                    <li>• Tax and accounting records</li>
+                    <li>• Regulatory compliance (UAE law)</li>
+                    <li>• Anti-money laundering checks</li>
+                  </ul>
+                </div>
+                <div className="bg-gradient-to-r from-light-blue/10 to-light-blue/5 border border-light-blue/20 rounded-xl p-4">
+                  <h4 className="text-white font-semibold mb-2">Legitimate Interests (Art. 6(1)(f))</h4>
+                  <ul className="text-white/70 text-sm space-y-1">
+                    <li>• Fraud prevention and security</li>
+                    <li>• Business analytics and improvements</li>
+                    <li>• Network and information security</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-azure-blue/10 to-bright-blue/10 border border-azure-blue/30 rounded-2xl p-6 mb-8">
+                <p className="text-white/80 text-sm leading-relaxed">
+                  <strong>Your Right to Withdraw Consent:</strong> Where we rely on consent, you have the right to withdraw it at any time. 
+                  This will not affect the lawfulness of processing based on consent before its withdrawal. Contact us at legal@theorangecode.com 
+                  to withdraw consent.
+                </p>
+              </div>
+
+              <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <Users className="w-8 h-8 text-bright-blue" />
-                3. Information Sharing & Disclosure
+                4. Information Sharing & Disclosure
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
                 We do not sell, trade, or rent your personal information. We may share information only in the following circumstances:
@@ -178,7 +237,7 @@ export default function PrivacyPolicy() {
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <Database className="w-8 h-8 text-azure-blue" />
-                4. Third-Party Services & Data Processors
+                5. Third-Party Services & Data Processors
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
                 We use trusted third-party services to operate our website and provide services. These services may process your personal 
@@ -342,7 +401,7 @@ export default function PrivacyPolicy() {
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <Shield className="w-8 h-8 text-azure-blue" />
-                5. Data Security & Protection
+                6. Data Security & Protection
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
                 We implement comprehensive security measures to protect your personal information:
@@ -371,10 +430,10 @@ export default function PrivacyPolicy() {
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <UserCheck className="w-8 h-8 text-orange" />
-                6. Your Data Protection Rights
+                7. Your Data Protection Rights (GDPR Articles 12-23 & UAE Law)
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                Under UAE data protection laws, you have the following rights:
+                Under GDPR and UAE Federal Decree-Law No. 45 of 2021, you have the following data protection rights:
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
@@ -382,22 +441,29 @@ export default function PrivacyPolicy() {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-orange rounded-full mt-3 flex-shrink-0" />
                     <div>
-                      <p className="text-white font-semibold">Right to Access</p>
-                      <p className="text-white/70 text-sm">Request copies of your personal data</p>
+                      <p className="text-white font-semibold">Right to Access (Art. 15)</p>
+                      <p className="text-white/70 text-sm">Request copies of your personal data and information about processing</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-orange rounded-full mt-3 flex-shrink-0" />
                     <div>
-                      <p className="text-white font-semibold">Right to Rectification</p>
-                      <p className="text-white/70 text-sm">Correct inaccurate or incomplete data</p>
+                      <p className="text-white font-semibold">Right to Rectification (Art. 16)</p>
+                      <p className="text-white/70 text-sm">Correct inaccurate or incomplete data without undue delay</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-orange rounded-full mt-3 flex-shrink-0" />
                     <div>
-                      <p className="text-white font-semibold">Right to Erasure</p>
-                      <p className="text-white/70 text-sm">Request deletion of your data</p>
+                      <p className="text-white font-semibold">Right to Erasure (Art. 17)</p>
+                      <p className="text-white/70 text-sm">Request deletion of your data ("Right to be Forgotten")</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-orange rounded-full mt-3 flex-shrink-0" />
+                    <div>
+                      <p className="text-white font-semibold">Right to Restriction (Art. 18)</p>
+                      <p className="text-white/70 text-sm">Limit processing of your data under certain conditions</p>
                     </div>
                   </div>
                 </div>
@@ -405,30 +471,50 @@ export default function PrivacyPolicy() {
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-orange rounded-full mt-3 flex-shrink-0" />
                     <div>
-                      <p className="text-white font-semibold">Right to Restriction</p>
-                      <p className="text-white/70 text-sm">Limit processing of your data</p>
+                      <p className="text-white font-semibold">Right to Data Portability (Art. 20)</p>
+                      <p className="text-white/70 text-sm">Receive your data in a structured, machine-readable format</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-orange rounded-full mt-3 flex-shrink-0" />
                     <div>
-                      <p className="text-white font-semibold">Right to Portability</p>
-                      <p className="text-white/70 text-sm">Transfer your data to another service</p>
+                      <p className="text-white font-semibold">Right to Object (Art. 21)</p>
+                      <p className="text-white/70 text-sm">Object to processing based on legitimate interests or direct marketing</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-orange rounded-full mt-3 flex-shrink-0" />
                     <div>
-                      <p className="text-white font-semibold">Right to Object</p>
-                      <p className="text-white/70 text-sm">Object to processing for marketing</p>
+                      <p className="text-white font-semibold">Right to Withdraw Consent</p>
+                      <p className="text-white/70 text-sm">Withdraw consent at any time where processing is based on consent</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-orange rounded-full mt-3 flex-shrink-0" />
+                    <div>
+                      <p className="text-white font-semibold">Right to Lodge a Complaint</p>
+                      <p className="text-white/70 text-sm">File a complaint with a supervisory authority (see Section 11)</p>
                     </div>
                   </div>
                 </div>
               </div>
 
+              <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-2xl p-6 mb-8">
+                <h4 className="text-white font-semibold mb-3">How to Exercise Your Rights</h4>
+                <p className="text-white/80 text-sm leading-relaxed mb-3">
+                  To exercise any of these rights, please contact our Data Protection Officer at <a href="mailto:legal@theorangecode.com" className="text-orange hover:underline">legal@theorangecode.com</a> or call +971 56 878 6106.
+                </p>
+                <ul className="text-white/70 text-sm space-y-2">
+                  <li>• We will respond to your request within <strong>30 days</strong> (GDPR) or as required by UAE law</li>
+                  <li>• We may request additional information to verify your identity before processing your request</li>
+                  <li>• Exercising your rights is <strong>free of charge</strong>, unless requests are manifestly unfounded or excessive</li>
+                  <li>• We will inform you if we cannot comply with your request and provide reasons</li>
+                </ul>
+              </div>
+
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <Globe className="w-8 h-8 text-bright-blue" />
-                7. Cookies & Tracking Technologies
+                8. Cookies & Tracking Technologies
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
                 We use cookies and similar technologies to enhance your experience. You can control cookie preferences through our cookie banner or browser settings. 
@@ -457,7 +543,7 @@ export default function PrivacyPolicy() {
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <FileText className="w-8 h-8 text-azure-blue" />
-                8. Data Retention & Storage
+                9. Data Retention & Storage
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
                 We retain your personal information only as long as necessary for the purposes outlined in this policy:
@@ -482,15 +568,143 @@ export default function PrivacyPolicy() {
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <Lock className="w-8 h-8 text-orange" />
-                9. International Data Transfers
+                10. International Data Transfers (GDPR Chapter V)
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                Your data is primarily stored and processed within the UAE. Any international transfers are conducted with appropriate safeguards and in compliance with UAE data protection laws.
+                Your data is primarily stored and processed within the UAE and EU. When we transfer personal data outside the UAE or EU, we ensure adequate protection through:
               </p>
+              
+              <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-2xl p-6 mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="text-white font-semibold mb-3">GDPR Safeguards</h4>
+                    <ul className="text-white/70 text-sm space-y-2">
+                      <li>• Standard Contractual Clauses (SCCs) approved by the EU Commission</li>
+                      <li>• Data Processing Agreements (DPAs) with all third-party processors</li>
+                      <li>• Adequacy decisions where applicable</li>
+                      <li>• Binding Corporate Rules (BCRs) for intra-group transfers</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold mb-3">UAE Requirements</h4>
+                    <ul className="text-white/70 text-sm space-y-2">
+                      <li>• Compliance with Federal Decree-Law No. 45 of 2021</li>
+                      <li>• Authorization from competent authorities where required</li>
+                      <li>• Contractual obligations ensuring data protection</li>
+                      <li>• Technical and organizational security measures</li>
+                    </ul>
+                  </div>
+                </div>
+                <p className="text-white/80 text-sm mt-4">
+                  <strong>Data Transfer Countries:</strong> USA (Google, Stripe, Vercel, Resend), Lithuania/EU (MailerLite). 
+                  All transfers are protected by SCCs and appropriate safeguards.
+                </p>
+              </div>
+
+              <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
+                <AlertTriangle className="w-8 h-8 text-azure-blue" />
+                11. Automated Decision-Making & Profiling (GDPR Article 22)
+              </h2>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                We do not engage in automated decision-making or profiling that produces legal effects or similarly significantly affects you. 
+                Any analytics or personalization is for improving service quality and does not result in automated decisions about your eligibility 
+                for services, pricing, or other significant outcomes.
+              </p>
+
+              <div className="bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-2xl p-6 mb-8">
+                <p className="text-white/80 text-sm">
+                  If we introduce automated decision-making in the future, we will: (1) notify you, (2) obtain your explicit consent where required, 
+                  (3) provide meaningful information about the logic involved, and (4) give you the right to human intervention, express your point 
+                  of view, and contest the decision.
+                </p>
+              </div>
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <Shield className="w-8 h-8 text-bright-blue" />
-                10. Contact Information
+                12. Data Breach Notification
+              </h2>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                In the unlikely event of a personal data breach, we will:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <div className="bg-gradient-to-r from-bright-blue/10 to-bright-blue/5 border border-bright-blue/20 rounded-xl p-4">
+                  <h4 className="text-white font-semibold mb-2">GDPR Obligations</h4>
+                  <ul className="text-white/70 text-sm space-y-1">
+                    <li>• Notify the supervisory authority within 72 hours</li>
+                    <li>• Notify affected individuals without undue delay if high risk</li>
+                    <li>• Document the breach and our response</li>
+                    <li>• Implement measures to address the breach</li>
+                  </ul>
+                </div>
+                <div className="bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl p-4">
+                  <h4 className="text-white font-semibold mb-2">UAE Requirements</h4>
+                  <ul className="text-white/70 text-sm space-y-1">
+                    <li>• Notify UAE Data Office as required by law</li>
+                    <li>• Inform affected individuals promptly</li>
+                    <li>• Take corrective and preventive measures</li>
+                    <li>• Cooperate with authorities</li>
+                  </ul>
+                </div>
+              </div>
+
+              <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
+                <Globe className="w-8 h-8 text-orange" />
+                13. Children's Privacy
+              </h2>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                Our services are not directed to children under the age of 16 (GDPR) or 18 (UAE law). We do not knowingly collect personal 
+                data from children. If you are a parent or guardian and believe your child has provided us with personal data, please contact 
+                us immediately at legal@theorangecode.com, and we will delete such information from our systems.
+              </p>
+
+              <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
+                <Database className="w-8 h-8 text-light-blue" />
+                14. Supervisory Authorities & Complaints
+              </h2>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                If you are located in the EU/EEA or UAE, you have the right to lodge a complaint with a supervisory authority:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <div className="bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl p-6">
+                  <h4 className="text-white font-semibold mb-3">EU/EEA Residents</h4>
+                  <p className="text-white/80 text-sm mb-2">
+                    You may lodge a complaint with your local data protection authority. Find your authority at:
+                  </p>
+                  <a 
+                    href="https://edpb.europa.eu/about-edpb/about-edpb/members_en" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-orange hover:underline text-sm"
+                  >
+                    European Data Protection Board - Member List
+                  </a>
+                </div>
+                <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl p-6">
+                  <h4 className="text-white font-semibold mb-3">UAE Residents</h4>
+                  <p className="text-white/80 text-sm mb-2">
+                    <strong>UAE Data Office</strong><br/>
+                    Telecommunications and Digital Government Regulatory Authority (TDRA)<br/>
+                    Email: dataoffice@tdra.gov.ae<br/>
+                    Website: <a href="https://tdra.gov.ae" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">tdra.gov.ae</a>
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-r from-azure-blue/10 to-bright-blue/10 border border-azure-blue/30 rounded-2xl p-6 mb-8">
+                <h4 className="text-white font-semibold mb-3">ADGM Residents</h4>
+                <p className="text-white/80 text-sm">
+                  <strong>Office of Data Protection - Abu Dhabi Global Market</strong><br/>
+                  Al Maryah Island, Abu Dhabi, UAE<br/>
+                  Email: dataprotection@adgm.com<br/>
+                  Website: <a href="https://www.adgm.com/operating-in-adgm/office-of-data-protection" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">ADGM Data Protection</a>
+                </p>
+              </div>
+
+              <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
+                <Shield className="w-8 h-8 text-bright-blue" />
+                15. Contact Information & Data Protection Officer
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
                 For privacy-related questions or to exercise your rights, contact our Data Protection Officer:
@@ -513,16 +727,61 @@ export default function PrivacyPolicy() {
                 </div>
               </div>
 
-              <div className="mt-12 p-6 bg-gradient-to-r from-azure-blue/10 to-bright-blue/10 border border-azure-blue/30 rounded-2xl">
+              <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
+                <FileText className="w-8 h-8 text-azure-blue" />
+                16. Changes to This Privacy Policy
+              </h2>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                We may update this Privacy Policy from time to time to reflect changes in our practices, legal requirements, or operational needs. 
+                When we make material changes, we will:
+              </p>
+
+              <div className="bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-2xl p-6 mb-8">
+                <ul className="text-white/80 text-sm space-y-2">
+                  <li>• Post the updated policy on our website with a new "Last Updated" date</li>
+                  <li>• Notify you by email if you have an account with us</li>
+                  <li>• Display a prominent notice on our website</li>
+                  <li>• Obtain your consent if required by law (e.g., for new processing purposes)</li>
+                </ul>
+                <p className="text-white/70 text-sm mt-4">
+                  We encourage you to review this Privacy Policy periodically. Continued use of our services after changes constitutes 
+                  acceptance of the updated policy, unless your consent is required by law.
+                </p>
+              </div>
+
+              <div className="mt-12 p-8 bg-gradient-to-r from-azure-blue/10 to-bright-blue/10 border border-azure-blue/30 rounded-2xl">
                 <div className="flex items-center gap-3 mb-4">
                   <Shield className="w-6 h-6 text-azure-blue" />
-                  <h4 className="text-xl font-bold text-white">Legal Compliance</h4>
+                  <h4 className="text-xl font-bold text-white">Legal Compliance & Certifications</h4>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
-                  <strong>Last Updated:</strong> December 2025<br/>
-                  This policy complies with UAE Federal Law No. 2 of 2019 on the Use of Information and Communication Technology in the Areas of Health, 
-                  Abu Dhabi Law No. 4 of 2013 (Abu Dhabi Global Market), and international data protection standards.
-                </p>
+                <div className="space-y-3">
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    <strong>Last Updated:</strong> {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </p>
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    <strong>Effective Date:</strong> {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </p>
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    <strong>Version:</strong> 2.0
+                  </p>
+                  <div className="border-t border-white/20 my-4" />
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    <strong>This Privacy Policy complies with:</strong>
+                  </p>
+                  <ul className="text-white/70 text-sm space-y-1 ml-4">
+                    <li>• <strong>GDPR:</strong> EU General Data Protection Regulation (EU) 2016/679</li>
+                    <li>• <strong>ePrivacy Directive:</strong> Directive 2002/58/EC (as amended by Directive 2009/136/EC)</li>
+                    <li>• <strong>UAE Federal Law:</strong> Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data</li>
+                    <li>• <strong>ADGM:</strong> Abu Dhabi Global Market Data Protection Regulations 2021</li>
+                    <li>• <strong>DIFC:</strong> Dubai International Financial Centre Data Protection Law No. 5 of 2020 (where applicable)</li>
+                    <li>• <strong>PCI DSS:</strong> Payment Card Industry Data Security Standard (via Stripe)</li>
+                  </ul>
+                  <div className="border-t border-white/20 my-4" />
+                  <p className="text-white/70 text-xs leading-relaxed">
+                    The Orange Code is committed to maintaining the highest standards of data protection and privacy. This policy reflects 
+                    our commitment to transparency, accountability, and respect for individual privacy rights under international and local laws.
+                  </p>
+                </div>
               </div>
             </motion.div>
           </div>
