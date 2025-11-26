@@ -224,9 +224,10 @@ export default function TermsConditions() {
                   </div>
                   <div>
                     <p className="text-white font-bold text-xl mb-2">Business Address</p>
-                    <p className="text-white/80 mb-1">Abu Dhabi Global Market</p>
+                    <p className="text-white/80 mb-1">Etihad Towers</p>
+                    <p className="text-white/80 mb-1">Tower 3, Floor 36</p>
                     <p className="text-white/80 mb-1">Abu Dhabi, United Arab Emirates</p>
-                    <p className="text-white/80 mb-1">License: [UAE Business License Number]</p>
+                    <p className="text-white/80 mb-1">License No: ON-4296787</p>
                   </div>
                 </div>
               </div>
@@ -234,13 +235,21 @@ export default function TermsConditions() {
               <div className="mt-12 p-6 bg-gradient-to-r from-orange/10 to-bright-blue/10 border border-orange/30 rounded-2xl">
                 <div className="flex items-center gap-3 mb-4">
                   <Shield className="w-6 h-6 text-orange" />
-                  <h4 className="text-xl font-bold text-white">Legal Compliance</h4>
+                  <h4 className="text-xl font-bold text-white">Business License & Legal Compliance</h4>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
-                  <strong>Last Updated:</strong> December 2025<br/>
-                  These terms are compliant with UAE Federal Law No. 2 of 2019 (Commercial Companies Law), 
-                  Abu Dhabi Law No. 4 of 2013 (Abu Dhabi Global Market), and UAE Federal Law No. 5 of 1985 (Civil Transactions Law).
-                </p>
+                <div className="space-y-3">
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    <strong>Business License:</strong> The Orange Code operates under a freelance license issued by the Abu Dhabi Registration Authority (ADRA) 
+                    under the UAE Ministry of Economic Development.<br/>
+                    <strong>License Number:</strong> ON-4296787
+                  </p>
+                  <div className="border-t border-white/20 my-3" />
+                  <p className="text-white/80 text-sm leading-relaxed">
+                    <strong>Last Updated:</strong> {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}<br/>
+                    These terms are compliant with UAE Federal Law No. 2 of 2019 (Commercial Companies Law), 
+                    UAE Ministry of Economy Regulations, and UAE Federal Law No. 5 of 1985 (Civil Transactions Law).
+                  </p>
+                </div>
               </div>
             </motion.div>
           </div>

@@ -836,11 +836,6 @@ export default function PrivacyPolicy() {
                   </ul>
                   <div className="border-t border-white/20 my-4" />
                   <p className="text-white/70 text-xs leading-relaxed">
-                    <strong>Business License:</strong> The Orange Code operates under a freelance license issued by the Abu Dhabi Registration Authority (ADRA) 
-                    under the UAE Ministry of Economic Development.
-                  </p>
-                  <div className="border-t border-white/20 my-4" />
-                  <p className="text-white/70 text-xs leading-relaxed">
                     The Orange Code is committed to maintaining the highest standards of data protection and privacy. This policy reflects 
                     our commitment to transparency, accountability, and respect for individual privacy rights under international and local laws.
                   </p>
