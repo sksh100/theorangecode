@@ -126,27 +126,9 @@ export default function PrivacyPolicy() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/30 rounded-2xl p-6 mb-8">
-                <div className="flex items-center gap-3 mb-3">
-                  <Lock className="w-6 h-6 text-orange" />
-                  <h3 className="text-xl font-bold text-white">Important: Payment Information</h3>
-                </div>
-                <p className="text-white/80 leading-relaxed mb-3">
-                  <strong>We do NOT collect, store, or process your payment card information.</strong> All payment transactions are processed 
-                  securely through our third-party payment processor, Stripe, Inc. When you make a payment:
-                </p>
-                <ul className="text-white/70 text-sm space-y-2 ml-4">
-                  <li>• Your payment card details (card number, CVV, expiration date) are entered directly into Stripe's secure payment form</li>
-                  <li>• Payment information is transmitted directly to Stripe using industry-standard encryption (TLS/SSL)</li>
-                  <li>• We never have access to your full card details - only transaction confirmation and billing information</li>
-                  <li>• Stripe is PCI DSS Level 1 certified, the highest level of payment security certification</li>
-                  <li>• We only receive transaction IDs, payment status, and billing email from Stripe</li>
-                </ul>
-                <p className="text-white/70 text-sm mt-3">
-                  For more information about how Stripe handles your payment data, please see{' '}
-                  <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
-                    Stripe's Privacy Policy
-                  </a>.
+              <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-8">
+                <p className="text-white/80 text-sm">
+                  <strong>Payment Processing:</strong> All payment card information is securely processed by Stripe. We do not store or have access to your full payment card details.
                 </p>
               </div>
 
@@ -423,50 +405,6 @@ export default function PrivacyPolicy() {
                 </ul>
               </div>
 
-              <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/30 rounded-2xl p-6 mb-8">
-                <div className="flex items-center gap-3 mb-3">
-                  <AlertTriangle className="w-6 h-6 text-orange" />
-                  <h3 className="text-xl font-bold text-white">Third-Party Services Disclaimer</h3>
-                </div>
-                <p className="text-white/80 leading-relaxed mb-3">
-                  <strong>Limitation of Liability for Third-Party Data Breaches:</strong> While we carefully select and vet all third-party 
-                  service providers and require them to maintain high security standards, we cannot and do not guarantee the absolute security 
-                  of data processed by third-party services.
-                </p>
-                <p className="text-white/80 leading-relaxed mb-3">
-                  <strong>Third-Party Responsibility:</strong> Each third-party service provider (including but not limited to Google Analytics, 
-                  Stripe, Vercel, Resend, MailerLite, and Upstash) is independently responsible for:
-                </p>
-                <ul className="text-white/70 text-sm space-y-2 ml-4 mb-3">
-                  <li>• The security and protection of data they process on our behalf</li>
-                  <li>• Any data breaches, unauthorized access, or security incidents within their systems</li>
-                  <li>• Compliance with their own privacy policies and data protection obligations</li>
-                  <li>• Notification and remediation of any security incidents affecting their infrastructure</li>
-                </ul>
-                <p className="text-white/80 leading-relaxed mb-3">
-                  <strong>No Liability:</strong> The Orange Code shall not be held liable for any damages, losses, or unauthorized disclosure 
-                  of personal data resulting from:
-                </p>
-                <ul className="text-white/70 text-sm space-y-2 ml-4 mb-3">
-                  <li>• Security breaches or data breaches occurring within third-party service provider systems</li>
-                  <li>• Unauthorized access to third-party infrastructure beyond our control</li>
-                  <li>• Failures of third-party security measures, encryption, or access controls</li>
-                  <li>• Acts or omissions of third-party service providers</li>
-                  <li>• Force majeure events affecting third-party services</li>
-                </ul>
-                <p className="text-white/80 leading-relaxed">
-                  <strong>Your Acknowledgment:</strong> By using our services, you acknowledge and agree that we use third-party services 
-                  as described in this policy, and you accept that these third parties have independent responsibility for the security of 
-                  data they process. We will cooperate fully in investigating and responding to any third-party security incidents that may 
-                  affect your personal data and will notify affected users in accordance with applicable data protection laws.
-                </p>
-                <p className="text-white/70 text-sm mt-4">
-                  <strong>Note:</strong> This limitation does not affect our obligations under applicable data protection laws, including 
-                  our duty to select appropriate processors, ensure adequate contractual protections, and notify authorities and affected 
-                  individuals of personal data breaches where required by law.
-                </p>
-              </div>
-
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <Shield className="w-8 h-8 text-azure-blue" />
                 6. Data Security & Protection
@@ -670,65 +608,8 @@ export default function PrivacyPolicy() {
               </div>
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
-                <AlertTriangle className="w-8 h-8 text-azure-blue" />
-                11. Automated Decision-Making & Profiling (GDPR Article 22)
-              </h2>
-              <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                We do not engage in automated decision-making or profiling that produces legal effects or similarly significantly affects you. 
-                Any analytics or personalization is for improving service quality and does not result in automated decisions about your eligibility 
-                for services, pricing, or other significant outcomes.
-              </p>
-
-              <div className="bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-2xl p-6 mb-8">
-                <p className="text-white/80 text-sm">
-                  If we introduce automated decision-making in the future, we will: (1) notify you, (2) obtain your explicit consent where required, 
-                  (3) provide meaningful information about the logic involved, and (4) give you the right to human intervention, express your point 
-                  of view, and contest the decision.
-                </p>
-              </div>
-
-              <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
-                <Shield className="w-8 h-8 text-bright-blue" />
-                12. Data Breach Notification
-              </h2>
-              <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                In the unlikely event of a personal data breach, we will:
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                <div className="bg-gradient-to-r from-bright-blue/10 to-bright-blue/5 border border-bright-blue/20 rounded-xl p-4">
-                  <h4 className="text-white font-semibold mb-2">GDPR Obligations</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
-                    <li>• Notify the supervisory authority within 72 hours</li>
-                    <li>• Notify affected individuals without undue delay if high risk</li>
-                    <li>• Document the breach and our response</li>
-                    <li>• Implement measures to address the breach</li>
-                  </ul>
-                </div>
-                <div className="bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl p-4">
-                  <h4 className="text-white font-semibold mb-2">UAE Requirements</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
-                    <li>• Notify UAE Data Office as required by law</li>
-                    <li>• Inform affected individuals promptly</li>
-                    <li>• Take corrective and preventive measures</li>
-                    <li>• Cooperate with authorities</li>
-                  </ul>
-                </div>
-              </div>
-
-              <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
-                <Globe className="w-8 h-8 text-orange" />
-                13. Children's Privacy
-              </h2>
-              <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                Our services are not directed to children under the age of 16 (GDPR) or 18 (UAE law). We do not knowingly collect personal 
-                data from children. If you are a parent or guardian and believe your child has provided us with personal data, please contact 
-                us immediately at legal@theorangecode.com, and we will delete such information from our systems.
-              </p>
-
-              <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <Database className="w-8 h-8 text-light-blue" />
-                14. Supervisory Authorities & Complaints
+                11. Supervisory Authorities & Complaints
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
                 If you are located in the EU/EEA or UAE, you have the right to lodge a complaint with a supervisory authority:
@@ -762,7 +643,7 @@ export default function PrivacyPolicy() {
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <Shield className="w-8 h-8 text-bright-blue" />
-                15. Contact Information & Data Protection Officer
+                12. Contact Information
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
                 For privacy related questions feel free to contact us.
@@ -788,7 +669,7 @@ export default function PrivacyPolicy() {
 
               <h2 className="text-3xl font-bold text-white mb-6 mt-16 flex items-center gap-4">
                 <FileText className="w-8 h-8 text-azure-blue" />
-                16. Changes to This Privacy Policy
+                13. Changes to This Privacy Policy
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
                 We may update this Privacy Policy from time to time to reflect changes in our practices, legal requirements, or operational needs. 
