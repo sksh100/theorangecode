@@ -786,7 +786,7 @@ export default function PrivacyPolicy() {
                 </div>
               </div>
 
-              <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
+              <h2 className="text-3xl font-bold text-white mb-6 mt-16 flex items-center gap-4">
                 <FileText className="w-8 h-8 text-azure-blue" />
                 16. Changes to This Privacy Policy
               </h2>
