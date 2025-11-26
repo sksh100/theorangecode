@@ -44,7 +44,7 @@ export default function CultureMap3D() {
       { name: "Germany", x: -3.3, y: 1.8, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
       { name: "Denmark", x: -3.0, y: 1.4, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
       
-      // Australia slightly to the right and clearly higher than Netherlands
+      // Australia slightly to the right and higher than Netherlands (as you wanted)
       { name: "Australia", x: -0.4, y: 2.3, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
       
       // Around and to the right of the vertical axis, top right
@@ -53,26 +53,28 @@ export default function CultureMap3D() {
       { name: "UK", x: 1.7, y: 1.0, region: 'westernNorthAmerica', baselineY: 0, baselineZ: 8 },
       
       // Bottom left: high-context but still direct
-      { name: "Israel", x: -3.1, y: -0.2, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
-      { name: "Russia", x: -3.4, y: -0.7, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
+      // In Erin's map Israel is to the LEFT of Russia and slightly higher
+      { name: "Israel", x: -3.7, y: -0.2, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
+      { name: "Russia", x: -3.2, y: -0.7, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
       { name: "Spain", x: -2.6, y: -0.8, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
       { name: "France", x: -2.2, y: -1.1, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
       
-      // Italy is lower and to the right of France, but still left of the vertical axis
+      // Italy lower and a bit to the right of France, but still left of the vertical axis
       { name: "Italy", x: -1.2, y: -1.9, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
       
-      // Middle right: Latin America cluster
-      { name: "Brazil", x: 2.3, y: 0.1, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
-      { name: "Argentina", x: 2.5, y: -0.3, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
-      { name: "Mexico", x: 2.7, y: -0.6, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
+      // Middle right: Latin America cluster (a little right of the axis, slight downward diagonal)
+      { name: "Brazil", x: 2.4, y: 0.3, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
+      { name: "Argentina", x: 2.7, y: 0.0, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
+      { name: "Mexico", x: 3.0, y: -0.3, region: 'mediterraneanLatin', baselineY: 0, baselineZ: 8 },
       
-      // Bottom right arc: Middle East and Asia
-      { name: "India", x: 3.0, y: -0.8, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
-      { name: "Saudi Arabia", x: 3.3, y: -0.9, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
-      { name: "Kenya", x: 2.8, y: -1.1, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
-      { name: "China", x: 2.9, y: -1.5, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
-      { name: "Thailand", x: 3.3, y: -1.7, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
-      { name: "Japan", x: 3.6, y: -1.8, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 }
+      // Bottom-right arc: Middle East and Asia
+      // Pushed further right and slightly down, following Erin's curve
+      { name: "India", x: 3.2, y: -0.7, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "Saudi Arabia", x: 3.6, y: -0.7, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "Kenya", x: 3.0, y: -1.0, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "China", x: 3.3, y: -1.4, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "Thailand", x: 3.6, y: -1.6, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "Japan", x: 3.9, y: -1.7, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 }
     ]
 
     // Scene setup
@@ -352,11 +354,11 @@ export default function CultureMap3D() {
       'Netherlands': { dy: -4 },
       'Germany': { dy: -2 },
       'Denmark': { dy: 2 },
-      'US': { dx: 0, dy: -10 },   // label just above the dot
-      'Canada': { dx: 0, dy: 10 },   // label just below the dot
+      'US': { dx: 0, dy: -10 },
+      'Canada': { dx: 0, dy: 10 },
       'UK': { dx: -4, dy: -4 },
-      'Israel': { dx: 4, dy: -2 },
-      'Russia': { dy: 2 },
+      'Israel': { dx: 6, dy: -2 },  // pull slightly right so it doesn't sit on the dot
+      'Russia': { dx: 0, dy: 2 },
       'Spain': { dy: 2 },
       'France': { dy: 2 },
       'Italy': { dy: 4 },
