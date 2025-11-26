@@ -8,7 +8,7 @@ interface Country {
   name: string
   x: number
   y: number
-  region: 'western' | 'mediterranean' | 'asia'
+  region: 'western' | 'med' | 'middleEastAsia'
   baselineY: number
   baselineZ: number
 }
@@ -37,33 +37,36 @@ export default function CultureMap3D() {
       white: 0xffffff
     }
 
-    // Country data with regional grouping
+    // Country data with regional grouping - updated positions to match Culture Map figure
     const COUNTRIES: Country[] = [
-      // Western Europe and North America (orange cluster)
-      { name: "Netherlands", x: -4.5, y: 1.5, region: 'western', baselineY: 0, baselineZ: 8 },
-      { name: "Germany", x: -4.0, y: 1.0, region: 'western', baselineY: 0, baselineZ: 8 },
-      { name: "Denmark", x: -3.5, y: 0.5, region: 'western', baselineY: 0, baselineZ: 8 },
-      { name: "US", x: 2.0, y: 1.5, region: 'western', baselineY: 0, baselineZ: 8 },
-      { name: "Canada", x: 2.0, y: 1.0, region: 'western', baselineY: 0, baselineZ: 8 },
-      { name: "UK", x: 1.5, y: 0.2, region: 'western', baselineY: 0, baselineZ: 8 },
+      // Top-left quadrant: Low-Context + Direct Feedback (orange cluster)
+      { name: "Netherlands", x: -4.1, y: 2.0, region: 'western', baselineY: 0, baselineZ: 8 },
+      { name: "Germany", x: -3.7, y: 1.6, region: 'western', baselineY: 0, baselineZ: 8 },
+      { name: "Denmark", x: -3.3, y: 1.2, region: 'western', baselineY: 0, baselineZ: 8 },
+      { name: "Australia", x: -0.6, y: 1.6, region: 'western', baselineY: 0, baselineZ: 8 },
       
-      // Mediterranean and Latin (bright blue cluster)
-      { name: "Israel", x: -4.2, y: -0.3, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
-      { name: "Russia", x: -3.8, y: -0.8, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
-      { name: "Spain", x: -3.0, y: -1.4, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
-      { name: "France", x: -2.5, y: -1.5, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
-      { name: "Italy", x: -1.5, y: -2.0, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
-      { name: "Brazil", x: 1.2, y: -0.5, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
-      { name: "Argentina", x: 1.4, y: -0.7, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
-      { name: "Mexico", x: 1.6, y: -0.9, region: 'mediterranean', baselineY: 0, baselineZ: 8 },
+      // Top-right quadrant: Low-Context + more Indirect (orange cluster)
+      { name: "US", x: 2.8, y: 2.0, region: 'western', baselineY: 0, baselineZ: 8 },
+      { name: "Canada", x: 2.7, y: 1.6, region: 'western', baselineY: 0, baselineZ: 8 },
+      { name: "UK", x: 0.8, y: 1.0, region: 'western', baselineY: 0, baselineZ: 8 },
       
-      // Middle East and Asia (azure blue cluster)
-      { name: "India", x: 3.5, y: -1.5, region: 'asia', baselineY: 0, baselineZ: 8 },
-      { name: "Saudi Arabia", x: 4.0, y: -1.3, region: 'asia', baselineY: 0, baselineZ: 8 },
-      { name: "Kenya", x: 3.0, y: -1.7, region: 'asia', baselineY: 0, baselineZ: 8 },
-      { name: "China", x: 3.5, y: -2.0, region: 'asia', baselineY: 0, baselineZ: 8 },
-      { name: "Thailand", x: 4.2, y: -2.2, region: 'asia', baselineY: 0, baselineZ: 8 },
-      { name: "Japan", x: 4.5, y: -2.5, region: 'asia', baselineY: 0, baselineZ: 8 }
+      // Bottom-left quadrant: High-Context + Direct Feedback (bright blue cluster)
+      { name: "Israel", x: -3.7, y: -0.4, region: 'med', baselineY: 0, baselineZ: 8 },
+      { name: "Russia", x: -3.3, y: -0.8, region: 'med', baselineY: 0, baselineZ: 8 },
+      { name: "Spain", x: -2.3, y: -1.3, region: 'med', baselineY: 0, baselineZ: 8 },
+      { name: "France", x: -1.7, y: -1.4, region: 'med', baselineY: 0, baselineZ: 8 },
+      { name: "Italy", x: -0.5, y: -1.9, region: 'med', baselineY: 0, baselineZ: 8 },
+      
+      // Bottom-right quadrant: High-Context + Indirect Feedback (azure blue cluster)
+      { name: "Brazil", x: 1.2, y: -0.3, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "Argentina", x: 1.4, y: -0.6, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "Mexico", x: 1.6, y: -0.8, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "India", x: 2.7, y: -1.4, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "Saudi Arabia", x: 3.1, y: -1.3, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "Kenya", x: 2.3, y: -1.6, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "China", x: 2.9, y: -2.0, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "Thailand", x: 3.3, y: -2.1, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 },
+      { name: "Japan", x: 3.7, y: -2.2, region: 'middleEastAsia', baselineY: 0, baselineZ: 8 }
     ]
 
     // Scene setup
@@ -156,7 +159,7 @@ export default function CultureMap3D() {
 
     // Create country nodes
     const nodes: THREE.Mesh[] = []
-    const nodeGeometry = new THREE.SphereGeometry(0.35, 32, 32) // Slightly larger for visibility
+    const nodeGeometry = new THREE.SphereGeometry(0.25, 32, 32) // Smaller radius for cleaner look
 
     COUNTRIES.forEach((country) => {
       // Assign color based on region
@@ -166,7 +169,7 @@ export default function CultureMap3D() {
       if (country.region === 'western') {
         nodeColor = COLORS.orange
         emissiveColor = COLORS.orangeLuminous
-      } else if (country.region === 'mediterranean') {
+      } else if (country.region === 'med') {
         nodeColor = COLORS.brightBlue
         emissiveColor = COLORS.azureLuminous
       } else {
@@ -219,7 +222,7 @@ export default function CultureMap3D() {
       label.textContent = country.name
       label.style.position = 'absolute'
       label.style.color = '#ffffff'
-      label.style.fontSize = '11px'
+      label.style.fontSize = '10px'
       label.style.fontWeight = '500'
       label.style.opacity = '0'
       label.style.transition = 'opacity 0.5s'
@@ -311,9 +314,9 @@ export default function CultureMap3D() {
         const x = (vector.x * 0.5 + 0.5) * containerRef.current!.clientWidth
         const y = (-(vector.y * 0.5) + 0.5) * containerRef.current!.clientHeight
         
-        // Position label with offset
-        labels[index].style.left = `${x + 15}px`
-        labels[index].style.top = `${y - 5}px`
+        // Position label with offset (closer since nodes are smaller)
+        labels[index].style.left = `${x + 12}px`
+        labels[index].style.top = `${y - 4}px`
       })
       
       renderer.render(scene, camera)
