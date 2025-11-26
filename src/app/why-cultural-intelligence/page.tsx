@@ -110,7 +110,7 @@ export default function WhyCulturalIntelligencePage() {
                   Success in the UAE and the wider GCC is built on <span className="text-orange font-bold">trust</span>, <span className="text-azure-blue font-bold">clarity</span>, and <span className="text-orange font-bold">respect</span>.
                 </p>
                 <p className="text-lg leading-relaxed text-white/80">
-                  This region brings together more than <span className="text-orange font-semibold">two hundred nationalities</span>. Every day you interact with people shaped by different communication styles, values, leadership expectations, and social behaviours.
+                  Every interaction here is shaped by diverse communication styles, values, leadership expectations, and social behaviours.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
                   <motion.div
@@ -118,7 +118,7 @@ export default function WhyCulturalIntelligencePage() {
                     className="p-6 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm"
                   >
                     <p className="text-white/90 font-semibold">
-                      <span className="text-white">Without cultural intelligence:</span> These differences create misunderstandings that slow progress and weaken relationships.
+                      <span className="text-white">Without cultural intelligence:</span> These differences create confusion that slows progress.
                     </p>
                   </motion.div>
                   <motion.div
@@ -126,7 +126,7 @@ export default function WhyCulturalIntelligencePage() {
                     className="p-6 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm"
                   >
                     <p className="text-white/90 font-semibold">
-                      <span className="text-white">With cultural intelligence:</span> They become an advantage.
+                      <span className="text-white">With cultural intelligence:</span> They turn into an advantage that strengthens relationships and drives meaningful success.
                     </p>
                   </motion.div>
                 </div>
@@ -138,7 +138,7 @@ export default function WhyCulturalIntelligencePage() {
                   <BarChart3 className="w-8 h-8 text-orange" />
                   <h2 className="text-3xl md:text-4xl font-bold">
                     <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                      The Research
+                      Time Perception in the UAE
                     </span>
                   </h2>
                 </div>
@@ -164,7 +164,7 @@ export default function WhyCulturalIntelligencePage() {
 
                 <div className="p-6 rounded-xl bg-white/5 border-l-4 border-white/30 backdrop-blur-sm">
                   <p className="text-white/90 leading-relaxed">
-                    Studies highlight that <span className="text-orange font-semibold">Western professionals often value direct clarity</span>, while many cultures in the Middle East express meaning through <span className="text-azure-blue font-semibold">context, tone, intention, and relationship</span>. Both approaches are valid. They simply follow different cultural rules. Without understanding these rules, meaning gets lost.
+                    Studies have shown that time is perceived very differently across cultures. Many Western countries follow a linear view of time, where schedules stay strict, tasks occur in sequence, and interruptions are avoided. The UAE follows a more flexible view of time, where priorities shift naturally, conversations are not rushed, and relationships carry more weight than the clock. Cultural intelligence helps you understand these differences without judgment, adjust with ease, and move through the region with clarity instead of confusion.
                   </p>
                 </div>
               </motion.div>
@@ -221,7 +221,7 @@ export default function WhyCulturalIntelligencePage() {
                   <TrendingUp className="w-8 h-8 text-orange" />
                   <h2 className="text-3xl md:text-4xl font-bold">
                     <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                      Leadership Expectations
+                      How Cultures Differ in Approaching Confrontation
                     </span>
                   </h2>
                 </div>
@@ -245,11 +245,11 @@ export default function WhyCulturalIntelligencePage() {
                 </motion.div>
 
                 <p className="text-lg leading-relaxed text-white/80">
-                  Research shows that some cultures value <span className="text-orange font-semibold">flat hierarchies and informal interactions</span>, while others expect <span className="text-azure-blue font-semibold">structured decision making, respect for seniority, and clear roles</span>.
+                  Studies have shown that cultures vary greatly in how they approach confrontation. Some societies value open debate, direct feedback, and clear disagreement, even in professional settings. Others prioritise harmony, diplomacy, and emotional awareness, and view direct confrontation as unnecessary or even disrespectful. The UAE aligns more closely with the latter. Communication here is considerate, layered, and guided by respect for relationships. Feedback is often softened, disagreements are expressed subtly, and the goal is to maintain dignity on all sides.
                 </p>
                 <div className="p-6 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
                   <p className="text-white/90 leading-relaxed font-medium">
-                    In the Gulf, leadership often blends <span className="text-white font-bold">professionalism with relational warmth</span>. When expatriates do not recognise this blend, teams may experience tension that has nothing to do with performance and everything to do with cultural expectations.
+                    Cultural intelligence helps you recognise these signals, respond with sensitivity, and communicate effectively without causing tension or misunderstanding.
                   </p>
                 </div>
               </motion.div>
