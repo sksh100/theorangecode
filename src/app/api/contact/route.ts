@@ -25,8 +25,8 @@ export async function POST(request: Request) {
     );
 
     const { error } = await resend.emails.send({
-      from: "The Orange Code <hello@theorangecode.com>",
-      to: ["hello@theorangecode.com", "sksh.ae100@gmail.com"],
+      from: "The Orange Code <contact@theorangecode.com>",
+      to: ["sksh.ae100@gmail.com"], // Send directly to your Gmail
       reply_to: email,
       subject: `New contact form message: ${subject}`,
       html: `
