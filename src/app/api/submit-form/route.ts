@@ -90,17 +90,20 @@ async function addToMailerLite(data: {
     console.log('🔄 Calling MailerLite API with data:', JSON.stringify(subscriberData, null, 2))
     const response = await mailerlite.subscribers.createOrUpdate(subscriberData)
 
+    // Extract subscriber data from response (handle different response structures)
+    const subscriberData_response: any = response.data?.data || response.data || {}
+    
     console.log('✅ Subscriber added to MailerLite successfully:', {
       email: data.email,
-      subscriberId: response.data?.data?.id || response.data?.id || 'unknown',
-      groups: response.data?.data?.groups || response.data?.groups || [],
-      status: response.data?.data?.status || response.data?.status || 'unknown',
-      subscribed_at: response.data?.data?.subscribed_at || response.data?.subscribed_at || 'unknown',
+      subscriberId: subscriberData_response.id || 'unknown',
+      groups: subscriberData_response.groups || [],
+      status: subscriberData_response.status || 'unknown',
+      subscribed_at: subscriberData_response.subscribed_at || 'unknown',
       fullResponse: JSON.stringify(response, null, 2)
     })
     
     // Log automation trigger info
-    const groups = response.data?.data?.groups || response.data?.groups || []
+    const groups = subscriberData_response.groups || []
     const isInGroup = groupId && Array.isArray(groups) && groups.some((g: any) => 
       (typeof g === 'string' && g === groupId) || 
       (typeof g === 'number' && groupId && g === parseInt(groupId)) ||
@@ -114,7 +117,7 @@ async function addToMailerLite(data: {
       groupsType: typeof groups,
       isArray: Array.isArray(groups),
       isInGroup: isInGroup,
-      subscriberStatus: response.data?.data?.status || response.data?.status
+      subscriberStatus: subscriberData_response.status
     })
     
     if (groupId && isInGroup) {
