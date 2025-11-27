@@ -43,12 +43,19 @@ interface VisitorData {
 async function sendToSlack(message: SlackMessage): Promise<boolean> {
   const webhookUrl = process.env.SLACK_WEBHOOK_URL;
 
+  console.log('🔍 Slack webhook status:', {
+    hasWebhook: !!webhookUrl,
+    webhookPrefix: webhookUrl ? webhookUrl.substring(0, 30) + '...' : 'none'
+  });
+
   if (!webhookUrl) {
     console.warn('⚠️ SLACK_WEBHOOK_URL not configured - notification not sent');
     return false;
   }
 
   try {
+    console.log('📤 Sending to Slack...', { messageType: message.blocks?.[0]?.text?.text || 'unknown' });
+    
     const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: {
@@ -57,8 +64,19 @@ async function sendToSlack(message: SlackMessage): Promise<boolean> {
       body: JSON.stringify(message),
     });
 
+    console.log('📥 Slack response:', {
+      status: response.status,
+      statusText: response.statusText,
+      ok: response.ok
+    });
+
     if (!response.ok) {
-      console.error('❌ Slack notification failed:', response.statusText);
+      const errorText = await response.text();
+      console.error('❌ Slack notification failed:', {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorText
+      });
       return false;
     }
 

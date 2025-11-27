@@ -49,9 +49,10 @@ export async function POST(request: Request) {
     }
 
     // Send Slack notification (don't wait for it, fire and forget)
-    notifyContactForm({ name, email, phone, subject, message }).catch((err) =>
-      console.error("Slack notification failed:", err)
-    );
+    console.log("📢 Attempting to send Slack notification for contact form...");
+    notifyContactForm({ name, email, phone, subject, message })
+      .then(() => console.log("✅ Slack notification sent successfully"))
+      .catch((err) => console.error("❌ Slack notification failed:", err));
 
     return NextResponse.json({ ok: true }, { status: 200 });
 
