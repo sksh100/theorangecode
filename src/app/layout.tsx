@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import Script from 'next/script'
 import './globals.css'
 import { VisitorTracker } from '@/components/VisitorTracker'
 import { GoogleAnalytics } from '@/components/GoogleAnalytics'
@@ -239,6 +240,14 @@ export default function RootLayout({
       </head>
       <body style={{ fontFamily: "'Inter', 'Glacial Indifference', sans-serif" }} className="antialiased">
         <GoogleAnalytics />
+        
+        {/* Umami Analytics - Privacy-friendly analytics (EU region) */}
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="bbdc9c5d-f64a-4144-9ccd-37b5d7a692b4"
+          strategy="afterInteractive"
+        />
+        
         {children}
         <VisitorTracker />
         <CookieBanner />
