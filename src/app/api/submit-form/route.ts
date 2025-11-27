@@ -87,39 +87,40 @@ async function addToMailerLite(data: {
     
     // Add subscriber to MailerLite with groups included
     // This triggers the automation when subscriber joins the group
+    console.log('🔄 Calling MailerLite API with data:', JSON.stringify(subscriberData, null, 2))
     const response = await mailerlite.subscribers.createOrUpdate(subscriberData)
 
     console.log('✅ Subscriber added to MailerLite successfully:', {
       email: data.email,
-      subscriberId: response.data?.data?.id || 'unknown',
-      groups: response.data?.data?.groups || [],
-      status: response.data?.data?.status || 'unknown',
-      subscribed_at: response.data?.data?.subscribed_at || 'unknown',
-      fullResponse: JSON.stringify(response.data, null, 2)
+      subscriberId: response.data?.data?.id || response.data?.id || 'unknown',
+      groups: response.data?.data?.groups || response.data?.groups || [],
+      status: response.data?.data?.status || response.data?.status || 'unknown',
+      subscribed_at: response.data?.data?.subscribed_at || response.data?.subscribed_at || 'unknown',
+      fullResponse: JSON.stringify(response, null, 2)
     })
     
     // Log automation trigger info
-    const groups = response.data?.data?.groups || []
+    const groups = response.data?.data?.groups || response.data?.groups || []
     const isInGroup = groupId && Array.isArray(groups) && groups.some((g: any) => 
       (typeof g === 'string' && g === groupId) || 
       (typeof g === 'number' && groupId && g === parseInt(groupId)) ||
       (g?.id && groupId && (g.id.toString() === groupId || g.id === parseInt(groupId)))
     )
     
+    console.log('🔍 MailerLite Group Check:', {
+      email: data.email,
+      expectedGroupId: groupId,
+      actualGroups: groups,
+      groupsType: typeof groups,
+      isArray: Array.isArray(groups),
+      isInGroup: isInGroup,
+      subscriberStatus: response.data?.data?.status || response.data?.status
+    })
+    
     if (groupId && isInGroup) {
-      console.log('✅ Subscriber is in group - automation should trigger:', {
-        email: data.email,
-        groupId: groupId,
-        subscriberStatus: response.data?.data?.status,
-        isInGroup: true
-      })
-    } else {
-      console.warn('⚠️ Subscriber may not be in group - automation may not trigger:', {
-        email: data.email,
-        groupId: groupId,
-        actualGroups: groups,
-        subscriberStatus: response.data?.data?.status
-      })
+      console.log('✅ Subscriber is in group - automation should trigger')
+    } else if (groupId) {
+      console.warn('⚠️ Subscriber may not be in group - automation may not trigger. Check MailerLite dashboard manually.')
     }
     
     return { success: true }
@@ -133,14 +134,26 @@ async function addToMailerLite(data: {
       status: errorStatus,
       statusText: error.response?.statusText,
       details: errorDetails,
+      errorName: error.name,
+      errorCode: error.code,
+      apiKey: process.env.MAILERLITE_API_KEY ? `${process.env.MAILERLITE_API_KEY.substring(0, 8)}...` : 'missing',
       fullError: JSON.stringify(error, null, 2)
     })
     
     // Check if subscriber already exists (not an error, just informational)
     if (errorMessage?.includes('already exists') || errorStatus === 409) {
-      console.log('ℹ️ Subscriber already exists in MailerLite')
+      console.log('ℹ️ Subscriber already exists in MailerLite - treating as success')
       // Still return true as this is not a failure
       return { success: true }
+    }
+    
+    // Check for authentication errors
+    if (errorStatus === 401 || errorStatus === 403) {
+      console.error('🔐 MailerLite Authentication Error - Check API Key')
+      return { 
+        success: false, 
+        error: `Authentication failed (${errorStatus}). Check MAILERLITE_API_KEY.`
+      }
     }
     
     // Don't throw - allow submission to continue even if MailerLite fails
