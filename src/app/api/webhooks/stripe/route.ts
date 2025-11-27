@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { redis } from "@/lib/redis";
 import { sendPushToAll } from "@/lib/webPush";
+import { notifyPayment } from "@/lib/slack";
 
 // Initialize Stripe only if secret key is available
 const getStripe = () => {
@@ -105,6 +106,18 @@ export async function POST(req: NextRequest) {
       }).catch(err => {
         console.error('Push notification error:', err);
         // Don't fail the webhook if push fails
+      });
+
+      // Send Slack notification
+      notifyPayment({
+        customerEmail: email,
+        amount: session.amount_total ?? 0,
+        currency: session.currency ?? "aed",
+        productName: session.metadata?.productName || "Course/Product",
+        stripeChargeId: session.payment_intent as string || session.id
+      }).catch(err => {
+        console.error('Slack notification error:', err);
+        // Don't fail the webhook if Slack fails
       });
 
       console.log('✅ Payment stored in Redis:', payment);

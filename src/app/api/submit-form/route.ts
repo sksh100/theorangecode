@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { kv } from '@vercel/kv'
 import MailerLite from '@mailerlite/mailerlite-nodejs'
 import { sendPushToAll } from '@/lib/webPush'
+import { notifyNewsletterSubscription } from '@/lib/slack'
 
 interface FormData {
   firstName?: string
@@ -268,6 +269,16 @@ export async function POST(request: NextRequest) {
       }).catch(err => {
         console.error('Push notification error:', err);
         // Don't fail the request if push fails
+      });
+
+      // Send Slack notification for new subscriber
+      notifyNewsletterSubscription({
+        email: cleanEmail,
+        name: displayName !== 'Anonymous' ? displayName : undefined,
+        source: finalSource
+      }).catch(err => {
+        console.error('Slack notification error:', err);
+        // Don't fail the request if Slack fails
       });
     } else {
       console.warn('⚠️ MailerLite add failed, but submission will continue')

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-
 import { Resend } from "resend";
+import { notifyContactForm } from "@/lib/slack";
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
@@ -47,6 +47,11 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
+
+    // Send Slack notification (don't wait for it, fire and forget)
+    notifyContactForm({ name, email, phone, subject, message }).catch((err) =>
+      console.error("Slack notification failed:", err)
+    );
 
     return NextResponse.json({ ok: true }, { status: 200 });
 
