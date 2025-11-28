@@ -7,11 +7,13 @@ export async function GET() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.theorangecode.com'
   const logoUrl = `${baseUrl}/logo1.png`
   
-  let logoData: ArrayBuffer | null = null
+  let logoDataUrl: string | null = null
   try {
     const logoResponse = await fetch(logoUrl)
     if (logoResponse.ok) {
-      logoData = await logoResponse.arrayBuffer()
+      const logoBuffer = await logoResponse.arrayBuffer()
+      const base64 = Buffer.from(logoBuffer).toString('base64')
+      logoDataUrl = `data:image/png;base64,${base64}`
     }
   } catch (error) {
     console.error('Failed to load logo:', error)
@@ -52,10 +54,9 @@ export async function GET() {
           }}
         >
           {/* Logo image */}
-          {logoData ? (
-            // @ts-ignore - ImageResponse supports ArrayBuffer
+          {logoDataUrl ? (
             <img
-              src={logoData}
+              src={logoDataUrl}
               alt="The Orange Code Logo"
               width={400}
               height={400}
