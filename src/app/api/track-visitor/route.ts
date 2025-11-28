@@ -251,7 +251,11 @@ export async function POST(req: NextRequest) {
       // Continue even if Redis fails
     }
 
-    // Always log visitor tracking
+    // Always log visitor tracking with enhanced details
+    const timeSinceLastSeen = lastSeen && typeof lastSeen === 'string' 
+      ? Math.round((now - parseInt(lastSeen, 10)) / 1000) 
+      : null;
+    
     console.log("📊 Visitor tracked:", {
       ip,
       country,
@@ -262,7 +266,9 @@ export async function POST(req: NextRequest) {
       path,
       isNewVisitor,
       redisAvailable,
-      lastSeen: lastSeen && typeof lastSeen === 'string' ? `seen ${Math.round((now - parseInt(lastSeen, 10)) / 1000)}s ago` : "never"
+      lastSeen: lastSeen ? `seen ${timeSinceLastSeen}s ago` : "never",
+      willNotify: shouldNotify,
+      slackConfigured: !!process.env.SLACK_WEBHOOK_URL
     });
 
     // Force notifications for testing - Set FORCE_VISITOR_NOTIFICATIONS=true in Vercel to always notify
