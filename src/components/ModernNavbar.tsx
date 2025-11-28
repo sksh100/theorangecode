@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { ChevronDown, Menu, X, Sparkles, Zap, Shield, Users, Settings, LogOut, LogIn, ShoppingBag, CheckCircle, FileText } from 'lucide-react'
 import { AboutMegaDropdown } from './AboutMegaDropdown'
 import { ContactMegaDropdown } from './ContactMegaDropdown'
@@ -205,16 +206,15 @@ export function ModernNavbar() {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
         <div className="flex items-center justify-between h-20">
-          {/* Logo - visible on all screen sizes, bigger on mobile, positioned to left edge */}
-          <Link href="/" className="flex-shrink-0 min-w-0 -ml-4 sm:-ml-4 lg:-ml-2 flex items-center">
+          {/* Logo - visible on all screen sizes */}
+          <Link href="/" className="flex-shrink-0 min-w-0 -ml-2 sm:-ml-4 lg:flex lg:items-center">
             <Image
               src="/coming-soon/logo-1.png"
-              alt="The Orange Code"
-              width={160}
-              height={64}
-              className="h-16 sm:h-12 lg:h-12 w-auto object-contain"
+              alt="The Orange Code Logo"
+              width={120}
+              height={48}
+              className="h-16 sm:h-12 lg:h-12 w-auto lg:object-contain"
               priority
-              unoptimized={false}
             />
           </Link>
 

@@ -241,22 +241,22 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
             >
               <h4 className="text-lg font-semibold text-white mb-6 tracking-tight">Quick Links</h4>
               <div className="space-y-3">
-                <a href="#about" className="block text-white/70 text-sm hover:text-orange transition-colors">
+                <Link href="/#about" className="block text-white/70 text-sm hover:text-orange transition-colors cursor-pointer touch-manipulation" style={{ WebkitTapHighlightColor: 'transparent' }}>
                   About Us
-                </a>
-                <a href="/what-is-cq" className="block text-white/70 text-sm hover:text-orange transition-colors">
+                </Link>
+                <Link href="/what-is-cq" className="block text-white/70 text-sm hover:text-orange transition-colors cursor-pointer touch-manipulation" style={{ WebkitTapHighlightColor: 'transparent' }}>
                   What is Cultural Intelligence
-                </a>
-                <a href="#why-cultural-intelligence" className="block text-white/70 text-sm hover:text-orange transition-colors">
+                </Link>
+                <Link href="/why-cultural-intelligence" className="block text-white/70 text-sm hover:text-orange transition-colors cursor-pointer touch-manipulation" style={{ WebkitTapHighlightColor: 'transparent' }}>
                   Why Cultural Intelligence Matters
-                </a>
-                <a href="/masterclasses" className="block text-white/70 text-sm hover:text-orange transition-colors">
+                </Link>
+                <Link href="/masterclasses" className="block text-white/70 text-sm hover:text-orange transition-colors cursor-pointer touch-manipulation" style={{ WebkitTapHighlightColor: 'transparent' }}>
                   Masterclasses
-                </a>
-                <Link href="/#contact" className="block text-white/70 text-sm hover:text-orange transition-colors">
+                </Link>
+                <Link href="/#contact" className="block text-white/70 text-sm hover:text-orange transition-colors cursor-pointer touch-manipulation" style={{ WebkitTapHighlightColor: 'transparent' }}>
                   Contact
                 </Link>
-                <Link href="/faq" className="block text-white/70 text-sm hover:text-orange transition-colors">
+                <Link href="/faq" className="block text-white/70 text-sm hover:text-orange transition-colors cursor-pointer touch-manipulation" style={{ WebkitTapHighlightColor: 'transparent' }}>
                   FAQ
                 </Link>
               </div>
@@ -373,19 +373,22 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
               >
                 <Link 
                   href="/terms-conditions" 
-                    className="text-white/50 hover:text-orange transition-colors text-xs"
+                  className="text-white/50 hover:text-orange transition-colors text-xs cursor-pointer touch-manipulation"
+                  style={{ WebkitTapHighlightColor: 'transparent' }}
                 >
                   Terms & Conditions
                 </Link>
                 <Link 
                   href="/privacy-policy" 
-                    className="text-white/50 hover:text-orange transition-colors text-xs"
+                  className="text-white/50 hover:text-orange transition-colors text-xs cursor-pointer touch-manipulation"
+                  style={{ WebkitTapHighlightColor: 'transparent' }}
                 >
                   Privacy Policy
                 </Link>
                 <Link 
                   href="/cookie-policy" 
-                    className="text-white/50 hover:text-orange transition-colors text-xs"
+                  className="text-white/50 hover:text-orange transition-colors text-xs cursor-pointer touch-manipulation"
+                  style={{ WebkitTapHighlightColor: 'transparent' }}
                 >
                   Cookie Policy
                 </Link>

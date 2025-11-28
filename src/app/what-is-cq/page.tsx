@@ -85,9 +85,9 @@ export default function WhatIsCQPage() {
                   Understanding CQ
                 </span>
               </motion.div>
-              <h1 className="text-5xl md:text-7xl font-bold mb-6">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 px-4 sm:px-0">
                 <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
-                  What is <span className="whitespace-nowrap">Cultural Intelligence</span>
+                  What is <span className="whitespace-normal sm:whitespace-nowrap">Cultural Intelligence</span>
                 </span>
               </h1>
             </motion.div>
@@ -107,11 +107,11 @@ export default function WhatIsCQPage() {
               {/* Definition Section */}
               <motion.div variants={itemVariants} className="relative">
                 <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-white/20 via-white/30 to-white/20 opacity-60" />
-                <div className="pl-8 space-y-6">
-                  <p className="text-xl md:text-2xl leading-relaxed text-white/90 font-medium">
+                <div className="pl-4 sm:pl-8 space-y-6 px-4 sm:px-0">
+                  <p className="text-lg sm:text-xl md:text-2xl leading-relaxed text-white/90 font-medium break-words">
                     Cultural intelligence is a <span className="text-orange font-bold">scientifically recognised ability</span> that allows individuals to interpret, adapt to, and effectively engage with people from different cultural backgrounds.
                   </p>
-                  <p className="text-lg leading-relaxed text-white/80">
+                  <p className="text-base sm:text-lg leading-relaxed text-white/80 break-words">
                     It is a structured skill built on <span className="text-azure-blue font-semibold">cognitive understanding</span>, <span className="text-orange font-semibold">emotional awareness</span>, and <span className="text-azure-blue font-semibold">behavioural flexibility</span>.
                   </p>
                 </div>
@@ -119,8 +119,8 @@ export default function WhatIsCQPage() {
 
               {/* Three Pillars Section */}
               <motion.div variants={itemVariants}>
-                <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">
-                  <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 text-center px-4 sm:px-0">
+                  <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent break-words">
                     The Three Pillars of CQ
                   </span>
                 </h2>
@@ -154,18 +154,18 @@ export default function WhatIsCQPage() {
 
               {/* In Practice Section */}
               <motion.div variants={itemVariants} className="relative">
-                <div className="relative p-8 md:p-12 rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm">
+                <div className="relative p-6 sm:p-8 md:p-12 rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm mx-4 sm:mx-0">
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-white/20 via-white/40 to-white/20" />
                   <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-6">
-                      <Sparkles className="w-8 h-8 text-orange" />
-                      <h2 className="text-2xl md:text-3xl font-bold">
+                      <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-orange flex-shrink-0" />
+                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold break-words">
                         <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
                           In Practice
                         </span>
                       </h2>
                     </div>
-                    <p className="text-lg leading-relaxed text-white/90 mb-6">
+                    <p className="text-base sm:text-lg leading-relaxed text-white/90 mb-6 break-words">
                       In practice, Cultural Intelligence helps you recognise why people communicate the way they do, how they make decisions, what they find respectful and which behaviours build trust. It enables you to adjust your approach with sensitivity while remaining authentic and professional.
                     </p>
                     
