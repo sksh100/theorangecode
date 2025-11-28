@@ -32,7 +32,7 @@ export function TestimonialCarousel() {
       name: 'Ciara K. Al-J.',
       role: 'Irish professional married to an Emirati',
       company: '',
-      content: 'Understanding the culture around me changed everything. It brought calm into my marriage, clarity into my daily life and a sense of belonging I didn\'t know I could feel. I understand my husband\'s world so much better now and I\'m genuinely grateful for how much lighter and more connected life here feels after what I\'ve learned.',
+      content: 'I\'m very thankful. Understanding the culture around me changed everything. It brought calm into my marriage, clarity into my daily life and a sense of belonging I didn\'t know I could feel. I understand my husband\'s world so much better now and I\'m genuinely grateful for how much lighter and more connected life here feels after what I\'ve learned.',
       rating: 5
     },
     {
