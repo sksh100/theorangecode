@@ -8,6 +8,7 @@ import { ModernFooter } from '@/components/ModernFooter'
 import Link from 'next/link'
 import Image from 'next/image'
 import { trackMasterclassSelect, trackTimeSlotSelect, trackCheckoutStart, trackButtonClick, trackFormStart, trackFormComplete } from '@/lib/analytics'
+import { trackMasterclassInterest, trackCTAClick, trackFunnelStep } from '@/lib/tracking'
 
 interface Masterclass {
   id: number
