@@ -81,9 +81,14 @@ export default function TermsConditions() {
                 <Shield className="w-8 h-8 text-orange" />
                 1. Acceptance of Terms
               </h2>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                By accessing or using The Orange Code's website, social media channels, digital content, or any services provided by The Orange Code, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.
+              </p>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                These Terms and Conditions apply to all users, clients, visitors, and participants engaging with The Orange Code in any form.
+              </p>
               <p className="text-white/80 leading-relaxed mb-8 text-lg">
-                By accessing and using the services of The Orange Code, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. 
-                These terms are governed by the laws of the United Arab Emirates and are subject to the jurisdiction of UAE courts.
+                All activities and interactions are governed by the laws of the United Arab Emirates, and any disputes arising from them fall under the exclusive jurisdiction of the UAE courts.
               </p>
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
