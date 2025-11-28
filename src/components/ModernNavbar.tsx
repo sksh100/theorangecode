@@ -444,12 +444,23 @@ export function ModernNavbar() {
                         <AnimatePresence>
                           {activeDropdown === item.label && (
                             <motion.div
-                              className="ml-4 space-y-1 mt-2"
+                              className="ml-4 space-y-1 mt-2 max-h-[60vh] overflow-y-auto overscroll-contain relative z-[70]"
                               initial={{ opacity: 0, height: 0 }}
                               animate={{ opacity: 1, height: "auto" }}
                               exit={{ opacity: 0, height: 0 }}
                               transition={{ duration: 0.2 }}
                               onClick={(e) => e.stopPropagation()}
+                              onScroll={(e) => {
+                                e.stopPropagation()
+                              }}
+                              onTouchMove={(e) => {
+                                e.stopPropagation()
+                              }}
+                              style={{ 
+                                WebkitOverflowScrolling: 'touch',
+                                touchAction: 'pan-y',
+                                pointerEvents: 'auto'
+                              }}
                             >
                               {item.dropdown?.map((dropdownItem, index) => {
                                 // Assign colors based on parent menu item
