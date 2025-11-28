@@ -17,6 +17,8 @@ type VisitorPayload = {
   lat?: number | null;
   lng?: number | null;
   ts: number;
+  source?: string | null;  // Traffic source (Google, Direct, Social, etc.)
+  navigationFlow?: string[];  // Array of pages visited in this session
 };
 
 // Helper function to detect device type from user agent
@@ -44,6 +46,73 @@ function detectBrowser(userAgent: string | null): string {
   if (ua.includes("edg")) return "Edge";
   if (ua.includes("opera")) return "Opera";
   return "Other";
+}
+
+// Helper function to detect traffic source from referrer
+function detectTrafficSource(referrer: string | null, url: string): string {
+  if (!referrer || referrer === "Direct" || referrer === "") {
+    return "Direct";
+  }
+
+  try {
+    const referrerUrl = new URL(referrer);
+    const hostname = referrerUrl.hostname.toLowerCase();
+    
+    // Check for UTM parameters in current URL
+    const currentUrl = new URL(url, 'https://www.theorangecode.com');
+    const utmSource = currentUrl.searchParams.get('utm_source');
+    if (utmSource) {
+      return utmSource.charAt(0).toUpperCase() + utmSource.slice(1);
+    }
+    
+    // Google search
+    if (hostname.includes('google.com') || hostname.includes('google.ae')) {
+      const query = referrerUrl.searchParams.get('q');
+      return query ? `Google Search: "${query.substring(0, 50)}"` : "Google";
+    }
+    
+    // Bing search
+    if (hostname.includes('bing.com')) {
+      const query = referrerUrl.searchParams.get('q');
+      return query ? `Bing Search: "${query.substring(0, 50)}"` : "Bing";
+    }
+    
+    // Yahoo search
+    if (hostname.includes('yahoo.com')) {
+      return "Yahoo";
+    }
+    
+    // Social media
+    if (hostname.includes('facebook.com') || hostname.includes('fb.com')) return "Facebook";
+    if (hostname.includes('instagram.com')) return "Instagram";
+    if (hostname.includes('twitter.com') || hostname.includes('x.com')) return "Twitter/X";
+    if (hostname.includes('linkedin.com')) return "LinkedIn";
+    if (hostname.includes('youtube.com')) return "YouTube";
+    if (hostname.includes('whatsapp.com') || hostname.includes('wa.me')) return "WhatsApp";
+    if (hostname.includes('tiktok.com')) return "TikTok";
+    if (hostname.includes('pinterest.com')) return "Pinterest";
+    
+    // Other common referrers
+    if (hostname.includes('reddit.com')) return "Reddit";
+    if (hostname.includes('quora.com')) return "Quora";
+    
+    // Same domain (internal navigation)
+    if (hostname.includes('theorangecode.com')) {
+      return "Internal";
+    }
+    
+    // External website
+    return `External: ${hostname}`;
+  } catch (error) {
+    // If URL parsing fails, try simple string matching
+    const ref = referrer.toLowerCase();
+    if (ref.includes('google')) return "Google";
+    if (ref.includes('facebook') || ref.includes('fb.com')) return "Facebook";
+    if (ref.includes('instagram')) return "Instagram";
+    if (ref.includes('twitter') || ref.includes('x.com')) return "Twitter/X";
+    if (ref.includes('linkedin')) return "LinkedIn";
+    return "External";
+  }
 }
 
 // Helper function to get location data (city, coordinates) from IP address
@@ -291,6 +360,8 @@ export async function POST(req: NextRequest) {
       lat: coordinates?.lat ?? null,
       lng: coordinates?.lng ?? null,
       ts: now,
+      source: trafficSource,
+      navigationFlow: navigationFlow.length > 0 ? navigationFlow : undefined,
     };
 
     const key = `active:${id}`;

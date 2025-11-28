@@ -38,6 +38,8 @@ interface VisitorData {
   ip?: string;
   lat?: number;
   lng?: number;
+  source?: string;
+  navigationFlow?: string[];
 }
 
 /**
@@ -365,13 +367,34 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
     });
   }
 
+  // Add traffic source
   blocks.push({
     type: 'section',
-    text: {
-      type: 'mrkdwn',
-      text: `*📄 Page:* \`${data.page}\``,
-    },
+    fields: [
+      {
+        type: 'mrkdwn',
+        text: `*📄 Landing Page:*\n\`${data.page}\``,
+      },
+      {
+        type: 'mrkdwn',
+        text: `*🔗 Traffic Source:*\n${data.source || 'Direct'}`,
+      },
+    ],
   });
+  
+  // Add navigation flow if available
+  if (data.navigationFlow && data.navigationFlow.length > 1) {
+    const flowText = data.navigationFlow
+      .map((page, index) => `${index + 1}. \`${page}\``)
+      .join('\n');
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*🧭 Navigation Flow:*\n${flowText}`,
+      },
+    });
+  }
 
   // Add map link button if coordinates are available
   if (mapLink) {

@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export function VisitorTracker() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const send = async () => {
       try {
@@ -34,8 +37,14 @@ export function VisitorTracker() {
       }
     };
 
+    // Track on initial load
     send();
-  }, []);
+    
+    // Track navigation when pathname changes
+    if (pathname) {
+      send();
+    }
+  }, [pathname]);
 
   return null;
 }
