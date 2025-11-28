@@ -74,6 +74,14 @@ export function TestimonialCarousel() {
       company: '',
       content: 'I have been living in the Gulf already for more than five years because of my husband\'s work, but honestly I never had the possibility to understand the culture in such a complete way. Many things I was feeling but could not explain. This training finally put all the pieces together. Now I understand why people communicate in certain ways, how respect is shown here and what I was sometimes misunderstanding. I feel much more connected to others and the country. For me this experience was really precious.',
       rating: 5
+    },
+    {
+      id: 8,
+      name: 'David Mitchell',
+      role: 'American Business Man',
+      company: '',
+      content: 'As an American working in the Gulf, I thought being direct and transparent would always be seen as professional. I quickly learned that here it can come across very differently. The Masterclasses helped me understand the cultural expectations around communication, relationships, and respect in a way no book or YouTube video ever could. I finally get why people respond the way they do and how small adjustments on my side make a huge difference. It\'s made my work relationships smoother & faster and honestly much more enjoyable.',
+      rating: 5
     }
   ]
 
