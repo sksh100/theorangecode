@@ -621,6 +621,8 @@ export async function POST(req: NextRequest) {
       notifyNewVisitor({
         country: country !== "Unknown" ? country : undefined,
         city: city !== "Unknown" ? city : undefined,
+        area: ipArea || undefined,
+        postalCode: ipPostalCode || undefined,
         device: device,
         browser: browser,
         page: path,
