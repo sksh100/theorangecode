@@ -136,6 +136,22 @@
     left: 0 !important;
   }
   
+  @media (max-width: 1024px) {
+    .hero-content-left {
+      margin-left: 2rem !important;
+      max-width: calc(100% - 4rem);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .hero-content-left {
+      margin-left: 1rem !important;
+      margin-right: 1rem !important;
+      max-width: calc(100% - 2rem);
+      padding-top: 2rem;
+    }
+  }
+  
   .hero-section .glass-card {
     @apply bg-accent-blue/20 backdrop-blur-[5px] border border-light-blue/40 shadow-2xl;
     box-shadow: 

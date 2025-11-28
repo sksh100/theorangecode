@@ -180,15 +180,16 @@ export function ModernNavbar() {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="flex items-center justify-between h-20">
-          {/* Logo - visible on all screen sizes, bigger on mobile */}
-          <Link href="/" className="flex-shrink-0 min-w-0 -ml-4 sm:-ml-4 lg:-ml-2">
+          {/* Logo - visible on all screen sizes, bigger on mobile, positioned to left edge */}
+          <Link href="/" className="flex-shrink-0 min-w-0 -ml-4 sm:-ml-4 lg:-ml-2 flex items-center">
             <Image
               src="/coming-soon/logo-1.png"
-              alt="The Orange Code Logo"
+              alt="The Orange Code"
               width={160}
               height={64}
-              className="h-16 sm:h-12 lg:h-12 w-auto"
+              className="h-16 sm:h-12 lg:h-12 w-auto object-contain"
               priority
+              unoptimized={false}
             />
           </Link>
 

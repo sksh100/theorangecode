@@ -251,6 +251,10 @@ export async function POST(req: NextRequest) {
       // Continue even if Redis fails
     }
 
+    // Force notifications for testing - Set FORCE_VISITOR_NOTIFICATIONS=true in Vercel to always notify
+    const forceNotifications = process.env.FORCE_VISITOR_NOTIFICATIONS === 'true';
+    const shouldNotify = isNewVisitor || forceNotifications;
+    
     // Always log visitor tracking with enhanced details
     const timeSinceLastSeen = lastSeen && typeof lastSeen === 'string' 
       ? Math.round((now - parseInt(lastSeen, 10)) / 1000) 
@@ -270,10 +274,6 @@ export async function POST(req: NextRequest) {
       willNotify: shouldNotify,
       slackConfigured: !!process.env.SLACK_WEBHOOK_URL
     });
-
-    // Force notifications for testing - Set FORCE_VISITOR_NOTIFICATIONS=true in Vercel to always notify
-    const forceNotifications = process.env.FORCE_VISITOR_NOTIFICATIONS === 'true';
-    const shouldNotify = isNewVisitor || forceNotifications;
     
     // Enhanced logging for debugging
     console.log("🔔 Notification decision:", {
