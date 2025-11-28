@@ -126,6 +126,18 @@ export default function TermsConditions() {
                 </li>
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 bg-orange rounded-full mt-3 flex-shrink-0" />
+                  Speak and behave respectfully in a manner consistent with UAE cultural norms and laws
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange rounded-full mt-3 flex-shrink-0" />
+                  Dress in a professional and culturally appropriate manner throughout all sessions
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange rounded-full mt-3 flex-shrink-0" />
+                  Respect scheduled breaks during local prayer times
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 bg-orange rounded-full mt-3 flex-shrink-0" />
                   Maintain confidentiality of proprietary methods and materials
                 </li>
                 <li className="flex items-start gap-3">
@@ -145,23 +157,27 @@ export default function TermsConditions() {
               <div className="bg-gradient-to-r from-bright-blue/10 to-bright-blue/5 border border-bright-blue/20 rounded-2xl p-6 mb-6">
                 <h4 className="text-xl font-bold text-white mb-4">Payment Requirements</h4>
                 <ul className="text-white/80 leading-relaxed space-y-2">
-                  <li>• All payments must be made in UAE Dirhams (AED)</li>
-                  <li>• 50% deposit required upon booking confirmation</li>
-                  <li>• Remaining balance due 7 days before masterclass commencement</li>
-                  <li>• All prices include 5% VAT as per UAE Federal Tax Authority regulations</li>
-                  <li>• Late payments may incur additional charges as per UAE commercial law</li>
+                  <li>• All payments must be made in UAE Dirhams (AED).</li>
+                  <li>• To secure a confirmed timeslot, payment must be completed at least 48 hours prior to the masterclass or coaching session, unless alternative arrangements have been approved by The Orange Code in writing.</li>
+                  <li>• All prices include 5% VAT as per UAE Federal Tax Authority regulations.</li>
                 </ul>
               </div>
               
               <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-2xl p-6 mb-8">
                 <h4 className="text-xl font-bold text-white mb-4">Cancellation & Refund Policy</h4>
-                <ul className="text-white/80 leading-relaxed space-y-2">
-                  <li>• Cancellations 14+ days before start: 100% refund minus 5% processing fee</li>
-                  <li>• Cancellations 7-13 days before start: 75% refund</li>
-                  <li>• Cancellations 3-6 days before start: 50% refund</li>
-                  <li>• Cancellations less than 3 days: No refund (as per UAE consumer protection law)</li>
-                  <li>• Refunds processed within 14 business days</li>
+                <p className="text-white/80 leading-relaxed mb-4">
+                  The Orange Code is committed to providing flexibility and exceptional service. We aim to accommodate our clients whenever possible; however, due to the nature of customised training and reserved time allocations, cancellations are not eligible for refunds.
+                </p>
+                <p className="text-white/80 leading-relaxed mb-4">
+                  If a client is unable to attend:
+                </p>
+                <ul className="text-white/80 leading-relaxed space-y-2 mb-4">
+                  <li>• We will make every reasonable effort to reschedule the session to another available date.</li>
+                  <li>• If rescheduling is not possible, the session fee remains non-refundable in accordance with UAE business practices for professional services.</li>
                 </ul>
+                <p className="text-white/80 leading-relaxed">
+                  Refunds are not provided for no-shows, missed sessions, or last-minute cancellations.
+                </p>
               </div>
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
@@ -169,8 +185,13 @@ export default function TermsConditions() {
                 5. Limitation of Liability
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                The Orange Code's liability is limited to the amount paid for services. We are not liable for indirect, consequential, or punitive damages. 
-                This limitation applies to the fullest extent permitted by UAE Federal Law No. 5 of 1985 (Civil Transactions Law).
+                The Orange Code's liability is strictly limited to the total amount paid by the client for the specific service in question.
+              </p>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                We are not responsible for any indirect, incidental, consequential, special, or punitive damages arising from the use of our services.
+              </p>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                This limitation applies to the maximum extent permitted under UAE Federal Law No. 5 of 1985 (Civil Transactions Law) and its amendments.
               </p>
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
@@ -178,8 +199,13 @@ export default function TermsConditions() {
                 6. Governing Law & Dispute Resolution
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                These terms are governed by the laws of the United Arab Emirates. Any disputes shall be resolved in the courts of Dubai, UAE. 
-                Both parties agree to submit to the exclusive jurisdiction of UAE courts and waive any objection to venue.
+                These Terms and Conditions are governed by the laws of the United Arab Emirates.
+              </p>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                Any dispute arising from or relating to our services shall fall under the exclusive jurisdiction of the courts of Abu Dhabi, UAE, as the location of The Orange Code's registered establishment.
+              </p>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                Both parties agree to submit to this jurisdiction and waive any objection to venue or applicable law.
               </p>
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
@@ -187,8 +213,22 @@ export default function TermsConditions() {
                 7. Intellectual Property
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                All training materials, methodologies, and proprietary content remain the intellectual property of The Orange Code. 
-                Clients may not reproduce, distribute, or use such materials for commercial purposes without written consent.
+                All training materials, course content, frameworks, visuals, documents and proprietary concepts are the exclusive intellectual property of The Orange Code.
+              </p>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                Clients may not copy, reproduce, modify, distribute, publish, or use these materials for commercial purposes without prior written consent.
+              </p>
+              <p className="text-white/80 leading-relaxed mb-4 text-lg">
+                Additionally:
+              </p>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                All digital content appearing on The Orange Code's website, social media channels, promotional materials, graphics, text, illustrations, designs, and media assets is protected by copyright and intellectual property laws.
+              </p>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                No user is permitted to download, replicate, alter, reuse, or redistribute any such content without explicit written permission from The Orange Code.
+              </p>
+              <p className="text-white/80 leading-relaxed mb-6 text-lg">
+                Unauthorised use may result in legal action according to UAE copyright and intellectual property regulations.
               </p>
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
@@ -211,7 +251,7 @@ export default function TermsConditions() {
                     <p className="text-white/80 mb-1">Etihad Towers</p>
                     <p className="text-white/80 mb-1">Tower 3, Floor 36</p>
                     <p className="text-white/80 mb-1">Abu Dhabi, United Arab Emirates</p>
-                    <p className="text-white/80 mb-1">License No: ON-4296787</p>
+                    <p className="text-white/80 mb-1">License No: CN-4296787</p>
                   </div>
                 </div>
               </div>
@@ -223,9 +263,8 @@ export default function TermsConditions() {
                 </div>
                 <div className="space-y-3">
                   <p className="text-white/80 text-sm leading-relaxed">
-                    <strong>Business License:</strong> The Orange Code operates under a freelance license issued by the Abu Dhabi Registration Authority (ADRA) 
-                    under the UAE Ministry of Economic Development.<br/>
-                    <strong>License Number:</strong> ON-4296787
+                    <strong>Business License:</strong> The Orange Code operates under license number CN-4296787 issued by the Abu Dhabi Registration Authority (ADRA).<br/>
+                    <strong>License Number:</strong> CN-4296787
                   </p>
                   <div className="border-t border-white/20 my-3" />
                   <p className="text-white/80 text-sm leading-relaxed">
