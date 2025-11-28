@@ -511,6 +511,8 @@ export async function POST(req: NextRequest) {
         ip: ip !== "unknown" ? ip : undefined,
         lat: coordinates?.lat,
         lng: coordinates?.lng,
+        source: trafficSource,
+        navigationFlow: navigationFlow.length > 0 ? navigationFlow : undefined,
       })
         .then(() => {
           console.log("✅✅✅ Visitor Slack notification SENT SUCCESSFULLY");
