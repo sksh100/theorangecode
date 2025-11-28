@@ -140,13 +140,44 @@ export async function POST(req: NextRequest) {
     const device = detectDevice(userAgent);
     const browser = detectBrowser(userAgent);
 
-    // Get coordinates from IP (non-blocking, don't fail if it doesn't work)
+    // Get coordinates from IP (with caching - coordinates stored per IP for 30 days)
     let coordinates: { lat: number; lng: number } | null = null;
     if (ip && ip !== "unknown") {
+      const coordinatesCacheKey = `coordinates:${ip}`;
+      
       try {
-        coordinates = await getCoordinatesFromIP(ip);
+        // First, check if we have cached coordinates for this IP
+        const cachedCoords = await redis.get(coordinatesCacheKey);
+        
+        if (cachedCoords) {
+          try {
+            const parsed = JSON.parse(cachedCoords as string);
+            if (parsed.lat && parsed.lng) {
+              coordinates = { lat: parsed.lat, lng: parsed.lng };
+              console.log('✅ Using cached coordinates for IP:', ip);
+            }
+          } catch (parseError) {
+            console.warn('⚠️ Failed to parse cached coordinates:', parseError);
+          }
+        }
+        
+        // If no cached coordinates, fetch new ones
+        if (!coordinates) {
+          console.log('📍 Fetching new coordinates for IP:', ip);
+          coordinates = await getCoordinatesFromIP(ip);
+          
+          // Cache the coordinates for 30 days (2,592,000 seconds)
+          if (coordinates) {
+            await redis.set(
+              coordinatesCacheKey,
+              JSON.stringify(coordinates),
+              { ex: 2592000 } // 30 days
+            );
+            console.log('✅ Cached coordinates for IP:', ip, 'for 30 days');
+          }
+        }
       } catch (error) {
-        console.warn('⚠️ Failed to get coordinates (non-critical):', error);
+        console.warn('⚠️ Failed to get/cache coordinates (non-critical):', error);
       }
     }
 
