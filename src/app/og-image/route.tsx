@@ -1,17 +1,19 @@
 import { ImageResponse } from 'next/og'
+import { readFile } from 'fs/promises'
+import { join } from 'path'
 
-export const runtime = 'edge'
+export const runtime = 'nodejs' // Changed to nodejs to access file system
 
 export async function GET() {
-  // Fetch the logo image
-  const logoResponse = await fetch(
-    new URL('../../public/logo1.png', import.meta.url)
-  ).catch(() => null)
-  
-  const logoData = logoResponse ? await logoResponse.arrayBuffer() : null
-  const logoBase64 = logoData 
-    ? `data:image/png;base64,${Buffer.from(logoData).toString('base64')}`
-    : null
+  // Read the logo image from public folder
+  let logoData: ArrayBuffer | null = null
+  try {
+    const logoPath = join(process.cwd(), 'public', 'logo1.png')
+    const logoBuffer = await readFile(logoPath)
+    logoData = logoBuffer.buffer
+  } catch (error) {
+    console.error('Failed to load logo:', error)
+  }
 
   return new ImageResponse(
     (
@@ -48,13 +50,14 @@ export async function GET() {
           }}
         >
           {/* Logo image */}
-          {logoBase64 ? (
+          {logoData ? (
+            // @ts-ignore - ImageResponse supports ArrayBuffer
             <img
-              src={logoBase64}
+              src={logoData}
               alt="The Orange Code Logo"
+              width={400}
+              height={400}
               style={{
-                width: '400px',
-                height: '400px',
                 objectFit: 'contain',
               }}
             />
