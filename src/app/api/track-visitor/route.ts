@@ -208,7 +208,9 @@ export async function POST(req: NextRequest) {
             );
             console.log('✅ Cached location for IP:', ip, 'for 30 days', {
               city: ipCity,
-              region: ipRegion
+              region: ipRegion,
+              coordinates: `${locationData.lat}, ${locationData.lng}`,
+              note: 'Coordinates are city-level approximations from IP geolocation'
             });
           }
         }

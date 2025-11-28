@@ -306,15 +306,19 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
     ? `${data.country}${data.city && data.city !== 'Unknown' ? `, ${data.city}` : ''}`
     : 'Unknown location';
   
-  // Format coordinates if available
+  // Format coordinates if available (with more precision to show differences)
   const coordinates = data.lat && data.lng 
-    ? `${data.lat.toFixed(6)}, ${data.lng.toFixed(6)}`
+    ? `${data.lat.toFixed(8)}, ${data.lng.toFixed(8)}`
     : null;
   
   // Create Google Maps link if coordinates are available
   const mapLink = coordinates 
     ? `https://www.google.com/maps?q=${data.lat},${data.lng}`
     : null;
+  
+  // Note: IP geolocation coordinates are city-level approximations
+  // Multiple IPs in the same city may show the same coordinates
+  // This is normal behavior for IP-based geolocation services
 
   const blocks: any[] = [
     {
