@@ -1,16 +1,18 @@
 import { ImageResponse } from 'next/og'
-import { readFile } from 'fs/promises'
-import { join } from 'path'
 
-export const runtime = 'nodejs' // Changed to nodejs to access file system
+export const runtime = 'edge'
 
 export async function GET() {
-  // Read the logo image from public folder
+  // Fetch the logo image from public URL
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.theorangecode.com'
+  const logoUrl = `${baseUrl}/logo1.png`
+  
   let logoData: ArrayBuffer | null = null
   try {
-    const logoPath = join(process.cwd(), 'public', 'logo1.png')
-    const logoBuffer = await readFile(logoPath)
-    logoData = logoBuffer.buffer
+    const logoResponse = await fetch(logoUrl)
+    if (logoResponse.ok) {
+      logoData = await logoResponse.arrayBuffer()
+    }
   } catch (error) {
     console.error('Failed to load logo:', error)
   }
