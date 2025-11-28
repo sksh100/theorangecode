@@ -103,7 +103,21 @@ export function ModernNavbar() {
   const [isMasterclassesMegaOpen, setIsMasterclassesMegaOpen] = useState(false)
   const [isResourcesMegaOpen, setIsResourcesMegaOpen] = useState(false)
 
-  const handleDropdownToggle = (label: string) => {
+  const handleDropdownToggle = (label: string, isMobile: boolean = false) => {
+    // On mobile, always use simple dropdown structure
+    if (isMobile) {
+      const isOpening = activeDropdown !== label
+      setActiveDropdown(isOpening ? label : null)
+      // Close mega dropdowns on mobile
+      setIsAboutMegaOpen(false)
+      setIsContactMegaOpen(false)
+      setIsMasterclassesMegaOpen(false)
+      setIsResourcesMegaOpen(false)
+      if (isOpening) trackDropdownOpen(label)
+      return
+    }
+    
+    // Desktop: use mega dropdowns for specific items
     if (label === 'About') {
       const isOpening = !isAboutMegaOpen
       setIsAboutMegaOpen(isOpening)
@@ -387,12 +401,17 @@ export function ModernNavbar() {
                     {item.dropdown ? (
                       <>
                         <motion.button
-                          className="w-full flex items-center justify-between p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium z-10 relative"
+                          className="w-full flex items-center justify-between p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium z-10 relative touch-manipulation"
                           onClick={(e) => {
+                            e.preventDefault()
                             e.stopPropagation()
-                            handleDropdownToggle(item.label)
+                            handleDropdownToggle(item.label, true)
                           }}
-                          whileHover={{ x: 4 }}
+                          onTouchStart={(e) => {
+                            e.stopPropagation()
+                          }}
+                          whileTap={{ scale: 0.98 }}
+                          style={{ WebkitTapHighlightColor: 'transparent', cursor: 'pointer' }}
                         >
                           <span>{item.label}</span>
                           <ChevronDown 
