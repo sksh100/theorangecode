@@ -38,7 +38,7 @@ export function MasterclassesMegaDropdown({ isOpen, onClose }: MasterclassesMega
       title: 'UAE Cultural Foundations',
       description: "A comprehensive introduction to the cultural foundations of the UAE. Participants explore the country's heritage, values, social codes, national identity, daily rhythms, dress etiquette, and the significance of traditions such as Ramadan.",
       icon: Sparkles,
-      price: '699 د.إ',
+      price: '950 د.إ',
       gradient: 'from-orange/20 to-bright-blue/20'
     },
     {
@@ -46,7 +46,7 @@ export function MasterclassesMegaDropdown({ isOpen, onClose }: MasterclassesMega
       title: 'Cultural Intelligence For Expats',
       description: 'A transformative masterclass that helps expats recognise how their own communication style, decision making, and relationship-building habits impact their experience in the region.',
       icon: Users,
-      price: '1799 د.إ',
+      price: '1450 د.إ',
       gradient: 'from-bright-blue/20 to-light-blue/20'
     },
     {
@@ -54,7 +54,7 @@ export function MasterclassesMegaDropdown({ isOpen, onClose }: MasterclassesMega
       title: 'Business Culture & Professional Etiquette',
       description: 'A strategic masterclass focused on business etiquette and professional communication in the UAE and GCC-region. Learn how to navigate hierarchy, manage feedback, build trust and conduct meetings and negotiations in a relationship-driven environment.',
       icon: Zap,
-      price: '2499 د.إ',
+      price: '2200 د.إ',
       gradient: 'from-light-blue/20 to-orange/20'
     }
   ]

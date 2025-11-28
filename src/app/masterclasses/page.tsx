@@ -15,6 +15,9 @@ interface Masterclass {
   description: string
   gradient: string
   price: number
+  paymentLink?: string
+  learningObjectives?: string[]
+  outcomes?: string[]
 }
 
 interface TimeSlot {
@@ -30,32 +33,85 @@ const masterclasses: Masterclass[] = [
     title: "UAE Cultural Foundations",
     description: "A comprehensive introduction to the cultural foundations of the UAE. Participants explore the country's heritage, values, social codes, national identity, daily rhythms, dress etiquette, and the significance of traditions such as Ramadan. Designed as an essential integration experience for anyone living in or relocating to the Emirates.",
     gradient: "from-orange/20 to-bright-blue/20",
-    price: 699
+    price: 950,
+    paymentLink: 'https://book.stripe.com/9B63cvalo66t46f7pC8k802',
+    learningObjectives: [
+      "Understand the cultural DNA and identity of the UAE",
+      "Recognise key values that shape social and professional behaviour",
+      "Learn appropriate dress codes, greetings, and etiquette",
+      "Appreciate the role of heritage, religion, and national symbols",
+      "Gain confidence in navigating daily life respectfully and tactfully"
+    ],
+    outcomes: [
+      "A strong cultural foundation to integrate smoothly into UAE society",
+      "Increased awareness of what is respectful and appropriate in local contexts",
+      "Practical knowledge that prevents misunderstandings and supports meaningful relationships",
+      "Confidence to participate in social and community life with ease"
+    ]
   },
   {
     id: 2,
     title: "Cultural Intelligence For Expats",
     description: "A transformative masterclass that helps expats recognise how their own communication style, decision making, and relationship-building habits impact their experience in the region. Using globally recognised cultural frameworks (without naming them), participants learn how to adapt, connect, and thrive across cultures.",
     gradient: "from-bright-blue/20 to-light-blue/20",
-    price: 1799
+    price: 1450,
+    learningObjectives: [
+      "Identify their own cultural communication patterns",
+      "Understand how different cultures interpret clarity, feedback, trust, and hierarchy",
+      "Learn how to adjust style without losing authenticity",
+      "Improve connection, collaboration, and rapport with diverse teams",
+      "Develop emotional and cultural awareness in daily interactions"
+    ],
+    outcomes: [
+      "A higher level of cultural intelligence and interpersonal awareness",
+      "Stronger relationships at work and in personal life",
+      "Practical tools to communicate clearly and respectfully across cultures",
+      "The ability to avoid common cultural misunderstandings"
+    ]
   },
   {
     id: 3,
     title: "Business Culture & Professional Etiquette",
-    description: "A strategic masterclass focused on business etiquette and professional communication in the UAE and GCC-region. Learn how to navigate hierarchy, manage feedback, build trust and conduct meetings and negotiations in a relationship-driven environment. Ideal for executives, entrepreneurs, and professionals aiming to succeed in the local market or expand business across the Gulf.",
+    description: "A strategic masterclass focused on business etiquette and professional communication in the UAE and the wider region. Learn how to navigate hierarchy, manage feedback, build trust, and conduct meetings and negotiations in a relationship-driven environment. Ideal for executives, entrepreneurs, and professionals aiming to succeed in the local market or expand business across the Gulf.",
     gradient: "from-light-blue/20 to-orange/20",
-    price: 2499
+    price: 2200,
+    learningObjectives: [
+      "Understand business expectations, hierarchy, and workplace dynamics",
+      "Learn how to communicate with clarity and respect",
+      "Master culturally appropriate feedback styles",
+      "Navigate negotiations, partnerships, and long-term business relationships",
+      "Recognise the importance of trust, discretion, and reputation"
+    ],
+    outcomes: [
+      "The confidence to conduct business professionally and effectively",
+      "Improved communication in meetings, negotiations, and client relationships",
+      "Stronger rapport with local and regional partners",
+      "A strategic understanding of how business decisions are influenced by culture"
+    ]
   }
 ]
 
 // Generate available dates for the next 4 weeks
-const generateAvailableDates = (): TimeSlot[] => {
+// Masterclass day mapping:
+// 1 = UAE Cultural Foundations -> Monday
+// 2 = Cultural Intelligence For Expats -> Tuesday
+// 3 = Business Culture & Professional Etiquette -> Thursday
+const generateAvailableDates = (masterclassId: number | null): TimeSlot[] => {
   const slots: TimeSlot[] = []
   const today = new Date()
   const fourWeeksLater = new Date(today)
   fourWeeksLater.setDate(today.getDate() + 28)
 
-  const offlineDays = [2, 4] // Tuesday, Thursday
+  // Map masterclass ID to day of week (0 = Sunday, 1 = Monday, 2 = Tuesday, etc.)
+  const masterclassDays: Record<number, number> = {
+    1: 1, // UAE Cultural Foundations -> Monday
+    2: 2, // Cultural Intelligence For Expats -> Tuesday
+    3: 4  // Business Culture & Professional Etiquette -> Thursday
+  }
+
+  const offlineDays = masterclassId && masterclassDays[masterclassId] 
+    ? [masterclassDays[masterclassId]] 
+    : []
   const offlineTime = '11:00 AM - 2:00 PM'
 
   // Fully booked in-person sessions (December 2, 9, 25, 27)
@@ -123,13 +179,13 @@ export default function MasterclassesPage() {
   const [tailormadeStatusMessage, setTailormadeStatusMessage] = useState<string | null>(null)
   const [contactStatusMessage, setContactStatusMessage] = useState<string | null>(null)
 
-  const availableSlots = generateAvailableDates()
+  const availableSlots = generateAvailableDates(selectedMasterclass)
   const filteredSlots = availableSlots.filter(slot => slot.type === 'offline')
 
         const handleBookNow = () => {
           if (selectedMasterclass && selectedSlot) {
-            const paymentLink = 'https://buy.stripe.com/5kQ3cv79cfH3byHdO08k800'
             const masterclassData = masterclasses.find(m => m.id === selectedMasterclass)
+            const paymentLink = masterclassData?.paymentLink || 'https://buy.stripe.com/5kQ3cv79cfH3byHdO08k800'
             const masterclassName = masterclassData?.title || ''
             const bookingData = {
               masterclass: masterclassName,
@@ -344,9 +400,39 @@ export default function MasterclassesPage() {
                           <p className="text-white/50 text-xs">per person</p>
                         </div>
                       </div>
-                      <p className="text-white/70 text-sm leading-relaxed">
-                        {masterclass.description}
-                      </p>
+                      <div className="text-white/70 text-sm leading-relaxed space-y-4">
+                        <p>{masterclass.description}</p>
+                        
+                        {masterclass.learningObjectives && masterclass.learningObjectives.length > 0 && (
+                          <div className="mt-4">
+                            <h4 className="text-white font-semibold mb-2 text-base">Learning Objectives</h4>
+                            <p className="text-white/80 text-xs mb-2">By the end of this masterclass, participants will:</p>
+                            <ul className="space-y-1.5 ml-4">
+                              {masterclass.learningObjectives.map((objective, idx) => (
+                                <li key={idx} className="flex items-start gap-2">
+                                  <span className="text-orange mt-1.5">•</span>
+                                  <span className="text-white/70">{objective}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        
+                        {masterclass.outcomes && masterclass.outcomes.length > 0 && (
+                          <div className="mt-4">
+                            <h4 className="text-white font-semibold mb-2 text-base">Outcomes</h4>
+                            <p className="text-white/80 text-xs mb-2">Participants will leave with:</p>
+                            <ul className="space-y-1.5 ml-4">
+                              {masterclass.outcomes.map((outcome, idx) => (
+                                <li key={idx} className="flex items-start gap-2">
+                                  <span className="text-orange mt-1.5">•</span>
+                                  <span className="text-white/70">{outcome}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
                     </motion.button>
                   ))}
                 </div>
