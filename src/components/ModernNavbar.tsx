@@ -11,6 +11,7 @@ import { ContactMegaDropdown } from './ContactMegaDropdown'
 import { MasterclassesMegaDropdown } from './MasterclassesMegaDropdown'
 import { ResourcesMegaDropdown } from './ResourcesMegaDropdown'
 import { trackDropdownOpen, trackDropdownItemClick, trackButtonClick } from '@/lib/analytics'
+import { trackCTAClick } from '@/lib/tracking'
 
 export function ModernNavbar() {
   const pathname = usePathname()
@@ -294,6 +295,7 @@ export function ModernNavbar() {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                onClick={() => trackCTAClick('Shopping Cart', pathname)}
               >
                 <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
                 {cartItems > 0 && (
@@ -368,6 +370,7 @@ export function ModernNavbar() {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                onClick={() => trackCTAClick('Get Started', pathname)}
               >
                 Get Started
               </motion.button>
@@ -617,7 +620,10 @@ export function ModernNavbar() {
                   )} */}
 
                   {/* Get Started Button - Mobile */}
-                  <Link href="/masterclasses" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Link href="/masterclasses" onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    trackCTAClick('Get Started (Mobile)', pathname);
+                  }}>
                     <motion.button
                       className="w-full px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl"
                       whileHover={{ scale: 1.02 }}

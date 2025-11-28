@@ -46,6 +46,13 @@ interface VisitorData {
   visitCount?: number;
 }
 
+interface ConversionEventData {
+  event: string;
+  element: string;
+  location?: string;
+  metadata?: Record<string, any>;
+}
+
 /**
  * Send a message to Slack
  */

@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Send, Mail, Phone, MapPin, MessageSquare, ChevronDown } from 'lucide-react'
 import { trackFormStart, trackFormComplete } from '@/lib/analytics'
+import { trackFormStart as trackFormStartNew, trackFormComplete as trackFormCompleteNew, trackFormAbandon } from '@/lib/tracking'
 
 export function ContactFormSection() {
   const [formData, setFormData] = useState({
@@ -20,6 +21,8 @@ export function ContactFormSection() {
   const [emailError, setEmailError] = useState<string | null>(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const formStartTracked = useRef(false)
+  const fieldsFilledRef = useRef(0)
   
   const subjectOptions = [
     { value: '', label: 'Select a subject', disabled: true },
@@ -38,6 +41,16 @@ export function ContactFormSection() {
       ...prev,
       [name]: value
     }))
+    
+    // Track form start on first field interaction
+    if (!formStartTracked.current) {
+      formStartTracked.current = true;
+      trackFormStartNew('Contact Form', window.location.pathname);
+    }
+    
+    // Count filled fields
+    const filledFields = Object.values({ ...formData, [name]: value }).filter(v => v && v.trim()).length;
+    fieldsFilledRef.current = filledFields;
     
     // Validate email match in real-time
     if (name === 'email' || name === 'emailConfirm') {
@@ -88,6 +101,11 @@ export function ContactFormSection() {
 
       if (res.ok) {
         trackFormComplete('Contact Form', 'Contact Section', {
+          form_name: submissionData.name,
+          form_email: submissionData.email,
+          form_subject: submissionData.subject,
+        });
+        trackFormCompleteNew('Contact Form', window.location.pathname, {
           form_name: submissionData.name,
           form_email: submissionData.email,
           form_subject: submissionData.subject,
