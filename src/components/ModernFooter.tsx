@@ -129,7 +129,7 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
       <div className="relative z-10">
         {/* Main Footer Content */}
         <div className="container mx-auto px-4 sm:px-6 py-16 sm:py-20 md:py-24 mt-8 sm:mt-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 lg:gap-8">
             
             {/* Company Info - Column 1 */}
             <motion.div
@@ -148,7 +148,7 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <h3 className="text-2xl font-bold text-white tracking-tight">The Orange Code</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">The Orange Code</h3>
               </div>
               <p className="text-white/70 text-sm leading-relaxed mb-8 max-w-sm">
                 Bridging people, cultures and intelligence.

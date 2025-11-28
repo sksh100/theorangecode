@@ -139,7 +139,7 @@ export function USPBar() {
               The Orange Code
             </span>
           </h2>
-          <div className="text-white/70 text-lg font-montserrat max-w-4xl mx-auto space-y-6 leading-relaxed tracking-normal">
+          <div className="text-white/70 text-base sm:text-lg md:text-lg font-montserrat max-w-4xl mx-auto space-y-4 sm:space-y-6 leading-relaxed tracking-normal px-4 sm:px-0">
             <p>
               Choosing The Orange Code means choosing clarity in a region where culture, ambition, and identity shape every interaction. People come to us because they want to feel grounded in the UAE, understood in a multicultural environment, and confident in a place where expectations are high and unspoken norms influence daily life.
             </p>
@@ -153,7 +153,7 @@ export function USPBar() {
         </motion.div>
 
         {/* USP Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 px-4 sm:px-0">
           {pillars.map((pillar, index) => (
             <motion.div
               key={pillar.id}
@@ -164,7 +164,7 @@ export function USPBar() {
               viewport={{ once: true }}
             >
               {/* Card */}
-              <div className="relative h-full flex flex-col p-8 bg-primary-dark/80 backdrop-blur-[20px] border border-glass-border rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-white/30">
+              <div className="relative h-full flex flex-col p-6 sm:p-8 bg-primary-dark/80 backdrop-blur-[20px] border border-glass-border rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-white/30">
                 {/* Background Gradient */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${pillar.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
                 
@@ -180,10 +180,10 @@ export function USPBar() {
 
                 {/* Content - Fixed alignment */}
                 <div className="relative flex flex-col flex-grow">
-                  <h3 className={`text-xl font-bold font-montserrat mb-3 min-h-[3rem] flex items-start ${pillar.titleGradient}`}>
+                  <h3 className={`text-lg sm:text-xl font-bold font-montserrat mb-3 min-h-[3rem] sm:min-h-[3rem] flex items-start ${pillar.titleGradient}`}>
                     {pillar.title}
                   </h3>
-                  <p className="text-white/70 font-montserrat leading-relaxed flex-grow">
+                  <p className="text-white/70 text-sm sm:text-base font-montserrat leading-relaxed flex-grow">
                     {pillar.subtitle}
                   </p>
                 </div>

@@ -54,7 +54,7 @@ export function StartTodayCTA() {
         <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-primary-dark via-transparent to-transparent" />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <motion.div
           className="text-center max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 50 }}
@@ -84,7 +84,7 @@ export function StartTodayCTA() {
 
           {/* CTA Text */}
           <motion.div
-            className="text-body mb-8 max-w-2xl mx-auto space-y-4"
+            className="text-body mb-8 max-w-2xl mx-auto space-y-3 sm:space-y-4 px-4 sm:px-0"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -113,7 +113,7 @@ export function StartTodayCTA() {
           >
             <Link href="/masterclasses">
               <motion.button
-                className="group relative inline-flex items-center gap-3 px-8 py-4 cta-button-glow text-white font-semibold text-lg rounded-xl overflow-hidden"
+                className="group relative inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 cta-button-glow text-white font-semibold text-base sm:text-lg rounded-xl overflow-hidden"
                 whileHover={{ 
                   scale: 1.05,
                   boxShadow: "0 20px 40px rgba(255, 145, 77, 0.4)"

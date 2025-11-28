@@ -312,7 +312,7 @@ export default function MasterclassesPage() {
       >
         {/* Hero Image Section */}
         <section className="relative overflow-hidden">
-          <div className="relative h-[60vh] md:h-[70vh] w-full">
+          <div className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] w-full">
             <Image
               src="/theorangecode-masterclass.jpg"
               alt="The Orange Code Masterclass Boardroom"
@@ -329,13 +329,13 @@ export default function MasterclassesPage() {
                   transition={{ duration: 0.8 }}
                   className="max-w-4xl"
                 >
-                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+                  <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
                     <span className="text-white">Book Your </span>
                     <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
                       Masterclass
                     </span>
                   </h1>
-                  <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+                  <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed">
                     Experience our Orange Code Masterclasses at Etihad Towers in Abu Dhabi. Choose your masterclass and preferred time. Secure your spot in seconds.
                   </p>
                 </motion.div>
@@ -345,18 +345,18 @@ export default function MasterclassesPage() {
         </section>
 
         {/* Main Booking Section - Side by Side */}
-        <section className="py-8 md:py-12 relative">
-          <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 max-w-7xl mx-auto">
+        <section className="py-6 sm:py-8 md:py-12 relative">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 max-w-7xl mx-auto">
               
               {/* Left Side - Masterclass Selection */}
               <div className="space-y-6">
                 <div>
-                  <h2 className="text-2xl md:text-3xl font-bold mb-2 flex items-center gap-2">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 flex items-center gap-2">
                     <span className="w-2 h-2 bg-orange rounded-full"></span>
                     Step 1: <span className="text-orange">Choose</span> Your Masterclass
                   </h2>
-                  <p className="text-white/60 text-sm mb-6">Select the masterclass that interests you most</p>
+                  <p className="text-white/60 text-xs sm:text-sm mb-6">Select the masterclass that interests you most</p>
                 </div>
                 
                 <div className="space-y-4">
@@ -377,7 +377,7 @@ export default function MasterclassesPage() {
                         scale: selectedMasterclass === masterclass.id ? 1.02 : 1
                       }}
                       transition={{ duration: 0.3, delay: index * 0.1 }}
-                      className={`relative w-full p-5 rounded-xl border-2 transition-all duration-300 text-left ${
+                      className={`relative w-full p-4 sm:p-5 rounded-xl border-2 transition-all duration-300 text-left ${
                         selectedMasterclass === masterclass.id
                           ? 'border-orange bg-gradient-to-br from-orange/20 to-orange/5 shadow-xl shadow-orange/20'
                           : 'border-white/10 bg-white/5 hover:border-orange/50 hover:bg-white/10'
@@ -394,26 +394,26 @@ export default function MasterclassesPage() {
                         </motion.div>
                       )}
                       <div className="flex items-start justify-between gap-4 mb-2 pr-8">
-                        <h3 className="text-lg font-bold text-white flex-1">
+                        <h3 className="text-base sm:text-lg font-bold text-white flex-1">
                           {masterclass.title}
                         </h3>
                         <div className="flex-shrink-0 text-right">
-                          <p className="text-2xl font-bold text-orange">{masterclass.price} د.إ</p>
+                          <p className="text-xl sm:text-2xl font-bold text-orange">{masterclass.price} د.إ</p>
                           <p className="text-white/50 text-xs">per person</p>
                         </div>
                       </div>
-                      <div className="text-white/70 text-sm leading-relaxed space-y-4">
+                      <div className="text-white/70 text-xs sm:text-sm leading-relaxed space-y-3 sm:space-y-4">
                         <p>{masterclass.description}</p>
                         
                         {masterclass.learningObjectives && masterclass.learningObjectives.length > 0 && (
                           <div className="mt-4">
-                            <h4 className="text-white font-semibold mb-2 text-base">Learning Objectives</h4>
+                            <h4 className="text-white font-semibold mb-2 text-sm sm:text-base">Learning Objectives</h4>
                             <p className="text-white/80 text-xs mb-2">By the end of this masterclass, participants will:</p>
-                            <ul className="space-y-1.5 ml-4">
+                            <ul className="space-y-1.5 ml-3 sm:ml-4">
                               {masterclass.learningObjectives.map((objective, idx) => (
                                 <li key={idx} className="flex items-start gap-2">
-                                  <span className="text-orange mt-1.5">•</span>
-                                  <span className="text-white/70">{objective}</span>
+                                  <span className="text-orange mt-1.5 text-xs">•</span>
+                                  <span className="text-white/70 text-xs sm:text-sm">{objective}</span>
                                 </li>
                               ))}
                             </ul>
@@ -422,13 +422,13 @@ export default function MasterclassesPage() {
                         
                         {masterclass.outcomes && masterclass.outcomes.length > 0 && (
                           <div className="mt-4">
-                            <h4 className="text-white font-semibold mb-2 text-base">Outcomes</h4>
+                            <h4 className="text-white font-semibold mb-2 text-sm sm:text-base">Outcomes</h4>
                             <p className="text-white/80 text-xs mb-2">Participants will leave with:</p>
-                            <ul className="space-y-1.5 ml-4">
+                            <ul className="space-y-1.5 ml-3 sm:ml-4">
                               {masterclass.outcomes.map((outcome, idx) => (
                                 <li key={idx} className="flex items-start gap-2">
-                                  <span className="text-orange mt-1.5">•</span>
-                                  <span className="text-white/70">{outcome}</span>
+                                  <span className="text-orange mt-1.5 text-xs">•</span>
+                                  <span className="text-white/70 text-xs sm:text-sm">{outcome}</span>
                                 </li>
                               ))}
                             </ul>
@@ -449,11 +449,11 @@ export default function MasterclassesPage() {
                     transition={{ duration: 0.4 }}
                   >
                     <div>
-                      <h2 className="text-2xl md:text-3xl font-bold mb-2 flex items-center gap-2">
+                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 flex items-center gap-2">
                         <span className="w-2 h-2 bg-azure-blue rounded-full"></span>
                         Step 2: <span className="text-orange">Choose</span> Your Time
                       </h2>
-                      <p className="text-white/60 text-sm mb-6">Select your preferred date and session type</p>
+                      <p className="text-white/60 text-xs sm:text-sm mb-6">Select your preferred date and session type</p>
                     </div>
 
                     {/* Filter Tabs - Only In-Person Available */}
@@ -465,7 +465,7 @@ export default function MasterclassesPage() {
                     </div>
 
                     {/* Time Slots Grid */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 max-h-[400px] sm:max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
                       {filteredSlots.map((slot, index) => (
                         <motion.button
                           key={`${slot.date}-${slot.type}-${index}`}
@@ -501,8 +501,8 @@ export default function MasterclassesPage() {
                           <div className="flex flex-col items-center gap-1.5">
                             <MapPin className={`w-4 h-4 ${!slot.available ? 'text-red-500/50' : 'text-orange'}`} />
                             <p className={`text-xs font-semibold leading-tight ${!slot.available ? 'text-red-400/70' : 'text-white'}`}>{slot.date}</p>
-                            <p className={`text-[10px] leading-tight ${!slot.available ? 'text-red-400/60' : 'text-white/70'}`}>{slot.time}</p>
-                            <p className={`text-[9px] ${!slot.available ? 'text-red-400/60' : 'text-white/50'}`}>
+                            <p className={`text-xs leading-tight ${!slot.available ? 'text-red-400/60' : 'text-white/70'}`}>{slot.time}</p>
+                            <p className={`text-xs ${!slot.available ? 'text-red-400/60' : 'text-white/50'}`}>
                               {!slot.available ? 'Fully Booked' : 'Etihad Towers, Abu Dhabi'}
                             </p>
                           </div>
@@ -576,7 +576,7 @@ export default function MasterclassesPage() {
                     <Sparkle className="w-8 h-8 text-orange" />
                   </div>
                   <div className="flex-1">
-                    <h2 className="text-2xl md:text-3xl font-bold mb-3 text-white">
+                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 text-white">
                       Need a Tailormade Course or Different Time?
                     </h2>
                     <p className="text-white/80 text-lg leading-relaxed mb-4">
@@ -744,10 +744,10 @@ export default function MasterclassesPage() {
                 boxShadow: '0 -10px 40px rgba(0, 0, 0, 0.5), 0 0 60px rgba(255, 145, 77, 0.2), 0 0 80px rgba(0, 212, 255, 0.15)'
               }}
             >
-              <div className="container mx-auto px-6 py-5">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4 max-w-7xl mx-auto">
+              <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-5">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 max-w-7xl mx-auto">
                   {/* Selection Summary */}
-                  <div className="flex-1 flex flex-wrap items-center gap-4 text-sm">
+                  <div className="flex-1 flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-orange rounded-full animate-pulse"></div>
                       <span className="text-white/90 font-semibold">{selectedMasterclassData.title}</span>
@@ -755,7 +755,7 @@ export default function MasterclassesPage() {
                     <div className="flex items-center gap-2 text-orange font-bold">
                       <span>{selectedMasterclassData.price} د.إ</span>
                     </div>
-                    <div className="hidden md:flex items-center gap-2 text-white/70">
+                    <div className="hidden sm:flex items-center gap-2 text-white/70">
                       <Calendar className="w-4 h-4" />
                       <span>{selectedSlot.date}</span>
                     </div>
@@ -764,7 +764,7 @@ export default function MasterclassesPage() {
                       <span>{selectedSlot.time}</span>
                     </div>
                     {selectedSlot.type === 'offline' && (
-                      <div className="flex items-center gap-2 text-white/70">
+                      <div className="hidden sm:flex items-center gap-2 text-white/70">
                         <MapPin className="w-4 h-4" />
                         <span>Etihad Towers, Abu Dhabi</span>
                       </div>
@@ -777,9 +777,9 @@ export default function MasterclassesPage() {
                     whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(255, 145, 77, 0.6)" }}
                     whileTap={{ scale: 0.95 }}
                     transition={{ duration: 0.3 }}
-                    className="cta-button-glow w-full md:w-auto px-10 py-4 text-white font-bold text-lg rounded-xl relative overflow-hidden group flex items-center justify-center gap-3"
+                    className="cta-button-glow w-full sm:w-auto px-6 sm:px-10 py-3 sm:py-4 text-white font-bold text-base sm:text-lg rounded-xl relative overflow-hidden group flex items-center justify-center gap-3"
                   >
-                    <Sparkles className="w-5 h-5 relative z-10 group-hover:rotate-12 transition-transform" />
+                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 relative z-10 group-hover:rotate-12 transition-transform" />
                     <span className="relative z-10">Secure Your Spot</span>
                   </motion.button>
                 </div>

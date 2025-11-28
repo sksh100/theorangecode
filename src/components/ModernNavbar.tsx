@@ -167,7 +167,7 @@ export function ModernNavbar() {
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
       {/* Logo at bottom left edge of page */}
-      <div className="absolute bottom-0 left-0 z-50 h-20 -ml-0">
+      <div className="absolute bottom-0 left-0 z-50 h-16 sm:h-20 -ml-0 hidden sm:block">
         <Image
           src="/coming-soon/logo-1.png"
           alt="The Orange Code Logo"

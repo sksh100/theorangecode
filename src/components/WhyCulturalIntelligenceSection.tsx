@@ -257,7 +257,7 @@ export function WhyCulturalIntelligenceSection() {
           </motion.div>
 
           <motion.h2 
-            className="text-title text-white max-w-5xl mx-auto leading-tight whitespace-nowrap"
+            className="text-title text-white max-w-5xl mx-auto leading-tight"
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ 
@@ -303,9 +303,9 @@ export function WhyCulturalIntelligenceSection() {
             </motion.span>
           </motion.h2>
           
-          <div className="max-w-4xl mx-auto space-y-6">
+          <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6 px-4 sm:px-0">
             <motion.p 
-              className="text-lg md:text-xl text-white/90 leading-relaxed tracking-normal"
+              className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed tracking-normal"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ 
@@ -318,7 +318,7 @@ export function WhyCulturalIntelligenceSection() {
               People succeed because they know how to communicate across cultures, interpret subtle signals, and build trust quickly. Cultural intelligence gives you this advantage.
             </motion.p>
             <motion.p 
-              className="text-lg md:text-xl text-white/70 leading-relaxed tracking-normal"
+              className="text-base sm:text-lg md:text-xl text-white/70 leading-relaxed tracking-normal"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ 
@@ -474,7 +474,7 @@ export function WhyCulturalIntelligenceSection() {
                   ease: [0.25, 0.1, 0.25, 1]
                 }}
                 viewport={{ once: true, margin: "-50px" }}
-                className="flex flex-col md:flex-row gap-6 md:gap-8 group"
+                className="flex flex-col sm:flex-row gap-4 sm:gap-6 md:gap-8 group px-4 sm:px-0"
                 whileHover={{ x: 10 }}
               >
                 <motion.div 
@@ -515,7 +515,7 @@ export function WhyCulturalIntelligenceSection() {
                   viewport={{ once: true }}
                 >
                   <motion.h4 
-                    className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-orange transition-colors duration-300"
+                    className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-orange transition-colors duration-300"
                     whileHover={{ 
                       textShadow: "0 0 20px rgba(255, 145, 77, 0.8)"
                     }}
@@ -523,7 +523,7 @@ export function WhyCulturalIntelligenceSection() {
                     {benefit.title}
                   </motion.h4>
                   <motion.p 
-                    className="text-lg text-white/70 leading-relaxed"
+                    className="text-base sm:text-lg text-white/70 leading-relaxed"
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.2 + 0.4 }}
@@ -567,12 +567,12 @@ export function WhyCulturalIntelligenceSection() {
             </div>
           </div>
 
-          <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-16 max-w-3xl">
+          <p className="text-base sm:text-lg md:text-xl text-white/80 leading-relaxed mb-12 sm:mb-16 max-w-3xl px-4 sm:px-0">
             Cultural intelligence is essential for successful business outcomes in the UAE and Gulf Region.
           </p>
 
           {/* Benefits - Grid Layout for Business */}
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 px-4 sm:px-0">
             {businessBenefits.map((benefit, index) => (
               <motion.div
                 key={index}
@@ -613,7 +613,7 @@ export function WhyCulturalIntelligenceSection() {
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange/50 via-azure-blue/50 to-transparent" />
           
           <div className="pt-12 pb-8">
-            <div className="flex items-start gap-6 mb-8">
+            <div className="flex items-start gap-4 sm:gap-6 mb-6 sm:mb-8 px-4 sm:px-0">
               <div className="relative flex-shrink-0">
                 <div className="w-20 h-20 bg-gradient-to-br from-orange via-azure-blue to-orange rounded-2xl flex items-center justify-center">
                   <TrendingUp className="w-10 h-10 text-white" />
@@ -624,7 +624,7 @@ export function WhyCulturalIntelligenceSection() {
                 <h4 className="text-subtitle text-white mb-6">
                   The Bottom Line
                 </h4>
-                <p className="text-xl md:text-2xl text-white/90 leading-relaxed">
+                <p className="text-base sm:text-xl md:text-2xl text-white/90 leading-relaxed px-4 sm:px-0">
                   Teams with high cultural intelligence see{' '}
                   <motion.span 
                     className="font-bold text-orange inline-block relative"

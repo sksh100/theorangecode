@@ -84,7 +84,7 @@ export function MasterclassesOverview({ onExpand }: MasterclassesOverviewProps) 
     <motion.section
       ref={sectionRef}
       id="masterclasses-overview"
-      className="relative py-32 bg-gradient-to-br from-primary-dark via-primary-dark/95 to-primary-dark overflow-hidden"
+      className="relative py-16 sm:py-24 md:py-32 bg-gradient-to-br from-primary-dark via-primary-dark/95 to-primary-dark overflow-hidden"
       style={{ opacity, scale }}
     >
       {/* Cutting-Edge Background Effects */}
@@ -218,7 +218,7 @@ export function MasterclassesOverview({ onExpand }: MasterclassesOverviewProps) 
           viewport={{ once: true }}
         >
           {/* Grid Container for 3 Boxes */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch px-4 sm:px-0">
             {masterclasses.map((masterclass, index) => {
               const panelColors = [
                 { bg: 'from-orange/15 to-orange/5', border: 'border-orange/40', glow: 'from-orange/30 to-orange/10' },
@@ -255,14 +255,14 @@ export function MasterclassesOverview({ onExpand }: MasterclassesOverviewProps) 
                   />
                   
                   {/* Glass Morphic Box */}
-                  <div className={`relative bg-gradient-to-br ${colors.bg} backdrop-blur-[40px] border ${colors.border} rounded-3xl p-6 md:p-8 transition-all duration-500 group-hover:border-opacity-80 shadow-2xl flex flex-col flex-grow`}>
+                  <div className={`relative bg-gradient-to-br ${colors.bg} backdrop-blur-[40px] border ${colors.border} rounded-3xl p-5 sm:p-6 md:p-8 transition-all duration-500 group-hover:border-opacity-80 shadow-2xl flex flex-col flex-grow`}>
                     
                     {/* Vertical Layout: Title -> Image -> Description */}
                     <div className="flex flex-col gap-6 flex-grow">
                       
                       {/* Title Above Image - Fixed Height */}
                       <motion.h3 
-                        className="text-xl md:text-2xl font-black text-white group-hover:text-orange transition-colors duration-300 text-center min-h-[3rem] md:min-h-[3.5rem] flex items-center justify-center"
+                        className="text-lg sm:text-xl md:text-2xl font-black text-white group-hover:text-orange transition-colors duration-300 text-center min-h-[3rem] sm:min-h-[3rem] md:min-h-[3.5rem] flex items-center justify-center"
                         whileHover={{ 
                           textShadow: "0 0 30px rgba(255, 145, 77, 0.8)"
                         }}
@@ -298,7 +298,7 @@ export function MasterclassesOverview({ onExpand }: MasterclassesOverviewProps) 
 
                       {/* Description Below Image */}
                       <div className="flex flex-col gap-4 flex-grow">
-                        <p className="text-white/90 text-sm md:text-base leading-relaxed text-center flex-grow">
+                        <p className="text-white/90 text-sm sm:text-sm md:text-base leading-relaxed text-center flex-grow">
                           {masterclass.description}
                         </p>
                         

@@ -133,7 +133,7 @@ export function ContactFormSection() {
         <div className="absolute bottom-20 right-10 w-80 h-80 bg-orange/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 overflow-x-hidden">
         {/* Section Header */}
         <motion.div
           className="text-center mb-16"
@@ -181,7 +181,7 @@ export function ContactFormSection() {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Contact Information */}
           <motion.div
             className="lg:col-span-1"
@@ -190,7 +190,7 @@ export function ContactFormSection() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="glass-card p-8 h-full">
+            <div className="glass-card p-6 sm:p-8 h-full">
               <h3 className="text-2xl font-bold text-white mb-6">Contact Information</h3>
               
               <div className="space-y-6">
@@ -244,10 +244,10 @@ export function ContactFormSection() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="glass-card p-8 md:p-10">
+            <div className="glass-card p-6 sm:p-8 md:p-10">
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* First Name and Last Name Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <label htmlFor="firstName" className="block text-white font-semibold mb-2">
                       First Name *
@@ -282,7 +282,7 @@ export function ContactFormSection() {
                 </div>
 
                 {/* E-mail and Confirm E-mail Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <label htmlFor="email" className="block text-white font-semibold mb-2">
                       E-mail Address *
@@ -328,7 +328,7 @@ export function ContactFormSection() {
                 </div>
 
                 {/* Phone and Subject Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <label htmlFor="phone" className="block text-white font-semibold mb-2">
                       Phone Number

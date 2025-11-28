@@ -246,7 +246,7 @@ export function TestimonialCarousel() {
               {duplicatedTestimonials.map((testimonial, index) => (
                 <motion.div
                   key={`${testimonial.id}-${index}`}
-                  className="testimonial-card flex-shrink-0 w-[400px] glass-card p-6 md:p-8 flex flex-col relative cursor-pointer"
+                  className="testimonial-card flex-shrink-0 w-[90vw] sm:w-[400px] md:w-[400px] glass-card p-6 md:p-8 flex flex-col relative cursor-pointer"
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                   whileHover={{ 
