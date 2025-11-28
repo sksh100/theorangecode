@@ -58,6 +58,14 @@ export function TestimonialCarousel() {
       company: 'Ballast Nedam',
       content: 'Coming from a Dutch background I assumed honesty and directness created trust. In the Gulf this sometimes sounded too blunt. The Orange Code helped me adapt my communication to the UAE and Saudi ecosystem. I learned how warmth and respect shape business here. The results were immediate. Our projects moved faster and partnerships became effortless.',
       rating: 5
+    },
+    {
+      id: 6,
+      name: 'Dmitry P.',
+      role: '',
+      company: 'Russian Business Conglomerate',
+      content: 'Coming from Russia, I was used to giving feedback very directly axaxa. But in the Gulf, I realised that the same honesty can feel too sharp. This training helped me see how my communication comes across and how I can adjust here and there. The awareness it gave me is honestly the most valuable part. Great job! This is something many people overlook and nobody fills the gap my compliments!',
+      rating: 5
     }
   ]
 
@@ -222,8 +230,8 @@ export function TestimonialCarousel() {
                     transition: { duration: 0.3, ease: "easeOut" }
                   }}
                 >
-                  {/* NDA Indicator - Only for Regional Project Lead */}
-                  {testimonial.id === 1 && (
+                  {/* NDA Indicator - For anonymous testimonials */}
+                  {(testimonial.id === 1 || testimonial.id === 6) && (
                     <div className="absolute top-4 right-4 z-10">
                       <div className="w-6 h-6 bg-orange/20 rounded-full flex items-center justify-center border border-orange/40 backdrop-blur-sm">
                         <Shield className="w-3.5 h-3.5 text-orange" />
