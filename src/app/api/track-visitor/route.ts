@@ -560,6 +560,8 @@ export async function POST(req: NextRequest) {
         lng: coordinates?.lng,
         source: trafficSource,
         navigationFlow: navigationFlow.length > 0 ? navigationFlow : undefined,
+        sessionDuration: sessionDuration > 0 ? sessionDuration : undefined,
+        visitCount: visitCount > 0 ? visitCount : undefined,
       })
         .then(() => {
           console.log("✅✅✅ Visitor Slack notification SENT SUCCESSFULLY");
