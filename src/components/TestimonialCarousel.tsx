@@ -45,10 +45,10 @@ export function TestimonialCarousel() {
     },
     {
       id: 4,
-      name: 'Michael Chen',
-      role: 'Senior Consultant',
-      company: 'Strategic Partners Group',
-      content: 'The depth of knowledge and practical application in The Orange Code masterclass is exceptional. It\'s not just theory - it\'s real-world wisdom that immediately improved my interactions and business outcomes in the region.',
+      name: 'M. D.',
+      role: 'United Nations Programme Officer',
+      company: '',
+      content: 'Coming from France and working in the UN, I thought I understood multicultural dynamics, but the Gulf has its own way of communicating. This training gave me the clarity and confidence to navigate it with real respect and ease.',
       rating: 5
     },
     {
@@ -247,7 +247,7 @@ export function TestimonialCarousel() {
                   }}
                 >
                   {/* NDA Indicator - For anonymous testimonials */}
-                  {(testimonial.id === 1 || testimonial.id === 6) && (
+                  {(testimonial.id === 1 || testimonial.id === 4 || testimonial.id === 6) && (
                     <div className="absolute top-4 right-4 z-10">
                       <div className="w-6 h-6 bg-orange/20 rounded-full flex items-center justify-center border border-orange/40 backdrop-blur-sm">
                         <Shield className="w-3.5 h-3.5 text-orange" />
