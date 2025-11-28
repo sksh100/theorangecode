@@ -471,20 +471,45 @@ export function ModernNavbar() {
                                 }
                                 
                                 return (
-                                  <Link
-                                    key={dropdownItem.label}
-                                    href={dropdownItem.href}
-                                    onClick={(e) => {
-                                      e.stopPropagation()
-                                      setIsMobileMenuOpen(false)
-                                      setActiveDropdown(null)
-                                    }}
-                                    className={`flex items-center space-x-3 p-3 text-white/70 hover:text-white ${bgHoverColor} rounded-lg transition-all duration-300 cursor-pointer touch-manipulation`}
-                                    style={{ WebkitTapHighlightColor: 'transparent' }}
-                                  >
-                                    <dropdownItem.icon className={`w-5 h-5 ${iconColor} flex-shrink-0`} />
-                                    <span className="font-montserrat text-sm">{dropdownItem.label}</span>
-                                  </Link>
+                                  <div key={dropdownItem.label}>
+                                    <Link
+                                      href={dropdownItem.href}
+                                      onClick={(e) => {
+                                        e.preventDefault()
+                                        e.stopPropagation()
+                                        setIsMobileMenuOpen(false)
+                                        setActiveDropdown(null)
+                                        // Navigate after closing menu
+                                        setTimeout(() => {
+                                          if (dropdownItem.href.startsWith('#')) {
+                                            window.location.hash = dropdownItem.href.substring(1)
+                                          } else {
+                                            window.location.href = dropdownItem.href
+                                          }
+                                        }, 100)
+                                      }}
+                                      className={`flex items-center space-x-3 p-3 text-white/70 hover:text-white ${bgHoverColor} rounded-lg transition-all duration-300 cursor-pointer touch-manipulation relative z-10`}
+                                      style={{ WebkitTapHighlightColor: 'transparent', pointerEvents: 'auto' }}
+                                    >
+                                      <dropdownItem.icon className={`w-5 h-5 ${iconColor} flex-shrink-0`} />
+                                      <span className="font-montserrat text-sm">{dropdownItem.label}</span>
+                                    </Link>
+                                    {/* Show ebook image for Resources dropdown on mobile */}
+                                    {item.label === 'Resources' && index === 0 && (
+                                      <div className="ml-4 mt-2 mb-2 relative z-10">
+                                        <div className="relative rounded-xl overflow-hidden border border-white/10 bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10">
+                                          <Image
+                                            src="/e-book.png"
+                                            alt="Ebook Coming Soon"
+                                            width={300}
+                                            height={450}
+                                            className="w-full h-auto object-contain"
+                                            priority={false}
+                                          />
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
                                 )
                               })}
                             </motion.div>
