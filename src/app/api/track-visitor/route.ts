@@ -93,19 +93,22 @@ export async function POST(req: NextRequest) {
     // Check if this is a new visitor (not seen in last 5 minutes)
     let isNewVisitor = true;
     let lastSeen = null;
+    let redisAvailable = true;
     
     try {
       lastSeen = await redis.get(visitorKey);
       isNewVisitor = !lastSeen;
       console.log("🔍 Visitor check:", {
         ip,
-        lastSeen: lastSeen ? "seen before" : "new visitor",
-        isNewVisitor
+        lastSeen: lastSeen ? `seen at ${lastSeen}` : "new visitor",
+        isNewVisitor,
+        visitorKey
       });
     } catch (redisError) {
       console.warn("⚠️ Redis check failed, treating as new visitor:", redisError);
       // If Redis fails, treat as new visitor to ensure notifications work
       isNewVisitor = true;
+      redisAvailable = false;
     }
 
     // Try to store visitor data (but don't fail if Redis is down)
@@ -124,17 +127,34 @@ export async function POST(req: NextRequest) {
       // Continue even if Redis fails
     }
 
+    // Always log visitor tracking
+    console.log("📊 Visitor tracked:", {
+      ip,
+      country,
+      city,
+      device,
+      browser,
+      path,
+      isNewVisitor,
+      redisAvailable,
+      lastSeen: lastSeen ? `seen ${Math.round((now - parseInt(lastSeen)) / 1000)}s ago` : "never"
+    });
+
+    // TEMPORARY: Force notifications for testing (remove after debugging)
+    // Set FORCE_VISITOR_NOTIFICATIONS=true in Vercel to always notify
+    const forceNotifications = process.env.FORCE_VISITOR_NOTIFICATIONS === 'true';
+    const shouldNotify = isNewVisitor || forceNotifications;
+
     // Send Slack notification for new visitors only (to avoid spam)
-    if (isNewVisitor) {
-      console.log("👤 New visitor detected, sending Slack notification...", {
+    if (shouldNotify) {
+      console.log("👤 NEW VISITOR - Sending Slack notification...", {
         ip,
         country,
         city,
         device,
         browser,
         path,
-        isNewVisitor,
-        lastSeen: lastSeen ? "yes" : "no"
+        timestamp: new Date().toISOString()
       });
       
       notifyNewVisitor({
@@ -145,15 +165,24 @@ export async function POST(req: NextRequest) {
         page: path,
         ip: ip !== "unknown" ? ip : undefined
       })
-        .then(() => console.log("✅ Visitor Slack notification sent successfully"))
+        .then(() => {
+          console.log("✅✅✅ Visitor Slack notification SENT SUCCESSFULLY");
+        })
         .catch(err => {
-          console.error("❌ Slack notification error:", err);
+          console.error("❌❌❌ Slack notification FAILED:", {
+            error: err.message,
+            stack: err.stack,
+            ip,
+            country,
+            city
+          });
           // Don't fail tracking if Slack fails
         });
     } else {
       console.log("⏭️ Visitor already seen recently, skipping notification", {
         ip,
-        lastSeen: lastSeen
+        lastSeen: lastSeen,
+        timeSinceLastSeen: lastSeen ? `${Math.round((now - parseInt(lastSeen)) / 1000)} seconds` : "unknown"
       });
     }
 
