@@ -644,4 +644,3 @@ export function ModernNavbar() {
     </motion.nav>
   )
 }
-// Verified: usePathname import present
