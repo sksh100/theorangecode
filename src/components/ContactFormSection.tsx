@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Send, Mail, Phone, MapPin, MessageSquare, ChevronDown } from 'lucide-react'
 import { trackFormStart, trackFormComplete } from '@/lib/analytics'
@@ -18,6 +18,17 @@ export function ContactFormSection() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [statusMessage, setStatusMessage] = useState<string | null>(null)
   const [emailError, setEmailError] = useState<string | null>(null)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+  
+  const subjectOptions = [
+    { value: '', label: 'Select a subject', disabled: true },
+    { value: 'masterclass-inquiry', label: 'Masterclass Inquiry' },
+    { value: 'booking', label: 'Book a Session' },
+    { value: 'private-masterclass-inquiry', label: 'Private Masterclass Inquiry' },
+    { value: 'partnership', label: 'Partnership' },
+    { value: 'general', label: 'General Question' },
+  ]
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const value = e.target.value
@@ -97,6 +108,23 @@ export function ContactFormSection() {
     }
   }
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false)
+      }
+    }
+
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isDropdownOpen])
+
   return (
     <section id="contact" className="relative py-24 md:py-32 bg-gradient-to-br from-primary-dark via-primary-dark/95 to-primary-dark overflow-hidden">
       {/* Background decorative elements */}
@@ -135,17 +163,17 @@ export function ContactFormSection() {
             </span>
           </h2>
           <div className="text-white/70 text-lg md:text-xl max-w-2xl mx-auto space-y-4 mb-8">
-            <p>
-              We answer every message with <span className="text-orange font-semibold">care</span> so you can move forward with <span className="text-azure-blue font-semibold">confidence</span>.{' '}
-              <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent font-bold text-xl md:text-2xl">
+            <p className="tracking-normal">
+              We answer every message with care so you can move forward with confidence.{' '}
+              <span className="text-orange font-bold text-xl md:text-2xl">
                 Let's Connect!
               </span>
             </p>
-            <p className="text-white/70 text-lg max-w-2xl mx-auto">
+            <p className="text-white/70 text-lg max-w-2xl mx-auto tracking-normal">
               Share your details below so our team can reply shortly.
             </p>
-            <p className="text-white/70 text-lg max-w-2xl mx-auto">
-              Your message stays <span className="text-orange font-semibold">private</span>, <span className="text-azure-blue font-semibold">confidential</span>, <span className="text-orange font-semibold">safe</span>.
+            <p className="text-white/70 text-lg max-w-2xl mx-auto tracking-normal">
+              Your message stays private, confidential, safe.
             </p>
           </div>
           
@@ -323,30 +351,69 @@ export function ContactFormSection() {
                     <label htmlFor="subject" className="block text-white font-semibold mb-2">
                       Subject *
                     </label>
-                    <div className="relative group">
+                    <div className="relative group" ref={dropdownRef}>
                       {/* Gradient border effect on focus/hover */}
                       <div className="absolute -inset-0.5 bg-gradient-to-r from-orange/50 via-azure-blue/50 to-orange/50 rounded-xl opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 blur-sm transition-opacity duration-300 -z-10" />
                       
-                      <select
-                        id="subject"
+                      {/* Custom Dropdown Button */}
+                      <button
+                        type="button"
+                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        className="w-full px-4 py-3 bg-gradient-to-br from-primary-dark/80 via-primary-dark/60 to-primary-dark/80 backdrop-blur-[20px] border border-white/20 rounded-xl text-white focus:outline-none focus:border-orange/50 focus:ring-2 focus:ring-orange/30 transition-all cursor-pointer pr-12 hover:border-azure-blue/40 hover:bg-gradient-to-br hover:from-primary-dark/90 hover:via-primary-dark/70 hover:to-primary-dark/90 relative z-10 shadow-lg hover:shadow-orange/10 text-left"
+                      >
+                        <span className={formData.subject ? 'text-white' : 'text-white/50'}>
+                          {formData.subject 
+                            ? subjectOptions.find(opt => opt.value === formData.subject)?.label 
+                            : 'Select a subject'}
+                        </span>
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none z-20">
+                          <ChevronDown className={`w-5 h-5 text-white/70 group-hover:text-orange transition-all duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                        </div>
+                      </button>
+                      
+                      {/* Custom Dropdown Menu */}
+                      {isDropdownOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute z-50 w-full mt-2 bg-gradient-to-br from-primary-dark via-primary-dark/95 to-primary-dark backdrop-blur-[20px] border border-white/20 rounded-xl shadow-2xl overflow-hidden"
+                        >
+                          <div className="py-2">
+                            {subjectOptions.map((option, index) => (
+                              <button
+                                key={option.value || `option-${index}`}
+                                type="button"
+                                onClick={() => {
+                                  if (!option.disabled) {
+                                    setFormData(prev => ({ ...prev, subject: option.value }))
+                                    setIsDropdownOpen(false)
+                                  }
+                                }}
+                                disabled={option.disabled}
+                                className={`w-full px-4 py-3 text-left text-white transition-all duration-200 ${
+                                  option.disabled
+                                    ? 'text-white/50 cursor-not-allowed'
+                                    : formData.subject === option.value
+                                    ? 'bg-gradient-to-r from-orange/20 to-azure-blue/20 text-white font-semibold'
+                                    : 'hover:bg-gradient-to-r hover:from-orange/10 hover:to-azure-blue/10 hover:text-white'
+                                }`}
+                              >
+                                {option.label}
+                              </button>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                      
+                      {/* Hidden input for form validation */}
+                      <input
+                        type="hidden"
                         name="subject"
                         value={formData.subject}
-                        onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 bg-gradient-to-br from-primary-dark/80 via-primary-dark/60 to-primary-dark/80 backdrop-blur-[20px] border border-white/20 rounded-xl text-white focus:outline-none focus:border-orange/50 focus:ring-2 focus:ring-orange/30 transition-all appearance-none cursor-pointer pr-12 hover:border-azure-blue/40 hover:bg-gradient-to-br hover:from-primary-dark/90 hover:via-primary-dark/70 hover:to-primary-dark/90 relative z-10 shadow-lg hover:shadow-orange/10"
-                      >
-                        <option value="" disabled className="bg-primary-dark text-white/50 py-3">Select a subject</option>
-                        <option value="masterclass-inquiry" className="bg-primary-dark text-white py-3 hover:bg-orange/20">Masterclass Inquiry</option>
-                        <option value="booking" className="bg-primary-dark text-white py-3 hover:bg-azure-blue/20">Book a Session</option>
-                        <option value="private-masterclass-inquiry" className="bg-primary-dark text-white py-3 hover:bg-orange/20">Private Masterclass Inquiry</option>
-                        <option value="partnership" className="bg-primary-dark text-white py-3 hover:bg-azure-blue/20">Partnership</option>
-                        <option value="general" className="bg-primary-dark text-white py-3 hover:bg-orange/20">General Question</option>
-                      </select>
-                      
-                      {/* Custom dropdown arrow with gradient */}
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none z-20">
-                        <ChevronDown className="w-5 h-5 text-white/70 group-hover:text-orange group-focus-within:text-azure-blue transition-colors duration-300" />
-                      </div>
+                      />
                       
                       {/* Glow effect on focus */}
                       <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange/0 via-azure-blue/0 to-orange/0 opacity-0 group-focus-within:opacity-20 transition-opacity duration-300 pointer-events-none" />
