@@ -12,6 +12,7 @@ import { ResourcesMegaDropdown } from './ResourcesMegaDropdown'
 import { trackDropdownOpen, trackDropdownItemClick, trackButtonClick } from '@/lib/analytics'
 
 export function ModernNavbar() {
+  const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
@@ -45,6 +46,16 @@ export function ModernNavbar() {
       }
     }
   }, [])
+
+  // Close mobile menu and dropdowns when route changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+    setActiveDropdown(null)
+    setIsAboutMegaOpen(false)
+    setIsContactMegaOpen(false)
+    setIsMasterclassesMegaOpen(false)
+    setIsResourcesMegaOpen(false)
+  }, [pathname])
 
   const navItems = [
     {
@@ -89,9 +100,9 @@ export function ModernNavbar() {
     },
     {
       label: 'Resources',
-      href: '#resources',
+      href: '/#resources',
       dropdown: [
-        { label: 'Ebook Coming Soon', icon: FileText, href: '#resources' },
+        { label: 'Ebook Coming Soon', icon: FileText, href: '/#resources' },
       ]
     },
     {
@@ -437,22 +448,42 @@ export function ModernNavbar() {
                               transition={{ duration: 0.2 }}
                               onClick={(e) => e.stopPropagation()}
                             >
-                              {item.dropdown?.map((dropdownItem) => (
-                                <Link
-                                  key={dropdownItem.label}
-                                  href={dropdownItem.href}
-                                  onClick={(e) => {
-                                    e.stopPropagation()
-                                    setIsMobileMenuOpen(false)
-                                    setActiveDropdown(null)
-                                  }}
-                                  className="flex items-center space-x-3 p-3 text-white/70 hover:text-white hover:bg-azure-blue-transparent rounded-lg transition-all duration-300 cursor-pointer touch-manipulation"
-                                  style={{ WebkitTapHighlightColor: 'transparent' }}
-                                >
-                                  <dropdownItem.icon className="w-5 h-5 text-azure-blue flex-shrink-0" />
-                                  <span className="font-montserrat text-sm">{dropdownItem.label}</span>
-                                </Link>
-                              ))}
+                              {item.dropdown?.map((dropdownItem, index) => {
+                                // Assign colors based on parent menu item
+                                let iconColor = 'text-azure-blue'
+                                let bgHoverColor = 'hover:bg-azure-blue-transparent'
+                                
+                                if (item.label === 'About') {
+                                  // Orange colors for About section
+                                  iconColor = index === 0 ? 'text-orange' : index === 1 ? 'text-azure-blue' : 'text-bright-blue'
+                                  bgHoverColor = index === 0 ? 'hover:bg-orange/10' : index === 1 ? 'hover:bg-azure-blue-transparent' : 'hover:bg-bright-blue/10'
+                                } else if (item.label === 'Masterclasses') {
+                                  // Orange, Azure Blue, Bright Blue for different masterclasses
+                                  iconColor = index === 0 ? 'text-orange' : index === 1 ? 'text-azure-blue' : 'text-bright-blue'
+                                  bgHoverColor = index === 0 ? 'hover:bg-orange/10' : index === 1 ? 'hover:bg-azure-blue-transparent' : 'hover:bg-bright-blue/10'
+                                } else if (item.label === 'Resources') {
+                                  // Orange for Resources
+                                  iconColor = 'text-orange'
+                                  bgHoverColor = 'hover:bg-orange/10'
+                                }
+                                
+                                return (
+                                  <Link
+                                    key={dropdownItem.label}
+                                    href={dropdownItem.href}
+                                    onClick={(e) => {
+                                      e.stopPropagation()
+                                      setIsMobileMenuOpen(false)
+                                      setActiveDropdown(null)
+                                    }}
+                                    className={`flex items-center space-x-3 p-3 text-white/70 hover:text-white ${bgHoverColor} rounded-lg transition-all duration-300 cursor-pointer touch-manipulation`}
+                                    style={{ WebkitTapHighlightColor: 'transparent' }}
+                                  >
+                                    <dropdownItem.icon className={`w-5 h-5 ${iconColor} flex-shrink-0`} />
+                                    <span className="font-montserrat text-sm">{dropdownItem.label}</span>
+                                  </Link>
+                                )
+                              })}
                             </motion.div>
                           )}
                         </AnimatePresence>
