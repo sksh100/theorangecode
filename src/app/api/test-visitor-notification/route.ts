@@ -17,13 +17,37 @@ export async function GET(request: NextRequest) {
     
     console.log("🧪 Testing visitor notification...", { ip, country, city, userAgent });
     
+    // Try to get coordinates for test
+    let coordinates: { lat: number; lng: number } | null = null;
+    if (ip && ip !== "test-ip" && ip !== "unknown") {
+      try {
+        // Use the same function from track-visitor
+        const ipinfoResponse = await fetch(`https://ipinfo.io/${ip}/json`, {
+          headers: { 'Accept': 'application/json' },
+        });
+        if (ipinfoResponse.ok) {
+          const ipinfoData = await ipinfoResponse.json();
+          if (ipinfoData.loc) {
+            const [lat, lng] = ipinfoData.loc.split(',').map(Number);
+            if (!isNaN(lat) && !isNaN(lng)) {
+              coordinates = { lat, lng };
+            }
+          }
+        }
+      } catch (error) {
+        console.log('Could not fetch coordinates for test:', error);
+      }
+    }
+    
     await notifyNewVisitor({
       country: country !== "Unknown" ? country : undefined,
       city: city !== "Unknown" ? city : undefined,
       device: "Desktop",
       browser: "Chrome",
       page: "/test",
-      ip: ip
+      ip: ip !== "test-ip" ? ip : undefined,
+      lat: coordinates?.lat,
+      lng: coordinates?.lng,
     });
 
     return NextResponse.json({

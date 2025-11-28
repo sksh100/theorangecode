@@ -198,25 +198,36 @@ export async function POST(req: NextRequest) {
     const visitorKey = `visitor:seen:${ip}`; // Track by IP to detect new visitors
 
     // Check if this is a new visitor (not seen in last 5 minutes)
+    // Reduced to 2 minutes to catch more visitors, or use FORCE_VISITOR_NOTIFICATIONS=true to always notify
     let isNewVisitor = true;
     let lastSeen: string | null = null;
     let redisAvailable = true;
+    const NOTIFICATION_WINDOW_SECONDS = 120; // 2 minutes instead of 5 minutes
     
     try {
       const lastSeenValue = await redis.get(visitorKey);
       // Ensure lastSeen is a string or null (handle Redis return type)
       if (lastSeenValue && typeof lastSeenValue === 'string') {
         lastSeen = lastSeenValue;
+        const lastSeenTime = parseInt(lastSeen, 10);
+        const timeSinceLastSeen = (now - lastSeenTime) / 1000; // seconds
+        
+        // Only consider "new" if not seen in the last 2 minutes
+        isNewVisitor = timeSinceLastSeen > NOTIFICATION_WINDOW_SECONDS;
+        
+        console.log("🔍 Visitor check:", {
+          ip,
+          lastSeen: lastSeen ? `seen ${Math.round(timeSinceLastSeen)}s ago` : "new visitor",
+          isNewVisitor,
+          timeSinceLastSeen: Math.round(timeSinceLastSeen),
+          window: NOTIFICATION_WINDOW_SECONDS,
+          visitorKey
+        });
       } else {
         lastSeen = null;
+        isNewVisitor = true;
+        console.log("🔍 Visitor check: NEW VISITOR (no previous record)", { ip, visitorKey });
       }
-      isNewVisitor = !lastSeen;
-      console.log("🔍 Visitor check:", {
-        ip,
-        lastSeen: lastSeen ? `seen at ${lastSeen}` : "new visitor",
-        isNewVisitor,
-        visitorKey
-      });
     } catch (redisError) {
       console.warn("⚠️ Redis check failed, treating as new visitor:", redisError);
       // If Redis fails, treat as new visitor to ensure notifications work
@@ -229,8 +240,8 @@ export async function POST(req: NextRequest) {
       // store active visitor with TTL 60 seconds
       await redis.set(key, JSON.stringify(payload), { ex: 60 });
 
-      // Mark this IP as seen (5 minute window)
-      await redis.set(visitorKey, now.toString(), { ex: 300 });
+      // Mark this IP as seen (2 minute window for notifications, but store longer for analytics)
+      await redis.set(visitorKey, now.toString(), { ex: NOTIFICATION_WINDOW_SECONDS });
 
       // push into recent visitors list, keep only last 200
       await redis.lpush("visitors", JSON.stringify(payload));
@@ -254,10 +265,20 @@ export async function POST(req: NextRequest) {
       lastSeen: lastSeen && typeof lastSeen === 'string' ? `seen ${Math.round((now - parseInt(lastSeen, 10)) / 1000)}s ago` : "never"
     });
 
-    // TEMPORARY: Force notifications for testing (remove after debugging)
-    // Set FORCE_VISITOR_NOTIFICATIONS=true in Vercel to always notify
+    // Force notifications for testing - Set FORCE_VISITOR_NOTIFICATIONS=true in Vercel to always notify
     const forceNotifications = process.env.FORCE_VISITOR_NOTIFICATIONS === 'true';
     const shouldNotify = isNewVisitor || forceNotifications;
+    
+    // Enhanced logging for debugging
+    console.log("🔔 Notification decision:", {
+      ip,
+      isNewVisitor,
+      forceNotifications,
+      shouldNotify,
+      SLACK_WEBHOOK_URL: process.env.SLACK_WEBHOOK_URL ? "✅ Set" : "❌ Missing",
+      country,
+      city
+    });
 
     // Send Slack notification for new visitors only (to avoid spam)
     if (shouldNotify) {

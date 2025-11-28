@@ -48,11 +48,13 @@ async function sendToSlack(message: SlackMessage): Promise<boolean> {
 
   console.log('🔍 Slack webhook status:', {
     hasWebhook: !!webhookUrl,
-    webhookPrefix: webhookUrl ? webhookUrl.substring(0, 30) + '...' : 'none'
+    webhookPrefix: webhookUrl ? webhookUrl.substring(0, 30) + '...' : 'none',
+    messageType: message.blocks?.[0]?.text?.text || message.text || 'unknown'
   });
 
   if (!webhookUrl) {
-    console.warn('⚠️ SLACK_WEBHOOK_URL not configured - notification not sent');
+    console.error('❌ SLACK_WEBHOOK_URL not configured - notification not sent');
+    console.error('❌ Please add SLACK_WEBHOOK_URL to Vercel environment variables');
     return false;
   }
 
