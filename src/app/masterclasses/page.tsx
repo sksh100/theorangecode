@@ -164,6 +164,23 @@ export default function MasterclassesPage() {
   const [filterType, setFilterType] = useState<'offline'>('offline')
   const [showTailormadeForm, setShowTailormadeForm] = useState(false)
   const [showContactForm, setShowContactForm] = useState(false)
+
+  // Track masterclass views when page loads or masterclass is selected
+  useEffect(() => {
+    if (selectedMasterclass) {
+      const masterclass = masterclasses.find(m => m.id === selectedMasterclass);
+      if (masterclass) {
+        trackMasterclassView(masterclass.id.toString(), masterclass.title);
+        trackFunnelStep('masterclass_selected', 3, {
+          masterclass: masterclass.title,
+          price: masterclass.price,
+        });
+      }
+    } else {
+      // Track viewing all masterclasses
+      trackMasterclassView('all', 'All Masterclasses');
+    }
+  }, [selectedMasterclass])
   const [tailormadeFormData, setTailormadeFormData] = useState({
     name: '',
     email: '',
@@ -207,6 +224,27 @@ export default function MasterclassesPage() {
             )
             
             trackButtonClick('Secure Your Spot', 'Masterclasses Page Checkout Bar')
+            
+            // Track masterclass interest (payment link click)
+            if (masterclassData) {
+              trackMasterclassInterest(
+                masterclassData.id.toString(),
+                masterclassData.title,
+                'payment_link_click'
+              );
+              trackFunnelStep('payment_click', 5, {
+                masterclass: masterclassData.title,
+                price: masterclassData.price,
+                date: selectedSlot.date,
+                time: selectedSlot.time,
+              });
+            }
+            
+            // Track CTA click
+            trackCTAClick('Book Masterclass', window.location.pathname, {
+              masterclass: masterclassData?.title,
+              price: masterclassData?.price,
+            });
             
             window.location.href = paymentLink
           }
