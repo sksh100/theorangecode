@@ -49,7 +49,7 @@ export function USPBar() {
     },
     {
       id: 'transformation',
-      title: 'Noticeable Growth in Weeks',
+      title: 'Instant Changes',
       subtitle: 'Clients experience meaningful improvement in communication, confidence, and relationships within a short period. The process brings clarity, refinement and ease in both personal and professional environments.',
       icon: Zap,
       gradient: 'from-orange via-azure-blue to-orange',

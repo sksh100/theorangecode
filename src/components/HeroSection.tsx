@@ -83,8 +83,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            Understand people. Unlock opportunity in the UAE, the Gulf Region,
-            and the Middle East.
+            Understand people. Unlock opportunity in the UAE, the Gulf Region.
           </motion.p>
         </motion.div>
       </div>

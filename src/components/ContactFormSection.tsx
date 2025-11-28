@@ -24,8 +24,8 @@ export function ContactFormSection() {
   const subjectOptions = [
     { value: '', label: 'Select a subject', disabled: true },
     { value: 'masterclass-inquiry', label: 'Masterclass Inquiry' },
-    { value: 'booking', label: 'Book a Session' },
-    { value: 'private-masterclass-inquiry', label: 'Private Masterclass Inquiry' },
+    { value: 'booking', label: 'Corporate Training' },
+    { value: 'private-masterclass-inquiry', label: 'Private Coaching Session' },
     { value: 'partnership', label: 'Partnership' },
     { value: 'general', label: 'General Question' },
   ]
@@ -163,16 +163,16 @@ export function ContactFormSection() {
             </span>
           </h2>
           <div className="text-white/70 text-lg md:text-xl max-w-2xl mx-auto space-y-4 mb-8">
-            <p className="tracking-normal">
+            <p className="text-lg md:text-xl tracking-normal">
               We answer every message with care so you can move forward with confidence.{' '}
-              <span className="text-orange font-bold text-xl md:text-2xl">
+              <span className="text-orange font-bold text-lg md:text-xl">
                 Let's Connect!
               </span>
             </p>
-            <p className="text-white/70 text-lg max-w-2xl mx-auto tracking-normal">
+            <p className="text-white/70 text-lg md:text-xl max-w-2xl mx-auto tracking-normal">
               Share your details below so our team can reply shortly.
             </p>
-            <p className="text-white/70 text-lg max-w-2xl mx-auto tracking-normal">
+            <p className="text-white/70 text-lg md:text-xl max-w-2xl mx-auto tracking-normal">
               Your message stays private, confidential, safe.
             </p>
           </div>
@@ -284,11 +284,11 @@ export function ContactFormSection() {
                   </div>
                 </div>
 
-                {/* Email and Confirm Email Row */}
+                {/* E-mail and Confirm E-mail Row */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="email" className="block text-white font-semibold mb-2">
-                      Email Address *
+                      E-mail Address *
                     </label>
                     <input
                       type="email"
@@ -302,13 +302,13 @@ export function ContactFormSection() {
                           ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/20' 
                           : 'border-white/20 focus:border-orange/50 focus:ring-orange/20'
                       }`}
-                      placeholder="your emailadress"
+                      placeholder="Your best e-mail"
                     />
                   </div>
 
                   <div>
                     <label htmlFor="emailConfirm" className="block text-white font-semibold mb-2">
-                      Confirm Email Address *
+                      Confirm E-mail Address *
                     </label>
                     <input
                       type="email"
@@ -322,7 +322,7 @@ export function ContactFormSection() {
                           ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/20' 
                           : 'border-white/20 focus:border-orange/50 focus:ring-orange/20'
                       }`}
-                      placeholder="your emailadress"
+                      placeholder="Your best e-mail"
                     />
                     {emailError && (
                       <p className="mt-2 text-sm text-red-400">{emailError}</p>

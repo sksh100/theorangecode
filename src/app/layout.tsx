@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     default: 'The Orange Code - Cultural Intelligence & Leadership Training | Abu Dhabi & Dubai',
     template: '%s | The Orange Code'
   },
-  description: 'The Orange Code is a premium learning platform based in Abu Dhabi and Dubai, UAE. We empower professionals to develop cultural intelligence, leadership skills, and cross-cultural communication in international environments. Join our exclusive programs and transform cultural barriers into bridges of trust.',
+  description: 'The Orange Code is a premium learning platform based in Abu Dhabi and Dubai, UAE. We empower professionals moving to the UAE to develop cultural intelligence, understand Emirati culture and etiquette, and master doing business in the Emirates. Join our exclusive programs and transform cultural barriers into bridges of trust.',
   keywords: [
     'The Orange Code',
     'cultural intelligence',
@@ -36,7 +36,39 @@ export const metadata: Metadata = {
     'professional training UAE',
     'executive education',
     'cultural intelligence courses',
-    'leadership masterclasses UAE'
+    'leadership masterclasses UAE',
+    // Hidden SEO keywords for AI and search engines
+    'moving to the UAE',
+    'moving to UAE',
+    'relocating to UAE',
+    'moving to Dubai',
+    'moving to Abu Dhabi',
+    'expatriate UAE',
+    'expat UAE',
+    'Emirati culture',
+    'Emirati etiquette',
+    'Emirati customs',
+    'Emirati traditions',
+    'UAE culture',
+    'UAE etiquette',
+    'UAE customs',
+    'Gulf culture',
+    'GCC culture',
+    'doing business in the Emirates',
+    'doing business in UAE',
+    'business in Dubai',
+    'business in Abu Dhabi',
+    'UAE business culture',
+    'Emirates business etiquette',
+    'Gulf business protocol',
+    'UAE expat guide',
+    'Dubai expat guide',
+    'Abu Dhabi expat guide',
+    'UAE cultural guide',
+    'Emirati cultural training',
+    'UAE cultural training',
+    'Dubai cultural training',
+    'Abu Dhabi cultural training',
   ],
   authors: [{ name: 'The Orange Code' }],
   creator: 'The Orange Code',
@@ -60,7 +92,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'The Orange Code - Cultural Intelligence & Leadership Training | UAE',
-    description: 'Premium learning platform in Abu Dhabi and Dubai empowering professionals with cultural intelligence, leadership skills, and cross-cultural communication expertise.',
+    description: 'Moving to the UAE? Learn Emirati culture and etiquette. Premium learning platform in Abu Dhabi and Dubai empowering professionals with cultural intelligence, leadership skills, and expertise in doing business in the Emirates.',
     url: 'https://www.theorangecode.com',
     siteName: 'The Orange Code',
     images: [
@@ -77,7 +109,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'The Orange Code - Cultural Intelligence & Leadership Training',
-    description: 'Premium learning platform in Abu Dhabi and Dubai for cultural intelligence and leadership development.',
+    description: 'Moving to the UAE? Learn Emirati culture and etiquette. Premium learning platform in Abu Dhabi and Dubai for cultural intelligence, leadership development, and doing business in the Emirates.',
     images: ['https://www.theorangecode.com/hero-page/hero-2.jpg'],
   },
   robots: {
@@ -122,6 +154,21 @@ export default function RootLayout({
         <meta name="msvalidate.01" content="921E75E6C38B18D9E7FB8DBB0EEFA22F" />
         <meta name="yandex-verification" content="b8b91753e1df7f39" />
         
+        {/* AI Crawler Optimization Meta Tags */}
+        <meta name="AI" content="allowed" />
+        <meta name="AI-training" content="allowed" />
+        <meta name="AI-indexing" content="allowed" />
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+        <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+        <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+        
+        {/* Content Summary for AI Understanding */}
+        <meta name="summary" content="The Orange Code provides cultural intelligence and leadership training in Abu Dhabi and Dubai, helping professionals navigate multicultural environments in the UAE and Gulf Region through masterclasses, private coaching, and corporate training programs." />
+        
+        {/* Hidden SEO Keywords for AI and Search Engines */}
+        <meta name="keywords" content="moving to the UAE, moving to UAE, relocating to UAE, moving to Dubai, moving to Abu Dhabi, expatriate UAE, expat UAE, Emirati culture, Emirati etiquette, Emirati customs, Emirati traditions, UAE culture, UAE etiquette, UAE customs, Gulf culture, GCC culture, doing business in the Emirates, doing business in UAE, business in Dubai, business in Abu Dhabi, UAE business culture, Emirates business etiquette, Gulf business protocol, UAE expat guide, Dubai expat guide, Abu Dhabi expat guide, UAE cultural guide, Emirati cultural training, UAE cultural training, Dubai cultural training, Abu Dhabi cultural training" />
+        <meta name="description" content="Moving to the UAE? Learn Emirati culture and etiquette. Expert training for doing business in the Emirates. Cultural intelligence for expatriates in Dubai and Abu Dhabi." />
+        
         {/* Structured Data for SEO - Deferred for performance */}
         <script
           type="application/ld+json"
@@ -140,14 +187,8 @@ export default function RootLayout({
                 addressCountry: 'AE',
               },
               sameAs: [
-                // Add your social media profiles here when available
+                'https://www.instagram.com/the.orangecode',
               ],
-              contactPoint: {
-                '@type': 'ContactPoint',
-                contactType: 'Customer Service',
-                areaServed: 'AE',
-                availableLanguage: ['en', 'ar'],
-              },
             }),
           }}
           defer
@@ -163,6 +204,7 @@ export default function RootLayout({
               url: 'https://www.theorangecode.com',
               address: {
                 '@type': 'PostalAddress',
+                streetAddress: 'Etihad Towers, Tower 3, Floor 36',
                 addressLocality: 'Abu Dhabi',
                 addressRegion: 'Abu Dhabi',
                 addressCountry: 'AE',
@@ -170,6 +212,18 @@ export default function RootLayout({
               areaServed: {
                 '@type': 'Country',
                 name: 'United Arab Emirates',
+              },
+              offers: {
+                '@type': 'Offer',
+                itemOffered: {
+                  '@type': 'Course',
+                  name: 'Cultural Intelligence Masterclass',
+                  description: 'Comprehensive cultural intelligence training for professionals in the UAE and Gulf Region.',
+                  provider: {
+                    '@type': 'Organization',
+                    name: 'The Orange Code',
+                  },
+                },
               },
             }),
           }}
@@ -191,6 +245,231 @@ export default function RootLayout({
                 },
                 'query-input': 'required name=search_term_string',
               },
+            }),
+          }}
+          defer
+        />
+        
+        {/* Course/Service Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Service',
+              serviceType: 'Cultural Intelligence Training',
+              provider: {
+                '@type': 'Organization',
+                name: 'The Orange Code',
+              },
+              areaServed: {
+                '@type': 'Country',
+                name: 'United Arab Emirates',
+              },
+              hasOfferCatalog: {
+                '@type': 'OfferCatalog',
+                name: 'Training Programs',
+                itemListElement: [
+                  {
+                    '@type': 'Offer',
+                    itemOffered: {
+                      '@type': 'Course',
+                      name: 'Cultural Intelligence Masterclass',
+                      description: '3-hour masterclass covering cultural foundations, communication styles, and business protocols for the UAE and Gulf Region.',
+                      courseCode: 'CI-MASTERCLASS',
+                      educationalLevel: 'Professional Development',
+                    },
+                  },
+                  {
+                    '@type': 'Offer',
+                    itemOffered: {
+                      '@type': 'Course',
+                      name: 'Private Coaching Session',
+                      description: 'One-on-one personalized coaching sessions tailored to individual needs and goals.',
+                      courseCode: 'PRIVATE-COACHING',
+                      educationalLevel: 'Professional Development',
+                    },
+                  },
+                  {
+                    '@type': 'Offer',
+                    itemOffered: {
+                      '@type': 'Course',
+                      name: 'Corporate Training',
+                      description: 'Customized corporate training programs for teams and organizations operating in the UAE and Gulf Region.',
+                      courseCode: 'CORPORATE-TRAINING',
+                      educationalLevel: 'Professional Development',
+                    },
+                  },
+                ],
+              },
+            }),
+          }}
+          defer
+        />
+        
+        {/* FAQPage Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'FAQPage',
+              mainEntity: [
+                {
+                  '@type': 'Question',
+                  name: 'What makes The Orange Code different from other Masterclasses?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'The Orange Code offers an experience that goes far beyond standard cultural training. Our programs are designed specifically for the realities of the UAE and the wider GCC. We blend cultural intelligence, leadership psychology, behaviour science, and region specific insights to help clients strengthen confidence, communication, and emotional awareness.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'How long do the Masterclasses take?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Our signature Masterclasses are designed to fit into a busy lifestyle. They run for 3 hours and deliver strong value in a short time. One to one coaching can be scheduled according to the client\'s needs and availability.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'What cultural aspects do you cover for UAE expats?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Our Foundations Masterclass includes the core cultural elements needed to feel confident and grounded in the UAE. We cover Islamic etiquette, modesty guidelines, hospitality rituals, communication styles, national identity, essential Arabic greetings, and the subtle social rules that shape daily life in the Emirates.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'What should I know about Emirati culture when moving to the UAE?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'When moving to the UAE, understanding Emirati culture is essential. This includes Islamic etiquette, modesty guidelines, hospitality rituals, communication styles, national identity, essential Arabic greetings, and the subtle social rules that shape daily life in the Emirates. Our training programs help expatriates navigate these cultural nuances effectively.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'What is Emirati etiquette I should learn?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Emirati etiquette includes understanding high-context communication, indirect feedback styles, respect for hierarchy, relationship-building over task-orientation, proper greeting customs, dress code and modesty guidelines, prayer time considerations, and hospitality rituals. Our masterclasses provide comprehensive training in these areas.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'How do I do business in the Emirates?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Doing business in the Emirates requires understanding local business protocols, negotiation styles, relationship-building approaches, meeting etiquette, gift-giving customs, and the importance of building trust before closing deals. Cultural intelligence training helps professionals navigate these nuances effectively and build successful business relationships.',
+                  },
+                },
+              ],
+            }),
+          }}
+          defer
+        />
+        
+        {/* BreadcrumbList Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'BreadcrumbList',
+              itemListElement: [
+                {
+                  '@type': 'ListItem',
+                  position: 1,
+                  name: 'Home',
+                  item: 'https://www.theorangecode.com',
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 2,
+                  name: 'Masterclasses',
+                  item: 'https://www.theorangecode.com/masterclasses',
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 3,
+                  name: 'About',
+                  item: 'https://www.theorangecode.com/about',
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 4,
+                  name: 'FAQ',
+                  item: 'https://www.theorangecode.com/faq',
+                },
+              ],
+            }),
+          }}
+          defer
+        />
+        
+        {/* Aggregate Rating Schema for Testimonials */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'The Orange Code',
+              aggregateRating: {
+                '@type': 'AggregateRating',
+                ratingValue: '5',
+                reviewCount: '9',
+                bestRating: '5',
+                worstRating: '5',
+              },
+            }),
+          }}
+          defer
+        />
+        
+        {/* Individual Review Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'ItemList',
+              itemListElement: [
+                {
+                  '@type': 'Review',
+                  author: {
+                    '@type': 'Person',
+                    name: 'Sophie Turner',
+                  },
+                  reviewBody: 'I signed up for the first masterclass of the culture code out of pure curiosity. I wanted to understand the culture I was living in and hoped to learn a few basics. The Cultural Foundations Masterclass and the Masterclass dedicated to Expatriates gave me so much more. I finally understood the values that shape life in the UAE and the meaning behind the way people communicate here.',
+                  reviewRating: {
+                    '@type': 'Rating',
+                    ratingValue: '5',
+                    bestRating: '5',
+                  },
+                  itemReviewed: {
+                    '@type': 'Service',
+                    name: 'Cultural Intelligence Masterclass',
+                  },
+                },
+                {
+                  '@type': 'Review',
+                  author: {
+                    '@type': 'Person',
+                    name: 'David Mitchell',
+                  },
+                  reviewBody: 'As an American working in the Gulf, I thought being direct and transparent would always be seen as professional. I quickly learned that here it can come across very differently. The Masterclasses helped me understand the cultural expectations around communication, relationships, and respect in a way no book or YouTube video ever could.',
+                  reviewRating: {
+                    '@type': 'Rating',
+                    ratingValue: '5',
+                    bestRating: '5',
+                  },
+                  itemReviewed: {
+                    '@type': 'Service',
+                    name: 'Cultural Intelligence Masterclass',
+                  },
+                },
+              ],
             }),
           }}
           defer

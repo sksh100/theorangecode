@@ -52,8 +52,7 @@ export function Hero() {
               </Link>
             </div>
             <p className="mt-4 text-xs md:text-sm text-slate-300">
-              Understand people. Unlock opportunity in the UAE, the Gulf Region,
-              and the Middle East.
+              Understand people. Unlock opportunity in the UAE, the Gulf Region.
             </p>
           </motion.div>
         </div>

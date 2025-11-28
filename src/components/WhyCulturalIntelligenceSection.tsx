@@ -156,17 +156,23 @@ export function WhyCulturalIntelligenceSection() {
     {
       icon: Briefcase,
       title: 'Successful Business Outcomes',
-      description: 'Close deals faster, build stronger partnerships, and create lasting business relationships.'
+      description: 'Close deals faster, build stronger partnerships, and create lasting business relationships.',
+      iconColor: 'text-orange',
+      titleColor: 'text-orange'
     },
     {
       icon: Target,
       title: 'Strategic Advantage',
-      description: 'Gain competitive edge by understanding local markets and business protocols in the UAE and Gulf Region.'
+      description: 'Gain competitive edge by understanding local markets and business protocols in the UAE and Gulf Region.',
+      iconColor: 'text-azure-blue',
+      titleColor: 'text-azure-blue'
     },
     {
       icon: Shield,
       title: 'Risk Mitigation',
-      description: 'Avoid costly cultural missteps that can damage relationships, reputation, and business opportunities.'
+      description: 'Avoid costly cultural missteps that can damage relationships, reputation, and business opportunities.',
+      iconColor: 'text-bright-blue',
+      titleColor: 'text-bright-blue'
     }
   ]
 
@@ -579,10 +585,10 @@ export function WhyCulturalIntelligenceSection() {
                 <div className="flex flex-col h-full">
                   <div className="mb-6 flex-shrink-0">
                     <div className="w-14 h-14 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center backdrop-blur-sm group-hover:bg-white/10 group-hover:border-white/20 transition-all duration-300">
-                      <benefit.icon className="w-7 h-7 text-white/90" />
+                      <benefit.icon className={`w-7 h-7 ${benefit.iconColor || 'text-white/90'}`} />
                     </div>
                   </div>
-                  <h4 className="text-xl md:text-2xl font-bold text-white mb-3 min-h-[4rem] flex items-start group-hover:text-white transition-colors duration-300">
+                  <h4 className={`text-xl md:text-2xl font-bold ${benefit.titleColor || 'text-white'} mb-3 min-h-[4rem] flex items-start transition-colors duration-300`}>
                     {benefit.title}
                   </h4>
                   <p className="text-base text-white/70 leading-relaxed flex-grow">

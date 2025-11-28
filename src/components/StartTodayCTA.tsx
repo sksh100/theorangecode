@@ -94,10 +94,10 @@ export function StartTodayCTA() {
               Step into the UAE with clarity instead of guesswork.
             </p>
             <p>
-              When you understand the culture, everything changes. Conversations flow, opportunities open, and you carry yourself with a confidence people feel immediately.
+              When you understand the culture, everything changes. Conversations flow, opportunities open, and you carry yourself with confidence that people feel immediately.
             </p>
             <p>
-              Most people rely on trial and error. The ones who excel choose to learn the unwritten rules, refine their presence, and move with intention.
+              Most people rely on trial and error. The ones who excel choose to learn the unwritten rules, refine their presence, and move with clear intention.
             </p>
             <p>
               If you want your life, career, or business in the UAE to feel aligned, respected, and effortless, the first step begins here.
