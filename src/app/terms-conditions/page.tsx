@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowLeft, Shield, FileText, Scale, Crown, AlertTriangle, CreditCard, Users, Globe } from 'lucide-react'
+import { ArrowLeft, Shield, FileText, Scale, Crown, CreditCard, Users, Globe } from 'lucide-react'
 import Link from 'next/link'
 
 export default function TermsConditions() {
@@ -77,18 +77,6 @@ export default function TermsConditions() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="prose prose-invert max-w-none"
             >
-              {/* Legal Notice */}
-              <div className="bg-gradient-to-r from-orange/10 to-bright-blue/10 border border-orange/30 rounded-2xl p-6 mb-8">
-                <div className="flex items-center gap-3 mb-3">
-                  <AlertTriangle className="w-6 h-6 text-orange" />
-                  <h3 className="text-xl font-bold text-white">Legal Notice</h3>
-                </div>
-                <p className="text-white/80 leading-relaxed">
-                  These Terms and Conditions are governed by the laws of the United Arab Emirates and are subject to the jurisdiction of UAE courts. 
-                  By using our services, you agree to be bound by these terms and UAE law.
-                </p>
-              </div>
-
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
                 <Shield className="w-8 h-8 text-orange" />
                 1. Acceptance of Terms
@@ -103,24 +91,20 @@ export default function TermsConditions() {
                 2. Services Description
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                The Orange Code provides premium cultural intelligence, protocol training, and luxury lifestyle consulting services. Our masterclasses include but are not limited to:
+                The Orange Code provides premium Cultural Intelligence training. Our masterclasses include but are not limited to:
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                 <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl p-4">
                   <p className="text-white font-semibold">Cultural Intelligence</p>
-                  <p className="text-white/70 text-sm">Protocol training and cultural awareness</p>
                 </div>
                 <div className="bg-gradient-to-r from-bright-blue/10 to-bright-blue/5 border border-bright-blue/20 rounded-xl p-4">
-                  <p className="text-white font-semibold">Cross-Cultural Negotiation</p>
-                  <p className="text-white/70 text-sm">Diplomacy and business protocols</p>
+                  <p className="text-white font-semibold">Protocol Training</p>
                 </div>
                 <div className="bg-gradient-to-r from-light-blue/10 to-light-blue/5 border border-light-blue/20 rounded-xl p-4">
-                  <p className="text-white font-semibold">Luxury Heritage</p>
-                  <p className="text-white/70 text-sm">Brand building and premium positioning</p>
+                  <p className="text-white font-semibold">Cross-Cultural Negotiation</p>
                 </div>
                 <div className="bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl p-4">
-                  <p className="text-white font-semibold">Global Experience</p>
-                  <p className="text-white/70 text-sm">Multicultural competence masterclasses</p>
+                  <p className="text-white font-semibold">Executive Presence & Communication Training</p>
                 </div>
               </div>
 
