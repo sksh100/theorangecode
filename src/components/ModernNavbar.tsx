@@ -149,6 +149,14 @@ export function ModernNavbar() {
 
   const handleMobileMenuToggle = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
+    // Close all dropdowns when toggling mobile menu
+    if (!isMobileMenuOpen) {
+      setActiveDropdown(null)
+      setIsAboutMegaOpen(false)
+      setIsContactMegaOpen(false)
+      setIsMasterclassesMegaOpen(false)
+      setIsResourcesMegaOpen(false)
+    }
   }
 
   // Shopping cart should only be updated when masterclass is actually added
@@ -172,14 +180,14 @@ export function ModernNavbar() {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="flex items-center justify-between h-20">
-          {/* Logo - visible on all screen sizes */}
-          <Link href="/" className="flex-shrink-0 min-w-0 -ml-2 sm:-ml-4">
+          {/* Logo - visible on all screen sizes, bigger on mobile */}
+          <Link href="/" className="flex-shrink-0 min-w-0 -ml-4 sm:-ml-4 lg:-ml-2">
             <Image
               src="/coming-soon/logo-1.png"
               alt="The Orange Code Logo"
-              width={120}
-              height={48}
-              className="h-10 sm:h-12 w-auto"
+              width={160}
+              height={64}
+              className="h-16 sm:h-12 lg:h-12 w-auto"
               priority
             />
           </Link>
@@ -360,14 +368,29 @@ export function ModernNavbar() {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              <div className="p-4 space-y-2">
+              <div 
+                className="p-4 space-y-2 max-h-[70vh] overflow-y-auto overscroll-contain"
+                onScroll={(e) => {
+                  e.stopPropagation()
+                  // Prevent menu from closing when scrolling inside
+                }}
+                onClick={(e) => e.stopPropagation()}
+                onTouchMove={(e) => e.stopPropagation()}
+                style={{ 
+                  WebkitOverflowScrolling: 'touch',
+                  touchAction: 'pan-y'
+                }}
+              >
                 {navItems.map((item) => (
                   <div key={item.label}>
                     {item.dropdown ? (
                       <>
                         <motion.button
-                          className="w-full flex items-center justify-between p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium"
-                          onClick={() => handleDropdownToggle(item.label)}
+                          className="w-full flex items-center justify-between p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium z-10 relative"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleDropdownToggle(item.label)
+                          }}
                           whileHover={{ x: 4 }}
                         >
                           <span>{item.label}</span>
@@ -381,23 +404,26 @@ export function ModernNavbar() {
                         <AnimatePresence>
                           {activeDropdown === item.label && (
                             <motion.div
-                              className="ml-4 space-y-1"
+                              className="ml-4 space-y-1 mt-2"
                               initial={{ opacity: 0, height: 0 }}
                               animate={{ opacity: 1, height: "auto" }}
                               exit={{ opacity: 0, height: 0 }}
                               transition={{ duration: 0.2 }}
+                              onClick={(e) => e.stopPropagation()}
                             >
                               {item.dropdown?.map((dropdownItem) => (
                                 <Link
                                   key={dropdownItem.label}
                                   href={dropdownItem.href}
-                                  onClick={() => {
+                                  onClick={(e) => {
+                                    e.stopPropagation()
                                     setIsMobileMenuOpen(false)
                                     setActiveDropdown(null)
                                   }}
-                                  className="flex items-center space-x-3 p-2 text-white/60 hover:text-white hover:bg-azure-blue-transparent rounded-lg transition-all duration-300 cursor-pointer"
+                                  className="flex items-center space-x-3 p-3 text-white/70 hover:text-white hover:bg-azure-blue-transparent rounded-lg transition-all duration-300 cursor-pointer touch-manipulation"
+                                  style={{ WebkitTapHighlightColor: 'transparent' }}
                                 >
-                                  <dropdownItem.icon className="w-4 h-4 text-azure-blue" />
+                                  <dropdownItem.icon className="w-5 h-5 text-azure-blue flex-shrink-0" />
                                   <span className="font-montserrat text-sm">{dropdownItem.label}</span>
                                 </Link>
                               ))}
@@ -408,8 +434,12 @@ export function ModernNavbar() {
                     ) : (
                       <Link 
                         href={item.href || '#'}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="block p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setIsMobileMenuOpen(false)
+                        }}
+                        className="block p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium cursor-pointer touch-manipulation"
+                        style={{ WebkitTapHighlightColor: 'transparent' }}
                       >
                         {item.label}
                       </Link>
