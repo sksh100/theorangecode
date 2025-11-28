@@ -35,6 +35,7 @@ interface VisitorData {
   device?: string;
   browser?: string;
   page: string;
+  ip?: string;
 }
 
 /**
@@ -297,15 +298,56 @@ export async function notifyPayment(data: PaymentData): Promise<void> {
  * Notify about new visitor (when someone first lands on the site)
  */
 export async function notifyNewVisitor(data: VisitorData): Promise<void> {
+  const location = data.country && data.country !== 'Unknown' 
+    ? `${data.country}${data.city && data.city !== 'Unknown' ? `, ${data.city}` : ''}`
+    : 'Unknown location';
+  
   const message: SlackMessage = {
-    text: `👤 New visitor on ${data.page}`,
     blocks: [
+      {
+        type: 'header',
+        text: {
+          type: 'plain_text',
+          text: '👤 New Visitor on Website',
+          emoji: true,
+        },
+      },
+      {
+        type: 'section',
+        fields: [
+          {
+            type: 'mrkdwn',
+            text: `*📍 Location:*\n${location}`,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*🌐 IP Address:*\n\`${data.ip || 'Unknown'}\``,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*💻 Device:*\n${data.device || 'Unknown'}`,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*🔍 Browser:*\n${data.browser || 'Unknown'}`,
+          },
+        ],
+      },
       {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `👤 *New Visitor*\n📍 ${data.country || 'Unknown'} ${data.city ? `(${data.city})` : ''}\n💻 ${data.device || 'Unknown device'} • ${data.browser || 'Unknown browser'}\n📄 Viewing: \`${data.page}\``,
+          text: `*📄 Page:* \`${data.page}\``,
         },
+      },
+      {
+        type: 'context',
+        elements: [
+          {
+            type: 'mrkdwn',
+            text: `⏰ ${new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })} (UAE Time)`,
+          },
+        ],
       },
     ],
   };

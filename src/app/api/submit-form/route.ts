@@ -258,6 +258,20 @@ export async function POST(request: NextRequest) {
     const mailerliteSuccess = mailerliteResult.success
     const mailerliteError = mailerliteResult.error
     
+    // Send Slack notification for new subscriber (regardless of MailerLite success)
+    // This ensures you're notified even if MailerLite has issues
+    console.log("📢 Attempting to send Slack notification for newsletter subscription...");
+    notifyNewsletterSubscription({
+      email: cleanEmail,
+      name: displayName !== 'Anonymous' ? displayName : undefined,
+      source: finalSource
+    })
+      .then(() => console.log("✅ Slack notification sent successfully"))
+      .catch(err => {
+        console.error('❌ Slack notification error:', err);
+        // Don't fail the request if Slack fails
+      });
+
     if (mailerliteSuccess) {
       console.log('✅ Successfully added subscriber to MailerLite')
       
@@ -270,19 +284,6 @@ export async function POST(request: NextRequest) {
         console.error('Push notification error:', err);
         // Don't fail the request if push fails
       });
-
-      // Send Slack notification for new subscriber
-      console.log("📢 Attempting to send Slack notification for newsletter subscription...");
-      notifyNewsletterSubscription({
-        email: cleanEmail,
-        name: displayName !== 'Anonymous' ? displayName : undefined,
-        source: finalSource
-      })
-        .then(() => console.log("✅ Slack notification sent successfully"))
-        .catch(err => {
-          console.error('❌ Slack notification error:', err);
-          // Don't fail the request if Slack fails
-        });
     } else {
       console.warn('⚠️ MailerLite add failed, but submission will continue')
     }
