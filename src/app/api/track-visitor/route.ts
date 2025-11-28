@@ -46,15 +46,15 @@ function detectBrowser(userAgent: string | null): string {
   return "Other";
 }
 
-// Helper function to get coordinates from IP address
-// Uses multiple services for better accuracy (tries ipinfo.io first, then ip-api.com as fallback)
-async function getCoordinatesFromIP(ip: string): Promise<{ lat: number; lng: number } | null> {
+// Helper function to get location data (city, coordinates) from IP address
+// Uses multiple services for better accuracy, specifically to distinguish Dubai vs Abu Dhabi
+async function getLocationFromIP(ip: string): Promise<{ lat: number; lng: number; city?: string; region?: string } | null> {
   // Skip for localhost or private IPs
   if (ip === "unknown" || ip.startsWith("127.") || ip.startsWith("192.168.") || ip.startsWith("10.") || ip.startsWith("172.")) {
     return null;
   }
 
-  // Try ipinfo.io first (often more accurate, free tier: 50k/month, no API key needed for basic)
+  // Try ipinfo.io first (often more accurate for city detection, free tier: 50k/month)
   try {
     const ipinfoResponse = await fetch(`https://ipinfo.io/${ip}/json`, {
       headers: {
@@ -69,8 +69,17 @@ async function getCoordinatesFromIP(ip: string): Promise<{ lat: number; lng: num
       if (ipinfoData.loc) {
         const [lat, lng] = ipinfoData.loc.split(',').map(Number);
         if (!isNaN(lat) && !isNaN(lng)) {
-          console.log('✅ Got coordinates from ipinfo.io');
-          return { lat, lng };
+          console.log('✅ Got location from ipinfo.io:', {
+            city: ipinfoData.city,
+            region: ipinfoData.region,
+            coordinates: `${lat}, ${lng}`
+          });
+          return { 
+            lat, 
+            lng,
+            city: ipinfoData.city,
+            region: ipinfoData.region
+          };
         }
       }
     }
@@ -78,9 +87,9 @@ async function getCoordinatesFromIP(ip: string): Promise<{ lat: number; lng: num
     console.log('ℹ️ ipinfo.io failed, trying fallback:', error);
   }
 
-  // Fallback to ip-api.com (free, 45 requests/minute, no API key needed)
+  // Fallback to ip-api.com (free, 45 requests/minute, includes city data)
   try {
-    const response = await fetch(`http://ip-api.com/json/${ip}?fields=status,lat,lon`, {
+    const response = await fetch(`http://ip-api.com/json/${ip}?fields=status,lat,lon,city,regionName`, {
       headers: {
         'Accept': 'application/json',
       },
@@ -94,16 +103,22 @@ async function getCoordinatesFromIP(ip: string): Promise<{ lat: number; lng: num
     const data = await response.json();
     
     if (data.status === 'success' && data.lat && data.lon) {
-      console.log('✅ Got coordinates from ip-api.com (fallback)');
+      console.log('✅ Got location from ip-api.com (fallback):', {
+        city: data.city,
+        region: data.regionName,
+        coordinates: `${data.lat}, ${data.lon}`
+      });
       return {
         lat: data.lat,
         lng: data.lon,
+        city: data.city,
+        region: data.regionName
       };
     }
 
     return null;
   } catch (error) {
-    console.warn('⚠️ Error fetching coordinates:', error);
+    console.warn('⚠️ Error fetching location:', error);
     return null;
   }
 }
@@ -127,9 +142,9 @@ export async function POST(req: NextRequest) {
       req.headers.get("x-real-ip") ?? 
       "unknown";
 
-    // Get location from Vercel headers (more accurate)
-    const country = body.country ?? req.headers.get("x-vercel-ip-country") ?? "Unknown";
-    const city = body.city ?? req.headers.get("x-vercel-ip-city") ?? "Unknown";
+    // Get location from Vercel headers (fallback)
+    let country = body.country ?? req.headers.get("x-vercel-ip-country") ?? "Unknown";
+    let city = body.city ?? req.headers.get("x-vercel-ip-city") ?? "Unknown";
     const region = req.headers.get("x-vercel-ip-country-region") ?? null;
 
     const userAgent = body.userAgent ?? req.headers.get("user-agent") ?? "Unknown";
@@ -140,44 +155,84 @@ export async function POST(req: NextRequest) {
     const device = detectDevice(userAgent);
     const browser = detectBrowser(userAgent);
 
-    // Get coordinates from IP (with caching - coordinates stored per IP for 30 days)
+    // Get location data (coordinates + city) from IP (with caching - stored per IP for 30 days)
     let coordinates: { lat: number; lng: number } | null = null;
+    let ipCity: string | null = null;
+    let ipRegion: string | null = null;
+    
     if (ip && ip !== "unknown") {
-      const coordinatesCacheKey = `coordinates:${ip}`;
+      const locationCacheKey = `location:${ip}`;
       
       try {
-        // First, check if we have cached coordinates for this IP
-        const cachedCoords = await redis.get(coordinatesCacheKey);
+        // First, check if we have cached location data for this IP
+        const cachedLocation = await redis.get(locationCacheKey);
         
-        if (cachedCoords) {
+        if (cachedLocation) {
           try {
-            const parsed = JSON.parse(cachedCoords as string);
+            const parsed = JSON.parse(cachedLocation as string);
             if (parsed.lat && parsed.lng) {
               coordinates = { lat: parsed.lat, lng: parsed.lng };
-              console.log('✅ Using cached coordinates for IP:', ip);
+              ipCity = parsed.city || null;
+              ipRegion = parsed.region || null;
+              console.log('✅ Using cached location for IP:', ip, {
+                city: ipCity,
+                region: ipRegion,
+                coordinates: `${coordinates.lat}, ${coordinates.lng}`
+              });
             }
           } catch (parseError) {
-            console.warn('⚠️ Failed to parse cached coordinates:', parseError);
+            console.warn('⚠️ Failed to parse cached location:', parseError);
           }
         }
         
-        // If no cached coordinates, fetch new ones
+        // If no cached location, fetch new one
         if (!coordinates) {
-          console.log('📍 Fetching new coordinates for IP:', ip);
-          coordinates = await getCoordinatesFromIP(ip);
+          console.log('📍 Fetching new location for IP:', ip);
+          const locationData = await getLocationFromIP(ip);
           
-          // Cache the coordinates for 30 days (2,592,000 seconds)
-          if (coordinates) {
+          if (locationData) {
+            coordinates = { lat: locationData.lat, lng: locationData.lng };
+            ipCity = locationData.city || null;
+            ipRegion = locationData.region || null;
+            
+            // Cache the location data for 30 days (2,592,000 seconds)
             await redis.set(
-              coordinatesCacheKey,
-              JSON.stringify(coordinates),
+              locationCacheKey,
+              JSON.stringify({
+                lat: locationData.lat,
+                lng: locationData.lng,
+                city: locationData.city,
+                region: locationData.region
+              }),
               { ex: 2592000 } // 30 days
             );
-            console.log('✅ Cached coordinates for IP:', ip, 'for 30 days');
+            console.log('✅ Cached location for IP:', ip, 'for 30 days', {
+              city: ipCity,
+              region: ipRegion
+            });
+          }
+        }
+        
+        // Use IP geolocation city if available and more specific (especially for UAE)
+        // This helps distinguish between Dubai and Abu Dhabi
+        if (ipCity && country === "AE") {
+          // Normalize city names for better matching
+          const normalizedIpCity = ipCity.toLowerCase().trim();
+          const normalizedVercelCity = city.toLowerCase().trim();
+          
+          // If IP geolocation gives us a specific city (Dubai or Abu Dhabi), use it
+          if (normalizedIpCity.includes('dubai') || normalizedIpCity.includes('abu dhabi') || 
+              normalizedIpCity.includes('abudhabi') || normalizedIpCity.includes('abu-dhabi')) {
+            city = ipCity; // Use the more specific city from IP geolocation
+            console.log('✅ Using IP geolocation city (more accurate):', city);
+          } else if (normalizedVercelCity === 'unknown' || normalizedVercelCity === '') {
+            // If Vercel city is unknown, use IP city
+            city = ipCity;
+            console.log('✅ Using IP geolocation city (Vercel unknown):', city);
           }
         }
       } catch (error) {
-        console.warn('⚠️ Failed to get/cache coordinates (non-critical):', error);
+        console.warn('⚠️ Failed to get/cache location (non-critical):', error);
       }
     }
 
