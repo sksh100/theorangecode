@@ -3,6 +3,16 @@ import { ImageResponse } from 'next/og'
 export const runtime = 'edge'
 
 export async function GET() {
+  // Fetch the logo image
+  const logoResponse = await fetch(
+    new URL('../../public/logo1.png', import.meta.url)
+  ).catch(() => null)
+  
+  const logoData = logoResponse ? await logoResponse.arrayBuffer() : null
+  const logoBase64 = logoData 
+    ? `data:image/png;base64,${Buffer.from(logoData).toString('base64')}`
+    : null
+
   return new ImageResponse(
     (
       <div
@@ -33,42 +43,56 @@ export async function GET() {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '20px',
+            gap: '30px',
             zIndex: 1,
           }}
         >
-          {/* Logo text */}
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              fontSize: '72px',
-              fontWeight: 'bold',
-              color: 'white',
-              textAlign: 'center',
-            }}
-          >
-            <span style={{ fontSize: '32px', color: '#00d4ff' }}>The</span>
-            <span
+          {/* Logo image */}
+          {logoBase64 ? (
+            <img
+              src={logoBase64}
+              alt="The Orange Code Logo"
               style={{
-                background: 'linear-gradient(135deg, #ff914d 0%, #00d4ff 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
+                width: '400px',
+                height: '400px',
+                objectFit: 'contain',
+              }}
+            />
+          ) : (
+            // Fallback to text if image fails to load
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                fontSize: '72px',
+                fontWeight: 'bold',
+                color: 'white',
+                textAlign: 'center',
               }}
             >
-              Orange Code
-            </span>
-          </div>
+              <span style={{ fontSize: '32px', color: '#00d4ff' }}>The</span>
+              <span
+                style={{
+                  background: 'linear-gradient(135deg, #ff914d 0%, #00d4ff 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
+                Orange Code
+              </span>
+            </div>
+          )}
           
           {/* Tagline */}
           <div
             style={{
-              fontSize: '24px',
+              fontSize: '28px',
               color: '#00d4ff',
               textAlign: 'center',
               opacity: 0.9,
+              fontWeight: 500,
             }}
           >
             Cultural Intelligence & Leadership Training
