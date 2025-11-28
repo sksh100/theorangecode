@@ -71,7 +71,7 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
           
           {/* Mega Dropdown */}
           <motion.div
-            className="fixed top-20 left-4 right-4 w-auto max-w-4xl z-[55]"
+            className="hidden lg:block fixed top-20 left-4 right-4 w-auto max-w-4xl z-[55]"
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
