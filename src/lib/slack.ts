@@ -626,6 +626,74 @@ export async function notifyError(error: {
 }
 
 /**
+ * Notify about conversion events (form completions, masterclass interest, etc.)
+ */
+export async function notifyConversionEvent(data: ConversionEventData): Promise<void> {
+  const eventEmoji = data.event === 'form_complete' ? '✅' : 
+                     data.event === 'masterclass_interest' ? '🎓' : 
+                     data.event === 'cta_click' ? '👆' : '📊';
+
+  const eventTitle = data.event === 'form_complete' ? 'Form Completed' :
+                     data.event === 'masterclass_interest' ? 'Masterclass Interest' :
+                     data.event === 'cta_click' ? 'CTA Clicked' :
+                     'Conversion Event';
+
+  const blocks: any[] = [
+    {
+      type: 'header',
+      text: {
+        type: 'plain_text',
+        text: `${eventEmoji} ${eventTitle}`,
+        emoji: true,
+      },
+    },
+    {
+      type: 'section',
+      fields: [
+        {
+          type: 'mrkdwn',
+          text: `*Element:*\n${data.element}`,
+        },
+        {
+          type: 'mrkdwn',
+          text: `*Location:*\n\`${data.location || 'Unknown'}\``,
+        },
+      ],
+    },
+  ];
+
+  if (data.metadata && Object.keys(data.metadata).length > 0) {
+    const metadataText = Object.entries(data.metadata)
+      .map(([key, value]) => `*${key}:* ${value}`)
+      .join('\n');
+    
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*Details:*\n${metadataText}`,
+      },
+    });
+  }
+
+  blocks.push({
+    type: 'context',
+    elements: [
+      {
+        type: 'mrkdwn',
+        text: `⏰ ${new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })} (UAE Time)`,
+      },
+    ],
+  });
+
+  const message: SlackMessage = {
+    blocks,
+  };
+
+  await sendToSlack(message);
+}
+
+/**
  * Test Slack connection
  */
 export async function testSlackConnection(): Promise<boolean> {
