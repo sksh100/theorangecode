@@ -219,6 +219,39 @@ export async function POST(req: NextRequest) {
     const userAgent = body.userAgent ?? req.headers.get("user-agent") ?? "Unknown";
     const path = body.path ?? req.url.split("?")[0] ?? "/";
     const referrer = body.referrer ?? req.headers.get("referer") ?? "Direct";
+    
+    // Detect traffic source
+    const trafficSource = detectTrafficSource(referrer, req.url);
+    
+    // Track navigation flow (pages visited in this session)
+    let navigationFlow: string[] = [];
+    const sessionId = body.id ?? `anon:${now}`;
+    const navigationKey = `navigation:${sessionId}`;
+    
+    try {
+      // Get existing navigation history for this session
+      const existingNavigation = await redis.get(navigationKey);
+      if (existingNavigation) {
+        try {
+          navigationFlow = JSON.parse(existingNavigation as string);
+        } catch (parseError) {
+          navigationFlow = [];
+        }
+      }
+      
+      // Add current page to navigation flow (if not already the last page)
+      if (navigationFlow.length === 0 || navigationFlow[navigationFlow.length - 1] !== path) {
+        navigationFlow.push(path);
+        // Keep only last 10 pages to avoid too much data
+        if (navigationFlow.length > 10) {
+          navigationFlow = navigationFlow.slice(-10);
+        }
+        // Store navigation flow for 1 hour (session duration)
+        await redis.set(navigationKey, JSON.stringify(navigationFlow), { ex: 3600 });
+      }
+    } catch (navError) {
+      console.warn('⚠️ Failed to track navigation flow:', navError);
+    }
 
     // Detect device and browser
     const device = detectDevice(userAgent);
