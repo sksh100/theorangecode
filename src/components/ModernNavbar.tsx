@@ -69,21 +69,21 @@ export function ModernNavbar() {
           icon: Sparkles, 
           href: '/masterclasses',
           price: '699 د.إ',
-          description: 'Step into your full potential with a masterclass that refines how you think, speak, move, and lead.'
+          description: 'A comprehensive introduction to the cultural foundations of the UAE. Participants explore the country's heritage, values, social codes, national identity, daily rhythms, dress etiquette, and the significance of traditions such as Ramadan.'
         },
         { 
           label: 'Cultural Intelligence For Expats', 
           icon: Users, 
           href: '/masterclasses',
           price: '1799 د.إ',
-          description: 'Belong socially and culturally in the Emirates. Learn Islamic etiquette, modesty codes, and hospitality rituals.'
+          description: 'A transformative masterclass that helps expats recognise how their own communication style, decision making, and relationship-building habits impact their experience in the region.'
         },
         { 
-          label: 'Cultural Intelligence In Business', 
+          label: 'Business Culture & Professional Etiquette', 
           icon: Zap, 
           href: '/masterclasses',
           price: '2499 د.إ',
-          description: 'Unlock the unspoken rules of GCC business culture. From trust-building to negotiation rhythms.'
+          description: 'A strategic masterclass focused on business etiquette and professional communication in the UAE and GCC-region. Learn how to navigate hierarchy, manage feedback, build trust and conduct meetings and negotiations in a relationship-driven environment.'
         },
       ]
     },

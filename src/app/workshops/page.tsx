@@ -34,7 +34,7 @@ export default function MasterclassesPage() {
     {
       id: 1,
       title: "UAE Cultural Foundations",
-      description: "Step into your full potential with a masterclass that refines how you think, speak, move, and lead. From table manners and royal protocols to body language, tone of voice, and setting boundaries, this journey transforms ambition into presence.",
+      description: "A comprehensive introduction to the cultural foundations of the UAE. Participants explore the country's heritage, values, social codes, national identity, daily rhythms, dress etiquette, and the significance of traditions such as Ramadan. Designed as an essential integration experience for anyone living in or relocating to the Emirates.",
       gradient: "from-orange/20 to-bright-blue/20",
       imagePlaceholder: "/programs/program 1.png",
       learnMoreLink: "/masterclasses"
@@ -42,15 +42,15 @@ export default function MasterclassesPage() {
     {
       id: 2,
       title: "Cultural Intelligence\nFor Expats",
-      description: "Belong socially and culturally in the Emirates. Learn Islamic etiquette, modesty codes, hospitality rituals, Arabic phrases, and the art of building lasting friendships with Emiratis. Break isolation and thrive with cultural confidence.",
+      description: "A transformative masterclass that helps expats recognise how their own communication style, decision making, and relationship-building habits impact their experience in the region. Using globally recognised cultural frameworks (without naming them), participants learn how to adapt, connect, and thrive across cultures.",
       gradient: "from-bright-blue/20 to-light-blue/20",
       imagePlaceholder: "/programs/program 2.png",
       learnMoreLink: "/masterclasses"
     },
     {
       id: 3,
-      title: "Cultural Intelligence\nIn Business",
-      description: "Unlock the unspoken rules of GCC business culture. From trust-building and negotiation rhythms to gifting, attire, and majlis etiquette, this masterclass gives executives and entrepreneurs the keys to succeed in UAE, Saudi Arabia, Qatar, and beyond.",
+      title: "Business Culture & Professional Etiquette",
+      description: "A strategic masterclass focused on business etiquette and professional communication in the UAE and GCC-region. Learn how to navigate hierarchy, manage feedback, build trust and conduct meetings and negotiations in a relationship-driven environment. Ideal for executives, entrepreneurs, and professionals aiming to succeed in the local market or expand business across the Gulf.",
       gradient: "from-light-blue/20 to-orange/20",
       imagePlaceholder: "/programs/program 3.png",
       learnMoreLink: "/masterclasses"

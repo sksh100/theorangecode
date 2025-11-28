@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Calendar, Clock, MapPin, Video, Mail, ArrowRight, Check, Sparkles, X, Sparkle, Send, MessageSquare } from 'lucide-react'
+import { Calendar, Clock, MapPin, Mail, ArrowRight, Check, Sparkles, X, Sparkle, Send, MessageSquare } from 'lucide-react'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 import Link from 'next/link'
@@ -28,21 +28,21 @@ const masterclasses: Masterclass[] = [
   {
     id: 1,
     title: "UAE Cultural Foundations",
-    description: "Step into your full potential with a masterclass that refines how you think, speak, move, and lead. From table manners and royal protocols to body language, tone of voice, and setting boundaries, this journey transforms ambition into presence.",
+    description: "A comprehensive introduction to the cultural foundations of the UAE. Participants explore the country's heritage, values, social codes, national identity, daily rhythms, dress etiquette, and the significance of traditions such as Ramadan. Designed as an essential integration experience for anyone living in or relocating to the Emirates.",
     gradient: "from-orange/20 to-bright-blue/20",
     price: 699
   },
   {
     id: 2,
     title: "Cultural Intelligence For Expats",
-    description: "Belong socially and culturally in the Emirates. Learn Islamic etiquette, modesty codes, hospitality rituals, Arabic phrases, and the art of building lasting friendships with Emiratis. Break isolation and thrive with cultural confidence.",
+    description: "A transformative masterclass that helps expats recognise how their own communication style, decision making, and relationship-building habits impact their experience in the region. Using globally recognised cultural frameworks (without naming them), participants learn how to adapt, connect, and thrive across cultures.",
     gradient: "from-bright-blue/20 to-light-blue/20",
     price: 1799
   },
   {
     id: 3,
-    title: "Cultural Intelligence In Business",
-    description: "Unlock the unspoken rules of GCC business culture. From trust-building and negotiation rhythms to gifting, attire, and majlis etiquette, this masterclass gives executives and entrepreneurs the keys to succeed in UAE, Saudi Arabia, Qatar, and beyond.",
+    title: "Business Culture & Professional Etiquette",
+    description: "A strategic masterclass focused on business etiquette and professional communication in the UAE and GCC-region. Learn how to navigate hierarchy, manage feedback, build trust and conduct meetings and negotiations in a relationship-driven environment. Ideal for executives, entrepreneurs, and professionals aiming to succeed in the local market or expand business across the Gulf.",
     gradient: "from-light-blue/20 to-orange/20",
     price: 2499
   }
@@ -55,8 +55,6 @@ const generateAvailableDates = (): TimeSlot[] => {
   const fourWeeksLater = new Date(today)
   fourWeeksLater.setDate(today.getDate() + 28)
 
-  const onlineDays = [1, 3, 6] // Monday, Wednesday, Saturday
-  const onlineTime = '10:00 AM - 1:00 PM'
   const offlineDays = [2, 4] // Tuesday, Thursday
   const offlineTime = '11:00 AM - 2:00 PM'
 
@@ -86,15 +84,6 @@ const generateAvailableDates = (): TimeSlot[] => {
       day: 'numeric' 
     })
 
-    if (onlineDays.includes(dayOfWeek)) {
-      slots.push({
-        date: formattedDate,
-        time: onlineTime,
-        available: true,
-        type: 'online'
-      })
-    }
-
     if (offlineDays.includes(dayOfWeek)) {
       // Check if this is a fully booked date for in-person sessions
       const booked = isFullyBooked(d)
@@ -113,7 +102,7 @@ const generateAvailableDates = (): TimeSlot[] => {
 export default function MasterclassesPage() {
   const [selectedMasterclass, setSelectedMasterclass] = useState<number | null>(null)
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null)
-  const [filterType, setFilterType] = useState<'all' | 'online' | 'offline'>('all')
+  const [filterType, setFilterType] = useState<'offline'>('offline')
   const [showTailormadeForm, setShowTailormadeForm] = useState(false)
   const [showContactForm, setShowContactForm] = useState(false)
   const [tailormadeFormData, setTailormadeFormData] = useState({
@@ -135,9 +124,7 @@ export default function MasterclassesPage() {
   const [contactStatusMessage, setContactStatusMessage] = useState<string | null>(null)
 
   const availableSlots = generateAvailableDates()
-  const filteredSlots = filterType === 'all' 
-    ? availableSlots 
-    : availableSlots.filter(slot => slot.type === filterType)
+  const filteredSlots = availableSlots.filter(slot => slot.type === 'offline')
 
         const handleBookNow = () => {
           if (selectedMasterclass && selectedSlot) {
@@ -291,7 +278,7 @@ export default function MasterclassesPage() {
                     </span>
                   </h1>
                   <p className="text-lg md:text-xl text-white/90 leading-relaxed">
-                    Experience our premium boardroom at Etihad Towers, Abu Dhabi or join us online. Choose your masterclass and preferred time. Secure your spot in seconds.
+                    Experience our Orange Code Masterclasses at Etihad Towers in Abu Dhabi. Choose your masterclass and preferred time. Secure your spot in seconds.
                   </p>
                 </motion.div>
               </div>
@@ -381,40 +368,12 @@ export default function MasterclassesPage() {
                       <p className="text-white/60 text-sm mb-6">Select your preferred date and session type</p>
                     </div>
 
-                    {/* Filter Tabs */}
+                    {/* Filter Tabs - Only In-Person Available */}
                     <div className="flex gap-3 mb-6">
-                      <button
-                        onClick={() => setFilterType('all')}
-                        className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
-                          filterType === 'all'
-                            ? 'bg-gradient-to-r from-orange to-azure-blue text-white'
-                            : 'bg-white/5 text-white/70 hover:bg-white/10'
-                        }`}
-                      >
-                        All
-                      </button>
-                      <button
-                        onClick={() => setFilterType('offline')}
-                        className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
-                          filterType === 'offline'
-                            ? 'bg-gradient-to-r from-orange to-light-blue text-white'
-                            : 'bg-white/5 text-white/70 hover:bg-white/10'
-                        }`}
-                      >
+                      <div className="px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-orange to-light-blue text-white flex items-center gap-2">
                         <MapPin className="w-3 h-3" />
-                        In-Person
-                      </button>
-                      <button
-                        onClick={() => setFilterType('online')}
-                        className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
-                          filterType === 'online'
-                            ? 'bg-gradient-to-r from-azure-blue to-bright-blue text-white'
-                            : 'bg-white/5 text-white/70 hover:bg-white/10'
-                        }`}
-                      >
-                        <Video className="w-3 h-3" />
-                        Online
-                      </button>
+                        In-Person Sessions
+                      </div>
                     </div>
 
                     {/* Time Slots Grid */}
@@ -452,18 +411,12 @@ export default function MasterclassesPage() {
                           )}
                           
                           <div className="flex flex-col items-center gap-1.5">
-                            {slot.type === 'online' ? (
-                              <Video className="w-4 h-4 text-azure-blue" />
-                            ) : (
-                              <MapPin className={`w-4 h-4 ${!slot.available ? 'text-red-500/50' : 'text-orange'}`} />
-                            )}
+                            <MapPin className={`w-4 h-4 ${!slot.available ? 'text-red-500/50' : 'text-orange'}`} />
                             <p className={`text-xs font-semibold leading-tight ${!slot.available ? 'text-red-400/70' : 'text-white'}`}>{slot.date}</p>
                             <p className={`text-[10px] leading-tight ${!slot.available ? 'text-red-400/60' : 'text-white/70'}`}>{slot.time}</p>
-                            {slot.type === 'offline' && (
-                              <p className={`text-[9px] ${!slot.available ? 'text-red-400/60' : 'text-white/50'}`}>
-                                {!slot.available ? 'Fully Booked' : 'Etihad Towers, Abu Dhabi'}
-                              </p>
-                            )}
+                            <p className={`text-[9px] ${!slot.available ? 'text-red-400/60' : 'text-white/50'}`}>
+                              {!slot.available ? 'Fully Booked' : 'Etihad Towers, Abu Dhabi'}
+                            </p>
                           </div>
                         </motion.button>
                       ))}
