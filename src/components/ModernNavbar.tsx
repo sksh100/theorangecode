@@ -69,7 +69,7 @@ export function ModernNavbar() {
           icon: Sparkles, 
           href: '/masterclasses',
           price: '699 د.إ',
-          description: 'A comprehensive introduction to the cultural foundations of the UAE. Participants explore the country's heritage, values, social codes, national identity, daily rhythms, dress etiquette, and the significance of traditions such as Ramadan.'
+          description: "A comprehensive introduction to the cultural foundations of the UAE. Participants explore the country's heritage, values, social codes, national identity, daily rhythms, dress etiquette, and the significance of traditions such as Ramadan."
         },
         { 
           label: 'Cultural Intelligence For Expats', 
