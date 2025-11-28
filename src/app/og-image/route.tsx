@@ -12,7 +12,10 @@ export async function GET() {
     const logoResponse = await fetch(logoUrl)
     if (logoResponse.ok) {
       const logoBuffer = await logoResponse.arrayBuffer()
-      const base64 = Buffer.from(logoBuffer).toString('base64')
+      // Convert ArrayBuffer to base64 for edge runtime
+      const bytes = new Uint8Array(logoBuffer)
+      const binary = bytes.reduce((acc, byte) => acc + String.fromCharCode(byte), '')
+      const base64 = btoa(binary)
       logoDataUrl = `data:image/png;base64,${base64}`
     }
   } catch (error) {
