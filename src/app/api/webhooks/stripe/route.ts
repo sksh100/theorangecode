@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { redis } from "@/lib/redis";
 import { sendPushToAll } from "@/lib/webPush";
-import { notifyPayment } from "@/lib/slack";
+import { notifyPayment, notifyError } from "@/lib/slack";
 
 // Initialize Stripe only if secret key is available
 const getStripe = () => {
@@ -126,6 +126,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ received: true });
   } catch (error: any) {
     console.error('❌ Error processing Stripe webhook:', error);
+    
+    // Notify about critical payment processing error
+    notifyError({
+      message: `Stripe webhook error: ${error.message || 'Unknown error'}`,
+      stack: error.stack,
+      url: '/api/webhooks/stripe',
+    }).catch(slackErr => console.error("Failed to notify error:", slackErr));
+    
     return NextResponse.json({ error: error.message || 'Unknown error' }, { status: 500 });
   }
 }

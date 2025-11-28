@@ -11,6 +11,23 @@ export default function Error({
 }) {
   useEffect(() => {
     console.error(error)
+    
+    // Send error notification to Slack
+    fetch('/api/report-error', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: error.message,
+        stack: error.stack,
+        digest: error.digest,
+        url: window.location.href,
+        userAgent: navigator.userAgent,
+      }),
+    }).catch(err => {
+      console.error('Failed to report error to Slack:', err)
+    })
   }, [error])
 
   return (

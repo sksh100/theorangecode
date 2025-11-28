@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { notifyContactForm } from "@/lib/slack";
+import { notifyContactForm, notifyError } from "@/lib/slack";
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
@@ -42,6 +42,13 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error("Resend error:", error);
+      
+      // Notify about email sending error
+      notifyError({
+        message: `Contact form email send failed: ${error.message || 'Unknown error'}`,
+        url: '/api/contact',
+      }).catch(err => console.error("Failed to notify error:", err));
+      
       return NextResponse.json(
         { error: "Email send failed", details: error },
         { status: 500 }
@@ -56,8 +63,16 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ ok: true }, { status: 200 });
 
-  } catch (err) {
+  } catch (err: any) {
     console.error("Contact route error:", err);
+    
+    // Notify about critical error
+    notifyError({
+      message: `Contact form API error: ${err.message || 'Unknown error'}`,
+      stack: err.stack,
+      url: '/api/contact',
+    }).catch(slackErr => console.error("Failed to notify error:", slackErr));
+    
     return NextResponse.json(
       { error: "Server error" },
       { status: 500 }

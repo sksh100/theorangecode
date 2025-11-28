@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { kv } from '@vercel/kv'
 import MailerLite from '@mailerlite/mailerlite-nodejs'
 import { sendPushToAll } from '@/lib/webPush'
-import { notifyNewsletterSubscription } from '@/lib/slack'
+import { notifyNewsletterSubscription, notifyError } from '@/lib/slack'
 
 interface FormData {
   firstName?: string
@@ -318,8 +318,16 @@ export async function POST(request: NextRequest) {
       }
     })
     
-  } catch (error) {
+  } catch (error: any) {
     console.error('Form submission error:', error)
+    
+    // Notify about critical error
+    notifyError({
+      message: `Newsletter subscription API error: ${error.message || 'Unknown error'}`,
+      stack: error.stack,
+      url: '/api/submit-form',
+    }).catch(slackErr => console.error("Failed to notify error:", slackErr));
+    
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
