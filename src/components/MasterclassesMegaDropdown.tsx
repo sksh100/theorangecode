@@ -36,7 +36,7 @@ export function MasterclassesMegaDropdown({ isOpen, onClose }: MasterclassesMega
     {
       id: 'uae-foundations',
       title: 'UAE Cultural Foundations',
-      description: 'A comprehensive introduction to the cultural foundations of the UAE. Participants explore the country's heritage, values, social codes, national identity, daily rhythms, dress etiquette, and the significance of traditions such as Ramadan.',
+      description: "A comprehensive introduction to the cultural foundations of the UAE. Participants explore the country's heritage, values, social codes, national identity, daily rhythms, dress etiquette, and the significance of traditions such as Ramadan.",
       icon: Sparkles,
       price: '699 د.إ',
       gradient: 'from-orange/20 to-bright-blue/20'
