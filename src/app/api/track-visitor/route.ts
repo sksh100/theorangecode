@@ -14,6 +14,8 @@ type VisitorPayload = {
   referrer?: string | null;
   country?: string | null;
   city?: string | null;
+  area?: string | null;  // Area/neighborhood (e.g., Al Bateen, Al Khalidiyah)
+  postalCode?: string | null;  // Postal code if available
   lat?: number | null;
   lng?: number | null;
   ts: number;
@@ -117,15 +119,56 @@ function detectTrafficSource(referrer: string | null, url: string): string {
   }
 }
 
-// Helper function to get location data (city, coordinates) from IP address
+// Helper function to get area/neighborhood from coordinates using reverse geocoding
+async function getAreaFromCoordinates(lat: number, lng: number, city: string): Promise<string | null> {
+  // Only try reverse geocoding for UAE cities (Abu Dhabi, Dubai, etc.)
+  if (city && (city.toLowerCase().includes('abu dhabi') || city.toLowerCase().includes('dubai'))) {
+    try {
+      // Use OpenStreetMap Nominatim API (free, no API key required)
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`,
+        {
+          headers: {
+            'User-Agent': 'TheOrangeCode/1.0 (contact@theorangecode.com)', // Required by Nominatim
+            'Accept': 'application/json',
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const address = data.address || {};
+        
+        // Try to get neighborhood/area from various address fields
+        const area = address.suburb || 
+                    address.neighbourhood || 
+                    address.quarter || 
+                    address.district ||
+                    address.area ||
+                    address.locality;
+        
+        if (area) {
+          console.log('✅ Got area from reverse geocoding:', area);
+          return area;
+        }
+      }
+    } catch (error) {
+      console.log('ℹ️ Reverse geocoding failed (non-critical):', error);
+    }
+  }
+  return null;
+}
+
+// Helper function to get location data (city, coordinates, area) from IP address
 // Uses multiple services for better accuracy, specifically to distinguish Dubai vs Abu Dhabi
-async function getLocationFromIP(ip: string): Promise<{ lat: number; lng: number; city?: string; region?: string } | null> {
+async function getLocationFromIP(ip: string): Promise<{ lat: number; lng: number; city?: string; region?: string; postalCode?: string; area?: string } | null> {
   // Skip for localhost or private IPs
   if (ip === "unknown" || ip.startsWith("127.") || ip.startsWith("192.168.") || ip.startsWith("10.") || ip.startsWith("172.")) {
     return null;
   }
 
   // Try ipinfo.io first (often more accurate for city detection, free tier: 50k/month)
+  // ipinfo.io provides: city, region, country, postal code, coordinates, timezone, org
   try {
     const ipinfoResponse = await fetch(`https://ipinfo.io/${ip}/json`, {
       headers: {
@@ -140,16 +183,30 @@ async function getLocationFromIP(ip: string): Promise<{ lat: number; lng: number
       if (ipinfoData.loc) {
         const [lat, lng] = ipinfoData.loc.split(',').map(Number);
         if (!isNaN(lat) && !isNaN(lng)) {
+          const city = ipinfoData.city;
+          const postalCode = ipinfoData.postal || null;
+          
+          // Try to get area/neighborhood from coordinates
+          let area: string | null = null;
+          if (city) {
+            area = await getAreaFromCoordinates(lat, lng, city);
+          }
+          
           console.log('✅ Got location from ipinfo.io:', {
             city: ipinfoData.city,
             region: ipinfoData.region,
+            postalCode: postalCode,
+            area: area,
             coordinates: `${lat}, ${lng}`
           });
+          
           return { 
             lat, 
             lng,
             city: ipinfoData.city,
-            region: ipinfoData.region
+            region: ipinfoData.region,
+            postalCode: postalCode,
+            area: area
           };
         }
       }
@@ -302,10 +359,12 @@ export async function POST(req: NextRequest) {
     const device = detectDevice(userAgent);
     const browser = detectBrowser(userAgent);
 
-    // Get location data (coordinates + city) from IP (with caching - stored per IP for 30 days)
+    // Get location data (coordinates + city + area) from IP (with caching - stored per IP for 30 days)
     let coordinates: { lat: number; lng: number } | null = null;
     let ipCity: string | null = null;
     let ipRegion: string | null = null;
+    let ipArea: string | null = null;
+    let ipPostalCode: string | null = null;
     
     if (ip && ip !== "unknown") {
       const locationCacheKey = `location:${ip}`;
@@ -321,9 +380,13 @@ export async function POST(req: NextRequest) {
               coordinates = { lat: parsed.lat, lng: parsed.lng };
               ipCity = parsed.city || null;
               ipRegion = parsed.region || null;
+              ipArea = parsed.area || null;
+              ipPostalCode = parsed.postalCode || null;
               console.log('✅ Using cached location for IP:', ip, {
                 city: ipCity,
                 region: ipRegion,
+                area: ipArea,
+                postalCode: ipPostalCode,
                 coordinates: `${coordinates.lat}, ${coordinates.lng}`
               });
             }
@@ -341,6 +404,8 @@ export async function POST(req: NextRequest) {
             coordinates = { lat: locationData.lat, lng: locationData.lng };
             ipCity = locationData.city || null;
             ipRegion = locationData.region || null;
+            ipArea = locationData.area || null;
+            ipPostalCode = locationData.postalCode || null;
             
             // Cache the location data for 30 days (2,592,000 seconds)
             await redis.set(
@@ -349,13 +414,17 @@ export async function POST(req: NextRequest) {
                 lat: locationData.lat,
                 lng: locationData.lng,
                 city: locationData.city,
-                region: locationData.region
+                region: locationData.region,
+                area: locationData.area,
+                postalCode: locationData.postalCode
               }),
               { ex: 2592000 } // 30 days
             );
             console.log('✅ Cached location for IP:', ip, 'for 30 days', {
               city: ipCity,
               region: ipRegion,
+              area: ipArea,
+              postalCode: ipPostalCode,
               coordinates: `${locationData.lat}, ${locationData.lng}`,
               note: 'Coordinates are city-level approximations from IP geolocation'
             });

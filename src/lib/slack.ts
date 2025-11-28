@@ -32,6 +32,8 @@ interface PaymentData {
 interface VisitorData {
   country?: string;
   city?: string;
+  area?: string;  // Area/neighborhood (e.g., Al Bateen, Al Khalidiyah)
+  postalCode?: string;  // Postal code if available
   device?: string;
   browser?: string;
   page: string;
@@ -306,9 +308,15 @@ export async function notifyPayment(data: PaymentData): Promise<void> {
  * Notify about new visitor (when someone first lands on the site)
  */
 export async function notifyNewVisitor(data: VisitorData): Promise<void> {
-  const location = data.country && data.country !== 'Unknown' 
+  // Build location string with area if available
+  let location = data.country && data.country !== 'Unknown' 
     ? `${data.country}${data.city && data.city !== 'Unknown' ? `, ${data.city}` : ''}`
     : 'Unknown location';
+  
+  // Add area/neighborhood if available (e.g., "UAE, Abu Dhabi, Al Bateen")
+  if (data.area) {
+    location += `, ${data.area}`;
+  }
   
   // Format coordinates if available (with more precision to show differences)
   const coordinates = data.lat && data.lng 
