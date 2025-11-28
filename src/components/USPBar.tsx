@@ -139,7 +139,7 @@ export function USPBar() {
               The Orange Code
             </span>
           </h2>
-          <div className="text-white/70 text-lg font-montserrat max-w-4xl mx-auto space-y-6 leading-relaxed">
+          <div className="text-white/70 text-lg font-montserrat max-w-4xl mx-auto space-y-6 leading-relaxed tracking-normal">
             <p>
               Choosing The Orange Code means choosing clarity in a region where culture, ambition, and identity shape every interaction. People come to us because they want to feel grounded in the UAE, understood in a multicultural environment, and confident in a place where expectations are high and unspoken norms influence daily life.
             </p>
