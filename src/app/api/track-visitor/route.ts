@@ -19,6 +19,8 @@ type VisitorPayload = {
   ts: number;
   source?: string | null;  // Traffic source (Google, Direct, Social, etc.)
   navigationFlow?: string[];  // Array of pages visited in this session
+  sessionDuration?: number;  // Session duration in seconds
+  visitCount?: number;  // Number of times this visitor has visited
 };
 
 // Helper function to detect device type from user agent
@@ -227,8 +229,44 @@ export async function POST(req: NextRequest) {
     let navigationFlow: string[] = [];
     const sessionId = body.id ?? `anon:${now}`;
     const navigationKey = `navigation:${sessionId}`;
+    const sessionKey = `session:${sessionId}`;
+    
+    // Track session start time and visit count
+    let sessionStartTime: number = now;
+    let visitCount: number = 1;
+    let sessionDuration: number = 0;
     
     try {
+      // Get existing session data
+      const existingSession = await redis.get(sessionKey);
+      if (existingSession) {
+        try {
+          const sessionData = JSON.parse(existingSession as string);
+          sessionStartTime = sessionData.startTime || now;
+          // Calculate session duration in seconds
+          sessionDuration = Math.floor((now - sessionStartTime) / 1000);
+        } catch (parseError) {
+          // If parsing fails, start new session
+          sessionStartTime = now;
+        }
+      } else {
+        // New session - store start time
+        await redis.set(sessionKey, JSON.stringify({ startTime: now }), { ex: 7200 }); // 2 hours
+      }
+      
+      // Track visit count by IP address
+      const visitCountKey = `visits:${ip}`;
+      try {
+        const existingVisitCount = await redis.get(visitCountKey);
+        if (existingVisitCount) {
+          visitCount = parseInt(existingVisitCount as string, 10) + 1;
+        }
+        // Store visit count for 90 days (to track returning visitors)
+        await redis.set(visitCountKey, visitCount.toString(), { ex: 7776000 }); // 90 days
+      } catch (visitError) {
+        console.warn('⚠️ Failed to track visit count:', visitError);
+      }
+      
       // Get existing navigation history for this session
       const existingNavigation = await redis.get(navigationKey);
       if (existingNavigation) {
@@ -249,6 +287,13 @@ export async function POST(req: NextRequest) {
         // Store navigation flow for 1 hour (session duration)
         await redis.set(navigationKey, JSON.stringify(navigationFlow), { ex: 3600 });
       }
+      
+      // Update session with latest activity
+      await redis.set(sessionKey, JSON.stringify({ 
+        startTime: sessionStartTime,
+        lastActivity: now,
+        duration: sessionDuration
+      }), { ex: 7200 }); // 2 hours
     } catch (navError) {
       console.warn('⚠️ Failed to track navigation flow:', navError);
     }
@@ -395,6 +440,8 @@ export async function POST(req: NextRequest) {
       ts: now,
       source: trafficSource,
       navigationFlow: navigationFlow.length > 0 ? navigationFlow : undefined,
+      sessionDuration: sessionDuration > 0 ? sessionDuration : undefined,
+      visitCount: visitCount > 0 ? visitCount : undefined,
     };
 
     const key = `active:${id}`;

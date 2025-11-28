@@ -40,6 +40,8 @@ interface VisitorData {
   lng?: number;
   source?: string;
   navigationFlow?: string[];
+  sessionDuration?: number;
+  visitCount?: number;
 }
 
 /**
@@ -322,12 +324,23 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
   // Multiple IPs in the same city may show the same coordinates
   // This is normal behavior for IP-based geolocation services
 
+  // Format session duration
+  const formatDuration = (seconds: number): string => {
+    if (seconds < 60) return `${seconds}s`;
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    if (minutes < 60) return `${minutes}m ${remainingSeconds}s`;
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    return `${hours}h ${remainingMinutes}m`;
+  };
+
   const blocks: any[] = [
     {
       type: 'header',
       text: {
         type: 'plain_text',
-        text: '👤 New Visitor on Website',
+        text: data.visitCount && data.visitCount > 1 ? `👤 Returning Visitor (Visit #${data.visitCount})` : '👤 New Visitor on Website',
         emoji: true,
       },
     },
@@ -353,6 +366,27 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
       ],
     },
   ];
+  
+  // Add visit count and session duration if available
+  if (data.visitCount || data.sessionDuration) {
+    const visitInfo: string[] = [];
+    if (data.visitCount) {
+      visitInfo.push(`*🔄 Visit Count:* ${data.visitCount}${data.visitCount === 1 ? ' (First visit)' : ' (Returning visitor)'}`);
+    }
+    if (data.sessionDuration !== undefined && data.sessionDuration > 0) {
+      visitInfo.push(`*⏱️ Time on Site:* ${formatDuration(data.sessionDuration)}`);
+    }
+    
+    if (visitInfo.length > 0) {
+      blocks.push({
+        type: 'section',
+        fields: visitInfo.map(info => ({
+          type: 'mrkdwn',
+          text: info,
+        })),
+      });
+    }
+  }
 
   // Add coordinates field if available
   if (coordinates) {

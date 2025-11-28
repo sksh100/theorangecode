@@ -1,12 +1,19 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 export function VisitorTracker() {
   const pathname = usePathname();
+  const sessionStartTime = useRef<number | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    // Initialize session start time on first load
+    if (!sessionStartTime.current) {
+      sessionStartTime.current = Date.now();
+    }
+
     const send = async () => {
       try {
         // Get or create session ID
@@ -44,7 +51,39 @@ export function VisitorTracker() {
     if (pathname) {
       send();
     }
+
+    // Send periodic updates every 30 seconds to track session duration
+    intervalRef.current = setInterval(() => {
+      send();
+    }, 30000); // 30 seconds
+
+    // Cleanup interval on unmount
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
   }, [pathname]);
+
+  // Track session end when user leaves
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      // Send final tracking update
+      const sessionId = localStorage.getItem('visitor_session_id');
+      if (sessionId) {
+        // Use sendBeacon for reliable tracking on page unload
+        navigator.sendBeacon('/api/track-visitor', JSON.stringify({
+          id: sessionId,
+          path: window.location.pathname,
+          referrer: document.referrer || null,
+          userAgent: navigator.userAgent,
+        }));
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, []);
 
   return null;
 }
