@@ -66,6 +66,14 @@ export function TestimonialCarousel() {
       company: 'Russian Business Conglomerate',
       content: 'Coming from Russia, I was used to giving feedback very directly axaxa. But in the Gulf, I realised that the same honesty can feel too sharp. This training helped me see how my communication comes across and how I can adjust here and there. The awareness it gave me is honestly the most valuable part. Great job! This is something many people overlook and nobody fills the gap my compliments!',
       rating: 5
+    },
+    {
+      id: 7,
+      name: 'Francesca Morelli',
+      role: 'Italian Expat Living in the UAE for 5+ Years',
+      company: '',
+      content: 'I have been living in the Gulf already for more than five years because of my husband\'s work, but honestly I never had the possibility to understand the culture in such a complete way. Many things I was feeling but could not explain. This training finally put all the pieces together. Now I understand why people communicate in certain ways, how respect is shown here and what I was sometimes misunderstanding. I feel much more connected to others and the country. For me this experience was really precious.',
+      rating: 5
     }
   ]
 
