@@ -55,6 +55,7 @@ const masterclasses: Masterclass[] = [
     description: "A transformative masterclass that helps expats recognise how their own communication style, decision making, and relationship-building habits impact their experience in the region. Using globally recognised cultural frameworks (without naming them), participants learn how to adapt, connect, and thrive across cultures.",
     gradient: "from-bright-blue/20 to-light-blue/20",
     price: 1450,
+    paymentLink: 'https://book.stripe.com/9B67sLfFIcuRfOX11e8k803',
     learningObjectives: [
       "Identify their own cultural communication patterns",
       "Understand how different cultures interpret clarity, feedback, trust, and hierarchy",
@@ -75,6 +76,7 @@ const masterclasses: Masterclass[] = [
     description: "A strategic masterclass focused on business etiquette and professional communication in the UAE and the wider region. Learn how to navigate hierarchy, manage feedback, build trust, and conduct meetings and negotiations in a relationship-driven environment. Ideal for executives, entrepreneurs, and professionals aiming to succeed in the local market or expand business across the Gulf.",
     gradient: "from-light-blue/20 to-orange/20",
     price: 2200,
+    paymentLink: 'https://book.stripe.com/6oUeVd1OSeCZcCL25i8k804',
     learningObjectives: [
       "Understand business expectations, hierarchy, and workplace dynamics",
       "Learn how to communicate with clarity and respect",
