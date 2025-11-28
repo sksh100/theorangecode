@@ -166,24 +166,20 @@ export function ModernNavbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      {/* Logo at bottom left edge of page */}
-      <div className="absolute bottom-0 left-0 z-50 h-16 sm:h-20 -ml-0 hidden sm:block">
-        <Image
-          src="/coming-soon/logo-1.png"
-          alt="The Orange Code Logo"
-          width={200}
-          height={80}
-          className="h-full w-auto"
-          priority
-        />
-      </div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="flex items-center justify-between h-20">
-          {/* Logo - text removed as requested */}
-          <div className="flex-shrink-0 min-w-0 -ml-2 sm:-ml-4">
-            {/* Logo only, no text */}
-          </div>
+          {/* Logo - visible on all screen sizes */}
+          <Link href="/" className="flex-shrink-0 min-w-0 -ml-2 sm:-ml-4">
+            <Image
+              src="/coming-soon/logo-1.png"
+              alt="The Orange Code Logo"
+              width={120}
+              height={48}
+              className="h-10 sm:h-12 w-auto"
+              priority
+            />
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-6 xl:space-x-8 flex-1 justify-center mx-4">
