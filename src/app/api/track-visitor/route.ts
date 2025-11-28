@@ -204,8 +204,12 @@ export async function POST(req: NextRequest) {
     
     try {
       const lastSeenValue = await redis.get(visitorKey);
-      // Ensure lastSeen is a string or null
-      lastSeen = typeof lastSeenValue === 'string' ? lastSeenValue : null;
+      // Ensure lastSeen is a string or null (handle Redis return type)
+      if (lastSeenValue && typeof lastSeenValue === 'string') {
+        lastSeen = lastSeenValue;
+      } else {
+        lastSeen = null;
+      }
       isNewVisitor = !lastSeen;
       console.log("🔍 Visitor check:", {
         ip,
@@ -247,7 +251,7 @@ export async function POST(req: NextRequest) {
       path,
       isNewVisitor,
       redisAvailable,
-      lastSeen: lastSeen ? `seen ${Math.round((now - parseInt(lastSeen, 10)) / 1000)}s ago` : "never"
+      lastSeen: lastSeen && typeof lastSeen === 'string' ? `seen ${Math.round((now - parseInt(lastSeen, 10)) / 1000)}s ago` : "never"
     });
 
     // TEMPORARY: Force notifications for testing (remove after debugging)
@@ -295,7 +299,7 @@ export async function POST(req: NextRequest) {
       console.log("⏭️ Visitor already seen recently, skipping notification", {
         ip,
         lastSeen: lastSeen,
-        timeSinceLastSeen: lastSeen ? `${Math.round((now - parseInt(lastSeen, 10)) / 1000)} seconds` : "unknown"
+        timeSinceLastSeen: lastSeen && typeof lastSeen === 'string' ? `${Math.round((now - parseInt(lastSeen, 10)) / 1000)} seconds` : "unknown"
       });
     }
 
