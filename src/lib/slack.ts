@@ -359,7 +359,7 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
       fields: [
         {
           type: 'mrkdwn',
-          text: `*🗺️ Coordinates:*\n\`${coordinates}\``,
+          text: `*🗺️ Coordinates:*\n\`${coordinates}\`\n_*Note:* City-level approximation (IP geolocation)_`,
         },
       ],
     });
