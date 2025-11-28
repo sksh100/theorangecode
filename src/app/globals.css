@@ -885,6 +885,28 @@
   .font-glacial {
     font-family: 'Glacial Indifference', sans-serif;
   }
+  
+  /* Typography System - 4 Standard Styles */
+  
+  /* Style 1: Main Titles (H1) - text-4xl md:text-5xl lg:text-6xl font-bold mb-6 */
+  .text-title {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-normal;
+  }
+  
+  /* Style 2: Subtitles (H2/H3) - A little smaller than titles */
+  .text-subtitle {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold mb-4 tracking-normal;
+  }
+  
+  /* Style 3: Body Text - text-xl md:text-2xl text-white/80 max-w-5xl mx-auto leading-relaxed */
+  .text-body {
+    @apply text-xl md:text-2xl text-white/80 max-w-5xl mx-auto leading-relaxed tracking-normal;
+  }
+  
+  /* Style 4: Smaller Text (like business benefits) - text-base text-white/70 leading-relaxed */
+  .text-small {
+    @apply text-base text-white/70 leading-relaxed tracking-normal;
+  }
 }
 
 /* Responsive Design */

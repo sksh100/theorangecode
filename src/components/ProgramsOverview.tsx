@@ -185,7 +185,7 @@ export function MasterclassesOverview({ onExpand }: MasterclassesOverviewProps) 
 
           {/* Main Title: "Our Masterclasses" with gradient on "Masterclasses" */}
           <motion.h1 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+            className="text-title"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -199,7 +199,7 @@ export function MasterclassesOverview({ onExpand }: MasterclassesOverviewProps) 
           
           {/* Subtitle */}
           <motion.p 
-            className="text-xl md:text-2xl text-white/80 max-w-5xl mx-auto leading-relaxed mb-6 md:whitespace-nowrap"
+            className="text-body mb-6 md:whitespace-nowrap"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}

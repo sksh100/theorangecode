@@ -133,9 +133,9 @@ export function USPBar() {
             />
           </motion.div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-montserrat mb-4">
+          <h2 className="text-title text-white font-montserrat mb-4">
             Why Choose{' '}
-            <span className="text-gradient-primary bg-gradient-primary bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
               The Orange Code
             </span>
           </h2>

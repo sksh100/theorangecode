@@ -64,7 +64,7 @@ export function StartTodayCTA() {
         >
           {/* Heading */}
           <motion.h2
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
+            className="text-title text-white"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -84,7 +84,7 @@ export function StartTodayCTA() {
 
           {/* CTA Text */}
           <motion.div
-            className="text-lg md:text-xl text-white/80 leading-relaxed mb-8 max-w-2xl mx-auto space-y-4"
+            className="text-body mb-8 max-w-2xl mx-auto space-y-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}

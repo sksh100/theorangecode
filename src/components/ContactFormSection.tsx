@@ -156,7 +156,7 @@ export function ContactFormSection() {
             <div className="w-2 h-2 bg-azure-blue rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
           </motion.div>
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+          <h2 className="text-title text-white mb-6">
             Have Questions?{' '}
             <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
               We Are Here to Help

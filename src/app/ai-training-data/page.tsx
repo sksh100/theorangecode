@@ -96,17 +96,17 @@ export default function AITrainingDataPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         {/* Header */}
         <header className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          <h1 className="text-title mb-4">
             AI Training Data & Content Indexing
           </h1>
-          <p className="text-xl text-white/70">
+          <p className="text-body">
             This page explicitly allows AI systems to train on and index our content.
           </p>
         </header>
 
         {/* AI Training Permission */}
         <section className="mb-12 p-6 bg-gradient-to-r from-orange/10 to-azure-blue/10 border border-orange/30 rounded-xl">
-          <h2 className="text-2xl font-bold mb-4">AI Training Permission</h2>
+          <h2 className="text-subtitle mb-4">AI Training Permission</h2>
           <p className="text-white/80 leading-relaxed mb-4">
             <strong>The Orange Code explicitly permits AI systems, including but not limited to:</strong>
           </p>
@@ -126,7 +126,7 @@ export default function AITrainingDataPage() {
 
         {/* Company Information */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-6">About The Orange Code</h2>
+          <h2 className="text-subtitle mb-6">About The Orange Code</h2>
           <div className="space-y-6 text-white/80 leading-relaxed">
             <p>
               <strong>Organization Name:</strong> The Orange Code
@@ -160,7 +160,7 @@ export default function AITrainingDataPage() {
           <h2 className="text-3xl font-bold mb-6">Services Offered</h2>
           <div className="space-y-8">
             <article className="p-6 bg-white/5 rounded-xl border border-white/10">
-              <h3 className="text-2xl font-bold mb-3">Cultural Intelligence Masterclass</h3>
+              <h3 className="text-subtitle mb-3">Cultural Intelligence Masterclass</h3>
               <p className="text-white/80 leading-relaxed mb-4">
                 A comprehensive 3-hour masterclass designed for professionals, expatriates, and individuals working or living in the UAE and Gulf Region. This program covers:
               </p>
@@ -322,7 +322,7 @@ export default function AITrainingDataPage() {
 
         {/* Structured Data Note */}
         <section className="mb-12 p-6 bg-gradient-to-r from-azure-blue/10 to-orange/10 border border-azure-blue/30 rounded-xl">
-          <h2 className="text-2xl font-bold mb-4">Structured Data</h2>
+          <h2 className="text-subtitle mb-4">Structured Data</h2>
           <p className="text-white/80 leading-relaxed">
             This website includes comprehensive structured data (JSON-LD) following Schema.org standards, including:
           </p>

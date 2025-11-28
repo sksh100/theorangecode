@@ -257,7 +257,7 @@ export function WhyCulturalIntelligenceSection() {
           </motion.div>
 
           <motion.h2 
-            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-white max-w-5xl mx-auto leading-tight whitespace-nowrap"
+            className="text-subtitle text-white max-w-5xl mx-auto leading-tight whitespace-nowrap mb-8"
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ 
@@ -405,7 +405,7 @@ export function WhyCulturalIntelligenceSection() {
               viewport={{ once: true }}
             >
               <motion.h3 
-                className="text-3xl md:text-4xl font-bold text-white mb-2"
+                className="text-subtitle text-white mb-2"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
@@ -430,7 +430,7 @@ export function WhyCulturalIntelligenceSection() {
           </motion.div>
 
           <motion.p 
-            className="text-lg md:text-xl text-white/80 leading-relaxed mb-16 max-w-3xl"
+            className="text-body mb-16 max-w-3xl"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ 
@@ -560,7 +560,7 @@ export function WhyCulturalIntelligenceSection() {
               <div className="absolute -inset-2 bg-azure-blue/20 rounded-2xl blur-xl -z-10" />
             </div>
             <div>
-              <h3 className="text-3xl md:text-4xl font-bold text-white mb-2">
+              <h3 className="text-subtitle text-white mb-2">
                 In Business
               </h3>
               <div className="h-1 w-24 bg-gradient-to-r from-azure-blue to-transparent rounded-full" />
@@ -588,10 +588,10 @@ export function WhyCulturalIntelligenceSection() {
                       <benefit.icon className={`w-7 h-7 ${benefit.iconColor || 'text-white/90'}`} />
                     </div>
                   </div>
-                  <h4 className={`text-xl md:text-2xl font-bold ${benefit.titleColor || 'text-white'} mb-3 min-h-[4rem] flex items-start transition-colors duration-300`}>
+                  <h4 className={`text-subtitle ${benefit.titleColor || 'text-white'} mb-3 min-h-[4rem] flex items-start transition-colors duration-300`}>
                     {benefit.title}
                   </h4>
-                  <p className="text-base text-white/70 leading-relaxed flex-grow">
+                  <p className="text-small flex-grow">
                     {benefit.description}
                   </p>
                 </div>
@@ -621,7 +621,7 @@ export function WhyCulturalIntelligenceSection() {
                 <div className="absolute -inset-3 bg-gradient-to-br from-orange/20 via-azure-blue/20 to-orange/20 rounded-2xl blur-2xl -z-10" />
               </div>
               <div className="flex-1 pt-2">
-                <h4 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                <h4 className="text-subtitle text-white mb-6">
                   The Bottom Line
                 </h4>
                 <p className="text-xl md:text-2xl text-white/90 leading-relaxed">
