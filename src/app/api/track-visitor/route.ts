@@ -214,21 +214,63 @@ export async function POST(req: NextRequest) {
         }
         
         // Use IP geolocation city if available and more specific (especially for UAE)
-        // This helps distinguish between Dubai and Abu Dhabi
+        // This helps distinguish between all Emirates: Abu Dhabi, Dubai, Sharjah, Ras Al Khaimah, Fujairah, Umm Al Quwain, Ajman, and Al Ain
         if (ipCity && country === "AE") {
           // Normalize city names for better matching
           const normalizedIpCity = ipCity.toLowerCase().trim();
           const normalizedVercelCity = city.toLowerCase().trim();
           
-          // If IP geolocation gives us a specific city (Dubai or Abu Dhabi), use it
-          if (normalizedIpCity.includes('dubai') || normalizedIpCity.includes('abu dhabi') || 
-              normalizedIpCity.includes('abudhabi') || normalizedIpCity.includes('abu-dhabi')) {
-            city = ipCity; // Use the more specific city from IP geolocation
-            console.log('✅ Using IP geolocation city (more accurate):', city);
-          } else if (normalizedVercelCity === 'unknown' || normalizedVercelCity === '') {
-            // If Vercel city is unknown, use IP city
+          // List of all UAE Emirates and major cities with their variations
+          const uaeEmirates = [
+            { keywords: ['abu dhabi', 'abudhabi', 'abu-dhabi', 'abudhabi'], name: 'Abu Dhabi' },
+            { keywords: ['dubai', 'dubayy'], name: 'Dubai' },
+            { keywords: ['sharjah', 'shajrah', 'sharja'], name: 'Sharjah' },
+            { keywords: ['ras al khaimah', 'ras al khaima', 'rak', 'ras-al-khaimah', 'rasalkhaimah'], name: 'Ras Al Khaimah' },
+            { keywords: ['fujairah', 'fujayrah', 'fujerah'], name: 'Fujairah' },
+            { keywords: ['umm al quwain', 'umm al quwayn', 'uaq', 'umm-al-quwain'], name: 'Umm Al Quwain' },
+            { keywords: ['ajman', 'ajman city'], name: 'Ajman' },
+            { keywords: ['al ain', 'al-ain', 'alain', 'al ayn'], name: 'Al Ain' }
+          ];
+          
+          // Check if IP geolocation city matches any UAE emirate
+          let matchedEmirate: string | null = null;
+          for (const emirate of uaeEmirates) {
+            if (emirate.keywords.some(keyword => normalizedIpCity.includes(keyword))) {
+              matchedEmirate = emirate.name;
+              break;
+            }
+          }
+          
+          // Also check Vercel city for emirate matching
+          let matchedVercelEmirate: string | null = null;
+          if (normalizedVercelCity !== 'unknown' && normalizedVercelCity !== '') {
+            for (const emirate of uaeEmirates) {
+              if (emirate.keywords.some(keyword => normalizedVercelCity.includes(keyword))) {
+                matchedVercelEmirate = emirate.name;
+                break;
+              }
+            }
+          }
+          
+          // Prioritize IP geolocation city if it matches an emirate
+          if (matchedEmirate) {
+            city = matchedEmirate; // Use the standardized emirate name
+            console.log('✅ Using IP geolocation emirate (more accurate):', city, 'from IP city:', ipCity);
+          } 
+          // If IP doesn't match but Vercel does, use Vercel
+          else if (matchedVercelEmirate) {
+            city = matchedVercelEmirate;
+            console.log('✅ Using Vercel emirate:', city);
+          }
+          // If Vercel city is unknown but IP city exists, use IP city (even if not a recognized emirate)
+          else if ((normalizedVercelCity === 'unknown' || normalizedVercelCity === '') && ipCity) {
             city = ipCity;
             console.log('✅ Using IP geolocation city (Vercel unknown):', city);
+          }
+          // If both have cities but neither matches an emirate, prefer IP geolocation
+          else if (ipCity && normalizedIpCity !== normalizedVercelCity) {
+            city = ipCity;
+            console.log('✅ Using IP geolocation city (different from Vercel):', city);
           }
         }
       } catch (error) {
