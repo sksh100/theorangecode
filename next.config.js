@@ -18,6 +18,20 @@ const nextConfig = {
       { source: '/android-chrome-512x512.png', destination: '/flavicon/android-chrome-512x512.png' },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/preview',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/coming-soon',
+        destination: '/',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

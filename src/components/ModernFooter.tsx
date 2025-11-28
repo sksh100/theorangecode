@@ -253,7 +253,7 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                 <a href="/masterclasses" className="block text-white/70 text-sm hover:text-orange transition-colors">
                   Masterclasses
                 </a>
-                <Link href="/preview#contact" className="block text-white/70 text-sm hover:text-orange transition-colors">
+                <Link href="/#contact" className="block text-white/70 text-sm hover:text-orange transition-colors">
                   Contact
                 </Link>
                 <Link href="/faq" className="block text-white/70 text-sm hover:text-orange transition-colors">

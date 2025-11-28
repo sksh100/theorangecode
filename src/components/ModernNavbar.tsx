@@ -49,7 +49,7 @@ export function ModernNavbar() {
   const navItems = [
     {
       label: 'Home',
-      href: '/preview',
+      href: '/',
     },
     {
       label: 'About',
@@ -96,7 +96,7 @@ export function ModernNavbar() {
     },
     {
       label: 'Contact',
-      href: '/preview#contact',
+      href: '/#contact',
     }
   ]
 
