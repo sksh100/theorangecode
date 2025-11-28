@@ -56,7 +56,7 @@ export function TestimonialCarousel() {
       name: 'Dutch Operations Lead',
       role: 'Operations Lead',
       company: 'Ballast Nedam',
-      content: 'Coming from a Dutch background I assumed honesty and directness created trust. In the Gulf this sometimes sounded too blunt. The Orange Code helped me adapt my communication to the UAE and Saudi ecosystem. I learned how warmth and respect shape business here. The results were immediate. Our projects moved faster and partnerships became effortless.',
+      content: 'I am from The Netherlands and when I started working in this amazing country I did thing The Dutch Way. I had a lot of stress and didn\'t know why things were not going effortlesly just like back in The Netherlands. I kept comparing and tried to find solutions that were all around defining our KPI\'s better but I just couldn\'t get the results I aimed for. Then I came across this and the \'Orange\' in the name attracted me. Did around 15 private coaching sessions and man o man what a difference. I couldn\'t have come up with this on my own. Thank you!',
       rating: 5
     },
     {
