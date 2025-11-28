@@ -14,6 +14,8 @@ type VisitorPayload = {
   referrer?: string | null;
   country?: string | null;
   city?: string | null;
+  lat?: number | null;
+  lng?: number | null;
   ts: number;
 };
 
@@ -42,6 +44,42 @@ function detectBrowser(userAgent: string | null): string {
   if (ua.includes("edg")) return "Edge";
   if (ua.includes("opera")) return "Opera";
   return "Other";
+}
+
+// Helper function to get coordinates from IP address
+async function getCoordinatesFromIP(ip: string): Promise<{ lat: number; lng: number } | null> {
+  // Skip for localhost or private IPs
+  if (ip === "unknown" || ip.startsWith("127.") || ip.startsWith("192.168.") || ip.startsWith("10.") || ip.startsWith("172.")) {
+    return null;
+  }
+
+  try {
+    // Using ip-api.com (free, 45 requests/minute, no API key needed)
+    const response = await fetch(`http://ip-api.com/json/${ip}?fields=status,lat,lon`, {
+      headers: {
+        'Accept': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      console.warn(`⚠️ IP geolocation API failed: ${response.status}`);
+      return null;
+    }
+
+    const data = await response.json();
+    
+    if (data.status === 'success' && data.lat && data.lon) {
+      return {
+        lat: data.lat,
+        lng: data.lon,
+      };
+    }
+
+    return null;
+  } catch (error) {
+    console.warn('⚠️ Error fetching coordinates:', error);
+    return null;
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -76,6 +114,16 @@ export async function POST(req: NextRequest) {
     const device = detectDevice(userAgent);
     const browser = detectBrowser(userAgent);
 
+    // Get coordinates from IP (non-blocking, don't fail if it doesn't work)
+    let coordinates: { lat: number; lng: number } | null = null;
+    if (ip && ip !== "unknown") {
+      try {
+        coordinates = await getCoordinatesFromIP(ip);
+      } catch (error) {
+        console.warn('⚠️ Failed to get coordinates (non-critical):', error);
+      }
+    }
+
     const payload: VisitorPayload = {
       id,
       ip,
@@ -84,6 +132,8 @@ export async function POST(req: NextRequest) {
       referrer,
       country,
       city,
+      lat: coordinates?.lat ?? null,
+      lng: coordinates?.lng ?? null,
       ts: now,
     };
 
@@ -134,6 +184,7 @@ export async function POST(req: NextRequest) {
       ip,
       country,
       city,
+      coordinates: coordinates ? `${coordinates.lat}, ${coordinates.lng}` : "not available",
       device,
       browser,
       path,
@@ -153,6 +204,7 @@ export async function POST(req: NextRequest) {
         ip,
         country,
         city,
+        coordinates: coordinates ? `${coordinates.lat}, ${coordinates.lng}` : "not available",
         device,
         browser,
         path,
@@ -165,7 +217,9 @@ export async function POST(req: NextRequest) {
         device: device,
         browser: browser,
         page: path,
-        ip: ip !== "unknown" ? ip : undefined
+        ip: ip !== "unknown" ? ip : undefined,
+        lat: coordinates?.lat,
+        lng: coordinates?.lng,
       })
         .then(() => {
           console.log("✅✅✅ Visitor Slack notification SENT SUCCESSFULLY");

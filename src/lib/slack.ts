@@ -36,6 +36,8 @@ interface VisitorData {
   browser?: string;
   page: string;
   ip?: string;
+  lat?: number;
+  lng?: number;
 }
 
 /**
@@ -302,54 +304,100 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
     ? `${data.country}${data.city && data.city !== 'Unknown' ? `, ${data.city}` : ''}`
     : 'Unknown location';
   
-  const message: SlackMessage = {
-    blocks: [
-      {
-        type: 'header',
-        text: {
-          type: 'plain_text',
-          text: '👤 New Visitor on Website',
-          emoji: true,
-        },
+  // Format coordinates if available
+  const coordinates = data.lat && data.lng 
+    ? `${data.lat.toFixed(6)}, ${data.lng.toFixed(6)}`
+    : null;
+  
+  // Create Google Maps link if coordinates are available
+  const mapLink = coordinates 
+    ? `https://www.google.com/maps?q=${data.lat},${data.lng}`
+    : null;
+
+  const blocks: any[] = [
+    {
+      type: 'header',
+      text: {
+        type: 'plain_text',
+        text: '👤 New Visitor on Website',
+        emoji: true,
       },
-      {
-        type: 'section',
-        fields: [
-          {
-            type: 'mrkdwn',
-            text: `*📍 Location:*\n${location}`,
-          },
-          {
-            type: 'mrkdwn',
-            text: `*🌐 IP Address:*\n\`${data.ip || 'Unknown'}\``,
-          },
-          {
-            type: 'mrkdwn',
-            text: `*💻 Device:*\n${data.device || 'Unknown'}`,
-          },
-          {
-            type: 'mrkdwn',
-            text: `*🔍 Browser:*\n${data.browser || 'Unknown'}`,
-          },
-        ],
-      },
-      {
-        type: 'section',
-        text: {
+    },
+    {
+      type: 'section',
+      fields: [
+        {
           type: 'mrkdwn',
-          text: `*📄 Page:* \`${data.page}\``,
+          text: `*📍 Location:*\n${location}`,
         },
-      },
-      {
-        type: 'context',
-        elements: [
-          {
-            type: 'mrkdwn',
-            text: `⏰ ${new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })} (UAE Time)`,
+        {
+          type: 'mrkdwn',
+          text: `*🌐 IP Address:*\n\`${data.ip || 'Unknown'}\``,
+        },
+        {
+          type: 'mrkdwn',
+          text: `*💻 Device:*\n${data.device || 'Unknown'}`,
+        },
+        {
+          type: 'mrkdwn',
+          text: `*🔍 Browser:*\n${data.browser || 'Unknown'}`,
+        },
+      ],
+    },
+  ];
+
+  // Add coordinates field if available
+  if (coordinates) {
+    blocks.push({
+      type: 'section',
+      fields: [
+        {
+          type: 'mrkdwn',
+          text: `*🗺️ Coordinates:*\n\`${coordinates}\``,
+        },
+      ],
+    });
+  }
+
+  blocks.push({
+    type: 'section',
+    text: {
+      type: 'mrkdwn',
+      text: `*📄 Page:* \`${data.page}\``,
+    },
+  });
+
+  // Add map link button if coordinates are available
+  if (mapLink) {
+    blocks.push({
+      type: 'actions',
+      elements: [
+        {
+          type: 'button',
+          text: {
+            type: 'plain_text',
+            text: '🗺️ View on Map',
+            emoji: true,
           },
-        ],
+          url: mapLink,
+          style: 'primary',
+        },
+      ],
+    });
+  }
+
+  blocks.push({
+    type: 'context',
+    elements: [
+      {
+        type: 'mrkdwn',
+        text: `⏰ ${new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })} (UAE Time)`,
       },
     ],
+  });
+
+  const message: SlackMessage = {
+    blocks,
   };
 
   await sendToSlack(message);
