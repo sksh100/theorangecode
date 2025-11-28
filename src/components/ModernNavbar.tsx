@@ -151,8 +151,11 @@ export function ModernNavbar() {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
 
+  // Shopping cart should only be updated when masterclass is actually added
+  // This function is kept for UI purposes but cart should be managed elsewhere
   const addToCart = () => {
-    setCartItems(prev => prev + 1)
+    // Don't increment on button click - cart should only update when masterclass is added
+    // This will be handled by the masterclasses booking page
   }
 
   return (
@@ -251,25 +254,26 @@ export function ModernNavbar() {
           {/* CTA Buttons - Always right aligned */}
           <div className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0 ml-auto">
             {/* Shopping Basket */}
-            <motion.button
-              className="relative p-2 sm:p-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300 group"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              onClick={addToCart}
-            >
-              <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
-              {cartItems > 0 && (
-                <motion.span
-                  className="cart-badge"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  {cartItems}
-                </motion.span>
-              )}
-            </motion.button>
+            <Link href="/masterclasses" className="relative">
+              <motion.button
+                className="relative p-2 sm:p-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300 group min-w-[44px] min-h-[44px] flex items-center justify-center"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
+                {cartItems > 0 && (
+                  <motion.span
+                    className="cart-badge"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  >
+                    {cartItems}
+                  </motion.span>
+                )}
+              </motion.button>
+            </Link>
 
             {/* Login/Dashboard Button */}
             {isLoggedIn ? (
@@ -324,7 +328,7 @@ export function ModernNavbar() {
             )}
 
             {/* Get Started Button */}
-            <Link href="/signup">
+            <Link href="/masterclasses">
               <motion.button
                 className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-xs sm:text-sm md:text-base"
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -384,28 +388,30 @@ export function ModernNavbar() {
                               transition={{ duration: 0.2 }}
                             >
                               {item.dropdown?.map((dropdownItem) => (
-                                <motion.a
+                                <Link
                                   key={dropdownItem.label}
                                   href={dropdownItem.href}
-                                  className="flex items-center space-x-3 p-2 text-white/60 hover:text-white hover:bg-azure-blue-transparent rounded-lg transition-all duration-300"
-                                  whileHover={{ x: 4 }}
+                                  onClick={() => {
+                                    setIsMobileMenuOpen(false)
+                                    setActiveDropdown(null)
+                                  }}
+                                  className="flex items-center space-x-3 p-2 text-white/60 hover:text-white hover:bg-azure-blue-transparent rounded-lg transition-all duration-300 cursor-pointer"
                                 >
                                   <dropdownItem.icon className="w-4 h-4 text-azure-blue" />
                                   <span className="font-montserrat text-sm">{dropdownItem.label}</span>
-                                </motion.a>
+                                </Link>
                               ))}
                             </motion.div>
                           )}
                         </AnimatePresence>
                       </>
                     ) : (
-                      <Link href={item.href || '#'}>
-                        <motion.span
-                          className="block p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium"
-                          whileHover={{ x: 4 }}
-                        >
-                          {item.label}
-                        </motion.span>
+                      <Link 
+                        href={item.href || '#'}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium cursor-pointer"
+                      >
+                        {item.label}
                       </Link>
                     )}
                   </div>
@@ -414,20 +420,21 @@ export function ModernNavbar() {
                 {/* Mobile CTA Buttons */}
                 <div className="mt-4 space-y-3">
                   {/* Shopping Basket - Mobile */}
-                  <motion.button
-                    className="w-full flex items-center justify-center space-x-2 p-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={addToCart}
-                  >
-                    <ShoppingBag className="w-5 h-5" />
-                    <span className="font-montserrat font-medium">Shopping Cart</span>
-                    {cartItems > 0 && (
-                      <span className="cart-badge">
-                        {cartItems}
-                      </span>
-                    )}
-                  </motion.button>
+                  <Link href="/masterclasses" onClick={() => setIsMobileMenuOpen(false)}>
+                    <motion.button
+                      className="w-full flex items-center justify-center space-x-2 p-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <ShoppingBag className="w-5 h-5" />
+                      <span className="font-montserrat font-medium">Shopping Cart</span>
+                      {cartItems > 0 && (
+                        <span className="cart-badge">
+                          {cartItems}
+                        </span>
+                      )}
+                    </motion.button>
+                  </Link>
 
                   {/* Login/Dashboard Button - Mobile */}
                   {isLoggedIn ? (
@@ -480,7 +487,7 @@ export function ModernNavbar() {
                   )}
 
                   {/* Get Started Button - Mobile */}
-                  <Link href="/signup">
+                  <Link href="/masterclasses" onClick={() => setIsMobileMenuOpen(false)}>
                     <motion.button
                       className="w-full px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl"
                       whileHover={{ scale: 1.02 }}
