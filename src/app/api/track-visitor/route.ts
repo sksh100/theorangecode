@@ -161,7 +161,7 @@ async function getAreaFromCoordinates(lat: number, lng: number, city: string): P
 
 // Helper function to get location data (city, coordinates, area) from IP address
 // Uses multiple services for better accuracy, specifically to distinguish Dubai vs Abu Dhabi
-async function getLocationFromIP(ip: string): Promise<{ lat: number; lng: number; city?: string; region?: string; postalCode?: string; area?: string } | null> {
+async function getLocationFromIP(ip: string): Promise<{ lat: number; lng: number; city?: string; region?: string; postalCode?: string | null; area?: string | null } | null> {
   // Skip for localhost or private IPs
   if (ip === "unknown" || ip.startsWith("127.") || ip.startsWith("192.168.") || ip.startsWith("10.") || ip.startsWith("172.")) {
     return null;
@@ -205,8 +205,8 @@ async function getLocationFromIP(ip: string): Promise<{ lat: number; lng: number
             lng,
             city: ipinfoData.city,
             region: ipinfoData.region,
-            postalCode: postalCode,
-            area: area
+            postalCode: postalCode || undefined,
+            area: area || undefined
           };
         }
       }
