@@ -204,10 +204,10 @@ export function ModernNavbar() {
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0 relative w-full">
         <div className="flex items-center justify-between h-20 relative">
           {/* Logo - visible on all screen sizes, full height, left edge aligned */}
-          <Link href="/" className="flex-shrink-0 min-w-0 flex items-center h-full absolute left-0 lg:relative lg:left-auto lg:-ml-4">
+          <Link href="/" className="flex-shrink-0 min-w-0 flex items-center h-full absolute left-0 lg:absolute lg:left-0">
             <Image
               src="/coming-soon/logo-1.png"
               alt="The Orange Code Logo"
