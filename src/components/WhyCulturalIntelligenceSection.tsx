@@ -257,7 +257,7 @@ export function WhyCulturalIntelligenceSection() {
           </motion.div>
 
           <motion.h2 
-            className="text-subtitle text-white max-w-5xl mx-auto leading-tight whitespace-nowrap mb-8"
+            className="text-title text-white max-w-5xl mx-auto leading-tight whitespace-nowrap"
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ 
@@ -305,7 +305,7 @@ export function WhyCulturalIntelligenceSection() {
           
           <div className="max-w-4xl mx-auto space-y-6">
             <motion.p 
-              className="text-lg md:text-xl text-white/90 leading-relaxed"
+              className="text-lg md:text-xl text-white/90 leading-relaxed tracking-normal"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ 
@@ -318,7 +318,7 @@ export function WhyCulturalIntelligenceSection() {
               People succeed because they know how to communicate across cultures, interpret subtle signals, and build trust quickly. Cultural intelligence gives you this advantage.
             </motion.p>
             <motion.p 
-              className="text-lg md:text-xl text-white/70 leading-relaxed"
+              className="text-lg md:text-xl text-white/70 leading-relaxed tracking-normal"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ 

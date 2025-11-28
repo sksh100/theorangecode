@@ -180,18 +180,10 @@ export function ModernNavbar() {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="flex items-center justify-between h-20">
-          {/* Logo with text */}
-          <motion.div
-            className="flex items-center flex-shrink-0 min-w-0 -ml-2 sm:-ml-4"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            <div className="flex-shrink-0">
-              <h1 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-white font-montserrat whitespace-nowrap">
-                The Orange Code
-              </h1>
-            </div>
-          </motion.div>
+          {/* Logo - text removed as requested */}
+          <div className="flex-shrink-0 min-w-0 -ml-2 sm:-ml-4">
+            {/* Logo only, no text */}
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-6 xl:space-x-8 flex-1 justify-center mx-4">

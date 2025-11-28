@@ -172,9 +172,6 @@ export function ContactFormSection() {
             <p className="text-white/70 text-lg md:text-xl max-w-2xl mx-auto tracking-normal">
               Share your details below so our team can reply shortly.
             </p>
-            <p className="text-white/70 text-lg md:text-xl max-w-2xl mx-auto tracking-normal">
-              Your message stays private, confidential, safe.
-            </p>
           </div>
           
           <div className="flex items-center justify-center mb-8">

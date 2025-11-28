@@ -223,8 +223,8 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                       Abu Dhabi,<br />
                       United Arab Emirates
                     </p>
-                    <p className="text-white/60 text-xs mt-2">
-                      License No: ON-4296787
+                    <p className="text-white text-sm mt-2">
+                      License No: CN-4296787
                     </p>
                   </div>
                 </div>
