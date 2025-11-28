@@ -48,6 +48,10 @@ export async function GET(request: NextRequest) {
       ip: ip !== "test-ip" ? ip : undefined,
       lat: coordinates?.lat,
       lng: coordinates?.lng,
+      source: "Test Notification",
+      navigationFlow: ["/home", "/masterclasses", "/about", "/test"],
+      sessionDuration: 185, // 3 minutes 5 seconds
+      visitCount: 2, // Simulating a returning visitor
     });
 
     return NextResponse.json({
