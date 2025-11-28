@@ -938,8 +938,8 @@
   }
 
   .hero-content-left {
-    margin-left: 3rem;
-    max-width: 38rem;
+    margin-left: 2rem !important;
+    max-width: calc(100% - 4rem);
   }
 }
 
