@@ -86,7 +86,7 @@ export function ContactMegaDropdown({ isOpen, onClose }: ContactMegaDropdownProp
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <div className="mega-dropdown-glass rounded-3xl overflow-hidden shadow-glow-luminous">
+            <div className="mega-dropdown-glass rounded-3xl overflow-hidden shadow-glow-luminous max-h-[90vh] overflow-y-auto">
               <div className="p-8">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">

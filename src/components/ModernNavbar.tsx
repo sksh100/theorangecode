@@ -275,8 +275,8 @@ export function ModernNavbar() {
               </motion.button>
             </Link>
 
-            {/* Login/Dashboard Button */}
-            {isLoggedIn ? (
+            {/* Login/Dashboard Button - Hidden for now */}
+            {/* {isLoggedIn ? (
               <Link href="/dashboard">
                 <motion.button
                   className="hidden sm:flex items-center space-x-2 px-3 sm:px-4 py-2 sm:py-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300 group"
@@ -325,7 +325,7 @@ export function ModernNavbar() {
                 <LogIn className="w-4 h-4 group-hover:text-azure-blue transition-colors duration-300" />
                 <span className="font-montserrat font-medium text-xs sm:text-sm">Login</span>
               </motion.button>
-            )}
+            )} */}
 
             {/* Get Started Button */}
             <Link href="/masterclasses">
@@ -436,8 +436,8 @@ export function ModernNavbar() {
                     </motion.button>
                   </Link>
 
-                  {/* Login/Dashboard Button - Mobile */}
-                  {isLoggedIn ? (
+                  {/* Login/Dashboard Button - Mobile - Hidden for now */}
+                  {/* {isLoggedIn ? (
                     <Link href="/dashboard">
                       <motion.button
                         className="w-full flex items-center justify-center space-x-2 p-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300"
@@ -484,7 +484,7 @@ export function ModernNavbar() {
                       <LogIn className="w-4 h-4" />
                       <span className="font-montserrat font-medium">Login</span>
                     </motion.button>
-                  )}
+                  )} */}
 
                   {/* Get Started Button - Mobile */}
                   <Link href="/masterclasses" onClick={() => setIsMobileMenuOpen(false)}>

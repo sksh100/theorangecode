@@ -78,7 +78,7 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
             transition={{ duration: 0.3, ease: "easeOut" }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="mega-dropdown-glass rounded-3xl overflow-hidden border border-white/10">
+            <div className="mega-dropdown-glass rounded-3xl overflow-hidden border border-white/10 max-h-[90vh] overflow-y-auto">
               <div className="p-8">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
