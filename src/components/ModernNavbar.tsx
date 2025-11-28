@@ -206,8 +206,8 @@ export function ModernNavbar() {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
         <div className="flex items-center justify-between h-20">
-          {/* Logo - visible on all screen sizes */}
-          <Link href="/" className="flex-shrink-0 min-w-0 flex items-center h-full -ml-4 sm:-ml-4 lg:-ml-4">
+          {/* Logo - visible on all screen sizes, full height, left edge aligned */}
+          <Link href="/" className="flex-shrink-0 min-w-0 flex items-center h-full absolute left-0 lg:relative lg:left-auto lg:-ml-4">
             <Image
               src="/coming-soon/logo-1.png"
               alt="The Orange Code Logo"
