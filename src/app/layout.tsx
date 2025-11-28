@@ -7,10 +7,10 @@ import { CookieBanner } from '@/components/CookieBanner'
 
 export const metadata: Metadata = {
   title: {
-    default: 'The Orange Code - Cultural Intelligence & Leadership Training | Abu Dhabi & Dubai',
+    default: 'The Orange Code - Cultural Intelligence & Leadership Training | Abu Dhabi',
     template: '%s | The Orange Code'
   },
-  description: 'The Orange Code is a premium learning platform based in Abu Dhabi and Dubai, UAE. We empower professionals moving to the UAE to develop cultural intelligence, understand Emirati culture and etiquette, and master doing business in the Emirates. Join our exclusive programs and transform cultural barriers into bridges of trust.',
+  description: 'The Orange Code is a premium learning platform based in Abu Dhabi, UAE. We empower professionals moving to the UAE to develop cultural intelligence, understand Emirati culture and etiquette, and master doing business in the Emirates. Join our exclusive programs and transform cultural barriers into bridges of trust.',
   keywords: [
     'The Orange Code',
     'cultural intelligence',
@@ -92,12 +92,12 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'The Orange Code - Cultural Intelligence & Leadership Training | UAE',
-    description: 'Moving to the UAE? Learn Emirati culture and etiquette. Premium learning platform in Abu Dhabi and Dubai empowering professionals with cultural intelligence, leadership skills, and expertise in doing business in the Emirates.',
+    description: 'Moving to the UAE? Learn Emirati culture and etiquette. Premium learning platform in Abu Dhabi empowering professionals with cultural intelligence, leadership skills, and expertise in doing business in the Emirates.',
     url: 'https://www.theorangecode.com',
     siteName: 'The Orange Code',
     images: [
       {
-        url: 'https://www.theorangecode.com/coming-soon/logo-1.png',
+        url: 'https://www.theorangecode.com/og-image',
         width: 1200,
         height: 630,
         alt: 'The Orange Code - Cultural Intelligence Training',
@@ -109,8 +109,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'The Orange Code - Cultural Intelligence & Leadership Training',
-    description: 'Moving to the UAE? Learn Emirati culture and etiquette. Premium learning platform in Abu Dhabi and Dubai for cultural intelligence, leadership development, and doing business in the Emirates.',
-    images: ['https://www.theorangecode.com/coming-soon/logo-1.png'],
+    description: 'Moving to the UAE? Learn Emirati culture and etiquette. Premium learning platform in Abu Dhabi for cultural intelligence, leadership development, and doing business in the Emirates.',
+    images: ['https://www.theorangecode.com/og-image'],
   },
   robots: {
     index: true,
@@ -163,11 +163,11 @@ export default function RootLayout({
         <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         
         {/* Content Summary for AI Understanding */}
-        <meta name="summary" content="The Orange Code provides cultural intelligence and leadership training in Abu Dhabi and Dubai, helping professionals navigate multicultural environments in the UAE and Gulf Region through masterclasses, private coaching, and corporate training programs." />
+        <meta name="summary" content="The Orange Code provides cultural intelligence and leadership training in Abu Dhabi, helping professionals navigate multicultural environments in the UAE and Gulf Region through masterclasses, private coaching, and corporate training programs." />
         
         {/* Hidden SEO Keywords for AI and Search Engines */}
         <meta name="keywords" content="moving to the UAE, moving to UAE, relocating to UAE, moving to Dubai, moving to Abu Dhabi, expatriate UAE, expat UAE, Emirati culture, Emirati etiquette, Emirati customs, Emirati traditions, UAE culture, UAE etiquette, UAE customs, Gulf culture, GCC culture, doing business in the Emirates, doing business in UAE, business in Dubai, business in Abu Dhabi, UAE business culture, Emirates business etiquette, Gulf business protocol, UAE expat guide, Dubai expat guide, Abu Dhabi expat guide, UAE cultural guide, Emirati cultural training, UAE cultural training, Dubai cultural training, Abu Dhabi cultural training" />
-        <meta name="description" content="Moving to the UAE? Learn Emirati culture and etiquette. Expert training for doing business in the Emirates. Cultural intelligence for expatriates in Dubai and Abu Dhabi." />
+        <meta name="description" content="Moving to the UAE? Learn Emirati culture and etiquette. Expert training for doing business in the Emirates. Cultural intelligence for expatriates in Abu Dhabi." />
         
         {/* Structured Data for SEO - Deferred for performance */}
         <script
@@ -179,7 +179,7 @@ export default function RootLayout({
               name: 'The Orange Code',
               url: 'https://www.theorangecode.com',
               logo: 'https://www.theorangecode.com/android-chrome-512x512.png',
-              description: 'Premium learning platform in Abu Dhabi and Dubai empowering professionals with cultural intelligence and leadership skills.',
+              description: 'Premium learning platform in Abu Dhabi empowering professionals with cultural intelligence and leadership skills.',
               address: {
                 '@type': 'PostalAddress',
                 addressLocality: 'Abu Dhabi',
@@ -200,7 +200,7 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'EducationalOrganization',
               name: 'The Orange Code',
-              description: 'Cultural intelligence and leadership training masterclasses in Abu Dhabi and Dubai, UAE.',
+              description: 'Cultural intelligence and leadership training masterclasses in Abu Dhabi, UAE.',
               url: 'https://www.theorangecode.com',
               address: {
                 '@type': 'PostalAddress',
@@ -477,7 +477,7 @@ export default function RootLayout({
         
         {/* Bilingual SEO Meta Tags for Yandex (Russian/English) */}
         <meta name="keywords" content="cultural intelligence, leadership, cross-cultural communication, Abu Dhabi, Dubai, UAE, The Orange Code, культурный интеллект, лидерство, кросс-культурная коммуникация, Абу-Даби, Дубай, ОАЭ" />
-        <meta name="description" content="The Orange Code — a learning platform based in Abu Dhabi and Dubai, empowering professionals to develop cultural intelligence and leadership in an international environment. | The Orange Code — обучающая платформа, созданная в Абу-Даби и Дубае, которая помогает профессионалам развивать культурный интеллект и лидерство в международной среде." />
+        <meta name="description" content="The Orange Code — a learning platform based in Abu Dhabi, empowering professionals to develop cultural intelligence and leadership in an international environment. | The Orange Code — обучающая платформа, созданная в Абу-Даби, которая помогает профессионалам развивать культурный интеллект и лидерство в международной среде." />
         {/* Chinese and Russian meta tags for Baidu indexing */}
         <meta name="keywords" content="文化智商, 跨文化沟通, 领导力课程, The Orange Code, 阿布扎比, 迪拜, 阿联酋, культурный интеллект, лидерство, кросс-культурная коммуникация, Абу-Даби, Дубай, ОАЭ, cultural intelligence, leadership, cross-cultural communication, Abu Dhabi, Dubai, UAE" />
         <meta name="description" content="The Orange Code 是一个学习平台，位于阿布扎比和迪拜，帮助专业人士提升文化智商与领导力，实现跨文化沟通的成功。| The Orange Code — обучающая платформа, созданная в Абу-Даби и Дубае, которая помогает профессионалам развивать культурный интеллект и лидерство в международной среде." />

@@ -85,7 +85,7 @@ export default function WhatIsCQPage() {
                   Understanding CQ
                 </span>
               </motion.div>
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 px-4 sm:px-0">
+              <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-6 px-4 sm:px-0 break-words">
                 <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
                   What is <span className="whitespace-normal sm:whitespace-nowrap">Cultural Intelligence</span>
                 </span>
@@ -136,7 +136,7 @@ export default function WhatIsCQPage() {
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.15 }}
                         whileHover={{ y: -10, scale: 1.02 }}
-                        className="relative p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm group"
+                        className="relative p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-primary-dark/90 to-primary-dark/80 backdrop-blur-[20px] sm:from-white/5 sm:to-white/0 sm:backdrop-blur-sm group"
                       >
                         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
                         <div className="relative z-10">
@@ -154,7 +154,7 @@ export default function WhatIsCQPage() {
 
               {/* In Practice Section */}
               <motion.div variants={itemVariants} className="relative">
-                <div className="relative p-6 sm:p-8 md:p-12 rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm mx-4 sm:mx-0">
+                <div className="relative p-6 sm:p-8 md:p-12 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px] sm:bg-white/5 sm:backdrop-blur-sm mx-4 sm:mx-0">
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-white/20 via-white/40 to-white/20" />
                   <div className="relative z-10">
                     <div className="flex items-center gap-3 mb-6">
@@ -178,7 +178,7 @@ export default function WhatIsCQPage() {
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true }}
                           transition={{ delay: index * 0.1 }}
-                          className="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/10"
+                          className="flex items-start gap-3 p-4 rounded-xl bg-primary-dark/90 backdrop-blur-[20px] sm:bg-white/5 sm:backdrop-blur-sm border border-white/10"
                         >
                           <CheckCircle className={`w-5 h-5 flex-shrink-0 mt-0.5 ${index % 2 === 0 ? 'text-orange' : 'text-azure-blue'}`} />
                           <p className="text-white/80">{benefit}</p>
@@ -211,7 +211,7 @@ export default function WhatIsCQPage() {
                     </p>
                     <motion.div
                       whileHover={{ scale: 1.02, x: 10 }}
-                      className="p-6 rounded-xl bg-white/5 border-l-4 border-orange backdrop-blur-sm"
+                      className="p-6 rounded-xl bg-primary-dark/90 backdrop-blur-[20px] sm:bg-white/5 sm:backdrop-blur-sm border-l-4 border-orange"
                     >
                       <p className="text-white/90 font-semibold">
                         Without cultural understanding, confusion rises, relationships weaken, workplaces lose harmony, communication falls short. Cultural Intelligence helps individuals, families, and professionals navigate daily life with confidence, clarity, and natural ease.
@@ -225,7 +225,7 @@ export default function WhatIsCQPage() {
                     viewport={{ once: true }}
                     className="relative"
                   >
-                    <div className="p-8 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm">
+                    <div className="p-8 rounded-2xl border border-white/10 bg-gradient-to-br from-primary-dark/90 to-primary-dark/80 backdrop-blur-[20px] sm:from-white/5 sm:to-white/0 sm:backdrop-blur-sm">
                       <div className="space-y-4">
                         <div className="flex items-center gap-3">
                           <div className="w-3 h-3 rounded-full bg-orange" />
@@ -262,7 +262,7 @@ export default function WhatIsCQPage() {
               {/* Strategic Advantage Section */}
               <motion.div
                 variants={itemVariants}
-                className="relative p-10 md:p-16 rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm"
+                className="relative p-10 md:p-16 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px] sm:bg-white/5 sm:backdrop-blur-sm"
               >
                 <div className="relative z-10 text-center space-y-6">
                   <motion.div
