@@ -276,8 +276,8 @@ export function ModernNavbar() {
 
           {/* CTA Buttons - Always right aligned */}
           <div className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0 ml-auto">
-            {/* Shopping Basket */}
-            <Link href="/masterclasses" className="relative">
+            {/* Shopping Basket - Hidden on mobile, visible on desktop */}
+            <Link href="/masterclasses" className="relative hidden sm:block">
               <motion.button
                 className="relative p-2 sm:p-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300 group min-w-[44px] min-h-[44px] flex items-center justify-center"
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -350,10 +350,10 @@ export function ModernNavbar() {
               </motion.button>
             )} */}
 
-            {/* Get Started Button */}
+            {/* Get Started Button - Smaller on mobile, full size on desktop */}
             <Link href="/masterclasses">
               <motion.button
-                className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-xs sm:text-sm md:text-base"
+                className="hidden sm:flex px-3 sm:px-4 md:px-6 py-2 sm:py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-xs sm:text-sm md:text-base"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -363,13 +363,19 @@ export function ModernNavbar() {
             </Link>
           </div>
 
-          {/* Mobile Menu Button - Only show when menu items need to be hidden */}
+          {/* Mobile Menu Button - Prominent on mobile */}
           <motion.button
-            className="lg:hidden p-2 text-white/80 hover:text-white transition-colors duration-300 ml-2"
+            className="lg:hidden relative p-3 bg-gradient-to-r from-orange/20 to-azure-blue/20 border border-orange/40 rounded-xl text-white hover:text-white transition-all duration-300 ml-2 backdrop-blur-[10px] shadow-lg shadow-orange/20 hover:shadow-orange/30 hover:border-orange/60"
             onClick={handleMobileMenuToggle}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6 text-orange" />
+            ) : (
+              <Menu className="w-6 h-6 text-orange" />
+            )}
           </motion.button>
         </div>
 
