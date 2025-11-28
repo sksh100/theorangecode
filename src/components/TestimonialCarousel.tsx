@@ -82,6 +82,14 @@ export function TestimonialCarousel() {
       company: '',
       content: 'As an American working in the Gulf, I thought being direct and transparent would always be seen as professional. I quickly learned that here it can come across very differently. The Masterclasses helped me understand the cultural expectations around communication, relationships, and respect in a way no book or YouTube video ever could. I finally get why people respond the way they do and how small adjustments on my side make a huge difference. It\'s made my work relationships smoother & faster and honestly much more enjoyable.',
       rating: 5
+    },
+    {
+      id: 9,
+      name: 'Ahmed Al M.',
+      role: 'Emirati Professonial',
+      company: '',
+      content: 'I\'m really grateful that someone took the time to help others understand our country, our heritage, and our values in such a professional way. I honestly hope people practice what they learn and share this knowledge, so we continue to respect each other. It\'s inspiring and motivating. Wishing you all the success, inshallah.',
+      rating: 5
     }
   ]
 
