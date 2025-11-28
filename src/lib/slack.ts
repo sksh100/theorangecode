@@ -357,7 +357,7 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
       fields: [
         {
           type: 'mrkdwn',
-          text: `*📍 Location:*\n${location}`,
+          text: `*📍 Location:*\n${location}${data.postalCode ? `\n_Postal: ${data.postalCode}_` : ''}`,
         },
         {
           type: 'mrkdwn',
