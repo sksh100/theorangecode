@@ -45,7 +45,7 @@ export function TestimonialCarousel() {
     },
     {
       id: 4,
-      name: 'M. D.',
+      name: 'M',
       role: 'United Nations Programme Officer',
       company: '',
       content: 'Coming from France and working in the UN, I thought I understood multicultural dynamics, but the Gulf has its own way of communicating. This training gave me the clarity and confidence to navigate it with real respect and ease.',
