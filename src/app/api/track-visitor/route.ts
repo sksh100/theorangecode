@@ -47,14 +47,39 @@ function detectBrowser(userAgent: string | null): string {
 }
 
 // Helper function to get coordinates from IP address
+// Uses multiple services for better accuracy (tries ipinfo.io first, then ip-api.com as fallback)
 async function getCoordinatesFromIP(ip: string): Promise<{ lat: number; lng: number } | null> {
   // Skip for localhost or private IPs
   if (ip === "unknown" || ip.startsWith("127.") || ip.startsWith("192.168.") || ip.startsWith("10.") || ip.startsWith("172.")) {
     return null;
   }
 
+  // Try ipinfo.io first (often more accurate, free tier: 50k/month, no API key needed for basic)
   try {
-    // Using ip-api.com (free, 45 requests/minute, no API key needed)
+    const ipinfoResponse = await fetch(`https://ipinfo.io/${ip}/json`, {
+      headers: {
+        'Accept': 'application/json',
+      },
+    });
+
+    if (ipinfoResponse.ok) {
+      const ipinfoData = await ipinfoResponse.json();
+      
+      // ipinfo.io returns coordinates as "lat,lng" string
+      if (ipinfoData.loc) {
+        const [lat, lng] = ipinfoData.loc.split(',').map(Number);
+        if (!isNaN(lat) && !isNaN(lng)) {
+          console.log('✅ Got coordinates from ipinfo.io');
+          return { lat, lng };
+        }
+      }
+    }
+  } catch (error) {
+    console.log('ℹ️ ipinfo.io failed, trying fallback:', error);
+  }
+
+  // Fallback to ip-api.com (free, 45 requests/minute, no API key needed)
+  try {
     const response = await fetch(`http://ip-api.com/json/${ip}?fields=status,lat,lon`, {
       headers: {
         'Accept': 'application/json',
@@ -69,6 +94,7 @@ async function getCoordinatesFromIP(ip: string): Promise<{ lat: number; lng: num
     const data = await response.json();
     
     if (data.status === 'success' && data.lat && data.lon) {
+      console.log('✅ Got coordinates from ip-api.com (fallback)');
       return {
         lat: data.lat,
         lng: data.lon,
