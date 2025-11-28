@@ -507,16 +507,20 @@ export function ModernNavbar() {
                                     </Link>
                                     {/* Show ebook image for Resources dropdown on mobile */}
                                     {item.label === 'Resources' && index === 0 && (
-                                      <div className="ml-4 mt-2 mb-2 relative z-10">
-                                        <div className="relative rounded-xl overflow-hidden border border-white/10 bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10">
+                                      <div className="ml-4 mt-2 mb-2 relative z-10 px-2">
+                                        <div className="relative rounded-xl overflow-hidden border border-white/20 bg-gradient-to-br from-primary-dark/90 to-primary-dark/80 backdrop-blur-[20px] p-4">
                                           <Image
                                             src="/e-book.png"
                                             alt="Ebook Coming Soon"
                                             width={300}
                                             height={450}
-                                            className="w-full h-auto object-contain"
+                                            className="w-full h-auto object-contain max-w-full"
                                             priority={false}
+                                            style={{ display: 'block' }}
                                           />
+                                          <div className="mt-3 text-center">
+                                            <p className="text-white/80 text-xs">Ebook Coming Soon</p>
+                                          </div>
                                         </div>
                                       </div>
                                     )}
