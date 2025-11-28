@@ -244,6 +244,9 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                 <a href="#about" className="block text-white/70 text-sm hover:text-orange transition-colors">
                   About Us
                 </a>
+                <a href="/what-is-cq" className="block text-white/70 text-sm hover:text-orange transition-colors">
+                  What is Cultural Intelligence
+                </a>
                 <a href="#why-cultural-intelligence" className="block text-white/70 text-sm hover:text-orange transition-colors">
                   Why Cultural Intelligence Matters
                 </a>

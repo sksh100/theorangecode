@@ -190,7 +190,7 @@ export function TestimonialCarousel() {
           </motion.div>
 
           <motion.h2 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 md:mb-10"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 md:mb-10 tracking-normal"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ 
@@ -216,7 +216,7 @@ export function TestimonialCarousel() {
             </motion.span>
           </motion.h2>
           <motion.div 
-            className="text-white/70 text-lg max-w-3xl mx-auto"
+            className="text-white/70 text-lg max-w-3xl mx-auto tracking-normal"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ 
@@ -226,10 +226,10 @@ export function TestimonialCarousel() {
             }}
             viewport={{ once: true }}
           >
-            <p className="mb-4">
+            <p className="mb-4 tracking-normal">
               Honest reflections from the people who walked this journey with us.
             </p>
-            <p>
+            <p className="tracking-normal">
               Several clients, marked with a shield, prefer to remain anonymous because of NDA requirements, but still offered to share their experience. We are truly thankful for every participant who chooses to tell us how the masterclasses shaped their understanding of the culture. Here is a small selection.
             </p>
           </motion.div>
@@ -272,7 +272,7 @@ export function TestimonialCarousel() {
 
                   {/* Testimonial Content */}
                   <blockquote className="flex-grow mb-4">
-                    <p className="text-white text-sm md:text-base leading-relaxed font-light italic mb-3">
+                    <p className="text-white text-sm md:text-base leading-relaxed font-light italic mb-3 tracking-normal">
                       "{testimonial.content}"
                     </p>
                   </blockquote>
@@ -286,11 +286,11 @@ export function TestimonialCarousel() {
 
                   {/* Author Info */}
                   <div className="text-center mt-auto">
-                    <h4 className="text-white text-base md:text-lg font-bold mb-1">
+                    <h4 className="text-white text-base md:text-lg font-bold mb-1 tracking-normal">
                       {testimonial.name}
                     </h4>
                     {(testimonial.role || testimonial.company) && (
-                      <p className="text-white/70 text-xs md:text-sm">
+                      <p className="text-white/70 text-xs md:text-sm tracking-normal">
                         {testimonial.role && testimonial.company 
                           ? `${testimonial.role} at ${testimonial.company}`
                           : testimonial.role || testimonial.company

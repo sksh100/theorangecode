@@ -2,41 +2,68 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Send, Mail, Phone, MapPin, MessageSquare } from 'lucide-react'
+import { Send, Mail, Phone, MapPin, MessageSquare, ChevronDown } from 'lucide-react'
 import { trackFormStart, trackFormComplete } from '@/lib/analytics'
 
 export function ContactFormSection() {
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
+    emailConfirm: '',
     phone: '',
     subject: '',
     message: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [statusMessage, setStatusMessage] = useState<string | null>(null)
+  const [emailError, setEmailError] = useState<string | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const value = e.target.value
+    const name = e.target.name
+    
     setFormData(prev => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [name]: value
     }))
+    
+    // Validate email match in real-time
+    if (name === 'email' || name === 'emailConfirm') {
+      const email = name === 'email' ? value : formData.email
+      const emailConfirm = name === 'emailConfirm' ? value : formData.emailConfirm
+      
+      if (email && emailConfirm && email !== emailConfirm) {
+        setEmailError('Email addresses do not match')
+      } else {
+        setEmailError(null)
+      }
+    }
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    
+    // Validate email match before submission
+    if (formData.email !== formData.emailConfirm) {
+      setEmailError('Email addresses do not match. Please check and try again.')
+      setStatusMessage('Please ensure both email addresses match.')
+      return
+    }
+    
     trackFormStart('Contact Form', 'Contact Section');
     setIsSubmitting(true);
     setStatusMessage(null);
+    setEmailError(null);
 
     const form = e.currentTarget;
 
     const submissionData = {
-      name: (form.elements.namedItem("name") as HTMLInputElement).value,
-      email: (form.elements.namedItem("email") as HTMLInputElement).value,
-      phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
-      subject: (form.elements.namedItem("subject") as HTMLInputElement | HTMLSelectElement).value,
-      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+      name: `${formData.firstName} ${formData.lastName}`.trim(),
+      email: formData.email,
+      phone: formData.phone,
+      subject: formData.subject,
+      message: formData.message,
     };
 
     try {
@@ -56,7 +83,8 @@ export function ContactFormSection() {
         });
         setStatusMessage("Thank you. Your message has been received and our team will be in touch very soon.");
         form.reset();
-        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+        setFormData({ firstName: '', lastName: '', email: '', emailConfirm: '', phone: '', subject: '', message: '' });
+        setEmailError(null);
       } else {
         console.error('API error:', data);
         setStatusMessage(data.error || "Something went wrong, please try again.");
@@ -108,23 +136,15 @@ export function ContactFormSection() {
           </h2>
           <div className="text-white/70 text-lg md:text-xl max-w-2xl mx-auto space-y-4 mb-8">
             <p>
-              If you want <span className="text-orange font-semibold">clarity</span> before you begin or you feel <span className="text-azure-blue font-semibold">unsure</span> about the next step, reach out.
-            </p>
-            <p>
-              We answer every message with <span className="text-orange font-semibold">care</span> so you can move forward with <span className="text-azure-blue font-semibold">confidence</span>.
-            </p>
-          </div>
-          
-          <div className="mb-8">
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-              <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                Let's Connect
+              We answer every message with <span className="text-orange font-semibold">care</span> so you can move forward with <span className="text-azure-blue font-semibold">confidence</span>.{' '}
+              <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent font-bold text-xl md:text-2xl">
+                Let's Connect!
               </span>
-            </h3>
+            </p>
             <p className="text-white/70 text-lg max-w-2xl mx-auto">
               Share your details below so our team can reply shortly.
             </p>
-            <p className="text-white/70 text-lg max-w-2xl mx-auto mt-2">
+            <p className="text-white/70 text-lg max-w-2xl mx-auto">
               Your message stays <span className="text-orange font-semibold">private</span>, <span className="text-azure-blue font-semibold">confidential</span>, <span className="text-orange font-semibold">safe</span>.
             </p>
           </div>
@@ -201,24 +221,43 @@ export function ContactFormSection() {
           >
             <div className="glass-card p-8 md:p-10">
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Name and Email Row */}
+                {/* First Name and Last Name Row */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-white font-semibold mb-2">
-                      Full Name *
+                    <label htmlFor="firstName" className="block text-white font-semibold mb-2">
+                      First Name *
                     </label>
                     <input
                       type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
+                      id="firstName"
+                      name="firstName"
+                      value={formData.firstName}
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 bg-primary-dark/50 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-orange/50 focus:ring-2 focus:ring-orange/20 transition-all"
-                      placeholder="John Doe"
+                      placeholder="First Name"
                     />
                   </div>
 
+                  <div>
+                    <label htmlFor="lastName" className="block text-white font-semibold mb-2">
+                      Last Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 bg-primary-dark/50 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-orange/50 focus:ring-2 focus:ring-orange/20 transition-all"
+                      placeholder="Last Name"
+                    />
+                  </div>
+                </div>
+
+                {/* Email and Confirm Email Row */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="email" className="block text-white font-semibold mb-2">
                       Email Address *
@@ -230,9 +269,36 @@ export function ContactFormSection() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-primary-dark/50 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-orange/50 focus:ring-2 focus:ring-orange/20 transition-all"
-                      placeholder="john@example.com"
+                      className={`w-full px-4 py-3 bg-primary-dark/50 border rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 transition-all ${
+                        emailError 
+                          ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/20' 
+                          : 'border-white/20 focus:border-orange/50 focus:ring-orange/20'
+                      }`}
+                      placeholder="your emailadress"
                     />
+                  </div>
+
+                  <div>
+                    <label htmlFor="emailConfirm" className="block text-white font-semibold mb-2">
+                      Confirm Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      id="emailConfirm"
+                      name="emailConfirm"
+                      value={formData.emailConfirm}
+                      onChange={handleChange}
+                      required
+                      className={`w-full px-4 py-3 bg-primary-dark/50 border rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 transition-all ${
+                        emailError 
+                          ? 'border-red-500/50 focus:border-red-500 focus:ring-red-500/20' 
+                          : 'border-white/20 focus:border-orange/50 focus:ring-orange/20'
+                      }`}
+                      placeholder="your emailadress"
+                    />
+                    {emailError && (
+                      <p className="mt-2 text-sm text-red-400">{emailError}</p>
+                    )}
                   </div>
                 </div>
 
@@ -257,28 +323,33 @@ export function ContactFormSection() {
                     <label htmlFor="subject" className="block text-white font-semibold mb-2">
                       Subject *
                     </label>
-                    <div className="relative">
+                    <div className="relative group">
+                      {/* Gradient border effect on focus/hover */}
+                      <div className="absolute -inset-0.5 bg-gradient-to-r from-orange/50 via-azure-blue/50 to-orange/50 rounded-xl opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 blur-sm transition-opacity duration-300 -z-10" />
+                      
                       <select
                         id="subject"
                         name="subject"
                         value={formData.subject}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 bg-primary-dark/50 backdrop-blur-sm border border-white/20 rounded-xl text-white focus:outline-none focus:border-azure-blue/50 focus:ring-2 focus:ring-azure-blue/20 transition-all appearance-none cursor-pointer pr-12 hover:border-white/30 hover:bg-primary-dark/60"
-                        style={{
-                          backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e")`,
-                          backgroundRepeat: 'no-repeat',
-                          backgroundPosition: 'right 1rem center',
-                          backgroundSize: '16px'
-                        }}
+                        className="w-full px-4 py-3 bg-gradient-to-br from-primary-dark/80 via-primary-dark/60 to-primary-dark/80 backdrop-blur-[20px] border border-white/20 rounded-xl text-white focus:outline-none focus:border-orange/50 focus:ring-2 focus:ring-orange/30 transition-all appearance-none cursor-pointer pr-12 hover:border-azure-blue/40 hover:bg-gradient-to-br hover:from-primary-dark/90 hover:via-primary-dark/70 hover:to-primary-dark/90 relative z-10 shadow-lg hover:shadow-orange/10"
                       >
-                        <option value="" disabled className="bg-primary-dark text-white/50">Select a subject</option>
-                        <option value="masterclass-inquiry" className="bg-primary-dark text-white py-2">Masterclass Inquiry</option>
-                        <option value="booking" className="bg-primary-dark text-white py-2">Book a Session</option>
-                        <option value="private-masterclass-inquiry" className="bg-primary-dark text-white py-2">Private Masterclass Inquiry</option>
-                        <option value="partnership" className="bg-primary-dark text-white py-2">Partnership</option>
-                        <option value="general" className="bg-primary-dark text-white py-2">General Question</option>
+                        <option value="" disabled className="bg-primary-dark text-white/50 py-3">Select a subject</option>
+                        <option value="masterclass-inquiry" className="bg-primary-dark text-white py-3 hover:bg-orange/20">Masterclass Inquiry</option>
+                        <option value="booking" className="bg-primary-dark text-white py-3 hover:bg-azure-blue/20">Book a Session</option>
+                        <option value="private-masterclass-inquiry" className="bg-primary-dark text-white py-3 hover:bg-orange/20">Private Masterclass Inquiry</option>
+                        <option value="partnership" className="bg-primary-dark text-white py-3 hover:bg-azure-blue/20">Partnership</option>
+                        <option value="general" className="bg-primary-dark text-white py-3 hover:bg-orange/20">General Question</option>
                       </select>
+                      
+                      {/* Custom dropdown arrow with gradient */}
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none z-20">
+                        <ChevronDown className="w-5 h-5 text-white/70 group-hover:text-orange group-focus-within:text-azure-blue transition-colors duration-300" />
+                      </div>
+                      
+                      {/* Glow effect on focus */}
+                      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange/0 via-azure-blue/0 to-orange/0 opacity-0 group-focus-within:opacity-20 transition-opacity duration-300 pointer-events-none" />
                     </div>
                   </div>
                 </div>

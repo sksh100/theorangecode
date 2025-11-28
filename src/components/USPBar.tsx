@@ -11,6 +11,8 @@ interface USPPillar {
   icon: any
   gradient: string
   delay: number
+  iconColor: string
+  titleGradient: string
 }
 
 export function USPBar() {
@@ -21,7 +23,9 @@ export function USPBar() {
       subtitle: 'Receive clear guidance on Emirati culture, Gulf etiquette, and the subtle expectations that shape daily interactions. Our approach makes the region\'s social codes easy to understand and apply.',
       icon: Crown,
       gradient: 'from-orange via-azure-blue to-orange',
-      delay: 0
+      delay: 0,
+      iconColor: 'text-orange',
+      titleGradient: 'bg-gradient-to-r from-orange to-orange-luminous bg-clip-text text-transparent'
     },
     {
       id: 'certified',
@@ -29,7 +33,9 @@ export function USPBar() {
       subtitle: 'We focus on real, visible change. You learn how to communicate, carry yourself and build trust in multicultural settings where presence and clarity matter.',
       icon: Award,
       gradient: 'from-orange via-azure-blue to-orange',
-      delay: 0.2
+      delay: 0.2,
+      iconColor: 'text-azure-blue',
+      titleGradient: 'bg-gradient-to-r from-azure-blue to-azure-luminous bg-clip-text text-transparent'
     },
     {
       id: 'trusted',
@@ -37,7 +43,9 @@ export function USPBar() {
       subtitle: 'Individuals, families, executives, diplomats and organisations rely on The Orange Code for personal, discreet, and accurate guidance. Our work is grounded in real regional experience and human centred expertise.',
       icon: Shield,
       gradient: 'from-orange via-azure-blue to-orange',
-      delay: 0.4
+      delay: 0.4,
+      iconColor: 'text-bright-blue',
+      titleGradient: 'bg-gradient-to-r from-bright-blue to-azure-blue bg-clip-text text-transparent'
     },
     {
       id: 'transformation',
@@ -45,7 +53,9 @@ export function USPBar() {
       subtitle: 'Clients experience meaningful improvement in communication, confidence, and relationships within a short period. The process brings clarity, refinement and ease in both personal and professional environments.',
       icon: Zap,
       gradient: 'from-orange via-azure-blue to-orange',
-      delay: 0.6
+      delay: 0.6,
+      iconColor: 'text-orange-luminous',
+      titleGradient: 'bg-gradient-to-r from-orange-luminous via-orange to-azure-blue bg-clip-text text-transparent'
     }
   ]
 
@@ -164,13 +174,13 @@ export function USPBar() {
                 {/* Icon */}
                 <div className="relative mb-6 flex-shrink-0">
                   <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center group-hover:bg-white/10 group-hover:border-white/20 transition-all duration-500">
-                    <pillar.icon className="w-7 h-7 text-white/90" />
+                    <pillar.icon className={`w-7 h-7 ${pillar.iconColor} transition-colors duration-500`} />
                   </div>
                 </div>
 
                 {/* Content - Fixed alignment */}
                 <div className="relative flex flex-col flex-grow">
-                  <h3 className="text-xl font-bold text-white font-montserrat mb-3 min-h-[3rem] flex items-start">
+                  <h3 className={`text-xl font-bold font-montserrat mb-3 min-h-[3rem] flex items-start ${pillar.titleGradient}`}>
                     {pillar.title}
                   </h3>
                   <p className="text-white/70 font-montserrat leading-relaxed flex-grow">

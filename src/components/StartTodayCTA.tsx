@@ -100,7 +100,7 @@ export function StartTodayCTA() {
               Most people rely on trial and error. The ones who excel choose to learn the unwritten rules, refine their presence, and move with intention.
             </p>
             <p>
-              If you want your life, career, or business in the Gulf to feel aligned, respected, and effortless, the first step begins here.
+              If you want your life, career, or business in the UAE to feel aligned, respected, and effortless, the first step begins here.
             </p>
           </motion.div>
 

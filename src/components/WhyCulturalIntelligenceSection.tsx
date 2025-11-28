@@ -9,7 +9,10 @@ export function WhyCulturalIntelligenceSection() {
   const [scrollY, setScrollY] = useState(0)
   const [nationalitiesCount, setNationalitiesCount] = useState(100)
   const [hasAnimated, setHasAnimated] = useState(false)
+  const [collaborationPercent, setCollaborationPercent] = useState(0)
+  const [hasAnimatedPercent, setHasAnimatedPercent] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
+  const bottomLineRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
@@ -39,27 +42,37 @@ export function WhyCulturalIntelligenceSection() {
             const duration = 2000 // 2 seconds
             const startValue = 100
             const endValue = 200
-            const steps = 100
-            const increment = (endValue - startValue) / steps
-            const stepDuration = duration / steps
-            let current = startValue
+            const startTime = Date.now()
 
-            const timer = setInterval(() => {
-              current += increment
-              if (current >= endValue) {
-                setNationalitiesCount(endValue)
-                clearInterval(timer)
+            const animate = () => {
+              const elapsed = Date.now() - startTime
+              const progress = Math.min(elapsed / duration, 1)
+              
+              // Easing function for smooth animation
+              const easeOutQuart = 1 - Math.pow(1 - progress, 4)
+              const current = startValue + (endValue - startValue) * easeOutQuart
+              
+              setNationalitiesCount(Math.floor(current))
+
+              if (progress < 1) {
+                requestAnimationFrame(animate)
               } else {
-                setNationalitiesCount(Math.floor(current))
+                setNationalitiesCount(endValue)
               }
-            }, stepDuration)
+            }
+
+            // Start animation on next frame
+            requestAnimationFrame(animate)
 
             // Stop observing once animation starts
             observer.disconnect()
           }
         })
       },
-      { threshold: 0.1 } // Trigger as soon as 10% of element is visible
+      { 
+        threshold: 0.2, // Trigger when 20% of element is visible
+        rootMargin: '0px 0px -100px 0px' // Trigger slightly before element enters viewport
+      }
     )
 
     observer.observe(sectionRef.current)
@@ -68,6 +81,58 @@ export function WhyCulturalIntelligenceSection() {
       observer.disconnect()
     }
   }, [hasAnimated])
+
+  // Count-up animation for 40% - triggers when "The Bottom Line" section appears
+  useEffect(() => {
+    if (!bottomLineRef.current || hasAnimatedPercent) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimatedPercent) {
+            setHasAnimatedPercent(true)
+            const duration = 2000 // 2 seconds
+            const startValue = 0
+            const endValue = 40
+            const startTime = Date.now()
+
+            const animate = () => {
+              const elapsed = Date.now() - startTime
+              const progress = Math.min(elapsed / duration, 1)
+              
+              // Easing function for smooth animation
+              const easeOutQuart = 1 - Math.pow(1 - progress, 4)
+              const current = startValue + (endValue - startValue) * easeOutQuart
+              
+              setCollaborationPercent(Math.floor(current))
+
+              if (progress < 1) {
+                requestAnimationFrame(animate)
+              } else {
+                setCollaborationPercent(endValue)
+              }
+            }
+
+            // Start animation on next frame
+            requestAnimationFrame(animate)
+
+            // Stop observing once animation starts
+            observer.disconnect()
+          }
+        })
+      },
+      { 
+        threshold: 0.2, // Trigger when 20% of element is visible
+        rootMargin: '0px 0px -100px 0px' // Trigger slightly before element enters viewport
+      }
+    )
+
+    observer.observe(bottomLineRef.current)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [hasAnimatedPercent])
 
   const personalBenefits = [
     {
@@ -531,6 +596,7 @@ export function WhyCulturalIntelligenceSection() {
 
         {/* Bottom Line - Flowing Highlight */}
         <motion.div
+          ref={bottomLineRef}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -554,7 +620,24 @@ export function WhyCulturalIntelligenceSection() {
                 </h4>
                 <p className="text-xl md:text-2xl text-white/90 leading-relaxed">
                   Teams with high cultural intelligence see{' '}
-                  <span className="font-bold text-orange">40% better collaboration</span>,{' '}
+                  <motion.span 
+                    className="font-bold text-orange inline-block relative"
+                    key={collaborationPercent}
+                    initial={{ scale: 1.2, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {collaborationPercent}%
+                    <motion.span
+                      className="absolute inset-0 text-orange-luminous blur-sm opacity-50 pointer-events-none"
+                      initial={{ scale: 1.5, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 0.5 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      {collaborationPercent}%
+                    </motion.span>
+                  </motion.span>
+                  {' '}better collaboration,{' '}
                   <span className="font-bold text-orange">faster decision-making</span>, and{' '}
                   <span className="font-bold text-orange">stronger client relationships</span>. 
                   In a region where relationships drive business, cultural intelligence is your competitive advantage.
