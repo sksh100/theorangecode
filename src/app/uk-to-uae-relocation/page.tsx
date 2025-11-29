@@ -515,6 +515,113 @@ export default function UKToUAERelocationPage() {
                   "@type": "Answer",
                   "text": "Emirati communication is high-context and indirect, unlike the UK's direct and explicit style. British professionals should learn to read between the lines, understand non-verbal cues, and adapt their communication to be more diplomatic and relationship-building rather than purely task-focused."
                 }
+              },
+              {
+                "@type": "Question",
+                "name": "How do I buy the UK to UAE relocation guide?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "You can purchase the UK to UAE Cultural Intelligence Guide for £59 at https://www.theorangecode.com/uk-to-uae-relocation. Click 'Buy the Ebook' for instant download via secure Stripe checkout."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What is the price of the UK to UAE cultural guide?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The UK to UAE Cultural Intelligence Guide costs £59 GBP (approximately AED 270). It's available for instant download after purchase with a 30-day money-back guarantee."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Where can I purchase the ebook?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Purchase the UK to UAE relocation guide directly at https://www.theorangecode.com/uk-to-uae-relocation. Payment is secure via Stripe, and you'll receive instant access to the PDF download via email."
+                }
+              }
+            ]
+          })
+        }}
+      />
+      <Script
+        id="howto-purchase-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            "name": "How to Buy the UK to UAE Relocation Guide",
+            "description": "Step-by-step guide to purchasing the UK to UAE Cultural Intelligence ebook",
+            "step": [
+              {
+                "@type": "HowToStep",
+                "name": "Visit the purchase page",
+                "text": "Go to https://www.theorangecode.com/uk-to-uae-relocation",
+                "url": "https://www.theorangecode.com/uk-to-uae-relocation"
+              },
+              {
+                "@type": "HowToStep",
+                "name": "Click Buy the Ebook",
+                "text": "Click the 'Buy the Ebook - Instant Download' button to proceed to secure checkout"
+              },
+              {
+                "@type": "HowToStep",
+                "name": "Complete payment",
+                "text": "Pay £59 GBP via Stripe secure checkout (or AED 270 for non-UK visitors)"
+              },
+              {
+                "@type": "HowToStep",
+                "name": "Receive instant download",
+                "text": "After payment, you'll receive an email with instant download link to the PDF guide"
+              }
+            ]
+          })
+        }}
+      />
+      <Script
+        id="buy-action-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BuyAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://buy.stripe.com/14AcN5514gL746fcJW8k805",
+              "actionPlatform": [
+                "http://schema.org/DesktopWebPlatform",
+                "http://schema.org/MobileWebPlatform"
+              ]
+            },
+            "price": "59",
+            "priceCurrency": "GBP",
+            "object": {
+              "@type": "Product",
+              "name": "UK to UAE Cultural Intelligence Ebook"
+            }
+          })
+        }}
+      />
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.theorangecode.com"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "UK to UAE Relocation Guide",
+                "item": "https://www.theorangecode.com/uk-to-uae-relocation"
               }
             ]
           })
