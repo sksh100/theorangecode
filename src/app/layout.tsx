@@ -514,6 +514,7 @@ export default function RootLayout({
                     '@type': 'Rating',
                     ratingValue: '5',
                     bestRating: '5',
+                    worstRating: '1',
                   },
                   itemReviewed: {
                     '@type': 'Service',
@@ -531,6 +532,7 @@ export default function RootLayout({
                     '@type': 'Rating',
                     ratingValue: '5',
                     bestRating: '5',
+                    worstRating: '1',
                   },
                   itemReviewed: {
                     '@type': 'Service',

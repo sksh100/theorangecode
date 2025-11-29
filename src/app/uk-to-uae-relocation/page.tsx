@@ -392,7 +392,12 @@ export default function UKToUAERelocationPage() {
               "priceCurrency": "GBP",
               "price": "59",
               "availability": "https://schema.org/InStock",
-              "priceValidUntil": "2025-12-31"
+              "priceValidUntil": "2025-12-31",
+              "seller": {
+                "@type": "Organization",
+                "name": "The Orange Code",
+                "url": "https://www.theorangecode.com"
+              }
             }
           })
         }}
@@ -451,6 +456,7 @@ export default function UKToUAERelocationPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "FAQPage",
+            "mainEntityOfPage": "https://www.theorangecode.com/uk-to-uae-relocation",
             "mainEntity": [
               {
                 "@type": "Question",
