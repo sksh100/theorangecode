@@ -517,8 +517,15 @@ export default function RootLayout({
                     worstRating: '1',
                   },
                   itemReviewed: {
-                    '@type': 'Service',
+                    '@type': 'Course',
                     name: 'Cultural Intelligence Masterclass',
+                    provider: {
+                      '@type': 'Organization',
+                      name: 'The Orange Code',
+                      url: 'https://www.theorangecode.com'
+                    },
+                    courseCode: 'CI-MASTERCLASS',
+                    educationalLevel: 'Professional Development'
                   },
                 },
                 {
@@ -535,8 +542,15 @@ export default function RootLayout({
                     worstRating: '1',
                   },
                   itemReviewed: {
-                    '@type': 'Service',
+                    '@type': 'Course',
                     name: 'Cultural Intelligence Masterclass',
+                    provider: {
+                      '@type': 'Organization',
+                      name: 'The Orange Code',
+                      url: 'https://www.theorangecode.com'
+                    },
+                    courseCode: 'CI-MASTERCLASS',
+                    educationalLevel: 'Professional Development'
                   },
                 },
               ],
