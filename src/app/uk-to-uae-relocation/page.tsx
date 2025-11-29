@@ -449,7 +449,15 @@ export default function UKToUAERelocationPage() {
                 "name": "What do UK expats need to know before moving to the UAE?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "UK expats need to understand that UAE workplace culture differs significantly from the UK. Communication is more indirect and diplomatic, feedback is softened to maintain harmony, time is more flexible and relationship-focused, and workplace hierarchy is more clearly defined. This guide provides comprehensive cultural intelligence to help British professionals navigate these differences successfully."
+                  "text": "UK expats relocating to the UAE need to understand workplace hierarchy, communication styles, indirect feedback norms, and Emirati cultural expectations."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is UAE culture very different from the UK?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. The UAE workplace emphasizes relationship building, indirect communication and respect for hierarchy, while the UK values directness and equality."
                 }
               },
               {
