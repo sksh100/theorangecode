@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Line } from '@react-three/drei'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
-import { Globe, Network, Users, Sparkles, Layers, GitBranch, Link2 } from 'lucide-react'
+import { Globe, Network, Users, Sparkles, Layers, GitBranch, Link2, Circle, Zap, Grid3x3 } from 'lucide-react'
 import * as THREE from 'three'
 
 // OPTION 1: Cultural Networks - Connected nodes representing people and connections
@@ -433,12 +433,436 @@ function LayeredUnderstandingEffect({ mousePosition }: { mousePosition: { x: num
   )
 }
 
+// OPTION 7: Floating Spheres - Multiple 3D spheres floating in space
+function FloatingSpheresEffect({ mousePosition }: { mousePosition: { x: number, y: number } }) {
+  const groupRef = useRef<THREE.Group>(null)
+  const sphereCount = 20
+
+  const spheres = useMemo(() => {
+    return Array.from({ length: sphereCount }).map(() => ({
+      position: [
+        (Math.random() - 0.5) * 25,
+        (Math.random() - 0.5) * 25,
+        (Math.random() - 0.5) * 20
+      ] as [number, number, number],
+      radius: 0.5 + Math.random() * 1.5,
+      speed: 0.2 + Math.random() * 0.3,
+      color: Math.random() < 0.33 ? '#ff914d' : Math.random() < 0.66 ? '#00d4ff' : '#0099ff',
+      phase: Math.random() * Math.PI * 2
+    }))
+  }, [])
+
+  useFrame((state) => {
+    if (!groupRef.current) return
+    const time = state.clock.getElapsedTime()
+    
+    groupRef.current.rotation.y = time * 0.05
+    
+    groupRef.current.children.forEach((child, i) => {
+      if (child instanceof THREE.Mesh) {
+        const sphere = spheres[i]
+        const float = Math.sin(time * sphere.speed + sphere.phase) * 0.5
+        child.position.y = sphere.position[1] + float + mousePosition.y * 2
+        child.position.x = sphere.position[0] + mousePosition.x * 2
+        child.rotation.x += 0.01
+        child.rotation.y += 0.01
+      }
+    })
+  })
+
+  return (
+    <group ref={groupRef}>
+      {spheres.map((sphere, i) => (
+        <mesh key={i} position={sphere.position}>
+          <sphereGeometry args={[sphere.radius, 32, 32]} />
+          <meshStandardMaterial
+            color={sphere.color}
+            emissive={sphere.color}
+            emissiveIntensity={0.6}
+            transparent
+            opacity={0.85}
+            metalness={0.3}
+            roughness={0.2}
+          />
+        </mesh>
+      ))}
+    </group>
+  )
+}
+
+// OPTION 8: Orbiting Spheres - Spheres orbiting around central points
+function OrbitingSpheresEffect({ mousePosition }: { mousePosition: { x: number, y: number } }) {
+  const groupRef = useRef<THREE.Group>(null)
+  const orbitCount = 6
+  const spheresPerOrbit = 5
+
+  useFrame((state) => {
+    if (!groupRef.current) return
+    const time = state.clock.getElapsedTime()
+    
+    groupRef.current.rotation.y = time * 0.1 + mousePosition.x * 0.2
+    groupRef.current.rotation.x = Math.sin(time * 0.05) * 0.2 + mousePosition.y * 0.2
+  })
+
+  return (
+    <group ref={groupRef}>
+      {Array.from({ length: orbitCount }).map((_, orbitIndex) => {
+        const radius = 3 + orbitIndex * 2
+        const speed = 0.3 + orbitIndex * 0.1
+        const color = orbitIndex % 3 === 0 ? '#ff914d' : orbitIndex % 3 === 1 ? '#00d4ff' : '#0099ff'
+        
+        return (
+          <group key={orbitIndex}>
+            {Array.from({ length: spheresPerOrbit }).map((_, sphereIndex) => {
+              const angle = (sphereIndex / spheresPerOrbit) * Math.PI * 2
+              
+              return (
+                <OrbitingSphere
+                  key={sphereIndex}
+                  radius={radius}
+                  angle={angle}
+                  speed={speed}
+                  color={color}
+                  orbitIndex={orbitIndex}
+                  mousePosition={mousePosition}
+                />
+              )
+            })}
+          </group>
+        )
+      })}
+    </group>
+  )
+}
+
+function OrbitingSphere({
+  radius,
+  angle,
+  speed,
+  color,
+  orbitIndex,
+  mousePosition
+}: {
+  radius: number
+  angle: number
+  speed: number
+  color: string
+  orbitIndex: number
+  mousePosition: { x: number, y: number }
+}) {
+  const sphereRef = useRef<THREE.Mesh>(null)
+
+  useFrame((state) => {
+    if (!sphereRef.current) return
+    const time = state.clock.getElapsedTime()
+    
+    const currentAngle = angle + time * speed
+    sphereRef.current.position.x = Math.cos(currentAngle) * radius + mousePosition.x * 1.5
+    sphereRef.current.position.y = Math.sin(currentAngle) * radius * 0.6 + mousePosition.y * 1.5
+    sphereRef.current.position.z = Math.sin(currentAngle) * radius * 0.4
+    sphereRef.current.rotation.x += 0.02
+    sphereRef.current.rotation.y += 0.02
+  })
+
+  return (
+    <mesh ref={sphereRef}>
+      <sphereGeometry args={[0.6, 32, 32]} />
+      <meshStandardMaterial
+        color={color}
+        emissive={color}
+        emissiveIntensity={0.7}
+        transparent
+        opacity={0.9}
+        metalness={0.4}
+        roughness={0.1}
+      />
+    </mesh>
+  )
+}
+
+// OPTION 9: Pulsing Spheres - Spheres that pulse and glow rhythmically
+function PulsingSpheresEffect({ mousePosition }: { mousePosition: { x: number, y: number } }) {
+  const groupRef = useRef<THREE.Group>(null)
+  const sphereCount = 15
+
+  const spheres = useMemo(() => {
+    return Array.from({ length: sphereCount }).map(() => ({
+      position: [
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 15
+      ] as [number, number, number],
+      baseRadius: 0.8 + Math.random() * 1.2,
+      pulseSpeed: 0.5 + Math.random() * 0.5,
+      phase: Math.random() * Math.PI * 2,
+      color: Math.random() < 0.33 ? '#ff914d' : Math.random() < 0.66 ? '#00d4ff' : '#0099ff'
+    }))
+  }, [])
+
+  useFrame((state) => {
+    if (!groupRef.current) return
+    const time = state.clock.getElapsedTime()
+    
+    groupRef.current.rotation.y = time * 0.08
+    
+    groupRef.current.children.forEach((child, i) => {
+      if (child instanceof THREE.Mesh) {
+        const sphere = spheres[i]
+        const pulse = Math.sin(time * sphere.pulseSpeed + sphere.phase) * 0.3 + 1
+        const scale = sphere.baseRadius * pulse
+        child.scale.set(scale, scale, scale)
+        child.position.x = sphere.position[0] + mousePosition.x * 1.5
+        child.position.y = sphere.position[1] + mousePosition.y * 1.5
+      }
+    })
+  })
+
+  return (
+    <group ref={groupRef}>
+      {spheres.map((sphere, i) => (
+        <mesh key={i} position={sphere.position} scale={sphere.baseRadius}>
+          <sphereGeometry args={[1, 32, 32]} />
+          <meshStandardMaterial
+            color={sphere.color}
+            emissive={sphere.color}
+            emissiveIntensity={0.8}
+            transparent
+            opacity={0.9}
+            metalness={0.5}
+            roughness={0.1}
+          />
+        </mesh>
+      ))}
+    </group>
+  )
+}
+
+// OPTION 10: Sphere Grid - Spheres arranged in a 3D grid formation
+function SphereGridEffect({ mousePosition }: { mousePosition: { x: number, y: number } }) {
+  const groupRef = useRef<THREE.Group>(null)
+  const gridSize = 5
+  const spacing = 3
+
+  useFrame((state) => {
+    if (!groupRef.current) return
+    const time = state.clock.getElapsedTime()
+    
+    groupRef.current.rotation.y = time * 0.1 + mousePosition.x * 0.3
+    groupRef.current.rotation.x = Math.sin(time * 0.05) * 0.2 + mousePosition.y * 0.3
+  })
+
+  return (
+    <group ref={groupRef}>
+      {Array.from({ length: gridSize }).map((_, x) => {
+        return Array.from({ length: gridSize }).map((_, y) => {
+          return Array.from({ length: gridSize }).map((_, z) => {
+            const colorIndex = (x + y + z) % 3
+            const color = colorIndex === 0 ? '#ff914d' : colorIndex === 1 ? '#00d4ff' : '#0099ff'
+            const offset = (x + y + z) * 0.1
+            
+            return (
+              <mesh
+                key={`${x}-${y}-${z}`}
+                position={[
+                  (x - gridSize / 2) * spacing,
+                  (y - gridSize / 2) * spacing,
+                  (z - gridSize / 2) * spacing
+                ]}
+              >
+                <sphereGeometry args={[0.8, 24, 24]} />
+                <meshStandardMaterial
+                  color={color}
+                  emissive={color}
+                  emissiveIntensity={0.6}
+                  transparent
+                  opacity={0.85}
+                  metalness={0.3}
+                  roughness={0.2}
+                />
+              </mesh>
+            )
+          })
+        })
+      })}
+    </group>
+  )
+}
+
+// OPTION 11: Merging Spheres - Spheres that merge and separate
+function MergingSpheresEffect({ mousePosition }: { mousePosition: { x: number, y: number } }) {
+  const groupRef = useRef<THREE.Group>(null)
+  const clusterCount = 4
+  const spheresPerCluster = 6
+
+  useFrame((state) => {
+    if (!groupRef.current) return
+    const time = state.clock.getElapsedTime()
+    
+    groupRef.current.rotation.y = time * 0.1
+    
+    const mergePhase = Math.sin(time * 0.3)
+    const mergeAmount = (mergePhase + 1) / 2 // 0 to 1
+    
+    groupRef.current.children.forEach((cluster, clusterIndex) => {
+      if (cluster instanceof THREE.Group) {
+        const baseAngle = (clusterIndex / clusterCount) * Math.PI * 2
+        const baseRadius = 8
+        const mergeRadius = baseRadius * (1 - mergeAmount * 0.7)
+        
+        cluster.position.x = Math.cos(baseAngle + time * 0.1) * mergeRadius + mousePosition.x * 2
+        cluster.position.y = Math.sin(baseAngle + time * 0.1) * mergeRadius * 0.5 + mousePosition.y * 2
+        cluster.position.z = Math.sin(baseAngle + time * 0.15) * mergeRadius * 0.3
+      }
+    })
+  })
+
+  return (
+    <group ref={groupRef}>
+      {Array.from({ length: clusterCount }).map((_, clusterIndex) => {
+        const color = clusterIndex % 3 === 0 ? '#ff914d' : clusterIndex % 3 === 1 ? '#00d4ff' : '#0099ff'
+        
+        return (
+          <group key={clusterIndex}>
+            {Array.from({ length: spheresPerCluster }).map((_, sphereIndex) => {
+              const angle = (sphereIndex / spheresPerCluster) * Math.PI * 2
+              const radius = 1.5
+              
+              return (
+                <mesh
+                  key={sphereIndex}
+                  position={[
+                    Math.cos(angle) * radius,
+                    Math.sin(angle) * radius,
+                    Math.sin(angle * 2) * radius * 0.5
+                  ]}
+                >
+                  <sphereGeometry args={[0.7, 24, 24]} />
+                  <meshStandardMaterial
+                    color={color}
+                    emissive={color}
+                    emissiveIntensity={0.7}
+                    transparent
+                    opacity={0.9}
+                    metalness={0.4}
+                    roughness={0.15}
+                  />
+                </mesh>
+              )
+            })}
+          </group>
+        )
+      })}
+    </group>
+  )
+}
+
+// OPTION 12: Sphere Cluster - Spheres forming a network cluster
+function SphereClusterEffect({ mousePosition }: { mousePosition: { x: number, y: number } }) {
+  const groupRef = useRef<THREE.Group>(null)
+  const sphereCount = 25
+
+  const spheres = useMemo(() => {
+    return Array.from({ length: sphereCount }).map(() => ({
+      position: [
+        (Math.random() - 0.5) * 15,
+        (Math.random() - 0.5) * 15,
+        (Math.random() - 0.5) * 15
+      ] as [number, number, number],
+      radius: 0.6 + Math.random() * 0.8,
+      color: Math.random() < 0.33 ? '#ff914d' : Math.random() < 0.66 ? '#00d4ff' : '#0099ff',
+      connectionDistance: 4 + Math.random() * 3
+    }))
+  }, [])
+
+  useFrame((state) => {
+    if (!groupRef.current) return
+    const time = state.clock.getElapsedTime()
+    
+    groupRef.current.rotation.y = time * 0.08
+    
+    groupRef.current.children.forEach((child, i) => {
+      if (child instanceof THREE.Mesh) {
+        const sphere = spheres[i]
+        const float = Math.sin(time * 0.3 + i) * 0.3
+        child.position.x = sphere.position[0] + mousePosition.x * 1.5 + float
+        child.position.y = sphere.position[1] + mousePosition.y * 1.5 + float
+        child.rotation.x += 0.01
+        child.rotation.y += 0.01
+      }
+    })
+  })
+
+  // Create connections between nearby spheres
+  const connections = useMemo(() => {
+    const conns: Array<{ from: number, to: number }> = []
+    spheres.forEach((sphereA, i) => {
+      spheres.forEach((sphereB, j) => {
+        if (i >= j) return
+        const distance = Math.sqrt(
+          Math.pow(sphereA.position[0] - sphereB.position[0], 2) +
+          Math.pow(sphereA.position[1] - sphereB.position[1], 2) +
+          Math.pow(sphereA.position[2] - sphereB.position[2], 2)
+        )
+        if (distance < Math.max(sphereA.connectionDistance, sphereB.connectionDistance)) {
+          conns.push({ from: i, to: j })
+        }
+      })
+    })
+    return conns
+  }, [spheres])
+
+  return (
+    <group ref={groupRef}>
+      {spheres.map((sphere, i) => (
+        <mesh key={i} position={sphere.position}>
+          <sphereGeometry args={[sphere.radius, 32, 32]} />
+          <meshStandardMaterial
+            color={sphere.color}
+            emissive={sphere.color}
+            emissiveIntensity={0.7}
+            transparent
+            opacity={0.9}
+            metalness={0.3}
+            roughness={0.2}
+          />
+        </mesh>
+      ))}
+      
+      {/* Connection lines */}
+      {connections.map((conn, i) => {
+        const from = spheres[conn.from]
+        const to = spheres[conn.to]
+        return (
+          <line key={`line-${i}`}>
+            <bufferGeometry>
+              <bufferAttribute
+                attach="attributes-position"
+                count={2}
+                array={new Float32Array([
+                  from.position[0], from.position[1], from.position[2],
+                  to.position[0], to.position[1], to.position[2]
+                ])}
+                itemSize={3}
+              />
+            </bufferGeometry>
+            <lineBasicMaterial
+              color="#ffffff"
+              transparent
+              opacity={0.15}
+            />
+          </line>
+        )
+      })}
+    </group>
+  )
+}
+
 // Scene wrapper
 function Scene({ 
   effectType, 
   mousePosition 
 }: { 
-  effectType: 'networks' | 'converging' | 'harmonic' | 'bridges' | 'threads' | 'layers'
+  effectType: 'networks' | 'converging' | 'harmonic' | 'bridges' | 'threads' | 'layers' | 'floating' | 'orbiting' | 'pulsing' | 'grid' | 'merging' | 'cluster'
   mousePosition: { x: number, y: number }
 }) {
   const groupRef = useRef<THREE.Group>(null)
@@ -462,6 +886,18 @@ function Scene({
         return <InterwovenThreadsEffect mousePosition={mousePosition} />
       case 'layers':
         return <LayeredUnderstandingEffect mousePosition={mousePosition} />
+      case 'floating':
+        return <FloatingSpheresEffect mousePosition={mousePosition} />
+      case 'orbiting':
+        return <OrbitingSpheresEffect mousePosition={mousePosition} />
+      case 'pulsing':
+        return <PulsingSpheresEffect mousePosition={mousePosition} />
+      case 'grid':
+        return <SphereGridEffect mousePosition={mousePosition} />
+      case 'merging':
+        return <MergingSpheresEffect mousePosition={mousePosition} />
+      case 'cluster':
+        return <SphereClusterEffect mousePosition={mousePosition} />
       default:
         return <CulturalNetworksEffect mousePosition={mousePosition} />
     }
@@ -546,11 +982,59 @@ const effectOptions: EffectOption[] = [
     icon: <Layers className="w-6 h-6" />,
     concept: 'Multiple transparent planes stacked to create depth. Each layer represents a different level of cultural understanding - from surface awareness to deep comprehension. As layers accumulate, understanding becomes richer and more nuanced.',
     whyItWorks: 'Shows that cultural intelligence is not a single skill but a layered understanding that deepens over time. Each layer adds complexity and richness, representing the journey from basic awareness to profound cultural mastery.'
+  },
+  {
+    id: 'floating',
+    name: 'Floating Spheres',
+    description: '3D spheres floating gracefully in space',
+    icon: <Circle className="w-6 h-6" />,
+    concept: 'Multiple 3D spheres of varying sizes floating independently in three-dimensional space. Each sphere represents a unique cultural perspective, moving freely while maintaining its own identity. The spheres gently float and rotate, creating a sense of harmony and balance.',
+    whyItWorks: 'Represents individual cultural identities existing independently yet harmoniously in a shared space. The floating motion suggests flexibility and adaptability - key qualities in cultural intelligence.'
+  },
+  {
+    id: 'orbiting',
+    name: 'Orbiting Spheres',
+    description: 'Spheres orbiting around multiple central points',
+    icon: <Zap className="w-6 h-6" />,
+    concept: 'Multiple groups of spheres orbiting around different central points, each following its own orbital path. The spheres move in synchronized patterns, creating a complex but organized dance. Each orbit represents a cultural system with its own rules and rhythms.',
+    whyItWorks: 'Shows how different cultural systems can coexist, each with its own center of gravity and rules, yet all part of a larger interconnected universe. The orbital motion represents the structured yet dynamic nature of cultural relationships.'
+  },
+  {
+    id: 'pulsing',
+    name: 'Pulsing Spheres',
+    description: 'Spheres that rhythmically pulse and glow',
+    icon: <Sparkles className="w-6 h-6" />,
+    concept: 'Spheres that rhythmically expand and contract, pulsing with energy and light. Each sphere pulses at its own rhythm, creating a mesmerizing wave-like effect. The pulsing represents the dynamic, living nature of culture - always changing, always breathing.',
+    whyItWorks: 'The pulsing motion represents the living, breathing nature of culture. Just as cultures evolve and adapt, these spheres pulse with life, showing that cultural intelligence is about understanding dynamic, ever-changing systems.'
+  },
+  {
+    id: 'grid',
+    name: 'Sphere Grid',
+    description: 'Spheres arranged in a perfect 3D grid formation',
+    icon: <Grid3x3 className="w-6 h-6" />,
+    concept: 'Spheres arranged in a precise three-dimensional grid pattern, creating a structured, organized formation. Each sphere maintains its position in the grid while the entire structure rotates, showing how individual elements contribute to a larger organized system.',
+    whyItWorks: 'Represents the structured, organized nature of cultural systems. The grid shows that while cultures have structure and rules, they can still move and evolve as a whole. This emphasizes the systematic approach to understanding cultural intelligence.'
+  },
+  {
+    id: 'merging',
+    name: 'Merging Spheres',
+    description: 'Sphere clusters that merge and separate',
+    icon: <Users className="w-6 h-6" />,
+    concept: 'Groups of spheres that come together, merge into unified clusters, then separate again. The merging and separating represents the dynamic nature of cultural exchange - how different groups can come together, share ideas, and then maintain their distinct identities.',
+    whyItWorks: 'Perfect metaphor for cultural exchange and collaboration. Shows how different cultural groups can merge temporarily to share knowledge and understanding, then separate while maintaining their unique identities - core to cultural intelligence.'
+  },
+  {
+    id: 'cluster',
+    name: 'Sphere Cluster',
+    description: 'Spheres forming an interconnected network cluster',
+    icon: <Network className="w-6 h-6" />,
+    concept: 'Spheres arranged in a cluster formation with connecting lines between nearby spheres. The cluster represents a network of relationships, where each sphere is connected to others, creating a web of cultural connections and understanding.',
+    whyItWorks: 'Visualizes the interconnected nature of cultural relationships. Each sphere represents an individual or group, and the connections show how cultural understanding is built through relationships and networks - essential to cultural intelligence.'
   }
 ]
 
 export function WebGLEffectSelector() {
-  const [selectedEffect, setSelectedEffect] = useState<'networks' | 'converging' | 'harmonic' | 'bridges' | 'threads' | 'layers'>('networks')
+  const [selectedEffect, setSelectedEffect] = useState<'networks' | 'converging' | 'harmonic' | 'bridges' | 'threads' | 'layers' | 'floating' | 'orbiting' | 'pulsing' | 'grid' | 'merging' | 'cluster'>('networks')
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
