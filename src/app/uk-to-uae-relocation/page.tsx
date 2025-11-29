@@ -9,6 +9,7 @@ import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 import { StickyCTABar } from '@/components/StickyCTABar'
 import { ExitIntentPopup } from '@/components/ExitIntentPopup'
+import { WhatsAppShareButton } from '@/components/WhatsAppShareButton'
 import { trackCTAClick } from '@/lib/tracking'
 import Script from 'next/script'
 import { gsap } from 'gsap'
@@ -583,6 +584,18 @@ export default function UKToUAERelocationPage() {
                       View Course Options
                     </motion.button>
                   </Link>
+                </motion.div>
+
+                {/* WhatsApp Share Button */}
+                <motion.div
+                  variants={itemVariants}
+                  className="mt-6 flex justify-center"
+                >
+                  <WhatsAppShareButton 
+                    variant="large"
+                    url="https://www.theorangecode.com/uk-to-uae-relocation"
+                    message="I found this UK to UAE relocation cultural guide and it helped me avoid big mistakes. Thought you might need it."
+                  />
                 </motion.div>
               </motion.div>
             </div>
