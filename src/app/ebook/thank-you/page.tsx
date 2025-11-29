@@ -154,10 +154,10 @@ export default function EbookThankYouPage() {
                 <p className="text-white/60 text-xs md:text-sm text-center mb-4">
                   A payment receipt has been sent to your email. If you have any questions or need support, contact us at{' '}
                   <a
-                    href="mailto:support@theorangecode.com"
+                    href="mailto:contact@theorangecode.com"
                     className="text-azure-blue hover:text-orange underline underline-offset-2 transition-colors"
                   >
-                    support@theorangecode.com
+                    contact@theorangecode.com
                   </a>
                   .
                 </p>
