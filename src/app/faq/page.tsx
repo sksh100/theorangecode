@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { ArrowLeft, HelpCircle, ChevronDown, ChevronUp, Phone, Mail, MessageCircle, Calendar, Globe, Shield, Award, Users } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
+import Script from 'next/script'
 
 interface FAQItem {
   id: string
@@ -127,6 +128,28 @@ export default function FAQ() {
   }
 
   return (
+    <>
+      {/* FAQ Schema */}
+      <Script
+        id="faq-page-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntityOfPage": "https://www.theorangecode.com/faq",
+            "mainEntity": faqItems.map((item) => ({
+              "@type": "Question",
+              "name": item.question,
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": item.answer.replace(/\n\n/g, ' ').replace(/\n/g, ' ')
+              }
+            }))
+          })
+        }}
+      />
+
     <div className="min-h-screen bg-primary-dark">
       {/* Background Effects */}
       <div className="absolute inset-0">
@@ -308,5 +331,6 @@ export default function FAQ() {
         </div>
       </div>
     </div>
+    </>
   )
 }

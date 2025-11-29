@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { Sparkles, Target, Heart, Eye, Users, Globe, ArrowRight, CheckCircle, Zap } from 'lucide-react'
+import Script from 'next/script'
 
 // Dynamically import all components to prevent hydration issues
 const ModernNavbar = dynamic(() => import('@/components/ModernNavbar').then(mod => ({ default: mod.ModernNavbar })), { ssr: false })
@@ -34,6 +35,63 @@ export default function AboutPage() {
   }
 
   return (
+    <>
+      {/* Structured Data */}
+      <Script
+        id="about-organization-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "The Orange Code",
+            "url": "https://www.theorangecode.com",
+            "logo": "https://www.theorangecode.com/logo1.png",
+            "description": "Cultural Intelligence & Leadership Training in Abu Dhabi, UAE. We empower professionals moving to the UAE to develop cultural intelligence, understand Emirati culture and etiquette, and master doing business in the Emirates.",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Etihad Towers, Tower 3, Floor 36",
+              "addressLocality": "Abu Dhabi",
+              "addressRegion": "Abu Dhabi",
+              "addressCountry": "AE"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+971568786106",
+              "email": "hello@theorangecode.com",
+              "contactType": "Customer Service"
+            },
+            "sameAs": [
+              "https://www.instagram.com/the.orangecode"
+            ],
+            "foundingDate": "2024",
+            "areaServed": {
+              "@type": "Country",
+              "name": "United Arab Emirates"
+            }
+          })
+        }}
+      />
+      <Script
+        id="about-page-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "name": "About The Orange Code",
+            "description": "Learn about The Orange Code, a cultural intelligence and leadership training platform in Abu Dhabi, UAE. Our mission is to bridge people, cultures and intelligence.",
+            "url": "https://www.theorangecode.com/about",
+            "mainEntity": {
+              "@type": "Organization",
+              "name": "The Orange Code",
+              "mission": "To equip individuals, teams and organisations with the cultural intelligence needed to communicate with clarity, build lasting connections and operate confidently across the UAE and the wider Gulf.",
+              "foundingDate": "2024"
+            }
+          })
+        }}
+      />
+
     <div className="min-h-screen bg-primary-dark text-white">
       <ModernNavbar />
       

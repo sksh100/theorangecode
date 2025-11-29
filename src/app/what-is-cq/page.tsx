@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 import { Brain, Eye, Heart, Target, Sparkles, ArrowRight, CheckCircle, Globe } from 'lucide-react'
+import Script from 'next/script'
 
 export default function WhatIsCQPage() {
   const containerVariants = {
@@ -56,6 +57,38 @@ export default function WhatIsCQPage() {
   ]
 
   return (
+    <>
+      {/* Article Schema */}
+      <Script
+        id="what-is-cq-article-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "What is Cultural Intelligence (CQ)?",
+            "description": "Learn about Cultural Intelligence (CQ) - the ability to understand, adapt, and work effectively across different cultures. Discover the three pillars: cognitive understanding, emotional awareness, and behavioural flexibility.",
+            "url": "https://www.theorangecode.com/what-is-cq",
+            "image": "https://www.theorangecode.com/og-image",
+            "author": {
+              "@type": "Organization",
+              "name": "The Orange Code"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "The Orange Code",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.theorangecode.com/logo1.png"
+              }
+            },
+            "datePublished": "2024-01-01",
+            "dateModified": new Date().toISOString().split('T')[0],
+            "mainEntityOfPage": "https://www.theorangecode.com/what-is-cq"
+          })
+        }}
+      />
+
     <div className="min-h-screen bg-primary-dark text-white">
       <ModernNavbar />
       

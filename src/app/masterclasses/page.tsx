@@ -7,6 +7,7 @@ import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 import Link from 'next/link'
 import Image from 'next/image'
+import Script from 'next/script'
 import { trackMasterclassSelect, trackTimeSlotSelect, trackCheckoutStart, trackButtonClick, trackFormStart, trackFormComplete } from '@/lib/analytics'
 import { trackMasterclassInterest, trackCTAClick, trackFunnelStep, trackMasterclassView } from '@/lib/tracking'
 
@@ -340,6 +341,90 @@ export default function MasterclassesPage() {
   const isReadyToBook = selectedMasterclass !== null && selectedSlot !== null
 
   return (
+    <>
+      {/* Structured Data - Course Schemas */}
+      <Script
+        id="masterclasses-service-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "Cultural Intelligence Masterclasses",
+            "provider": {
+              "@type": "Organization",
+              "name": "The Orange Code",
+              "url": "https://www.theorangecode.com"
+            },
+            "areaServed": {
+              "@type": "Country",
+              "name": "United Arab Emirates"
+            },
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Cultural Intelligence Masterclasses",
+              "itemListElement": masterclasses.map((masterclass, index) => ({
+                "@type": "Offer",
+                "position": index + 1,
+                "itemOffered": {
+                  "@type": "Course",
+                  "name": masterclass.title,
+                  "description": masterclass.description,
+                  "provider": {
+                    "@type": "Organization",
+                    "name": "The Orange Code"
+                  },
+                  "courseCode": `CI-MASTERCLASS-${masterclass.id}`,
+                  "educationalLevel": "Professional Development",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": masterclass.price.toString(),
+                    "priceCurrency": "AED",
+                    "availability": "https://schema.org/InStock",
+                    "url": masterclass.paymentLink || "https://www.theorangecode.com/masterclasses"
+                  }
+                }
+              }))
+            }
+          })
+        }}
+      />
+      {masterclasses.map((masterclass) => (
+        <Script
+          key={`course-schema-${masterclass.id}`}
+          id={`course-schema-${masterclass.id}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Course",
+              "name": masterclass.title,
+              "description": masterclass.description,
+              "provider": {
+                "@type": "Organization",
+                "name": "The Orange Code",
+                "url": "https://www.theorangecode.com"
+              },
+              "courseCode": `CI-MASTERCLASS-${masterclass.id}`,
+              "educationalLevel": "Professional Development",
+              "teaches": masterclass.learningObjectives || [],
+              "offers": {
+                "@type": "Offer",
+                "price": masterclass.price.toString(),
+                "priceCurrency": "AED",
+                "availability": "https://schema.org/InStock",
+                "url": masterclass.paymentLink || "https://www.theorangecode.com/masterclasses",
+                "seller": {
+                  "@type": "Organization",
+                  "name": "The Orange Code",
+                  "url": "https://www.theorangecode.com"
+                }
+              }
+            })
+          }}
+        />
+      ))}
+
     <div className="min-h-screen bg-primary-dark text-white">
       <ModernNavbar />
       
@@ -832,5 +917,6 @@ export default function MasterclassesPage() {
 
       <ModernFooter />
     </div>
+    </>
   )
 }

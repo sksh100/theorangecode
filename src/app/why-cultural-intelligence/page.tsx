@@ -7,6 +7,7 @@ import { ModernFooter } from '@/components/ModernFooter'
 import { CulturalIntelligenceImpactChart } from '@/components/CulturalIntelligenceImpactChart'
 import { TrendingUp, Users, Globe, Target, CheckCircle, ArrowRight, BarChart3, Lightbulb, Shield, Zap, Heart } from 'lucide-react'
 import Image from 'next/image'
+import Script from 'next/script'
 
 // Dynamically import 3D component to avoid SSR issues
 const CultureMap3D = dynamic(() => import('@/components/CultureMap3D'), { ssr: false })
@@ -61,6 +62,38 @@ export default function WhyCulturalIntelligencePage() {
   ]
 
   return (
+    <>
+      {/* Article Schema */}
+      <Script
+        id="why-cultural-intelligence-article-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "Why Cultural Intelligence Matters",
+            "description": "Discover why cultural intelligence is essential for success in the UAE and Gulf region. Learn how CQ improves communication, reduces misunderstandings, and builds stronger relationships across cultures.",
+            "url": "https://www.theorangecode.com/why-cultural-intelligence",
+            "image": "https://www.theorangecode.com/og-image",
+            "author": {
+              "@type": "Organization",
+              "name": "The Orange Code"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "The Orange Code",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.theorangecode.com/logo1.png"
+              }
+            },
+            "datePublished": "2024-01-01",
+            "dateModified": new Date().toISOString().split('T')[0],
+            "mainEntityOfPage": "https://www.theorangecode.com/why-cultural-intelligence"
+          })
+        }}
+      />
+
     <div className="min-h-screen bg-primary-dark text-white">
       <ModernNavbar />
       
@@ -400,5 +433,6 @@ export default function WhyCulturalIntelligencePage() {
 
       <ModernFooter />
     </div>
+    </>
   )
 }
