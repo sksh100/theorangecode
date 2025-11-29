@@ -586,7 +586,7 @@ export function WebGLEffectSelector() {
   const currentOption = effectOptions.find(opt => opt.id === selectedEffect)
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-primary-dark">
+    <div className="relative w-full min-h-[200vh] bg-primary-dark">
       {/* WebGL Canvas */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <Canvas
@@ -601,12 +601,12 @@ export function WebGLEffectSelector() {
       </div>
 
       {/* Effect Selector UI - Expanded with more vertical space */}
-      <div className="relative z-10 h-full flex flex-col items-start justify-start px-4 sm:px-6 lg:px-8 pt-8 md:pt-12 pb-32">
+      <div className="relative z-10 flex flex-col items-start justify-start px-4 sm:px-6 lg:px-8 pt-8 md:pt-12 pb-96">
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-5xl mx-auto w-full"
-          style={{ minHeight: 'calc(100vh - 200px)', paddingBottom: '200px' }}
+          style={{ minHeight: '100vh', paddingBottom: '400px' }}
         >
           <div className="glass-card p-6 md:p-8 backdrop-blur-[20px] mb-8 bg-white/5 border border-white/10">
             <motion.div
