@@ -20,8 +20,11 @@ export default function UKToUAERelocationPage() {
   const [isUK, setIsUK] = useState(false)
   const [currency, setCurrency] = useState('AED')
   const [price, setPrice] = useState(99) // Default AED price
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
+    
     // Detect UK visitors - try to get country from visitor tracking
     // First check browser language/timezone as fallback
     const isUKBrowser = navigator.language.includes('en-GB') || 
@@ -53,7 +56,8 @@ export default function UKToUAERelocationPage() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.1,
+        delayChildren: 0.1
       }
     }
   }
@@ -63,7 +67,7 @@ export default function UKToUAERelocationPage() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6 }
+      transition: { duration: 0.6, ease: "easeOut" }
     }
   }
 
@@ -186,7 +190,8 @@ export default function UKToUAERelocationPage() {
               <motion.div
                 variants={containerVariants}
                 initial="hidden"
-                animate="visible"
+                animate={mounted ? "visible" : "visible"}
+                viewport={{ once: true }}
                 className="max-w-4xl mx-auto text-center"
               >
                 <motion.div
