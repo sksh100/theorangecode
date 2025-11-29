@@ -453,7 +453,6 @@ export default function RootLayout({
               '@id': 'https://www.theorangecode.com/#localbusiness',
               name: 'The Orange Code',
               image: 'https://www.theorangecode.com/logo1.png',
-              '@id': 'https://www.theorangecode.com',
               url: 'https://www.theorangecode.com',
               telephone: '+971568786106',
               email: 'hello@theorangecode.com',
