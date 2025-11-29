@@ -115,6 +115,45 @@ export default function UKToUAERelocationPage() {
         }}
       />
       <Script
+        id="article-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "Moving from the UK to the UAE: Cultural Guide for British Professionals",
+            "description": "A practical guide for British professionals relocating to the UAE. Learn workplace culture, etiquette, communication and expectations before you arrive.",
+            "image": "https://www.theorangecode.com/og-image",
+            "author": {
+              "@type": "Organization",
+              "name": "The Orange Code",
+              "url": "https://www.theorangecode.com"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "The Orange Code",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.theorangecode.com/logo1.png"
+              }
+            },
+            "datePublished": "2025-01-01",
+            "dateModified": new Date().toISOString().split('T')[0],
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "https://www.theorangecode.com/uk-to-uae-relocation"
+            },
+            "articleSection": "Cultural Intelligence",
+            "keywords": "UK to UAE relocation, British expats UAE, UAE workplace culture, Emirati culture guide",
+            "inLanguage": "en-GB",
+            "about": {
+              "@type": "Thing",
+              "name": "Cultural Intelligence Training"
+            }
+          })
+        }}
+      />
+      <Script
         id="faq-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -267,7 +306,7 @@ export default function UKToUAERelocationPage() {
                   className="text-3xl md:text-5xl font-bold mb-6 text-center"
                 >
                   <span className="bg-gradient-to-r from-orange to-azure-blue bg-clip-text text-transparent">
-                    Why British expats need this guide
+                    Why British Expats Need This Guide
                   </span>
                 </motion.h2>
 
@@ -319,7 +358,7 @@ export default function UKToUAERelocationPage() {
                   className="text-3xl md:text-5xl font-bold mb-8 text-center"
                 >
                   <span className="bg-gradient-to-r from-azure-blue to-orange bg-clip-text text-transparent">
-                    What the guide covers
+                    What the Guide Covers
                   </span>
                 </motion.h2>
 
@@ -366,7 +405,7 @@ export default function UKToUAERelocationPage() {
                   className="text-3xl md:text-5xl font-bold mb-12 text-center"
                 >
                   <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                    Key cultural differences between the UK and the UAE
+                    Key Cultural Differences Between the UK and the UAE
                   </span>
                 </motion.h2>
 

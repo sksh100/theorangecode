@@ -20,6 +20,10 @@ export const metadata: Metadata = {
     'UAE expat guide UK',
     'Emirati culture for British',
     'UAE business culture UK',
+    'British expatriates UAE',
+    'UK professionals moving to UAE',
+    'UAE cultural intelligence guide',
+    'Emirati workplace culture',
   ],
   alternates: {
     canonical: 'https://www.theorangecode.com/uk-to-uae-relocation',
@@ -38,13 +42,24 @@ export const metadata: Metadata = {
       },
     ],
     locale: 'en_GB',
-    type: 'website',
+    type: 'article',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Moving to the UAE from the UK. Cultural Guide for British Professionals',
     description: 'A practical guide for British professionals relocating to the UAE. Learn workplace culture, etiquette, communication and expectations before you arrive.',
     images: ['https://www.theorangecode.com/og-image'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 }
 

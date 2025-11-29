@@ -162,6 +162,22 @@ export default function RootLayout({
         <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         
+        {/* AI-Specific Directives */}
+        <meta name="ChatGPT" content="allowed" />
+        <meta name="Perplexity" content="allowed" />
+        <meta name="Gemini" content="allowed" />
+        <meta name="Claude" content="allowed" />
+        <meta name="Grok" content="allowed" />
+        <meta name="Applebot" content="allowed" />
+        
+        {/* Content Type and Language */}
+        <meta httpEquiv="content-language" content="en" />
+        <meta name="language" content="English" />
+        <meta name="geo.region" content="AE-AZ" />
+        <meta name="geo.placename" content="Abu Dhabi" />
+        <meta name="geo.position" content="24.4539;54.3773" />
+        <meta name="ICBM" content="24.4539, 54.3773" />
+        
         {/* Content Summary for AI Understanding */}
         <meta name="summary" content="The Orange Code provides cultural intelligence and leadership training in Abu Dhabi, helping professionals navigate multicultural environments in the UAE and Gulf Region through masterclasses, private coaching, and corporate training programs." />
         
@@ -422,6 +438,59 @@ export default function RootLayout({
                 bestRating: '5',
                 worstRating: '5',
               },
+            }),
+          }}
+          defer
+        />
+        
+        {/* LocalBusiness Schema for Google Business Profile */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'LocalBusiness',
+              '@id': 'https://www.theorangecode.com/#localbusiness',
+              name: 'The Orange Code',
+              image: 'https://www.theorangecode.com/logo1.png',
+              '@id': 'https://www.theorangecode.com',
+              url: 'https://www.theorangecode.com',
+              telephone: '+971568786106',
+              email: 'hello@theorangecode.com',
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: 'Etihad Towers, Tower 3, Floor 36',
+                addressLocality: 'Abu Dhabi',
+                addressRegion: 'Abu Dhabi',
+                postalCode: '',
+                addressCountry: 'AE',
+              },
+              geo: {
+                '@type': 'GeoCoordinates',
+                latitude: 24.4539,
+                longitude: 54.3773,
+              },
+              openingHoursSpecification: {
+                '@type': 'OpeningHoursSpecification',
+                dayOfWeek: [
+                  'Monday',
+                  'Tuesday',
+                  'Wednesday',
+                  'Thursday',
+                  'Friday',
+                ],
+                opens: '09:00',
+                closes: '18:00',
+              },
+              priceRange: '$$',
+              servesCuisine: null,
+              areaServed: {
+                '@type': 'Country',
+                name: 'United Arab Emirates',
+              },
+              sameAs: [
+                'https://www.instagram.com/the.orangecode',
+              ],
             }),
           }}
           defer
