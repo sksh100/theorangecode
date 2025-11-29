@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { MessageCircle, Linkedin, Facebook, Instagram, Pinterest, Share2, Copy, Check } from 'lucide-react'
+import { MessageCircle, Linkedin, Facebook, Instagram, Share2, Copy, Check, Image } from 'lucide-react'
 import { useState } from 'react'
 import { trackCTAClick } from '@/lib/tracking'
 
@@ -95,7 +95,7 @@ export function SocialShareButtons({
     },
     {
       name: 'Pinterest',
-      icon: Pinterest,
+      icon: Image, // Using Image icon as Pinterest alternative (lucide-react doesn't have Pinterest icon)
       color: 'bg-[#BD081C] hover:bg-[#A5071A]',
       onClick: () => handleShare('Pinterest', pinterestUrl)
     },
