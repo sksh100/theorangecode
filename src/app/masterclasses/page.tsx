@@ -381,7 +381,12 @@ export default function MasterclassesPage() {
                     "price": masterclass.price.toString(),
                     "priceCurrency": "AED",
                     "availability": "https://schema.org/InStock",
-                    "url": masterclass.paymentLink || "https://www.theorangecode.com/masterclasses"
+                    "url": masterclass.paymentLink || "https://www.theorangecode.com/masterclasses",
+                    "seller": {
+                      "@type": "Organization",
+                      "name": "The Orange Code",
+                      "url": "https://www.theorangecode.com"
+                    }
                   }
                 }
               }))
