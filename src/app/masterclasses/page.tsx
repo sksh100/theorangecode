@@ -376,6 +376,7 @@ export default function MasterclassesPage() {
                   },
                   "courseCode": `CI-MASTERCLASS-${masterclass.id}`,
                   "educationalLevel": "Professional Development",
+                  "image": "https://www.theorangecode.com/og-image",
                   "offers": {
                     "@type": "Offer",
                     "price": masterclass.price.toString(),
@@ -413,6 +414,7 @@ export default function MasterclassesPage() {
               "courseCode": `CI-MASTERCLASS-${masterclass.id}`,
               "educationalLevel": "Professional Development",
               "teaches": masterclass.learningObjectives || [],
+              "image": "https://www.theorangecode.com/og-image",
               "offers": {
                 "@type": "Offer",
                 "price": masterclass.price.toString(),
