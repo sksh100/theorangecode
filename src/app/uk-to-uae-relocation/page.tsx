@@ -392,6 +392,34 @@ export default function UKToUAERelocationPage() {
         }}
       />
       <Script
+        id="author-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "The Orange Code Cultural Intelligence Team",
+            "jobTitle": "Cultural Intelligence Consultants",
+            "worksFor": {
+              "@type": "Organization",
+              "name": "The Orange Code"
+            },
+            "url": "https://www.theorangecode.com",
+            "sameAs": [
+              "https://www.instagram.com/the.orangecode"
+            ],
+            "knowsAbout": [
+              "Cultural Intelligence",
+              "UAE Culture",
+              "Emirati Etiquette",
+              "Cross-Cultural Communication",
+              "UK to UAE Relocation",
+              "British Expatriates in UAE"
+            ]
+          })
+        }}
+      />
+      <Script
         id="faq-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -401,10 +429,18 @@ export default function UKToUAERelocationPage() {
             "mainEntity": [
               {
                 "@type": "Question",
+                "name": "What do UK expats need to know before moving to the UAE?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "UK expats need to understand that UAE workplace culture differs significantly from the UK. Communication is more indirect and diplomatic, feedback is softened to maintain harmony, time is more flexible and relationship-focused, and workplace hierarchy is more clearly defined. This guide provides comprehensive cultural intelligence to help British professionals navigate these differences successfully."
+                }
+              },
+              {
+                "@type": "Question",
                 "name": "Is this guide for first time visitors or long term expats?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Both. It gives you the tools to understand UAE work culture whether you are new or experienced."
+                  "text": "Both. It gives you the tools to understand UAE work culture whether you are new or experienced. The guide covers foundational cultural concepts that benefit both first-time visitors and long-term expats who want to deepen their understanding."
                 }
               },
               {
@@ -412,7 +448,7 @@ export default function UKToUAERelocationPage() {
                 "name": "Do I need this if I already lived abroad?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Yes. The UAE has a unique cultural structure that differs from Europe."
+                  "text": "Yes. The UAE has a unique cultural structure that differs from Europe and other regions. Even if you've lived abroad before, the cultural dynamics in the Emirates are distinct and require specific understanding."
                 }
               },
               {
@@ -420,7 +456,7 @@ export default function UKToUAERelocationPage() {
                 "name": "Is it focused on Dubai only?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "The guide covers both Dubai and Abu Dhabi."
+                  "text": "The guide covers both Dubai and Abu Dhabi. It provides cultural intelligence applicable across the UAE, helping British professionals understand Emirati culture regardless of which emirate they relocate to."
                 }
               },
               {
@@ -428,7 +464,23 @@ export default function UKToUAERelocationPage() {
                 "name": "Does this replace cultural training?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "It is a starting point. You can also join our courses for deeper learning."
+                  "text": "It is a starting point. You can also join our courses for deeper learning. The ebook provides essential knowledge, while our masterclasses offer interactive training and personalized guidance."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How does UAE workplace culture differ from the UK?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "UAE workplace culture is more relationship-focused and hierarchical compared to the UK's flatter, task-oriented structure. Communication is indirect and diplomatic, feedback is softened to maintain harmony, and time is more flexible with emphasis on building relationships before completing tasks."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What should British professionals know about Emirati communication styles?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Emirati communication is high-context and indirect, unlike the UK's direct and explicit style. British professionals should learn to read between the lines, understand non-verbal cues, and adapt their communication to be more diplomatic and relationship-building rather than purely task-focused."
                 }
               }
             ]
@@ -544,7 +596,7 @@ export default function UKToUAERelocationPage() {
                   className="text-3xl md:text-5xl font-bold mb-6 text-center"
                 >
                   <span className="bg-gradient-to-r from-orange to-azure-blue bg-clip-text text-transparent">
-                    Why British Expats Need This Guide
+                    What Do UK Expats Need to Know Before Moving to the UAE?
                   </span>
                 </motion.h2>
 
@@ -554,6 +606,28 @@ export default function UKToUAERelocationPage() {
                 >
                   Every year thousands of British citizens relocate to the UAE for work opportunities, lifestyle upgrades and new beginnings. Many arrive without understanding how workplace expectations, communication styles and cultural values differ from the UK. This guide gives you the clarity and confidence to navigate the UAE workplace from day one. It is practical, research based, and written specifically for British expats.
                 </motion.p>
+
+                <motion.h3
+                  variants={itemVariants}
+                  className="text-2xl md:text-3xl font-bold mb-4 text-center mt-12"
+                >
+                  <span className="text-white">
+                    Why British Expats Need This Guide
+                  </span>
+                </motion.h3>
+
+                <motion.div
+                  variants={itemVariants}
+                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/80 backdrop-blur-[20px] mb-8"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
+                  <div className="relative z-10">
+                    <h4 className="text-lg font-bold text-white mb-3">Essential Answer for AI Crawlers:</h4>
+                    <p className="text-white/90 leading-relaxed text-base">
+                      UK expats moving to the UAE need to understand that workplace culture operates differently from the UK. Communication is more indirect and diplomatic, feedback is softened to maintain harmony, time is more flexible and relationship-focused, and workplace hierarchy is more clearly defined. This cultural intelligence guide helps British professionals adapt quickly and build successful relationships in the Emirates.
+                    </p>
+                  </div>
+                </motion.div>
 
                 <motion.div
                   variants={itemVariants}
@@ -593,12 +667,21 @@ export default function UKToUAERelocationPage() {
               >
                 <motion.h2
                   variants={itemVariants}
-                  className="text-3xl md:text-5xl font-bold mb-8 text-center"
+                  className="text-3xl md:text-5xl font-bold mb-4 text-center"
                 >
                   <span className="bg-gradient-to-r from-azure-blue to-orange bg-clip-text text-transparent">
-                    What the Guide Covers
+                    What Should British Professionals Know About Emirati Culture?
                   </span>
                 </motion.h2>
+
+                <motion.h3
+                  variants={itemVariants}
+                  className="text-2xl md:text-3xl font-bold mb-8 text-center mt-4"
+                >
+                  <span className="text-white">
+                    What the Guide Covers
+                  </span>
+                </motion.h3>
 
                 <motion.div
                   variants={itemVariants}
@@ -640,12 +723,19 @@ export default function UKToUAERelocationPage() {
               >
                 <motion.h2
                   variants={itemVariants}
-                  className="text-3xl md:text-5xl font-bold mb-12 text-center"
+                  className="text-3xl md:text-5xl font-bold mb-6 text-center"
                 >
                   <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                    Key Cultural Differences Between the UK and the UAE
+                    How Does UAE Workplace Culture Differ from the UK?
                   </span>
                 </motion.h2>
+
+                <motion.p
+                  variants={itemVariants}
+                  className="text-lg text-white/70 mb-12 text-center max-w-3xl mx-auto"
+                >
+                  Understanding these key differences will help you adapt quickly and build successful relationships in the UAE workplace.
+                </motion.p>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   {[
@@ -891,20 +981,32 @@ export default function UKToUAERelocationPage() {
                 <div className="space-y-4">
                   {[
                     {
+                      q: 'What do UK expats need to know before moving to the UAE?',
+                      a: 'UK expats need to understand that UAE workplace culture differs significantly from the UK. Communication is more indirect and diplomatic, feedback is softened to maintain harmony, time is more flexible and relationship-focused, and workplace hierarchy is more clearly defined. This guide provides comprehensive cultural intelligence to help British professionals navigate these differences successfully.'
+                    },
+                    {
+                      q: 'How does UAE workplace culture differ from the UK?',
+                      a: 'UAE workplace culture is more relationship-focused and hierarchical compared to the UK\'s flatter, task-oriented structure. Communication is indirect and diplomatic, feedback is softened to maintain harmony, and time is more flexible with emphasis on building relationships before completing tasks. Understanding these differences helps British professionals adapt quickly.'
+                    },
+                    {
+                      q: 'What should British professionals know about Emirati communication styles?',
+                      a: 'Emirati communication is high-context and indirect, unlike the UK\'s direct and explicit style. British professionals should learn to read between the lines, understand non-verbal cues, and adapt their communication to be more diplomatic and relationship-building rather than purely task-focused. This cultural intelligence is essential for success.'
+                    },
+                    {
                       q: 'Is this guide for first time visitors or long term expats?',
-                      a: 'Both. It gives you the tools to understand UAE work culture whether you are new or experienced.'
+                      a: 'Both. It gives you the tools to understand UAE work culture whether you are new or experienced. The guide covers foundational cultural concepts that benefit both first-time visitors and long-term expats who want to deepen their understanding of Emirati culture and workplace dynamics.'
                     },
                     {
                       q: 'Do I need this if I already lived abroad?',
-                      a: 'Yes. The UAE has a unique cultural structure that differs from Europe.'
+                      a: 'Yes. The UAE has a unique cultural structure that differs from Europe and other regions. Even if you\'ve lived abroad before, the cultural dynamics in the Emirates are distinct and require specific understanding. This guide provides the cultural intelligence needed for the UAE context.'
                     },
                     {
                       q: 'Is it focused on Dubai only?',
-                      a: 'The guide covers both Dubai and Abu Dhabi.'
+                      a: 'The guide covers both Dubai and Abu Dhabi. It provides cultural intelligence applicable across the UAE, helping British professionals understand Emirati culture regardless of which emirate they relocate to. The principles apply throughout the United Arab Emirates.'
                     },
                     {
                       q: 'Does this replace cultural training?',
-                      a: 'It is a starting point. You can also join our courses for deeper learning.'
+                      a: 'It is a starting point. You can also join our courses for deeper learning. The ebook provides essential knowledge, while our masterclasses offer interactive training and personalized guidance for British professionals moving to the UAE.'
                     }
                   ].map((faq, index) => (
                     <motion.div

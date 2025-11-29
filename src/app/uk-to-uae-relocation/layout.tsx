@@ -4,10 +4,20 @@ export const metadata: Metadata = {
   title: 'Moving to the UAE from the UK. Cultural Guide for British Professionals',
   description: 'A practical guide for British professionals relocating to the UAE. Learn workplace culture, etiquette, communication and expectations before you arrive.',
   keywords: [
+    // Primary long-tail keywords
+    'what do UK expats need to know before moving to UAE',
+    'how does UAE workplace culture differ from UK',
+    'what should British professionals know about Emirati culture',
+    'UK to UAE relocation cultural guide',
+    'British expats moving to UAE what to know',
+    'UAE workplace culture for British professionals',
+    'Emirati communication styles for UK expats',
+    'moving from UK to UAE cultural differences',
+    'British professionals relocating to UAE guide',
+    // Secondary keywords
     'moving to UAE from UK',
     'UK expats in UAE',
     'British expats Dubai culture',
-    'UAE workplace culture for British professionals',
     'UAE relocation guide',
     'moving to Dubai from UK',
     'UAE etiquette for UK professionals',
@@ -24,6 +34,12 @@ export const metadata: Metadata = {
     'UK professionals moving to UAE',
     'UAE cultural intelligence guide',
     'Emirati workplace culture',
+    // Long-tail variations
+    'what UK expats should know about UAE before moving',
+    'UAE cultural differences from UK for British professionals',
+    'how to adapt from UK to UAE workplace culture',
+    'British expat guide to Emirati business culture',
+    'UK professional moving to UAE cultural preparation',
   ],
   alternates: {
     canonical: 'https://www.theorangecode.com/uk-to-uae-relocation',
