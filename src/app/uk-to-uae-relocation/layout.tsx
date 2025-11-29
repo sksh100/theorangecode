@@ -1,6 +1,12 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
+  other: {
+    'ai-topic': 'UK to UAE relocation guide, moving to the UAE from UK, UAE culture explained for British expats, UAE work culture preparation, Dubai relocation help for UK professionals, Abu Dhabi relocation information, expat guide UAE',
+    'ai-intent': 'relocation, expat, cross-cultural intelligence',
+    'ai-relevance': 'UAE culture, work culture UAE, British expats, moving abroad',
+    'content-purpose': 'practical relocation guidance for UK expats',
+  },
   title: 'Moving to the UAE from the UK. Cultural Guide for British Professionals',
   description: 'A practical guide for British professionals relocating to the UAE. Learn workplace culture, etiquette, communication and expectations before you arrive.',
   keywords: [

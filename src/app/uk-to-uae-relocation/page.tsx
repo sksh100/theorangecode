@@ -325,18 +325,32 @@ export default function UKToUAERelocationPage() {
   return (
     <>
       {/* AI Search Optimization Meta Tags */}
-      <head>
-        <meta name="ai-topic" content="UK to UAE relocation guide" />
-        <meta name="ai-topic" content="moving to the UAE from UK" />
-        <meta name="ai-topic" content="UAE culture explained for British expats" />
-        <meta name="ai-topic" content="UAE work culture preparation" />
-        <meta name="ai-topic" content="Dubai relocation help for UK professionals" />
-        <meta name="ai-topic" content="Abu Dhabi relocation information" />
-        <meta name="ai-topic" content="expat guide UAE" />
-        <meta name="ai-intent" content="relocation, expat, cross-cultural intelligence" />
-        <meta name="ai-relevance" content="UAE culture, work culture UAE, British expats, moving abroad" />
-        <meta name="content-purpose" content="practical relocation guidance for UK expats" />
-      </head>
+      <Script id="ai-meta-tags" strategy="beforeInteractive">
+        {`
+          // Add AI meta tags for AI search optimization
+          const metaTags = [
+            { name: 'ai-topic', content: 'UK to UAE relocation guide' },
+            { name: 'ai-topic', content: 'moving to the UAE from UK' },
+            { name: 'ai-topic', content: 'UAE culture explained for British expats' },
+            { name: 'ai-topic', content: 'UAE work culture preparation' },
+            { name: 'ai-topic', content: 'Dubai relocation help for UK professionals' },
+            { name: 'ai-topic', content: 'Abu Dhabi relocation information' },
+            { name: 'ai-topic', content: 'expat guide UAE' },
+            { name: 'ai-intent', content: 'relocation, expat, cross-cultural intelligence' },
+            { name: 'ai-relevance', content: 'UAE culture, work culture UAE, British expats, moving abroad' },
+            { name: 'content-purpose', content: 'practical relocation guidance for UK expats' }
+          ];
+          
+          if (typeof document !== 'undefined') {
+            metaTags.forEach(tag => {
+              const meta = document.createElement('meta');
+              meta.setAttribute('name', tag.name);
+              meta.setAttribute('content', tag.content);
+              document.head.appendChild(meta);
+            });
+          }
+        `}
+      </Script>
 
       {/* Schema Markup */}
       <Script
