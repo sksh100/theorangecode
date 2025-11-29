@@ -1,0 +1,58 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Moving to the UAE from the UK. Cultural Guide for British Professionals',
+  description: 'A practical guide for British professionals relocating to the UAE. Learn workplace culture, etiquette, communication and expectations before you arrive.',
+  keywords: [
+    'moving to UAE from UK',
+    'UK expats in UAE',
+    'British expats Dubai culture',
+    'UAE workplace culture for British professionals',
+    'UAE relocation guide',
+    'moving to Dubai from UK',
+    'UAE etiquette for UK professionals',
+    'GCC business culture UK',
+    'UK to UAE relocation',
+    'British professionals UAE',
+    'UAE cultural guide UK',
+    'Dubai relocation guide UK',
+    'Abu Dhabi relocation guide UK',
+    'UAE expat guide UK',
+    'Emirati culture for British',
+    'UAE business culture UK',
+  ],
+  alternates: {
+    canonical: 'https://www.theorangecode.com/uk-to-uae-relocation',
+  },
+  openGraph: {
+    title: 'Moving to the UAE from the UK. Cultural Guide for British Professionals',
+    description: 'A practical guide for British professionals relocating to the UAE. Learn workplace culture, etiquette, communication and expectations before you arrive.',
+    url: 'https://www.theorangecode.com/uk-to-uae-relocation',
+    siteName: 'The Orange Code',
+    images: [
+      {
+        url: 'https://www.theorangecode.com/og-image',
+        width: 1200,
+        height: 630,
+        alt: 'UK to UAE Relocation Cultural Guide',
+      },
+    ],
+    locale: 'en_GB',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Moving to the UAE from the UK. Cultural Guide for British Professionals',
+    description: 'A practical guide for British professionals relocating to the UAE. Learn workplace culture, etiquette, communication and expectations before you arrive.',
+    images: ['https://www.theorangecode.com/og-image'],
+  },
+}
+
+export default function UKToUAERelocationLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return <>{children}</>
+}
+
