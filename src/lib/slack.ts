@@ -375,6 +375,20 @@ export async function notifyEbookDelivery(data: EbookDeliveryData): Promise<void
 }
 
 /**
+ * Format IP address for display (with custom names for known IPs)
+ */
+function formatIPAddress(ip: string | undefined | null): string {
+  if (!ip) return 'Unknown';
+  
+  // Custom IP address mappings
+  const knownIPs: Record<string, string> = {
+    '94.59.182.192': 'Sunain',
+  };
+  
+  return knownIPs[ip] || ip;
+}
+
+/**
  * Notify about new visitor (when someone first lands on the site)
  */
 export async function notifyNewVisitor(data: VisitorData): Promise<void> {
@@ -412,6 +426,9 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
     const remainingMinutes = minutes % 60;
     return `${hours}h ${remainingMinutes}m`;
   };
+  
+  // Format IP address with custom name if applicable
+  const displayIP = formatIPAddress(data.ip);
 
   const blocks: any[] = [
     {
@@ -431,7 +448,7 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
         },
         {
           type: 'mrkdwn',
-          text: `*🌐 IP Address:*\n\`${data.ip || 'Unknown'}\``,
+          text: `*🌐 IP Address:*\n\`${displayIP}\``,
         },
         {
           type: 'mrkdwn',
