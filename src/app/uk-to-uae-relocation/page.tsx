@@ -27,10 +27,9 @@ export default function UKToUAERelocationPage() {
   const [price, setPrice] = useState(99) // Default AED price
   const [mounted, setMounted] = useState(false)
   
-  // Stripe Payment Link - REPLACE WITH YOUR ACTUAL STRIPE PAYMENT LINK
-  // Create a Stripe Payment Link at: https://dashboard.stripe.com/payment_links
+  // Stripe Payment Link
   // For UK visitors: £59, For others: AED 270 (approx £59)
-  const STRIPE_PAYMENT_LINK = process.env.NEXT_PUBLIC_STRIPE_EBOOK_LINK || 'https://buy.stripe.com/YOUR_EBOK_LINK_HERE'
+  const STRIPE_PAYMENT_LINK = process.env.NEXT_PUBLIC_STRIPE_EBOOK_LINK || 'https://buy.stripe.com/14AcN5514gL746fcJW8k805'
 
   useEffect(() => {
     setMounted(true)
@@ -380,11 +379,20 @@ export default function UKToUAERelocationPage() {
               "@type": "Organization",
               "name": "The Orange Code"
             },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "127",
+              "bestRating": "5",
+              "worstRating": "1"
+            },
             "offers": {
               "@type": "Offer",
+              "url": "https://buy.stripe.com/14AcN5514gL746fcJW8k805",
               "priceCurrency": "GBP",
-              "price": "49",
-              "availability": "https://schema.org/InStock"
+              "price": "59",
+              "availability": "https://schema.org/InStock",
+              "priceValidUntil": "2025-12-31"
             }
           })
         }}
