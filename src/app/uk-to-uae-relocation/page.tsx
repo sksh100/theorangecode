@@ -687,9 +687,16 @@ export default function UKToUAERelocationPage() {
 
                 <motion.p
                   variants={itemVariants}
-                  className="text-lg md:text-xl text-white/80 mb-8 max-w-3xl mx-auto leading-relaxed"
+                  className="text-lg md:text-xl text-white/80 mb-4 max-w-3xl mx-auto leading-relaxed"
                 >
                   A practical cultural intelligence guide for British professionals, families and students relocating from the United Kingdom to the United Arab Emirates.
+                </motion.p>
+
+                <motion.p
+                  variants={itemVariants}
+                  className="text-base md:text-lg text-white/70 mb-8 max-w-3xl mx-auto"
+                >
+                  <strong className="text-orange">Purchase for £59 - Instant download available.</strong> Secure payment via Stripe. 30-day money-back guarantee.
                 </motion.p>
 
                 <motion.div
