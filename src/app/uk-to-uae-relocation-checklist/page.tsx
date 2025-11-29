@@ -169,10 +169,12 @@ export default function RelocationChecklistPage() {
                     Download PDF Checklist
                   </motion.button>
                   
-                  <WhatsAppShareButton 
-                    variant="large"
+                  <SocialShareButtons
                     url="https://www.theorangecode.com/uk-to-uae-relocation-checklist"
-                    message="I found this free UK to UAE relocation checklist - super helpful for anyone moving to the Emirates!"
+                    title="UK to UAE Relocation Checklist"
+                    description="A comprehensive free checklist to help British professionals prepare for their move to the UAE."
+                    variant="default"
+                    showLabel={true}
                   />
                 </motion.div>
 
@@ -266,10 +268,13 @@ export default function RelocationChecklistPage() {
                         </motion.button>
                       </Link>
                       
-                      <WhatsAppShareButton 
-                        variant="default"
+                      <SocialShareButtons
                         url="https://www.theorangecode.com/uk-to-uae-relocation"
-                        message="I found this UK to UAE relocation cultural guide and it helped me avoid big mistakes. Thought you might need it."
+                        title="UK to UAE Relocation Cultural Guide"
+                        description="A practical cultural intelligence guide for British professionals relocating to the UAE."
+                        variant="compact"
+                        showLabel={true}
+                        className="justify-center"
                       />
                     </div>
 
@@ -308,12 +313,13 @@ export default function RelocationChecklistPage() {
 
                 <motion.div
                   variants={itemVariants}
-                  className="flex flex-wrap gap-4 justify-center"
                 >
-                  <WhatsAppShareButton 
-                    variant="large"
+                  <SocialShareButtons
                     url="https://www.theorangecode.com/uk-to-uae-relocation-checklist"
-                    message="I found this free UK to UAE relocation checklist - super helpful for anyone moving to the Emirates!"
+                    title="UK to UAE Relocation Checklist"
+                    description="A comprehensive free checklist to help British professionals prepare for their move to the UAE."
+                    variant="default"
+                    showLabel={true}
                   />
                 </motion.div>
               </motion.div>
