@@ -54,7 +54,7 @@ export function SocialShareButtons({
   }
 
   // WhatsApp
-  const whatsappMessage = `I found this UK to UAE relocation cultural guide and it helped me avoid big mistakes. Thought you might need it. ${url}`
+  const whatsappMessage = `I found this UK to UAE relocation cultural guide... Thought you might need it! Link: ${url}`
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`
 
   // LinkedIn

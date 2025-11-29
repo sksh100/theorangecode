@@ -926,7 +926,7 @@ export default function UKToUAERelocationPage() {
                     <WhatsAppShareButton 
                       variant="default"
                       url="https://www.theorangecode.com/uk-to-uae-relocation"
-                      message="I found this UK to UAE relocation cultural guide and it helped me avoid big mistakes. Thought you might need it."
+                      message="I found this UK to UAE relocation cultural guide... Thought you might need it!"
                     />
                   </div>
                 </motion.div>
