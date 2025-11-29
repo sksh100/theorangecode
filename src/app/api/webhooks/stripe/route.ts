@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { redis } from "@/lib/redis";
 import { sendPushToAll } from "@/lib/webPush";
-import { notifyPayment, notifyError } from "@/lib/slack";
+import { notifyPayment, notifyError, notifyEbookPurchase } from "@/lib/slack";
 
 // Initialize Stripe only if secret key is available
 const getStripe = () => {
@@ -127,6 +127,18 @@ export async function POST(req: NextRequest) {
                               session.metadata?.type === 'ebook'
 
       if (isEbookPurchase && email && email !== 'unknown') {
+        // Send dedicated ebook purchase notification to Slack
+        notifyEbookPurchase({
+          customerEmail: email,
+          customerName: session.customer_details?.name || email.split('@')[0],
+          amount: session.amount_total ?? 0,
+          currency: session.currency ?? "gbp",
+          orderId: session.id,
+          stripeChargeId: session.payment_intent as string || session.id
+        }).catch(err => {
+          console.error('Slack ebook purchase notification error:', err);
+          // Don't fail the webhook if Slack fails
+        });
         try {
           // Send ebook via email
           const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.theorangecode.com'

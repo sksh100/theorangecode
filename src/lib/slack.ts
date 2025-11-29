@@ -318,6 +318,116 @@ export async function notifyPayment(data: PaymentData): Promise<void> {
 }
 
 /**
+ * Notify about ebook purchase
+ */
+export async function notifyEbookPurchase(data: {
+  customerEmail: string;
+  customerName?: string;
+  amount: number;
+  currency: string;
+  orderId: string;
+  stripeChargeId: string;
+}): Promise<void> {
+  const formattedAmount = new Intl.NumberFormat('en-AE', {
+    style: 'currency',
+    currency: data.currency.toUpperCase(),
+  }).format(data.amount / 100); // Stripe amounts are in cents
+
+  const message: SlackMessage = {
+    blocks: [
+      {
+        type: 'header',
+        text: {
+          type: 'plain_text',
+          text: '📚 New Ebook Purchase!',
+          emoji: true,
+        },
+      },
+      {
+        type: 'section',
+        fields: [
+          {
+            type: 'mrkdwn',
+            text: `*Customer:*\n${data.customerName || data.customerEmail}`,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Email:*\n${data.customerEmail}`,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Amount:*\n${formattedAmount}`,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Product:*\nUK to UAE Cultural Intelligence Ebook`,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Order ID:*\n\`${data.orderId}\``,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Time:*\n${new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })}`,
+          },
+        ],
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Stripe Charge ID:*\n\`${data.stripeChargeId}\``,
+        },
+      },
+      {
+        type: 'actions',
+        elements: [
+          {
+            type: 'button',
+            text: {
+              type: 'plain_text',
+              text: '💳 View in Stripe',
+              emoji: true,
+            },
+            url: `https://dashboard.stripe.com/payments/${data.stripeChargeId}`,
+            style: 'primary',
+          },
+          {
+            type: 'button',
+            text: {
+              type: 'plain_text',
+              text: '📧 Email Customer',
+              emoji: true,
+            },
+            url: `mailto:${data.customerEmail}`,
+          },
+          {
+            type: 'button',
+            text: {
+              type: 'plain_text',
+              text: '📥 Resend Ebook',
+              emoji: true,
+            },
+            url: `https://www.theorangecode.com/api/send-ebook?email=${encodeURIComponent(data.customerEmail)}&product=${encodeURIComponent('UK to UAE Cultural Intelligence Ebook')}`,
+          },
+        ],
+      },
+      {
+        type: 'context',
+        elements: [
+          {
+            type: 'mrkdwn',
+            text: '✅ Ebook will be automatically sent to the customer via email.',
+          },
+        ],
+      },
+    ],
+  };
+
+  await sendToSlack(message);
+}
+
+/**
  * Notify about ebook delivery
  */
 export async function notifyEbookDelivery(data: EbookDeliveryData): Promise<void> {
