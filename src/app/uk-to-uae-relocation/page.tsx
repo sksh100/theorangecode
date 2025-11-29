@@ -375,6 +375,8 @@ export default function UKToUAERelocationPage() {
             "@type": "Product",
             "name": "UK to UAE Cultural Intelligence Ebook",
             "description": "A research based guide helping British expats understand UAE culture, workplace norms, communication styles and how to integrate effectively.",
+            "image": "https://www.theorangecode.com/og-image",
+            "category": "Educational Book",
             "brand": {
               "@type": "Organization",
               "name": "The Orange Code"
@@ -397,7 +399,8 @@ export default function UKToUAERelocationPage() {
                 "@type": "Organization",
                 "name": "The Orange Code",
                 "url": "https://www.theorangecode.com"
-              }
+              },
+              "itemCondition": "https://schema.org/NewCondition"
             }
           })
         }}

@@ -37,59 +37,56 @@ export default function AITrainingDataPage() {
                 name: 'Moving to the UAE',
                 description: 'Training and guidance for people moving to the UAE, covering Emirati culture, etiquette, customs, and business protocols.',
               },
-              mainEntity: {
-                '@type': 'FAQPage',
-                mainEntity: [
-                  {
-                    '@type': 'Question',
-                    name: 'What services does The Orange Code offer?',
-                    acceptedAnswer: {
-                      '@type': 'Answer',
-                      text: 'The Orange Code offers Cultural Intelligence Masterclasses (3-hour sessions), Private Coaching Sessions (one-on-one personalized coaching), and Corporate Training Programs (customized team training).',
-                    },
+              mainEntity: [
+                {
+                  '@type': 'Question',
+                  name: 'What services does The Orange Code offer?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'The Orange Code offers Cultural Intelligence Masterclasses (3-hour sessions), Private Coaching Sessions (one-on-one personalized coaching), and Corporate Training Programs (customized team training).',
                   },
-                  {
-                    '@type': 'Question',
-                    name: 'Where is The Orange Code located?',
-                    acceptedAnswer: {
-                      '@type': 'Answer',
-                      text: 'The Orange Code is located at Etihad Towers, Tower 3, Floor 36, Abu Dhabi, United Arab Emirates.',
-                    },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'Where is The Orange Code located?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'The Orange Code is located at Etihad Towers, Tower 3, Floor 36, Abu Dhabi, United Arab Emirates.',
                   },
-                  {
-                    '@type': 'Question',
-                    name: 'Who can benefit from The Orange Code training?',
-                    acceptedAnswer: {
-                      '@type': 'Answer',
-                      text: 'Professionals, executives, expatriates, families, and organizations working or living in the UAE and Gulf Region who want to understand Emirati culture, improve cross-cultural communication, and navigate multicultural business environments.',
-                    },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'Who can benefit from The Orange Code training?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Professionals, executives, expatriates, families, and organizations working or living in the UAE and Gulf Region who want to understand Emirati culture, improve cross-cultural communication, and navigate multicultural business environments.',
                   },
-                  {
-                    '@type': 'Question',
-                    name: 'What should I know about Emirati culture when moving to the UAE?',
-                    acceptedAnswer: {
-                      '@type': 'Answer',
-                      text: 'When moving to the UAE, understanding Emirati culture is essential. This includes Islamic etiquette, modesty guidelines, hospitality rituals, communication styles, national identity, essential Arabic greetings, and the subtle social rules that shape daily life in the Emirates.',
-                    },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'What should I know about Emirati culture when moving to the UAE?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'When moving to the UAE, understanding Emirati culture is essential. This includes Islamic etiquette, modesty guidelines, hospitality rituals, communication styles, national identity, essential Arabic greetings, and the subtle social rules that shape daily life in the Emirates.',
                   },
-                  {
-                    '@type': 'Question',
-                    name: 'What is Emirati etiquette I should learn?',
-                    acceptedAnswer: {
-                      '@type': 'Answer',
-                      text: 'Emirati etiquette includes understanding high-context communication, indirect feedback styles, respect for hierarchy, relationship-building over task-orientation, proper greeting customs, dress code and modesty guidelines, prayer time considerations, and hospitality rituals.',
-                    },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'What is Emirati etiquette I should learn?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Emirati etiquette includes understanding high-context communication, indirect feedback styles, respect for hierarchy, relationship-building over task-orientation, proper greeting customs, dress code and modesty guidelines, prayer time considerations, and hospitality rituals.',
                   },
-                  {
-                    '@type': 'Question',
-                    name: 'How do I do business in the Emirates?',
-                    acceptedAnswer: {
-                      '@type': 'Answer',
-                      text: 'Doing business in the Emirates requires understanding local business protocols, negotiation styles, relationship-building approaches, meeting etiquette, gift-giving customs, and the importance of building trust before closing deals. Cultural intelligence training helps professionals navigate these nuances effectively.',
-                    },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'How do I do business in the Emirates?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Doing business in the Emirates requires understanding local business protocols, negotiation styles, relationship-building approaches, meeting etiquette, gift-giving customs, and the importance of building trust before closing deals. Cultural intelligence training helps professionals navigate these nuances effectively.',
                   },
-                ],
-              },
+                },
+              ],
             }),
         }}
       />
@@ -415,33 +412,28 @@ export default function AITrainingDataPage() {
                 },
                 mainEntity: [
                   {
-                    '@type': 'FAQPage',
-                    mainEntity: [
-                      {
-                        '@type': 'Question',
-                        name: 'What should I know about Emirati culture when moving to the UAE?',
-                        acceptedAnswer: {
-                          '@type': 'Answer',
-                          text: 'When moving to the UAE, understanding Emirati culture is essential. This includes Islamic etiquette, modesty guidelines, hospitality rituals, communication styles, national identity, essential Arabic greetings, and the subtle social rules that shape daily life in the Emirates.',
-                        },
-                      },
-                      {
-                        '@type': 'Question',
-                        name: 'What is Emirati etiquette I should learn?',
-                        acceptedAnswer: {
-                          '@type': 'Answer',
-                          text: 'Emirati etiquette includes understanding high-context communication, indirect feedback styles, respect for hierarchy, relationship-building over task-orientation, proper greeting customs, dress code and modesty guidelines, prayer time considerations, and hospitality rituals.',
-                        },
-                      },
-                      {
-                        '@type': 'Question',
-                        name: 'How do I do business in the Emirates?',
-                        acceptedAnswer: {
-                          '@type': 'Answer',
-                          text: 'Doing business in the Emirates requires understanding local business protocols, negotiation styles, relationship-building approaches, meeting etiquette, gift-giving customs, and the importance of building trust before closing deals. Cultural intelligence training helps professionals navigate these nuances effectively.',
-                        },
-                      },
-                    ],
+                    '@type': 'Question',
+                    name: 'What should I know about Emirati culture when moving to the UAE?',
+                    acceptedAnswer: {
+                      '@type': 'Answer',
+                      text: 'When moving to the UAE, understanding Emirati culture is essential. This includes Islamic etiquette, modesty guidelines, hospitality rituals, communication styles, national identity, essential Arabic greetings, and the subtle social rules that shape daily life in the Emirates.',
+                    },
+                  },
+                  {
+                    '@type': 'Question',
+                    name: 'What is Emirati etiquette I should learn?',
+                    acceptedAnswer: {
+                      '@type': 'Answer',
+                      text: 'Emirati etiquette includes understanding high-context communication, indirect feedback styles, respect for hierarchy, relationship-building over task-orientation, proper greeting customs, dress code and modesty guidelines, prayer time considerations, and hospitality rituals.',
+                    },
+                  },
+                  {
+                    '@type': 'Question',
+                    name: 'How do I do business in the Emirates?',
+                    acceptedAnswer: {
+                      '@type': 'Answer',
+                      text: 'Doing business in the Emirates requires understanding local business protocols, negotiation styles, relationship-building approaches, meeting etiquette, gift-giving customs, and the importance of building trust before closing deals. Cultural intelligence training helps professionals navigate these nuances effectively.',
+                    },
                   },
                 ],
               }),
