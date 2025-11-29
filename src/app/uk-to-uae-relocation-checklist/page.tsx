@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 import { WhatsAppShareButton } from '@/components/WhatsAppShareButton'
+import { SocialShareButtons } from '@/components/SocialShareButtons'
 import { trackCTAClick } from '@/lib/tracking'
 import dynamic from 'next/dynamic'
 
