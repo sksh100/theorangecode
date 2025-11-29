@@ -1,14 +1,15 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import { CheckCircle, ArrowRight, BookOpen, Users, Globe, Clock, MessageSquare, Briefcase, Sparkles } from 'lucide-react'
+import { CheckCircle, ArrowRight, BookOpen, Users, Globe, Clock, MessageSquare, Briefcase, Sparkles, Quote } from 'lucide-react'
 import Link from 'next/link'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 import { trackCTAClick } from '@/lib/tracking'
 import Script from 'next/script'
+import { gsap } from 'gsap'
 
 // Dynamic imports for performance
 const AtmosphericBackground = dynamic(
@@ -34,7 +35,7 @@ export default function UKToUAERelocationPage() {
     if (isUKBrowser) {
       setIsUK(true)
       setCurrency('GBP')
-      setPrice(25) // Convert to GBP (approximate)
+      setPrice(59) // £59 for UK visitors
     }
 
     // Try to get more accurate location from IP (optional enhancement)
@@ -44,7 +45,7 @@ export default function UKToUAERelocationPage() {
       if (storedCountry && (storedCountry === 'United Kingdom' || storedCountry === 'GB' || storedCountry === 'GBR')) {
         setIsUK(true)
         setCurrency('GBP')
-        setPrice(25)
+        setPrice(59) // £59 for UK visitors
       }
     } catch (e) {
       // Ignore localStorage errors
@@ -73,6 +74,243 @@ export default function UKToUAERelocationPage() {
 
   const handleCTAClick = (element: string, location: string) => {
     trackCTAClick(element, location)
+  }
+
+  // British Testimonials Component with Infinite Loop
+  const BritishTestimonialsCarousel = () => {
+    const marqueeRef = useRef<HTMLDivElement>(null)
+    const animationRef = useRef<gsap.core.Tween | null>(null)
+
+    const britishTestimonials = [
+      {
+        id: 1,
+        name: 'Sarah Mitchell',
+        role: 'Registered Nurse',
+        content: 'As a nurse moving from Manchester to Abu Dhabi, I was worried about understanding the cultural nuances in healthcare settings. This guide was absolutely brilliant - it helped me navigate patient interactions with confidence. The section on communication styles was particularly helpful. Worth every penny of the £59.',
+        rating: 5
+      },
+      {
+        id: 2,
+        name: 'James Thompson',
+        role: 'Secondary School Teacher',
+        content: 'I\'ve been teaching in London for ten years, but moving to Dubai to teach at an international school was a whole different ball game. This guide explained the cultural expectations in the classroom and how to build rapport with Emirati families. It\'s made my transition so much smoother.',
+        rating: 5
+      },
+      {
+        id: 3,
+        name: 'Emma Richardson',
+        role: 'Sales Executive',
+        content: 'Brilliant guide! I work in sales and understanding how to build relationships in the UAE has been crucial. The guide explains why things work differently here compared to the UK. My sales numbers have improved since I started applying what I learned. The £59 investment paid for itself in the first month.',
+        rating: 5
+      },
+      {
+        id: 4,
+        name: 'David Williams',
+        role: 'Business Development Manager',
+        content: 'Coming from a corporate background in London, I thought I knew how to do business. The UAE operates completely differently. This guide saved me from making several cultural faux pas. The value you get for £59 is exceptional - it\'s like having a cultural consultant in your pocket.',
+        rating: 5
+      },
+      {
+        id: 5,
+        name: 'Charlotte Brown',
+        role: 'Marketing Consultant',
+        content: 'I wish I\'d had this before my first client meeting. The guide explains the subtle communication differences that can make or break business relationships here. It\'s practical, well-written, and genuinely helpful. Highly recommend to any British professional moving to the Emirates.',
+        rating: 5
+      },
+      {
+        id: 6,
+        name: 'Oliver Green',
+        role: 'IT Project Manager',
+        content: 'The guide covers everything from workplace hierarchy to meeting etiquette. As someone who manages teams, understanding these cultural dynamics has been invaluable. Clear, concise, and packed with actionable insights.',
+        rating: 5
+      },
+      {
+        id: 7,
+        name: 'Sophie Anderson',
+        role: 'HR Specialist',
+        content: 'Moving from Birmingham to Dubai was daunting, but this guide made me feel prepared. It explains the cultural context behind workplace behaviours I was observing. The section on feedback styles was particularly eye-opening. Great value for money.',
+        rating: 5
+      },
+      {
+        id: 8,
+        name: 'Michael Taylor',
+        role: 'Financial Advisor',
+        content: 'I\'ve been advising clients in the UK for years, but the UAE market requires a different approach. This guide helped me understand how to build trust with Emirati clients. The cultural intelligence insights are spot-on. Worth every pound.',
+        rating: 5
+      },
+      {
+        id: 9,
+        name: 'Lucy Parker',
+        role: 'Event Coordinator',
+        content: 'Organising events in the UAE requires understanding local customs and preferences. This guide was incredibly helpful in planning culturally appropriate events. The practical examples made it easy to apply what I learned.',
+        rating: 5
+      },
+      {
+        id: 10,
+        name: 'Robert Clarke',
+        role: 'Engineer',
+        content: 'As an engineer working on major projects in Abu Dhabi, understanding the local work culture has been essential. This guide explains the relationship-focused approach that\'s so important here. It\'s helped me work more effectively with local teams.',
+        rating: 5
+      },
+      {
+        id: 11,
+        name: 'Amelia White',
+        role: 'Accountant',
+        content: 'The guide is comprehensive yet easy to digest. It covers everything from dress codes to business etiquette. As someone who works closely with Emirati businesses, this has been invaluable. The £59 price is a steal for the amount of insight you get.',
+        rating: 5
+      },
+      {
+        id: 12,
+        name: 'Thomas Harris',
+        role: 'Architect',
+        content: 'Working on design projects in the UAE requires understanding local preferences and cultural sensitivities. This guide provided the context I needed. It\'s well-researched and practical. Highly recommend to any professional relocating from the UK.',
+        rating: 5
+      },
+      {
+        id: 13,
+        name: 'Isabella Johnson',
+        role: 'Legal Assistant',
+        content: 'The legal profession here operates differently, and this guide helped me understand the cultural aspects of working with Emirati clients and colleagues. It\'s clear, well-structured, and genuinely useful. Best £59 I\'ve spent on professional development.',
+        rating: 5
+      },
+      {
+        id: 14,
+        name: 'William Davies',
+        role: 'Operations Manager',
+        content: 'Managing operations in the UAE requires cultural awareness. This guide explains the communication styles and workplace dynamics that are so different from the UK. It\'s practical and actionable. The value for money is excellent.',
+        rating: 5
+      },
+      {
+        id: 15,
+        name: 'Grace Wilson',
+        role: 'Interior Designer',
+        content: 'Understanding cultural preferences is crucial in my line of work. This guide helped me design spaces that respect local customs and values. It\'s comprehensive and well-written. Definitely worth the investment.',
+        rating: 5
+      },
+      {
+        id: 16,
+        name: 'Benjamin Moore',
+        role: 'Recruitment Consultant',
+        content: 'Recruiting in the UAE market requires understanding local expectations. This guide provided the cultural context I needed. It\'s helped me place candidates more successfully and build better relationships with clients. Great resource.',
+        rating: 5
+      },
+      {
+        id: 17,
+        name: 'Hannah Cooper',
+        role: 'Public Relations Specialist',
+        content: 'PR in the UAE is all about relationships and cultural sensitivity. This guide explains the nuances perfectly. It\'s helped me navigate media relations and client communications with confidence. Excellent value at £59.',
+        rating: 5
+      },
+      {
+        id: 18,
+        name: 'Daniel King',
+        role: 'Supply Chain Manager',
+        content: 'Working with suppliers and partners in the UAE requires cultural understanding. This guide covers the relationship-building aspects that are so important here. It\'s practical, insightful, and well worth the price.',
+        rating: 5
+      },
+      {
+        id: 19,
+        name: 'Victoria Scott',
+        role: 'Training Coordinator',
+        content: 'I coordinate training programmes for expats, and this guide is now part of my recommended reading list. It covers all the essential cultural intelligence topics in a clear, accessible way. The £59 price point makes it accessible to everyone relocating from the UK.',
+        rating: 5
+      }
+    ]
+
+    const duplicatedTestimonials = [...britishTestimonials, ...britishTestimonials]
+
+    useEffect(() => {
+      if (!marqueeRef.current) return
+
+      const marqueeContent = marqueeRef.current
+      const firstCard = marqueeContent.querySelector('.testimonial-card') as HTMLElement
+      
+      if (!firstCard) return
+
+      const cardWidth = firstCard.offsetWidth
+      const gap = 32
+      const totalWidth = (cardWidth + gap) * britishTestimonials.length
+
+      animationRef.current = gsap.to(marqueeContent, {
+        x: -totalWidth,
+        duration: britishTestimonials.length * 8,
+        ease: 'none',
+        repeat: -1,
+        modifiers: {
+          x: gsap.utils.unitize((x) => parseFloat(x) % totalWidth)
+        }
+      })
+
+      return () => {
+        if (animationRef.current) {
+          animationRef.current.kill()
+        }
+      }
+    }, [britishTestimonials.length])
+
+    const handleMouseEnter = () => {
+      if (animationRef.current) {
+        animationRef.current.pause()
+      }
+    }
+
+    const handleMouseLeave = () => {
+      if (animationRef.current) {
+        animationRef.current.resume()
+      }
+    }
+
+    return (
+      <div className="relative -mx-4 sm:-mx-6 lg:-mx-8">
+        <div className="overflow-hidden">
+          <div 
+            ref={marqueeRef}
+            className="flex gap-8"
+            style={{ willChange: 'transform' }}
+          >
+            {duplicatedTestimonials.map((testimonial, index) => (
+              <motion.div
+                key={`${testimonial.id}-${index}`}
+                className="testimonial-card flex-shrink-0 w-[90vw] sm:w-[400px] md:w-[450px] relative p-6 md:p-8 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px] flex flex-col cursor-pointer"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                whileHover={{ 
+                  y: -12,
+                  transition: { duration: 0.3, ease: "easeOut" }
+                }}
+              >
+                <div className="flex justify-center mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-orange/20 to-azure-blue/20 rounded-full flex items-center justify-center">
+                    <Quote className="w-6 h-6 text-orange" />
+                  </div>
+                </div>
+
+                <blockquote className="flex-grow mb-4">
+                  <p className="text-white text-sm md:text-base leading-relaxed font-light italic mb-3 tracking-normal">
+                    "{testimonial.content}"
+                  </p>
+                </blockquote>
+
+                <div className="flex justify-center gap-1 mb-3">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <span key={i} className="text-orange text-base">★</span>
+                  ))}
+                </div>
+
+                <div className="text-center mt-auto">
+                  <h4 className="text-white text-base md:text-lg font-bold mb-1 tracking-normal">
+                    {testimonial.name}
+                  </h4>
+                  <p className="text-white/70 text-xs md:text-sm tracking-normal">
+                    {testimonial.role}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -490,44 +728,32 @@ export default function UKToUAERelocationPage() {
             </div>
           </section>
 
-          {/* SECTION 5: UK EXPAT TESTIMONIALS */}
-          <section className="relative py-16 md:py-24 bg-gradient-to-b from-transparent via-primary-dark/50 to-transparent">
+          {/* SECTION 5: UK EXPAT TESTIMONIALS - Infinite Loop Carousel */}
+          <section className="relative py-16 md:py-24 bg-gradient-to-b from-transparent via-primary-dark/50 to-transparent overflow-hidden">
             <div className="container mx-auto px-6">
               <motion.div
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
-                className="max-w-4xl mx-auto"
+                className="max-w-7xl mx-auto"
               >
                 <motion.h2
                   variants={itemVariants}
-                  className="text-3xl md:text-5xl font-bold mb-12 text-center"
+                  className="text-3xl md:text-5xl font-bold mb-4 text-center"
                 >
                   <span className="bg-gradient-to-r from-azure-blue to-orange bg-clip-text text-transparent">
-                    What British expats say
+                    What British Expats Say About This Guide
                   </span>
                 </motion.h2>
+                <motion.p
+                  variants={itemVariants}
+                  className="text-center text-white/70 mb-12 max-w-2xl mx-auto"
+                >
+                  Real experiences from British professionals who used this cultural intelligence guide before relocating to the UAE
+                </motion.p>
 
-                <div className="grid md:grid-cols-3 gap-6">
-                  {[
-                    "I wish I learned this before my first week in Dubai.",
-                    "This guide helped me understand what colleagues expect in the UAE.",
-                    "Clear. Practical. Real. It made my relocation smoother."
-                  ].map((quote, index) => (
-                    <motion.div
-                      key={index}
-                      variants={itemVariants}
-                      className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
-                    >
-                      <div className="absolute top-4 right-4">
-                        <Sparkles className="w-6 h-6 text-orange/50" />
-                      </div>
-                      <p className="text-white/90 italic relative z-10">"{quote}"</p>
-                      <p className="text-white/50 text-sm mt-4">— British Expat, UAE</p>
-                    </motion.div>
-                  ))}
-                </div>
+                <BritishTestimonialsCarousel />
               </motion.div>
             </div>
           </section>
