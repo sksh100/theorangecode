@@ -120,6 +120,39 @@ export async function POST(req: NextRequest) {
         // Don't fail the webhook if Slack fails
       });
 
+      // Check if this is an ebook purchase and send the ebook
+      const productName = session.metadata?.productName || session.metadata?.product || ""
+      const isEbookPurchase = productName.toLowerCase().includes('ebook') || 
+                              productName.toLowerCase().includes('uk to uae') ||
+                              session.metadata?.type === 'ebook'
+
+      if (isEbookPurchase && email && email !== 'unknown') {
+        try {
+          // Send ebook via email
+          const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.theorangecode.com'
+          const ebookResponse = await fetch(`${baseUrl}/api/send-ebook`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: email,
+              customerName: session.customer_details?.name || email.split('@')[0],
+              orderId: session.id,
+            }),
+          })
+
+          if (ebookResponse.ok) {
+            console.log('✅ Ebook sent successfully to:', email)
+          } else {
+            console.error('⚠️ Failed to send ebook:', await ebookResponse.text())
+          }
+        } catch (ebookError) {
+          console.error('❌ Error sending ebook:', ebookError)
+          // Don't fail the webhook if ebook delivery fails
+        }
+      }
+
       console.log('✅ Payment stored in Redis:', payment);
     }
 

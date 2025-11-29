@@ -53,6 +53,12 @@ interface ConversionEventData {
   metadata?: Record<string, any>;
 }
 
+interface EbookDeliveryData {
+  email: string;
+  customerName?: string;
+  orderId?: string;
+}
+
 /**
  * Send a message to Slack
  */
@@ -302,6 +308,63 @@ export async function notifyPayment(data: PaymentData): Promise<void> {
               emoji: true,
             },
             url: `mailto:${data.customerEmail}`,
+          },
+        ],
+      },
+    ],
+  };
+
+  await sendToSlack(message);
+}
+
+/**
+ * Notify about ebook delivery
+ */
+export async function notifyEbookDelivery(data: EbookDeliveryData): Promise<void> {
+  const message: SlackMessage = {
+    blocks: [
+      {
+        type: 'header',
+        text: {
+          type: 'plain_text',
+          text: '📚 Ebook Delivered Successfully!',
+          emoji: true,
+        },
+      },
+      {
+        type: 'section',
+        fields: [
+          {
+            type: 'mrkdwn',
+            text: `*Customer:*\n${data.customerName || 'Customer'}`,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Email:*\n${data.email}`,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Order ID:*\n\`${data.orderId || 'N/A'}\``,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Time:*\n${new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })}`,
+          },
+        ],
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: '✅ *UK to UAE Cultural Intelligence Guide* has been sent to the customer via email.',
+        },
+      },
+      {
+        type: 'context',
+        elements: [
+          {
+            type: 'mrkdwn',
+            text: '📧 The ebook PDF was attached to the email or a download link was provided.',
           },
         ],
       },

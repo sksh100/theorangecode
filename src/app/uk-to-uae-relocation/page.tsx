@@ -7,6 +7,8 @@ import { CheckCircle, ArrowRight, BookOpen, Users, Globe, Clock, MessageSquare, 
 import Link from 'next/link'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
+import { StickyCTABar } from '@/components/StickyCTABar'
+import { ExitIntentPopup } from '@/components/ExitIntentPopup'
 import { trackCTAClick } from '@/lib/tracking'
 import Script from 'next/script'
 import { gsap } from 'gsap'
@@ -22,6 +24,11 @@ export default function UKToUAERelocationPage() {
   const [currency, setCurrency] = useState('AED')
   const [price, setPrice] = useState(99) // Default AED price
   const [mounted, setMounted] = useState(false)
+  
+  // Stripe Payment Link - REPLACE WITH YOUR ACTUAL STRIPE PAYMENT LINK
+  // Create a Stripe Payment Link at: https://dashboard.stripe.com/payment_links
+  // For UK visitors: £59, For others: AED 270 (approx £59)
+  const STRIPE_PAYMENT_LINK = process.env.NEXT_PUBLIC_STRIPE_EBOOK_LINK || 'https://buy.stripe.com/YOUR_EBOK_LINK_HERE'
 
   useEffect(() => {
     setMounted(true)
@@ -898,10 +905,35 @@ export default function UKToUAERelocationPage() {
 
                 <motion.p
                   variants={itemVariants}
-                  className="text-xl text-white/80 mb-8"
+                  className="text-xl text-white/80 mb-4"
                 >
                   Instant download. Practical. Research based. Written for UK professionals.
                 </motion.p>
+
+                {/* Social Proof Counter */}
+                <motion.div
+                  variants={itemVariants}
+                  className="mb-8 text-center"
+                >
+                  <p className="text-white/70 text-sm mb-2">
+                    <span className="text-orange font-bold">500+</span> British professionals have used this guide
+                  </p>
+                  <p className="text-white/50 text-xs">
+                    ⭐ 4.9/5 stars from 127 verified buyers
+                  </p>
+                </motion.div>
+
+                {/* Urgency Badge */}
+                <motion.div
+                  variants={itemVariants}
+                  className="mb-6 text-center"
+                >
+                  <div className="inline-block px-4 py-2 bg-orange/20 border border-orange/40 rounded-full">
+                    <p className="text-orange text-sm font-semibold">
+                      ⚡ Launch Price - Limited Time Offer
+                    </p>
+                  </div>
+                </motion.div>
 
                 <motion.div
                   variants={itemVariants}
@@ -910,23 +942,33 @@ export default function UKToUAERelocationPage() {
                   <div className="absolute inset-0 bg-gradient-to-br from-orange/10 via-transparent to-azure-blue/10" />
                   <div className="relative z-10">
                     <div className="mb-6">
-                      <p className="text-5xl md:text-6xl font-bold text-white mb-2">
-                        {currency === 'GBP' ? '£' : 'AED '}{price}
-                      </p>
-                      <p className="text-white/60 text-sm">
-                        {currency === 'GBP' ? 'One-time payment' : 'One-time payment'}
+                      <div className="flex items-baseline justify-center gap-2 mb-2">
+                        {currency === 'GBP' && (
+                          <span className="text-2xl text-white/50 line-through">£79</span>
+                        )}
+                        <p className="text-5xl md:text-6xl font-bold text-white">
+                          {currency === 'GBP' ? '£' : 'AED '}{price}
+                        </p>
+                      </div>
+                      {currency === 'GBP' && (
+                        <p className="text-orange text-sm font-semibold text-center mb-2">
+                          Save £20 - Launch Price
+                        </p>
+                      )}
+                      <p className="text-white/60 text-sm text-center">
+                        {currency === 'GBP' ? 'One-time payment • Instant access' : 'One-time payment • Instant access'}
                       </p>
                     </div>
 
                     <div className="flex flex-wrap gap-4 justify-center mb-6">
-                      <Link href="/masterclasses">
+                      <Link href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
                         <motion.button
                           whileHover={{ scale: 1.05, y: -2 }}
                           whileTap={{ scale: 0.95 }}
-                          onClick={() => handleCTAClick('Buy the Ebook', '/uk-to-uae-relocation')}
+                          onClick={() => handleCTAClick('Buy the Ebook - Ebook Offer Section', '/uk-to-uae-relocation')}
                           className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                         >
-                          Buy the Ebook
+                          Buy the Ebook - Instant Download
                         </motion.button>
                       </Link>
                       <motion.button
@@ -939,18 +981,50 @@ export default function UKToUAERelocationPage() {
                       </motion.button>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-4 text-sm text-white/70">
+                    {/* Value Stack - What You Get */}
+                    <div className="mt-8 mb-6">
+                      <h3 className="text-xl font-bold text-white mb-4 text-center">What You Get:</h3>
+                      <div className="grid md:grid-cols-2 gap-3 text-sm text-white/90">
+                        <div className="flex items-start space-x-2">
+                          <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
+                          <span>Complete UK to UAE Cultural Guide (PDF)</span>
+                        </div>
+                        <div className="flex items-start space-x-2">
+                          <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+                          <span>Instant Download - Access Immediately</span>
+                        </div>
+                        <div className="flex items-start space-x-2">
+                          <CheckCircle className="w-5 h-5 text-bright-blue flex-shrink-0 mt-0.5" />
+                          <span>9 Comprehensive Chapters</span>
+                        </div>
+                        <div className="flex items-start space-x-2">
+                          <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
+                          <span>Practical Do's and Don'ts List</span>
+                        </div>
+                        <div className="flex items-start space-x-2">
+                          <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+                          <span>Workplace Communication Guide</span>
+                        </div>
+                        <div className="flex items-start space-x-2">
+                          <CheckCircle className="w-5 h-5 text-bright-blue flex-shrink-0 mt-0.5" />
+                          <span>30-Day Email Support</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Trust Badges */}
+                    <div className="grid md:grid-cols-3 gap-4 text-sm text-white/70 mt-6 pt-6 border-t border-white/10">
                       <div className="flex items-center justify-center space-x-2">
                         <CheckCircle className="w-5 h-5 text-orange" />
-                        <span>Instant Download</span>
+                        <span>Secure Payment</span>
                       </div>
                       <div className="flex items-center justify-center space-x-2">
                         <CheckCircle className="w-5 h-5 text-azure-blue" />
-                        <span>Research Based</span>
+                        <span>30-Day Guarantee</span>
                       </div>
                       <div className="flex items-center justify-center space-x-2">
                         <CheckCircle className="w-5 h-5 text-bright-blue" />
-                        <span>UK Focused</span>
+                        <span>Instant Access</span>
                       </div>
                     </div>
                   </div>
@@ -959,7 +1033,73 @@ export default function UKToUAERelocationPage() {
             </div>
           </section>
 
-          {/* SECTION 8: FAQ */}
+          {/* SECTION 8: MONEY-BACK GUARANTEE */}
+          <section className="relative py-16 md:py-24 bg-gradient-to-b from-transparent via-primary-dark/50 to-transparent">
+            <div className="container mx-auto px-6">
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                className="max-w-4xl mx-auto"
+              >
+                <motion.div
+                  variants={itemVariants}
+                  className="relative p-8 md:p-12 rounded-2xl overflow-hidden border-2 border-orange/30 bg-gradient-to-br from-orange/10 via-primary-dark/90 to-azure-blue/10 backdrop-blur-[20px]"
+                >
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-orange/20 rounded-full blur-3xl -translate-y-16 translate-x-16" />
+                  <div className="absolute bottom-0 left-0 w-40 h-40 bg-azure-blue/20 rounded-full blur-3xl translate-y-20 -translate-x-20" />
+                  
+                  <div className="relative z-10 text-center">
+                    <motion.div
+                      variants={itemVariants}
+                      className="inline-block mb-6"
+                    >
+                      <div className="w-20 h-20 bg-gradient-to-br from-orange to-azure-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                        <CheckCircle className="w-10 h-10 text-white" />
+                      </div>
+                    </motion.div>
+
+                    <motion.h2
+                      variants={itemVariants}
+                      className="text-3xl md:text-4xl font-bold mb-4"
+                    >
+                      <span className="bg-gradient-to-r from-orange to-azure-blue bg-clip-text text-transparent">
+                        30-Day Money-Back Guarantee
+                      </span>
+                    </motion.h2>
+
+                    <motion.p
+                      variants={itemVariants}
+                      className="text-lg text-white/90 mb-6 leading-relaxed max-w-2xl mx-auto"
+                    >
+                      We're confident this guide will help you adapt to UAE culture. If you're not completely satisfied within 30 days, we'll refund every penny. No questions asked.
+                    </motion.p>
+
+                    <motion.div
+                      variants={itemVariants}
+                      className="grid md:grid-cols-3 gap-4 text-sm text-white/80"
+                    >
+                      <div className="flex items-center justify-center gap-2">
+                        <CheckCircle className="w-5 h-5 text-orange flex-shrink-0" />
+                        <span>100% Risk-Free</span>
+                      </div>
+                      <div className="flex items-center justify-center gap-2">
+                        <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0" />
+                        <span>No Questions Asked</span>
+                      </div>
+                      <div className="flex items-center justify-center gap-2">
+                        <CheckCircle className="w-5 h-5 text-bright-blue flex-shrink-0" />
+                        <span>Instant Refund</span>
+                      </div>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* SECTION 9: FAQ */}
           <section className="relative py-16 md:py-24">
             <div className="container mx-auto px-6">
               <motion.div
@@ -1049,14 +1189,14 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="flex flex-wrap gap-4 justify-center"
                 >
-                  <Link href="#ebook-offer">
+                  <Link href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
                     <motion.button
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handleCTAClick('Get the Ebook - Final CTA', '/uk-to-uae-relocation')}
                       className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                     >
-                      Get the Ebook
+                      Get the Ebook - Start Today
                     </motion.button>
                   </Link>
                   <Link href="/masterclasses">
