@@ -600,15 +600,15 @@ export function WebGLEffectSelector() {
         </Canvas>
       </div>
 
-      {/* Effect Selector UI - Compact at top with 40cm space below */}
-      <div className="relative z-10 h-full flex flex-col items-start justify-start px-4 sm:px-6 lg:px-8 pt-2 md:pt-3">
+      {/* Effect Selector UI - Expanded with more vertical space */}
+      <div className="relative z-10 h-full flex flex-col items-start justify-start px-4 sm:px-6 lg:px-8 pt-8 md:pt-12 pb-32">
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-5xl mx-auto w-full"
-          style={{ maxHeight: 'calc(100vh - 400px)' }}
+          style={{ minHeight: 'calc(100vh - 200px)', paddingBottom: '200px' }}
         >
-          <div className="glass-card p-2 md:p-3 backdrop-blur-[20px] mb-2 bg-white/5 border border-white/10">
+          <div className="glass-card p-6 md:p-8 backdrop-blur-[20px] mb-8 bg-white/5 border border-white/10">
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -628,7 +628,7 @@ export function WebGLEffectSelector() {
             </p>
 
             {/* Effect Cards - 6 options in 2 rows */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
               {effectOptions.map((option) => (
                 <motion.button
                   key={option.id}
