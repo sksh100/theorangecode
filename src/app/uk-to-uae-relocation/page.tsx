@@ -1244,6 +1244,23 @@ export default function UKToUAERelocationPage() {
                     </motion.button>
                   </Link>
                 </motion.div>
+
+                {/* Social Share Section */}
+                <motion.div
+                  variants={itemVariants}
+                  className="mt-12 pt-8 border-t border-white/10"
+                >
+                  <p className="text-white/70 text-center mb-6">
+                    Share this guide with friends, family, and colleagues who are relocating to the UAE
+                  </p>
+                  <SocialShareButtons
+                    url="https://www.theorangecode.com/uk-to-uae-relocation"
+                    title="UK to UAE Relocation Cultural Guide"
+                    description="A practical cultural intelligence guide for British professionals relocating to the UAE."
+                    variant="default"
+                    showLabel={true}
+                  />
+                </motion.div>
               </motion.div>
             </div>
           </section>
