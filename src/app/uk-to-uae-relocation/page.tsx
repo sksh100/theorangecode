@@ -889,10 +889,28 @@ export default function UKToUAERelocationPage() {
 
                 <motion.p
                   variants={itemVariants}
-                  className="text-lg text-white/80 leading-relaxed"
+                  className="text-lg text-white/80 leading-relaxed mb-8"
                 >
                   This guide was created by The Orange Code, a UAE based cultural intelligence consultancy. We help professionals, teams and expats succeed in the UAE workplace through training, courses and practical learning tools.
                 </motion.p>
+
+                {/* Share CTA inside ebook preview section */}
+                <motion.div
+                  variants={itemVariants}
+                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/60 backdrop-blur-[20px]"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
+                  <div className="relative z-10">
+                    <p className="text-white/90 text-lg mb-4 font-medium">
+                      If you know someone preparing to move to the UAE, share this guide with them.
+                    </p>
+                    <WhatsAppShareButton 
+                      variant="default"
+                      url="https://www.theorangecode.com/uk-to-uae-relocation"
+                      message="I found this UK to UAE relocation cultural guide and it helped me avoid big mistakes. Thought you might need it."
+                    />
+                  </div>
+                </motion.div>
               </motion.div>
             </div>
           </section>
