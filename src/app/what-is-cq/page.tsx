@@ -349,6 +349,7 @@ export default function WhatIsCQPage() {
 
       <ModernFooter />
     </div>
+    </>
   )
 }
 
