@@ -323,68 +323,6 @@ export default function RootLayout({
           defer
         />
         
-        {/* FAQPage Schema */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'FAQPage',
-              mainEntity: [
-                {
-                  '@type': 'Question',
-                  name: 'What makes The Orange Code different from other Masterclasses?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'The Orange Code offers an experience that goes far beyond standard cultural training. Our programs are designed specifically for the realities of the UAE and the wider GCC. We blend cultural intelligence, leadership psychology, behaviour science, and region specific insights to help clients strengthen confidence, communication, and emotional awareness.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'How long do the Masterclasses take?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'Our signature Masterclasses are designed to fit into a busy lifestyle. They run for 3 hours and deliver strong value in a short time. One to one coaching can be scheduled according to the client\'s needs and availability.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'What cultural aspects do you cover for UAE expats?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'Our Foundations Masterclass includes the core cultural elements needed to feel confident and grounded in the UAE. We cover Islamic etiquette, modesty guidelines, hospitality rituals, communication styles, national identity, essential Arabic greetings, and the subtle social rules that shape daily life in the Emirates.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'What should I know about Emirati culture when moving to the UAE?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'When moving to the UAE, understanding Emirati culture is essential. This includes Islamic etiquette, modesty guidelines, hospitality rituals, communication styles, national identity, essential Arabic greetings, and the subtle social rules that shape daily life in the Emirates. Our training programs help expatriates navigate these cultural nuances effectively.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'What is Emirati etiquette I should learn?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'Emirati etiquette includes understanding high-context communication, indirect feedback styles, respect for hierarchy, relationship-building over task-orientation, proper greeting customs, dress code and modesty guidelines, prayer time considerations, and hospitality rituals. Our masterclasses provide comprehensive training in these areas.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'How do I do business in the Emirates?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'Doing business in the Emirates requires understanding local business protocols, negotiation styles, relationship-building approaches, meeting etiquette, gift-giving customs, and the importance of building trust before closing deals. Cultural intelligence training helps professionals navigate these nuances effectively and build successful business relationships.',
-                  },
-                },
-              ],
-            }),
-          }}
-          defer
-        />
-        
         {/* BreadcrumbList Schema */}
         <script
           type="application/ld+json"
