@@ -75,7 +75,7 @@ export const metadata: Metadata = {
   publisher: 'The Orange Code',
   metadataBase: new URL('https://www.theorangecode.com'),
   alternates: {
-    canonical: '/',
+    canonical: 'https://www.theorangecode.com/',
   },
   icons: {
     icon: [
