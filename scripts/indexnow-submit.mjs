@@ -32,29 +32,58 @@ async function submitIndexNow() {
     urlList,
   };
 
-  try {
-    console.log('Submitting URLs to IndexNow...');
-    console.log('Host:', host);
-    console.log('Key location:', keyLocation);
-    console.log('URL count:', urlList.length);
+  // Try multiple IndexNow endpoints
+  const endpoints = [
+    'https://api.indexnow.org/index',
+    'https://www.bing.com/indexnow',
+  ];
 
-    const res = await fetch('https://api.indexnow.org/index', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-      body: JSON.stringify(body),
-    });
+  console.log('Submitting URLs to IndexNow...');
+  console.log('Host:', host);
+  console.log('Key location:', keyLocation);
+  console.log('URL count:', urlList.length);
+  console.log('');
 
-    const text = await res.text();
-    console.log('IndexNow response status:', res.status);
-    console.log('IndexNow response body:', text);
+  let success = false;
+  let lastError = null;
 
-    if (!res.ok) {
-      process.exitCode = 1;
+  for (const endpoint of endpoints) {
+    try {
+      console.log(`Trying endpoint: ${endpoint}`);
+      
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: JSON.stringify(body),
+      });
+
+      const text = await res.text();
+      console.log(`Response status: ${res.status}`);
+      
+      if (res.ok || res.status === 202) {
+        if (res.status === 202) {
+          console.log('✅ Success! URLs accepted (202 Accepted - validation pending).');
+        } else {
+          console.log('✅ Success! URLs submitted successfully.');
+        }
+        console.log('Response:', text || '(empty response)');
+        success = true;
+        break;
+      } else {
+        console.log('❌ Failed:', text);
+        lastError = { endpoint, status: res.status, text };
+      }
+    } catch (error) {
+      console.error(`❌ Error with ${endpoint}:`, error.message);
+      lastError = { endpoint, error: error.message };
     }
-  } catch (error) {
-    console.error('Error submitting to IndexNow:', error);
+    console.log('');
+  }
+
+  if (!success) {
+    console.error('All IndexNow endpoints failed. Last error:', lastError);
     process.exitCode = 1;
   }
 }
