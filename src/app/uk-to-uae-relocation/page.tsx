@@ -1384,10 +1384,10 @@ export default function UKToUAERelocationPage() {
                     <motion.button
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => handleCTAClick('Explore Workshops - Final CTA', '/uk-to-uae-relocation')}
+                      onClick={() => handleCTAClick('Explore Masterclasses - Final CTA', '/masterclasses')}
                       className="px-8 py-4 nav-button-glass text-white/90 hover:text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                     >
-                      Explore Workshops
+                      Explore Masterclasses
                     </motion.button>
                   </Link>
                 </motion.div>
