@@ -82,10 +82,12 @@ export default function AboutPage() {
             "name": "About The Orange Code",
             "description": "Learn about The Orange Code, a cultural intelligence and leadership training platform in Abu Dhabi, UAE. Our mission is to bridge people, cultures and intelligence.",
             "url": "https://www.theorangecode.com/about",
-            "mainEntity": {
+            "mainEntityOfPage": "https://www.theorangecode.com/about",
+            "about": {
               "@type": "Organization",
               "name": "The Orange Code",
-              "mission": "To equip individuals, teams and organisations with the cultural intelligence needed to communicate with clarity, build lasting connections and operate confidently across the UAE and the wider Gulf.",
+              "description": "The Orange Code equips individuals, teams and organisations with the cultural intelligence needed to communicate with clarity, build lasting connections and operate confidently across the UAE and wider Gulf.",
+              "url": "https://www.theorangecode.com",
               "foundingDate": "2024"
             }
           })

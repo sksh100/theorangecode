@@ -50,8 +50,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${baseUrl}/uk-to-uae-relocation`,
       lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.9,
+      changeFrequency: 'weekly',
+      priority: 1.0,
     },
     {
       url: `${baseUrl}/uk-to-uae-relocation-checklist`,

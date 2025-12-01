@@ -323,33 +323,43 @@ export default function UKToUAERelocationPage() {
 
   return (
     <>
-      {/* AI Search Optimization Meta Tags */}
-      <Script id="ai-meta-tags" strategy="beforeInteractive">
-        {`
-          // Add AI meta tags for AI search optimization
-          const metaTags = [
-            { name: 'ai-topic', content: 'UK to UAE relocation guide' },
-            { name: 'ai-topic', content: 'moving to the UAE from UK' },
-            { name: 'ai-topic', content: 'UAE culture explained for British expats' },
-            { name: 'ai-topic', content: 'UAE work culture preparation' },
-            { name: 'ai-topic', content: 'Dubai relocation help for UK professionals' },
-            { name: 'ai-topic', content: 'Abu Dhabi relocation information' },
-            { name: 'ai-topic', content: 'expat guide UAE' },
-            { name: 'ai-intent', content: 'relocation, expat, cross-cultural intelligence' },
-            { name: 'ai-relevance', content: 'UAE culture, work culture UAE, British expats, moving abroad' },
-            { name: 'content-purpose', content: 'practical relocation guidance for UK expats' }
-          ];
-          
-          if (typeof document !== 'undefined') {
-            metaTags.forEach(tag => {
-              const meta = document.createElement('meta');
-              meta.setAttribute('name', tag.name);
-              meta.setAttribute('content', tag.content);
-              document.head.appendChild(meta);
-            });
-          }
-        `}
-      </Script>
+       {/* AI Search Optimization Meta Tags */}
+       <Script id="ai-meta-tags" strategy="beforeInteractive">
+         {`
+           // Add AI meta tags for AI search optimization
+           const metaTags = [
+             { name: 'ai-topic', content: 'UK to UAE relocation guide' },
+             { name: 'ai-topic', content: 'moving to the UAE from UK' },
+             { name: 'ai-topic', content: 'UAE culture explained for British expats' },
+             { name: 'ai-topic', content: 'UAE work culture preparation' },
+             { name: 'ai-topic', content: 'Dubai relocation help for UK professionals' },
+             { name: 'ai-topic', content: 'Abu Dhabi relocation information' },
+             { name: 'ai-topic', content: 'expat guide UAE' },
+             { name: 'ai-topic', content: 'UAE guide for British' },
+             { name: 'ai-topic', content: 'UK expat guide UAE' },
+             { name: 'ai-topic', content: 'British expat guide UAE' },
+             { name: 'ai-topic', content: 'UAE dos and donts for British' },
+             { name: 'ai-topic', content: 'UAE rules for UK expats' },
+             { name: 'ai-topic', content: 'Dubai guide for UK expats' },
+             { name: 'ai-topic', content: 'Abu Dhabi guide for British' },
+             { name: 'ai-intent', content: 'relocation, expat, cross-cultural intelligence, UK to UAE move, British professionals UAE' },
+             { name: 'ai-relevance', content: 'UAE culture, work culture UAE, British expats, moving abroad, UK expat guide, UAE guide for British, Dubai guide UK, Abu Dhabi guide UK' },
+             { name: 'content-purpose', content: 'practical relocation guidance for UK expats, cultural intelligence for British professionals moving to UAE' },
+             { name: 'target-audience', content: 'British professionals, UK expats, British citizens moving to UAE, UK teachers UAE, UK nurses UAE' },
+             { name: 'geographic-focus', content: 'United Kingdom, UK, United Arab Emirates, UAE, Dubai, Abu Dhabi' },
+             { name: 'content-language', content: 'en-GB' }
+           ];
+           
+           if (typeof document !== 'undefined') {
+             metaTags.forEach(tag => {
+               const meta = document.createElement('meta');
+               meta.setAttribute('name', tag.name);
+               meta.setAttribute('content', tag.content);
+               document.head.appendChild(meta);
+             });
+           }
+         `}
+       </Script>
 
       {/* Schema Markup */}
       <Script
@@ -374,9 +384,19 @@ export default function UKToUAERelocationPage() {
             "@context": "https://schema.org",
             "@type": "Product",
             "name": "UK to UAE Cultural Intelligence Ebook",
-            "description": "A research based guide helping British expats understand UAE culture, workplace norms, communication styles and how to integrate effectively.",
+            "description": "A research based guide helping British expats understand UAE culture, workplace norms, communication styles, dos and donts, and how to integrate effectively. Written specifically for UK professionals moving to Dubai and Abu Dhabi.",
             "image": "https://www.theorangecode.com/og-image",
             "category": "Educational Book",
+            "inLanguage": "en-GB",
+            "audience": {
+              "@type": "Audience",
+              "audienceType": "British expatriates",
+              "geographicArea": {
+                "@type": "Country",
+                "name": "United Kingdom"
+              }
+            },
+            "keywords": "UK to UAE guide, British expat guide UAE, UAE guide for British, Dubai guide UK, Abu Dhabi guide UK, UAE dos and donts for British, UAE rules for UK expats, UK expat UAE guide",
             "brand": {
               "@type": "Organization",
               "name": "The Orange Code"
@@ -395,6 +415,10 @@ export default function UKToUAERelocationPage() {
               "price": "59",
               "availability": "https://schema.org/InStock",
               "priceValidUntil": "2025-12-31",
+              "eligibleRegion": {
+                "@type": "Country",
+                "name": "United Kingdom"
+              },
               "seller": {
                 "@type": "Organization",
                 "name": "The Orange Code",
@@ -413,14 +437,31 @@ export default function UKToUAERelocationPage() {
             "@context": "https://schema.org",
             "@type": "Article",
             "headline": "Moving from the UK to the UAE. Cultural Guide for British Professionals",
-            "description": "A practical guide for UK expats preparing to relocate to the UAE. Covers UAE culture, communication, workplace expectations, etiquette, and mistakes to avoid.",
+            "description": "A practical cultural intelligence guide for UK expats preparing to relocate to the UAE. Covers UAE culture, communication, workplace expectations, etiquette, dos and donts, rules, and mistakes to avoid. Written specifically for British professionals moving to Dubai and Abu Dhabi.",
             "image": "https://www.theorangecode.com/og-image",
+            "inLanguage": "en-GB",
             "author": {
               "@type": "Organization",
-              "name": "The Orange Code"
+              "name": "The Orange Code",
+              "url": "https://www.theorangecode.com"
             },
-            "keywords": "moving to UAE from UK, UK expats UAE, Dubai relocation guide, UAE workplace culture, British professionals UAE",
-            "mainEntityOfPage": "https://www.theorangecode.com/uk-to-uae-relocation"
+            "publisher": {
+              "@type": "Organization",
+              "name": "The Orange Code",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.theorangecode.com/android-chrome-512x512.png"
+              }
+            },
+            "keywords": "moving to UAE from UK, UK expats UAE, Dubai relocation guide, UAE workplace culture, British professionals UAE, UK to UAE expat guide, British expat guide UAE, UAE guide for British, Dubai guide UK, Abu Dhabi guide UK, UAE dos and donts for British, UAE rules for UK expats, UAE etiquette for British, UK expat UAE guide",
+            "about": {
+              "@type": "Thing",
+              "name": "UK to UAE Relocation",
+              "description": "Cultural intelligence guide for British professionals relocating to the United Arab Emirates"
+            },
+            "mainEntityOfPage": "https://www.theorangecode.com/uk-to-uae-relocation",
+            "datePublished": "2024-01-01",
+            "dateModified": new Date().toISOString().split('T')[0]
           })
         }}
       />
@@ -447,7 +488,11 @@ export default function UKToUAERelocationPage() {
               "Emirati Etiquette",
               "Cross-Cultural Communication",
               "UK to UAE Relocation",
-              "British Expatriates in UAE"
+              "British Expatriates in UAE",
+              "UAE Guide for British",
+              "UK Expat Guide UAE",
+              "UAE Dos and Donts",
+              "UAE Rules for Expats"
             ]
           })
         }}
@@ -548,6 +593,46 @@ export default function UKToUAERelocationPage() {
                   "@type": "Answer",
                   "text": "Purchase the UK to UAE relocation guide directly at https://www.theorangecode.com/uk-to-uae-relocation. Payment is secure via Stripe, and you'll receive instant access to the PDF download via email."
                 }
+              },
+              {
+                "@type": "Question",
+                "name": "Is this ebook specifically for British professionals?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. The UK to UAE Cultural Intelligence Ebook is written specifically for British professionals and families moving from the UK to the Emirates. Every chapter uses UK workplace examples, UK–UAE comparisons and real scenarios from British expats in Dubai and Abu Dhabi."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Will this guide help me avoid cultural mistakes in the UAE?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. The ebook includes a dedicated section on UAE dos and don'ts, practical etiquette on dress, communication and behaviour, and real examples of mistakes British expats make in Dubai and Abu Dhabi – and how to avoid them."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is this useful if I am only exploring jobs in the UAE from the UK?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Even if you are still considering a move, the ebook explains what British professionals should know before applying for jobs in the UAE, how workplace expectations differ from the UK, and which cultural skills employers in Dubai and Abu Dhabi are looking for."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What are the UAE dos and donts for British expats?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The guide covers comprehensive UAE dos and donts for British expats, including dress codes, communication styles, workplace behaviour, social etiquette, and cultural sensitivities. It explains what not to do in UAE as a British expat and provides practical rules and regulations to follow."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is this a complete UAE guide for British expats?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. This is a comprehensive UAE expat guide specifically written for British professionals. It covers UAE culture, workplace norms, communication, etiquette, dos and donts, rules, and practical advice for living and working in Dubai and Abu Dhabi."
+                }
               }
             ]
           })
@@ -633,6 +718,43 @@ export default function UKToUAERelocationPage() {
                 "item": "https://www.theorangecode.com/uk-to-uae-relocation"
               }
             ]
+          })
+        }}
+      />
+      <Script
+        id="webpage-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "UK to UAE Relocation Cultural Guide",
+            "description": "A practical cultural intelligence guide for British professionals relocating to the UAE. Learn UAE workplace culture, Emirati etiquette, communication styles, dos and donts, and what to expect before you arrive.",
+            "url": "https://www.theorangecode.com/uk-to-uae-relocation",
+            "inLanguage": "en-GB",
+            "isPartOf": {
+              "@type": "WebSite",
+              "name": "The Orange Code",
+              "url": "https://www.theorangecode.com"
+            },
+            "about": {
+              "@type": "Thing",
+              "name": "UK to UAE Relocation",
+              "description": "Cultural intelligence guide for British professionals moving to the United Arab Emirates"
+            },
+            "audience": {
+              "@type": "Audience",
+              "audienceType": "British expatriates",
+              "geographicArea": {
+                "@type": "Country",
+                "name": "United Kingdom"
+              }
+            },
+            "keywords": "UK to UAE guide, British expat guide UAE, UAE guide for British, Dubai guide UK, Abu Dhabi guide UK, UAE dos and donts for British, UAE rules for UK expats, UK expat UAE guide",
+            "mainEntity": {
+              "@type": "Product",
+              "name": "UK to UAE Cultural Intelligence Ebook"
+            }
           })
         }}
       />
