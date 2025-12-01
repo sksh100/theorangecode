@@ -67,7 +67,7 @@ export default function WhatIsCQPage() {
             "@context": "https://schema.org",
             "@type": "Article",
             "headline": "What is Cultural Intelligence (CQ)?",
-            "description": "Learn about Cultural Intelligence (CQ) - the ability to understand, adapt, and work effectively across different cultures. Discover the three pillars: cognitive understanding, emotional awareness, and behavioural flexibility.",
+            "description": "Cultural intelligence is the ability to interpret, adapt to, and effectively engage with people from different cultural backgrounds. Learn about its three pillars: cognitive understanding, emotional awareness, and behavioural flexibility.",
             "url": "https://www.theorangecode.com/what-is-cq",
             "image": "https://www.theorangecode.com/og-image",
             "author": {
@@ -79,7 +79,7 @@ export default function WhatIsCQPage() {
               "name": "The Orange Code",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://www.theorangecode.com/logo1.png"
+                "url": "https://www.theorangecode.com/android-chrome-512x512.png"
               }
             },
             "datePublished": "2024-01-01",
