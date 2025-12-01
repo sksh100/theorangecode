@@ -387,7 +387,6 @@ export default function UKToUAERelocationPage() {
             "description": "A research based guide helping British expats understand UAE culture, workplace norms, communication styles, dos and donts, and how to integrate effectively. Written specifically for UK professionals moving to Dubai and Abu Dhabi.",
             "image": "https://www.theorangecode.com/og-image",
             "category": "Educational Book",
-            "inLanguage": "en-GB",
             "audience": {
               "@type": "Audience",
               "audienceType": "British expatriates",

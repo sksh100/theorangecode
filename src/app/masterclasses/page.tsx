@@ -360,38 +360,37 @@ export default function MasterclassesPage() {
               "@type": "Country",
               "name": "United Arab Emirates"
             },
-            "hasOfferCatalog": {
-              "@type": "OfferCatalog",
-              "name": "Cultural Intelligence Masterclasses",
-              "itemListElement": masterclasses.map((masterclass, index) => ({
-                "@type": "Offer",
-                "position": index + 1,
-                "itemOffered": {
-                  "@type": "Course",
-                  "name": masterclass.title,
-                  "description": masterclass.description,
-                  "provider": {
-                    "@type": "Organization",
-                    "name": "The Orange Code"
-                  },
-                  "courseCode": `CI-MASTERCLASS-${masterclass.id}`,
-                  "educationalLevel": "Professional Development",
-                  "image": "https://www.theorangecode.com/og-image",
-                  "offers": {
-                    "@type": "Offer",
-                    "price": masterclass.price.toString(),
-                    "priceCurrency": "AED",
-                    "availability": "https://schema.org/InStock",
-                    "url": masterclass.paymentLink || "https://www.theorangecode.com/masterclasses",
-                    "seller": {
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Cultural Intelligence Masterclasses",
+                "itemListElement": masterclasses.map((masterclass) => ({
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Course",
+                    "name": masterclass.title,
+                    "description": masterclass.description,
+                    "provider": {
                       "@type": "Organization",
-                      "name": "The Orange Code",
-                      "url": "https://www.theorangecode.com"
+                      "name": "The Orange Code"
+                    },
+                    "courseCode": `CI-MASTERCLASS-${masterclass.id}`,
+                    "educationalLevel": "Professional Development",
+                    "image": "https://www.theorangecode.com/og-image",
+                    "offers": {
+                      "@type": "Offer",
+                      "price": masterclass.price.toString(),
+                      "priceCurrency": "AED",
+                      "availability": "https://schema.org/InStock",
+                      "url": masterclass.paymentLink || "https://www.theorangecode.com/masterclasses",
+                      "seller": {
+                        "@type": "Organization",
+                        "name": "The Orange Code",
+                        "url": "https://www.theorangecode.com"
+                      }
                     }
                   }
-                }
-              }))
-            }
+                }))
+              }
           })
         }}
       />
