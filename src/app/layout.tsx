@@ -301,6 +301,7 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'Organization',
               name: 'The Orange Code',
+              alternateName: ['theorangecode', 'the orange code'],
               url: 'https://www.theorangecode.com',
               logo: 'https://www.theorangecode.com/android-chrome-512x512.png',
               description: 'Premium learning platform in Abu Dhabi empowering professionals with cultural intelligence and leadership skills.',

@@ -32,7 +32,7 @@ export function Hero() {
               in the Gulf.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href="/home#book-session">
+              <Link href="/#contact">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}

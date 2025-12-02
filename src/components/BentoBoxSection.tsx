@@ -91,7 +91,7 @@ export function BentoBoxSection() {
       gradient: 'from-orange/20 to-orange/5',
       borderColor: 'border-orange/40',
       glowColor: 'from-orange/30 to-orange/10',
-      link: '#book-session'
+      link: '#contact'
     }
   ]
 

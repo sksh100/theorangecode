@@ -110,7 +110,7 @@ export function FinalCTASection() {
             viewport={{ once: true }}
           >
             {/* Primary CTA */}
-            <Link href="/home#book-session">
+            <Link href="/#contact">
               <motion.button
                 className="cta-button-glow px-10 py-5 rounded-xl font-bold text-lg md:text-xl text-white relative overflow-hidden group"
                 whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(255, 145, 77, 0.6)" }}
