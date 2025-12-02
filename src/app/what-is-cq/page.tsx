@@ -89,6 +89,59 @@ export default function WhatIsCQPage() {
           })
         }}
       />
+      {/* FAQ Schema for "People Also Ask" */}
+      <Script
+        id="what-is-cq-faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is cultural intelligence?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Cultural intelligence (CQ) is the ability to interpret, adapt to, and effectively engage with people from different cultural backgrounds. It consists of three pillars: cognitive understanding (knowing about different cultures), emotional awareness (recognizing and respecting emotional responses across cultures), and behavioural flexibility (adapting your actions and communication style appropriately)."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What is cultural intelligence in the UAE?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Cultural intelligence in the UAE is essential for anyone living, working, or building relationships in the Emirates. It involves understanding Emirati traditions, Islamic values, and navigating one of the world's most diverse international communities. Cultural intelligence UAE helps professionals in Dubai, Abu Dhabi, and across all seven emirates communicate effectively, build trust, and avoid misunderstandings in both professional and social settings."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Why is cultural intelligence important in the UAE?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Cultural intelligence is crucial in the UAE because the country hosts over 200 nationalities, creating a unique multicultural environment. Understanding cultural differences helps professionals communicate clearly, build stronger relationships, reduce misunderstandings, and succeed in business. Without cultural intelligence, confusion rises, relationships weaken, and workplaces lose harmony."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How can I develop cultural intelligence in the UAE?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "You can develop cultural intelligence in the UAE through training programs, masterclasses, and practical experience. The Orange Code offers cultural intelligence training in Abu Dhabi and Dubai, covering Emirati cultural foundations, communication styles, business etiquette, and relationship-building strategies. Our programs help professionals understand how to adapt their approach while remaining authentic."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What are the benefits of cultural intelligence training in Dubai and Abu Dhabi?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Cultural intelligence training in Dubai and Abu Dhabi helps professionals recognize why people communicate differently, understand how decisions are made in different contexts, know what behaviours are considered respectful, build trust through culturally appropriate actions, adjust approaches while remaining authentic, and navigate multicultural environments with confidence."
+                }
+              }
+            ]
+          })
+        }}
+      />
 
     <div className="min-h-screen bg-primary-dark text-white">
       <ModernNavbar />
@@ -121,11 +174,11 @@ export default function WhatIsCQPage() {
               </motion.div>
               <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-6 px-4 sm:px-0 break-words">
                 <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
-                  What is <span className="whitespace-normal sm:whitespace-nowrap">Cultural Intelligence</span> in the UAE?
+                  Cultural Intelligence UAE: What is CQ in Dubai & Abu Dhabi?
                 </span>
               </h1>
               <p className="text-lg sm:text-xl text-white/80 mb-4">
-                Cultural Intelligence (CQ) for professionals in Dubai, Abu Dhabi, and the United Arab Emirates
+                Master cultural intelligence (CQ) for success in the UAE. Essential training for professionals in Dubai, Abu Dhabi, and across all seven emirates.
               </p>
             </motion.div>
           </div>
