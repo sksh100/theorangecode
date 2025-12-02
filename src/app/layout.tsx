@@ -312,8 +312,10 @@ export default function RootLayout({
                 addressCountry: 'AE',
               },
               sameAs: [
-                'https://www.instagram.com/the.orangecode',
+                'https://www.instagram.com/the.orangecode/',
                 'https://www.linkedin.com/in/the-orange-code-070849395/',
+                'https://x.com/TheOrangeCode',
+                'https://www.pinterest.com/theorangecode/',
               ],
             }),
           }}
