@@ -205,7 +205,7 @@ export function ModernNavbar() {
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
       
-      <div className="max-w-7xl mx-auto px-0 relative w-full">
+      <div className="w-full px-0 relative">
         <div className="flex items-center justify-between h-20 relative">
           {/* Logo - visible on all screen sizes, full height, left edge aligned */}
           <Link href="/" className="flex-shrink-0 min-w-0 flex items-center h-full absolute left-0 lg:absolute lg:left-0">
