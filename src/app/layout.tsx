@@ -7,10 +7,10 @@ import { CookieBanner } from '@/components/CookieBanner'
 
 export const metadata: Metadata = {
   title: {
-    default: 'The Orange Code - Cultural Intelligence & Leadership Training | Abu Dhabi',
+    default: 'Cultural Intelligence UAE | Cultural Intelligence Training Dubai & Abu Dhabi | The Orange Code',
     template: '%s | The Orange Code'
   },
-  description: 'The Orange Code is a premium learning platform based in Abu Dhabi, UAE. We empower professionals moving to the UAE to develop cultural intelligence, understand Emirati culture and etiquette, and master doing business in the Emirates. Join our exclusive programs and transform cultural barriers into bridges of trust.',
+  description: 'Cultural Intelligence UAE: Premium cultural intelligence training in Dubai and Abu Dhabi. The Orange Code empowers professionals to develop cultural intelligence (CQ), understand Emirati culture, and master doing business in the UAE and GCC. Expert cultural intelligence courses and masterclasses.',
   keywords: [
     'The Orange Code',
     'cultural intelligence',

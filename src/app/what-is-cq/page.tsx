@@ -66,8 +66,9 @@ export default function WhatIsCQPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            "headline": "What is Cultural Intelligence (CQ)?",
-            "description": "Cultural intelligence is the ability to interpret, adapt to, and effectively engage with people from different cultural backgrounds. Learn about its three pillars: cognitive understanding, emotional awareness, and behavioural flexibility.",
+            "headline": "What is Cultural Intelligence (CQ)? | Cultural Intelligence UAE",
+            "description": "Cultural intelligence (CQ) is the ability to interpret, adapt to, and effectively engage with people from different cultural backgrounds. Essential for professionals in the UAE, Dubai, and Abu Dhabi. Learn about its three pillars: cognitive understanding, emotional awareness, and behavioural flexibility.",
+            "keywords": "cultural intelligence, cultural intelligence UAE, cultural intelligence Dubai, cultural intelligence Abu Dhabi, CQ, cultural competence UAE",
             "url": "https://www.theorangecode.com/what-is-cq",
             "image": "https://www.theorangecode.com/og-image",
             "author": {
@@ -120,9 +121,12 @@ export default function WhatIsCQPage() {
               </motion.div>
               <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-6 px-4 sm:px-0 break-words">
                 <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
-                  What is <span className="whitespace-normal sm:whitespace-nowrap">Cultural Intelligence</span>
+                  What is <span className="whitespace-normal sm:whitespace-nowrap">Cultural Intelligence</span> in the UAE?
                 </span>
               </h1>
+              <p className="text-lg sm:text-xl text-white/80 mb-4">
+                Cultural Intelligence (CQ) for professionals in Dubai, Abu Dhabi, and the United Arab Emirates
+              </p>
             </motion.div>
           </div>
         </section>
@@ -235,12 +239,12 @@ export default function WhatIsCQPage() {
                       <Globe className="w-10 h-10 text-azure-blue" />
                       <h2 className="text-3xl font-bold">
                         <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                          In the United Arab Emirates
+                          Cultural Intelligence in the United Arab Emirates
                         </span>
                       </h2>
                     </div>
                     <p className="text-lg leading-relaxed text-white/80">
-                      In the United Arab Emirates, Cultural Intelligence is essential for anyone who wants to live, work, or build meaningful relationships in the region. Life here is shaped by Emirati traditions, Islamic values, and one of the most diverse international communities in the world. Understanding how these layers interact helps people feel grounded, respected, and confident in their daily interactions.
+                      <strong className="text-white">Cultural Intelligence UAE</strong> is essential for anyone who wants to live, work, or build meaningful relationships in the region. Life here is shaped by Emirati traditions, Islamic values, and one of the most diverse international communities in the world. Understanding how these layers interact helps people feel grounded, respected, and confident in their daily interactions. Whether you're in Dubai, Abu Dhabi, or any of the seven emirates, <strong className="text-orange">cultural intelligence</strong> is your foundation for success.
                     </p>
                     <motion.div
                       whileHover={{ scale: 1.02, x: 10 }}
