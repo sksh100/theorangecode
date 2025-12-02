@@ -102,9 +102,6 @@ const masterclasses: Masterclass[] = [
 // 3 = Business Culture & Professional Etiquette -> Thursday
 const generateAvailableDates = (masterclassId: number | null): TimeSlot[] => {
   const slots: TimeSlot[] = []
-  const today = new Date()
-  const fourWeeksLater = new Date(today)
-  fourWeeksLater.setDate(today.getDate() + 28)
 
   // Map masterclass ID to day of week (0 = Sunday, 1 = Monday, 2 = Tuesday, etc.)
   const masterclassDays: Record<number, number> = {
@@ -113,47 +110,44 @@ const generateAvailableDates = (masterclassId: number | null): TimeSlot[] => {
     3: 4  // Business Culture & Professional Etiquette -> Thursday
   }
 
-  const offlineDays = masterclassId && masterclassDays[masterclassId] 
-    ? [masterclassDays[masterclassId]] 
+  const offlineDays = masterclassId && masterclassDays[masterclassId]
+    ? [masterclassDays[masterclassId]]
     : []
   const offlineTime = '11:00 AM - 2:00 PM'
 
-  // Fully booked in-person sessions (December 2, 9, 25, 27)
-  const currentYear = new Date().getFullYear()
-  const fullyBookedDates = [
-    new Date(currentYear, 11, 2),   // December 2
-    new Date(currentYear, 11, 9),   // December 9
-    new Date(currentYear, 11, 25),  // December 25
-    new Date(currentYear, 11, 27),  // December 27
-  ]
+  // Business rule: until Tuesday 6 January (fixed date), all sessions are sold out
+  // except that single day, which is the only available in-person slot.
+  // NOTE: JavaScript months are 0-indexed, so 0 = January.
+  const today = new Date()
+  const targetYear = 2026
+  const firstAvailableDate = new Date(targetYear, 0, 6) // Tuesday 6 January 2026
+  const endDate = new Date(targetYear, 0, 13) // Tuesday 13 January 2026 (fully booked)
 
-  // Helper function to check if a date matches any fully booked date
-  const isFullyBooked = (date: Date): boolean => {
-    return fullyBookedDates.some(bookedDate => 
-      date.getDate() === bookedDate.getDate() &&
-      date.getMonth() === bookedDate.getMonth() &&
-      date.getFullYear() === bookedDate.getFullYear()
-    )
-  }
-
-  for (let d = new Date(today); d <= fourWeeksLater; d.setDate(d.getDate() + 1)) {
+  // Loop from today up to and including the end date
+  for (let d = new Date(today); d <= endDate; d.setDate(d.getDate() + 1)) {
     const dayOfWeek = d.getDay()
-    const formattedDate = d.toLocaleDateString('en-US', { 
-      weekday: 'short', 
-      month: 'short', 
-      day: 'numeric' 
+
+    if (!offlineDays.includes(dayOfWeek)) {
+      continue
+    }
+
+    const formattedDate = d.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
     })
 
-    if (offlineDays.includes(dayOfWeek)) {
-      // Check if this is a fully booked date for in-person sessions
-      const booked = isFullyBooked(d)
-      slots.push({
-        date: formattedDate,
-        time: offlineTime,
-        available: !booked,
-        type: 'offline'
-      })
-    }
+    const isTarget =
+      d.getFullYear() === firstAvailableDate.getFullYear() &&
+      d.getMonth() === firstAvailableDate.getMonth() &&
+      d.getDate() === firstAvailableDate.getDate()
+
+    slots.push({
+      date: formattedDate,
+      time: offlineTime,
+      available: isTarget,
+      type: 'offline',
+    })
   }
 
   return slots
@@ -165,6 +159,40 @@ export default function MasterclassesPage() {
   const [filterType, setFilterType] = useState<'offline'>('offline')
   const [showTailormadeForm, setShowTailormadeForm] = useState(false)
   const [showContactForm, setShowContactForm] = useState(false)
+
+  // Restore last booking selection if user returns from Stripe or navigates back
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    try {
+      const stored = sessionStorage.getItem('bookingData')
+      if (!stored) return
+
+      const data = JSON.parse(stored) as {
+        masterclass?: string
+        date?: string
+        time?: string
+        type?: 'online' | 'offline'
+      }
+
+      if (!data.masterclass) return
+      const mc = masterclasses.find(m => m.title === data.masterclass)
+      if (!mc) return
+
+      setSelectedMasterclass(mc.id)
+
+      if (data.date && data.time && data.type) {
+        setSelectedSlot({
+          date: data.date,
+          time: data.time,
+          type: data.type,
+          available: true,
+        })
+      }
+    } catch (e) {
+      console.error('Error restoring booking data from sessionStorage:', e)
+    }
+  }, [])
 
   // Track masterclass views when page loads or masterclass is selected
   useEffect(() => {
