@@ -313,6 +313,7 @@ export default function RootLayout({
               },
               sameAs: [
                 'https://www.instagram.com/the.orangecode',
+                'https://www.linkedin.com/in/the-orange-code-070849395/',
               ],
             }),
           }}
