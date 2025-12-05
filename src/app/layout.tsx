@@ -328,6 +328,16 @@ export default function RootLayout({
         <meta name="geo.position" content="24.4539;54.3773" />
         <meta name="ICBM" content="24.4539, 54.3773" />
         
+        {/* UK and Netherlands Geographic Targeting */}
+        <meta name="geo.region" content="GB" />
+        <meta name="geo.region" content="NL" />
+        <meta name="geo.placename" content="United Kingdom, Netherlands, Nederland" />
+        
+        {/* Hreflang tags for UK and Netherlands */}
+        <link rel="alternate" hreflang="en-GB" href="https://www.theorangecode.com/" />
+        <link rel="alternate" hreflang="en-NL" href="https://www.theorangecode.com/" />
+        <link rel="alternate" hreflang="nl-NL" href="https://www.theorangecode.com/" />
+        
         {/* Content Summary for AI Understanding */}
         <meta name="summary" content="The Orange Code provides cultural intelligence and leadership training in Abu Dhabi, helping professionals navigate multicultural environments in the UAE and Gulf Region through masterclasses, private coaching, and corporate training programs." />
         
