@@ -129,58 +129,19 @@ export default function PrivacyPolicy() {
               </div>
 
               <div className="bg-gradient-to-r from-bright-blue/10 to-bright-blue/5 border border-bright-blue/20 rounded-xl p-6 mb-8">
-                <h4 className="text-white font-semibold mb-3">Automatically Collected Visitor Information</h4>
+                <h4 className="text-white font-semibold mb-3">Automatically Collected Information</h4>
                 <p className="text-white/70 text-sm mb-3">
-                  When you visit our website, we automatically collect the following information for analytics, security, and service improvement:
+                  When you visit our website, we automatically collect basic information to improve our services and understand how visitors use our site:
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-white/80 text-sm font-semibold mb-2">Location & Network:</p>
-                    <ul className="text-white/70 text-xs space-y-1">
-                      <li>• IP address and approximate location (city, region, country)</li>
-                      <li>• Postal code, area/neighborhood (when available)</li>
-                      <li>• Geographic coordinates (city-level approximation)</li>
-                      <li>• ISP and organization information</li>
-                      <li>• Timezone (from IP and browser)</li>
-                      <li>• Network type (WiFi, cellular, ethernet)</li>
-                      <li>• Network speed and latency</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white/80 text-sm font-semibold mb-2">Device & Browser:</p>
-                    <ul className="text-white/70 text-xs space-y-1">
-                      <li>• Device type (mobile, tablet, desktop)</li>
-                      <li>• Screen resolution and viewport size</li>
-                      <li>• Color depth and pixel ratio</li>
-                      <li>• Device memory and CPU cores</li>
-                      <li>• Battery level (mobile devices)</li>
-                      <li>• Browser type and version</li>
-                      <li>• Operating system and platform</li>
-                      <li>• Language preferences</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white/80 text-sm font-semibold mb-2">Usage & Behavior:</p>
-                    <ul className="text-white/70 text-xs space-y-1">
-                      <li>• Pages visited and navigation flow</li>
-                      <li>• Session duration and visit count</li>
-                      <li>• Traffic source and referrer</li>
-                      <li>• Search queries (if from search engine)</li>
-                      <li>• UTM parameters</li>
-                      <li>• Page load times and performance</li>
-                      <li>• Scroll depth and interactions</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-white/80 text-sm font-semibold mb-2">Privacy Settings:</p>
-                    <ul className="text-white/70 text-xs space-y-1">
-                      <li>• Do Not Track preference</li>
-                      <li>• Cookie enabled status</li>
-                    </ul>
-                  </div>
-                </div>
+                <ul className="text-white/70 text-sm space-y-2">
+                  <li>• General location information (country, city) for analytics purposes</li>
+                  <li>• Device type (mobile, tablet, or desktop) and browser information</li>
+                  <li>• Pages visited and how you navigate our website</li>
+                  <li>• Traffic source (how you found our website)</li>
+                  <li>• Basic website performance metrics</li>
+                </ul>
                 <p className="text-white/60 text-xs mt-4">
-                  <strong>Note:</strong> IP geolocation provides city-level approximations only. We use this data for analytics and do not attempt to identify individuals. All visitor data is aggregated and anonymized where possible.
+                  <strong>Note:</strong> This information is used for analytics and service improvement only. We do not attempt to identify individual visitors, and all data is aggregated and anonymized where possible.
                 </p>
               </div>
 
@@ -457,13 +418,13 @@ export default function PrivacyPolicy() {
                 <div className="bg-gradient-to-r from-purple-500/10 to-purple-500/5 border border-purple-500/20 rounded-xl p-6">
                   <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
                     <Users className="w-5 h-5 text-purple-400" />
-                    Slack (Notifications)
+                    Slack (Business Operations)
                   </h4>
                   <p className="text-white/70 text-sm mb-2">
-                    <strong>Purpose:</strong> Real-time notifications for website events including new visitors, contact form submissions, newsletter signups, payment completions, and error reporting.
+                    <strong>Purpose:</strong> Internal notifications for business operations including contact form submissions, newsletter signups, and payment notifications.
                   </p>
                   <p className="text-white/70 text-sm mb-2">
-                    <strong>Data Collected:</strong> Visitor information (location, device, browser, network), contact form data, payment notifications, and error logs.
+                    <strong>Data Collected:</strong> Basic contact information and transaction notifications for internal use only.
                   </p>
                   <p className="text-white/70 text-sm mb-2">
                     <strong>Data Processing:</strong> Slack Technologies, LLC (USA) - GDPR compliant with Data Processing Agreement (DPA).
@@ -471,34 +432,6 @@ export default function PrivacyPolicy() {
                   <p className="text-white/60 text-xs">
                     <a href="https://slack.com/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
                       Slack Privacy Policy
-                    </a>
-                  </p>
-                </div>
-
-                <div className="bg-gradient-to-r from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl p-6">
-                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-                    <Globe className="w-5 h-5 text-green-400" />
-                    IP Geolocation Services
-                  </h4>
-                  <p className="text-white/70 text-sm mb-2">
-                    <strong>Purpose:</strong> Enhanced location detection for visitor analytics, providing city-level geolocation, ISP information, and timezone data.
-                  </p>
-                  <p className="text-white/70 text-sm mb-2">
-                    <strong>Services Used:</strong> ipinfo.io (primary) and ip-api.com (fallback) for IP address geolocation.
-                  </p>
-                  <p className="text-white/70 text-sm mb-2">
-                    <strong>Data Collected:</strong> IP address is sent to geolocation services to determine approximate location (city, region, country, postal code, coordinates, ISP, organization, timezone).
-                  </p>
-                  <p className="text-white/70 text-sm mb-2">
-                    <strong>Data Processing:</strong> ipinfo.io (USA) and ip-api.com (USA) - Location data is approximate and city-level only.
-                  </p>
-                  <p className="text-white/60 text-xs">
-                    <a href="https://ipinfo.io/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
-                      ipinfo.io Privacy Policy
-                    </a>
-                    {' | '}
-                    <a href="https://ip-api.com/docs/legal" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
-                      ip-api.com Terms
                     </a>
                   </p>
                 </div>
@@ -684,16 +617,16 @@ export default function PrivacyPolicy() {
                     <p className="text-white/70 text-sm">As required by UAE law (typically 7 years)</p>
                   </div>
                   <div>
-                    <h4 className="text-white font-semibold mb-2">Visitor Tracking Data</h4>
-                    <p className="text-white/70 text-sm">Active sessions: 60 seconds; Historical data: 90 days for analytics</p>
+                    <h4 className="text-white font-semibold mb-2">Website Analytics Data</h4>
+                    <p className="text-white/70 text-sm">Retained for analytics purposes as per standard industry practices</p>
                   </div>
                   <div>
                     <h4 className="text-white font-semibold mb-2">Ebook Purchase Records</h4>
                     <p className="text-white/70 text-sm">Permanently retained for business records and copyright protection</p>
                   </div>
                   <div>
-                    <h4 className="text-white font-semibold mb-2">Download Tokens</h4>
-                    <p className="text-white/70 text-sm">Valid for 48 hours, then automatically expired</p>
+                    <h4 className="text-white font-semibold mb-2">Download Links</h4>
+                    <p className="text-white/70 text-sm">Time-limited for security purposes</p>
                   </div>
                 </div>
               </div>
