@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import { Download, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import Link from "next/link";
@@ -10,7 +10,7 @@ import dynamic from "next/dynamic";
 const ModernNavbar = dynamic(() => import('@/components/ModernNavbar').then(mod => ({ default: mod.ModernNavbar })), { ssr: false });
 const ModernFooter = dynamic(() => import('@/components/ModernFooter').then(mod => ({ default: mod.ModernFooter })), { ssr: false });
 
-export default function DownloadPage() {
+function DownloadContent() {
   const params = useSearchParams();
   const token = params.get("token");
   const [downloading, setDownloading] = useState(false);
@@ -144,6 +144,22 @@ export default function DownloadPage() {
       
       <ModernFooter />
     </div>
+  );
+}
+
+export default function DownloadPage() {
+  return (
+    <Suspense fallback={
+      <div className="relative w-full bg-primary-dark text-white min-h-screen flex items-center justify-center">
+        <div className="glass-card bg-primary-dark/90 backdrop-blur-[30px] border border-azure-blue/30 rounded-3xl p-8 md:p-12 text-center">
+          <Loader2 className="w-16 h-16 text-azure-blue mx-auto mb-4 animate-spin" />
+          <h1 className="text-2xl font-semibold mb-4">Loading...</h1>
+          <p className="text-white/70">Preparing your download...</p>
+        </div>
+      </div>
+    }>
+      <DownloadContent />
+    </Suspense>
   );
 }
 

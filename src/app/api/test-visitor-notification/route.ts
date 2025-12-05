@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { notifyNewVisitor } from "@/lib/slack";
 
+export const dynamic = 'force-dynamic';
+
 /**
  * Test endpoint to manually trigger a visitor notification
  * Visit: /api/test-visitor-notification to test
