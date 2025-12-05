@@ -97,6 +97,45 @@ export const metadata: Metadata = {
     'Dutch expats Abu Dhabi',
     'cultural intelligence Netherlands',
     'UAE cultural training Netherlands',
+    // Italy/Italian keywords
+    'intelligenza culturale',
+    'intelligenza culturale training',
+    'professionisti italiani UAE',
+    'professionisti italiani Dubai',
+    'professionisti italiani Abu Dhabi',
+    'espatriati italiani UAE',
+    'espatriati italiani Dubai',
+    'training culturale UAE',
+    'corso intelligenza culturale',
+    'formazione culturale UAE',
+    'cultura UAE per italiani',
+    'cultura Dubai per italiani',
+    'cultura Abu Dhabi per italiani',
+    'Italian professionals UAE',
+    'Italian expats Dubai',
+    'Italian expats Abu Dhabi',
+    'cultural intelligence Italy',
+    'UAE cultural training Italy',
+    // France/French keywords
+    'intelligence culturelle',
+    'intelligence culturelle formation',
+    'professionnels français UAE',
+    'professionnels français Dubai',
+    'professionnels français Abu Dhabi',
+    'expatriés français UAE',
+    'expatriés français Dubai',
+    'formation culturelle UAE',
+    'cours intelligence culturelle',
+    'formation culturelle Dubai',
+    'formation culturelle Abu Dhabi',
+    'culture UAE pour français',
+    'culture Dubai pour français',
+    'culture Abu Dhabi pour français',
+    'French professionals UAE',
+    'French expats Dubai',
+    'French expats Abu Dhabi',
+    'cultural intelligence France',
+    'UAE cultural training France',
     // Jobs, life and expat queries (UAE, Abu Dhabi, Dubai)
     'jobs in UAE',
     'jobs in the United Arab Emirates',
@@ -328,15 +367,19 @@ export default function RootLayout({
         <meta name="geo.position" content="24.4539;54.3773" />
         <meta name="ICBM" content="24.4539, 54.3773" />
         
-        {/* UK and Netherlands Geographic Targeting */}
+        {/* UK, Netherlands, Italy, and France Geographic Targeting */}
         <meta name="geo.region" content="GB" />
         <meta name="geo.region" content="NL" />
-        <meta name="geo.placename" content="United Kingdom, Netherlands, Nederland" />
+        <meta name="geo.region" content="IT" />
+        <meta name="geo.region" content="FR" />
+        <meta name="geo.placename" content="United Kingdom, Netherlands, Nederland, Italy, Italia, France, Français" />
         
-        {/* Hreflang tags for UK and Netherlands */}
+        {/* Hreflang tags for UK, Netherlands, Italy, and France */}
         <link rel="alternate" hreflang="en-GB" href="https://www.theorangecode.com/" />
         <link rel="alternate" hreflang="en-NL" href="https://www.theorangecode.com/" />
         <link rel="alternate" hreflang="nl-NL" href="https://www.theorangecode.com/" />
+        <link rel="alternate" hreflang="it-IT" href="https://www.theorangecode.com/" />
+        <link rel="alternate" hreflang="fr-FR" href="https://www.theorangecode.com/" />
         
         {/* Content Summary for AI Understanding */}
         <meta name="summary" content="The Orange Code provides cultural intelligence and leadership training in Abu Dhabi, helping professionals navigate multicultural environments in the UAE and Gulf Region through masterclasses, private coaching, and corporate training programs." />
@@ -393,6 +436,14 @@ export default function RootLayout({
                 {
                   '@type': 'Country',
                   name: 'Netherlands',
+                },
+                {
+                  '@type': 'Country',
+                  name: 'Italy',
+                },
+                {
+                  '@type': 'Country',
+                  name: 'France',
                 },
               ],
             }),

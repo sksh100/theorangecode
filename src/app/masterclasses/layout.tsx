@@ -36,7 +36,40 @@ export const metadata: Metadata = {
     'Nederlandse overheid samenwerking',
     'Dutch government collaboration',
     'cultural intelligence training Netherlands',
-    'UAE cultural training for Dutch professionals'
+    'UAE cultural training for Dutch professionals',
+    // Italy/Italian keywords
+    'cultural intelligence masterclass Italy',
+    'intelligenza culturale training',
+    'professionisti italiani UAE',
+    'professionisti italiani Dubai',
+    'professionisti italiani Abu Dhabi',
+    'espatriati italiani UAE',
+    'espatriati italiani Dubai',
+    'training culturale UAE',
+    'corso intelligenza culturale',
+    'formazione culturale UAE',
+    'cultura UAE per italiani',
+    'cultura Dubai per italiani',
+    'cultura Abu Dhabi per italiani',
+    'cultural intelligence training Italy',
+    'UAE cultural training for Italian professionals',
+    // France/French keywords
+    'cultural intelligence masterclass France',
+    'intelligence culturelle formation',
+    'professionnels français UAE',
+    'professionnels français Dubai',
+    'professionnels français Abu Dhabi',
+    'expatriés français UAE',
+    'expatriés français Dubai',
+    'formation culturelle UAE',
+    'cours intelligence culturelle',
+    'formation culturelle Dubai',
+    'formation culturelle Abu Dhabi',
+    'culture UAE pour français',
+    'culture Dubai pour français',
+    'culture Abu Dhabi pour français',
+    'cultural intelligence training France',
+    'UAE cultural training for French professionals'
   ],
   alternates: {
     canonical: 'https://www.theorangecode.com/masterclasses',
@@ -44,6 +77,8 @@ export const metadata: Metadata = {
       'en-GB': 'https://www.theorangecode.com/masterclasses',
       'en-NL': 'https://www.theorangecode.com/masterclasses',
       'nl-NL': 'https://www.theorangecode.com/masterclasses',
+      'it-IT': 'https://www.theorangecode.com/masterclasses',
+      'fr-FR': 'https://www.theorangecode.com/masterclasses',
     },
   },
   openGraph: {
@@ -96,6 +131,12 @@ export const metadata: Metadata = {
     'dutch-keywords': 'culturele intelligentie training, culturele training UAE, Nederlandse professionals UAE, culturele intelligentie cursus',
     'dutch-government': 'Nederlandse overheid samenwerking, Dutch government collaboration, cultural intelligence government training, public sector cultural training',
     'government-collaboration': 'government partnership, public sector training, cultural intelligence for government, international cultural cooperation',
+    // Italy/Italian-specific
+    'italian-audience': 'professionisti italiani, Italian professionals, espatriati italiani, Italian expats UAE, professionisti italiani Dubai, professionisti italiani Abu Dhabi',
+    'italian-keywords': 'intelligenza culturale training, formazione culturale UAE, corso intelligenza culturale, cultura UAE per italiani',
+    // France/French-specific
+    'french-audience': 'professionnels français, French professionals, expatriés français, French expats UAE, professionnels français Dubai, professionnels français Abu Dhabi',
+    'french-keywords': 'intelligence culturelle formation, formation culturelle UAE, cours intelligence culturelle, culture UAE pour français',
   },
 }
 

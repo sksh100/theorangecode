@@ -410,6 +410,14 @@ export default function MasterclassesPage() {
               {
                 "@type": "Country",
                 "name": "Netherlands"
+              },
+              {
+                "@type": "Country",
+                "name": "Italy"
+              },
+              {
+                "@type": "Country",
+                "name": "France"
               }
             ],
             "audience": {
@@ -423,6 +431,14 @@ export default function MasterclassesPage() {
                 {
                   "@type": "Country",
                   "name": "Netherlands"
+                },
+                {
+                  "@type": "Country",
+                  "name": "Italy"
+                },
+                {
+                  "@type": "Country",
+                  "name": "France"
                 },
                 {
                   "@type": "Country",
