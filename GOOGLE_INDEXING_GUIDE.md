@@ -6,6 +6,8 @@
 https://www.theorangecode.com/sitemap.xml
 ```
 
+**Just enter:** `sitemap.xml` in Google Search Console (Google adds your domain automatically)
+
 ## ✅ How to Submit to Google Search Console
 
 ### Step 1: Access Google Search Console
@@ -63,6 +65,24 @@ https://www.theorangecode.com/sitemap.xml
 - ❌ Main API: `https://api.indexnow.org/index` (Down for days)
 
 **Note:** Google does NOT use IndexNow. Google uses Google Search Console only.
+
+## 🔧 Fixed Indexing Issues
+
+✅ **All Google Search Console issues fixed:**
+- ✅ HTTP to HTTPS redirects (middleware updated)
+- ✅ Non-www to www redirects (middleware enhanced)
+- ✅ Explicit canonical tags on all pages
+- ✅ /coming-soon blocked in robots.txt (redirected to homepage)
+- ✅ /favicon.ico blocked in robots.txt
+- ✅ /home page has proper canonical
+- ✅ All pages point to www.theorangecode.com canonical URLs
+
+**After deployment, request re-indexing in Google Search Console for:**
+- `https://www.theorangecode.com/`
+- `https://www.theorangecode.com/home`
+- `https://www.theorangecode.com/faq`
+- `https://www.theorangecode.com/about`
+- `https://www.theorangecode.com/masterclasses`
 
 ## 📊 Monitor Your Indexing Status
 
