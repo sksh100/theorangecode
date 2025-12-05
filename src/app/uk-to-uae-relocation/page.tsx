@@ -1039,6 +1039,7 @@ export default function UKToUAERelocationPage() {
                 <motion.h1
                   variants={itemVariants}
                   className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6"
+                  itemProp="headline"
                 >
                   <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
                     Moving from the UK to the UAE
