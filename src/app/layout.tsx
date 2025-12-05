@@ -284,6 +284,14 @@ export default function RootLayout({
         <meta name="Claude" content="allowed" />
         <meta name="Grok" content="allowed" />
         <meta name="Applebot" content="allowed" />
+        <meta name="DeepSeek" content="allowed" />
+        <meta name="DeepSeekBot" content="allowed" />
+        
+        {/* Chinese Search Engine Directives */}
+        <meta name="Baiduspider" content="allowed" />
+        <meta name="Sogou" content="allowed" />
+        <meta name="360Spider" content="allowed" />
+        <meta name="YisouSpider" content="allowed" />
         
         {/* Content Type and Language */}
         <meta httpEquiv="content-language" content="en" />

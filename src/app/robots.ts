@@ -92,14 +92,46 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
       },
-      // Other search engines
+      // DeepSeek (AI Search Engine)
       {
-        userAgent: 'Yandex',
+        userAgent: 'DeepSeekBot',
         allow: '/',
         disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
       },
       {
+        userAgent: 'DeepSeek',
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
+      },
+      // Chinese Search Engines
+      {
         userAgent: 'Baiduspider',
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
+      },
+      {
+        userAgent: 'Sogou',
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
+      },
+      {
+        userAgent: 'Sogou web spider',
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
+      },
+      {
+        userAgent: '360Spider',
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
+      },
+      {
+        userAgent: 'YisouSpider',
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
+      },
+      // Other search engines
+      {
+        userAgent: 'Yandex',
         allow: '/',
         disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
       },

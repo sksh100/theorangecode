@@ -13,6 +13,11 @@ export const metadata: Metadata = {
     'product-category': 'cultural intelligence, relocation guide, expat resource, educational ebook',
     'purchase-intent': 'high, ready to buy, conversion-focused',
     'price-point': '£59 GBP, affordable, value-driven',
+    // UK-specific platforms
+    'uk-platforms': 'Amazon UK, Waterstones, Foyles, Book Depository UK, Kobo UK, Apple Books UK, Google Play Books UK, UK ebook stores',
+    'uk-audience': 'British professionals, UK expats, UK teachers, UK nurses, UK engineers, UK professionals relocating to UAE',
+    // Chinese search optimization
+    'chinese-keywords': '文化智能, 跨文化沟通, 阿联酋文化, 迪拜文化, 阿布扎比文化, 文化智能培训, 文化智能课程, 跨文化培训',
   },
   title: 'Moving to the UAE from the UK. Cultural Guide for British Professionals | The Orange Code',
   description: 'A practical cultural intelligence guide for British professionals relocating to the UAE. Learn UAE workplace culture, Emirati etiquette, communication styles, dos and donts, and what to expect before you arrive. Written specifically for UK expats moving to Dubai and Abu Dhabi.',

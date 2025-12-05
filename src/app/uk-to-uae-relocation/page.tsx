@@ -431,6 +431,89 @@ export default function UKToUAERelocationPage() {
                 "url": "https://www.theorangecode.com"
               },
               "itemCondition": "https://schema.org/NewCondition"
+            },
+            // UK Platform Availability
+            "availableAtOrFrom": [
+              {
+                "@type": "WebSite",
+                "name": "The Orange Code",
+                "url": "https://www.theorangecode.com/uk-to-uae-relocation"
+              }
+            ],
+            // UK-specific distribution channels
+            "distribution": {
+              "@type": "OfferCatalog",
+              "name": "UK Distribution Channels",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Product",
+                    "name": "UK to UAE Cultural Intelligence Ebook"
+                  },
+                  "seller": {
+                    "@type": "Organization",
+                    "name": "The Orange Code"
+                  },
+                  "areaServed": {
+                    "@type": "Country",
+                    "name": "United Kingdom"
+                  }
+                }
+              ]
+            }
+          })
+        }}
+      />
+      
+      {/* Book Schema for UK Platforms */}
+      <Script
+        id="book-schema-uk"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Book",
+            "name": "UK to UAE Cultural Intelligence Guide",
+            "alternateName": "Moving to the UAE from the UK: Cultural Guide for British Professionals",
+            "description": "A comprehensive cultural intelligence guide for British professionals relocating to the UAE. Covers workplace culture, Emirati etiquette, communication styles, and practical advice for UK expats moving to Dubai and Abu Dhabi.",
+            "author": {
+              "@type": "Organization",
+              "name": "The Orange Code"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "The Orange Code",
+              "url": "https://www.theorangecode.com"
+            },
+            "bookFormat": "https://schema.org/EBook",
+            "inLanguage": "en-GB",
+            "isbn": "",
+            "numberOfPages": "70",
+            "genre": ["Non-fiction", "Business", "Travel", "Cultural Studies", "Expat Guide"],
+            "audience": {
+              "@type": "Audience",
+              "audienceType": "British professionals, UK expats, UK teachers, UK nurses, UK engineers",
+              "geographicArea": {
+                "@type": "Country",
+                "name": "United Kingdom"
+              }
+            },
+            "offers": {
+              "@type": "Offer",
+              "url": STRIPE_PAYMENT_LINK,
+              "priceCurrency": "GBP",
+              "price": "59",
+              "availability": "https://schema.org/InStock",
+              "seller": {
+                "@type": "Organization",
+                "name": "The Orange Code"
+              }
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "127"
             }
           })
         }}
