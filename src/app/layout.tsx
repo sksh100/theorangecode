@@ -363,6 +363,28 @@ export default function RootLayout({
                 'https://x.com/TheOrangeCode',
                 'https://www.pinterest.com/theorangecode/',
               ],
+              // Government Collaboration
+              knowsAbout: [
+                'Cultural Intelligence',
+                'Cross-cultural Communication',
+                'International Cooperation',
+                'Government Training',
+                'Public Sector Development',
+              ],
+              areaServed: [
+                {
+                  '@type': 'Country',
+                  name: 'United Arab Emirates',
+                },
+                {
+                  '@type': 'Country',
+                  name: 'United Kingdom',
+                },
+                {
+                  '@type': 'Country',
+                  name: 'Netherlands',
+                },
+              ],
             }),
           }}
           defer
