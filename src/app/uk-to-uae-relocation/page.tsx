@@ -330,6 +330,21 @@ export default function UKToUAERelocationPage() {
     <>
       {/* Explicit canonical tag */}
       <link rel="canonical" href="https://www.theorangecode.com/uk-to-uae-relocation" />
+      
+      {/* Chinese Search Engine Meta Tags */}
+      <meta name="baidu-site-verification" content="" />
+      <meta name="360-site-verification" content="" />
+      <meta name="sogou_site_verification" content="" />
+      <meta name="format-detection" content="telephone=no" />
+      <meta name="mobile-web-app-capable" content="yes" />
+      <meta name="applicable-device" content="pc,mobile" />
+      
+      {/* UK Platform Meta Tags */}
+      <meta name="geo.region" content="GB" />
+      <meta name="geo.placename" content="United Kingdom" />
+      <meta name="distribution" content="global" />
+      <meta name="target" content="UK, United Kingdom, British professionals, UK expats" />
+      
        {/* AI Search Optimization Meta Tags */}
        <Script id="ai-meta-tags" strategy="beforeInteractive">
          {`
