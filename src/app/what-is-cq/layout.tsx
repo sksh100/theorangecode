@@ -45,6 +45,25 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://www.theorangecode.com/what-is-cq',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  other: {
+    'ai-topic': 'cultural intelligence, cultural intelligence UAE, what is cultural intelligence, CQ cultural intelligence, cultural intelligence definition, cultural intelligence meaning',
+    'ai-intent': 'information seeking, learning, education, understanding cultural intelligence',
+    'ai-relevance': 'cultural intelligence, CQ, cultural competence, cross-cultural communication, UAE culture',
+    'content-purpose': 'educational content explaining what cultural intelligence is and why it matters',
+    'target-audience': 'professionals seeking to understand cultural intelligence, expats in UAE, business professionals',
+    'geographic-focus': 'United Arab Emirates, UAE, Dubai, Abu Dhabi, GCC',
+  },
 }
 
 export default function WhatIsCQLayout({

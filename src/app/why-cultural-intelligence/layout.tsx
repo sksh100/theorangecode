@@ -44,6 +44,25 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://www.theorangecode.com/why-cultural-intelligence',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  other: {
+    'ai-topic': 'why cultural intelligence matters, cultural intelligence importance, cultural intelligence benefits, cultural intelligence UAE, cultural intelligence for professionals',
+    'ai-intent': 'information seeking, learning, understanding benefits of cultural intelligence',
+    'ai-relevance': 'cultural intelligence, CQ benefits, cultural intelligence importance, UAE culture, cross-cultural communication',
+    'content-purpose': 'educational content explaining why cultural intelligence is essential for success',
+    'target-audience': 'professionals considering cultural intelligence training, expats in UAE, business professionals',
+    'geographic-focus': 'United Arab Emirates, UAE, Dubai, Abu Dhabi, GCC',
+  },
 }
 
 export default function WhyCulturalIntelligenceLayout({

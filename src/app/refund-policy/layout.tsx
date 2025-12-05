@@ -49,6 +49,12 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  other: {
+    'ai-topic': 'refund policy, no refund policy, digital product refund, ebook refund, masterclass refund, UAE refund policy',
+    'ai-intent': 'information seeking, legal compliance, refund information',
+    'content-purpose': 'legal policy document explaining refund terms for digital products and services',
+    'target-audience': 'customers, potential buyers, legal compliance officers',
+  },
 }
 
 export default function RefundPolicyLayout({

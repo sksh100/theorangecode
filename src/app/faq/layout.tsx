@@ -17,6 +17,36 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  other: {
+    'ai-topic': 'cultural intelligence masterclasses FAQ, UAE cultural training questions, cultural intelligence courses UAE, masterclass booking, cultural training Abu Dhabi',
+    'ai-intent': 'information seeking, FAQ, customer support, booking inquiries',
+    'ai-relevance': 'cultural intelligence training, masterclasses, UAE culture, expat resources',
+    'content-purpose': 'answer frequently asked questions about cultural intelligence masterclasses and services',
+    'target-audience': 'prospective clients, expats in UAE, professionals seeking cultural training',
+    'geographic-focus': 'United Arab Emirates, UAE, Dubai, Abu Dhabi',
+  },
+  openGraph: {
+    title: 'FAQ - Frequently Asked Questions | The Orange Code',
+    description: 'Frequently asked questions about The Orange Code cultural intelligence masterclasses, private coaching, corporate training, and services in Abu Dhabi, UAE.',
+    url: 'https://www.theorangecode.com/faq',
+    siteName: 'The Orange Code',
+    images: [
+      {
+        url: 'https://www.theorangecode.com/about-us.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'The Orange Code FAQ',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'FAQ - Frequently Asked Questions | The Orange Code',
+    description: 'Frequently asked questions about The Orange Code cultural intelligence masterclasses and services.',
+    images: ['https://www.theorangecode.com/about-us.jpg'],
+  },
 }
 
 export default function FAQLayout({

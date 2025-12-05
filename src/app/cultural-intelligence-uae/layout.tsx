@@ -48,6 +48,25 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://www.theorangecode.com/cultural-intelligence-uae',
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  other: {
+    'ai-topic': 'cultural intelligence UAE, cultural intelligence Dubai, cultural intelligence Abu Dhabi, cultural intelligence training UAE, CQ training UAE, cultural intelligence courses',
+    'ai-intent': 'information seeking, course discovery, training enrollment',
+    'ai-relevance': 'cultural intelligence training, UAE culture, Emirati culture, cross-cultural training, cultural competence',
+    'content-purpose': 'informational page about cultural intelligence training in the UAE',
+    'target-audience': 'professionals seeking cultural intelligence training, expats in UAE, business professionals',
+    'geographic-focus': 'United Arab Emirates, UAE, Dubai, Abu Dhabi',
+  },
 }
 
 export default function CulturalIntelligenceUAELayout({

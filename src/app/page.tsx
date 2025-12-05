@@ -91,7 +91,128 @@ export default function Home() {
   }, [scrollYProgress])
 
   return (
-    <div ref={containerRef} className="relative w-full bg-primary-dark text-white min-h-screen">
+    <>
+      {/* Structured Data for Homepage */}
+      <Script
+        id="homepage-website-schema"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "The Orange Code",
+            "url": "https://www.theorangecode.com",
+            "description": "Cultural Intelligence & Leadership Training in Dubai and Abu Dhabi, UAE. Premium cultural intelligence courses and masterclasses for professionals.",
+            "publisher": {
+              "@type": "Organization",
+              "name": "The Orange Code",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.theorangecode.com/android-chrome-512x512.png"
+              }
+            },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://www.theorangecode.com/?s={search_term_string}"
+              },
+              "query-input": "required name=search_term_string"
+            }
+          })
+        }}
+      />
+      <Script
+        id="homepage-organization-schema"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "EducationalOrganization",
+            "name": "The Orange Code",
+            "url": "https://www.theorangecode.com",
+            "logo": "https://www.theorangecode.com/android-chrome-512x512.png",
+            "description": "Cultural intelligence and leadership training masterclasses in Abu Dhabi, UAE.",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Etihad Towers, Tower 3, Floor 36",
+              "addressLocality": "Abu Dhabi",
+              "addressRegion": "Abu Dhabi",
+              "addressCountry": "AE"
+            },
+            "areaServed": {
+              "@type": "Country",
+              "name": "United Arab Emirates"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+971568786106",
+              "email": "hello@theorangecode.com",
+              "contactType": "Customer Service"
+            }
+          })
+        }}
+      />
+      <Script
+        id="homepage-service-schema"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "Cultural Intelligence Training",
+            "provider": {
+              "@type": "Organization",
+              "name": "The Orange Code",
+              "url": "https://www.theorangecode.com"
+            },
+            "areaServed": {
+              "@type": "Country",
+              "name": "United Arab Emirates"
+            },
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Training Programs",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Course",
+                    "name": "Cultural Intelligence Masterclass",
+                    "description": "3-hour masterclass covering cultural foundations, communication styles, and business protocols for the UAE and Gulf Region.",
+                    "courseCode": "CI-MASTERCLASS",
+                    "educationalLevel": "Professional Development"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Course",
+                    "name": "Private Coaching Session",
+                    "description": "One-on-one personalized coaching sessions tailored to individual needs and goals.",
+                    "courseCode": "PRIVATE-COACHING",
+                    "educationalLevel": "Professional Development"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Course",
+                    "name": "Corporate Training",
+                    "description": "Customized corporate training programs for teams and organizations operating in the UAE and Gulf Region.",
+                    "courseCode": "CORPORATE-TRAINING",
+                    "educationalLevel": "Professional Development"
+                  }
+                }
+              ]
+            }
+          })
+        }}
+      />
+      <div ref={containerRef} className="relative w-full bg-primary-dark text-white min-h-screen" itemScope itemType="https://schema.org/WebPage">
       {/* Atmospheric Background - Wrapped in Suspense to prevent crashes */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <Suspense fallback={null}>
@@ -101,7 +222,7 @@ export default function Home() {
 
       <div className="relative z-10">
         <ModernNavbar />
-        <main>
+        <main itemScope itemType="https://schema.org/WebPage">
           <HeroSection />
           <WhyCulturalIntelligenceSection />
           <MasterclassesOverview />

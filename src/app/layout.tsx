@@ -229,6 +229,15 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  other: {
+    'ai-topic': 'cultural intelligence, cultural intelligence UAE, cultural intelligence training, UAE culture, Emirati culture, cross-cultural communication, leadership training UAE, Dubai cultural training, Abu Dhabi cultural training, UK to UAE relocation, expat guide UAE',
+    'ai-intent': 'cultural intelligence training, leadership development, cross-cultural communication, UAE expat resources, cultural training courses',
+    'ai-relevance': 'cultural intelligence, UAE culture, Emirati etiquette, Dubai business culture, Abu Dhabi business culture, GCC culture, Middle East business',
+    'content-purpose': 'cultural intelligence and leadership training for professionals in the UAE and GCC region',
+    'target-audience': 'professionals moving to UAE, expats in Dubai, expats in Abu Dhabi, business professionals UAE, international professionals',
+    'geographic-focus': 'United Arab Emirates, UAE, Dubai, Abu Dhabi, GCC, Middle East',
+    'content-language': 'en',
+  },
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION || '',
     yandex: 'b8b91753e1df7f39',

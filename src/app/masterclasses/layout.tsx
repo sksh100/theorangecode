@@ -49,6 +49,16 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  other: {
+    'ai-topic': 'cultural intelligence masterclasses, UAE cultural training, Emirati etiquette course, Abu Dhabi masterclass, cultural training UAE, business culture UAE',
+    'ai-intent': 'booking, enrollment, course registration, cultural training, professional development',
+    'ai-relevance': 'cultural intelligence training, masterclasses, UAE culture, Emirati etiquette, business protocol',
+    'content-purpose': 'book and enroll in cultural intelligence masterclasses for professionals in the UAE',
+    'target-audience': 'professionals moving to UAE, expats in Dubai, expats in Abu Dhabi, business professionals',
+    'geographic-focus': 'United Arab Emirates, UAE, Dubai, Abu Dhabi',
+    'content-type': 'course, training program, educational service',
+    'purchase-intent': 'high, ready to book',
+  },
 }
 
 export default function MasterclassesLayout({

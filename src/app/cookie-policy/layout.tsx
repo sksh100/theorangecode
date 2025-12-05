@@ -41,6 +41,12 @@ export const metadata: Metadata = {
     title: 'Cookie Policy - The Orange Code',
     description: 'Learn about how The Orange Code uses cookies on our website. GDPR and UAE data protection compliant cookie policy.',
   },
+  other: {
+    'ai-topic': 'cookie policy, GDPR cookies, data protection, privacy policy, cookie consent',
+    'ai-intent': 'information seeking, legal compliance, privacy information',
+    'content-purpose': 'legal policy document explaining cookie usage and data protection',
+    'target-audience': 'website visitors, customers, data protection officers',
+  },
 }
 
 export default function CookiePolicyLayout({
