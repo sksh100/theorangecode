@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, Suspense } from 'react'
 import { useScroll, useSpring, useMotionValue } from 'framer-motion'
 import dynamic from 'next/dynamic'
+import Script from 'next/script'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { HeroSection } from '@/components/HeroSection'
 import { WhyCulturalIntelligenceSection } from '@/components/WhyCulturalIntelligenceSection'
@@ -234,5 +235,6 @@ export default function Home() {
         <ModernFooter />
       </div>
     </div>
+    </>
   )
 }
