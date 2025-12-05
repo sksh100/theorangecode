@@ -375,11 +375,11 @@ export default function RootLayout({
         <meta name="geo.placename" content="United Kingdom, Netherlands, Nederland, Italy, Italia, France, Français" />
         
         {/* Hreflang tags for UK, Netherlands, Italy, and France */}
-        <link rel="alternate" hreflang="en-GB" href="https://www.theorangecode.com/" />
-        <link rel="alternate" hreflang="en-NL" href="https://www.theorangecode.com/" />
-        <link rel="alternate" hreflang="nl-NL" href="https://www.theorangecode.com/" />
-        <link rel="alternate" hreflang="it-IT" href="https://www.theorangecode.com/" />
-        <link rel="alternate" hreflang="fr-FR" href="https://www.theorangecode.com/" />
+        <link rel="alternate" hrefLang="en-GB" href="https://www.theorangecode.com/" />
+        <link rel="alternate" hrefLang="en-NL" href="https://www.theorangecode.com/" />
+        <link rel="alternate" hrefLang="nl-NL" href="https://www.theorangecode.com/" />
+        <link rel="alternate" hrefLang="it-IT" href="https://www.theorangecode.com/" />
+        <link rel="alternate" hrefLang="fr-FR" href="https://www.theorangecode.com/" />
         
         {/* Content Summary for AI Understanding */}
         <meta name="summary" content="The Orange Code provides cultural intelligence and leadership training in Abu Dhabi, helping professionals navigate multicultural environments in the UAE and Gulf Region through masterclasses, private coaching, and corporate training programs." />
