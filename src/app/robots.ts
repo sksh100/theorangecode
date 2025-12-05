@@ -107,7 +107,17 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/'],
+        disallow: [
+          '/admin/',
+          '/api/',
+          '/dashboard/',
+          '/login/',
+          '/signup/',
+          '/settings/',
+          '/courses/',
+          '/coming-soon',  // Redirected to homepage, don't index
+          '/favicon.ico',  // Don't index favicon
+        ],
       },
     ],
     sitemap: 'https://www.theorangecode.com/sitemap.xml',

@@ -217,6 +217,8 @@ export default function Home() {
         }}
       />
       <div ref={containerRef} className="relative w-full bg-primary-dark text-white min-h-screen" itemScope itemType="https://schema.org/WebPage">
+        {/* Explicit canonical tag for homepage */}
+        <link rel="canonical" href="https://www.theorangecode.com/" />
       {/* Atmospheric Background - Wrapped in Suspense to prevent crashes */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <Suspense fallback={null}>

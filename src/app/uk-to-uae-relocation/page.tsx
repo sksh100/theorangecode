@@ -328,6 +328,8 @@ export default function UKToUAERelocationPage() {
 
   return (
     <>
+      {/* Explicit canonical tag */}
+      <link rel="canonical" href="https://www.theorangecode.com/uk-to-uae-relocation" />
        {/* AI Search Optimization Meta Tags */}
        <Script id="ai-meta-tags" strategy="beforeInteractive">
          {`

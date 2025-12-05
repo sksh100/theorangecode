@@ -129,6 +129,8 @@ export default function FAQ() {
 
   return (
     <>
+      {/* Explicit canonical tag */}
+      <link rel="canonical" href="https://www.theorangecode.com/faq" />
       {/* FAQ Schema */}
       <Script
         id="faq-page-schema"

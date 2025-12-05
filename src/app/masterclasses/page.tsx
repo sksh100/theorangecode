@@ -370,6 +370,8 @@ export default function MasterclassesPage() {
 
   return (
     <>
+      {/* Explicit canonical tag */}
+      <link rel="canonical" href="https://www.theorangecode.com/masterclasses" />
       {/* Structured Data - Course Schemas */}
       <Script
         id="masterclasses-service-schema"

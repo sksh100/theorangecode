@@ -36,6 +36,8 @@ export default function AboutPage() {
 
   return (
     <>
+      {/* Explicit canonical tag */}
+      <link rel="canonical" href="https://www.theorangecode.com/about" />
       {/* Structured Data */}
       <Script
         id="about-organization-schema"
