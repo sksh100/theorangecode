@@ -34,10 +34,13 @@ async function submitIndexNow() {
     urlList,
   };
 
-  // Try multiple IndexNow endpoints
+  // Try multiple IndexNow endpoints (IndexNow protocol is supported by multiple search engines)
   const endpoints = [
-    'https://api.indexnow.org/index',
-    'https://www.bing.com/indexnow',
+    'https://www.bing.com/indexnow',           // Microsoft Bing (most reliable)
+    'https://api.indexnow.org/index',          // Main IndexNow API (may be down)
+    'https://yandex.com/indexnow',             // Yandex (Russian search engine)
+    'https://www.seznam.cz/indexnow',          // Seznam (Czech search engine)
+    'https://search.naver.com/indexnow',       // Naver (Korean search engine)
   ];
 
   console.log('Submitting URLs to IndexNow...');
