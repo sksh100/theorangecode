@@ -103,11 +103,13 @@ export default function Home() {
             "@context": "https://schema.org",
             "@type": "WebSite",
             "name": "The Orange Code",
+            "alternateName": ["The Orange Code", "the orange code", "theorangecode"],
             "url": "https://www.theorangecode.com",
-            "description": "Cultural Intelligence & Leadership Training in Dubai and Abu Dhabi, UAE. Premium cultural intelligence courses and masterclasses for professionals.",
+            "description": "The Orange Code - Cultural Intelligence & Leadership Training in Dubai and Abu Dhabi, UAE. Premium cultural intelligence courses and masterclasses for professionals.",
             "publisher": {
               "@type": "Organization",
               "name": "The Orange Code",
+              "alternateName": ["The Orange Code", "the orange code", "theorangecode"],
               "logo": {
                 "@type": "ImageObject",
                 "url": "https://www.theorangecode.com/android-chrome-512x512.png"
@@ -133,9 +135,10 @@ export default function Home() {
             "@context": "https://schema.org",
             "@type": "EducationalOrganization",
             "name": "The Orange Code",
+            "alternateName": ["The Orange Code", "the orange code", "theorangecode", "The Orange Code UAE"],
             "url": "https://www.theorangecode.com",
             "logo": "https://www.theorangecode.com/android-chrome-512x512.png",
-            "description": "Cultural intelligence and leadership training masterclasses in Abu Dhabi, UAE.",
+            "description": "The Orange Code - Cultural intelligence and leadership training masterclasses in Abu Dhabi, UAE.",
             "address": {
               "@type": "PostalAddress",
               "streetAddress": "Etihad Towers, Tower 3, Floor 36",

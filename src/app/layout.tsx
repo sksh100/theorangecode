@@ -8,7 +8,7 @@ import { lato } from '@/lib/fonts'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Cultural Intelligence UAE | Cultural Intelligence Training Dubai & Abu Dhabi | The Orange Code',
+    default: 'The Orange Code | Cultural Intelligence UAE | Cultural Intelligence Training Dubai & Abu Dhabi',
     template: '%s | The Orange Code'
   },
   description: 'Cultural Intelligence UAE: Premium cultural intelligence training in Dubai and Abu Dhabi. The Orange Code empowers professionals to develop cultural intelligence (CQ), understand Emirati culture, and master doing business in the UAE and GCC. Expert cultural intelligence courses and masterclasses.',
@@ -311,7 +311,8 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'Organization',
               name: 'The Orange Code',
-              alternateName: ['theorangecode', 'the orange code'],
+              alternateName: ['The Orange Code', 'the orange code', 'theorangecode', 'TheOrangeCode', 'The Orange Code UAE', 'The Orange Code Dubai', 'The Orange Code Abu Dhabi'],
+              legalName: 'The Orange Code',
               url: 'https://www.theorangecode.com',
               logo: 'https://www.theorangecode.com/android-chrome-512x512.png',
               description: 'Premium learning platform in Abu Dhabi empowering professionals with cultural intelligence and leadership skills.',

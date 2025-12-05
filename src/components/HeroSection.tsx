@@ -44,7 +44,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            Master Cultural Intelligence for the UAE and GCC
+            <span className="sr-only">The Orange Code - </span>Master Cultural Intelligence for the UAE and GCC
           </motion.h1>
           
           <motion.p 
