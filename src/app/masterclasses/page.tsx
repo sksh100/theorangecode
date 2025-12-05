@@ -373,16 +373,20 @@ export default function MasterclassesPage() {
       {/* Explicit canonical tag */}
       <link rel="canonical" href="https://www.theorangecode.com/masterclasses" />
       
-      {/* Hreflang tags for UK and Netherlands */}
-      <link rel="alternate" hreflang="en-GB" href="https://www.theorangecode.com/masterclasses" />
-      <link rel="alternate" hreflang="en-NL" href="https://www.theorangecode.com/masterclasses" />
-      <link rel="alternate" hreflang="nl-NL" href="https://www.theorangecode.com/masterclasses" />
+      {/* Hreflang tags for UK, Netherlands, Italy, and France */}
+      <link rel="alternate" hrefLang="en-GB" href="https://www.theorangecode.com/masterclasses" />
+      <link rel="alternate" hrefLang="en-NL" href="https://www.theorangecode.com/masterclasses" />
+      <link rel="alternate" hrefLang="nl-NL" href="https://www.theorangecode.com/masterclasses" />
+      <link rel="alternate" hrefLang="it-IT" href="https://www.theorangecode.com/masterclasses" />
+      <link rel="alternate" hrefLang="fr-FR" href="https://www.theorangecode.com/masterclasses" />
       
-      {/* UK and Netherlands Meta Tags */}
+      {/* UK, Netherlands, Italy, and France Meta Tags */}
       <meta name="geo.region" content="GB" />
       <meta name="geo.region" content="NL" />
-      <meta name="geo.placename" content="United Kingdom, Netherlands" />
-      <meta name="target" content="UK, United Kingdom, Netherlands, Nederland, British professionals, Dutch professionals, Nederlandse professionals" />
+      <meta name="geo.region" content="IT" />
+      <meta name="geo.region" content="FR" />
+      <meta name="geo.placename" content="United Kingdom, Netherlands, Nederland, Italy, Italia, France, Français, British professionals, Dutch professionals, Nederlandse professionals, Italian professionals, professionisti italiani, French professionals, professionnels français" />
+      <meta name="target" content="UK, United Kingdom, Netherlands, Nederland, Italy, Italia, France, Français, British professionals, Dutch professionals, Nederlandse professionals, Italian professionals, professionisti italiani, French professionals, professionnels français" />
       
       {/* Structured Data - Course Schemas */}
       <Script
