@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowLeft, Shield, FileText, Scale, Crown, CreditCard, Users, Globe } from 'lucide-react'
+import { ArrowLeft, Shield, FileText, Scale, Crown, CreditCard, Users, Globe, BookOpen } from 'lucide-react'
 import Link from 'next/link'
 
 export default function TermsConditions() {
@@ -96,11 +96,11 @@ export default function TermsConditions() {
                 2. Services Description
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                The Orange Code provides premium Cultural Intelligence training. Our masterclasses include but are not limited to:
+                The Orange Code provides premium Cultural Intelligence training and digital products. Our services include:
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl p-4">
-                  <p className="text-white font-semibold">Cultural Intelligence</p>
+                  <p className="text-white font-semibold">Cultural Intelligence Masterclasses</p>
                 </div>
                 <div className="bg-gradient-to-r from-bright-blue/10 to-bright-blue/5 border border-bright-blue/20 rounded-xl p-4">
                   <p className="text-white font-semibold">Protocol Training</p>
@@ -111,6 +111,32 @@ export default function TermsConditions() {
                 <div className="bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl p-4">
                   <p className="text-white font-semibold">Executive Presence & Communication Training</p>
                 </div>
+                <div className="bg-gradient-to-r from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl p-4">
+                  <p className="text-white font-semibold">Private Coaching Sessions</p>
+                </div>
+                <div className="bg-gradient-to-r from-purple-500/10 to-purple-500/5 border border-purple-500/20 rounded-xl p-4">
+                  <p className="text-white font-semibold">Corporate Training Programs</p>
+                </div>
+              </div>
+              <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl p-6 mb-8">
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-orange" />
+                  Digital Products (Ebooks)
+                </h4>
+                <p className="text-white/80 leading-relaxed mb-3">
+                  We offer digital ebooks, including the "UK to UAE Cultural Intelligence Guide" and other educational materials. 
+                  Digital products are delivered via secure, time-limited download links sent to your email address after purchase.
+                </p>
+                <p className="text-white/80 leading-relaxed mb-3">
+                  <strong>Security Features:</strong> All purchased ebooks are watermarked with your email address for security and copyright protection. 
+                  Download links are token-based and expire after 48 hours for your security.
+                </p>
+                <p className="text-white/70 text-sm">
+                  For detailed information about refunds for digital products, please see our{' '}
+                  <Link href="/refund-policy" className="text-orange hover:text-bright-blue transition-colors underline">
+                    Refund Policy
+                  </Link>.
+                </p>
               </div>
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">
@@ -183,8 +209,14 @@ export default function TermsConditions() {
                   <li>• We will make every reasonable effort to reschedule the session to another available date.</li>
                   <li>• If rescheduling is not possible, the session fee remains non-refundable in accordance with UAE business practices for professional services.</li>
                 </ul>
-                <p className="text-white/80 leading-relaxed">
+                <p className="text-white/80 leading-relaxed mb-4">
                   Refunds are not provided for no-shows, missed sessions, or last-minute cancellations.
+                </p>
+                <p className="text-white/80 leading-relaxed">
+                  For complete details on our refund policy, including exceptions and special circumstances, please review our{' '}
+                  <Link href="/refund-policy" className="text-orange hover:text-bright-blue transition-colors underline">
+                    Refund Policy
+                  </Link> page.
                 </p>
               </div>
 

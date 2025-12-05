@@ -102,7 +102,7 @@ export default function PrivacyPolicy() {
                 1. Information We Collect
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                We collect information you provide directly to us, such as when you create an account, book services, or contact us. This includes:
+                We collect information you provide directly to us, such as when you create an account, book services, purchase ebooks, or contact us. We also automatically collect certain information when you visit our website.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
@@ -113,6 +113,7 @@ export default function PrivacyPolicy() {
                     <li>• Email address and phone number</li>
                     <li>• Date of birth and nationality</li>
                     <li>• Professional title and company</li>
+                    <li>• Billing address and payment information</li>
                   </ul>
                 </div>
                 <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl p-4">
@@ -120,15 +121,75 @@ export default function PrivacyPolicy() {
                   <ul className="text-white/70 text-sm space-y-1">
                     <li>• Cultural background and preferences</li>
                     <li>• Training goals and objectives</li>
-                    <li>• Billing address and transaction details</li>
+                    <li>• Masterclass bookings and attendance</li>
+                    <li>• Ebook purchases and downloads</li>
                     <li>• Communication preferences</li>
                   </ul>
                 </div>
               </div>
 
+              <div className="bg-gradient-to-r from-bright-blue/10 to-bright-blue/5 border border-bright-blue/20 rounded-xl p-6 mb-8">
+                <h4 className="text-white font-semibold mb-3">Automatically Collected Visitor Information</h4>
+                <p className="text-white/70 text-sm mb-3">
+                  When you visit our website, we automatically collect the following information for analytics, security, and service improvement:
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-white/80 text-sm font-semibold mb-2">Location & Network:</p>
+                    <ul className="text-white/70 text-xs space-y-1">
+                      <li>• IP address and approximate location (city, region, country)</li>
+                      <li>• Postal code, area/neighborhood (when available)</li>
+                      <li>• Geographic coordinates (city-level approximation)</li>
+                      <li>• ISP and organization information</li>
+                      <li>• Timezone (from IP and browser)</li>
+                      <li>• Network type (WiFi, cellular, ethernet)</li>
+                      <li>• Network speed and latency</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-white/80 text-sm font-semibold mb-2">Device & Browser:</p>
+                    <ul className="text-white/70 text-xs space-y-1">
+                      <li>• Device type (mobile, tablet, desktop)</li>
+                      <li>• Screen resolution and viewport size</li>
+                      <li>• Color depth and pixel ratio</li>
+                      <li>• Device memory and CPU cores</li>
+                      <li>• Battery level (mobile devices)</li>
+                      <li>• Browser type and version</li>
+                      <li>• Operating system and platform</li>
+                      <li>• Language preferences</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-white/80 text-sm font-semibold mb-2">Usage & Behavior:</p>
+                    <ul className="text-white/70 text-xs space-y-1">
+                      <li>• Pages visited and navigation flow</li>
+                      <li>• Session duration and visit count</li>
+                      <li>• Traffic source and referrer</li>
+                      <li>• Search queries (if from search engine)</li>
+                      <li>• UTM parameters</li>
+                      <li>• Page load times and performance</li>
+                      <li>• Scroll depth and interactions</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-white/80 text-sm font-semibold mb-2">Privacy Settings:</p>
+                    <ul className="text-white/70 text-xs space-y-1">
+                      <li>• Do Not Track preference</li>
+                      <li>• Cookie enabled status</li>
+                    </ul>
+                  </div>
+                </div>
+                <p className="text-white/60 text-xs mt-4">
+                  <strong>Note:</strong> IP geolocation provides city-level approximations only. We use this data for analytics and do not attempt to identify individuals. All visitor data is aggregated and anonymized where possible.
+                </p>
+              </div>
+
               <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-8">
-                <p className="text-white/80 text-sm">
+                <p className="text-white/80 text-sm mb-3">
                   <strong>Payment Processing:</strong> All payment card information is securely processed by Stripe. We do not store or have access to your full payment card details.
+                </p>
+                <p className="text-white/80 text-sm">
+                  <strong>Ebook Delivery & Security:</strong> For ebook purchases, we use a secure token-based download system. Upon purchase completion, you will receive an email with a time-limited download link (valid for 48 hours). All downloaded ebooks are watermarked with your email address for security and copyright protection. This watermark is embedded in the PDF file and cannot be removed.
                 </p>
               </div>
 
@@ -144,10 +205,12 @@ export default function PrivacyPolicy() {
                 <div className="bg-gradient-to-r from-bright-blue/10 to-bright-blue/5 border border-bright-blue/20 rounded-xl p-4">
                   <h4 className="text-white font-semibold mb-2">Service Delivery</h4>
                   <ul className="text-white/70 text-sm space-y-1">
-                    <li>• Provide cultural intelligence training</li>
+                    <li>• Provide cultural intelligence training and masterclasses</li>
+                    <li>• Deliver digital products (ebooks) via secure download links</li>
                     <li>• Personalize your learning experience</li>
                     <li>• Process payments and bookings</li>
-                    <li>• Send service-related communications</li>
+                    <li>• Send service-related communications and confirmations</li>
+                    <li>• Watermark purchased ebooks with your email for security</li>
                   </ul>
                 </div>
                 <div className="bg-gradient-to-r from-light-blue/10 to-light-blue/5 border border-light-blue/20 rounded-xl p-4">
@@ -155,6 +218,8 @@ export default function PrivacyPolicy() {
                   <ul className="text-white/70 text-sm space-y-1">
                     <li>• Improve our services and masterclasses</li>
                     <li>• Conduct market research and analytics</li>
+                    <li>• Monitor website performance and user experience</li>
+                    <li>• Send real-time notifications for business operations</li>
                     <li>• Comply with UAE legal requirements</li>
                     <li>• Maintain business records</li>
                   </ul>
@@ -388,6 +453,55 @@ export default function PrivacyPolicy() {
                     </a>
                   </p>
                 </div>
+
+                <div className="bg-gradient-to-r from-purple-500/10 to-purple-500/5 border border-purple-500/20 rounded-xl p-6">
+                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                    <Users className="w-5 h-5 text-purple-400" />
+                    Slack (Notifications)
+                  </h4>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Purpose:</strong> Real-time notifications for website events including new visitors, contact form submissions, newsletter signups, payment completions, and error reporting.
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Collected:</strong> Visitor information (location, device, browser, network), contact form data, payment notifications, and error logs.
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Processing:</strong> Slack Technologies, LLC (USA) - GDPR compliant with Data Processing Agreement (DPA).
+                  </p>
+                  <p className="text-white/60 text-xs">
+                    <a href="https://slack.com/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
+                      Slack Privacy Policy
+                    </a>
+                  </p>
+                </div>
+
+                <div className="bg-gradient-to-r from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl p-6">
+                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                    <Globe className="w-5 h-5 text-green-400" />
+                    IP Geolocation Services
+                  </h4>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Purpose:</strong> Enhanced location detection for visitor analytics, providing city-level geolocation, ISP information, and timezone data.
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Services Used:</strong> ipinfo.io (primary) and ip-api.com (fallback) for IP address geolocation.
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Collected:</strong> IP address is sent to geolocation services to determine approximate location (city, region, country, postal code, coordinates, ISP, organization, timezone).
+                  </p>
+                  <p className="text-white/70 text-sm mb-2">
+                    <strong>Data Processing:</strong> ipinfo.io (USA) and ip-api.com (USA) - Location data is approximate and city-level only.
+                  </p>
+                  <p className="text-white/60 text-xs">
+                    <a href="https://ipinfo.io/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
+                      ipinfo.io Privacy Policy
+                    </a>
+                    {' | '}
+                    <a href="https://ip-api.com/docs/legal" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">
+                      ip-api.com Terms
+                    </a>
+                  </p>
+                </div>
               </div>
 
               <div className="bg-gradient-to-r from-azure-blue/10 to-bright-blue/10 border border-azure-blue/30 rounded-2xl p-6 mb-8">
@@ -568,6 +682,18 @@ export default function PrivacyPolicy() {
                   <div>
                     <h4 className="text-white font-semibold mb-2">Legal Compliance</h4>
                     <p className="text-white/70 text-sm">As required by UAE law (typically 7 years)</p>
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold mb-2">Visitor Tracking Data</h4>
+                    <p className="text-white/70 text-sm">Active sessions: 60 seconds; Historical data: 90 days for analytics</p>
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold mb-2">Ebook Purchase Records</h4>
+                    <p className="text-white/70 text-sm">Permanently retained for business records and copyright protection</p>
+                  </div>
+                  <div>
+                    <h4 className="text-white font-semibold mb-2">Download Tokens</h4>
+                    <p className="text-white/70 text-sm">Valid for 48 hours, then automatically expired</p>
                   </div>
                 </div>
               </div>
