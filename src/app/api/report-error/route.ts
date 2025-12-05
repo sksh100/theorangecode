@@ -9,7 +9,21 @@ export async function POST(request: NextRequest) {
     
     const { message, stack, digest, url, userAgent } = body;
 
-    // Send Slack notification
+    // Filter out chunk loading errors - these are usually due to old cached versions
+    // and are not critical errors that need Slack notifications
+    const isChunkLoadingError = 
+      message?.includes('Loading chunk') ||
+      message?.includes('ChunkLoadError') ||
+      message?.includes('Failed to fetch dynamically imported module') ||
+      stack?.includes('chunk') && stack?.includes('failed');
+
+    if (isChunkLoadingError) {
+      console.log('ℹ️ Chunk loading error filtered out (non-critical):', message);
+      // Still return success, but don't send to Slack
+      return NextResponse.json({ success: true, filtered: true });
+    }
+
+    // Send Slack notification for other errors
     await notifyError({
       message: message || 'Unknown error',
       stack: stack || undefined,

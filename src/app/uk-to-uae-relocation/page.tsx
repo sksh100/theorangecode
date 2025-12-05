@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import { CheckCircle, ArrowRight, BookOpen, Users, Globe, Clock, MessageSquare, Briefcase, Sparkles, Quote, Download } from 'lucide-react'
+import { CheckCircle, ArrowRight, BookOpen, Users, Globe, Clock, MessageSquare, Briefcase, Sparkles, Quote } from 'lucide-react'
 import Link from 'next/link'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
@@ -14,6 +14,7 @@ import { SocialShareButtons } from '@/components/SocialShareButtons'
 import { trackCTAClick } from '@/lib/tracking'
 import Script from 'next/script'
 import { gsap } from 'gsap'
+import { EbookSampleModal } from '@/components/EbookSampleModal'
 
 // Dynamic imports for performance
 const AtmosphericBackground = dynamic(
@@ -26,6 +27,7 @@ export default function UKToUAERelocationPage() {
   const [currency, setCurrency] = useState('AED')
   const [price, setPrice] = useState(99) // Default AED price
   const [mounted, setMounted] = useState(false)
+  const [showSampleModal, setShowSampleModal] = useState(false)
   
   // Stripe Payment Link
   // For UK visitors: £59, For others: AED 270 (approx £59)
@@ -84,27 +86,8 @@ export default function UKToUAERelocationPage() {
     trackCTAClick(element, location)
   }
 
-  const handleDownloadPDF = async () => {
-    try {
-      const response = await fetch('/api/download-ebook')
-      if (!response.ok) {
-        throw new Error('Failed to download PDF')
-      }
-      const blob = await response.blob()
-      const url = window.URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = 'UK-to-UAE-Cultural-Intelligence-Guide.pdf'
-      document.body.appendChild(a)
-      a.click()
-      window.URL.revokeObjectURL(url)
-      document.body.removeChild(a)
-      handleCTAClick('Download PDF', '/uk-to-uae-relocation')
-    } catch (error) {
-      console.error('Error downloading PDF:', error)
-      alert('Failed to download PDF. Please try again or contact support.')
-    }
-  }
+  // Download is only available after purchase via email link
+  // Users receive an automated email with a secure download link after Stripe payment
 
   // British Testimonials Component with Infinite Loop
   const BritishTestimonialsCarousel = () => {
@@ -431,7 +414,7 @@ export default function UKToUAERelocationPage() {
             },
             "offers": {
               "@type": "Offer",
-              "url": "https://buy.stripe.com/14AcN5514gL746fcJW8k805",
+              "url": STRIPE_PAYMENT_LINK,
               "priceCurrency": "GBP",
               "price": "59",
               "availability": "https://schema.org/InStock",
@@ -596,7 +579,7 @@ export default function UKToUAERelocationPage() {
                 "name": "How do I buy the UK to UAE relocation guide?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "You can purchase the UK to UAE Cultural Intelligence Guide for £59 at https://www.theorangecode.com/uk-to-uae-relocation. Click 'Buy the Ebook' for instant download via secure Stripe checkout."
+                  "text": "You can purchase the UK to UAE Cultural Intelligence Guide for £59 at https://www.theorangecode.com/uk-to-uae-relocation. Click 'Buy the Ebook' to proceed to checkout. After payment, you'll receive an automated email with a secure download link to your personalized PDF."
                 }
               },
               {
@@ -604,7 +587,7 @@ export default function UKToUAERelocationPage() {
                 "name": "What is the price of the UK to UAE cultural guide?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "The UK to UAE Cultural Intelligence Guide costs £59 GBP (approximately AED 270). It's available for instant download after purchase with a 30-day money-back guarantee."
+                  "text": "The UK to UAE Cultural Intelligence Guide costs £59 GBP (approximately AED 270). After purchase, you'll receive an automated email with a secure download link to your personalized, watermarked PDF."
                 }
               },
               {
@@ -612,7 +595,7 @@ export default function UKToUAERelocationPage() {
                 "name": "Where can I purchase the ebook?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Purchase the UK to UAE relocation guide directly at https://www.theorangecode.com/uk-to-uae-relocation. Payment is secure via Stripe, and you'll receive instant access to the PDF download via email."
+                  "text": "Purchase the UK to UAE relocation guide directly at https://www.theorangecode.com/uk-to-uae-relocation. After successful payment, you'll automatically receive an email with a secure download link to your personalized PDF (watermarked with your email for security). The download link is valid for 48 hours."
                 }
               },
               {
@@ -678,17 +661,17 @@ export default function UKToUAERelocationPage() {
               {
                 "@type": "HowToStep",
                 "name": "Click Buy the Ebook",
-                "text": "Click the 'Buy the Ebook - Instant Download' button to proceed to secure checkout"
+                "text": "Click the 'Buy the Ebook - Instant Email Delivery' button to proceed to secure checkout"
               },
               {
                 "@type": "HowToStep",
                 "name": "Complete payment",
-                "text": "Pay £59 GBP via Stripe secure checkout (or AED 270 for non-UK visitors)"
+                "text": "Pay £59 GBP (or AED 270 for non-UK visitors)"
               },
               {
                 "@type": "HowToStep",
-                "name": "Receive instant download",
-                "text": "After payment, you'll receive an email with instant download link to the PDF guide"
+                "name": "Receive automated email with download link",
+                "text": "After payment, you'll automatically receive an email within seconds with a secure download link to your personalized PDF guide (watermarked with your email). The link is valid for 48 hours."
               }
             ]
           })
@@ -703,7 +686,7 @@ export default function UKToUAERelocationPage() {
             "@type": "BuyAction",
             "target": {
               "@type": "EntryPoint",
-              "urlTemplate": "https://buy.stripe.com/14AcN5514gL746fcJW8k805",
+              "urlTemplate": STRIPE_PAYMENT_LINK,
               "actionPlatform": [
                 "http://schema.org/DesktopWebPlatform",
                 "http://schema.org/MobileWebPlatform"
@@ -788,22 +771,21 @@ export default function UKToUAERelocationPage() {
 
         <ModernNavbar />
 
-        {/* UK Banner */}
-        {isUK && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="relative z-50 bg-gradient-to-r from-orange/20 via-azure-blue/20 to-orange/20 border-b border-azure-blue/30 py-3"
-          >
-            <div className="container mx-auto px-6 text-center">
-              <p className="text-sm text-white/90">
-                🇬🇧 <strong>Moving from the UK to the UAE?</strong> Get your cultural intelligence guide today.
-              </p>
-            </div>
-          </motion.div>
-        )}
-
         <main className="relative z-10">
+          {/* UK Banner - Moved below navbar */}
+          {isUK && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="relative z-50 bg-gradient-to-r from-orange/20 via-azure-blue/20 to-orange/20 border-b border-azure-blue/30 py-3"
+            >
+              <div className="container mx-auto px-6 text-center">
+                <p className="text-sm text-white/90">
+                  🇬🇧 <strong>Moving from the UK to the UAE?</strong> Get your cultural intelligence guide today.
+                </p>
+              </div>
+            </motion.div>
+          )}
           {/* SECTION 1: HERO */}
           <section className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-32">
             <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5" />
@@ -848,7 +830,7 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="text-base md:text-lg text-white/70 mb-8 max-w-3xl mx-auto"
                 >
-                  <strong className="text-orange">Purchase for £59 - Instant download available.</strong> Secure payment via Stripe. 30-day money-back guarantee.
+                  <strong className="text-orange">Purchase for £59 - Instant email delivery with secure download link.</strong> Your personalized, watermarked PDF will be sent automatically after payment.
                 </motion.p>
 
                 <motion.div
@@ -869,26 +851,12 @@ export default function UKToUAERelocationPage() {
                     <motion.button
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => handleCTAClick('View Course Options - Hero', '/uk-to-uae-relocation')}
+                      onClick={() => handleCTAClick('Explore Masterclasses - Hero', '/uk-to-uae-relocation')}
                       className="px-8 py-4 nav-button-glass text-white/90 hover:text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                     >
-                      View Course Options
+                      Explore Masterclasses
                     </motion.button>
                   </Link>
-                </motion.div>
-
-                {/* Social Share Buttons */}
-                <motion.div
-                  variants={itemVariants}
-                  className="mt-8"
-                >
-                  <SocialShareButtons
-                    url="https://www.theorangecode.com/uk-to-uae-relocation"
-                    title="UK to UAE Relocation Cultural Guide"
-                    description="A practical cultural intelligence guide for British professionals relocating to the UAE. Learn workplace culture, etiquette, communication and expectations before you arrive."
-                    variant="default"
-                    showLabel={true}
-                  />
                 </motion.div>
               </motion.div>
             </div>
@@ -1001,7 +969,7 @@ export default function UKToUAERelocationPage() {
                   className="relative p-8 md:p-12 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
-                  <div className="relative z-10 grid md:grid-cols-2 gap-4">
+                  <div className="relative z-10 grid md:grid-cols-2 gap-x-6 gap-y-4">
                     {[
                       'UAE cultural foundations',
                       'Communication differences between UK and UAE',
@@ -1013,9 +981,9 @@ export default function UKToUAERelocationPage() {
                       'Time perception and punctuality',
                       'Do and dont list for new arrivals'
                     ].map((item, index) => (
-                      <div key={index} className="flex items-center space-x-3">
-                        <BookOpen className="w-5 h-5 text-azure-blue flex-shrink-0" />
-                        <span className="text-white/90">{item}</span>
+                      <div key={index} className="flex items-start gap-3">
+                        <BookOpen className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+                        <span className="text-white/90 leading-relaxed">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -1231,7 +1199,7 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="text-xl text-white/80 mb-4"
                 >
-                  Instant download. Practical. Research based. Written for UK professionals.
+                  Instant email delivery. Practical. Research based. Written for UK professionals.
                 </motion.p>
 
                 {/* Social Proof Counter */}
@@ -1292,72 +1260,83 @@ export default function UKToUAERelocationPage() {
                           onClick={() => handleCTAClick('Buy the Ebook - Ebook Offer Section', '/uk-to-uae-relocation')}
                           className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                         >
-                          Buy the Ebook - Instant Download
+                          Buy the Ebook - Instant Email Delivery
                         </motion.button>
                       </Link>
                       <motion.button
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={handleDownloadPDF}
-                        className="px-8 py-4 nav-button-glass text-white/90 hover:text-white font-semibold font-montserrat rounded-xl transition-all duration-300 flex items-center gap-2"
-                      >
-                        <Download className="w-5 h-5" />
-                        Download PDF
-                      </motion.button>
-                      <motion.button
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => handleCTAClick('Preview a Sample', '/uk-to-uae-relocation')}
+                        onClick={() => {
+                          handleCTAClick('Preview a Sample', '/uk-to-uae-relocation')
+                          setShowSampleModal(true)
+                        }}
                         className="px-8 py-4 nav-button-glass text-white/90 hover:text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                       >
                         Preview a Sample
                       </motion.button>
                     </div>
 
+                    {/* Automated Delivery Info */}
+                    <div className="mt-6 mb-4 p-4 rounded-xl bg-azure-blue/10 border border-azure-blue/20">
+                      <p className="text-white/80 text-sm text-center">
+                        <strong className="text-azure-blue">✨ Automated Delivery:</strong> After purchase, you'll receive an email within seconds with a secure download link. Your PDF will be personalized with your email address for security.
+                      </p>
+                    </div>
+
                     {/* Value Stack - What You Get */}
                     <div className="mt-8 mb-6">
-                      <h3 className="text-xl font-bold text-white mb-4 text-center">What You Get:</h3>
-                      <div className="grid md:grid-cols-2 gap-3 text-sm text-white/90">
-                        <div className="flex items-start space-x-2">
+                      <h3 className="text-xl font-bold text-white mb-6 text-center">✅ What You Get</h3>
+                      <div className="space-y-4 text-white/90">
+                        <div className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
-                          <span>Complete UK to UAE Cultural Guide (PDF)</span>
+                          <div>
+                            <p className="font-semibold text-white mb-1">Complete UK→UAE Cultural Intelligence Guide (PDF)</p>
+                            <p className="text-sm text-white/70">A comprehensive, expertly designed handbook for relocating and working in the UAE.</p>
+                          </div>
                         </div>
-                        <div className="flex items-start space-x-2">
+                        <div className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-                          <span>Instant Download - Access Immediately</span>
+                          <div>
+                            <p className="font-semibold text-white mb-1">Step-by-Step Relocation Framework</p>
+                            <p className="text-sm text-white/70">Clear guidance on visas, housing, banking, healthcare, and everyday life in the Emirates.</p>
+                          </div>
                         </div>
-                        <div className="flex items-start space-x-2">
+                        <div className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-bright-blue flex-shrink-0 mt-0.5" />
-                          <span>9 Comprehensive Chapters</span>
+                          <div>
+                            <p className="font-semibold text-white mb-1">Workplace & Communication Playbook</p>
+                            <p className="text-sm text-white/70">Master Emirati business etiquette, hierarchy, communication styles, and meeting expectations.</p>
+                          </div>
                         </div>
-                        <div className="flex items-start space-x-2">
+                        <div className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
-                          <span>Practical Do's and Don'ts List</span>
+                          <div>
+                            <p className="font-semibold text-white mb-1">Cultural Foundations & Social Norms Explained</p>
+                            <p className="text-sm text-white/70">Understand the unspoken rules, Islamic values, habits, and behaviours that shape life in the UAE.</p>
+                          </div>
                         </div>
-                        <div className="flex items-start space-x-2">
+                        <div className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-                          <span>Workplace Communication Guide</span>
+                          <div>
+                            <p className="font-semibold text-white mb-1">Practical Do's, Don'ts, and Real-Life Scenarios</p>
+                            <p className="text-sm text-white/70">Avoid common cultural misunderstandings with concrete examples and actionable recommendations.</p>
+                          </div>
                         </div>
-                        <div className="flex items-start space-x-2">
+                        <div className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-bright-blue flex-shrink-0 mt-0.5" />
-                          <span>30-Day Email Support</span>
+                          <div>
+                            <p className="font-semibold text-white mb-1">Essential Survival Tools & Emirati Arabic Quick Phrases</p>
+                            <p className="text-sm text-white/70">Useful words, expressions, and cheat sheets for daily interactions and polite communication.</p>
+                          </div>
                         </div>
                       </div>
                     </div>
 
                     {/* Trust Badges */}
-                    <div className="grid md:grid-cols-3 gap-4 text-sm text-white/70 mt-6 pt-6 border-t border-white/10">
-                      <div className="flex items-center justify-center space-x-2">
-                        <CheckCircle className="w-5 h-5 text-orange" />
-                        <span>Secure Payment</span>
-                      </div>
-                      <div className="flex items-center justify-center space-x-2">
-                        <CheckCircle className="w-5 h-5 text-azure-blue" />
-                        <span>30-Day Guarantee</span>
-                      </div>
+                    <div className="grid md:grid-cols-1 gap-4 text-sm text-white/70 mt-6 pt-6 border-t border-white/10">
                       <div className="flex items-center justify-center space-x-2">
                         <CheckCircle className="w-5 h-5 text-bright-blue" />
-                        <span>Instant Access</span>
+                        <span>Automated Email Delivery</span>
                       </div>
                     </div>
                   </div>
@@ -1366,73 +1345,7 @@ export default function UKToUAERelocationPage() {
             </div>
           </section>
 
-          {/* SECTION 8: MONEY-BACK GUARANTEE */}
-          <section className="relative py-16 md:py-24 bg-gradient-to-b from-transparent via-primary-dark/50 to-transparent">
-            <div className="container mx-auto px-6">
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                className="max-w-4xl mx-auto"
-              >
-                <motion.div
-                  variants={itemVariants}
-                  className="relative p-8 md:p-12 rounded-2xl overflow-hidden border-2 border-orange/30 bg-gradient-to-br from-orange/10 via-primary-dark/90 to-azure-blue/10 backdrop-blur-[20px]"
-                >
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-orange/20 rounded-full blur-3xl -translate-y-16 translate-x-16" />
-                  <div className="absolute bottom-0 left-0 w-40 h-40 bg-azure-blue/20 rounded-full blur-3xl translate-y-20 -translate-x-20" />
-                  
-                  <div className="relative z-10 text-center">
-                    <motion.div
-                      variants={itemVariants}
-                      className="inline-block mb-6"
-                    >
-                      <div className="w-20 h-20 bg-gradient-to-br from-orange to-azure-blue rounded-full flex items-center justify-center mx-auto mb-4">
-                        <CheckCircle className="w-10 h-10 text-white" />
-                      </div>
-                    </motion.div>
-
-                    <motion.h2
-                      variants={itemVariants}
-                      className="text-3xl md:text-4xl font-bold mb-4"
-                    >
-                      <span className="bg-gradient-to-r from-orange to-azure-blue bg-clip-text text-transparent">
-                        30-Day Money-Back Guarantee
-                      </span>
-                    </motion.h2>
-
-                    <motion.p
-                      variants={itemVariants}
-                      className="text-lg text-white/90 mb-6 leading-relaxed max-w-2xl mx-auto"
-                    >
-                      We're confident this guide will help you adapt to UAE culture. If you're not completely satisfied within 30 days, we'll refund every penny. No questions asked.
-                    </motion.p>
-
-                    <motion.div
-                      variants={itemVariants}
-                      className="grid md:grid-cols-3 gap-4 text-sm text-white/80"
-                    >
-                      <div className="flex items-center justify-center gap-2">
-                        <CheckCircle className="w-5 h-5 text-orange flex-shrink-0" />
-                        <span>100% Risk-Free</span>
-                      </div>
-                      <div className="flex items-center justify-center gap-2">
-                        <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0" />
-                        <span>No Questions Asked</span>
-                      </div>
-                      <div className="flex items-center justify-center gap-2">
-                        <CheckCircle className="w-5 h-5 text-bright-blue flex-shrink-0" />
-                        <span>Instant Refund</span>
-                      </div>
-                    </motion.div>
-                  </div>
-                </motion.div>
-              </motion.div>
-            </div>
-          </section>
-
-          {/* SECTION 9: FAQ */}
+          {/* SECTION 8: FAQ */}
           <section className="relative py-16 md:py-24">
             <div className="container mx-auto px-6">
               <motion.div
@@ -1532,16 +1445,6 @@ export default function UKToUAERelocationPage() {
                       Get the Ebook - Start Today
                     </motion.button>
                   </Link>
-                  <Link href="/masterclasses">
-                    <motion.button
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => handleCTAClick('Explore Masterclasses - Final CTA', '/masterclasses')}
-                      className="px-8 py-4 nav-button-glass text-white/90 hover:text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
-                    >
-                      Explore Masterclasses
-                    </motion.button>
-                  </Link>
                 </motion.div>
 
                 {/* Social Share Section */}
@@ -1549,15 +1452,13 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="mt-12 pt-8 border-t border-white/10"
                 >
-                  <p className="text-white/70 text-center mb-6">
-                    Share this guide with friends, family, and colleagues who are relocating to the UAE
-                  </p>
                   <SocialShareButtons
                     url="https://www.theorangecode.com/uk-to-uae-relocation"
                     title="UK to UAE Relocation Cultural Guide"
                     description="A practical cultural intelligence guide for British professionals relocating to the UAE."
                     variant="default"
                     showLabel={true}
+                    platforms={['WhatsApp', 'Copy Link']}
                   />
                 </motion.div>
               </motion.div>
@@ -1566,6 +1467,12 @@ export default function UKToUAERelocationPage() {
         </main>
 
         <ModernFooter />
+
+        {/* Ebook Sample Modal */}
+        <EbookSampleModal 
+          isOpen={showSampleModal} 
+          onClose={() => setShowSampleModal(false)} 
+        />
       </div>
     </>
   )

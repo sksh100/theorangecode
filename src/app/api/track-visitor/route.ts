@@ -23,6 +23,46 @@ type VisitorPayload = {
   navigationFlow?: string[];  // Array of pages visited in this session
   sessionDuration?: number;  // Session duration in seconds
   visitCount?: number;  // Number of times this visitor has visited
+  networkType?: string | null;  // Network connection type (wifi, cellular, etc.)
+  networkEffectiveType?: string | null;  // Effective network type (4g, 3g, etc.)
+  networkDownlink?: number | null;  // Network downlink speed in Mbps
+  networkRtt?: number | null;  // Network round-trip time in ms
+  // Enhanced location data
+  isp?: string | null;  // Internet Service Provider
+  org?: string | null;  // Organization name
+  timezone?: string | null;  // Timezone from IP geolocation
+  // Device & Display
+  screenWidth?: number | null;
+  screenHeight?: number | null;
+  viewportWidth?: number | null;
+  viewportHeight?: number | null;
+  colorDepth?: number | null;
+  pixelRatio?: number | null;
+  deviceMemory?: number | null;  // Device memory in GB
+  cpuCores?: number | null;  // CPU core count
+  // Language & Locale
+  language?: string | null;
+  languages?: string[] | null;
+  timezoneBrowser?: string | null;  // Timezone from browser
+  timezoneOffset?: number | null;  // Timezone offset in minutes
+  // Platform
+  platform?: string | null;
+  vendor?: string | null;
+  // Battery (mobile)
+  batteryLevel?: number | null;  // Battery percentage
+  batteryCharging?: boolean | null;
+  // Privacy
+  doNotTrack?: string | null;
+  cookieEnabled?: boolean | null;
+  // Performance
+  pageLoadTime?: number | null;  // Page load time in ms
+  domContentLoaded?: number | null;  // DOM content loaded time in ms
+  // Referrer details
+  referrerDomain?: string | null;
+  referrerPath?: string | null;
+  searchQuery?: string | null;  // Search query if from search engine
+  // UTM Parameters
+  utmParams?: Record<string, string> | null;
 };
 
 // Helper function to detect device type from user agent
@@ -161,7 +201,19 @@ async function getAreaFromCoordinates(lat: number, lng: number, city: string): P
 
 // Helper function to get location data (city, coordinates, area) from IP address
 // Uses multiple services for better accuracy, specifically to distinguish Dubai vs Abu Dhabi
-async function getLocationFromIP(ip: string): Promise<{ lat: number; lng: number; city?: string; region?: string; postalCode?: string | null; area?: string | null } | null> {
+// Returns enhanced location data including ISP, timezone, and organization
+async function getLocationFromIP(ip: string): Promise<{ 
+  lat: number; 
+  lng: number; 
+  city?: string; 
+  region?: string; 
+  postalCode?: string | null; 
+  area?: string | null;
+  isp?: string;
+  org?: string;
+  timezone?: string;
+  asn?: string;
+} | null> {
   // Skip for localhost or private IPs
   if (ip === "unknown" || ip.startsWith("127.") || ip.startsWith("192.168.") || ip.startsWith("10.") || ip.startsWith("172.")) {
     return null;
@@ -197,6 +249,8 @@ async function getLocationFromIP(ip: string): Promise<{ lat: number; lng: number
             region: ipinfoData.region,
             postalCode: postalCode,
             area: area,
+            isp: ipinfoData.org,
+            timezone: ipinfoData.timezone,
             coordinates: `${lat}, ${lng}`
           });
           
@@ -206,7 +260,10 @@ async function getLocationFromIP(ip: string): Promise<{ lat: number; lng: number
             city: ipinfoData.city,
             region: ipinfoData.region,
             postalCode: postalCode || undefined,
-            area: area || undefined
+            area: area || undefined,
+            isp: ipinfoData.org || undefined,
+            org: ipinfoData.org || undefined,
+            timezone: ipinfoData.timezone || undefined
           };
         }
       }
@@ -365,6 +422,9 @@ export async function POST(req: NextRequest) {
     let ipRegion: string | null = null;
     let ipArea: string | null = null;
     let ipPostalCode: string | null = null;
+    let ipIsp: string | null = null;
+    let ipOrg: string | null = null;
+    let ipTimezone: string | null = null;
     
     if (ip && ip !== "unknown") {
       const locationCacheKey = `location:${ip}`;
@@ -382,11 +442,16 @@ export async function POST(req: NextRequest) {
               ipRegion = parsed.region || null;
               ipArea = parsed.area || null;
               ipPostalCode = parsed.postalCode || null;
+              ipIsp = parsed.isp || null;
+              ipOrg = parsed.org || null;
+              ipTimezone = parsed.timezone || null;
               console.log('✅ Using cached location for IP:', ip, {
                 city: ipCity,
                 region: ipRegion,
                 area: ipArea,
                 postalCode: ipPostalCode,
+                isp: ipIsp,
+                timezone: ipTimezone,
                 coordinates: `${coordinates.lat}, ${coordinates.lng}`
               });
             }
@@ -406,6 +471,9 @@ export async function POST(req: NextRequest) {
             ipRegion = locationData.region || null;
             ipArea = locationData.area || null;
             ipPostalCode = locationData.postalCode || null;
+            ipIsp = locationData.isp || null;
+            ipOrg = locationData.org || null;
+            ipTimezone = locationData.timezone || null;
             
             // Cache the location data for 30 days (2,592,000 seconds)
             await redis.set(
@@ -416,7 +484,10 @@ export async function POST(req: NextRequest) {
                 city: locationData.city,
                 region: locationData.region,
                 area: locationData.area,
-                postalCode: locationData.postalCode
+                postalCode: locationData.postalCode,
+                isp: locationData.isp,
+                org: locationData.org,
+                timezone: locationData.timezone
               }),
               { ex: 2592000 } // 30 days
             );
@@ -496,6 +567,12 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // Extract all enhanced info from request body
+    const networkType = body.networkType || null;
+    const networkEffectiveType = body.networkEffectiveType || null;
+    const networkDownlink = body.networkDownlink || null;
+    const networkRtt = body.networkRtt || null;
+
     const payload: VisitorPayload = {
       id,
       ip,
@@ -511,6 +588,48 @@ export async function POST(req: NextRequest) {
       navigationFlow: navigationFlow.length > 0 ? navigationFlow : undefined,
       sessionDuration: sessionDuration > 0 ? sessionDuration : undefined,
       visitCount: visitCount > 0 ? visitCount : undefined,
+      networkType: networkType || null,
+      networkEffectiveType: networkEffectiveType || null,
+      networkDownlink: networkDownlink || null,
+      networkRtt: networkRtt || null,
+      // Enhanced location
+      isp: ipIsp || null,
+      org: ipOrg || null,
+      timezone: ipTimezone || null,
+      area: ipArea || null,
+      postalCode: ipPostalCode || null,
+      // Device & Display
+      screenWidth: body.screenWidth || null,
+      screenHeight: body.screenHeight || null,
+      viewportWidth: body.viewportWidth || null,
+      viewportHeight: body.viewportHeight || null,
+      colorDepth: body.colorDepth || null,
+      pixelRatio: body.pixelRatio || null,
+      deviceMemory: body.deviceMemory || null,
+      cpuCores: body.cpuCores || null,
+      // Language & Locale
+      language: body.language || null,
+      languages: body.languages || null,
+      timezoneBrowser: body.timezone || null,
+      timezoneOffset: body.timezoneOffset || null,
+      // Platform
+      platform: body.platform || null,
+      vendor: body.vendor || null,
+      // Battery
+      batteryLevel: body.batteryLevel || null,
+      batteryCharging: body.batteryCharging || null,
+      // Privacy
+      doNotTrack: body.doNotTrack || null,
+      cookieEnabled: body.cookieEnabled || null,
+      // Performance
+      pageLoadTime: body.pageLoadTime || null,
+      domContentLoaded: body.domContentLoaded || null,
+      // Referrer details
+      referrerDomain: body.referrerDomain || null,
+      referrerPath: body.referrerPath || null,
+      searchQuery: body.searchQuery || null,
+      // UTM Parameters
+      utmParams: body.utmParams || null,
     };
 
     const key = `active:${id}`;
@@ -633,6 +752,46 @@ export async function POST(req: NextRequest) {
         navigationFlow: navigationFlow.length > 0 ? navigationFlow : undefined,
         sessionDuration: sessionDuration > 0 ? sessionDuration : undefined,
         visitCount: visitCount > 0 ? visitCount : undefined,
+        networkType: networkType || undefined,
+        networkEffectiveType: networkEffectiveType || undefined,
+        networkDownlink: networkDownlink || undefined,
+        networkRtt: networkRtt || undefined,
+        // Enhanced location
+        isp: ipIsp || undefined,
+        org: ipOrg || undefined,
+        timezone: ipTimezone || undefined,
+        // Device & Display
+        screenWidth: payload.screenWidth || undefined,
+        screenHeight: payload.screenHeight || undefined,
+        viewportWidth: payload.viewportWidth || undefined,
+        viewportHeight: payload.viewportHeight || undefined,
+        colorDepth: payload.colorDepth || undefined,
+        pixelRatio: payload.pixelRatio || undefined,
+        deviceMemory: payload.deviceMemory || undefined,
+        cpuCores: payload.cpuCores || undefined,
+        // Language & Locale
+        language: payload.language || undefined,
+        languages: payload.languages || undefined,
+        timezoneBrowser: payload.timezoneBrowser || undefined,
+        timezoneOffset: payload.timezoneOffset || undefined,
+        // Platform
+        platform: payload.platform || undefined,
+        vendor: payload.vendor || undefined,
+        // Battery
+        batteryLevel: payload.batteryLevel || undefined,
+        batteryCharging: payload.batteryCharging || undefined,
+        // Privacy
+        doNotTrack: payload.doNotTrack || undefined,
+        cookieEnabled: payload.cookieEnabled || undefined,
+        // Performance
+        pageLoadTime: payload.pageLoadTime || undefined,
+        domContentLoaded: payload.domContentLoaded || undefined,
+        // Referrer details
+        referrerDomain: payload.referrerDomain || undefined,
+        referrerPath: payload.referrerPath || undefined,
+        searchQuery: payload.searchQuery || undefined,
+        // UTM Parameters
+        utmParams: payload.utmParams || undefined,
       })
         .then(() => {
           console.log("✅✅✅ Visitor Slack notification SENT SUCCESSFULLY");

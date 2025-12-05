@@ -170,6 +170,9 @@ export default function TermsConditions() {
               
               <div className="bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-2xl p-6 mb-8">
                 <h4 className="text-xl font-bold text-white mb-4">Cancellation & Refund Policy</h4>
+                <p className="text-white font-semibold mb-4 text-lg">
+                  Due to the nature of digital products, all ebook sales are final and non-refundable.
+                </p>
                 <p className="text-white/80 leading-relaxed mb-4">
                   The Orange Code is committed to providing flexibility and exceptional service. We aim to accommodate our clients whenever possible; however, due to the nature of customised training and reserved time allocations, cancellations are not eligible for refunds.
                 </p>

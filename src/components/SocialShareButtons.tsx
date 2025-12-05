@@ -13,6 +13,7 @@ interface SocialShareButtonsProps {
   variant?: 'default' | 'compact' | 'icon-only'
   className?: string
   showLabel?: boolean
+  platforms?: string[] // Optional: filter which platforms to show (e.g., ['WhatsApp', 'Copy Link'])
 }
 
 export function SocialShareButtons({
@@ -22,7 +23,8 @@ export function SocialShareButtons({
   imageUrl = 'https://www.theorangecode.com/og-image',
   variant = 'default',
   className = '',
-  showLabel = true
+  showLabel = true,
+  platforms
 }: SocialShareButtonsProps) {
   const [copied, setCopied] = useState(false)
 
@@ -74,7 +76,7 @@ export function SocialShareButtons({
     alert('Link copied! Paste it in your Instagram story or post. Instagram doesn\'t support direct web sharing.')
   }
 
-  const buttons = [
+  const allButtons = [
     {
       name: 'WhatsApp',
       icon: MessageCircle,
@@ -113,6 +115,11 @@ export function SocialShareButtons({
       textColor: 'text-white'
     }
   ]
+
+  // Filter buttons if platforms prop is provided
+  const buttons = platforms 
+    ? allButtons.filter(button => platforms.includes(button.name))
+    : allButtons
 
   if (variant === 'icon-only') {
     return (

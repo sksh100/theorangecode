@@ -41,6 +41,112 @@ export function VisitorTracker() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
+    // Collect comprehensive visitor information
+    const getVisitorInfo = async () => {
+      const info: any = {};
+      
+      // Network Information
+      if ('connection' in navigator) {
+        const connection = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
+        if (connection) {
+          info.networkType = connection.type || 'unknown';
+          info.networkEffectiveType = connection.effectiveType || 'unknown';
+          info.networkDownlink = connection.downlink || 0;
+          info.networkRtt = connection.rtt || 0;
+        }
+      }
+      
+      // Fallback network detection
+      if (!info.networkType || info.networkType === 'unknown') {
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        info.networkType = isMobile ? 'cellular' : 'wifi';
+      }
+      
+      // Screen/Display Information
+      info.screenWidth = window.screen.width;
+      info.screenHeight = window.screen.height;
+      info.viewportWidth = window.innerWidth;
+      info.viewportHeight = window.innerHeight;
+      info.colorDepth = window.screen.colorDepth;
+      info.pixelRatio = window.devicePixelRatio || 1;
+      
+      // Device Memory (if available)
+      if ('deviceMemory' in navigator) {
+        info.deviceMemory = (navigator as any).deviceMemory;
+      }
+      
+      // Hardware Concurrency (CPU cores)
+      if (navigator.hardwareConcurrency) {
+        info.cpuCores = navigator.hardwareConcurrency;
+      }
+      
+      // Language & Locale
+      info.language = navigator.language;
+      info.languages = navigator.languages || [navigator.language];
+      info.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      info.timezoneOffset = new Date().getTimezoneOffset();
+      
+      // Platform Details
+      info.platform = navigator.platform;
+      info.vendor = navigator.vendor;
+      
+      // Battery API (mobile devices)
+      if ('getBattery' in navigator) {
+        try {
+          const battery = await (navigator as any).getBattery();
+          info.batteryLevel = Math.round(battery.level * 100);
+          info.batteryCharging = battery.charging;
+        } catch (e) {
+          // Battery API not available or denied
+        }
+      }
+      
+      // Privacy Settings
+      info.doNotTrack = navigator.doNotTrack || 'unknown';
+      info.cookieEnabled = navigator.cookieEnabled;
+      
+      // Performance Timing (initial load)
+      if (window.performance && window.performance.timing) {
+        const timing = window.performance.timing;
+        info.pageLoadTime = timing.loadEventEnd - timing.navigationStart;
+        info.domContentLoaded = timing.domContentLoadedEventEnd - timing.navigationStart;
+      }
+      
+      // Referrer Details
+      if (document.referrer) {
+        try {
+          const referrerUrl = new URL(document.referrer);
+          info.referrerDomain = referrerUrl.hostname;
+          info.referrerPath = referrerUrl.pathname;
+          
+          // Extract search query if from search engine
+          const searchParams = referrerUrl.searchParams;
+          if (searchParams.has('q')) {
+            info.searchQuery = searchParams.get('q');
+          }
+        } catch (e) {
+          // Invalid referrer URL
+        }
+      }
+      
+      // UTM Parameters
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const utmParams: any = {};
+        ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(param => {
+          const value = urlParams.get(param);
+          if (value) utmParams[param] = value;
+        });
+        if (Object.keys(utmParams).length > 0) {
+          info.utmParams = utmParams;
+        }
+      } catch (e) {
+        // URL parsing failed
+      }
+      
+      return info;
+    };
+
     const send = async () => {
       try {
         // Get or create session ID
@@ -50,6 +156,9 @@ export function VisitorTracker() {
           localStorage.setItem('visitor_session_id', sessionId);
         }
 
+        // Get comprehensive visitor information
+        const visitorInfo = await getVisitorInfo();
+
         const response = await fetch("/api/track-visitor", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -58,6 +167,7 @@ export function VisitorTracker() {
             path: window.location.pathname,
             referrer: document.referrer || null,
             userAgent: navigator.userAgent,
+            ...visitorInfo, // Spread all collected info
           }),
         });
         const data = await response.json();
@@ -99,13 +209,35 @@ export function VisitorTracker() {
       // Send final tracking update
       const sessionId = localStorage.getItem('visitor_session_id');
       if (sessionId) {
-        // Use sendBeacon for reliable tracking on page unload
-        navigator.sendBeacon('/api/track-visitor', JSON.stringify({
-          id: sessionId,
-          path: window.location.pathname,
-          referrer: document.referrer || null,
-          userAgent: navigator.userAgent,
-        }));
+        // Collect basic info for sendBeacon (async not supported)
+      const basicInfo: any = {
+        id: sessionId,
+        path: window.location.pathname,
+        referrer: document.referrer || null,
+        userAgent: navigator.userAgent,
+      };
+      
+      // Add synchronous info only
+      if ('connection' in navigator) {
+        const connection = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
+        if (connection) {
+          basicInfo.networkType = connection.type || 'unknown';
+          basicInfo.networkEffectiveType = connection.effectiveType || 'unknown';
+          basicInfo.networkDownlink = connection.downlink || 0;
+          basicInfo.networkRtt = connection.rtt || 0;
+        }
+      }
+      
+      basicInfo.screenWidth = window.screen.width;
+      basicInfo.screenHeight = window.screen.height;
+      basicInfo.viewportWidth = window.innerWidth;
+      basicInfo.viewportHeight = window.innerHeight;
+      basicInfo.language = navigator.language;
+      basicInfo.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      
+      // Use sendBeacon for reliable tracking on page unload
+        const payload = JSON.stringify(basicInfo);
+        navigator.sendBeacon('/api/track-visitor', payload);
       }
     };
 

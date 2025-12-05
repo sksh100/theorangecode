@@ -379,6 +379,13 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                   Terms & Conditions
                 </Link>
                 <Link 
+                  href="/refund-policy" 
+                  className="text-white/50 hover:text-orange transition-colors text-xs cursor-pointer touch-manipulation"
+                  style={{ WebkitTapHighlightColor: 'transparent' }}
+                >
+                  Refund Policy
+                </Link>
+                <Link 
                   href="/privacy-policy" 
                   className="text-white/50 hover:text-orange transition-colors text-xs cursor-pointer touch-manipulation"
                   style={{ WebkitTapHighlightColor: 'transparent' }}
