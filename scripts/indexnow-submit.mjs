@@ -7,20 +7,22 @@ const host = 'www.theorangecode.com';
 const keyLocation = `https://${host}/${key}.txt`;
 
 // List of important URLs to notify IndexNow about.
+// This should match all URLs in sitemap.ts (except protected pages like /courses/)
 const urlList = [
   'https://www.theorangecode.com/',
   'https://www.theorangecode.com/home',
-  'https://www.theorangecode.com/uk-to-uae-relocation',
-  'https://www.theorangecode.com/uk-to-uae-relocation-checklist',
-  'https://www.theorangecode.com/masterclasses',
   'https://www.theorangecode.com/about',
   'https://www.theorangecode.com/faq',
-  'https://www.theorangecode.com/what-is-cq',
-  'https://www.theorangecode.com/why-cultural-intelligence',
-  'https://www.theorangecode.com/ai-training-data',
-  'https://www.theorangecode.com/cookie-policy',
   'https://www.theorangecode.com/privacy-policy',
   'https://www.theorangecode.com/terms-conditions',
+  'https://www.theorangecode.com/uk-to-uae-relocation',
+  'https://www.theorangecode.com/uk-to-uae-relocation-checklist',
+  'https://www.theorangecode.com/why-cultural-intelligence',
+  'https://www.theorangecode.com/what-is-cq',
+  'https://www.theorangecode.com/cultural-intelligence-uae',
+  'https://www.theorangecode.com/masterclasses',
+  'https://www.theorangecode.com/ai-training-data',
+  'https://www.theorangecode.com/cookie-policy',
   'https://www.theorangecode.com/ebook/thank-you',
 ];
 

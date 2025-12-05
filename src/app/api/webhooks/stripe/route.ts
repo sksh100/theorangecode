@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import { redis } from "@/lib/redis";
 import { sendPushToAll } from "@/lib/webPush";
 import { notifyPayment, notifyError, notifyEbookPurchase } from "@/lib/slack";
+import { createDownloadToken } from "@/lib/downloadToken";
 
 // Initialize Stripe only if secret key is available
 const getStripe = () => {
@@ -32,22 +33,68 @@ export async function POST(req: NextRequest) {
       return new NextResponse("Missing signature", { status: 400 });
     }
 
-    if (!process.env.STRIPE_WEBHOOK_SECRET) {
-      console.error("Stripe webhook secret not configured");
+    // Try to verify with ebook webhook secret first, then fall back to masterclass secret
+    const ebookWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET_UK_TO_UAE_EBOOK;
+    const masterclassWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+    if (!ebookWebhookSecret && !masterclassWebhookSecret) {
+      console.error("Stripe webhook secret not configured - neither ebook nor masterclass secret found");
       return new NextResponse("Webhook secret not configured", { status: 500 });
     }
 
     let event: Stripe.Event;
+    let usedEbookSecret = false;
 
-    try {
-      event = stripe.webhooks.constructEvent(
-        body,
-        sig,
-        process.env.STRIPE_WEBHOOK_SECRET
-      );
-    } catch (err: any) {
-      console.error("Stripe webhook error", err.message);
-      return new NextResponse("Webhook Error", { status: 400 });
+    // Try ebook webhook secret first
+    if (ebookWebhookSecret) {
+      try {
+        event = stripe.webhooks.constructEvent(
+          body,
+          sig,
+          ebookWebhookSecret
+        );
+        usedEbookSecret = true;
+        console.log('✅ Webhook verified with ebook secret');
+      } catch (err: any) {
+        // If ebook secret fails, try masterclass secret
+        if (masterclassWebhookSecret) {
+          try {
+            event = stripe.webhooks.constructEvent(
+              body,
+              sig,
+              masterclassWebhookSecret
+            );
+            usedEbookSecret = false;
+            console.log('✅ Webhook verified with masterclass secret');
+          } catch (masterclassErr: any) {
+            console.error("Stripe webhook error - both secrets failed:", {
+              ebookError: err.message,
+              masterclassError: masterclassErr.message
+            });
+            return new NextResponse("Webhook signature verification failed", { status: 400 });
+          }
+        } else {
+          console.error("Stripe webhook error with ebook secret:", err.message);
+          return new NextResponse("Webhook Error", { status: 400 });
+        }
+      }
+    } else {
+      // Only masterclass secret available
+      if (!masterclassWebhookSecret) {
+        return new NextResponse("Webhook secret not configured", { status: 500 });
+      }
+      try {
+        event = stripe.webhooks.constructEvent(
+          body,
+          sig,
+          masterclassWebhookSecret
+        );
+        usedEbookSecret = false;
+        console.log('✅ Webhook verified with masterclass secret');
+      } catch (err: any) {
+        console.error("Stripe webhook error:", err.message);
+        return new NextResponse("Webhook Error", { status: 400 });
+      }
     }
 
     if (event.type === "checkout.session.completed") {
@@ -121,10 +168,12 @@ export async function POST(req: NextRequest) {
       });
 
       // Check if this is an ebook purchase and send the ebook
+      // Only process ebook logic if verified with ebook secret OR metadata indicates ebook
       const productName = session.metadata?.productName || session.metadata?.product || ""
-      const isEbookPurchase = productName.toLowerCase().includes('ebook') || 
+      const isEbookPurchase = (usedEbookSecret || 
+                              productName.toLowerCase().includes('ebook') || 
                               productName.toLowerCase().includes('uk to uae') ||
-                              session.metadata?.type === 'ebook'
+                              session.metadata?.type === 'ebook')
 
       if (isEbookPurchase && email && email !== 'unknown') {
         // Send dedicated ebook purchase notification to Slack
@@ -140,8 +189,11 @@ export async function POST(req: NextRequest) {
           // Don't fail the webhook if Slack fails
         });
         try {
-          // Send ebook via email
-          const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.theorangecode.com'
+          // Generate download token for this purchase
+          const downloadToken = await createDownloadToken(email)
+          const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_DOMAIN || 'https://www.theorangecode.com'
+          
+          // Send ebook via email with download token
           const ebookResponse = await fetch(`${baseUrl}/api/send-ebook`, {
             method: 'POST',
             headers: {
@@ -151,6 +203,7 @@ export async function POST(req: NextRequest) {
               email: email,
               customerName: session.customer_details?.name || email.split('@')[0],
               orderId: session.id,
+              downloadToken: downloadToken,
             }),
           })
 

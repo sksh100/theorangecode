@@ -139,9 +139,15 @@ export default function EbookThankYouPage() {
 
                   <motion.p
                     variants={itemVariants}
-                    className="text-white/70 text-sm md:text-base mb-6 text-center leading-relaxed"
+                    className="text-white/70 text-sm md:text-base mb-4 text-center leading-relaxed"
                   >
                     The ebook is being finalized and will be available for download very soon. You will receive an email with the download link once it is ready.
+                  </motion.p>
+                  <motion.p
+                    variants={itemVariants}
+                    className="text-white/50 text-xs md:text-sm mb-6 text-center"
+                  >
+                    ⏰ Your download link will be valid for 48 hours. Please save the file to your device when you receive it.
                   </motion.p>
                 </>
               )}

@@ -10,12 +10,13 @@ interface EbookDeliveryRequest {
   email: string
   customerName?: string
   orderId?: string
+  downloadToken?: string
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body: EbookDeliveryRequest = await req.json()
-    const { email, customerName, orderId } = body
+    const { email, customerName, orderId, downloadToken } = body
 
     if (!email) {
       return NextResponse.json(
@@ -24,22 +25,13 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Get the PDF file from public folder
-    // Note: In production, you might want to store the PDF in a CDN or cloud storage
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.theorangecode.com'
-    const ebookUrl = `${baseUrl}/ebooks/uk-to-uae-relocation-guide.pdf`
+    // Generate download URL with token (if provided) or use direct link
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_DOMAIN || 'https://www.theorangecode.com'
+    const downloadUrl = downloadToken 
+      ? `${baseUrl}/download?token=${encodeURIComponent(downloadToken)}`
+      : `${baseUrl}/ebooks/uk-to-uae-relocation-guide.pdf`
 
-    // Fetch the PDF to attach it
-    let pdfBuffer: Buffer | null = null
-    try {
-      const pdfResponse = await fetch(ebookUrl)
-      if (pdfResponse.ok) {
-        const arrayBuffer = await pdfResponse.arrayBuffer()
-        pdfBuffer = Buffer.from(arrayBuffer)
-      }
-    } catch (error) {
-      console.warn('⚠️ Could not fetch PDF, will send download link instead:', error)
-    }
+    // Note: We're using token-based download instead of email attachment for security and personalization
 
     const displayName = customerName || email.split('@')[0]
 
@@ -73,18 +65,17 @@ export async function POST(req: NextRequest) {
               
               <p>Thank you for purchasing <strong>The UK to UAE Cultural Intelligence Guide</strong>!</p>
               
-              <p>Your ebook is attached to this email. You can also download it using the link below:</p>
+              <p>Your personalized ebook is ready! Click the button below to download your copy (stamped with your email for security):</p>
               
-              ${pdfBuffer ? `
-                <p><strong>📎 Your ebook is attached to this email.</strong></p>
-              ` : `
-                <p style="text-align: center;">
-                  <a href="${ebookUrl}" class="button">Download Your Guide Now</a>
-                </p>
-                <p style="text-align: center; font-size: 12px; color: #666;">
-                  Or copy this link: ${ebookUrl}
-                </p>
-              `}
+              <p style="text-align: center;">
+                <a href="${downloadUrl}" class="button">Download Your Guide Now</a>
+              </p>
+              <p style="text-align: center; font-size: 12px; color: #666;">
+                Or copy this link: ${downloadUrl}
+              </p>
+              <p style="text-align: center; font-size: 11px; color: #999; margin-top: 10px;">
+                ⏰ This download link is valid for 48 hours. Please save the file to your device.
+              </p>
               
               <h3>What's Inside:</h3>
               <ul>
@@ -116,12 +107,7 @@ export async function POST(req: NextRequest) {
         </body>
         </html>
       `,
-      attachments: pdfBuffer ? [
-        {
-          filename: 'UK-to-UAE-Cultural-Intelligence-Guide.pdf',
-          content: pdfBuffer,
-        }
-      ] : undefined,
+      // No attachment - using secure token-based download instead
     }
 
     const { error } = await resend.emails.send(emailContent)

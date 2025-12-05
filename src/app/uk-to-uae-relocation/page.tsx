@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import { CheckCircle, ArrowRight, BookOpen, Users, Globe, Clock, MessageSquare, Briefcase, Sparkles, Quote } from 'lucide-react'
+import { CheckCircle, ArrowRight, BookOpen, Users, Globe, Clock, MessageSquare, Briefcase, Sparkles, Quote, Download } from 'lucide-react'
 import Link from 'next/link'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
@@ -82,6 +82,28 @@ export default function UKToUAERelocationPage() {
 
   const handleCTAClick = (element: string, location: string) => {
     trackCTAClick(element, location)
+  }
+
+  const handleDownloadPDF = async () => {
+    try {
+      const response = await fetch('/api/download-ebook')
+      if (!response.ok) {
+        throw new Error('Failed to download PDF')
+      }
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = 'UK-to-UAE-Cultural-Intelligence-Guide.pdf'
+      document.body.appendChild(a)
+      a.click()
+      window.URL.revokeObjectURL(url)
+      document.body.removeChild(a)
+      handleCTAClick('Download PDF', '/uk-to-uae-relocation')
+    } catch (error) {
+      console.error('Error downloading PDF:', error)
+      alert('Failed to download PDF. Please try again or contact support.')
+    }
   }
 
   // British Testimonials Component with Infinite Loop
@@ -1273,6 +1295,15 @@ export default function UKToUAERelocationPage() {
                           Buy the Ebook - Instant Download
                         </motion.button>
                       </Link>
+                      <motion.button
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleDownloadPDF}
+                        className="px-8 py-4 nav-button-glass text-white/90 hover:text-white font-semibold font-montserrat rounded-xl transition-all duration-300 flex items-center gap-2"
+                      >
+                        <Download className="w-5 h-5" />
+                        Download PDF
+                      </motion.button>
                       <motion.button
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}

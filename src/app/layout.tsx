@@ -4,6 +4,7 @@ import './globals.css'
 import { VisitorTracker } from '@/components/VisitorTracker'
 import { GoogleAnalytics } from '@/components/GoogleAnalytics'
 import { CookieBanner } from '@/components/CookieBanner'
+import { lato } from '@/lib/fonts'
 
 export const metadata: Metadata = {
   title: {
@@ -639,7 +640,7 @@ export default function RootLayout({
           defer
         />
       </head>
-      <body style={{ fontFamily: "'Inter', 'Glacial Indifference', sans-serif" }} className="antialiased">
+      <body className={`${lato.variable} antialiased`} style={{ fontFamily: "'Inter', 'Lato', 'Glacial Indifference', sans-serif" }}>
         <GoogleAnalytics />
         
         {/* Umami Analytics - Privacy-friendly analytics (EU region) */}

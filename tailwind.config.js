@@ -48,12 +48,13 @@ module.exports = {
         'brand-bright-blue-transparent': 'rgba(0, 153, 255, 0.4)',
       },
       fontFamily: {
+        'lato': ['var(--font-lato)', 'Lato', 'sans-serif'],
         'glacial': ['Glacial Indifference', 'sans-serif'],
         'montserrat': ['Glacial Indifference', 'sans-serif'],
         'playfair': ['Glacial Indifference', 'sans-serif'],
         'sofia': ['Glacial Indifference', 'sans-serif'],
-        'inter': ['Glacial Indifference', 'sans-serif'],
-        'sans': ['Glacial Indifference', 'sans-serif'],
+        'inter': ['Inter', 'var(--font-lato)', 'Lato', 'sans-serif'],
+        'sans': ['var(--font-lato)', 'Lato', 'Inter', 'Glacial Indifference', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-primary': 'linear-gradient(to right, #E89F6B 0%, #A7A7A7 50%, #50A0F0 100%)',
