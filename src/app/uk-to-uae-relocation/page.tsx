@@ -762,6 +762,235 @@ export default function UKToUAERelocationPage() {
           })
         }}
       />
+      {/* Review Schema for Testimonials */}
+      <Script
+        id="review-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": [
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "Sarah Mitchell"
+                },
+                "reviewBody": "Understanding cultural preferences is crucial in my line of work. This guide helped me design spaces that respect local customs and values. It's comprehensive and well-written. Definitely worth the investment.",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5"
+                },
+                "itemReviewed": {
+                  "@type": "Product",
+                  "name": "UK to UAE Cultural Intelligence Ebook"
+                }
+              },
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "James Thompson"
+                },
+                "reviewBody": "As someone who's worked in multiple countries, I can say this guide is spot-on. The cultural insights are accurate and the practical advice is invaluable. It's helped me navigate the UAE workplace with much more confidence.",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5"
+                },
+                "itemReviewed": {
+                  "@type": "Product",
+                  "name": "UK to UAE Cultural Intelligence Ebook"
+                }
+              },
+              {
+                "@type": "Review",
+                "author": {
+                  "@type": "Person",
+                  "name": "Emily Watson"
+                },
+                "reviewBody": "This guide saved me from making several cultural mistakes. The dos and don'ts section is particularly helpful, and the communication style explanations are clear and practical. Highly recommend for any British professional moving to the UAE.",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5"
+                },
+                "itemReviewed": {
+                  "@type": "Product",
+                  "name": "UK to UAE Cultural Intelligence Ebook"
+                }
+              }
+            ]
+          })
+        }}
+      />
+      {/* Course/EducationalProduct Schema */}
+      <Script
+        id="course-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Course",
+            "name": "UK to UAE Cultural Intelligence Guide",
+            "description": "Comprehensive cultural intelligence course for British professionals relocating to the UAE. Covers workplace culture, communication, etiquette, and practical relocation guidance.",
+            "provider": {
+              "@type": "Organization",
+              "name": "The Orange Code",
+              "url": "https://www.theorangecode.com"
+            },
+            "educationalLevel": "Professional Development",
+            "courseCode": "UK-UAE-CQ-GUIDE",
+            "teaches": [
+              "UAE Workplace Culture",
+              "Emirati Communication Styles",
+              "UAE Business Etiquette",
+              "UK to UAE Relocation",
+              "Cultural Intelligence for British Expats",
+              "UAE Dos and Don'ts",
+              "Emirati Social Norms"
+            ],
+            "audience": {
+              "@type": "Audience",
+              "audienceType": "British Professionals",
+              "geographicArea": {
+                "@type": "Country",
+                "name": "United Kingdom"
+              }
+            },
+            "inLanguage": "en-GB",
+            "availableLanguage": ["en-GB"],
+            "learningResourceType": "Digital Book",
+            "timeRequired": "PT4H"
+          })
+        }}
+      />
+      {/* Service Schema */}
+      <Script
+        id="service-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "UK to UAE Relocation Cultural Intelligence Guide",
+            "name": "UK to UAE Cultural Intelligence Ebook",
+            "description": "Digital cultural intelligence guide providing comprehensive information for British professionals relocating to the UAE. Includes workplace culture, communication styles, etiquette, dos and don'ts, and practical relocation advice.",
+            "provider": {
+              "@type": "Organization",
+              "name": "The Orange Code",
+              "url": "https://www.theorangecode.com"
+            },
+            "areaServed": {
+              "@type": "Country",
+              "name": "United Kingdom"
+            },
+            "audience": {
+              "@type": "Audience",
+              "audienceType": "British Professionals Moving to UAE",
+              "geographicArea": {
+                "@type": "Country",
+                "name": "United Kingdom"
+              }
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "59",
+              "priceCurrency": "GBP",
+              "availability": "https://schema.org/InStock",
+              "url": STRIPE_PAYMENT_LINK
+            }
+          })
+        }}
+      />
+      {/* ItemList Schema for "What You Get" */}
+      <Script
+        id="itemlist-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": "What You Get - UK to UAE Cultural Intelligence Guide",
+            "description": "Complete contents of the UK to UAE relocation guide",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Complete UK→UAE Cultural Intelligence Guide (PDF)",
+                "description": "A comprehensive, expertly designed handbook for relocating and working in the UAE."
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Step-by-Step Relocation Framework",
+                "description": "Clear guidance on visas, housing, banking, healthcare, and everyday life in the Emirates."
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Workplace & Communication Playbook",
+                "description": "Master Emirati business etiquette, hierarchy, communication styles, and meeting expectations."
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Cultural Foundations & Social Norms Explained",
+                "description": "Understand the unspoken rules, Islamic values, habits, and behaviours that shape life in the UAE."
+              },
+              {
+                "@type": "ListItem",
+                "position": 5,
+                "name": "Practical Do's, Don'ts, and Real-Life Scenarios",
+                "description": "Avoid common cultural misunderstandings with concrete examples and actionable recommendations."
+              },
+              {
+                "@type": "ListItem",
+                "position": 6,
+                "name": "Essential Survival Tools & Emirati Arabic Quick Phrases",
+                "description": "Useful words, expressions, and cheat sheets for daily interactions and polite communication."
+              }
+            ]
+          })
+        }}
+      />
+      {/* CollectionPage Schema */}
+      <Script
+        id="collectionpage-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": "UK to UAE Relocation Cultural Intelligence Guide",
+            "description": "A comprehensive collection of cultural intelligence resources for British professionals relocating to the UAE, including ebook guide, practical advice, and cultural insights.",
+            "url": "https://www.theorangecode.com/uk-to-uae-relocation",
+            "mainEntity": {
+              "@type": "Product",
+              "name": "UK to UAE Cultural Intelligence Ebook"
+            },
+            "breadcrumb": {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://www.theorangecode.com"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "UK to UAE Relocation Guide",
+                  "item": "https://www.theorangecode.com/uk-to-uae-relocation"
+                }
+              ]
+            }
+          })
+        }}
+      />
 
       <div className="relative w-full bg-primary-dark text-white min-h-screen">
         {/* Atmospheric Background */}
@@ -771,7 +1000,8 @@ export default function UKToUAERelocationPage() {
 
         <ModernNavbar />
 
-        <main className="relative z-10">
+        <main className="relative z-10" itemScope itemType="https://schema.org/WebPage">
+          <article itemScope itemType="https://schema.org/Article">
           {/* UK Banner - Moved below navbar */}
           {isUK && (
             <motion.div
@@ -1464,6 +1694,7 @@ export default function UKToUAERelocationPage() {
               </motion.div>
             </div>
           </section>
+          </article>
         </main>
 
         <ModernFooter />
