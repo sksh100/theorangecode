@@ -4,10 +4,13 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone()
   const hostname = request.headers.get('host') || ''
-  const protocol = request.headers.get('x-forwarded-proto') || request.nextUrl.protocol
+  
+  // Check if request is HTTP (Vercel uses x-forwarded-proto header)
+  const forwardedProto = request.headers.get('x-forwarded-proto')
+  const isHttp = forwardedProto === 'http' || url.protocol === 'http:'
 
   // Force HTTPS redirect (if not already HTTPS)
-  if (protocol === 'http:' || !protocol.includes('https')) {
+  if (isHttp) {
     url.protocol = 'https:'
     return NextResponse.redirect(url, 301)
   }
@@ -16,6 +19,7 @@ export function middleware(request: NextRequest) {
   // This ensures canonical URLs always use www.theorangecode.com
   if (hostname === 'theorangecode.com' || hostname.startsWith('theorangecode.com:')) {
     url.hostname = 'www.theorangecode.com'
+    url.protocol = 'https:'
     return NextResponse.redirect(url, 301)
   }
 
