@@ -372,6 +372,18 @@ export default function MasterclassesPage() {
     <>
       {/* Explicit canonical tag */}
       <link rel="canonical" href="https://www.theorangecode.com/masterclasses" />
+      
+      {/* Hreflang tags for UK and Netherlands */}
+      <link rel="alternate" hreflang="en-GB" href="https://www.theorangecode.com/masterclasses" />
+      <link rel="alternate" hreflang="en-NL" href="https://www.theorangecode.com/masterclasses" />
+      <link rel="alternate" hreflang="nl-NL" href="https://www.theorangecode.com/masterclasses" />
+      
+      {/* UK and Netherlands Meta Tags */}
+      <meta name="geo.region" content="GB" />
+      <meta name="geo.region" content="NL" />
+      <meta name="geo.placename" content="United Kingdom, Netherlands" />
+      <meta name="target" content="UK, United Kingdom, Netherlands, Nederland, British professionals, Dutch professionals, Nederlandse professionals" />
+      
       {/* Structured Data - Course Schemas */}
       <Script
         id="masterclasses-service-schema"
@@ -386,9 +398,43 @@ export default function MasterclassesPage() {
               "name": "The Orange Code",
               "url": "https://www.theorangecode.com"
             },
-            "areaServed": {
-              "@type": "Country",
-              "name": "United Arab Emirates"
+            "areaServed": [
+              {
+                "@type": "Country",
+                "name": "United Arab Emirates"
+              },
+              {
+                "@type": "Country",
+                "name": "United Kingdom"
+              },
+              {
+                "@type": "Country",
+                "name": "Netherlands"
+              }
+            ],
+            "audience": {
+              "@type": "Audience",
+              "audienceType": "Professionals, Expatriates, Government Employees, International Organizations",
+              "geographicArea": [
+                {
+                  "@type": "Country",
+                  "name": "United Kingdom"
+                },
+                {
+                  "@type": "Country",
+                  "name": "Netherlands"
+                },
+                {
+                  "@type": "Country",
+                  "name": "United Arab Emirates"
+                }
+              ]
+            },
+            // Government Collaboration
+            "serviceAudience": {
+              "@type": "Audience",
+              "audienceType": "Government Organizations, Public Sector, International Cooperation",
+              "description": "Cultural intelligence training for government employees, public sector professionals, and international cooperation initiatives"
             },
               "hasOfferCatalog": {
                 "@type": "OfferCatalog",
