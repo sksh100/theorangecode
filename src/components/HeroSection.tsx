@@ -3,89 +3,99 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Hero3DEffect } from './Hero3DEffect'
+
+// Animation variants matching the relocation page
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" }
+  },
+}
 
 export function HeroSection() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth) * 2 - 1
-      const y = -(e.clientY / window.innerHeight) * 2 + 1
-      setMousePosition({ x, y })
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
+    setMounted(true)
   }, [])
 
   return (
-    <section className="hero-section relative">
-      <Hero3DEffect mousePosition={mousePosition} />
-      <div className="hero-content hero-content-left">
-        <motion.div 
-          className="glass-card hero-glass-morphic"
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
-          <motion.p 
-            className="text-sm uppercase tracking-[0.25em] text-orange-300 mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+    <section className="relative overflow-hidden">
+      {/* Wrapper that fills viewport under navbar */}
+      <div className="min-h-[min(900px,calc(100vh-96px))] flex items-center">
+        {/* Optional soft gradient overlay on top of your existing background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5 pointer-events-none" />
+        
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate={mounted ? "visible" : "visible"}
+            className="max-w-5xl mx-auto text-center"
           >
-            THE ORANGE CODE
-          </motion.p>
-          
-          <motion.h1 
-            className="text-title font-semibold leading-tight mb-4 text-white"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
-            <span className="sr-only">The Orange Code - </span>Master Cultural Intelligence for the UAE and GCC
-          </motion.h1>
-          
-          <motion.p 
-            className="text-sm md:text-base text-slate-200 mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            Learn how communication, trust, and leadership actually work in a
-            region where more than two hundred nationalities meet. Build the
-            awareness that helps you connect with confidence and grow faster
-            in the Gulf.
-          </motion.p>
-          
-          <motion.div 
-            className="flex flex-wrap gap-4 mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-          >
-            <Link href="/#contact">
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-sm md:text-base"
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
-                Start Your Transformation
-              </motion.button>
-            </Link>
+            {/* Small label / tagline */}
+            <motion.div variants={itemVariants} className="inline-flex items-center justify-center mb-6">
+              <span className="px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase bg-white/5 border border-white/10 text-white/80">
+                THE ORANGE CODE
+              </span>
+            </motion.div>
+
+            {/* Main headline in two clean lines */}
+            <motion.h1
+              variants={itemVariants}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight lg:leading-[1.05]"
+            >
+              <span className="block bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent lg:whitespace-nowrap">
+                Master Cultural Intelligence for the UAE and GCC
+              </span>
+              <span className="block text-white mt-2 lg:whitespace-nowrap">
+                Build awareness that helps you connect with confidence
+              </span>
+            </motion.h1>
+
+            {/* Subheading */}
+            <motion.p
+              variants={itemVariants}
+              className="text-sm sm:text-base md:text-lg text-white/80 mb-8 max-w-3xl mx-auto leading-relaxed"
+            >
+              Learn how communication, trust, and leadership actually work in a region where more than two hundred nationalities meet. Build the awareness that helps you connect with confidence and grow faster in the Gulf.
+            </motion.p>
+
+            {/* Primary and secondary CTAs */}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-wrap items-center justify-center gap-4"
+            >
+              <Link href="/#contact">
+                <motion.button
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
+                >
+                  Start Your Transformation
+                </motion.button>
+              </Link>
+              <Link href="/masterclasses">
+                <button className="px-8 py-4 nav-button-glass text-white/90 hover:text-white font-semibold font-montserrat rounded-xl transition-all duration-300">
+                  Explore masterclasses
+                </button>
+              </Link>
+            </motion.div>
           </motion.div>
-          
-          <motion.p 
-            className="mt-4 text-xs md:text-sm text-slate-300"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
-            Understand people. Unlock opportunity in the UAE, the Gulf Region.
-          </motion.p>
-        </motion.div>
+        </div>
       </div>
     </section>
   )
