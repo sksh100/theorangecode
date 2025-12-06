@@ -1620,7 +1620,7 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="text-center text-white/70 mb-12 max-w-2xl mx-auto"
                 >
-                  Real experiences from British professionals who used this cultural intelligence guide before relocating to the UAE.
+                  Read what newcomers say about how this guide helped them settle faster and avoid early cultural mistakes.
                 </motion.p>
 
                 <BritishTestimonialsCarousel />
