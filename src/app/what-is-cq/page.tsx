@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 import { Brain, Eye, Heart, Target, Sparkles, ArrowRight, CheckCircle, Globe } from 'lucide-react'
@@ -389,15 +390,16 @@ export default function WhatIsCQPage() {
                 variants={itemVariants}
                 className="text-center py-8"
               >
-                <motion.a
-                  href="/masterclasses"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-xl cta-button-glow text-white font-bold text-lg"
-                >
-                  <span>Start Elevating Now</span>
-                  <ArrowRight className="w-5 h-5" />
-                </motion.a>
+                <Link href="/masterclasses">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="inline-flex items-center gap-3 px-8 py-4 rounded-xl cta-button-glow text-white font-bold text-lg"
+                  >
+                    <span>Start Elevating Now</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </motion.button>
+                </Link>
               </motion.div>
             </motion.div>
           </div>

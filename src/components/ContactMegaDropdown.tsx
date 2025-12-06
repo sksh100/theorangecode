@@ -1,6 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
 import { Zap, Shield, Users, MessageCircle, Phone, Mail, ArrowRight, Star, Crown, X } from 'lucide-react'
 import { useEffect } from 'react'
 
@@ -197,16 +198,18 @@ export function ContactMegaDropdown({ isOpen, onClose }: ContactMegaDropdownProp
                       ))}
                     </div>
                     
-                    <motion.button
-                      className="px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl"
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.8 }}
-                    >
-                      Start Conversation
-                    </motion.button>
+                    <Link href="/#contact" onClick={onClose}>
+                      <motion.button
+                        className="px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl"
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.8 }}
+                      >
+                        Start Conversation
+                      </motion.button>
+                    </Link>
                   </div>
                 </div>
               </div>
