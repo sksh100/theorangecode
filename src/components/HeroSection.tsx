@@ -35,7 +35,7 @@ export function HeroSection() {
   return (
     <section className="relative overflow-hidden h-screen">
       {/* Wrapper that fills viewport */}
-      <div className="h-full flex items-center">
+      <div className="h-full flex items-center pt-20 md:pt-24">
         {/* Optional soft gradient overlay on top of your existing background */}
         <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5 pointer-events-none" />
         

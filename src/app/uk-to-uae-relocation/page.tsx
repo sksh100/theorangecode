@@ -1120,7 +1120,7 @@ export default function UKToUAERelocationPage() {
           <article itemScope itemType="https://schema.org/Article">
           {/* SECTION 1: HERO */}
           <section className="relative overflow-hidden h-screen">
-            <div className="h-full flex items-center">
+            <div className="h-full flex items-center pt-20 md:pt-24">
               <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5 pointer-events-none" />
               <div className="container mx-auto px-6 relative z-10 w-full">
                 <motion.div
