@@ -234,6 +234,7 @@ export default function UKToUAERelocationPage() {
 
     useEffect(() => {
       if (!marqueeRef.current) return
+      if (typeof window === 'undefined' || !gsap) return
 
       const marqueeContent = marqueeRef.current
       const firstCard = marqueeContent.querySelector('.testimonial-card') as HTMLElement
@@ -244,19 +245,27 @@ export default function UKToUAERelocationPage() {
       const gap = 32
       const totalWidth = (cardWidth + gap) * britishTestimonials.length
 
-      animationRef.current = gsap.to(marqueeContent, {
-        x: -totalWidth,
-        duration: britishTestimonials.length * 8,
-        ease: 'none',
-        repeat: -1,
-        modifiers: {
-          x: gsap.utils.unitize((x) => parseFloat(x) % totalWidth)
-        }
-      })
+      try {
+        animationRef.current = gsap.to(marqueeContent, {
+          x: -totalWidth,
+          duration: britishTestimonials.length * 8,
+          ease: 'none',
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize((x) => parseFloat(x) % totalWidth)
+          }
+        })
+      } catch (error) {
+        console.error('Error initializing gsap animation:', error)
+      }
 
       return () => {
         if (animationRef.current) {
-          animationRef.current.kill()
+          try {
+            animationRef.current.kill()
+          } catch (error) {
+            console.error('Error killing gsap animation:', error)
+          }
         }
       }
     }, [britishTestimonials.length])
@@ -346,40 +355,46 @@ export default function UKToUAERelocationPage() {
       <meta name="target" content="UK, United Kingdom, British professionals, UK expats" />
       
        {/* AI Search Optimization Meta Tags */}
-       <Script id="ai-meta-tags" strategy="beforeInteractive">
+       <Script id="ai-meta-tags" strategy="afterInteractive">
          {`
-           // Add AI meta tags for AI search optimization
-           const metaTags = [
-             { name: 'ai-topic', content: 'UK to UAE relocation guide' },
-             { name: 'ai-topic', content: 'moving to the UAE from UK' },
-             { name: 'ai-topic', content: 'UAE culture explained for British expats' },
-             { name: 'ai-topic', content: 'UAE work culture preparation' },
-             { name: 'ai-topic', content: 'Dubai relocation help for UK professionals' },
-             { name: 'ai-topic', content: 'Abu Dhabi relocation information' },
-             { name: 'ai-topic', content: 'expat guide UAE' },
-             { name: 'ai-topic', content: 'UAE guide for British' },
-             { name: 'ai-topic', content: 'UK expat guide UAE' },
-             { name: 'ai-topic', content: 'British expat guide UAE' },
-             { name: 'ai-topic', content: 'UAE dos and donts for British' },
-             { name: 'ai-topic', content: 'UAE rules for UK expats' },
-             { name: 'ai-topic', content: 'Dubai guide for UK expats' },
-             { name: 'ai-topic', content: 'Abu Dhabi guide for British' },
-             { name: 'ai-intent', content: 'relocation, expat, cross-cultural intelligence, UK to UAE move, British professionals UAE' },
-             { name: 'ai-relevance', content: 'UAE culture, work culture UAE, British expats, moving abroad, UK expat guide, UAE guide for British, Dubai guide UK, Abu Dhabi guide UK' },
-             { name: 'content-purpose', content: 'practical relocation guidance for UK expats, cultural intelligence for British professionals moving to UAE' },
-             { name: 'target-audience', content: 'British professionals, UK expats, British citizens moving to UAE, UK teachers UAE, UK nurses UAE' },
-             { name: 'geographic-focus', content: 'United Kingdom, UK, United Arab Emirates, UAE, Dubai, Abu Dhabi' },
-             { name: 'content-language', content: 'en-GB' }
-           ];
-           
-           if (typeof document !== 'undefined') {
-             metaTags.forEach(tag => {
-               const meta = document.createElement('meta');
-               meta.setAttribute('name', tag.name);
-               meta.setAttribute('content', tag.content);
-               document.head.appendChild(meta);
-             });
-           }
+           (function() {
+             if (typeof document === 'undefined') return;
+             
+             // Add AI meta tags for AI search optimization
+             const metaTags = [
+               { name: 'ai-topic', content: 'UK to UAE relocation guide' },
+               { name: 'ai-topic', content: 'moving to the UAE from UK' },
+               { name: 'ai-topic', content: 'UAE culture explained for British expats' },
+               { name: 'ai-topic', content: 'UAE work culture preparation' },
+               { name: 'ai-topic', content: 'Dubai relocation help for UK professionals' },
+               { name: 'ai-topic', content: 'Abu Dhabi relocation information' },
+               { name: 'ai-topic', content: 'expat guide UAE' },
+               { name: 'ai-topic', content: 'UAE guide for British' },
+               { name: 'ai-topic', content: 'UK expat guide UAE' },
+               { name: 'ai-topic', content: 'British expat guide UAE' },
+               { name: 'ai-topic', content: 'UAE dos and donts for British' },
+               { name: 'ai-topic', content: 'UAE rules for UK expats' },
+               { name: 'ai-topic', content: 'Dubai guide for UK expats' },
+               { name: 'ai-topic', content: 'Abu Dhabi guide for British' },
+               { name: 'ai-intent', content: 'relocation, expat, cross-cultural intelligence, UK to UAE move, British professionals UAE' },
+               { name: 'ai-relevance', content: 'UAE culture, work culture UAE, British expats, moving abroad, UK expat guide, UAE guide for British, Dubai guide UK, Abu Dhabi guide UK' },
+               { name: 'content-purpose', content: 'practical relocation guidance for UK expats, cultural intelligence for British professionals moving to UAE' },
+               { name: 'target-audience', content: 'British professionals, UK expats, British citizens moving to UAE, UK teachers UAE, UK nurses UAE' },
+               { name: 'geographic-focus', content: 'United Kingdom, UK, United Arab Emirates, UAE, Dubai, Abu Dhabi' },
+               { name: 'content-language', content: 'en-GB' }
+             ];
+             
+             try {
+               metaTags.forEach(tag => {
+                 const meta = document.createElement('meta');
+                 meta.setAttribute('name', tag.name);
+                 meta.setAttribute('content', tag.content);
+                 document.head.appendChild(meta);
+               });
+             } catch (e) {
+               console.error('Error adding AI meta tags:', e);
+             }
+           })();
          `}
        </Script>
 
@@ -1102,12 +1117,12 @@ export default function UKToUAERelocationPage() {
 
         <main className="relative z-10" itemScope itemType="https://schema.org/WebPage">
           <article itemScope itemType="https://schema.org/Article">
-          {/* UK Banner - Moved below navbar */}
+          {/* UK Banner - Positioned below navbar */}
           {isUK && (
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="relative z-50 bg-gradient-to-r from-orange/20 via-azure-blue/20 to-orange/20 border-b border-azure-blue/30 py-3"
+              className="relative z-[50] mt-[80px] bg-gradient-to-r from-orange/20 via-azure-blue/20 to-orange/20 border-b border-azure-blue/30 py-3"
             >
               <div className="container mx-auto px-6 text-center">
                 <p className="text-sm text-white/90">
