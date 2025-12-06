@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { testSlackConnection } from "@/lib/slack";
 
+export const dynamic = 'force-dynamic'
+
 /**
  * Test endpoint to verify Slack integration is working
  * Visit: /api/slack-test to test your Slack notifications

@@ -150,16 +150,18 @@ function Scene() {
       <FloatingGeometry position={[9, 4, -8]} color="#ff914d" shape="torus" />
       <FloatingGeometry position={[-4, -5, -5]} color="#0099ff" shape="box" />
 
-      {/* Camera controls - subtle auto-rotation */}
+      {/* Camera controls - interactive with mouse movement */}
       <OrbitControls
         enableZoom={false}
         enablePan={false}
         autoRotate
-        autoRotateSpeed={0.3}
+        autoRotateSpeed={0.2}
         minPolarAngle={Math.PI / 3}
         maxPolarAngle={Math.PI / 1.5}
         enableDamping
         dampingFactor={0.05}
+        rotateSpeed={0.5}
+        enableRotate={true}
       />
     </group>
   )
