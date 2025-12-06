@@ -357,16 +357,11 @@ function ResetPasswordContent() {
   )
 }
 
+import { LoadingSpinner } from '@/components/LoadingSpinner'
+
 export default function ResetPasswordPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-primary-dark text-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-white/70">Loading...</p>
-        </div>
-      </div>
-    }>
+    <Suspense fallback={<LoadingSpinner variant="full" message="Loading password reset..." />}>
       <ResetPasswordContent />
     </Suspense>
   )

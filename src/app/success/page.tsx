@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { CheckCircle } from 'lucide-react'
 import Link from 'next/link'
+import { LoadingSpinner } from '@/components/LoadingSpinner'
 
 function SuccessContent() {
   const searchParams = useSearchParams()
@@ -21,11 +22,7 @@ function SuccessContent() {
   }, [sessionId])
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-primary-dark flex items-center justify-center">
-        <div className="text-white">Loading...</div>
-      </div>
-    )
+    return <LoadingSpinner variant="full" message="Loading your success page..." />
   }
 
   return (
@@ -78,11 +75,7 @@ function SuccessContent() {
 
 export default function SuccessPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-primary-dark flex items-center justify-center">
-        <div className="text-white">Loading...</div>
-      </div>
-    }>
+    <Suspense fallback={<LoadingSpinner variant="full" message="Preparing your success page..." />}>
       <SuccessContent />
     </Suspense>
   )

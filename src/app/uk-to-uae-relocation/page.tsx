@@ -1179,7 +1179,7 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="text-base md:text-lg text-white/70 mb-8 max-w-3xl mx-auto"
                 >
-                  <strong className="text-orange">Purchase for £59 - Instant email delivery with secure download link.</strong> Your personalized, watermarked PDF will be sent automatically after payment.
+                  <strong className="text-orange">Purchase for £59 - Instant email delivery with secure download link.</strong>
                 </motion.p>
 
                 <motion.div
