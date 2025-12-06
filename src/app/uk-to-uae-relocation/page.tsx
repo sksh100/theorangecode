@@ -460,7 +460,7 @@ export default function UKToUAERelocationPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Product",
-            "name": "UK to UAE Cultural Intelligence Ebook",
+            "name": "UK to UAE Cultural Intelligence Guide",
             "description": "A research based guide helping British expats understand UAE culture, workplace norms, communication styles, dos and donts, and how to integrate effectively. Written specifically for UK professionals moving to Dubai and Abu Dhabi.",
             "image": "https://www.theorangecode.com/og-image",
             "category": "Educational Book",
@@ -710,7 +710,7 @@ export default function UKToUAERelocationPage() {
                 "name": "Does this replace cultural training?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "It is a starting point. You can also join our courses for deeper learning. The ebook provides essential knowledge, while our masterclasses offer interactive training and personalized guidance."
+                  "text": "It is a starting point. You can also join our courses for deeper learning. The guide provides essential knowledge, while our masterclasses offer interactive training and personalized guidance."
                 }
               },
               {
@@ -734,7 +734,7 @@ export default function UKToUAERelocationPage() {
                 "name": "How do I buy the UK to UAE relocation guide?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "You can purchase the UK to UAE Cultural Intelligence Guide for £59 at https://www.theorangecode.com/uk-to-uae-relocation. Click 'Buy the Ebook' to proceed to checkout. After payment, you'll receive an automated email with a secure download link to your personalized PDF."
+                  "text": "You can purchase the UK to UAE Cultural Intelligence Guide for £59 at https://www.theorangecode.com/uk-to-uae-relocation. Click 'Buy the Guide' to proceed to checkout. After payment, you'll receive an automated email with a secure download link to your personalized PDF."
                 }
               },
               {
@@ -747,7 +747,7 @@ export default function UKToUAERelocationPage() {
               },
               {
                 "@type": "Question",
-                "name": "Where can I purchase the ebook?",
+                "name": "Where can I purchase the guide?",
                 "acceptedAnswer": {
                   "@type": "Answer",
                   "text": "Purchase the UK to UAE relocation guide directly at https://www.theorangecode.com/uk-to-uae-relocation. After successful payment, you'll automatically receive an email with a secure download link to your personalized PDF (watermarked with your email for security). The download link is valid for 48 hours."
@@ -766,7 +766,7 @@ export default function UKToUAERelocationPage() {
                 "name": "Will this guide help me avoid cultural mistakes in the UAE?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Yes. The ebook includes a dedicated section on UAE dos and don'ts, practical etiquette on dress, communication and behaviour, and real examples of mistakes British expats make in Dubai and Abu Dhabi – and how to avoid them."
+                  "text": "Yes. The guide includes a dedicated section on UAE dos and don'ts, practical etiquette on dress, communication and behaviour, and real examples of mistakes British expats make in Dubai and Abu Dhabi – and how to avoid them."
                 }
               },
               {
@@ -774,7 +774,7 @@ export default function UKToUAERelocationPage() {
                 "name": "Is this useful if I am only exploring jobs in the UAE from the UK?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Yes. Even if you are still considering a move, the ebook explains what British professionals should know before applying for jobs in the UAE, how workplace expectations differ from the UK, and which cultural skills employers in Dubai and Abu Dhabi are looking for."
+                  "text": "Yes. Even if you are still considering a move, the guide explains what British professionals should know before applying for jobs in the UAE, how workplace expectations differ from the UK, and which cultural skills employers in Dubai and Abu Dhabi are looking for."
                 }
               },
               {
@@ -1031,7 +1031,7 @@ export default function UKToUAERelocationPage() {
             "@context": "https://schema.org",
             "@type": "Service",
             "serviceType": "UK to UAE Relocation Cultural Intelligence Guide",
-            "name": "UK to UAE Cultural Intelligence Ebook",
+            "name": "UK to UAE Cultural Intelligence Guide",
             "description": "Digital cultural intelligence guide providing comprehensive information for British professionals relocating to the UAE. Includes workplace culture, communication styles, etiquette, dos and don'ts, and practical relocation advice.",
             "provider": {
               "@type": "Organization",
@@ -1120,7 +1120,7 @@ export default function UKToUAERelocationPage() {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
             "name": "UK to UAE Relocation Cultural Intelligence Guide",
-            "description": "A comprehensive collection of cultural intelligence resources for British professionals relocating to the UAE, including ebook guide, practical advice, and cultural insights.",
+            "description": "A comprehensive collection of cultural intelligence resources for British professionals relocating to the UAE, including guide, practical advice, and cultural insights.",
             "url": "https://www.theorangecode.com/uk-to-uae-relocation",
             "mainEntity": {
               "@type": "Product",
@@ -1208,11 +1208,11 @@ export default function UKToUAERelocationPage() {
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() =>
-                          handleCTAClick('Get the Relocation Ebook - Hero', '/uk-to-uae-relocation')
+                          handleCTAClick('Get the Relocation Guide - Hero', '/uk-to-uae-relocation')
                         }
                         className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                       >
-                        Get the relocation ebook
+                        Get the relocation guide
                       </motion.button>
                     </Link>
                     <button
@@ -1255,7 +1255,7 @@ export default function UKToUAERelocationPage() {
                     variants={itemVariants}
                     className="text-sm sm:text-base text-white/70 max-w-2xl mx-auto"
                   >
-                    A quick look at how the ebook will support your move.
+                    A quick look at how the guide will support your move.
                   </motion.p>
                 </motion.div>
 
@@ -1372,10 +1372,10 @@ export default function UKToUAERelocationPage() {
                     <motion.button
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => handleCTAClick('Get the Relocation Ebook - Peek Inside', '/uk-to-uae-relocation')}
+                      onClick={() => handleCTAClick('Get the Relocation Guide - Peek Inside', '/uk-to-uae-relocation')}
                       className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                     >
-                      Get the Relocation Ebook
+                      Get the Relocation Guide
                     </motion.button>
                   </Link>
                 </motion.div>
@@ -1383,7 +1383,7 @@ export default function UKToUAERelocationPage() {
             </div>
           </section>
 
-          {/* EBOOK OFFER SECTION */}
+          {/* GUIDE OFFER SECTION */}
           <section id="ebook-offer" className="relative py-16 md:py-24 bg-gradient-to-b from-transparent via-primary-dark/50 to-transparent">
             <div className="container mx-auto px-6">
               <motion.div
@@ -1398,7 +1398,7 @@ export default function UKToUAERelocationPage() {
                   className="text-3xl md:text-5xl font-bold mb-4"
                 >
                   <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
-                    Get the UK to UAE Cultural Intelligence Ebook
+                    Get the UK to UAE Cultural Intelligence Guide
                   </span>
                 </motion.h2>
 
@@ -1428,10 +1428,10 @@ export default function UKToUAERelocationPage() {
                   className="mb-6 max-w-2xl mx-auto text-white/80 text-sm sm:text-base leading-relaxed"
                 >
                   <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
-                    Why this ebook is worth far more than £59
+                    Why this guide is worth far more than £59
                   </h3>
                   <p>
-                    A single cultural mistake in a meeting, contract negotiation or workplace interaction can cost you far more than the price of this guide. The ebook distils years of experience with British expats in the UAE into clear explanations, real examples and practical tools, so you can avoid costly misunderstandings and feel prepared from your very first week.
+                    A single cultural mistake in a meeting, contract negotiation or workplace interaction can cost you far more than the price of this guide. The guide distils years of experience with British expats in the UAE into clear explanations, real examples and practical tools, so you can avoid costly misunderstandings and feel prepared from your very first week.
                   </p>
                 </motion.div>
 
@@ -1477,10 +1477,10 @@ export default function UKToUAERelocationPage() {
                         <motion.button
                           whileHover={{ scale: 1.05, y: -2 }}
                           whileTap={{ scale: 0.95 }}
-                          onClick={() => handleCTAClick('Buy the Ebook - Ebook Offer Section', '/uk-to-uae-relocation')}
+                          onClick={() => handleCTAClick('Buy the Guide - Guide Offer Section', '/uk-to-uae-relocation')}
                           className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                         >
-                          Buy the Ebook – Instant Email Delivery
+                          Buy the Guide – Instant Email Delivery
                         </motion.button>
                       </Link>
                       <motion.button
@@ -1858,7 +1858,7 @@ export default function UKToUAERelocationPage() {
                   This guide was created by The Orange Code, a UAE based cultural intelligence consultancy. We help professionals, teams and expats succeed in the UAE workplace through training, courses and practical learning tools.
                 </motion.p>
 
-                {/* Share CTA inside ebook preview section */}
+                {/* Share CTA inside guide preview section */}
                 <motion.div
                   variants={itemVariants}
                   className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/60 backdrop-blur-[20px]"
@@ -1926,7 +1926,7 @@ export default function UKToUAERelocationPage() {
                     },
                     {
                       q: 'Does this replace cultural training?',
-                      a: 'It is a starting point. You can also join our courses for deeper learning. The ebook provides essential knowledge, while our masterclasses offer interactive training and personalized guidance for British professionals moving to the UAE.'
+                      a: 'It is a starting point. You can also join our courses for deeper learning. The guide provides essential knowledge, while our masterclasses offer interactive training and personalized guidance for British professionals moving to the UAE.'
                     }
                   ].map((faq, index) => (
                     <motion.div
@@ -1960,7 +1960,7 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="text-3xl md:text-5xl font-bold mb-6"
                 >
-                  <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent lg:whitespace-nowrap">
                     Prepare for a successful move to the UAE
                   </span>
                 </motion.h2>
@@ -1973,10 +1973,10 @@ export default function UKToUAERelocationPage() {
                     <motion.button
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => handleCTAClick('Get the Ebook - Final CTA', '/uk-to-uae-relocation')}
+                      onClick={() => handleCTAClick('Get the Guide - Final CTA', '/uk-to-uae-relocation')}
                       className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                     >
-                      Get the Ebook - Start Today
+                      Get the Guide - Start Today
                     </motion.button>
                   </Link>
                 </motion.div>
