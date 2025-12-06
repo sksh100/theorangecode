@@ -1284,7 +1284,7 @@ export default function UKToUAERelocationPage() {
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                     </div>
                     <p className="text-sm text-white/90">
-                      Chapter overviews that explain what to expect in each stage of your move
+                      What British expats said after using this guide — the confidence boost they needed before relocating.
                     </p>
                   </motion.div>
 
@@ -1299,7 +1299,7 @@ export default function UKToUAERelocationPage() {
                     >
                       <Image
                         src="/images/uk-uae-preview-2.png"
-                        alt="Practical do and don't lists preview"
+                        alt="Who it's for preview"
                         fill
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                         draggable={false}
@@ -1309,7 +1309,7 @@ export default function UKToUAERelocationPage() {
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                     </div>
                     <p className="text-sm text-white/90">
-                      Practical do and do not lists for meetings, housing and daily life
+                      Written specifically for British professionals, families, students and healthcare workers — finally, a guide that speaks your language.
                     </p>
                   </motion.div>
 
@@ -1324,7 +1324,7 @@ export default function UKToUAERelocationPage() {
                     >
                       <Image
                         src="/images/uk-uae-preview-3.png"
-                        alt="Reflection tools and field notes preview"
+                        alt="Why UAE preview"
                         fill
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                         draggable={false}
@@ -1334,7 +1334,7 @@ export default function UKToUAERelocationPage() {
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                     </div>
                     <p className="text-sm text-white/90">
-                      Reflection tools and field notes to help you apply what you read
+                      Start reading Chapter 1 — an honest, relatable explanation of the opportunities and realities of moving to the Emirates.
                     </p>
                   </motion.div>
 
@@ -1349,7 +1349,7 @@ export default function UKToUAERelocationPage() {
                     >
                       <Image
                         src="/images/uk-uae-preview-4.png"
-                        alt="Quick reference guides preview"
+                        alt="Culture shocks preview"
                         fill
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                         draggable={false}
@@ -1359,7 +1359,7 @@ export default function UKToUAERelocationPage() {
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                     </div>
                     <p className="text-sm text-white/90">
-                      Quick reference guides and checklists for visa, housing, and essential services
+                      The cultural differences nobody tells you about — until you're already here. This section alone saves new expats months of confusion.
                     </p>
                   </motion.div>
                 </motion.div>
