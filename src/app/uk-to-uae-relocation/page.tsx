@@ -1489,22 +1489,19 @@ export default function UKToUAERelocationPage() {
                   </h3>
                   <div className="space-y-4">
                     <p>
-                      One cultural misunderstanding in the UAE — a meeting handled the wrong way, a comment taken incorrectly, a decision escalated due to hierarchy — can cost you opportunities, trust and time.
+                      One cultural misunderstanding in the UAE can lead to a meeting handled the wrong way, a comment interpreted differently, or a decision that escalates because the expectations were unclear. Situations like these can cost you opportunities, trust and time.
                     </p>
                     <p>
-                      This guide prevents that instantly.
+                      This guide protects you from that.
                     </p>
                     <p>
-                      It translates years of real UAE experience into a clear, practical roadmap for British expats. You'll understand exactly how to communicate, behave and make decisions in the Emirates — the things no relocation agency or generic online resource teaches.
+                      It translates years of real UAE experience into a clear and practical roadmap for British newcomers. You will understand how daily life works, how to communicate with confidence, how to navigate hierarchy, and how to avoid the common mistakes most people make during their first months in the Emirates. These are insights that no relocation agency or generic online article provides.
                     </p>
                     <p>
-                      Professionals who read this guide step into the UAE workplace with confidence, avoid costly mistakes and integrate faster than most new arrivals.
+                      Readers who use this guide settle into life in the UAE with more clarity, more confidence and fewer surprises. They integrate faster, make better decisions and feel prepared from day one.
                     </p>
                     <p>
-                      You're not just buying a PDF.
-                    </p>
-                    <p>
-                      You're buying clarity on day one and removing the uncertainty that holds most newcomers back.
+                      You are investing in clarity, certainty and a smoother transition that removes the anxiety most newcomers carry before they arrive.
                     </p>
                   </div>
                 </motion.div>
