@@ -1116,21 +1116,6 @@ export default function UKToUAERelocationPage() {
 
         <ModernNavbar />
 
-        {/* UK Banner */}
-        {mounted && isUK && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="relative z-[40] bg-gradient-to-r from-orange/20 via-azure-blue/20 to-orange/20 border-b border-azure-blue/30 py-3 backdrop-blur-sm"
-          >
-            <div className="container mx-auto px-6 text-center">
-              <p className="text-sm text-white/90">
-                🇬🇧 <strong>Moving from the UK to the UAE?</strong> Get your cultural intelligence guide today.
-              </p>
-            </div>
-          </motion.div>
-        )}
-
         <main className="relative z-10" itemScope itemType="https://schema.org/WebPage">
           <article itemScope itemType="https://schema.org/Article">
           {/* SECTION 1: HERO */}
@@ -1144,6 +1129,16 @@ export default function UKToUAERelocationPage() {
                 viewport={{ once: true }}
                 className="max-w-5xl mx-auto text-center"
               >
+                {mounted && isUK && (
+                  <motion.div
+                    variants={itemVariants}
+                    className="inline-block mb-3"
+                  >
+                    <span className="px-3 py-1 rounded-full text-[11px] sm:text-xs font-medium bg-white/5 border border-white/10 text-white/80">
+                      🇬🇧 You are viewing the UK edition of this guide
+                    </span>
+                  </motion.div>
+                )}
                 <motion.div
                   variants={itemVariants}
                   className="inline-block mb-6"
