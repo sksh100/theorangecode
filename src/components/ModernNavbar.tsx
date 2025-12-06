@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ChevronDown, Menu, X, Sparkles, Zap, Shield, Users, Settings, LogOut, LogIn, ShoppingBag, CheckCircle, FileText } from 'lucide-react'
+import { ChevronDown, Menu, X, Sparkles, Zap, Shield, Users, Settings, LogOut, LogIn, ShoppingBag, CheckCircle, FileText, Globe, Home, Plane } from 'lucide-react'
 import { AboutMegaDropdown } from './AboutMegaDropdown'
 import { ContactMegaDropdown } from './ContactMegaDropdown'
 import { MasterclassesMegaDropdown } from './MasterclassesMegaDropdown'
@@ -96,6 +96,14 @@ export function ModernNavbar() {
           price: '2200 د.إ',
           description: 'A strategic masterclass focused on business etiquette and professional communication in the UAE and GCC-region. Learn how to navigate hierarchy, manage feedback, build trust and conduct meetings and negotiations in a relationship-driven environment.'
         },
+      ]
+    },
+    {
+      label: 'UAE Living',
+      href: '/uae-living',
+      dropdown: [
+        { label: 'Life in the UAE', icon: Home, href: '/life-in-the-uae' },
+        { label: 'Moving to the UAE', icon: Plane, href: '/moving-to-the-uae' },
       ]
     },
     {
