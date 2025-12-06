@@ -1224,3 +1224,18 @@ body {
     scroll-behavior: auto;
   }
 }
+
+/* 3D Book Mockup Styles */
+.perspective-1000 {
+  perspective: 1000px;
+  perspective-origin: center center;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.transform-gpu {
+  transform: translateZ(0);
+  will-change: transform;
+}

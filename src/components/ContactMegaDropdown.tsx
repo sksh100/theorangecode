@@ -21,8 +21,12 @@ interface ContactMegaDropdownProps {
 export function ContactMegaDropdown({ isOpen, onClose }: ContactMegaDropdownProps) {
   useEffect(() => {
     if (isOpen) {
-      const handleScroll = () => {
-        onClose()
+      // Only close on scroll for desktop, not mobile
+      const handleScroll = (e: Event) => {
+        // Check if we're on mobile (window width < 1024px)
+        if (window.innerWidth >= 1024) {
+          onClose()
+        }
       }
       window.addEventListener('scroll', handleScroll, true)
       return () => {

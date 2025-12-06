@@ -12,6 +12,101 @@ import { MasterclassesMegaDropdown } from './MasterclassesMegaDropdown'
 import { trackDropdownOpen, trackDropdownItemClick, trackButtonClick } from '@/lib/analytics'
 import { trackCTAClick } from '@/lib/tracking'
 
+interface SimpleDropdownProps {
+  isOpen: boolean
+  onClose: () => void
+  title: string
+  items: Array<{ label: string; icon?: any; href: string }>
+  onItemClick: (label: string) => void
+}
+
+function SimpleDropdown({ isOpen, onClose, title, items, onItemClick }: SimpleDropdownProps) {
+  useEffect(() => {
+    if (isOpen) {
+      // Close on scroll for desktop only
+      const handleScroll = (e: Event) => {
+        if (window.innerWidth >= 1024) {
+          onClose()
+        }
+      }
+      window.addEventListener('scroll', handleScroll, true)
+      return () => {
+        window.removeEventListener('scroll', handleScroll, true)
+      }
+    }
+  }, [isOpen, onClose])
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            className="fixed top-20 left-0 right-0 bottom-0 bg-black/40 backdrop-blur-md z-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={onClose}
+          />
+          
+          {/* Dropdown Menu */}
+          <motion.div
+            className="hidden lg:block fixed top-20 left-1/2 -translate-x-1/2 w-auto min-w-[280px] z-[55]"
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mega-dropdown-glass rounded-3xl overflow-hidden border border-white/10 shadow-glow-luminous">
+              <div className="p-6">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-bold">
+                    <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                      {title}
+                    </span>
+                  </h3>
+                  <motion.button
+                    className="p-2 text-white/60 hover:text-white transition-colors duration-300 rounded-lg hover:bg-white/10"
+                    onClick={onClose}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    aria-label="Close menu"
+                  >
+                    <X className="w-5 h-5" />
+                  </motion.button>
+                </div>
+                
+                {/* Dropdown Items */}
+                <div className="space-y-2">
+                  {items.map((dropdownItem, index) => {
+                    const Icon = dropdownItem.icon
+                    return (
+                      <Link
+                        key={dropdownItem.label}
+                        href={dropdownItem.href}
+                        onClick={() => {
+                          onItemClick(dropdownItem.label)
+                        }}
+                        className="flex items-center space-x-3 p-4 text-white/80 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300 group border border-white/5 hover:border-white/20"
+                      >
+                        {Icon && <Icon className="w-5 h-5 text-azure-blue group-hover:text-orange flex-shrink-0 transition-colors" />}
+                        <span className="font-montserrat text-sm font-medium">{dropdownItem.label}</span>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  )
+}
+
 export function ModernNavbar() {
   const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState(false)
@@ -250,65 +345,16 @@ export function ModernNavbar() {
 
                     {/* Simple Dropdowns for items that aren't mega dropdowns */}
                     {item.label !== 'About' && item.label !== 'Masterclasses' && item.label !== 'Contact' && (
-                      <AnimatePresence>
-                        {activeDropdown === item.label && (
-                          <>
-                            {/* Backdrop */}
-                            <motion.div
-                              className="fixed top-20 left-0 right-0 bottom-0 bg-black/40 backdrop-blur-md z-40"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              exit={{ opacity: 0 }}
-                              transition={{ duration: 0.2 }}
-                              onClick={() => setActiveDropdown(null)}
-                            />
-                            
-                            {/* Dropdown Menu */}
-                            <motion.div
-                              className="hidden lg:block fixed top-20 left-1/2 -translate-x-1/2 w-auto min-w-[280px] z-[55]"
-                              initial={{ opacity: 0, y: -20, scale: 0.95 }}
-                              animate={{ opacity: 1, y: 0, scale: 1 }}
-                              exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                              transition={{ duration: 0.3, ease: "easeOut" }}
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <div className="mega-dropdown-glass rounded-3xl overflow-hidden border border-white/10 shadow-glow-luminous">
-                                <div className="p-6">
-                                  {/* Header */}
-                                  <div className="flex items-center justify-between mb-4">
-                                    <h3 className="text-xl font-bold">
-                                      <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                                        {item.label}
-                                      </span>
-                                    </h3>
-                                  </div>
-                                  
-                                  {/* Dropdown Items */}
-                                  <div className="space-y-2">
-                                    {item.dropdown?.map((dropdownItem, index) => {
-                                      const Icon = dropdownItem.icon
-                                      return (
-                                        <Link
-                                          key={dropdownItem.label}
-                                          href={dropdownItem.href}
-                                          onClick={() => {
-                                            setActiveDropdown(null)
-                                            trackDropdownItemClick(item.label, dropdownItem.label)
-                                          }}
-                                          className="flex items-center space-x-3 p-4 text-white/80 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300 group border border-white/5 hover:border-white/20"
-                                        >
-                                          {Icon && <Icon className="w-5 h-5 text-azure-blue group-hover:text-orange flex-shrink-0 transition-colors" />}
-                                          <span className="font-montserrat text-sm font-medium">{dropdownItem.label}</span>
-                                        </Link>
-                                      )
-                                    })}
-                                  </div>
-                                </div>
-                              </div>
-                            </motion.div>
-                          </>
-                        )}
-                      </AnimatePresence>
+                      <SimpleDropdown
+                        isOpen={activeDropdown === item.label}
+                        onClose={() => setActiveDropdown(null)}
+                        title={item.label}
+                        items={item.dropdown || []}
+                        onItemClick={(label) => {
+                          setActiveDropdown(null)
+                          trackDropdownItemClick(item.label, label)
+                        }}
+                      />
                     )}
                   </>
                 ) : (

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import { CheckCircle, ArrowRight, Home, Briefcase, Car, ShoppingBag, Globe, Users, FileText, GraduationCap, Baby, Building2, BookOpen, ChevronDown, Target, FileCheck, Home as HomeIcon, Heart, MessageSquare, Zap, Shield } from 'lucide-react'
 import Link from 'next/link'
 import { ModernNavbar } from '@/components/ModernNavbar'
@@ -155,71 +156,76 @@ export default function MovingToUAEPage() {
                 variants={containerVariants}
                 initial="hidden"
                 animate={mounted ? 'visible' : 'visible'}
-                className="max-w-5xl mx-auto text-center"
+                className="max-w-5xl mx-auto"
               >
-                {/* Small label */}
-                <motion.div variants={itemVariants} className="inline-flex items-center justify-center mb-6">
-                  <span className="px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase bg-white/5 border border-white/10 text-white/80">
-                    UAE Culture and Relocation Hub
-                  </span>
-                </motion.div>
-
-                {/* Main heading */}
-                <motion.h1
+                <motion.div
                   variants={itemVariants}
-                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-normal text-center w-full"
+                  className="hero-glass-morphic p-8 md:p-12 text-center"
                 >
-                  <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent block lg:whitespace-nowrap text-center pt-2 pb-1">
-                    Move To The UAE With Cultural Intelligence
-                  </span>
-                </motion.h1>
+                  {/* Small label */}
+                  <motion.div variants={itemVariants} className="inline-flex items-center justify-center mb-6">
+                    <span className="px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase bg-white/5 border border-white/10 text-white/80">
+                      UAE Culture and Relocation Hub
+                    </span>
+                  </motion.div>
 
-                {/* Subheading */}
-                <motion.p
-                  variants={itemVariants}
-                  className="text-sm sm:text-base md:text-lg text-white/80 mb-8 max-w-3xl mx-auto leading-relaxed"
-                >
-                  A practical, research based hub from The Orange Code that helps you understand how life, work and relationships really function in the United Arab Emirates so you can plan your move with clarity.
-                </motion.p>
-
-                {/* Bullet list */}
-                <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 text-sm text-white/70">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-orange" />
-                    <span>See how visas, work and daily life connect in a realistic way</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-azure-blue" />
-                    <span>Avoid cultural misunderstandings that damage trust and reputation</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-bright-blue" />
-                    <span>Choose guides and masterclasses that support your career and family</span>
-                  </div>
-                </motion.div>
-
-                {/* CTAs */}
-                <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <motion.button
-                    onClick={() => {
-                      document.getElementById('relocation-overview')?.scrollIntoView({ behavior: 'smooth' })
-                    }}
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
+                  {/* Main heading */}
+                  <motion.h1
+                    variants={itemVariants}
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-normal text-center w-full"
                   >
-                    Start with the UAE overview
-                  </motion.button>
-                  
-                  <Link href="/uk-to-uae-relocation">
+                    <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent block lg:whitespace-nowrap text-center pt-2 pb-1">
+                      Move To The UAE With Cultural Intelligence
+                    </span>
+                  </motion.h1>
+
+                  {/* Subheading */}
+                  <motion.p
+                    variants={itemVariants}
+                    className="text-sm sm:text-base md:text-lg text-white/80 mb-8 max-w-3xl mx-auto leading-relaxed"
+                  >
+                    A practical, research based hub from The Orange Code that helps you understand how life, work and relationships really function in the United Arab Emirates so you can plan your move with clarity.
+                  </motion.p>
+
+                  {/* Bullet list */}
+                  <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 text-sm text-white/70">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-orange" />
+                      <span>See how visas, work and daily life connect in a realistic way</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-azure-blue" />
+                      <span>Avoid cultural misunderstandings that damage trust and reputation</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4 text-bright-blue" />
+                      <span>Choose guides and masterclasses that support your career and family</span>
+                    </div>
+                  </motion.div>
+
+                  {/* CTAs */}
+                  <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     <motion.button
+                      onClick={() => {
+                        document.getElementById('relocation-overview')?.scrollIntoView({ behavior: 'smooth' })
+                      }}
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      className="px-8 py-4 nav-button-glass text-white/90 hover:text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
+                      className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                     >
-                      Already moving from the UK
+                      Start with the UAE overview
                     </motion.button>
-                  </Link>
+                    
+                    <Link href="/uk-to-uae-relocation">
+                      <motion.button
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="px-8 py-4 nav-button-glass text-white/90 hover:text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
+                      >
+                        Already moving from the UK
+                      </motion.button>
+                    </Link>
+                  </motion.div>
                 </motion.div>
               </motion.div>
             </div>
@@ -639,9 +645,33 @@ export default function MovingToUAEPage() {
                     <p className="text-white/80 mb-4 leading-relaxed text-sm">
                       For Dutch professionals and families who want to understand how direct communication and consensus based decision making translate in the UAE.
                     </p>
-                    <div className="h-32 mb-4 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
-                      <span className="text-white/40 text-xs">Guide cover placeholder</span>
-                    </div>
+                    <motion.div 
+                      className="relative h-40 mb-4 perspective-1000 group cursor-pointer"
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="relative w-full h-full transform-gpu preserve-3d transition-transform duration-500 group-hover:rotate-y-[-12deg]">
+                        <div 
+                          className="absolute inset-0 rounded-lg overflow-hidden"
+                          style={{
+                            transform: 'rotateY(-8deg) translateZ(0)',
+                            transformStyle: 'preserve-3d',
+                            boxShadow: '0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                            filter: 'brightness(1.05)'
+                          }}
+                        >
+                          <Image
+                            src="/images/nl-uae-guice-cover.png"
+                            alt="Netherlands to UAE Cultural Intelligence Guide"
+                            fill
+                            className="object-cover"
+                            style={{ transform: 'translateZ(0)' }}
+                          />
+                          {/* Book spine shadow effect */}
+                          <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-r from-black/30 to-transparent" />
+                        </div>
+                      </div>
+                    </motion.div>
                     <button
                       onClick={() => handleRegisterInterest('nl-uae')}
                       className="w-full mt-4 px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
@@ -667,9 +697,33 @@ export default function MovingToUAEPage() {
                     <p className="text-white/80 mb-4 leading-relaxed text-sm">
                       For French professionals and families who want to understand how formality, hierarchy and relationship building work in the UAE context.
                     </p>
-                    <div className="h-32 mb-4 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
-                      <span className="text-white/40 text-xs">Guide cover placeholder</span>
-                    </div>
+                    <motion.div 
+                      className="relative h-40 mb-4 perspective-1000 group cursor-pointer"
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="relative w-full h-full transform-gpu preserve-3d transition-transform duration-500 group-hover:rotate-y-[-12deg]">
+                        <div 
+                          className="absolute inset-0 rounded-lg overflow-hidden"
+                          style={{
+                            transform: 'rotateY(-8deg) translateZ(0)',
+                            transformStyle: 'preserve-3d',
+                            boxShadow: '0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                            filter: 'brightness(1.05)'
+                          }}
+                        >
+                          <Image
+                            src="/images/fr-uae-guide-cover.png"
+                            alt="France to UAE Cultural Intelligence Guide"
+                            fill
+                            className="object-cover"
+                            style={{ transform: 'translateZ(0)' }}
+                          />
+                          {/* Book spine shadow effect */}
+                          <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-r from-black/30 to-transparent" />
+                        </div>
+                      </div>
+                    </motion.div>
                     <button
                       onClick={() => handleRegisterInterest('fr-uae')}
                       className="w-full mt-4 px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
@@ -695,9 +749,33 @@ export default function MovingToUAEPage() {
                     <p className="text-white/80 mb-4 leading-relaxed text-sm">
                       For Italian professionals and families who want to understand how relationship focused communication and family values translate in the UAE.
                     </p>
-                    <div className="h-32 mb-4 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
-                      <span className="text-white/40 text-xs">Guide cover placeholder</span>
-                    </div>
+                    <motion.div 
+                      className="relative h-40 mb-4 perspective-1000 group cursor-pointer"
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="relative w-full h-full transform-gpu preserve-3d transition-transform duration-500 group-hover:rotate-y-[-12deg]">
+                        <div 
+                          className="absolute inset-0 rounded-lg overflow-hidden"
+                          style={{
+                            transform: 'rotateY(-8deg) translateZ(0)',
+                            transformStyle: 'preserve-3d',
+                            boxShadow: '0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                            filter: 'brightness(1.05)'
+                          }}
+                        >
+                          <Image
+                            src="/images/it-uae-guide-cover.png"
+                            alt="Italy to UAE Cultural Intelligence Guide"
+                            fill
+                            className="object-cover"
+                            style={{ transform: 'translateZ(0)' }}
+                          />
+                          {/* Book spine shadow effect */}
+                          <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-r from-black/30 to-transparent" />
+                        </div>
+                      </div>
+                    </motion.div>
                     <button
                       onClick={() => handleRegisterInterest('it-uae')}
                       className="w-full mt-4 px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
@@ -723,9 +801,33 @@ export default function MovingToUAEPage() {
                     <p className="text-white/80 mb-4 leading-relaxed text-sm">
                       For Russian professionals and families who want to understand how direct communication and hierarchical structures work in the UAE context.
                     </p>
-                    <div className="h-32 mb-4 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
-                      <span className="text-white/40 text-xs">Guide cover placeholder</span>
-                    </div>
+                    <motion.div 
+                      className="relative h-40 mb-4 perspective-1000 group cursor-pointer"
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="relative w-full h-full transform-gpu preserve-3d transition-transform duration-500 group-hover:rotate-y-[-12deg]">
+                        <div 
+                          className="absolute inset-0 rounded-lg overflow-hidden"
+                          style={{
+                            transform: 'rotateY(-8deg) translateZ(0)',
+                            transformStyle: 'preserve-3d',
+                            boxShadow: '0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                            filter: 'brightness(1.05)'
+                          }}
+                        >
+                          <Image
+                            src="/images/russia-uae-guide-cover.png"
+                            alt="Russia to UAE Cultural Intelligence Guide"
+                            fill
+                            className="object-cover"
+                            style={{ transform: 'translateZ(0)' }}
+                          />
+                          {/* Book spine shadow effect */}
+                          <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-r from-black/30 to-transparent" />
+                        </div>
+                      </div>
+                    </motion.div>
                     <button
                       onClick={() => handleRegisterInterest('ru-uae')}
                       className="w-full mt-4 px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
