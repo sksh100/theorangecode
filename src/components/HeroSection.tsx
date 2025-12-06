@@ -56,12 +56,12 @@ export function HeroSection() {
             {/* Main headline in two clean lines */}
             <motion.h1
               variants={itemVariants}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight lg:leading-[1.05]"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight lg:leading-[1.05] text-center"
             >
-              <span className="block bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent lg:whitespace-nowrap">
+              <span className="block bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent lg:whitespace-nowrap text-center">
                 Master Cultural Intelligence for the UAE and GCC
               </span>
-              <span className="block text-white mt-2 lg:whitespace-nowrap">
+              <span className="block text-white mt-2 lg:whitespace-nowrap text-center">
                 Build awareness that helps you connect with confidence
               </span>
             </motion.h1>
