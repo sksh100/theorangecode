@@ -30,6 +30,7 @@ export default function UKToUAERelocationPage() {
   const [mounted, setMounted] = useState(false)
   const [showSampleModal, setShowSampleModal] = useState(false)
   const [selectedPreview, setSelectedPreview] = useState<number | null>(null)
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null)
   
   // Stripe Payment Link
   // For UK visitors: £59, For others: AED 270 (approx £59)
