@@ -12,6 +12,7 @@ interface AboutCard {
   description: string
   icon: any
   href: string
+  gradient: string
 }
 
 interface AboutMegaDropdownProps {
@@ -41,21 +42,24 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
       title: 'About Us',
       description: 'Learn about our mission, values, and the team behind The Orange Code',
       icon: Users,
-      href: '/about'
+      href: '/about',
+      gradient: 'from-orange/20 to-bright-blue/20'
     },
     {
       id: 'what-is-cq',
       title: 'What is Cultural Intelligence (CQ)',
       description: 'Discover the power of cultural intelligence and how it transforms your interactions',
       icon: Sparkles,
-      href: '/what-is-cq'
+      href: '/what-is-cq',
+      gradient: 'from-bright-blue/20 to-light-blue/20'
     },
     {
       id: 'why-matters',
       title: 'WHY Cultural Intelligence Matters',
       description: 'Understand why cultural intelligence is essential for success in the GCC region',
       icon: Zap,
-      href: '/why-cultural-intelligence'
+      href: '/why-cultural-intelligence',
+      gradient: 'from-light-blue/20 to-orange/20'
     }
   ]
 
@@ -75,7 +79,7 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
           
           {/* Mega Dropdown */}
           <motion.div
-            className="hidden lg:block fixed top-20 left-4 right-4 w-auto max-w-4xl z-[55]"
+            className="hidden lg:block fixed top-20 left-4 right-4 w-auto max-w-6xl z-[55]"
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -92,6 +96,7 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
                         About
                       </span>
                     </h3>
+                    <p className="text-white/70 text-sm">Explore our mission, values, and cultural intelligence resources</p>
                   </div>
                   <button
                     onClick={onClose}
@@ -120,7 +125,7 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
                         className="block group h-full"
                       >
                         <motion.div
-                          className="relative h-full min-h-[280px] p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/0 border border-white/10 hover:border-orange/50 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col"
+                          className={`relative h-full min-h-[280px] p-6 rounded-2xl bg-gradient-to-br ${section.gradient} border border-white/10 hover:border-orange/50 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col`}
                           whileHover={{ scale: 1.02, y: -4 }}
                           transition={{ type: "spring", stiffness: 300 }}
                         >
