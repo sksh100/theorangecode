@@ -1215,14 +1215,6 @@ export default function UKToUAERelocationPage() {
                         Get the relocation guide
                       </motion.button>
                     </Link>
-                    <button
-                      onClick={() =>
-                        document.getElementById('peek-inside')?.scrollIntoView({ behavior: 'smooth' })
-                      }
-                      className="text-xs sm:text-sm text-white/70 hover:text-white underline-offset-2 hover:underline transition-colors"
-                    >
-                      Or preview a sample first
-                    </button>
                   </motion.div>
                 </motion.div>
               </div>
