@@ -292,7 +292,7 @@ export default function WhatIsCQPage() {
                       <Globe className="w-10 h-10 text-azure-blue" />
                       <h2 className="text-3xl font-bold">
                         <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                          Cultural Intelligence in the United Arab Emirates
+                          Cultural Intelligence in the UAE
                         </span>
                       </h2>
                     </div>

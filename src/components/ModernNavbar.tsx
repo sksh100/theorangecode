@@ -255,7 +255,7 @@ export function ModernNavbar() {
                           <>
                             {/* Backdrop */}
                             <motion.div
-                              className="fixed top-20 left-0 right-0 bottom-0 bg-black/20 backdrop-blur-sm z-40"
+                              className="fixed top-20 left-0 right-0 bottom-0 bg-black/40 backdrop-blur-md z-40"
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                               exit={{ opacity: 0 }}
@@ -265,30 +265,45 @@ export function ModernNavbar() {
                             
                             {/* Dropdown Menu */}
                             <motion.div
-                              className="absolute top-full left-0 mt-2 glass-card min-w-[200px] z-[55] shadow-glow"
-                              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                              className="hidden lg:block fixed top-20 left-1/2 -translate-x-1/2 w-auto min-w-[280px] z-[55]"
+                              initial={{ opacity: 0, y: -20, scale: 0.95 }}
                               animate={{ opacity: 1, y: 0, scale: 1 }}
-                              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                              transition={{ duration: 0.2 }}
+                              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                              transition={{ duration: 0.3, ease: "easeOut" }}
+                              onClick={(e) => e.stopPropagation()}
                             >
-                              <div className="p-2 space-y-1">
-                                {item.dropdown?.map((dropdownItem, index) => {
-                                  const Icon = dropdownItem.icon
-                                  return (
-                                    <Link
-                                      key={dropdownItem.label}
-                                      href={dropdownItem.href}
-                                      onClick={() => {
-                                        setActiveDropdown(null)
-                                        trackDropdownItemClick(item.label, dropdownItem.label)
-                                      }}
-                                      className="flex items-center space-x-3 p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-lg transition-all duration-300 group"
-                                    >
-                                      {Icon && <Icon className="w-4 h-4 text-azure-blue group-hover:text-azure-blue flex-shrink-0" />}
-                                      <span className="font-montserrat text-sm">{dropdownItem.label}</span>
-                                    </Link>
-                                  )
-                                })}
+                              <div className="mega-dropdown-glass rounded-3xl overflow-hidden border border-white/10 shadow-glow-luminous">
+                                <div className="p-6">
+                                  {/* Header */}
+                                  <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-xl font-bold">
+                                      <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                                        {item.label}
+                                      </span>
+                                    </h3>
+                                  </div>
+                                  
+                                  {/* Dropdown Items */}
+                                  <div className="space-y-2">
+                                    {item.dropdown?.map((dropdownItem, index) => {
+                                      const Icon = dropdownItem.icon
+                                      return (
+                                        <Link
+                                          key={dropdownItem.label}
+                                          href={dropdownItem.href}
+                                          onClick={() => {
+                                            setActiveDropdown(null)
+                                            trackDropdownItemClick(item.label, dropdownItem.label)
+                                          }}
+                                          className="flex items-center space-x-3 p-4 text-white/80 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300 group border border-white/5 hover:border-white/20"
+                                        >
+                                          {Icon && <Icon className="w-5 h-5 text-azure-blue group-hover:text-orange flex-shrink-0 transition-colors" />}
+                                          <span className="font-montserrat text-sm font-medium">{dropdownItem.label}</span>
+                                        </Link>
+                                      )
+                                    })}
+                                  </div>
+                                </div>
                               </div>
                             </motion.div>
                           </>

@@ -24,7 +24,7 @@ export function HeroSection() {
       <Hero3DEffect mousePosition={mousePosition} />
       <div className="hero-content hero-content-left">
         <motion.div 
-          className="glass-card hero-glass-morphic"
+          className="hero-glass-morphic p-12"
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
