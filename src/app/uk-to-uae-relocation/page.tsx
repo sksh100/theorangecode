@@ -711,7 +711,7 @@ export default function UKToUAERelocationPage() {
                 "name": "Does this replace cultural training?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "It is a starting point. You can also join our courses for deeper learning. The guide provides essential knowledge, while our masterclasses offer interactive training and personalized guidance."
+                  "text": "This guide is your starting point. It gives British expats the essential cultural intelligence they need before and during their move, but it does not cover the full depth of how cultural dynamics work across the UAE and the wider GCC. The ebook focuses on the core foundations every newcomer must understand. Our masterclasses go much further. They offer immersive learning, real case scenarios, and personalised guidance for anyone who wants to truly master how to communicate, lead, work and build relationships in the UAE and the Gulf region. The guide prepares you. The masterclasses elevate you."
                 }
               },
               {
@@ -2028,7 +2028,7 @@ export default function UKToUAERelocationPage() {
                     },
                     {
                       q: 'Does this replace cultural training?',
-                      a: 'It is a starting point. You can also join our courses for deeper learning. The guide provides essential knowledge, while our masterclasses offer interactive training and personalized guidance for British professionals moving to the UAE.'
+                      a: 'This guide is your starting point. It gives British expats the essential cultural intelligence they need before and during their move, but it does not cover the full depth of how cultural dynamics work across the UAE and the wider GCC. The ebook focuses on the core foundations every newcomer must understand. Our masterclasses go much further. They offer immersive learning, real case scenarios, and personalised guidance for anyone who wants to truly master how to communicate, lead, work and build relationships in the UAE and the Gulf region. The guide prepares you. The masterclasses elevate you.'
                     }
                   ].map((faq, index) => (
                     <motion.div
