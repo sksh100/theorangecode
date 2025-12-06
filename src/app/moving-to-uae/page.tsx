@@ -646,7 +646,7 @@ export default function MovingToUAEPage() {
                       For Dutch professionals and families who want to understand how direct communication and consensus based decision making translate in the UAE.
                     </p>
                     <motion.div 
-                      className="relative h-40 mb-4 perspective-1000 group cursor-pointer"
+                      className="relative h-64 mb-4 perspective-1000 group cursor-pointer"
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.3 }}
                     >
@@ -664,7 +664,7 @@ export default function MovingToUAEPage() {
                             src="/images/nl-uae-guice-cover.png"
                             alt="Netherlands to UAE Cultural Intelligence Guide"
                             fill
-                            className="object-cover"
+                            className="object-contain"
                             style={{ transform: 'translateZ(0)' }}
                           />
                           {/* Book spine shadow effect */}
@@ -698,7 +698,7 @@ export default function MovingToUAEPage() {
                       For French professionals and families who want to understand how formality, hierarchy and relationship building work in the UAE context.
                     </p>
                     <motion.div 
-                      className="relative h-40 mb-4 perspective-1000 group cursor-pointer"
+                      className="relative h-64 mb-4 perspective-1000 group cursor-pointer"
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.3 }}
                     >
@@ -716,7 +716,7 @@ export default function MovingToUAEPage() {
                             src="/images/fr-uae-guide-cover.png"
                             alt="France to UAE Cultural Intelligence Guide"
                             fill
-                            className="object-cover"
+                            className="object-contain"
                             style={{ transform: 'translateZ(0)' }}
                           />
                           {/* Book spine shadow effect */}
@@ -750,7 +750,7 @@ export default function MovingToUAEPage() {
                       For Italian professionals and families who want to understand how relationship focused communication and family values translate in the UAE.
                     </p>
                     <motion.div 
-                      className="relative h-40 mb-4 perspective-1000 group cursor-pointer"
+                      className="relative h-64 mb-4 perspective-1000 group cursor-pointer"
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.3 }}
                     >
@@ -768,7 +768,7 @@ export default function MovingToUAEPage() {
                             src="/images/it-uae-guide-cover.png"
                             alt="Italy to UAE Cultural Intelligence Guide"
                             fill
-                            className="object-cover"
+                            className="object-contain"
                             style={{ transform: 'translateZ(0)' }}
                           />
                           {/* Book spine shadow effect */}
@@ -802,7 +802,7 @@ export default function MovingToUAEPage() {
                       For Russian professionals and families who want to understand how direct communication and hierarchical structures work in the UAE context.
                     </p>
                     <motion.div 
-                      className="relative h-40 mb-4 perspective-1000 group cursor-pointer"
+                      className="relative h-64 mb-4 perspective-1000 group cursor-pointer"
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.3 }}
                     >
@@ -820,7 +820,7 @@ export default function MovingToUAEPage() {
                             src="/images/russia-uae-guide-cover.png"
                             alt="Russia to UAE Cultural Intelligence Guide"
                             fill
-                            className="object-cover"
+                            className="object-contain"
                             style={{ transform: 'translateZ(0)' }}
                           />
                           {/* Book spine shadow effect */}

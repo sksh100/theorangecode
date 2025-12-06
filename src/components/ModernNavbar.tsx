@@ -52,7 +52,7 @@ function SimpleDropdown({ isOpen, onClose, title, items, onItemClick }: SimpleDr
           
           {/* Dropdown Menu */}
           <motion.div
-            className="hidden lg:block fixed top-20 left-1/2 -translate-x-1/2 w-auto min-w-[280px] z-[55]"
+            className="hidden lg:block absolute top-full left-1/2 -translate-x-1/2 mt-2 w-auto min-w-[280px] z-[55]"
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -287,7 +287,16 @@ export function ModernNavbar() {
       <div className="w-full px-0 relative">
         <div className="flex items-center justify-between h-20 relative">
           {/* Logo - visible on all screen sizes, full height, left edge aligned */}
-          <Link href="/" className="flex-shrink-0 min-w-0 flex items-center h-full absolute left-0 lg:absolute lg:left-0">
+          <Link 
+            href="/" 
+            className="flex-shrink-0 min-w-0 flex items-center h-full absolute left-0 lg:absolute lg:left-0"
+            onClick={() => {
+              // Scroll to top when clicking logo
+              if (pathname === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }
+            }}
+          >
             <Image
               src="/coming-soon/logo-1.png"
               alt="The Orange Code Logo"
@@ -358,7 +367,15 @@ export function ModernNavbar() {
                     )}
                   </>
                 ) : (
-                  <Link href={item.href || '#'}>
+                  <Link 
+                    href={item.href || '#'}
+                    onClick={() => {
+                      // Scroll to top when clicking Home if already on home page
+                      if (item.href === '/' && pathname === '/') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' })
+                      }
+                    }}
+                  >
                     <motion.span
                       className="flex items-center text-white/90 hover:text-white font-medium font-montserrat transition-colors duration-300 cursor-pointer"
                       whileHover={{ y: -2 }}
@@ -605,6 +622,10 @@ export function ModernNavbar() {
                         onClick={(e) => {
                           e.stopPropagation()
                           setIsMobileMenuOpen(false)
+                          // Scroll to top when clicking Home if already on home page
+                          if (item.href === '/' && pathname === '/') {
+                            window.scrollTo({ top: 0, behavior: 'smooth' })
+                          }
                         }}
                         className="block p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium cursor-pointer touch-manipulation"
                         style={{ WebkitTapHighlightColor: 'transparent' }}

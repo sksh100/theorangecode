@@ -261,10 +261,10 @@ export default function UAELivingPage() {
                       <motion.div
                         key={index}
                         variants={itemVariants}
-                        className="flex items-start gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+                        className="flex items-start gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors h-full"
                       >
                         <Icon className="w-8 h-8 text-orange flex-shrink-0 mt-1" />
-                        <div>
+                        <div className="flex-grow">
                           <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
                           <p className="text-white/70 text-sm leading-relaxed">{item.text}</p>
                         </div>
@@ -332,13 +332,13 @@ export default function UAELivingPage() {
                       key={index}
                       variants={itemVariants}
                       whileHover={{ y: -4, scale: 1.02 }}
-                      className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                      className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px] h-full flex flex-col"
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
-                      <div className="relative z-10">
-                        <Icon className="w-10 h-10 text-orange mb-4" />
-                        <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
-                        <p className="text-white/70 leading-relaxed">{item.text}</p>
+                      <div className="relative z-10 flex flex-col h-full">
+                        <Icon className="w-10 h-10 text-orange mb-4 flex-shrink-0" />
+                        <h3 className="text-xl font-bold text-white mb-3 flex-shrink-0">{item.title}</h3>
+                        <p className="text-white/70 leading-relaxed flex-grow">{item.text}</p>
                       </div>
                     </motion.div>
                   )
@@ -393,10 +393,10 @@ export default function UAELivingPage() {
                   <motion.div
                     key={index}
                     variants={itemVariants}
-                    className="p-6 rounded-2xl bg-primary-dark/60 backdrop-blur-[20px] border border-white/10"
+                    className="p-6 rounded-2xl bg-primary-dark/60 backdrop-blur-[20px] border border-white/10 h-full flex flex-col"
                   >
-                    <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
-                    <p className="text-white/70 text-sm leading-relaxed">{item.text}</p>
+                    <h3 className="text-lg font-bold text-white mb-3 flex-shrink-0">{item.title}</h3>
+                    <p className="text-white/70 text-sm leading-relaxed flex-grow">{item.text}</p>
                   </motion.div>
                 ))}
               </div>
@@ -482,13 +482,13 @@ export default function UAELivingPage() {
                       key={index}
                       variants={itemVariants}
                       whileHover={{ y: -4, scale: 1.02 }}
-                      className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                      className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px] h-full flex flex-col"
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
-                      <div className="relative z-10">
-                        <Icon className="w-10 h-10 text-orange mb-4" />
-                        <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
-                        <p className="text-white/70 text-sm leading-relaxed">{item.text}</p>
+                      <div className="relative z-10 flex flex-col h-full">
+                        <Icon className="w-10 h-10 text-orange mb-4 flex-shrink-0" />
+                        <h3 className="text-lg font-bold text-white mb-3 flex-shrink-0">{item.title}</h3>
+                        <p className="text-white/70 text-sm leading-relaxed flex-grow">{item.text}</p>
                       </div>
                     </motion.div>
                   )
@@ -563,17 +563,17 @@ export default function UAELivingPage() {
                     <motion.div
                       key={index}
                       variants={itemVariants}
-                      className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                      className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px] h-full flex flex-col"
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
-                      <div className="relative z-10">
-                        <Icon className="w-10 h-10 text-orange mb-4" />
-                        <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
-                        <p className="text-white/80 mb-3 leading-relaxed">{item.fit}</p>
-                        <p className="text-white/70 mb-4 text-sm leading-relaxed">{item.consider}</p>
+                      <div className="relative z-10 flex flex-col h-full">
+                        <Icon className="w-10 h-10 text-orange mb-4 flex-shrink-0" />
+                        <h3 className="text-xl font-bold text-white mb-3 flex-shrink-0">{item.title}</h3>
+                        <p className="text-white/80 mb-3 leading-relaxed flex-shrink-0">{item.fit}</p>
+                        <p className="text-white/70 mb-4 text-sm leading-relaxed flex-grow">{item.consider}</p>
                         <Link 
                           href="/moving-to-uae"
-                          className="text-sm text-orange hover:text-azure-blue transition-colors inline-flex items-center gap-1"
+                          className="text-sm text-orange hover:text-azure-blue transition-colors inline-flex items-center gap-1 flex-shrink-0 mt-auto"
                         >
                           See relocation advice <ArrowRight className="w-4 h-4" />
                         </Link>
@@ -615,11 +615,11 @@ export default function UAELivingPage() {
               <div className="grid md:grid-cols-2 gap-6">
                 <motion.div
                   variants={itemVariants}
-                  className="relative p-8 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                  className="relative p-8 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px] h-full flex flex-col"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-orange/10 via-transparent to-azure-blue/10" />
-                  <div className="relative z-10">
-                    <Link href="/moving-to-uae">
+                  <div className="relative z-10 flex flex-col h-full">
+                    <Link href="/moving-to-uae" className="flex-shrink-0">
                       <motion.button
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
@@ -628,17 +628,17 @@ export default function UAELivingPage() {
                         Visit the Moving to the UAE hub
                       </motion.button>
                     </Link>
-                    <p className="text-white/60 text-sm">Step-by-step guidance for visas, housing, work and cultural intelligence for all nationalities.</p>
+                    <p className="text-white/60 text-sm flex-grow">Step-by-step guidance for visas, housing, work and cultural intelligence for all nationalities.</p>
                   </div>
                 </motion.div>
 
                 <motion.div
                   variants={itemVariants}
-                  className="relative p-8 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                  className="relative p-8 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px] h-full flex flex-col"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/10 via-transparent to-orange/10" />
-                  <div className="relative z-10">
-                    <Link href="/uk-to-uae-relocation">
+                  <div className="relative z-10 flex flex-col h-full">
+                    <Link href="/uk-to-uae-relocation" className="flex-shrink-0">
                       <motion.button
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
@@ -647,7 +647,7 @@ export default function UAELivingPage() {
                         UK to UAE guide for British expats
                       </motion.button>
                     </Link>
-                    <p className="text-white/60 text-sm">A dedicated cultural intelligence guide for British citizens who plan to relocate from the UK.</p>
+                    <p className="text-white/60 text-sm flex-grow">A dedicated cultural intelligence guide for British citizens who plan to relocate from the UK.</p>
                   </div>
                 </motion.div>
               </div>

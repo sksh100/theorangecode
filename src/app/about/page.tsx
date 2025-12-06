@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { Sparkles, Target, Heart, Eye, Users, Globe, ArrowRight, CheckCircle, Zap } from 'lucide-react'
+import Image from 'next/image'
 import Script from 'next/script'
 
 // Dynamically import all components to prevent hydration issues
@@ -105,32 +106,47 @@ export default function AboutPage() {
         transition={{ duration: 0.8 }}
         className="relative"
       >
-        {/* Hero Section */}
-        <section className="relative overflow-hidden pt-32 pb-20">
-          <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5" />
-          <div className="container mx-auto px-6 relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="max-w-4xl mx-auto text-center"
-            >
-              <motion.div
-                initial={{ scale: 0.9 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="inline-block mb-6"
-              >
-                <span className="text-orange text-sm font-semibold tracking-wider uppercase">
-                  About Us
-                </span>
-              </motion.div>
-              <h1 className="text-5xl md:text-7xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                  The Orange Code
-                </span>
-              </h1>
-            </motion.div>
+        {/* Hero Image Section */}
+        <section className="relative overflow-hidden">
+          <div className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] w-full">
+            <Image
+              src="/about-us-image.JPG"
+              alt="The Orange Code - About Us"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/40 via-primary-dark/60 to-primary-dark/90" />
+            <div className="absolute inset-0 flex items-end">
+              <div className="container mx-auto px-6 pb-12 md:pb-16 relative z-10">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="max-w-4xl"
+                >
+                  <motion.div
+                    initial={{ scale: 0.9 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="inline-block mb-4"
+                  >
+                    <span className="text-orange text-sm font-semibold tracking-wider uppercase">
+                      About Us
+                    </span>
+                  </motion.div>
+                  <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+                    <span className="text-white">The </span>
+                    <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                      Orange Code
+                    </span>
+                  </h1>
+                  <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed">
+                    Bridging people, cultures and intelligence across the UAE and the wider Gulf.
+                  </p>
+                </motion.div>
+              </div>
+            </div>
           </div>
         </section>
 
