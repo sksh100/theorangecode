@@ -4,6 +4,7 @@ import './globals.css'
 import { VisitorTracker } from '@/components/VisitorTracker'
 import { GoogleAnalytics } from '@/components/GoogleAnalytics'
 import { CookieBanner } from '@/components/CookieBanner'
+import { ScrollRestoration } from '@/components/ScrollRestoration'
 import { lato } from '@/lib/fonts'
 
 export const metadata: Metadata = {
@@ -945,6 +946,7 @@ export default function RootLayout({
         />
         
         {children}
+        <ScrollRestoration />
         <VisitorTracker />
         <CookieBanner />
       </body>

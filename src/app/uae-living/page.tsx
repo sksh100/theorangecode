@@ -7,6 +7,7 @@ import { CheckCircle, ArrowRight, Home, Briefcase, Car, ShoppingBag, Globe, User
 import Link from 'next/link'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
+import { PageHeading } from '@/components/PageHeading'
 import Script from 'next/script'
 
 // Dynamic imports for performance
@@ -54,8 +55,8 @@ export default function UAELivingPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebPage",
-            "name": "Life in the UAE. Everyday living in Dubai and Abu Dhabi",
-            "description": "A calm, practical overview of life in the UAE for expats and newcomers from around the world. Learn about daily life, culture, housing, transport and weekends in Dubai and Abu Dhabi.",
+            "name": "Life in the UAE. Cultural intelligence guide to living in Dubai and Abu Dhabi",
+            "description": "A calm, research based overview of life in the UAE for expats and professionals from around the world. Learn what everyday life in Dubai and Abu Dhabi feels like, how culture and etiquette work, and how cultural intelligence helps you feel at home faster.",
             "url": "https://www.theorangecode.com/uae-living",
             "inLanguage": "en",
             "isPartOf": {
@@ -66,49 +67,49 @@ export default function UAELivingPage() {
             "about": {
               "@type": "Thing",
               "name": "Life in the UAE",
-              "description": "Comprehensive guide to living in the United Arab Emirates, covering daily life, culture, housing, transport, and lifestyle in Dubai and Abu Dhabi."
+              "description": "Guide to life in the United Arab Emirates seen through cultural intelligence. Covers everyday life, work culture, etiquette and community in Dubai, Abu Dhabi and the wider UAE."
             },
             "mainEntity": {
               "@type": "FAQPage",
               "mainEntity": [
                 {
                   "@type": "Question",
-                  "name": "Is the UAE safe for families and solo travellers?",
+                  "name": "Is the UAE safe for families and solo expats",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "The UAE is considered one of the safest countries in the world with very low crime rates. It has a rules-based environment with strong law enforcement. Families and solo travellers can feel secure, though normal urban awareness is always recommended."
+                    "text": "The UAE is considered one of the safest countries in the world with very low crime rates and clear rules. Families and solo expats generally feel secure, while normal urban awareness is still recommended."
                   }
                 },
                 {
                   "@type": "Question",
-                  "name": "Which emirates are best to live in?",
+                  "name": "Which emirates are most popular to live in",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Dubai and Abu Dhabi are the most popular choices for expats, offering international communities, modern infrastructure, and diverse opportunities. Other emirates like Sharjah and Ras Al Khaimah offer different vibes with more traditional settings and often lower costs."
+                    "text": "Dubai and Abu Dhabi attract most expats because of their international communities, infrastructure and career opportunities. Other emirates such as Sharjah and Ras Al Khaimah offer a different rhythm of life and often lower costs."
                   }
                 },
                 {
                   "@type": "Question",
-                  "name": "Do I need to speak Arabic to live in the UAE?",
+                  "name": "Do I need to speak Arabic to live in the UAE",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "English is widely used in business, education, and daily life throughout the UAE. However, learning some Arabic helps with deeper connections, shows respect for local culture, and can be valuable in certain professional and social contexts."
+                    "text": "English is widely used in business, education and daily life across the UAE. Learning basic Arabic greetings and phrases shows respect and can deepen relationships, but it is not a strict requirement for most expats."
                   }
                 },
                 {
                   "@type": "Question",
-                  "name": "What is the weather really like in the UAE?",
+                  "name": "What is the weather like in the UAE during the year",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "The UAE has two main seasons: hot summers (May to September) with temperatures often above 40°C, and pleasant winters (October to April) with temperatures around 20-30°C. Summer life is mostly indoors with air conditioning, while winter offers extensive outdoor activities."
+                    "text": "The UAE has hot summers from May to September and mild winters from October to April. Summer life is focused indoors with air conditioning, while winter is the main season for outdoor activities, events and social life."
                   }
                 },
                 {
                   "@type": "Question",
-                  "name": "Where can I learn more about moving to the UAE?",
+                  "name": "Where can I learn more about moving to the UAE",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Visit our Moving to the UAE hub at /moving-to-uae for step-by-step guidance on visas, housing, work, and cultural intelligence for all nationalities. British citizens can also explore our dedicated UK to UAE relocation guide at /uk-to-uae-relocation."
+                    "text": "For relocation planning, visit The Orange Code Moving to the UAE hub at /moving-to-uae. It offers step by step guidance on visas, work culture, housing and cultural intelligence. British citizens can also explore the UK to UAE relocation guide at /uk-to-uae-relocation."
                   }
                 }
               ]
@@ -138,41 +139,38 @@ export default function UAELivingPage() {
                 {/* Small label */}
                 <motion.div variants={itemVariants} className="inline-flex items-center justify-center mb-6">
                   <span className="px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase bg-white/5 border border-white/10 text-white/80">
-                    UAE Living
+                    Life in the UAE
                   </span>
                 </motion.div>
 
                 {/* Main heading */}
-                <motion.h1
-                  variants={itemVariants}
-                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-normal text-center w-full"
-                >
-                  <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent block lg:whitespace-nowrap text-center pt-2 pb-1">
-                    Discover What Life in the UAE Really Feels Like
-                  </span>
-                </motion.h1>
+                <motion.div variants={itemVariants} className="mb-6">
+                  <PageHeading level="h1">
+                    Life in the UAE through a cultural intelligence lens
+                  </PageHeading>
+                </motion.div>
 
                 {/* Subheading */}
                 <motion.p
                   variants={itemVariants}
                   className="text-sm sm:text-base md:text-lg text-white/80 mb-8 max-w-3xl mx-auto leading-relaxed"
                 >
-                  A calm, practical guide to everyday life in Dubai, Abu Dhabi and beyond. Written for professionals, families, students and curious explorers from every part of the world.
+                  A calm, practical overview of everyday life in Dubai, Abu Dhabi and the wider Emirates. Written for professionals, families, students and entrepreneurs who want to understand how life here really works.
                 </motion.p>
 
                 {/* Bullet highlights */}
                 <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 text-sm text-white/70">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-orange" />
-                    <span>Understand daily life, culture and unwritten rules</span>
+                    <span>See everyday life in the UAE beyond social media and tourism</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-azure-blue" />
-                    <span>Explore work, study and lifestyle possibilities</span>
+                    <span>Understand the cultural patterns that shape work and daily routines</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-bright-blue" />
-                    <span>Decide if the UAE is the right next chapter for you</span>
+                    <span>Decide how the UAE fits into your life and career story</span>
                   </div>
                 </motion.div>
 
@@ -193,7 +191,7 @@ export default function UAELivingPage() {
                     href="/moving-to-uae"
                     className="text-sm text-white/60 hover:text-white/90 underline-offset-2 hover:underline transition-colors"
                   >
-                    Thinking about relocating soon? Visit the Moving to the UAE hub.
+                    Thinking about relocating soon? Visit the Moving to the UAE hub for next steps.
                   </Link>
                 </motion.div>
               </motion.div>
@@ -211,20 +209,17 @@ export default function UAELivingPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="max-w-5xl mx-auto"
             >
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-6 text-center"
-              >
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                  Why People From Around The World Choose The UAE
-                </span>
-              </motion.h2>
+              <motion.div variants={itemVariants}>
+                <PageHeading level="h2">
+                  Why people from around the world choose the UAE
+                </PageHeading>
+              </motion.div>
 
               <motion.p
                 variants={itemVariants}
                 className="text-lg text-white/80 mb-12 text-center max-w-3xl mx-auto leading-relaxed"
               >
-                The UAE has become a global hub for careers, family life and new experiences. From the dynamic business districts of Dubai to the cultural richness of Abu Dhabi and the emerging opportunities in other emirates, the country offers safety, opportunities, multicultural communities and exceptional quality of life.
+                The UAE has become a meeting point for global talent, ambitious careers and diverse communities. For many people it is a place to accelerate their professional growth, provide stability for their families and experience a new cultural landscape in a safe and well organised environment.
               </motion.p>
 
               {/* Glassmorphism card with highlights */}
@@ -237,23 +232,23 @@ export default function UAELivingPage() {
                   {[
                     {
                       icon: Briefcase,
-                      title: 'Career and business',
-                      text: 'International companies, favorable tax environment, emerging industries and regional headquarters create diverse career opportunities.'
+                      title: 'Careers and business',
+                      text: 'Regional headquarters, family companies and fast growing sectors offer opportunities in finance, aviation, energy, healthcare, technology and creative industries.'
                     },
                     {
                       icon: Home,
-                      title: 'Lifestyle and comfort',
-                      text: 'Modern infrastructure, world-class shopping, diverse restaurants, beautiful beaches, parks and air conditioned comfort everywhere.'
+                      title: 'Quality of life',
+                      text: 'Modern infrastructure, reliable services, high safety levels and a strong focus on comfort and convenience shape daily life in Dubai, Abu Dhabi and other emirates.'
                     },
                     {
                       icon: Users,
                       title: 'Diversity and community',
-                      text: 'People from over 200 nationalities, multiple languages, international schools and vibrant mixed communities create a truly global experience.'
+                      text: 'People from many national backgrounds live and work together. You find mixed communities, international schools and networks that can feel both familiar and new.'
                     },
                     {
                       icon: Globe,
-                      title: 'Travel and location',
-                      text: 'Short flights to Europe, Africa and Asia, plus easy regional weekend trips make the UAE a perfect base for exploring the world.'
+                      title: 'Location and connectivity',
+                      text: 'The UAE sits between Europe, Asia and Africa. Direct flights and regional links make it an ideal base for international work and frequent travel.'
                     }
                   ].map((item, index) => {
                     const Icon = item.icon
@@ -287,43 +282,40 @@ export default function UAELivingPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="max-w-6xl mx-auto"
             >
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-6 text-center"
-              >
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                  Everyday Life in Dubai and Abu Dhabi
-                </span>
-              </motion.h2>
+              <motion.div variants={itemVariants}>
+                <PageHeading level="h2">
+                  What everyday life in the UAE feels like
+                </PageHeading>
+              </motion.div>
 
               <motion.p
                 variants={itemVariants}
                 className="text-lg text-white/80 mb-12 text-center max-w-3xl mx-auto leading-relaxed"
               >
-                This section gives you a realistic but encouraging picture of daily life in the Emirates.
+                This section gives a realistic picture of how days and weeks flow when you live in the Emirates.
               </motion.p>
 
               <div className="grid md:grid-cols-2 gap-6">
                 {[
                   {
                     icon: Clock,
-                    title: 'Weekday rhythm',
-                    text: 'Office hours typically run Sunday to Thursday or Monday to Friday depending on your employer. School times align with work schedules. Prayer times influence traffic patterns, and evening social life is vibrant with restaurants and cafes open late.'
+                    title: 'Daily rhythm',
+                    text: 'Work and school weeks usually run Monday to Friday, with Friday afternoons and weekends holding special meaning for prayer, rest and family time. Evenings are often social, with cafes and malls open late.'
                   },
                   {
                     icon: Home,
-                    title: 'Housing and neighbourhoods',
-                    text: 'Choose between modern apartments in high-rise towers or spacious villas in gated communities. Some areas are metro-connected while others are car-focused. Your relocation hub provides deeper insights into costs, paperwork and neighborhood selection.'
+                    title: 'Neighbourhoods and housing',
+                    text: 'High rise apartments, villa communities and more traditional areas each have their own pace and culture. Many expats live in mixed communities where neighbours come from several countries.'
                   },
                   {
                     icon: Car,
-                    title: 'Transport and getting around',
-                    text: 'Metro systems in Dubai and Abu Dhabi, reliable taxis, ride-hailing apps, and walkable areas in winter. Summer heat makes air-conditioned transport essential. Driving requires understanding local rules and traffic patterns.'
+                    title: 'Moving around the city',
+                    text: 'Public transport, taxis and ride hailing apps are widely used. Cars remain important for many families. In summer, movement centres around air conditioned routes, while winter invites more walking.'
                   },
                   {
                     icon: ShoppingBag,
-                    title: 'Food, groceries and daily errands',
-                    text: 'International supermarkets, delivery apps for everything, diverse cuisines from around the world, local bakeries, and halal food context throughout. Daily errands are convenient with modern services and infrastructure.'
+                    title: 'Day to day errands',
+                    text: 'Most services, from groceries to maintenance, can be ordered online or through apps. Local markets, international supermarkets and small neighbourhood shops sit side by side.'
                   }
                 ].map((item, index) => {
                   const Icon = item.icon
@@ -358,20 +350,17 @@ export default function UAELivingPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="max-w-5xl mx-auto"
             >
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-6 text-center"
-              >
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                  Culture, Etiquette and Feeling At Home
-                </span>
-              </motion.h2>
+              <motion.div variants={itemVariants}>
+                <PageHeading level="h2">
+                  Culture, etiquette and feeling at home
+                </PageHeading>
+              </motion.div>
 
               <motion.p
                 variants={itemVariants}
                 className="text-lg text-white/80 mb-12 text-center max-w-3xl mx-auto leading-relaxed"
               >
-                The UAE is rooted in Emirati and Islamic culture, with a very international expat population. Respect, modesty, hospitality and understanding small cultural nuances can make a significant difference in how you experience life here.
+                Life in the UAE is shaped by Emirati traditions, Islamic values and a large international community. Understanding how these layers work together is at the heart of cultural intelligence. When you know what respect looks like in practice, you feel more grounded and relationships grow faster.
               </motion.p>
 
               {/* Three column list */}
@@ -379,15 +368,15 @@ export default function UAELivingPage() {
                 {[
                   {
                     title: 'Respectful behaviour',
-                    text: 'Dress codes in certain places, public behaviour expectations, photography rules, and social media considerations help you navigate daily interactions with respect.'
+                    text: 'Awareness of dress in certain places, public affection, photography, alcohol rules and online behaviour protects your reputation and shows respect for local norms.'
                   },
                   {
                     title: 'Communication style',
-                    text: 'Polite, indirect language, avoiding open conflict, reading non-verbal cues and understanding context helps build stronger relationships in professional and social settings.'
+                    text: 'Polite and relationship focused communication is important. People often avoid direct confrontation, choose careful wording and value patience in decision making.'
                   },
                   {
-                    title: 'Religious and public holidays',
-                    text: 'Ramadan, Eid celebrations, National Day and other holidays change the rhythm of life. Understanding these periods and how to prepare makes integration smoother.'
+                    title: 'Rhythm of religious life',
+                    text: 'Ramadan, Eid and other holidays influence working hours, social life and the pace of the city. Knowing what to expect helps you plan well and support colleagues and neighbours.'
                   }
                 ].map((item, index) => (
                   <motion.div
@@ -408,9 +397,9 @@ export default function UAELivingPage() {
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
                 <div className="relative z-10 text-center">
-                  <h3 className="text-2xl font-bold text-white mb-3">Want a deeper understanding of UAE culture</h3>
+                  <h3 className="text-2xl font-bold text-white mb-3">Want to understand the deeper patterns behind life in the UAE</h3>
                   <p className="text-white/80 mb-6 max-w-2xl mx-auto">
-                    Our Cultural Intelligence masterclasses and relocation guides show you how to navigate work, social life and communication with confidence.
+                    Our cultural intelligence masterclasses and country specific guides explain how values, expectations and unwritten rules show up in meetings, emails, friendships and community life.
                   </p>
                   <Link href="/moving-to-uae">
                     <motion.button
@@ -437,20 +426,17 @@ export default function UAELivingPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="max-w-6xl mx-auto"
             >
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-6 text-center"
-              >
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                  Weekends, Events and Experiences
-                </span>
-              </motion.h2>
+              <motion.div variants={itemVariants}>
+                <PageHeading level="h2">
+                  How people recharge and explore on weekends
+                </PageHeading>
+              </motion.div>
 
               <motion.p
                 variants={itemVariants}
                 className="text-lg text-white/80 mb-12 text-center max-w-3xl mx-auto leading-relaxed"
               >
-                Life in the UAE can feel like living in a permanent city break if used wisely. From desert adventures to world-class events, there is always something to explore.
+                Weekends in the UAE can feel like a mix of normal life and mini city breaks. Many expats use free time to explore the country and build new routines that fit the climate and culture.
               </motion.p>
 
               <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -458,22 +444,22 @@ export default function UAELivingPage() {
                   {
                     icon: Mountain,
                     title: 'Desert and nature',
-                    text: 'Desert safaris, mountain hikes, mangrove kayaking, beach days and outdoor adventures year-round.'
+                    text: 'From quiet sunrise walks in the desert to mountain trails and mangroves, nature offers a break from the fast pace of the city, especially in the cooler months.'
                   },
                   {
                     icon: Palette,
-                    title: 'Culture and art',
-                    text: 'Museums, galleries, heritage areas, local festivals and cultural events throughout the year.'
+                    title: 'Culture and heritage',
+                    text: 'Museums, heritage districts, mosques that welcome visitors and local festivals give insight into Emirati and regional culture.'
                   },
                   {
                     icon: Music,
-                    title: 'Sports and concerts',
-                    text: 'Formula 1, football, tennis tournaments, concerts and performances by international artists.'
+                    title: 'Sports and events',
+                    text: 'From international tournaments to concerts and exhibitions, the events calendar is full year round, with a peak in the winter season.'
                   },
                   {
                     icon: Coffee,
-                    title: 'Restaurants and cafes',
-                    text: 'From street food to fine dining, diverse world cuisines and vibrant cafe culture in every neighborhood.'
+                    title: 'Food and social life',
+                    text: 'Cafes, restaurants and home gatherings are central to building community. Many friendships start over a simple coffee or shared meal.'
                   }
                 ].map((item, index) => {
                   const Icon = item.icon
@@ -499,7 +485,7 @@ export default function UAELivingPage() {
                 variants={itemVariants}
                 className="text-center text-white/60 text-sm mt-8"
               >
-                We will soon add a curated list of events and experiences for newcomers, including selected ticket platforms.
+                We will soon add a curated list of trusted event and ticket platforms that can help newcomers discover experiences that match their interests.
               </motion.p>
             </motion.div>
           </div>
@@ -515,47 +501,44 @@ export default function UAELivingPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="max-w-6xl mx-auto"
             >
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-6 text-center"
-              >
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                  Is Life in the UAE Right For You
-                </span>
-              </motion.h2>
+              <motion.div variants={itemVariants}>
+                <PageHeading level="h2">
+                  Who this guide is designed for
+                </PageHeading>
+              </motion.div>
 
               <motion.p
                 variants={itemVariants}
                 className="text-lg text-white/80 mb-12 text-center max-w-3xl mx-auto leading-relaxed"
               >
-                This is not a simple yes or no. It depends on your personality, goals and stage of life. Here is how different people experience the UAE.
+                Life in the UAE attracts many different profiles. Cultural intelligence gives each of them a clearer path into the country.
               </motion.p>
 
               <div className="grid md:grid-cols-2 gap-6">
                 {[
                   {
                     icon: Briefcase,
-                    title: 'Young professionals and entrepreneurs',
-                    fit: 'The UAE offers rapid career growth, networking opportunities, tax benefits and a dynamic business environment.',
-                    consider: 'Consider work-life balance, cost of living in premium areas and building long-term connections.'
+                    title: 'Global professionals and leaders',
+                    fit: 'You want to perform at a high level in the UAE workplace, manage regional teams or represent your organisation in front of senior stakeholders.',
+                    consider: 'Cultural intelligence helps you read context, build trust and avoid costly misunderstandings in meetings and negotiations.'
                   },
                   {
                     icon: Baby,
-                    title: 'Families with children',
-                    fit: 'International schools, safe neighborhoods, family-friendly activities and diverse communities make it ideal for raising children.',
-                    consider: 'Think about school costs, healthcare access, proximity to extended family and long-term education planning.'
+                    title: 'Families and dual career couples',
+                    fit: 'You want a safe, stable base with good education options and a clear future for your children while maintaining your own careers.',
+                    consider: 'Understanding how family life, schooling and social networks work in the UAE helps you design a sustainable set up.'
                   },
                   {
                     icon: GraduationCap,
-                    title: 'Students and early career explorers',
-                    fit: 'Universities, internships, part-time opportunities and a multicultural environment provide rich learning experiences.',
-                    consider: 'Consider tuition fees, visa requirements, part-time work regulations and career transition planning.'
+                    title: 'Students and early career talent',
+                    fit: 'You want to study, intern or start your career in a multicultural environment that stretches your comfort zone in a positive way.',
+                    consider: 'Knowing how to show professionalism in a new culture puts you ahead of peers and reduces early mistakes.'
                   },
                   {
                     icon: Users,
-                    title: 'Senior professionals and second career seekers',
-                    fit: 'Consulting opportunities, advisory roles, teaching positions and business ventures offer new chapter possibilities.',
-                    consider: 'Think about retirement planning, healthcare coverage, residency options and maintaining professional networks.'
+                    title: 'Entrepreneurs and independent consultants',
+                    fit: 'You see the UAE and wider GCC as a strategic base for your business or advisory work.',
+                    consider: 'Cultural intelligence supports client relationships, partnership building and long term reputation in the region.'
                   }
                 ].map((item, index) => {
                   const Icon = item.icon
@@ -596,20 +579,17 @@ export default function UAELivingPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="max-w-4xl mx-auto text-center"
             >
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-6"
-              >
-                <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
-                  Ready To Explore Your Move More Seriously
-                </span>
-              </motion.h2>
+              <motion.div variants={itemVariants}>
+                <PageHeading level="h2" className="mb-6">
+                  Ready to turn curiosity into a clear UAE plan
+                </PageHeading>
+              </motion.div>
 
               <motion.p
                 variants={itemVariants}
                 className="text-lg text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed"
               >
-                If you recognise yourself in any of the above personas, you can move from inspiration to clear planning with our comprehensive resources.
+                If life in the UAE feels like a serious option, you can move from browsing information to building a structured, culturally aware plan.
               </motion.p>
 
               <div className="grid md:grid-cols-2 gap-6">
@@ -628,7 +608,7 @@ export default function UAELivingPage() {
                         Visit the Moving to the UAE hub
                       </motion.button>
                     </Link>
-                    <p className="text-white/60 text-sm flex-grow">Step-by-step guidance for visas, housing, work and cultural intelligence for all nationalities.</p>
+                    <p className="text-white/60 text-sm flex-grow">Step by step guidance on visas, work culture, housing and cultural intelligence for all nationalities.</p>
                   </div>
                 </motion.div>
 
@@ -647,7 +627,7 @@ export default function UAELivingPage() {
                         UK to UAE guide for British expats
                       </motion.button>
                     </Link>
-                    <p className="text-white/60 text-sm flex-grow">A dedicated cultural intelligence guide for British citizens who plan to relocate from the UK.</p>
+                    <p className="text-white/60 text-sm flex-grow">A dedicated cultural intelligence guide for British citizens who want a clear roadmap for their move.</p>
                   </div>
                 </motion.div>
               </div>
@@ -665,14 +645,11 @@ export default function UAELivingPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="max-w-3xl mx-auto"
             >
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-12 text-center"
-              >
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+              <motion.div variants={itemVariants}>
+                <PageHeading level="h2" className="mb-12">
                   Frequently asked questions about life in the UAE
-                </span>
-              </motion.h2>
+                </PageHeading>
+              </motion.div>
 
               <div className="space-y-3">
                 {[
@@ -694,7 +671,7 @@ export default function UAELivingPage() {
                   },
                   {
                     q: 'Where can I learn more about moving to the UAE?',
-                    a: 'Visit our Moving to the UAE hub at /moving-to-uae for step-by-step guidance on visas, housing, work, and cultural intelligence for all nationalities. British citizens can also explore our dedicated UK to UAE relocation guide at /uk-to-uae-relocation.'
+                    a: 'For structured relocation planning, visit our Moving to the UAE hub at /moving-to-uae. It brings together legal, practical and cultural considerations for expats from many countries. British citizens can also explore our UK to UAE relocation guide at /uk-to-uae-relocation, which explains the specific differences between UK and UAE culture.'
                   }
                 ].map((faq, index) => (
                   <motion.div

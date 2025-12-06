@@ -12,6 +12,7 @@ import { StickyCTABar } from '@/components/StickyCTABar'
 import { ExitIntentPopup } from '@/components/ExitIntentPopup'
 import { WhatsAppShareButton } from '@/components/WhatsAppShareButton'
 import { SocialShareButtons } from '@/components/SocialShareButtons'
+import { PageHeading } from '@/components/PageHeading'
 import { trackCTAClick } from '@/lib/tracking'
 import Script from 'next/script'
 import { gsap } from 'gsap'
@@ -1189,18 +1190,14 @@ export default function UKToUAERelocationPage() {
                     </span>
                   </motion.div>
                   {/* Main heading */}
-                  <motion.h1
-                    variants={itemVariants}
-                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-normal text-center w-full"
-                    itemProp="headline"
-                  >
-                    <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent block lg:whitespace-nowrap text-center pt-2 pb-1">
+                  <motion.div variants={itemVariants} className="mb-6" itemProp="headline">
+                    <PageHeading level="h1">
                       Moving from the UK to the UAE
-                    </span>
-                    <span className="text-white block mt-8 lg:whitespace-nowrap text-center">
+                    </PageHeading>
+                    <p className="text-white block mt-8 lg:whitespace-nowrap text-center text-2xl sm:text-3xl md:text-4xl font-semibold">
                       Understand UAE culture before you arrive
-                    </span>
-                  </motion.h1>
+                    </p>
+                  </motion.div>
                   {/* Subheading */}
                   <motion.p
                     variants={itemVariants}
@@ -1249,14 +1246,11 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="text-center mb-10"
                 >
-                  <motion.h2
-                    variants={itemVariants}
-                    className="text-3xl md:text-5xl font-bold mb-4"
-                  >
-                    <span className="bg-gradient-to-r from-orange via-azure-blue to-bright-blue bg-clip-text text-transparent">
+                  <motion.div variants={itemVariants}>
+                    <PageHeading level="h2" className="mb-4">
                       See inside the guide
-                    </span>
-                  </motion.h2>
+                    </PageHeading>
+                  </motion.div>
                   <motion.p
                     variants={itemVariants}
                     className="text-sm sm:text-base text-white/70 max-w-2xl mx-auto"
@@ -1452,14 +1446,11 @@ export default function UKToUAERelocationPage() {
                 viewport={{ once: true, margin: "-100px" }}
                 className="max-w-3xl mx-auto text-center"
               >
-                <motion.h2
-                  variants={itemVariants}
-                  className="text-3xl md:text-5xl font-bold mb-4 text-center w-full"
-                >
-                  <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent lg:whitespace-nowrap inline-block">
+                <motion.div variants={itemVariants} className="mb-4">
+                  <PageHeading level="h2" className="w-full">
                     Get the UK to UAE Cultural Intelligence Guide
-                  </span>
-                </motion.h2>
+                  </PageHeading>
+                </motion.div>
 
                 <motion.p
                   variants={itemVariants}
@@ -1622,14 +1613,11 @@ export default function UKToUAERelocationPage() {
                 viewport={{ once: true, margin: "-100px" }}
                 className="max-w-7xl mx-auto"
               >
-                <motion.h2
-                  variants={itemVariants}
-                  className="text-3xl md:text-5xl font-bold mb-4 text-center"
-                >
-                  <span className="bg-gradient-to-r from-azure-blue to-orange bg-clip-text text-transparent">
+                <motion.div variants={itemVariants}>
+                  <PageHeading level="h2" className="mb-4">
                     What British expats say about this guide
-                  </span>
-                </motion.h2>
+                  </PageHeading>
+                </motion.div>
                 <motion.p
                   variants={itemVariants}
                   className="text-center text-white/70 mb-12 max-w-2xl mx-auto"
@@ -1652,14 +1640,11 @@ export default function UKToUAERelocationPage() {
                 viewport={{ once: true, margin: "-100px" }}
                 className="max-w-4xl mx-auto"
               >
-                <motion.h2
-                  variants={itemVariants}
-                  className="text-3xl md:text-5xl font-bold mb-6 text-center"
-                >
-                  <span className="bg-gradient-to-r from-orange to-azure-blue bg-clip-text text-transparent">
+                <motion.div variants={itemVariants}>
+                  <PageHeading level="h2">
                     What Do UK Expats Need to Know Before Moving to the UAE?
-                  </span>
-                </motion.h2>
+                  </PageHeading>
+                </motion.div>
 
                 <motion.p
                   variants={itemVariants}
@@ -1728,14 +1713,11 @@ export default function UKToUAERelocationPage() {
                 viewport={{ once: true, margin: "-100px" }}
                 className="max-w-4xl mx-auto"
               >
-                <motion.h2
-                  variants={itemVariants}
-                  className="text-3xl md:text-5xl font-bold mb-4 text-center"
-                >
-                  <span className="bg-gradient-to-r from-azure-blue to-orange bg-clip-text text-transparent">
+                <motion.div variants={itemVariants}>
+                  <PageHeading level="h2" className="mb-4">
                     What Every British Expat Should Know About Life in the UAE
-                  </span>
-                </motion.h2>
+                  </PageHeading>
+                </motion.div>
 
                 <motion.h3
                   variants={itemVariants}
@@ -1815,14 +1797,11 @@ export default function UKToUAERelocationPage() {
                 viewport={{ once: true, margin: "-100px" }}
                 className="max-w-5xl mx-auto"
               >
-                <motion.h2
-                  variants={itemVariants}
-                  className="text-3xl md:text-5xl font-bold mb-6 text-center"
-                >
-                  <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                <motion.div variants={itemVariants}>
+                  <PageHeading level="h2">
                     How Everyday Life in the UAE Really Differs From the UK
-                  </span>
-                </motion.h2>
+                  </PageHeading>
+                </motion.div>
 
                 <motion.p
                   variants={itemVariants}
@@ -1946,17 +1925,12 @@ export default function UKToUAERelocationPage() {
                 viewport={{ once: true, margin: "-100px" }}
                 className="max-w-3xl mx-auto text-center"
               >
-                <motion.h2
-                  variants={itemVariants}
-                  className="text-3xl md:text-5xl font-bold mb-6"
-                >
-                  <span className="bg-gradient-to-r from-orange to-azure-blue bg-clip-text text-transparent block lg:whitespace-nowrap">
-                    Guidance from a cultural intelligence consultant
-                  </span>
-                  <span className="bg-gradient-to-r from-orange to-azure-blue bg-clip-text text-transparent block lg:whitespace-nowrap">
-                    in the UAE
-                  </span>
-                </motion.h2>
+                <motion.div variants={itemVariants}>
+                  <PageHeading level="h2" className="mb-6">
+                    <span className="block">Guidance from a cultural intelligence consultant</span>
+                    <span className="block">in the UAE</span>
+                  </PageHeading>
+                </motion.div>
 
                 <motion.p
                   variants={itemVariants}
@@ -2025,14 +1999,11 @@ export default function UKToUAERelocationPage() {
                 viewport={{ once: true, margin: "-100px" }}
                 className="max-w-3xl mx-auto"
               >
-                <motion.h2
-                  variants={itemVariants}
-                  className="text-3xl md:text-5xl font-bold mb-12 text-center"
-                >
-                  <span className="bg-gradient-to-r from-orange to-azure-blue bg-clip-text text-transparent">
+                <motion.div variants={itemVariants}>
+                  <PageHeading level="h2" className="mb-12">
                     Frequently asked questions
-                  </span>
-                </motion.h2>
+                  </PageHeading>
+                </motion.div>
 
                 <div className="space-y-3">
                   {[
@@ -2116,14 +2087,11 @@ export default function UKToUAERelocationPage() {
                 viewport={{ once: true, margin: "-100px" }}
                 className="max-w-3xl mx-auto text-center"
               >
-                <motion.h2
-                  variants={itemVariants}
-                  className="text-3xl md:text-5xl font-bold mb-6"
-                >
-                  <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
+                <motion.div variants={itemVariants}>
+                  <PageHeading level="h2" className="mb-6">
                     Feel prepared, confident and at home in the UAE
-                  </span>
-                </motion.h2>
+                  </PageHeading>
+                </motion.div>
 
                 <motion.p
                   variants={itemVariants}

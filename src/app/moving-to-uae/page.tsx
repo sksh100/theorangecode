@@ -8,6 +8,7 @@ import { CheckCircle, ArrowRight, Home, Briefcase, Car, ShoppingBag, Globe, User
 import Link from 'next/link'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
+import { PageHeading } from '@/components/PageHeading'
 import Script from 'next/script'
 
 // Dynamic imports for performance
@@ -170,14 +171,11 @@ export default function MovingToUAEPage() {
                   </motion.div>
 
                   {/* Main heading */}
-                  <motion.h1
-                    variants={itemVariants}
-                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-normal text-center w-full"
-                  >
-                    <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent block lg:whitespace-nowrap text-center pt-2 pb-1">
-                      Move To The UAE With Cultural Intelligence
-                    </span>
-                  </motion.h1>
+                  <motion.div variants={itemVariants} className="mb-6">
+                    <PageHeading level="h1">
+                      Move to the UAE with Cultural Intelligence
+                    </PageHeading>
+                  </motion.div>
 
                   {/* Subheading */}
                   <motion.p
@@ -242,14 +240,11 @@ export default function MovingToUAEPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="max-w-5xl mx-auto"
             >
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-6 text-center"
-              >
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+              <motion.div variants={itemVariants}>
+                <PageHeading level="h2">
                   Why Cultural Preparation Matters More Than Logistics
-                </span>
-              </motion.h2>
+                </PageHeading>
+              </motion.div>
 
               <motion.p
                 variants={itemVariants}
@@ -314,14 +309,11 @@ export default function MovingToUAEPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="max-w-6xl mx-auto"
             >
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-12 text-center"
-              >
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+              <motion.div variants={itemVariants}>
+                <PageHeading level="h2" className="mb-12">
                   A Simple Four Step Overview For Your Move
-                </span>
-              </motion.h2>
+                </PageHeading>
+              </motion.div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
@@ -416,14 +408,11 @@ export default function MovingToUAEPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="max-w-6xl mx-auto"
             >
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-12 text-center"
-              >
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+              <motion.div variants={itemVariants}>
+                <PageHeading level="h2" className="mb-12">
                   How Different People Use This Hub
-                </span>
-              </motion.h2>
+                </PageHeading>
+              </motion.div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 {[
@@ -492,14 +481,12 @@ export default function MovingToUAEPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="max-w-6xl mx-auto"
             >
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-6 text-center"
-              >
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                  Cultural Intelligence Is Your Real Relocation Advantage
-                </span>
-              </motion.h2>
+              <motion.div variants={itemVariants}>
+                <PageHeading level="h2">
+                  <span className="block">Cultural Intelligence</span>
+                  <span className="block">Is Your Real Relocation Advantage</span>
+                </PageHeading>
+              </motion.div>
 
               <motion.p
                 variants={itemVariants}
@@ -572,14 +559,11 @@ export default function MovingToUAEPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="max-w-6xl mx-auto"
             >
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-6 text-center"
-              >
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+              <motion.div variants={itemVariants}>
+                <PageHeading level="h2">
                   Country Specific Guides For Moving To The UAE
-                </span>
-              </motion.h2>
+                </PageHeading>
+              </motion.div>
 
               <motion.p
                 variants={itemVariants}
@@ -652,7 +636,7 @@ export default function MovingToUAEPage() {
                     >
                       <div className="relative w-full h-full transform-gpu preserve-3d transition-transform duration-500 group-hover:rotate-y-[-12deg]">
                         <div 
-                          className="absolute inset-0 rounded-lg overflow-hidden"
+                          className="absolute inset-0 rounded-lg overflow-hidden bg-primary-dark"
                           style={{
                             transform: 'rotateY(-8deg) translateZ(0)',
                             transformStyle: 'preserve-3d',
@@ -704,7 +688,7 @@ export default function MovingToUAEPage() {
                     >
                       <div className="relative w-full h-full transform-gpu preserve-3d transition-transform duration-500 group-hover:rotate-y-[-12deg]">
                         <div 
-                          className="absolute inset-0 rounded-lg overflow-hidden"
+                          className="absolute inset-0 rounded-lg overflow-hidden bg-primary-dark"
                           style={{
                             transform: 'rotateY(-8deg) translateZ(0)',
                             transformStyle: 'preserve-3d',
@@ -756,7 +740,7 @@ export default function MovingToUAEPage() {
                     >
                       <div className="relative w-full h-full transform-gpu preserve-3d transition-transform duration-500 group-hover:rotate-y-[-12deg]">
                         <div 
-                          className="absolute inset-0 rounded-lg overflow-hidden"
+                          className="absolute inset-0 rounded-lg overflow-hidden bg-primary-dark"
                           style={{
                             transform: 'rotateY(-8deg) translateZ(0)',
                             transformStyle: 'preserve-3d',
@@ -808,7 +792,7 @@ export default function MovingToUAEPage() {
                     >
                       <div className="relative w-full h-full transform-gpu preserve-3d transition-transform duration-500 group-hover:rotate-y-[-12deg]">
                         <div 
-                          className="absolute inset-0 rounded-lg overflow-hidden"
+                          className="absolute inset-0 rounded-lg overflow-hidden bg-primary-dark"
                           style={{
                             transform: 'rotateY(-8deg) translateZ(0)',
                             transformStyle: 'preserve-3d',
@@ -830,6 +814,58 @@ export default function MovingToUAEPage() {
                     </motion.div>
                     <button
                       onClick={() => handleRegisterInterest('ru-uae')}
+                      className="w-full mt-4 px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
+                    >
+                      Register interest
+                    </button>
+                  </div>
+                </motion.div>
+
+                {/* US - Coming Soon */}
+                <motion.div
+                  variants={itemVariants}
+                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/5 via-transparent to-orange/5" />
+                  <div className="relative z-10">
+                    <div className="inline-block mb-4">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/10 border border-white/20 text-white/70">
+                        Coming soon
+                      </span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-4">US to UAE Guide</h3>
+                    <p className="text-white/80 mb-4 leading-relaxed text-sm">
+                      For American professionals and families who want to understand how direct communication, individual achievement and business culture translate in the UAE context.
+                    </p>
+                    <motion.div 
+                      className="relative h-64 mb-4 perspective-1000 group cursor-pointer"
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="relative w-full h-full transform-gpu preserve-3d transition-transform duration-500 group-hover:rotate-y-[-12deg]">
+                        <div 
+                          className="absolute inset-0 rounded-lg overflow-hidden bg-primary-dark"
+                          style={{
+                            transform: 'rotateY(-8deg) translateZ(0)',
+                            transformStyle: 'preserve-3d',
+                            boxShadow: '0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                            filter: 'brightness(1.05)'
+                          }}
+                        >
+                          <Image
+                            src="/images/us-uae-guide-cover.png"
+                            alt="US to UAE Cultural Intelligence Guide"
+                            fill
+                            className="object-contain"
+                            style={{ transform: 'translateZ(0)' }}
+                          />
+                          {/* Book spine shadow effect */}
+                          <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-r from-black/30 to-transparent" />
+                        </div>
+                      </div>
+                    </motion.div>
+                    <button
+                      onClick={() => handleRegisterInterest('us-uae')}
                       className="w-full mt-4 px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
                     >
                       Register interest
@@ -858,14 +894,11 @@ export default function MovingToUAEPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="max-w-6xl mx-auto"
             >
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-6 text-center"
-              >
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+              <motion.div variants={itemVariants}>
+                <PageHeading level="h2">
                   When You Need More Than An Online Guide
-                </span>
-              </motion.h2>
+                </PageHeading>
+              </motion.div>
 
               <motion.p
                 variants={itemVariants}
@@ -939,14 +972,11 @@ export default function MovingToUAEPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="max-w-4xl mx-auto text-center"
             >
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-6"
-              >
-                <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
+              <motion.div variants={itemVariants}>
+                <PageHeading level="h2" className="mb-6">
                   Choose The Next Step That Fits You
-                </span>
-              </motion.h2>
+                </PageHeading>
+              </motion.div>
 
               <motion.p
                 variants={itemVariants}
@@ -1014,14 +1044,11 @@ export default function MovingToUAEPage() {
               viewport={{ once: true, margin: "-100px" }}
               className="max-w-3xl mx-auto"
             >
-              <motion.h2
-                variants={itemVariants}
-                className="text-3xl md:text-5xl font-bold mb-12 text-center"
-              >
-                <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+              <motion.div variants={itemVariants}>
+                <PageHeading level="h2" className="mb-12">
                   Questions About Moving To The UAE
-                </span>
-              </motion.h2>
+                </PageHeading>
+              </motion.div>
 
               <div className="space-y-3">
                 {[

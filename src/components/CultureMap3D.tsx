@@ -537,23 +537,6 @@ export default function CultureMap3D() {
         </div>
       </div>
 
-      {/* Legend */}
-      <div className="absolute bottom-6 right-6 bg-primary-dark/80 backdrop-blur-sm border border-white/10 rounded-xl p-4 pointer-events-auto">
-        <div className="space-y-2 text-xs md:text-sm">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-orange" />
-            <span className="text-white/80">Western / North America</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-bright-blue" />
-            <span className="text-white/80">Mediterranean / Latin</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-azure-blue" />
-            <span className="text-white/80">Middle East / Asia</span>
-          </div>
-        </div>
-      </div>
     </div>
   )
 }
