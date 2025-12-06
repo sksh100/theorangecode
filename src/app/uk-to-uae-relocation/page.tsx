@@ -1542,17 +1542,6 @@ export default function UKToUAERelocationPage() {
                           Buy the Guide – Instant Email Delivery
                         </motion.button>
                       </Link>
-                      <motion.button
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => {
-                          handleCTAClick('Preview a Sample', '/uk-to-uae-relocation')
-                          setShowSampleModal(true)
-                        }}
-                        className="px-8 py-4 nav-button-glass text-white/90 hover:text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
-                      >
-                        Preview a Sample
-                      </motion.button>
                     </div>
 
                     {/* Automated Delivery Info */}
