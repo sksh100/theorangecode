@@ -1258,24 +1258,41 @@ export default function UKToUAERelocationPage() {
                   {/* Preview 1 */}
                   <motion.div
                     variants={itemVariants}
-                    className="space-y-3"
+                    className="space-y-4"
                   >
-                    <div 
-                      className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3] cursor-pointer group"
+                    <motion.div 
+                      className="relative overflow-hidden rounded-3xl aspect-[4/3] cursor-pointer group shadow-2xl"
                       onClick={() => setSelectedPreview(1)}
+                      whileHover={{ y: -8, scale: 1.02 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
                     >
-                      <Image
-                        src="/images/uk-uae-preview-1.png"
-                        alt="Chapter overviews preview"
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        draggable={false}
-                        onContextMenu={(e) => e.preventDefault()}
-                        onDragStart={(e) => e.preventDefault()}
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                    </div>
-                    <p className="text-sm text-white/90">
+                      {/* Gradient Border */}
+                      <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-orange/20 via-azure-blue/20 to-bright-blue/20 p-[1px]">
+                        <div className="h-full w-full rounded-3xl bg-primary-dark/80 backdrop-blur-xl" />
+                      </div>
+                      
+                      {/* Image Container */}
+                      <div className="absolute inset-[1px] rounded-3xl overflow-hidden">
+                        <Image
+                          src="/images/uk-uae-preview-1.png"
+                          alt="Chapter overviews preview"
+                          fill
+                          className="object-cover transition-all duration-500 group-hover:scale-110"
+                          draggable={false}
+                          onContextMenu={(e) => e.preventDefault()}
+                          onDragStart={(e) => e.preventDefault()}
+                        />
+                        {/* Luxurious Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-orange/10 via-transparent to-azure-blue/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </div>
+                      
+                      {/* Shine Effect */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                      </div>
+                    </motion.div>
+                    <p className="text-sm text-white/90 leading-relaxed px-2">
                       What British expats said after using this guide — the confidence boost they needed before relocating.
                     </p>
                   </motion.div>
@@ -1283,24 +1300,41 @@ export default function UKToUAERelocationPage() {
                   {/* Preview 2 */}
                   <motion.div
                     variants={itemVariants}
-                    className="space-y-3"
+                    className="space-y-4"
                   >
-                    <div 
-                      className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3] cursor-pointer group"
+                    <motion.div 
+                      className="relative overflow-hidden rounded-3xl aspect-[4/3] cursor-pointer group shadow-2xl"
                       onClick={() => setSelectedPreview(2)}
+                      whileHover={{ y: -8, scale: 1.02 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
                     >
-                      <Image
-                        src="/images/uk-uae-preview-2.png"
-                        alt="Who it's for preview"
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        draggable={false}
-                        onContextMenu={(e) => e.preventDefault()}
-                        onDragStart={(e) => e.preventDefault()}
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                    </div>
-                    <p className="text-sm text-white/90">
+                      {/* Gradient Border */}
+                      <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-azure-blue/20 via-orange/20 to-bright-blue/20 p-[1px]">
+                        <div className="h-full w-full rounded-3xl bg-primary-dark/80 backdrop-blur-xl" />
+                      </div>
+                      
+                      {/* Image Container */}
+                      <div className="absolute inset-[1px] rounded-3xl overflow-hidden">
+                        <Image
+                          src="/images/uk-uae-preview-2.png"
+                          alt="Who it's for preview"
+                          fill
+                          className="object-cover transition-all duration-500 group-hover:scale-110"
+                          draggable={false}
+                          onContextMenu={(e) => e.preventDefault()}
+                          onDragStart={(e) => e.preventDefault()}
+                        />
+                        {/* Luxurious Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/10 via-transparent to-orange/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </div>
+                      
+                      {/* Shine Effect */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                      </div>
+                    </motion.div>
+                    <p className="text-sm text-white/90 leading-relaxed px-2">
                       Written specifically for British professionals, families, students and healthcare workers — finally, a guide that speaks your language.
                     </p>
                   </motion.div>
@@ -1308,24 +1342,41 @@ export default function UKToUAERelocationPage() {
                   {/* Preview 3 */}
                   <motion.div
                     variants={itemVariants}
-                    className="space-y-3"
+                    className="space-y-4"
                   >
-                    <div 
-                      className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3] cursor-pointer group"
+                    <motion.div 
+                      className="relative overflow-hidden rounded-3xl aspect-[4/3] cursor-pointer group shadow-2xl"
                       onClick={() => setSelectedPreview(3)}
+                      whileHover={{ y: -8, scale: 1.02 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
                     >
-                      <Image
-                        src="/images/uk-uae-preview-3.png"
-                        alt="Why UAE preview"
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        draggable={false}
-                        onContextMenu={(e) => e.preventDefault()}
-                        onDragStart={(e) => e.preventDefault()}
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                    </div>
-                    <p className="text-sm text-white/90">
+                      {/* Gradient Border */}
+                      <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-bright-blue/20 via-orange/20 to-azure-blue/20 p-[1px]">
+                        <div className="h-full w-full rounded-3xl bg-primary-dark/80 backdrop-blur-xl" />
+                      </div>
+                      
+                      {/* Image Container */}
+                      <div className="absolute inset-[1px] rounded-3xl overflow-hidden">
+                        <Image
+                          src="/images/uk-uae-preview-3.png"
+                          alt="Why UAE preview"
+                          fill
+                          className="object-cover transition-all duration-500 group-hover:scale-110"
+                          draggable={false}
+                          onContextMenu={(e) => e.preventDefault()}
+                          onDragStart={(e) => e.preventDefault()}
+                        />
+                        {/* Luxurious Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-bright-blue/10 via-transparent to-orange/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </div>
+                      
+                      {/* Shine Effect */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                      </div>
+                    </motion.div>
+                    <p className="text-sm text-white/90 leading-relaxed px-2">
                       Start reading Chapter 1 — an honest, relatable explanation of the opportunities and realities of moving to the Emirates.
                     </p>
                   </motion.div>
@@ -1333,24 +1384,41 @@ export default function UKToUAERelocationPage() {
                   {/* Preview 4 */}
                   <motion.div
                     variants={itemVariants}
-                    className="space-y-3"
+                    className="space-y-4"
                   >
-                    <div 
-                      className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3] cursor-pointer group"
+                    <motion.div 
+                      className="relative overflow-hidden rounded-3xl aspect-[4/3] cursor-pointer group shadow-2xl"
                       onClick={() => setSelectedPreview(4)}
+                      whileHover={{ y: -8, scale: 1.02 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
                     >
-                      <Image
-                        src="/images/uk-uae-preview-4.png"
-                        alt="Culture shocks preview"
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        draggable={false}
-                        onContextMenu={(e) => e.preventDefault()}
-                        onDragStart={(e) => e.preventDefault()}
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                    </div>
-                    <p className="text-sm text-white/90">
+                      {/* Gradient Border */}
+                      <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-orange/20 via-bright-blue/20 to-azure-blue/20 p-[1px]">
+                        <div className="h-full w-full rounded-3xl bg-primary-dark/80 backdrop-blur-xl" />
+                      </div>
+                      
+                      {/* Image Container */}
+                      <div className="absolute inset-[1px] rounded-3xl overflow-hidden">
+                        <Image
+                          src="/images/uk-uae-preview-4.png"
+                          alt="Culture shocks preview"
+                          fill
+                          className="object-cover transition-all duration-500 group-hover:scale-110"
+                          draggable={false}
+                          onContextMenu={(e) => e.preventDefault()}
+                          onDragStart={(e) => e.preventDefault()}
+                        />
+                        {/* Luxurious Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-orange/10 via-transparent to-bright-blue/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </div>
+                      
+                      {/* Shine Effect */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                      </div>
+                    </motion.div>
+                    <p className="text-sm text-white/90 leading-relaxed px-2">
                       The cultural differences nobody tells you about — until you're already here. This section alone saves new expats months of confusion.
                     </p>
                   </motion.div>
