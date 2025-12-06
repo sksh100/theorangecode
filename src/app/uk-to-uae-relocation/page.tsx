@@ -1222,7 +1222,7 @@ export default function UKToUAERelocationPage() {
 
                 <motion.div
                   variants={itemVariants}
-                  className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mb-10"
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-10"
                 >
                   {/* Preview 1 */}
                   <motion.div
@@ -1275,6 +1275,24 @@ export default function UKToUAERelocationPage() {
                     </div>
                     <p className="text-sm text-white/90">
                       Reflection tools and field notes to help you apply what you read
+                    </p>
+                  </motion.div>
+
+                  {/* Preview 4 */}
+                  <motion.div
+                    variants={itemVariants}
+                    className="space-y-3"
+                  >
+                    <div className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3]">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="text-center p-4">
+                          <div className="text-white/40 text-xs mb-2">Preview Image</div>
+                          <div className="text-white/20 text-xs">/images/uk-uae-preview-4.png</div>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-sm text-white/90">
+                      Quick reference guides and checklists for visa, housing, and essential services
                     </p>
                   </motion.div>
                 </motion.div>
