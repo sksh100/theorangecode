@@ -196,7 +196,7 @@ export function ModernNavbar() {
     {
       label: 'Moving to the UAE',
       href: '/moving-to-uae',
-    }, // Direct link to Moving to the UAE page
+    },
     {
       label: 'Contact',
       href: '/#contact',
