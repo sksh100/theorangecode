@@ -247,6 +247,54 @@ export function ModernNavbar() {
                         onClose={() => setIsContactMegaOpen(false)} 
                       />
                     )}
+
+                    {/* Simple Dropdowns for items that aren't mega dropdowns */}
+                    {item.label !== 'About' && item.label !== 'Masterclasses' && item.label !== 'Contact' && (
+                      <AnimatePresence>
+                        {activeDropdown === item.label && (
+                          <>
+                            {/* Backdrop */}
+                            <motion.div
+                              className="fixed top-20 left-0 right-0 bottom-0 bg-black/20 backdrop-blur-sm z-40"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.2 }}
+                              onClick={() => setActiveDropdown(null)}
+                            />
+                            
+                            {/* Dropdown Menu */}
+                            <motion.div
+                              className="absolute top-full left-0 mt-2 glass-card min-w-[200px] z-[55] shadow-glow"
+                              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                              animate={{ opacity: 1, y: 0, scale: 1 }}
+                              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <div className="p-2 space-y-1">
+                                {item.dropdown?.map((dropdownItem, index) => {
+                                  const Icon = dropdownItem.icon
+                                  return (
+                                    <Link
+                                      key={dropdownItem.label}
+                                      href={dropdownItem.href}
+                                      onClick={() => {
+                                        setActiveDropdown(null)
+                                        trackDropdownItemClick(item.label, dropdownItem.label)
+                                      }}
+                                      className="flex items-center space-x-3 p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-lg transition-all duration-300 group"
+                                    >
+                                      {Icon && <Icon className="w-4 h-4 text-azure-blue group-hover:text-azure-blue flex-shrink-0" />}
+                                      <span className="font-montserrat text-sm">{dropdownItem.label}</span>
+                                    </Link>
+                                  )
+                                })}
+                              </div>
+                            </motion.div>
+                          </>
+                        )}
+                      </AnimatePresence>
+                    )}
                   </>
                 ) : (
                   <Link href={item.href || '#'}>

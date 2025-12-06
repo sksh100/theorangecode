@@ -91,16 +91,16 @@ export function StartTodayCTA() {
             viewport={{ once: true }}
           >
             <p>
-              Step into the UAE with clarity instead of guesswork.
+              Enter the UAE with clarity, confidence, and a grounded sense of direction.
             </p>
             <p>
-              When you understand the culture, everything changes. Conversations flow, opportunities open, and you carry yourself with confidence others notice right away.
+              Once you understand how the culture works, everything starts to shift. You speak with more confidence, you avoid misunderstandings, and you build trust faster than most newcomers.
             </p>
             <p>
-              Most people rely on trial and error. The ones who excel choose to learn the unwritten rules, refine their presence, and move with clear purpose.
+              Many people struggle because they guess their way through. The people who excel choose to learn the cultural foundations, refine how they show up, and take action with real purpose.
             </p>
             <p>
-              If you want your life, career, or business in the UAE to feel aligned, respected, and effortless—the first step begins here.
+              If you want your life, career, or business in the UAE to feel successful, respected, and supported, your first step begins here.
             </p>
           </motion.div>
 
@@ -111,7 +111,13 @@ export function StartTodayCTA() {
             transition={{ duration: 0.8, delay: 0.8 }}
             viewport={{ once: true }}
           >
-            <Link href="/masterclasses">
+            <Link 
+              href="/masterclasses"
+              onClick={() => {
+                // Ensure page scrolls to top when navigating
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }}
+            >
               <motion.button
                 className="group relative inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 cta-button-glow text-white font-semibold text-base sm:text-lg rounded-xl overflow-hidden"
                 whileHover={{ 

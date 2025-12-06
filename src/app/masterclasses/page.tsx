@@ -74,7 +74,7 @@ const masterclasses: Masterclass[] = [
   },
   {
     id: 3,
-    title: "Business Culture & Professional Etiquette",
+    title: "Business Culture & Professional\nEtiquette",
     description: "A strategic masterclass focused on business etiquette and professional communication in the UAE and the wider region. Learn how to navigate hierarchy, manage feedback, build trust, and conduct meetings and negotiations in a relationship-driven environment. Ideal for executives, entrepreneurs, and professionals aiming to succeed in the local market or expand business across the Gulf.",
     gradient: "from-light-blue/20 to-orange/20",
     price: 2200,
@@ -620,7 +620,7 @@ export default function MasterclassesPage() {
                         </motion.div>
                       )}
                       <div className="flex items-start justify-between gap-4 mb-2 pr-8">
-                        <h3 className="text-base sm:text-lg font-bold text-white flex-1">
+                        <h3 className="text-base sm:text-lg font-bold text-white flex-1 whitespace-pre-line">
                           {masterclass.title}
                         </h3>
                         <div className="flex-shrink-0 text-right">
@@ -976,7 +976,7 @@ export default function MasterclassesPage() {
                   <div className="flex-1 flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-orange rounded-full animate-pulse"></div>
-                      <span className="text-white/90 font-semibold">{selectedMasterclassData.title}</span>
+                      <span className="text-white/90 font-semibold whitespace-pre-line">{selectedMasterclassData.title}</span>
                     </div>
                     <div className="flex items-center gap-2 text-orange font-bold">
                       <span>{selectedMasterclassData.price} د.إ</span>

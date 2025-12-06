@@ -110,6 +110,7 @@ export function MasterclassesMegaDropdown({ isOpen, onClose }: MasterclassesMega
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
+                      className="h-full flex"
                     >
                       <Link
                         href="/masterclasses"
@@ -118,10 +119,10 @@ export function MasterclassesMegaDropdown({ isOpen, onClose }: MasterclassesMega
                           trackDropdownItemClick('Masterclasses', masterclass.title, '/masterclasses')
                           onClose()
                         }}
-                        className="block group"
+                        className="block group w-full h-full flex"
                       >
                         <motion.div
-                          className={`relative h-full p-6 rounded-2xl bg-gradient-to-br ${masterclass.gradient} border border-white/10 hover:border-orange/50 transition-all duration-300 cursor-pointer overflow-hidden`}
+                          className={`relative w-full h-full min-h-[400px] p-6 rounded-2xl bg-gradient-to-br ${masterclass.gradient} border border-white/10 hover:border-orange/50 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col`}
                           whileHover={{ scale: 1.02, y: -4 }}
                           transition={{ type: "spring", stiffness: 300 }}
                         >
@@ -138,7 +139,7 @@ export function MasterclassesMegaDropdown({ isOpen, onClose }: MasterclassesMega
                           </h4>
 
                           {/* Description */}
-                          <p className="text-white/70 text-sm mb-4 leading-relaxed line-clamp-3">
+                          <p className="text-white/70 text-sm mb-4 leading-relaxed line-clamp-3 flex-grow">
                             {masterclass.description}
                           </p>
 

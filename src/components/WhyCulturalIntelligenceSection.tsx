@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react'
 import { Target, Heart, Briefcase, Users, Globe, Shield, TrendingUp, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 import { CulturalIntelligence3DBackground } from './CulturalIntelligence3DBackground'
 
 export function WhyCulturalIntelligenceSection() {
@@ -39,20 +40,28 @@ export function WhyCulturalIntelligenceSection() {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasAnimated) {
             setHasAnimated(true)
-            const duration = 2000 // 2 seconds
+            const duration = 2500 // 2.5 seconds for smoother animation
             const startValue = 100
             const endValue = 200
-            const startTime = Date.now()
+            const startTime = performance.now()
 
-            const animate = () => {
-              const elapsed = Date.now() - startTime
+            const animate = (currentTime: number) => {
+              const elapsed = currentTime - startTime
               const progress = Math.min(elapsed / duration, 1)
               
-              // Easing function for smooth animation
-              const easeOutQuart = 1 - Math.pow(1 - progress, 4)
-              const current = startValue + (endValue - startValue) * easeOutQuart
+              // Smoother easing function - easeOutCubic for more natural motion
+              const easeOutCubic = 1 - Math.pow(1 - progress, 3)
+              // Add easeInOut for even smoother start and end
+              const easeInOut = progress < 0.5
+                ? 2 * progress * progress
+                : 1 - Math.pow(-2 * progress + 2, 3) / 2
               
-              setNationalitiesCount(Math.floor(current))
+              // Combine easing functions for ultra-smooth animation
+              const smoothProgress = (easeOutCubic + easeInOut) / 2
+              const current = startValue + (endValue - startValue) * smoothProgress
+              
+              // Use Math.round for smoother increments, update every frame
+              setNationalitiesCount(Math.round(current))
 
               if (progress < 1) {
                 requestAnimationFrame(animate)
@@ -91,20 +100,28 @@ export function WhyCulturalIntelligenceSection() {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasAnimatedPercent) {
             setHasAnimatedPercent(true)
-            const duration = 2000 // 2 seconds
+            const duration = 2500 // 2.5 seconds for smoother animation
             const startValue = 0
             const endValue = 40
-            const startTime = Date.now()
+            const startTime = performance.now()
 
-            const animate = () => {
-              const elapsed = Date.now() - startTime
+            const animate = (currentTime: number) => {
+              const elapsed = currentTime - startTime
               const progress = Math.min(elapsed / duration, 1)
               
-              // Easing function for smooth animation
-              const easeOutQuart = 1 - Math.pow(1 - progress, 4)
-              const current = startValue + (endValue - startValue) * easeOutQuart
+              // Smoother easing function - easeOutCubic for more natural motion
+              const easeOutCubic = 1 - Math.pow(1 - progress, 3)
+              // Add easeInOut for even smoother start and end
+              const easeInOut = progress < 0.5
+                ? 2 * progress * progress
+                : 1 - Math.pow(-2 * progress + 2, 3) / 2
               
-              setCollaborationPercent(Math.floor(current))
+              // Combine easing functions for ultra-smooth animation
+              const smoothProgress = (easeOutCubic + easeInOut) / 2
+              const current = startValue + (endValue - startValue) * smoothProgress
+              
+              // Use Math.round for smoother increments, update every frame
+              setCollaborationPercent(Math.round(current))
 
               if (progress < 1) {
                 requestAnimationFrame(animate)
@@ -535,6 +552,27 @@ export function WhyCulturalIntelligenceSection() {
               </motion.div>
             ))}
           </div>
+
+          {/* Explore More Button */}
+          <motion.div
+            className="mt-12 flex justify-center px-4 sm:px-0"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <Link href="/why-cultural-intelligence">
+              <motion.button
+                className="group inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 nav-button-glass text-white/90 hover:text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <span>Explore More</span>
+                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+              </motion.button>
+            </Link>
+          </motion.div>
         </motion.div>
 
         {/* Divider Line */}
@@ -583,7 +621,7 @@ export function WhyCulturalIntelligenceSection() {
                 className="group flex flex-col h-full"
               >
                 <div className="flex flex-col h-full">
-                  <div className="mb-6 flex-shrink-0">
+                  <div className="mb-6 flex-shrink-0 h-14">
                     <div className="w-14 h-14 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center backdrop-blur-sm group-hover:bg-white/10 group-hover:border-white/20 transition-all duration-300">
                       <benefit.icon className={`w-7 h-7 ${benefit.iconColor || 'text-white/90'}`} />
                     </div>

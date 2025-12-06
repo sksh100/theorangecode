@@ -174,11 +174,11 @@ export default function WhatIsCQPage() {
               </motion.div>
               <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-6 px-4 sm:px-0 break-words">
                 <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
-                  Cultural Intelligence UAE: What is CQ in Dubai & Abu Dhabi?
+                  Cultural Intelligence UAE: What is CQ in the UAE
                 </span>
               </h1>
               <p className="text-lg sm:text-xl text-white/80 mb-4">
-                Master cultural intelligence (CQ) for success in the UAE. Essential training for professionals in Dubai, Abu Dhabi, and across all seven emirates.
+                Learn the cultural intelligence (CQ) skills you need to succeed in the UAE. Designed for newcomers, long-term residents, families, and professionals living in Dubai, Abu Dhabi, and every emirate.
               </p>
             </motion.div>
           </div>
@@ -297,7 +297,7 @@ export default function WhatIsCQPage() {
                       </h2>
                     </div>
                     <p className="text-lg leading-relaxed text-white/80">
-                      <strong className="text-white">Cultural Intelligence UAE</strong> is essential for anyone who wants to live, work, or build meaningful relationships in the region. Life here is shaped by Emirati traditions, Islamic values, and one of the most diverse international communities in the world. Understanding how these layers interact helps people feel grounded, respected, and confident in their daily interactions. Whether you're in Dubai, Abu Dhabi, or any of the seven emirates, <strong className="text-orange">cultural intelligence</strong> is your foundation for success.
+                      <strong className="text-white">Cultural Intelligence UAE</strong> helps anyone who wants to make their life in the Emirates feel natural and effortless. The region brings together rich Emirati traditions, Islamic principles, and people from every corner of the world. When you understand how these influences shape daily life, communication, and relationships, you move through the Emirates with confidence and respect. No matter which emirate becomes your home, <strong className="text-orange">cultural intelligence</strong> becomes the key that unlocks genuine connection and opportunity.
                     </p>
                     <motion.div
                       whileHover={{ scale: 1.02, x: 10 }}
@@ -395,7 +395,7 @@ export default function WhatIsCQPage() {
                   whileTap={{ scale: 0.95 }}
                   className="inline-flex items-center gap-3 px-8 py-4 rounded-xl cta-button-glow text-white font-bold text-lg"
                 >
-                  <span>Elevate Your Cultural Intelligence</span>
+                  <span>Start Elevating Now</span>
                   <ArrowRight className="w-5 h-5" />
                 </motion.a>
               </motion.div>
