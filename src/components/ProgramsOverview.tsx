@@ -230,7 +230,7 @@ export function MasterclassesOverview({ onExpand }: MasterclassesOverviewProps) 
               return (
                 <motion.div
                   key={masterclass.id}
-                  className="group relative flex flex-col"
+                  className="group relative flex flex-col h-full"
                   initial={{ opacity: 0, y: 50, scale: 0.95 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
@@ -255,7 +255,7 @@ export function MasterclassesOverview({ onExpand }: MasterclassesOverviewProps) 
                   />
                   
                   {/* Glass Morphic Box */}
-                  <div className={`relative bg-gradient-to-br ${colors.bg} backdrop-blur-[40px] border ${colors.border} rounded-3xl p-5 sm:p-6 md:p-8 transition-all duration-500 group-hover:border-opacity-80 shadow-2xl flex flex-col flex-grow`}>
+                  <div className={`relative bg-gradient-to-br ${colors.bg} backdrop-blur-[40px] border ${colors.border} rounded-3xl p-5 sm:p-6 md:p-8 transition-all duration-500 group-hover:border-opacity-80 shadow-2xl flex flex-col h-full`}>
                     
                     {/* Vertical Layout: Title -> Image -> Description */}
                     <div className="flex flex-col gap-6 flex-grow">
