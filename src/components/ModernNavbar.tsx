@@ -9,7 +9,6 @@ import { ChevronDown, Menu, X, Sparkles, Zap, Shield, Users, Settings, LogOut, L
 import { AboutMegaDropdown } from './AboutMegaDropdown'
 import { ContactMegaDropdown } from './ContactMegaDropdown'
 import { MasterclassesMegaDropdown } from './MasterclassesMegaDropdown'
-import { ResourcesMegaDropdown } from './ResourcesMegaDropdown'
 import { trackDropdownOpen, trackDropdownItemClick, trackButtonClick } from '@/lib/analytics'
 import { trackCTAClick } from '@/lib/tracking'
 
@@ -56,7 +55,6 @@ export function ModernNavbar() {
     setIsAboutMegaOpen(false)
     setIsContactMegaOpen(false)
     setIsMasterclassesMegaOpen(false)
-    setIsResourcesMegaOpen(false)
   }, [pathname])
 
   const navItems = [
@@ -101,20 +99,12 @@ export function ModernNavbar() {
       ]
     },
     {
-      label: 'Resources',
-      href: '/#resources',
-      dropdown: [
-        { label: 'Ebook Coming Soon', icon: FileText, href: '/#resources' },
-      ]
-    },
-    {
       label: 'Contact',
       href: '/#contact',
     }
   ]
 
   const [isMasterclassesMegaOpen, setIsMasterclassesMegaOpen] = useState(false)
-  const [isResourcesMegaOpen, setIsResourcesMegaOpen] = useState(false)
 
   const handleDropdownToggle = (label: string, isMobile: boolean = false) => {
     // On mobile, always use simple dropdown structure
@@ -125,7 +115,6 @@ export function ModernNavbar() {
       setIsAboutMegaOpen(false)
       setIsContactMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
-      setIsResourcesMegaOpen(false)
       if (isOpening) trackDropdownOpen(label)
       return
     }
@@ -137,7 +126,6 @@ export function ModernNavbar() {
       setActiveDropdown(null)
       setIsContactMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
-      setIsResourcesMegaOpen(false)
       if (isOpening) trackDropdownOpen('About')
     } else if (label === 'Masterclasses') {
       const isOpening = !isMasterclassesMegaOpen
@@ -145,23 +133,13 @@ export function ModernNavbar() {
       setActiveDropdown(null)
       setIsAboutMegaOpen(false)
       setIsContactMegaOpen(false)
-      setIsResourcesMegaOpen(false)
       if (isOpening) trackDropdownOpen('Masterclasses')
-    } else if (label === 'Resources') {
-      const isOpening = !isResourcesMegaOpen
-      setIsResourcesMegaOpen(isOpening)
-      setActiveDropdown(null)
-      setIsAboutMegaOpen(false)
-      setIsContactMegaOpen(false)
-      setIsMasterclassesMegaOpen(false)
-      if (isOpening) trackDropdownOpen('Resources')
     } else if (label === 'Contact') {
       const isOpening = !isContactMegaOpen
       setIsContactMegaOpen(isOpening)
       setActiveDropdown(null)
       setIsAboutMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
-      setIsResourcesMegaOpen(false)
       if (isOpening) trackDropdownOpen('Contact')
     } else {
       const isOpening = activeDropdown !== label
@@ -169,7 +147,6 @@ export function ModernNavbar() {
       setIsAboutMegaOpen(false)
       setIsContactMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
-      setIsResourcesMegaOpen(false)
       if (isOpening) trackDropdownOpen(label)
     }
   }
@@ -182,7 +159,6 @@ export function ModernNavbar() {
       setIsAboutMegaOpen(false)
       setIsContactMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
-      setIsResourcesMegaOpen(false)
     }
   }
 
@@ -238,7 +214,6 @@ export function ModernNavbar() {
                             (activeDropdown === item.label || 
                              (item.label === 'About' && isAboutMegaOpen) ||
                              (item.label === 'Masterclasses' && isMasterclassesMegaOpen) ||
-                             (item.label === 'Resources' && isResourcesMegaOpen) ||
                              (item.label === 'Contact' && isContactMegaOpen)) ? 'rotate-180' : ''
                           }`} 
                         />
@@ -256,12 +231,6 @@ export function ModernNavbar() {
                       <MasterclassesMegaDropdown 
                         isOpen={isMasterclassesMegaOpen} 
                         onClose={() => setIsMasterclassesMegaOpen(false)} 
-                      />
-                    )}
-                    {item.label === 'Resources' && (
-                      <ResourcesMegaDropdown 
-                        isOpen={isResourcesMegaOpen} 
-                        onClose={() => setIsResourcesMegaOpen(false)} 
                       />
                     )}
                     {item.label === 'Contact' && (
@@ -478,11 +447,6 @@ export function ModernNavbar() {
                                   // Orange, Azure Blue, Bright Blue for different masterclasses
                                   iconColor = index === 0 ? 'text-orange' : index === 1 ? 'text-azure-blue' : 'text-bright-blue'
                                   bgHoverColor = index === 0 ? 'hover:bg-orange/10' : index === 1 ? 'hover:bg-azure-blue-transparent' : 'hover:bg-bright-blue/10'
-                                } else if (item.label === 'Resources') {
-                                  // Orange for Resources
-                                  iconColor = 'text-orange'
-                                  bgHoverColor = 'hover:bg-orange/10'
-                                }
                                 
                                 return (
                                   <div key={dropdownItem.label}>
@@ -508,25 +472,6 @@ export function ModernNavbar() {
                                       <dropdownItem.icon className={`w-5 h-5 ${iconColor} flex-shrink-0`} />
                                       <span className="font-montserrat text-sm">{dropdownItem.label}</span>
                                     </Link>
-                                    {/* Show ebook image for Resources dropdown on mobile */}
-                                    {item.label === 'Resources' && index === 0 && (
-                                      <div className="ml-4 mt-2 mb-2 relative z-10 px-2">
-                                        <div className="relative rounded-xl overflow-hidden border border-white/20 bg-gradient-to-br from-primary-dark/90 to-primary-dark/80 backdrop-blur-[20px] p-4">
-                                          <Image
-                                            src="/e-book.png"
-                                            alt="Ebook Coming Soon"
-                                            width={300}
-                                            height={450}
-                                            className="w-full h-auto object-contain max-w-full"
-                                            priority={false}
-                                            style={{ display: 'block' }}
-                                          />
-                                          <div className="mt-3 text-center">
-                                            <p className="text-white/80 text-xs">Ebook Coming Soon</p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    )}
                                   </div>
                                 )
                               })}
