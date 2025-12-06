@@ -1115,22 +1115,25 @@ export default function UKToUAERelocationPage() {
 
         <ModernNavbar />
 
+        {/* UK Banner - Fixed below navbar */}
+        {mounted && isUK && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="fixed top-[80px] left-0 right-0 z-[55] bg-gradient-to-r from-orange/20 via-azure-blue/20 to-orange/20 border-b border-azure-blue/30 py-3 backdrop-blur-sm"
+          >
+            <div className="container mx-auto px-6 text-center">
+              <p className="text-sm text-white/90">
+                🇬🇧 <strong>Moving from the UK to the UAE?</strong> Get your cultural intelligence guide today.
+              </p>
+            </div>
+          </motion.div>
+        )}
+
         <main className="relative z-10" itemScope itemType="https://schema.org/WebPage">
           <article itemScope itemType="https://schema.org/Article">
-          {/* UK Banner - Positioned below navbar */}
-          {isUK && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="relative z-[50] mt-[80px] bg-gradient-to-r from-orange/20 via-azure-blue/20 to-orange/20 border-b border-azure-blue/30 py-3"
-            >
-              <div className="container mx-auto px-6 text-center">
-                <p className="text-sm text-white/90">
-                  🇬🇧 <strong>Moving from the UK to the UAE?</strong> Get your cultural intelligence guide today.
-                </p>
-              </div>
-            </motion.div>
-          )}
+          {/* Add top padding if banner is visible */}
+          {mounted && isUK && <div className="h-[56px]"></div>}
           {/* SECTION 1: HERO */}
           <section className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-32">
             <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5" />

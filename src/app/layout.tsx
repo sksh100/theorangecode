@@ -328,6 +328,161 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Immediate Loading Screen - Shows before React hydrates */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            #__next-loading-screen {
+              position: fixed;
+              inset: 0;
+              z-index: 99999;
+              background: #01011e;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-direction: column;
+              overflow: hidden;
+            }
+            #__next-loading-screen::before {
+              content: '';
+              position: absolute;
+              inset: 0;
+              background: linear-gradient(135deg, rgba(255, 145, 77, 0.1) 0%, rgba(0, 212, 255, 0.1) 50%, rgba(0, 153, 255, 0.1) 100%);
+              animation: gradientShift 8s linear infinite;
+            }
+            @keyframes gradientShift {
+              0%, 100% { background: linear-gradient(135deg, rgba(255, 145, 77, 0.1) 0%, rgba(0, 212, 255, 0.1) 50%, rgba(0, 153, 255, 0.1) 100%); }
+              33% { background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 153, 255, 0.1) 50%, rgba(255, 145, 77, 0.1) 100%); }
+              66% { background: linear-gradient(135deg, rgba(0, 153, 255, 0.1) 0%, rgba(255, 145, 77, 0.1) 50%, rgba(0, 212, 255, 0.1) 100%); }
+            }
+            #__next-loading-content {
+              position: relative;
+              z-index: 10;
+              text-align: center;
+            }
+            #__next-loading-logo {
+              width: 96px;
+              height: 96px;
+              margin: 0 auto 32px;
+              position: relative;
+            }
+            #__next-loading-logo::before {
+              content: '';
+              position: absolute;
+              inset: 0;
+              border: 4px solid rgba(255, 145, 77, 0.3);
+              border-radius: 50%;
+              animation: rotate 3s linear infinite;
+            }
+            #__next-loading-logo::after {
+              content: '';
+              position: absolute;
+              inset: 8px;
+              border: 2px solid rgba(0, 212, 255, 0.4);
+              border-radius: 50%;
+              animation: rotateReverse 4s linear infinite;
+            }
+            @keyframes rotate {
+              from { transform: rotate(0deg); }
+              to { transform: rotate(360deg); }
+            }
+            @keyframes rotateReverse {
+              from { transform: rotate(360deg); }
+              to { transform: rotate(0deg); }
+            }
+            #__next-loading-title {
+              font-size: 2rem;
+              font-weight: bold;
+              background: linear-gradient(to right, #ff914d, #00d4ff, #0099ff);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+              margin-bottom: 16px;
+            }
+            #__next-loading-text {
+              color: rgba(255, 255, 255, 0.7);
+              font-size: 0.875rem;
+              margin-bottom: 32px;
+            }
+            #__next-loading-bar {
+              width: 256px;
+              height: 4px;
+              background: rgba(255, 255, 255, 0.1);
+              border-radius: 9999px;
+              overflow: hidden;
+              margin: 0 auto;
+            }
+            #__next-loading-bar-fill {
+              height: 100%;
+              background: linear-gradient(to right, #ff914d, #00d4ff, #0099ff);
+              width: 0%;
+              animation: loadingProgress 2s ease-in-out infinite;
+            }
+            @keyframes loadingProgress {
+              0% { width: 0%; }
+              50% { width: 70%; }
+              100% { width: 100%; }
+            }
+            #__next-loading-screen.hidden {
+              opacity: 0;
+              pointer-events: none;
+              transition: opacity 0.5s ease-out;
+            }
+          `
+        }} />
+        <div id="__next-loading-screen">
+          <div id="__next-loading-content">
+            <div id="__next-loading-logo">
+              <div style={{
+                position: 'absolute',
+                inset: '16px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #ff914d 0%, #00d4ff 50%, #0099ff 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <div style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  background: 'rgba(1, 1, 30, 0.8)'
+                }} />
+              </div>
+            </div>
+            <h1 id="__next-loading-title">The Orange Code</h1>
+            <p id="__next-loading-text">Preparing your experience...</p>
+            <div id="__next-loading-bar">
+              <div id="__next-loading-bar-fill" />
+            </div>
+          </div>
+        </div>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              // Hide loading screen when React is ready
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', hideLoader);
+              } else {
+                hideLoader();
+              }
+              
+              function hideLoader() {
+                setTimeout(function() {
+                  var loader = document.getElementById('__next-loading-screen');
+                  if (loader) {
+                    loader.classList.add('hidden');
+                    setTimeout(function() {
+                      loader.remove();
+                    }, 500);
+                  }
+                }, 300);
+              }
+              
+              // Also hide on window load as fallback
+              window.addEventListener('load', hideLoader);
+            })();
+          `
+        }} />
         {/* Google Search Console Verification */}
         {process.env.GOOGLE_SITE_VERIFICATION && (
           <meta name="google-site-verification" content={process.env.GOOGLE_SITE_VERIFICATION} />
