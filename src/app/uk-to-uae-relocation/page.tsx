@@ -1245,7 +1245,7 @@ export default function UKToUAERelocationPage() {
                 >
                   <motion.h2
                     variants={itemVariants}
-                    className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4"
+                    className="text-3xl md:text-5xl font-bold mb-4"
                   >
                     <span className="bg-gradient-to-r from-orange via-azure-blue to-bright-blue bg-clip-text text-transparent">
                       See inside the guide
