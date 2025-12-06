@@ -1652,7 +1652,7 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="text-lg text-white/80 mb-8 leading-relaxed"
                 >
-                  Every year thousands of British citizens relocate to the UAE for work opportunities, lifestyle upgrades and new beginnings. Many arrive without understanding how workplace expectations, communication styles and cultural values differ from the UK. This guide gives you the clarity and confidence to navigate the UAE workplace from day one. It is practical, research based, and written specifically for British expats.
+                  Every year British individuals, couples and families relocate to the UAE for new opportunities, better lifestyle options and a fresh start. Many arrive without real clarity on how everyday life, communication styles, social expectations and cultural values differ from the UK. This guide gives you the confidence to settle in smoothly and understand the unwritten rules that shape life in the UAE. It is practical, research based and written specifically to help British expats avoid confusion and feel at home faster.
                 </motion.p>
 
                 <motion.h3
@@ -1660,7 +1660,7 @@ export default function UKToUAERelocationPage() {
                   className="text-2xl md:text-3xl font-bold mb-4 text-center mt-12"
                 >
                   <span className="bg-gradient-to-r from-orange via-azure-blue to-bright-blue bg-clip-text text-transparent">
-                    Why British Expats Need This Guide
+                    Why British Expats Trust This Guide
                   </span>
                 </motion.h3>
 
@@ -1670,9 +1670,9 @@ export default function UKToUAERelocationPage() {
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
                   <div className="relative z-10">
-                    <h4 className="text-lg font-bold text-white mb-3">In plain language: what you really need to know</h4>
+                    <h4 className="text-lg font-bold text-white mb-3">In simple language: what you really need to know</h4>
                     <p className="text-white/90 leading-relaxed text-base">
-                      UK workplace habits do not always translate well in the UAE. The guide explains how hierarchy, communication, feedback and time are experienced differently here, so you do not accidentally come across as rude, impatient or unreliable. You learn what builds trust with Emirati colleagues and what quietly damages it.
+                      Life in the UAE is welcoming and full of opportunity, yet many British expats experience confusion in their first weeks simply because small behaviours can be interpreted differently here. This guide explains the real expectations behind communication, relationships, time, respect and daily interaction so you move through your first months with confidence instead of uncertainty. You learn what builds trust with Emiratis and long time residents and what quietly creates distance without you realising it.
                     </p>
                   </div>
                 </motion.div>
@@ -1682,12 +1682,14 @@ export default function UKToUAERelocationPage() {
                   className="grid md:grid-cols-2 gap-4 mt-8"
                 >
                   {[
-                    'Understand workplace hierarchy and expectations',
-                    'Learn how time and deadlines are interpreted differently',
-                    'Avoid accidental disrespect in communication',
-                    'Build trust faster with Emirati colleagues',
-                    'Adapt to high context, relationship based business culture',
-                    'Learn dress code and meeting etiquette'
+                    'Navigate social and cultural expectations with confidence',
+                    'Learn how communication cues and indirect signals work in the UAE',
+                    'Build stronger relationships at home, at work and in the community',
+                    'Understand how time, appointments and commitments are interpreted',
+                    'Avoid accidental disrespect in everyday interactions',
+                    'Help your family or partner settle in more smoothly',
+                    'Understand dress codes, etiquette and behaviour expectations',
+                    'Feel prepared for daily life, from greetings to decision making'
                   ].map((item, index) => (
                     <motion.div
                       key={index}
@@ -1898,6 +1900,25 @@ export default function UKToUAERelocationPage() {
                     )
                   })}
                 </div>
+
+                {/* CTA Button */}
+                <motion.div
+                  variants={itemVariants}
+                  className="flex justify-center mt-12"
+                >
+                  <Link href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+                    <motion.button
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() =>
+                        handleCTAClick('Get the Guide - UK to UAE Contrasts', '/uk-to-uae-relocation')
+                      }
+                      className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
+                    >
+                      Get the relocation guide
+                    </motion.button>
+                  </Link>
+                </motion.div>
               </motion.div>
             </div>
           </section>
