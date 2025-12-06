@@ -33,13 +33,13 @@ export function HeroSection() {
   }, [])
 
   return (
-    <section className="relative overflow-hidden">
-      {/* Wrapper that fills viewport under navbar */}
-      <div className="min-h-[min(900px,calc(100vh-96px))] flex items-center">
+    <section className="relative overflow-hidden h-screen">
+      {/* Wrapper that fills viewport */}
+      <div className="h-full flex items-center">
         {/* Optional soft gradient overlay on top of your existing background */}
         <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5 pointer-events-none" />
         
-        <div className="container mx-auto px-6 relative z-10">
+        <div className="container mx-auto px-6 relative z-10 w-full">
           <motion.div
             variants={containerVariants}
             initial="hidden"

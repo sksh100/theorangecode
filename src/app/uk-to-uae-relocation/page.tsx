@@ -1119,10 +1119,10 @@ export default function UKToUAERelocationPage() {
         <main className="relative z-10" itemScope itemType="https://schema.org/WebPage">
           <article itemScope itemType="https://schema.org/Article">
           {/* SECTION 1: HERO */}
-          <section className="relative overflow-hidden">
-            <div className="min-h-[calc(100vh-80px)] flex items-center">
+          <section className="relative overflow-hidden h-screen">
+            <div className="h-full flex items-center">
               <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5 pointer-events-none" />
-              <div className="container mx-auto px-6 relative z-10">
+              <div className="container mx-auto px-6 relative z-10 w-full">
                 <motion.div
                   variants={containerVariants}
                   initial="hidden"
@@ -1191,7 +1191,7 @@ export default function UKToUAERelocationPage() {
           </section>
 
           {/* PEEK INSIDE SECTION */}
-          <section id="peek-inside" className="relative py-16 md:py-24">
+          <section id="peek-inside" className="relative py-20 md:py-32">
             <div className="container mx-auto px-6">
               <motion.div
                 variants={containerVariants}
