@@ -671,7 +671,7 @@ export default function UKToUAERelocationPage() {
                 "name": "What do UK expats need to know before moving to the UAE?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "UK expats relocating to the UAE need to understand workplace hierarchy, communication styles, indirect feedback norms, and Emirati cultural expectations."
+                  "text": "UK expats should know that daily life and communication in the UAE work differently from the UK. Conversations are more indirect and relationship focused, feedback is delivered more gently to maintain harmony, time is interpreted with more flexibility, and social expectations can feel unfamiliar at first. These differences show up not only at work but also in housing, schooling, public interactions and everyday decision making. Understanding these cultural patterns early helps new arrivals avoid accidental misunderstandings, build trust faster and settle with more confidence. This guide gives expats, families, students and partners a clear overview of what to expect and how to navigate life in the UAE smoothly from day one."
                 }
               },
               {
@@ -2004,7 +2004,7 @@ export default function UKToUAERelocationPage() {
                   {[
                     {
                       q: 'What do UK expats need to know before moving to the UAE?',
-                      a: 'UK expats need to understand that UAE workplace culture differs significantly from the UK. Communication is more indirect and diplomatic, feedback is softened to maintain harmony, time is more flexible and relationship-focused, and workplace hierarchy is more clearly defined. This guide provides comprehensive cultural intelligence to help British professionals navigate these differences successfully.'
+                      a: 'UK expats should know that daily life and communication in the UAE work differently from the UK. Conversations are more indirect and relationship focused, feedback is delivered more gently to maintain harmony, time is interpreted with more flexibility, and social expectations can feel unfamiliar at first. These differences show up not only at work but also in housing, schooling, public interactions and everyday decision making. Understanding these cultural patterns early helps new arrivals avoid accidental misunderstandings, build trust faster and settle with more confidence. This guide gives expats, families, students and partners a clear overview of what to expect and how to navigate life in the UAE smoothly from day one.'
                     },
                     {
                       q: 'How does UAE workplace culture differ from the UK?',
