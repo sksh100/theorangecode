@@ -272,7 +272,7 @@ export const metadata: Metadata = {
     siteName: 'The Orange Code',
     images: [
       {
-        url: 'https://www.theorangecode.com/og-image',
+        url: 'https://www.theorangecode.com/logo1.png',
         width: 1200,
         height: 630,
         alt: 'The Orange Code - Cultural Intelligence Training',
@@ -285,7 +285,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'The Orange Code - Cultural Intelligence & Leadership Training',
     description: 'Moving to the UAE? Learn Emirati culture and etiquette. Premium learning platform in Abu Dhabi for cultural intelligence, leadership development, and doing business in the Emirates.',
-    images: ['https://www.theorangecode.com/og-image'],
+    images: ['https://www.theorangecode.com/logo1.png'],
   },
   robots: {
     index: true,
