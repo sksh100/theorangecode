@@ -1116,12 +1116,12 @@ export default function UKToUAERelocationPage() {
 
         <ModernNavbar />
 
-        {/* UK Banner - Fixed below navbar */}
+        {/* UK Banner */}
         {mounted && isUK && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="fixed top-[80px] left-0 right-0 z-[55] bg-gradient-to-r from-orange/20 via-azure-blue/20 to-orange/20 border-b border-azure-blue/30 py-3 backdrop-blur-sm"
+            className="relative z-[40] bg-gradient-to-r from-orange/20 via-azure-blue/20 to-orange/20 border-b border-azure-blue/30 py-3 backdrop-blur-sm"
           >
             <div className="container mx-auto px-6 text-center">
               <p className="text-sm text-white/90">
@@ -1133,8 +1133,6 @@ export default function UKToUAERelocationPage() {
 
         <main className="relative z-10" itemScope itemType="https://schema.org/WebPage">
           <article itemScope itemType="https://schema.org/Article">
-          {/* Add top padding if banner is visible */}
-          {mounted && isUK && <div className="h-[56px]"></div>}
           {/* SECTION 1: HERO */}
           <section className="relative overflow-hidden min-h-screen flex items-center justify-center">
             <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5" />
