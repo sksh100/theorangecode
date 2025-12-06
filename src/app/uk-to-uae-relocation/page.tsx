@@ -1923,7 +1923,7 @@ export default function UKToUAERelocationPage() {
             </div>
           </section>
 
-          {/* SECTION 6: ABOUT THE AUTHOR */}
+          {/* SECTION 6: ABOUT THE AUTHOR / SHARE OR GIFT */}
           <section className="relative py-16 md:py-24">
             <div className="container mx-auto px-6">
               <motion.div
@@ -1938,7 +1938,7 @@ export default function UKToUAERelocationPage() {
                   className="text-3xl md:text-5xl font-bold mb-6"
                 >
                   <span className="bg-gradient-to-r from-orange to-azure-blue bg-clip-text text-transparent">
-                    Created by UAE based cultural intelligence experts
+                    Guidance from a cultural intelligence consultant in the UAE
                   </span>
                 </motion.h2>
 
@@ -1946,24 +1946,35 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="text-lg text-white/80 leading-relaxed mb-8"
                 >
-                  This guide was developed by The Orange Code, a cultural intelligence consultancy based in the UAE. We help expatriates, families and professionals understand Emirati culture with clarity and confidence through training, courses and practical learning tools.
+                  This guide was created by The Orange Code, a UAE based cultural intelligence
+                  consultancy. We help professionals, families and new expats understand how life
+                  and work really function in the Emirates, so they can communicate with confidence,
+                  avoid common cultural mistakes and feel at home faster.
                 </motion.p>
 
-                {/* Share CTA inside guide preview section */}
                 <motion.div
                   variants={itemVariants}
-                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/60 backdrop-blur-[20px]"
+                  className="relative p-6 md:p-7 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/60 backdrop-blur-[20px] text-left md:text-center"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
-                  <div className="relative z-10">
-                    <p className="text-white/90 text-lg mb-4 font-medium">
-                      If you know someone relocating to the UAE or someone who has recently arrived and could benefit from this guidance, you can share or gift this guide to support their transition.
+                  <div className="relative z-10 space-y-3 md:space-y-4">
+                    <p className="text-white/90 text-base md:text-lg font-medium">
+                      If you know someone who is preparing to move to the UAE or has recently arrived,
+                      you can share or gift this guide to help them settle with more clarity and less stress.
                     </p>
-                    <WhatsAppShareButton 
-                      variant="default"
-                      url="https://www.theorangecode.com/uk-to-uae-relocation"
-                      message="I found this UK to UAE relocation cultural guide... Thought you might need it!"
-                    />
+                    <p className="text-white/75 text-sm md:text-base">
+                      It is a thoughtful and practical present for friends, colleagues or family members
+                      who are starting a new chapter in Dubai, Abu Dhabi or any other emirate and want to
+                      understand the culture from day one.
+                    </p>
+
+                    <div className="pt-2 flex md:justify-center">
+                      <WhatsAppShareButton
+                        variant="default"
+                        url="https://www.theorangecode.com/uk-to-uae-relocation"
+                        message="I found this UK to UAE cultural intelligence guide and thought it could really help you as you move to the Emirates."
+                      />
+                    </div>
                   </div>
                 </motion.div>
               </motion.div>
