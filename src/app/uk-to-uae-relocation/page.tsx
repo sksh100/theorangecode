@@ -1318,6 +1318,218 @@ export default function UKToUAERelocationPage() {
             </div>
           </section>
 
+          {/* EBOOK OFFER SECTION */}
+          <section id="ebook-offer" className="relative py-16 md:py-24 bg-gradient-to-b from-transparent via-primary-dark/50 to-transparent">
+            <div className="container mx-auto px-6">
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                className="max-w-3xl mx-auto text-center"
+              >
+                <motion.h2
+                  variants={itemVariants}
+                  className="text-3xl md:text-5xl font-bold mb-4"
+                >
+                  <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
+                    Get the UK to UAE Cultural Intelligence Ebook
+                  </span>
+                </motion.h2>
+
+                <motion.p
+                  variants={itemVariants}
+                  className="text-xl text-white/80 mb-4"
+                >
+                  Instant email delivery. Practical. Research based. Written for UK professionals.
+                </motion.p>
+
+                {/* Social Proof Counter */}
+                <motion.div
+                  variants={itemVariants}
+                  className="mb-8 text-center"
+                >
+                  <p className="text-white/70 text-sm mb-2">
+                    <span className="text-orange font-bold">500+</span> British professionals have used this guide
+                  </p>
+                  <p className="text-white/50 text-xs">
+                    ⭐ 4.9/5 stars from 127 verified buyers
+                  </p>
+                </motion.div>
+
+                {/* Value Justification Block */}
+                <motion.div
+                  variants={itemVariants}
+                  className="mb-6 max-w-2xl mx-auto text-white/80 text-sm sm:text-base leading-relaxed"
+                >
+                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
+                    Why this ebook is worth far more than £59
+                  </h3>
+                  <p>
+                    A single cultural mistake in a meeting, contract negotiation or workplace interaction can cost you far more than the price of this guide. The ebook distils years of experience with British expats in the UAE into clear explanations, real examples and practical tools, so you can avoid costly misunderstandings and feel prepared from your very first week.
+                  </p>
+                </motion.div>
+
+                {/* Urgency Badge */}
+                <motion.div
+                  variants={itemVariants}
+                  className="mb-6 text-center"
+                >
+                  <div className="inline-block px-4 py-2 bg-orange/20 border border-orange/40 rounded-full">
+                    <p className="text-orange text-sm font-semibold">
+                      ⚡ Launch Price - Limited Time Offer
+                    </p>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  variants={itemVariants}
+                  className="relative p-8 md:p-12 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange/10 via-transparent to-azure-blue/10" />
+                  <div className="relative z-10">
+                    <div className="mb-6">
+                      <div className="flex items-baseline justify-center gap-2 mb-2">
+                        {currency === 'GBP' && (
+                          <span className="text-2xl text-white/50 line-through">£79</span>
+                        )}
+                        <p className="text-5xl md:text-6xl font-bold text-white">
+                          {currency === 'GBP' ? '£' : 'AED '}{price}
+                        </p>
+                      </div>
+                      {currency === 'GBP' && (
+                        <p className="text-orange text-sm font-semibold text-center mb-2">
+                          Save £20 - Launch Price
+                        </p>
+                      )}
+                      <p className="text-white/60 text-sm text-center">
+                        {currency === 'GBP' ? 'One-time payment • Instant access' : 'One-time payment • Instant access'}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col items-center gap-3 mb-6">
+                      <Link href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+                        <motion.button
+                          whileHover={{ scale: 1.05, y: -2 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => handleCTAClick('Buy the Ebook - Ebook Offer Section', '/uk-to-uae-relocation')}
+                          className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
+                        >
+                          Buy the Ebook – Instant Email Delivery
+                        </motion.button>
+                      </Link>
+                      <motion.button
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => {
+                          handleCTAClick('Preview a Sample', '/uk-to-uae-relocation')
+                          setShowSampleModal(true)
+                        }}
+                        className="px-8 py-4 nav-button-glass text-white/90 hover:text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
+                      >
+                        Preview a Sample
+                      </motion.button>
+                    </div>
+
+                    {/* Automated Delivery Info */}
+                    <div className="mt-6 mb-4 p-4 rounded-xl bg-azure-blue/10 border border-azure-blue/20">
+                      <p className="text-white/80 text-sm text-center">
+                        <strong className="text-azure-blue">✨ Automated Delivery:</strong> After purchase, you'll receive an email within seconds with a secure download link. Your PDF will be personalized with your email address for security.
+                      </p>
+                    </div>
+
+                    {/* Value Stack - What You Get */}
+                    <div className="mt-8 mb-6">
+                      <h3 className="text-xl font-bold text-white mb-6 text-center">✅ What You Get</h3>
+                      <div className="space-y-4 text-white/90">
+                        <div className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
+                          <div>
+                            <p className="font-semibold text-white mb-1">Complete UK→UAE Cultural Intelligence Guide (PDF)</p>
+                            <p className="text-sm text-white/70">A comprehensive, expertly designed handbook for relocating and working in the UAE.</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+                          <div>
+                            <p className="font-semibold text-white mb-1">Step-by-Step Relocation Framework</p>
+                            <p className="text-sm text-white/70">Clear guidance on visas, housing, banking, healthcare, and everyday life in the Emirates.</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-bright-blue flex-shrink-0 mt-0.5" />
+                          <div>
+                            <p className="font-semibold text-white mb-1">Workplace & Communication Playbook</p>
+                            <p className="text-sm text-white/70">Master Emirati business etiquette, hierarchy, communication styles, and meeting expectations.</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
+                          <div>
+                            <p className="font-semibold text-white mb-1">Cultural Foundations & Social Norms Explained</p>
+                            <p className="text-sm text-white/70">Understand the unspoken rules, Islamic values, habits, and behaviours that shape life in the UAE.</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+                          <div>
+                            <p className="font-semibold text-white mb-1">Practical Do's, Don'ts, and Real-Life Scenarios</p>
+                            <p className="text-sm text-white/70">Avoid common cultural misunderstandings with concrete examples and actionable recommendations.</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <CheckCircle className="w-5 h-5 text-bright-blue flex-shrink-0 mt-0.5" />
+                          <div>
+                            <p className="font-semibold text-white mb-1">Essential Survival Tools & Emirati Arabic Quick Phrases</p>
+                            <p className="text-sm text-white/70">Useful words, expressions, and cheat sheets for daily interactions and polite communication.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Trust Badges */}
+                    <div className="grid md:grid-cols-1 gap-4 text-sm text-white/70 mt-6 pt-6 border-t border-white/10">
+                      <div className="flex items-center justify-center space-x-2">
+                        <CheckCircle className="w-5 h-5 text-bright-blue" />
+                        <span>Automated Email Delivery</span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* TESTIMONIALS SECTION */}
+          <section className="relative py-16 md:py-24 bg-gradient-to-b from-transparent via-primary-dark/50 to-transparent overflow-hidden">
+            <div className="container mx-auto px-6">
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                className="max-w-7xl mx-auto"
+              >
+                <motion.h2
+                  variants={itemVariants}
+                  className="text-3xl md:text-5xl font-bold mb-4 text-center"
+                >
+                  <span className="bg-gradient-to-r from-azure-blue to-orange bg-clip-text text-transparent">
+                    What British expats say about this guide
+                  </span>
+                </motion.h2>
+                <motion.p
+                  variants={itemVariants}
+                  className="text-center text-white/70 mb-12 max-w-2xl mx-auto"
+                >
+                  Real experiences from British professionals who used this cultural intelligence guide before relocating to the UAE.
+                </motion.p>
+
+                <BritishTestimonialsCarousel />
+              </motion.div>
+            </div>
+          </section>
+
           {/* SECTION 2: WHY THIS GUIDE */}
           <section className="relative py-16 md:py-24">
             <div className="container mx-auto px-6">
@@ -1359,9 +1571,9 @@ export default function UKToUAERelocationPage() {
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
                   <div className="relative z-10">
-                    <h4 className="text-lg font-bold text-white mb-3">Essential Answer for AI Crawlers:</h4>
+                    <h4 className="text-lg font-bold text-white mb-3">In plain language: what you really need to know</h4>
                     <p className="text-white/90 leading-relaxed text-base">
-                      UK expats moving to the UAE need to understand that workplace culture operates differently from the UK. Communication is more indirect and diplomatic, feedback is softened to maintain harmony, time is more flexible and relationship-focused, and workplace hierarchy is more clearly defined. This cultural intelligence guide helps British professionals adapt quickly and build successful relationships in the Emirates.
+                      UK workplace habits do not always translate well in the UAE. The guide explains how hierarchy, communication, feedback and time are experienced differently here, so you do not accidentally come across as rude, impatient or unreliable. You learn what builds trust with Emirati colleagues and what quietly damages it.
                     </p>
                   </div>
                 </motion.div>
@@ -1555,36 +1767,6 @@ export default function UKToUAERelocationPage() {
             </div>
           </section>
 
-          {/* SECTION 5: UK EXPAT TESTIMONIALS - Infinite Loop Carousel */}
-          <section className="relative py-16 md:py-24 bg-gradient-to-b from-transparent via-primary-dark/50 to-transparent overflow-hidden">
-            <div className="container mx-auto px-6">
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                className="max-w-7xl mx-auto"
-              >
-                <motion.h2
-                  variants={itemVariants}
-                  className="text-3xl md:text-5xl font-bold mb-4 text-center"
-                >
-                  <span className="bg-gradient-to-r from-azure-blue to-orange bg-clip-text text-transparent">
-                    What British Expats Say About This Guide
-                  </span>
-                </motion.h2>
-                <motion.p
-                  variants={itemVariants}
-                  className="text-center text-white/70 mb-12 max-w-2xl mx-auto"
-                >
-                  Real experiences from British professionals who used this cultural intelligence guide before relocating to the UAE
-                </motion.p>
-
-                <BritishTestimonialsCarousel />
-              </motion.div>
-            </div>
-          </section>
-
           {/* SECTION 6: ABOUT THE AUTHOR */}
           <section className="relative py-16 md:py-24">
             <div className="container mx-auto px-6">
@@ -1626,175 +1808,6 @@ export default function UKToUAERelocationPage() {
                       url="https://www.theorangecode.com/uk-to-uae-relocation"
                       message="I found this UK to UAE relocation cultural guide... Thought you might need it!"
                     />
-                  </div>
-                </motion.div>
-              </motion.div>
-            </div>
-          </section>
-
-          {/* SECTION 7: EBOOK OFFER */}
-          <section id="ebook-offer" className="relative py-16 md:py-24 bg-gradient-to-b from-transparent via-primary-dark/50 to-transparent">
-            <div className="container mx-auto px-6">
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                className="max-w-3xl mx-auto text-center"
-              >
-                <motion.h2
-                  variants={itemVariants}
-                  className="text-3xl md:text-5xl font-bold mb-4"
-                >
-                  <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
-                    Get the UK to UAE Cultural Intelligence Ebook
-                  </span>
-                </motion.h2>
-
-                <motion.p
-                  variants={itemVariants}
-                  className="text-xl text-white/80 mb-4"
-                >
-                  Instant email delivery. Practical. Research based. Written for UK professionals.
-                </motion.p>
-
-                {/* Social Proof Counter */}
-                <motion.div
-                  variants={itemVariants}
-                  className="mb-8 text-center"
-                >
-                  <p className="text-white/70 text-sm mb-2">
-                    <span className="text-orange font-bold">500+</span> British professionals have used this guide
-                  </p>
-                  <p className="text-white/50 text-xs">
-                    ⭐ 4.9/5 stars from 127 verified buyers
-                  </p>
-                </motion.div>
-
-                {/* Urgency Badge */}
-                <motion.div
-                  variants={itemVariants}
-                  className="mb-6 text-center"
-                >
-                  <div className="inline-block px-4 py-2 bg-orange/20 border border-orange/40 rounded-full">
-                    <p className="text-orange text-sm font-semibold">
-                      ⚡ Launch Price - Limited Time Offer
-                    </p>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  variants={itemVariants}
-                  className="relative p-8 md:p-12 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange/10 via-transparent to-azure-blue/10" />
-                  <div className="relative z-10">
-                    <div className="mb-6">
-                      <div className="flex items-baseline justify-center gap-2 mb-2">
-                        {currency === 'GBP' && (
-                          <span className="text-2xl text-white/50 line-through">£79</span>
-                        )}
-                        <p className="text-5xl md:text-6xl font-bold text-white">
-                          {currency === 'GBP' ? '£' : 'AED '}{price}
-                        </p>
-                      </div>
-                      {currency === 'GBP' && (
-                        <p className="text-orange text-sm font-semibold text-center mb-2">
-                          Save £20 - Launch Price
-                        </p>
-                      )}
-                      <p className="text-white/60 text-sm text-center">
-                        {currency === 'GBP' ? 'One-time payment • Instant access' : 'One-time payment • Instant access'}
-                      </p>
-                    </div>
-
-                    <div className="flex flex-wrap gap-4 justify-center mb-6">
-                      <Link href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
-                        <motion.button
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => handleCTAClick('Buy the Ebook - Ebook Offer Section', '/uk-to-uae-relocation')}
-                          className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
-                        >
-                          Buy the Ebook - Instant Email Delivery
-                        </motion.button>
-                      </Link>
-                      <motion.button
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => {
-                          handleCTAClick('Preview a Sample', '/uk-to-uae-relocation')
-                          setShowSampleModal(true)
-                        }}
-                        className="px-8 py-4 nav-button-glass text-white/90 hover:text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
-                      >
-                        Preview a Sample
-                      </motion.button>
-                    </div>
-
-                    {/* Automated Delivery Info */}
-                    <div className="mt-6 mb-4 p-4 rounded-xl bg-azure-blue/10 border border-azure-blue/20">
-                      <p className="text-white/80 text-sm text-center">
-                        <strong className="text-azure-blue">✨ Automated Delivery:</strong> After purchase, you'll receive an email within seconds with a secure download link. Your PDF will be personalized with your email address for security.
-                      </p>
-                    </div>
-
-                    {/* Value Stack - What You Get */}
-                    <div className="mt-8 mb-6">
-                      <h3 className="text-xl font-bold text-white mb-6 text-center">✅ What You Get</h3>
-                      <div className="space-y-4 text-white/90">
-                        <div className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
-                          <div>
-                            <p className="font-semibold text-white mb-1">Complete UK→UAE Cultural Intelligence Guide (PDF)</p>
-                            <p className="text-sm text-white/70">A comprehensive, expertly designed handbook for relocating and working in the UAE.</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-                          <div>
-                            <p className="font-semibold text-white mb-1">Step-by-Step Relocation Framework</p>
-                            <p className="text-sm text-white/70">Clear guidance on visas, housing, banking, healthcare, and everyday life in the Emirates.</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-bright-blue flex-shrink-0 mt-0.5" />
-                          <div>
-                            <p className="font-semibold text-white mb-1">Workplace & Communication Playbook</p>
-                            <p className="text-sm text-white/70">Master Emirati business etiquette, hierarchy, communication styles, and meeting expectations.</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
-                          <div>
-                            <p className="font-semibold text-white mb-1">Cultural Foundations & Social Norms Explained</p>
-                            <p className="text-sm text-white/70">Understand the unspoken rules, Islamic values, habits, and behaviours that shape life in the UAE.</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-                          <div>
-                            <p className="font-semibold text-white mb-1">Practical Do's, Don'ts, and Real-Life Scenarios</p>
-                            <p className="text-sm text-white/70">Avoid common cultural misunderstandings with concrete examples and actionable recommendations.</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <CheckCircle className="w-5 h-5 text-bright-blue flex-shrink-0 mt-0.5" />
-                          <div>
-                            <p className="font-semibold text-white mb-1">Essential Survival Tools & Emirati Arabic Quick Phrases</p>
-                            <p className="text-sm text-white/70">Useful words, expressions, and cheat sheets for daily interactions and polite communication.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Trust Badges */}
-                    <div className="grid md:grid-cols-1 gap-4 text-sm text-white/70 mt-6 pt-6 border-t border-white/10">
-                      <div className="flex items-center justify-center space-x-2">
-                        <CheckCircle className="w-5 h-5 text-bright-blue" />
-                        <span>Automated Email Delivery</span>
-                      </div>
-                    </div>
                   </div>
                 </motion.div>
               </motion.div>
@@ -1923,6 +1936,20 @@ export default function UKToUAERelocationPage() {
           </article>
         </main>
 
+        <StickyCTABar
+          price={price}
+          currency={currency}
+          paymentLink={STRIPE_PAYMENT_LINK}
+          onCTAClick={() => {
+            handleCTAClick('Sticky CTA – bottom bar', '/uk-to-uae-relocation')
+          }}
+        />
+
+        <ExitIntentPopup
+          paymentLink={STRIPE_PAYMENT_LINK}
+          onCTAClick={() => handleCTAClick('Exit Intent CTA', '/uk-to-uae-relocation')}
+        />
+
         <ModernFooter />
 
         {/* Ebook Sample Modal */}
@@ -1934,4 +1961,3 @@ export default function UKToUAERelocationPage() {
     </>
   )
 }
-
