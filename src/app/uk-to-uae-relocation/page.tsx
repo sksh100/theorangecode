@@ -1118,11 +1118,9 @@ export default function UKToUAERelocationPage() {
 
         <main className="relative z-10" itemScope itemType="https://schema.org/WebPage">
           <article itemScope itemType="https://schema.org/Article">
-          {mounted && isUK && <div className="h-[56px]"></div>}
           {/* SECTION 1: HERO */}
           <section className="relative overflow-hidden">
-            {/* full height wrapper that accounts for navbar + UK banner */}
-            <div className="min-h-[min(900px,calc(100vh-96px))] flex items-center">
+            <div className="min-h-[calc(100vh-80px)] flex items-center">
               <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5 pointer-events-none" />
               <div className="container mx-auto px-6 relative z-10">
                 <motion.div
