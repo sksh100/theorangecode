@@ -1118,88 +1118,77 @@ export default function UKToUAERelocationPage() {
 
         <main className="relative z-10" itemScope itemType="https://schema.org/WebPage">
           <article itemScope itemType="https://schema.org/Article">
+          {mounted && isUK && <div className="h-[56px]"></div>}
           {/* SECTION 1: HERO */}
-          <section className="relative overflow-hidden min-h-screen flex items-center justify-center">
-            <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5" />
-            <div className="container mx-auto px-6 relative z-10">
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate={mounted ? "visible" : "visible"}
-                viewport={{ once: true }}
-                className="max-w-5xl mx-auto text-center"
-              >
-                {mounted && isUK && (
-                  <motion.div
-                    variants={itemVariants}
-                    className="inline-block mb-3"
-                  >
-                    <span className="px-3 py-1 rounded-full text-[11px] sm:text-xs font-medium bg-white/5 border border-white/10 text-white/80">
-                      🇬🇧 You are viewing the UK edition of this guide
+          <section className="relative overflow-hidden">
+            {/* full height wrapper that accounts for navbar + UK banner */}
+            <div className="min-h-[min(900px,calc(100vh-96px))] flex items-center">
+              <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5 pointer-events-none" />
+              <div className="container mx-auto px-6 relative z-10">
+                <motion.div
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate={mounted ? 'visible' : 'visible'}
+                  className="max-w-5xl mx-auto text-center"
+                >
+                  {/* Small label */}
+                  <motion.div variants={itemVariants} className="inline-flex items-center justify-center mb-6">
+                    <span className="px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase bg-white/5 border border-white/10 text-white/80">
+                      UK to UAE relocation guide
                     </span>
                   </motion.div>
-                )}
-                <motion.div
-                  variants={itemVariants}
-                  className="inline-block mb-6"
-                >
-                  <span className="text-orange text-sm font-semibold tracking-wider uppercase">
-                    UK to UAE Relocation Guide
-                  </span>
-                </motion.div>
-                
-                <motion.h1
-                  variants={itemVariants}
-                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-                  itemProp="headline"
-                >
-                  <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
-                    Moving from the UK to the UAE
-                  </span>
-                  <span className="block text-white mt-2">
-                    Understand UAE culture before you arrive
-                  </span>
-                </motion.h1>
-
-                <motion.p
-                  variants={itemVariants}
-                  className="text-sm sm:text-base md:text-lg text-white/80 mb-4 max-w-2xl mx-auto leading-relaxed"
-                >
-                  A practical cultural intelligence guide for British professionals, families and students relocating from the United Kingdom to the United Arab Emirates.
-                </motion.p>
-
-                <motion.p
-                  variants={itemVariants}
-                  className="text-sm font-medium text-orange mb-8"
-                >
-                  Purchase for £59 - Instant email delivery with secure download link.
-                </motion.p>
-
-                <motion.div
-                  variants={itemVariants}
-                  className="flex flex-col items-center gap-2"
-                >
-                  <Link href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
-                    <motion.button
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => handleCTAClick('Get the Relocation Ebook - Hero', '/uk-to-uae-relocation')}
-                      className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
-                    >
-                      Get the Relocation Ebook
-                    </motion.button>
-                  </Link>
-                  <motion.button
+                  {/* Main heading */}
+                  <motion.h1
                     variants={itemVariants}
-                    onClick={() => {
-                      document.getElementById('peek-inside')?.scrollIntoView({ behavior: 'smooth' })
-                    }}
-                    className="text-xs sm:text-sm text-white/70 hover:text-white underline-offset-2 hover:underline transition-colors"
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight lg:leading-[1.05]"
+                    itemProp="headline"
                   >
-                    Or preview a sample
-                  </motion.button>
+                    <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent block lg:whitespace-nowrap">
+                      Moving from the UK to the UAE
+                    </span>
+                    <span className="text-white block mt-2 lg:whitespace-nowrap">
+                      Understand UAE culture before you arrive
+                    </span>
+                  </motion.h1>
+                  {/* Subheading */}
+                  <motion.p
+                    variants={itemVariants}
+                    className="text-sm sm:text-base md:text-lg text-white/80 mb-4 max-w-3xl mx-auto leading-relaxed"
+                  >
+                    A practical cultural intelligence guide for British professionals, families and students relocating from the United Kingdom to the United Arab Emirates.
+                  </motion.p>
+                  {/* Price + instant delivery line */}
+                  <motion.p
+                    variants={itemVariants}
+                    className="text-sm font-medium text-orange mb-8 lg:whitespace-nowrap"
+                  >
+                    Purchase for £59 · Instant email delivery with secure download link.
+                  </motion.p>
+                  {/* Primary CTA + subtle preview link */}
+                  <motion.div variants={itemVariants} className="flex flex-col items-center gap-2">
+                    <Link href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+                      <motion.button
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() =>
+                          handleCTAClick('Get the Relocation Ebook - Hero', '/uk-to-uae-relocation')
+                        }
+                        className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
+                      >
+                        Get the relocation ebook
+                      </motion.button>
+                    </Link>
+                    <button
+                      onClick={() =>
+                        document.getElementById('peek-inside')?.scrollIntoView({ behavior: 'smooth' })
+                      }
+                      className="text-xs sm:text-sm text-white/70 hover:text-white underline-offset-2 hover:underline transition-colors"
+                    >
+                      Or preview a sample first
+                    </button>
+                  </motion.div>
                 </motion.div>
-              </motion.div>
+              </div>
             </div>
           </section>
 
