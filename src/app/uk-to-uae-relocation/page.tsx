@@ -703,7 +703,7 @@ export default function UKToUAERelocationPage() {
                 "name": "Is it focused on Dubai only?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "The guide covers both Dubai and Abu Dhabi. It provides cultural intelligence applicable across the UAE, helping British professionals understand Emirati culture regardless of which emirate they relocate to."
+                  "text": "The cultural insights and practical advice apply across all emirates, so whether you move to Dubai, Abu Dhabi, Sharjah or elsewhere, you will understand the core Emirati cultural norms and daily-life expectations. The principles in this guide are relevant for anyone relocating anywhere in the United Arab Emirates."
                 }
               },
               {
@@ -2024,7 +2024,7 @@ export default function UKToUAERelocationPage() {
                     },
                     {
                       q: 'Is it focused on Dubai only?',
-                      a: 'The guide covers both Dubai and Abu Dhabi. It provides cultural intelligence applicable across the UAE, helping British professionals understand Emirati culture regardless of which emirate they relocate to. The principles apply throughout the United Arab Emirates.'
+                      a: 'The cultural insights and practical advice apply across all emirates, so whether you move to Dubai, Abu Dhabi, Sharjah or elsewhere, you will understand the core Emirati cultural norms and daily-life expectations. The principles in this guide are relevant for anyone relocating anywhere in the United Arab Emirates.'
                     },
                     {
                       q: 'Does this replace cultural training?',
