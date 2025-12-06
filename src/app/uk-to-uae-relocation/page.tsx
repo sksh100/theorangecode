@@ -1466,7 +1466,7 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="text-xl text-white/80 mb-4"
                 >
-                  Instant download. Clear. Practical. Written specifically for British professionals moving to the UAE.
+                  Instant download. Clear. Practical. Written for anyone relocating from the United Kingdom to the United Arab Emirates.
                 </motion.p>
 
                 {/* Social Proof Counter */}
@@ -1475,7 +1475,7 @@ export default function UKToUAERelocationPage() {
                   className="mt-4 mb-6 text-center space-y-1"
                 >
                   <p className="text-white/80 text-sm">
-                    ⭐ <strong className="text-white">Rated 4.9/5</strong> by <strong className="text-white">127 verified UK professionals</strong>
+                    ⭐ Rated 4.9 out of 5 by 127 verified UK readers
                   </p>
                 </motion.div>
 
