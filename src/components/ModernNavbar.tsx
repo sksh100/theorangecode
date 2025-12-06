@@ -9,6 +9,7 @@ import { ChevronDown, Menu, X, Sparkles, Zap, Shield, Users, Settings, LogOut, L
 import { AboutMegaDropdown } from './AboutMegaDropdown'
 import { ContactMegaDropdown } from './ContactMegaDropdown'
 import { MasterclassesMegaDropdown } from './MasterclassesMegaDropdown'
+import { UAELivingMegaDropdown } from './UAELivingMegaDropdown'
 import { trackDropdownOpen, trackDropdownItemClick, trackButtonClick } from '@/lib/analytics'
 import { trackCTAClick } from '@/lib/tracking'
 
@@ -114,6 +115,7 @@ export function ModernNavbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [isAboutMegaOpen, setIsAboutMegaOpen] = useState(false)
   const [isContactMegaOpen, setIsContactMegaOpen] = useState(false)
+  const [isUAELivingMegaOpen, setIsUAELivingMegaOpen] = useState(false)
   const [cartItems, setCartItems] = useState(0)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(false)
@@ -195,9 +197,8 @@ export function ModernNavbar() {
     },
     {
       label: 'UAE Living',
-      href: '/uae-living',
+      href: '/moving-to-uae',
       dropdown: [
-        { label: 'Life in the UAE', icon: Home, href: '/uae-living' },
         { label: 'Moving to the UAE', icon: Plane, href: '/moving-to-uae' },
       ]
     },
@@ -218,6 +219,8 @@ export function ModernNavbar() {
       setIsAboutMegaOpen(false)
       setIsContactMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
+      setIsUAELivingMegaOpen(false)
+      setIsUAELivingMegaOpen(false)
       if (isOpening) trackDropdownOpen(label)
       return
     }
@@ -243,13 +246,25 @@ export function ModernNavbar() {
       setActiveDropdown(null)
       setIsAboutMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
+      setIsUAELivingMegaOpen(false)
       if (isOpening) trackDropdownOpen('Contact')
+    } else if (label === 'UAE Living') {
+      const isOpening = !isUAELivingMegaOpen
+      setIsUAELivingMegaOpen(isOpening)
+      setActiveDropdown(null)
+      setIsAboutMegaOpen(false)
+      setIsContactMegaOpen(false)
+      setIsMasterclassesMegaOpen(false)
+      setIsUAELivingMegaOpen(false)
+      if (isOpening) trackDropdownOpen('UAE Living')
     } else {
       const isOpening = activeDropdown !== label
       setActiveDropdown(isOpening ? label : null)
       setIsAboutMegaOpen(false)
       setIsContactMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
+      setIsUAELivingMegaOpen(false)
+      setIsUAELivingMegaOpen(false)
       if (isOpening) trackDropdownOpen(label)
     }
   }
@@ -262,6 +277,7 @@ export function ModernNavbar() {
       setIsAboutMegaOpen(false)
       setIsContactMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
+      setIsUAELivingMegaOpen(false)
     }
   }
 

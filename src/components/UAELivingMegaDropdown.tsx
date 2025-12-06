@@ -39,14 +39,6 @@ export function UAELivingMegaDropdown({ isOpen, onClose }: UAELivingMegaDropdown
 
   const uaeLivingSections: UAELivingCard[] = [
     {
-      id: 'life-in-uae',
-      title: 'Life in the UAE',
-      description: 'A calm, practical overview of everyday life in Dubai, Abu Dhabi and the wider Emirates. Understand how life here really works.',
-      icon: Home,
-      href: '/uae-living',
-      gradient: 'from-orange/20 to-bright-blue/20'
-    },
-    {
       id: 'moving-to-uae',
       title: 'Moving to the UAE',
       description: 'A practical, research-based hub that helps you understand how life, work and relationships function in the UAE so you can plan your move with clarity.',
@@ -100,7 +92,7 @@ export function UAELivingMegaDropdown({ isOpen, onClose }: UAELivingMegaDropdown
                 </div>
 
                 {/* UAE Living Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6 max-w-md mx-auto">
                   {uaeLivingSections.map((section, index) => (
                     <motion.div
                       key={section.id}
