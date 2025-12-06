@@ -1,10 +1,10 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { CheckCircle, ArrowRight, BookOpen, Users, Globe, Clock, MessageSquare, Briefcase, Sparkles, Quote } from 'lucide-react'
+import { CheckCircle, ArrowRight, BookOpen, Users, Globe, Clock, MessageSquare, Briefcase, Sparkles, Quote, X } from 'lucide-react'
 import Link from 'next/link'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
@@ -29,6 +29,7 @@ export default function UKToUAERelocationPage() {
   const [price, setPrice] = useState(99) // Default AED price
   const [mounted, setMounted] = useState(false)
   const [showSampleModal, setShowSampleModal] = useState(false)
+  const [selectedPreview, setSelectedPreview] = useState<number | null>(null)
   
   // Stripe Payment Link
   // For UK visitors: £59, For others: AED 270 (approx £59)
@@ -36,6 +37,38 @@ export default function UKToUAERelocationPage() {
 
   useEffect(() => {
     setMounted(true)
+
+    // Disable common screenshot shortcuts when preview is open
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedPreview !== null) {
+        // Disable Print Screen, Ctrl+S, Ctrl+P, F12, etc.
+        if (
+          e.key === 'PrintScreen' ||
+          (e.ctrlKey && (e.key === 's' || e.key === 'p' || e.key === 'u')) ||
+          e.key === 'F12' ||
+          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J'))
+        ) {
+          e.preventDefault()
+          e.stopPropagation()
+          return false
+        }
+      }
+    }
+
+    if (selectedPreview !== null) {
+      document.addEventListener('keydown', handleKeyDown)
+      // Disable right-click globally when preview is open
+      document.addEventListener('contextmenu', (e) => e.preventDefault())
+      // Disable text selection
+      document.body.style.userSelect = 'none'
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('contextmenu', (e) => e.preventDefault())
+      document.body.style.userSelect = ''
+    }
+  }, [selectedPreview])
     
     // Detect UK visitors - try to get country from visitor tracking
     // First check browser language/timezone as fallback
@@ -1229,13 +1262,20 @@ export default function UKToUAERelocationPage() {
                     variants={itemVariants}
                     className="space-y-3"
                   >
-                    <div className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3]">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-center p-4">
-                          <div className="text-white/40 text-xs mb-2">Preview Image</div>
-                          <div className="text-white/20 text-xs">/images/uk-uae-preview-1.png</div>
-                        </div>
-                      </div>
+                    <div 
+                      className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3] cursor-pointer group"
+                      onClick={() => setSelectedPreview(1)}
+                    >
+                      <Image
+                        src="/images/uk-uae-preview-1.png"
+                        alt="Chapter overviews preview"
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        draggable={false}
+                        onContextMenu={(e) => e.preventDefault()}
+                        onDragStart={(e) => e.preventDefault()}
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                     </div>
                     <p className="text-sm text-white/90">
                       Chapter overviews that explain what to expect in each stage of your move
@@ -1247,13 +1287,20 @@ export default function UKToUAERelocationPage() {
                     variants={itemVariants}
                     className="space-y-3"
                   >
-                    <div className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3]">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-center p-4">
-                          <div className="text-white/40 text-xs mb-2">Preview Image</div>
-                          <div className="text-white/20 text-xs">/images/uk-uae-preview-2.png</div>
-                        </div>
-                      </div>
+                    <div 
+                      className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3] cursor-pointer group"
+                      onClick={() => setSelectedPreview(2)}
+                    >
+                      <Image
+                        src="/images/uk-uae-preview-2.png"
+                        alt="Practical do and don't lists preview"
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        draggable={false}
+                        onContextMenu={(e) => e.preventDefault()}
+                        onDragStart={(e) => e.preventDefault()}
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                     </div>
                     <p className="text-sm text-white/90">
                       Practical do and do not lists for meetings, housing and daily life
@@ -1265,13 +1312,20 @@ export default function UKToUAERelocationPage() {
                     variants={itemVariants}
                     className="space-y-3"
                   >
-                    <div className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3]">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-center p-4">
-                          <div className="text-white/40 text-xs mb-2">Preview Image</div>
-                          <div className="text-white/20 text-xs">/images/uk-uae-preview-3.png</div>
-                        </div>
-                      </div>
+                    <div 
+                      className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3] cursor-pointer group"
+                      onClick={() => setSelectedPreview(3)}
+                    >
+                      <Image
+                        src="/images/uk-uae-preview-3.png"
+                        alt="Reflection tools and field notes preview"
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        draggable={false}
+                        onContextMenu={(e) => e.preventDefault()}
+                        onDragStart={(e) => e.preventDefault()}
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                     </div>
                     <p className="text-sm text-white/90">
                       Reflection tools and field notes to help you apply what you read
@@ -1283,13 +1337,20 @@ export default function UKToUAERelocationPage() {
                     variants={itemVariants}
                     className="space-y-3"
                   >
-                    <div className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3]">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-center p-4">
-                          <div className="text-white/40 text-xs mb-2">Preview Image</div>
-                          <div className="text-white/20 text-xs">/images/uk-uae-preview-4.png</div>
-                        </div>
-                      </div>
+                    <div 
+                      className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3] cursor-pointer group"
+                      onClick={() => setSelectedPreview(4)}
+                    >
+                      <Image
+                        src="/images/uk-uae-preview-4.png"
+                        alt="Quick reference guides preview"
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        draggable={false}
+                        onContextMenu={(e) => e.preventDefault()}
+                        onDragStart={(e) => e.preventDefault()}
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                     </div>
                     <p className="text-sm text-white/90">
                       Quick reference guides and checklists for visa, housing, and essential services
@@ -1955,6 +2016,104 @@ export default function UKToUAERelocationPage() {
           isOpen={showSampleModal} 
           onClose={() => setShowSampleModal(false)} 
         />
+
+        {/* Preview Image Modal */}
+        <AnimatePresence>
+          {selectedPreview !== null && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="fixed inset-0 bg-black/90 backdrop-blur-md z-[100]"
+                onClick={() => setSelectedPreview(null)}
+              />
+              
+              {/* Modal Content */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="fixed inset-0 z-[101] flex items-center justify-center p-4"
+                onClick={() => setSelectedPreview(null)}
+              >
+                <div 
+                  className="relative max-w-6xl max-h-[90vh] w-full"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Close Button */}
+                  <motion.button
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ delay: 0.1 }}
+                    onClick={() => setSelectedPreview(null)}
+                    className="absolute -top-12 right-0 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white transition-all duration-300 hover:scale-110"
+                    aria-label="Close preview"
+                  >
+                    <X className="w-5 h-5" />
+                  </motion.button>
+
+                  {/* Protected Image Container */}
+                  <div className="relative w-full h-full bg-primary-dark/95 backdrop-blur-lg rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
+                    {/* Protection Overlay - prevents right-click, drag, and selection */}
+                    <div
+                      className="absolute inset-0 z-10 pointer-events-auto select-none"
+                      onContextMenu={(e) => e.preventDefault()}
+                      onDragStart={(e) => e.preventDefault()}
+                      style={{
+                        userSelect: 'none',
+                        WebkitUserSelect: 'none',
+                        MozUserSelect: 'none',
+                        msUserSelect: 'none',
+                      }}
+                    />
+                    
+                    {/* Watermark Overlay */}
+                    <div 
+                      className="absolute inset-0 z-20 pointer-events-none"
+                      style={{
+                        background: 'repeating-linear-gradient(45deg, transparent, transparent 100px, rgba(255, 145, 77, 0.03) 100px, rgba(255, 145, 77, 0.03) 200px)',
+                      }}
+                    />
+
+                    {/* Image */}
+                    <div className="relative w-full h-[90vh] flex items-center justify-center p-8">
+                      <Image
+                        src={`/images/uk-uae-preview-${selectedPreview}.png`}
+                        alt={`Preview ${selectedPreview}`}
+                        width={1200}
+                        height={900}
+                        className="max-w-full max-h-full object-contain"
+                        draggable={false}
+                        onContextMenu={(e) => e.preventDefault()}
+                        onDragStart={(e) => e.preventDefault()}
+                        style={{
+                          userSelect: 'none',
+                          WebkitUserSelect: 'none',
+                          MozUserSelect: 'none',
+                          msUserSelect: 'none',
+                          pointerEvents: 'none',
+                        }}
+                        priority
+                      />
+                    </div>
+
+                    {/* Protection Notice */}
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-30 px-4 py-2 bg-black/60 backdrop-blur-sm rounded-full border border-white/20">
+                      <p className="text-white/70 text-xs text-center">
+                        © The Orange Code - Protected Content
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </div>
     </>
   )
