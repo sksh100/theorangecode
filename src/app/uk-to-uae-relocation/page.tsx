@@ -1736,22 +1736,53 @@ export default function UKToUAERelocationPage() {
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
                   <div className="relative z-10 grid md:grid-cols-2 gap-x-6 gap-y-4">
-                    {[
-                      'UAE cultural foundations',
-                      'Communication differences between UK and UAE',
-                      'Emotional expression and reading indirect cues',
-                      'Feedback styles',
-                      'Business etiquette and relationship building',
-                      'Workplace hierarchy and decision making',
-                      'Dress code rules for men and women',
-                      'Time perception and punctuality',
-                      'Do and dont list for new arrivals'
-                    ].map((item, index) => (
-                      <div key={index} className="flex items-start gap-3">
+                    {/* Left Column */}
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-3">
                         <BookOpen className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-                        <span className="text-white/90 leading-relaxed">{item}</span>
+                        <span className="text-white/90 leading-relaxed">Core UAE cultural foundations so you understand the values and social norms that shape daily life.</span>
                       </div>
-                    ))}
+                      <div className="flex items-start gap-3">
+                        <BookOpen className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+                        <span className="text-white/90 leading-relaxed">How emotions are expressed and how to read indirect cues in conversations and meetings.</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <BookOpen className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+                        <span className="text-white/90 leading-relaxed">Social and professional etiquette to help you build trust and strong relationships quickly.</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <BookOpen className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+                        <span className="text-white/90 leading-relaxed">Dress code guidance for men and women in public spaces, workplaces and cultural settings.</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <BookOpen className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+                        <span className="text-white/90 leading-relaxed">Clear do and do not lists that help new arrivals avoid common misunderstandings.</span>
+                      </div>
+                    </div>
+                    
+                    {/* Right Column */}
+                    <div className="space-y-4">
+                      <div className="flex items-start gap-3">
+                        <BookOpen className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+                        <span className="text-white/90 leading-relaxed">How communication styles differ between the UK and UAE and what this means in real life.</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <BookOpen className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+                        <span className="text-white/90 leading-relaxed">How to give and receive feedback in a way that is respectful and culturally appropriate.</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <BookOpen className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+                        <span className="text-white/90 leading-relaxed">How hierarchy works in workplaces and communities so you can navigate decisions confidently.</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <BookOpen className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+                        <span className="text-white/90 leading-relaxed">Why time perception differs and how to adapt to local expectations around punctuality.</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <BookOpen className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+                        <span className="text-white/90 leading-relaxed">Quick reference tips and practical tools you can use from your very first week.</span>
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               </motion.div>
