@@ -173,7 +173,8 @@ export default function MovingToUAEPage() {
                   {/* Main heading */}
                   <motion.div variants={itemVariants} className="mb-6">
                     <PageHeading level="h1">
-                      Move to the UAE with Cultural Intelligence
+                      <span className="block">Move to the UAE with</span>
+                      <span className="block">Cultural Intelligence</span>
                     </PageHeading>
                   </motion.div>
 
