@@ -1183,7 +1183,7 @@ export default function UKToUAERelocationPage() {
                     <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent block lg:whitespace-nowrap text-center">
                       Moving from the UK to the UAE
                     </span>
-                    <span className="text-white block mt-4 lg:whitespace-nowrap text-center">
+                    <span className="text-white block mt-6 lg:whitespace-nowrap text-center">
                       Understand UAE culture before you arrive
                     </span>
                   </motion.h1>
