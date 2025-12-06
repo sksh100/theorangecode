@@ -18,10 +18,32 @@ const AtmosphericBackground = dynamic(
 export default function MovingToUAEPage() {
   const [mounted, setMounted] = useState(false)
   const [openFAQ, setOpenFAQ] = useState<number | null>(null)
+  const [interestGuide, setInterestGuide] = useState<string | null>(null)
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  const handleRegisterInterest = (guideKey: string) => {
+    setInterestGuide(guideKey)
+    // TODO: open a modal or send the guideKey to your analytics
+    // For now, log to the console so we can confirm it works
+    console.log('Register interest for guide:', guideKey)
+    
+    // Example of how you can send this to an API route later:
+    // fetch('/api/guide-interest', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({
+    //     guideKey,
+    //     // email: collected from a form field in a modal
+    //   }),
+    // })
+    // 
+    // guideKey can be "uk-uae", "nl-uae", "fr-uae", "it-uae", "ru-uae"
+    // In your database or email platform, this becomes a category or tag
+    // Later, when sending campaigns, you can filter by guideKey
+  }
 
   // Animation variants
   const containerVariants = {
@@ -54,8 +76,8 @@ export default function MovingToUAEPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebPage",
-            "name": "Moving to the UAE. Relocation hub for expats and professionals",
-            "description": "A clear, research based relocation hub for anyone who wants to move to the UAE. Understand visas, work culture, housing and everyday life in Dubai and Abu Dhabi, plus country specific guides such as the UK to UAE cultural intelligence ebook.",
+            "name": "Moving to the UAE. Cultural intelligence and relocation hub",
+            "description": "A cultural intelligence hub for anyone who wants to move to the UAE. Understand work culture, expectations, housing basics and everyday life, and explore country specific guides such as the UK to UAE cultural intelligence ebook.",
             "url": "https://www.theorangecode.com/moving-to-uae",
             "inLanguage": "en",
             "isPartOf": {
@@ -66,7 +88,7 @@ export default function MovingToUAEPage() {
             "about": {
               "@type": "Thing",
               "name": "Moving to the UAE",
-              "description": "Comprehensive relocation hub for professionals, families, students and entrepreneurs moving to the United Arab Emirates, covering visas, work culture, housing, and cultural intelligence."
+              "description": "Learning hub for professionals, families, students and entrepreneurs who are exploring a move to the United Arab Emirates, with a focus on cultural intelligence, workplace expectations and daily life."
             },
             "mainEntity": {
               "@type": "FAQPage",
@@ -138,7 +160,7 @@ export default function MovingToUAEPage() {
                 {/* Small label */}
                 <motion.div variants={itemVariants} className="inline-flex items-center justify-center mb-6">
                   <span className="px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase bg-white/5 border border-white/10 text-white/80">
-                    UAE Relocation Hub
+                    UAE Culture and Relocation Hub
                   </span>
                 </motion.div>
 
@@ -148,7 +170,7 @@ export default function MovingToUAEPage() {
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-normal text-center w-full"
                 >
                   <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent block lg:whitespace-nowrap text-center pt-2 pb-1">
-                    Moving To The UAE With Confidence
+                    Move To The UAE With Cultural Intelligence
                   </span>
                 </motion.h1>
 
@@ -157,22 +179,22 @@ export default function MovingToUAEPage() {
                   variants={itemVariants}
                   className="text-sm sm:text-base md:text-lg text-white/80 mb-8 max-w-3xl mx-auto leading-relaxed"
                 >
-                  A clear, research based roadmap for professionals, families, students and entrepreneurs who want to build a life in the United Arab Emirates.
+                  A practical, research based hub from The Orange Code that helps you understand how life, work and relationships really function in the United Arab Emirates so you can plan your move with clarity.
                 </motion.p>
 
                 {/* Bullet list */}
                 <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 text-sm text-white/70">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-orange" />
-                    <span>Understand visas, work and everyday life in a realistic way</span>
+                    <span>See how visas, work and daily life connect in a realistic way</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-azure-blue" />
-                    <span>Avoid cultural misunderstandings that slow down your progress</span>
+                    <span>Avoid cultural misunderstandings that damage trust and reputation</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-bright-blue" />
-                    <span>Plan a move that supports your career, family and wellbeing</span>
+                    <span>Choose guides and masterclasses that support your career and family</span>
                   </div>
                 </motion.div>
 
@@ -186,7 +208,7 @@ export default function MovingToUAEPage() {
                     whileTap={{ scale: 0.95 }}
                     className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                   >
-                    Start with the relocation overview
+                    Start with the UAE overview
                   </motion.button>
                   
                   <Link href="/uk-to-uae-relocation">
@@ -195,7 +217,7 @@ export default function MovingToUAEPage() {
                       whileTap={{ scale: 0.95 }}
                       className="px-8 py-4 nav-button-glass text-white/90 hover:text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                     >
-                      Already from the UK
+                      Already moving from the UK
                     </motion.button>
                   </Link>
                 </motion.div>
@@ -219,7 +241,7 @@ export default function MovingToUAEPage() {
                 className="text-3xl md:text-5xl font-bold mb-6 text-center"
               >
                 <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                  Why Careful Planning Matters In The UAE
+                  Why Cultural Preparation Matters More Than Logistics
                 </span>
               </motion.h2>
 
@@ -227,7 +249,7 @@ export default function MovingToUAEPage() {
                 variants={itemVariants}
                 className="text-lg text-white/80 mb-12 text-center max-w-3xl mx-auto leading-relaxed"
               >
-                Opportunities in the UAE are real and abundant, but the country has a specific way of working, hiring and building trust. Poor planning can lead to wrong job offers, visa complications or culture shock that slows your progress.
+                Flights, shipping and paperwork can be outsourced. What you cannot outsource is how you think, speak and make decisions in the UAE. The country has a specific way of working, hiring and building trust. When you ignore this, you risk accepting the wrong job, misunderstanding expectations or feeling lost during your first year.
               </motion.p>
 
               {/* Glass card */}
@@ -241,17 +263,17 @@ export default function MovingToUAEPage() {
                     {
                       icon: FileCheck,
                       title: 'Legal and practical systems',
-                      text: 'Visas, sponsorship, labour rules, tenancy contracts and official requirements that shape your move.'
+                      text: 'How visas, sponsorship, labour rules and contracts shape your options and timelines.'
                     },
                     {
                       icon: Briefcase,
                       title: 'Workplace and business culture',
-                      text: 'Hierarchy, decision making, communication styles, reputation building and professional expectations.'
+                      text: 'How hierarchy, communication, relationship building and reputation really work in organisations.'
                     },
                     {
                       icon: Home,
                       title: 'Life beyond work',
-                      text: 'Housing, schooling, partner careers, social life and wellbeing that make your move sustainable.'
+                      text: 'How housing, schooling, partner careers, social life and wellbeing make your move sustainable.'
                     }
                   ].map((item, index) => {
                     const Icon = item.icon
@@ -269,7 +291,7 @@ export default function MovingToUAEPage() {
                   })}
                 </div>
                 <p className="text-center text-white/60 text-sm">
-                  This hub gives you a starting point. Our guides and masterclasses go deeper into each layer.
+                  This hub gives you a structured overview. Our country specific guides and masterclasses go deeper when you are ready.
                 </p>
               </motion.div>
             </motion.div>
@@ -302,9 +324,9 @@ export default function MovingToUAEPage() {
                     icon: Target,
                     title: 'Clarify your goal',
                     bullets: [
-                      'Why you want to move',
-                      'Which emirate fits your lifestyle',
-                      'Time frame and budget'
+                      'Why you want to move and what success looks like',
+                      'Which emirate and lifestyle fit your priorities',
+                      'Time frame and financial boundaries'
                     ]
                   },
                   {
@@ -312,9 +334,9 @@ export default function MovingToUAEPage() {
                     icon: FileCheck,
                     title: 'Understand visas and employment basics',
                     bullets: [
-                      'Work visa and sponsorship rules',
-                      'Employer vs free zone vs own company',
-                      'Impact on family visas'
+                      'Work visa and sponsorship routes that apply to you',
+                      'Differences between mainland, free zones and your own company',
+                      'What this means for family visas and dependants'
                     ]
                   },
                   {
@@ -322,9 +344,9 @@ export default function MovingToUAEPage() {
                     icon: HomeIcon,
                     title: 'Design your life set up',
                     bullets: [
-                      'Housing zones, commute, transport options',
-                      'Schooling or childcare if relevant',
-                      'Social and community options'
+                      'Housing areas, commute patterns and transport',
+                      'Education and childcare if relevant',
+                      'Community, hobbies and faith life'
                     ]
                   },
                   {
@@ -332,9 +354,9 @@ export default function MovingToUAEPage() {
                     icon: Heart,
                     title: 'Prepare culturally and emotionally',
                     bullets: [
-                      'How communication works in the UAE',
-                      'What respect looks like in practice',
-                      'How to handle the first 90 days'
+                      'How communication and respect are expressed in the UAE',
+                      'How to handle hierarchy and feedback in practice',
+                      'How to navigate your first ninety days with confidence'
                     ]
                   }
                 ].map((item, index) => {
@@ -372,7 +394,7 @@ export default function MovingToUAEPage() {
                 variants={itemVariants}
                 className="text-center text-white/60 text-sm mt-8"
               >
-                Our country specific and profession specific guides help you apply these steps to your own situation.
+                Use this overview to think clearly about your move. Then choose the guide or training that fits your origin country and life stage.
               </motion.p>
             </motion.div>
           </div>
@@ -393,7 +415,7 @@ export default function MovingToUAEPage() {
                 className="text-3xl md:text-5xl font-bold mb-12 text-center"
               >
                 <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                  Relocation Paths For Different Types Of Movers
+                  How Different People Use This Hub
                 </span>
               </motion.h2>
 
@@ -401,27 +423,27 @@ export default function MovingToUAEPage() {
                 {[
                   {
                     icon: Briefcase,
-                    title: 'Working professionals and managers',
-                    text: 'Career growth, regional HQ roles, professional services, consulting, creative industries.',
-                    linkText: 'See cultural intelligence training'
+                    title: 'Established professionals and managers',
+                    text: 'Use the hub to understand workplace expectations, leadership style and how to protect your reputation while you transition into a new role.',
+                    linkText: 'Explore cultural intelligence training'
                   },
                   {
                     icon: Baby,
-                    title: 'Families relocating together',
-                    text: 'Housing choices, schools, spouse careers, family routines and community integration.',
-                    linkText: 'See cultural intelligence training'
+                    title: 'Families who are relocating together',
+                    text: 'Use the hub to think through housing, schools, partner careers and routines so that everyone adjusts in a healthy way.',
+                    linkText: 'Explore cultural intelligence training'
                   },
                   {
                     icon: GraduationCap,
                     title: 'Students, graduates and early career explorers',
-                    text: 'Internships, first roles, study options, cost awareness and career building.',
-                    linkText: 'See cultural intelligence training'
+                    text: 'Use the hub to understand cost of living, first roles, internships and what professional behaviour looks like in the UAE.',
+                    linkText: 'Explore cultural intelligence training'
                   },
                   {
                     icon: Building2,
-                    title: 'Entrepreneurs and independent professionals',
-                    text: 'Free zones, running your own consultancy, online businesses and business setup.',
-                    linkText: 'See cultural intelligence training'
+                    title: 'Entrepreneurs and independent consultants',
+                    text: 'Use the hub to frame questions about free zones, client relationships and how to build trust as an external partner.',
+                    linkText: 'Explore cultural intelligence training'
                   }
                 ].map((item, index) => {
                   const Icon = item.icon
@@ -477,7 +499,7 @@ export default function MovingToUAEPage() {
                 variants={itemVariants}
                 className="text-lg text-white/80 mb-12 text-center max-w-3xl mx-auto leading-relaxed"
               >
-                Visas, flights and shipping are the easy part. The hardest part is understanding how people think, decide and build trust in the UAE and wider GCC. Cultural intelligence keeps careers and businesses on track.
+                Visas and logistics move you from one country to another. Cultural intelligence determines whether you actually thrive once you arrive. It affects how people read your emails, how they respond in meetings and how quickly you are trusted with real responsibility.
               </motion.p>
 
               <div className="grid md:grid-cols-2 gap-8">
@@ -486,9 +508,9 @@ export default function MovingToUAEPage() {
                   <h3 className="text-2xl font-bold text-white mb-6">How cultural intelligence helps</h3>
                   <ul className="space-y-4">
                     {[
-                      'How cultural intelligence helps in meetings and negotiations by understanding communication styles and decision making processes.',
-                      'How it protects reputation through respectful behaviour that aligns with local expectations and values.',
-                      'How it helps the whole family feel settled faster by navigating social situations and building genuine connections.'
+                      'It improves meetings and negotiations because you understand how people communicate, decide and push back in a respectful way.',
+                      'It protects your reputation by aligning your behaviour with local expectations around respect, status and reliability.',
+                      'It helps partners and children feel settled faster by giving them a shared language to talk about cultural differences.'
                     ].map((item, index) => (
                       <li key={index} className="flex items-start gap-3">
                         <CheckCircle className="w-6 h-6 text-orange flex-shrink-0 mt-0.5" />
@@ -508,9 +530,9 @@ export default function MovingToUAEPage() {
                     <h3 className="text-2xl font-bold text-white mb-6">How The Orange Code helps</h3>
                     <ul className="space-y-3 mb-6">
                       {[
-                        'Country and culture specific relocation guides',
-                        'Live and virtual cultural intelligence masterclasses',
-                        'Resources focused on the UAE and wider GCC'
+                        'Country specific cultural intelligence guides for people moving to the UAE',
+                        'Live and virtual masterclasses that translate theory into real conversations',
+                        'Resources that focus on the Emirates and the wider GCC region'
                       ].map((item, index) => (
                         <li key={index} className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
@@ -534,7 +556,7 @@ export default function MovingToUAEPage() {
           </div>
         </section>
 
-        {/* SECTION 6: UK Specific Guide */}
+        {/* SECTION 6: Country Specific Guides */}
         <section className="relative py-16 md:py-24">
           <div className="container mx-auto px-6">
             <motion.div
@@ -542,14 +564,14 @@ export default function MovingToUAEPage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
-              className="max-w-4xl mx-auto"
+              className="max-w-6xl mx-auto"
             >
               <motion.h2
                 variants={itemVariants}
                 className="text-3xl md:text-5xl font-bold mb-6 text-center"
               >
                 <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                  If You Are Moving From The UK
+                  Country Specific Guides For Moving To The UAE
                 </span>
               </motion.h2>
 
@@ -557,54 +579,168 @@ export default function MovingToUAEPage() {
                 variants={itemVariants}
                 className="text-lg text-white/80 mb-12 text-center max-w-3xl mx-auto leading-relaxed"
               >
-                Many of our clients come from the UK, and we created a dedicated cultural intelligence guide for British citizens that addresses the specific cultural differences between the UK and UAE.
+                The core principles of cultural intelligence are universal, but each country arrives in the UAE with its own habits, communication style and blind spots. Our guides are written from inside the Emirates so that you can see the differences clearly.
               </motion.p>
 
-              {/* Premium card */}
-              <motion.div
-                variants={itemVariants}
-                className="relative p-8 md:p-10 rounded-3xl overflow-hidden border-2 border-orange/30 bg-gradient-to-br from-orange/10 via-primary-dark/90 to-azure-blue/10 backdrop-blur-[20px]"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
-                <div className="relative z-10">
-                  <div className="inline-block mb-4">
-                    <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-orange/20 border border-orange/40 text-orange">
-                      Country specific guide
-                    </span>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* UK Guide - Live */}
+                <motion.div
+                  variants={itemVariants}
+                  className="relative p-6 rounded-2xl overflow-hidden border-2 border-orange/30 bg-gradient-to-br from-orange/10 via-primary-dark/90 to-azure-blue/10 backdrop-blur-[20px]"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
+                  <div className="relative z-10">
+                    <div className="inline-block mb-4">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-orange/20 border border-orange/40 text-orange">
+                        Available now
+                      </span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-4">UK to UAE Cultural Intelligence Guide</h3>
+                    <p className="text-white/80 mb-6 leading-relaxed text-sm">
+                      Written for British citizens and residents who want to understand how Emirati and UAE workplace culture differs from the UK. Ideal for people moving from cities such as London, Manchester, Birmingham, Edinburgh and others.
+                    </p>
+                    <ul className="space-y-2 mb-6">
+                      {[
+                        'See how hierarchy, communication and decision making differ from the UK',
+                        'Avoid accidental offence in meetings, emails and social settings',
+                        'Use real examples that reflect British expectations and concerns'
+                      ].map((item, index) => (
+                        <li key={index} className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-orange flex-shrink-0 mt-0.5" />
+                          <span className="text-white/80 text-sm">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Link href="/uk-to-uae-relocation">
+                      <motion.button
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="w-full px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-sm"
+                      >
+                        View the UK to UAE guide
+                      </motion.button>
+                    </Link>
                   </div>
-                  <h3 className="text-3xl font-bold text-white mb-4">UK to UAE Cultural Intelligence Guide</h3>
-                  <p className="text-white/80 mb-6 leading-relaxed">
-                    A detailed, British perspective guide that explains how UAE culture, work expectations and communication differ from the UK. It is ideal if you are relocating from London, Manchester, Birmingham or any other UK city to Dubai or Abu Dhabi.
-                  </p>
-                  <ul className="space-y-3 mb-8">
-                    {[
-                      'Understand how workplace hierarchy and communication differ from UK norms',
-                      'Learn the cultural expectations that help you build trust and avoid misunderstandings',
-                      'Navigate your first months with confidence and clarity'
-                    ].map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
-                        <span className="text-white/80">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Link href="/uk-to-uae-relocation">
-                    <motion.button
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
+                </motion.div>
+
+                {/* Netherlands - Coming Soon */}
+                <motion.div
+                  variants={itemVariants}
+                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/5 via-transparent to-orange/5" />
+                  <div className="relative z-10">
+                    <div className="inline-block mb-4">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/10 border border-white/20 text-white/70">
+                        Coming soon
+                      </span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-4">Netherlands to UAE Guide</h3>
+                    <p className="text-white/80 mb-4 leading-relaxed text-sm">
+                      For Dutch professionals and families who want to understand how direct communication and consensus based decision making translate in the UAE.
+                    </p>
+                    <div className="h-32 mb-4 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+                      <span className="text-white/40 text-xs">Guide cover placeholder</span>
+                    </div>
+                    <button
+                      onClick={() => handleRegisterInterest('nl-uae')}
+                      className="w-full mt-4 px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
                     >
-                      Get the UK to UAE guide
-                    </motion.button>
-                  </Link>
-                </div>
-              </motion.div>
+                      Register interest
+                    </button>
+                  </div>
+                </motion.div>
+
+                {/* France - Coming Soon */}
+                <motion.div
+                  variants={itemVariants}
+                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/5 via-transparent to-orange/5" />
+                  <div className="relative z-10">
+                    <div className="inline-block mb-4">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/10 border border-white/20 text-white/70">
+                        Coming soon
+                      </span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-4">France to UAE Guide</h3>
+                    <p className="text-white/80 mb-4 leading-relaxed text-sm">
+                      For French professionals and families who want to understand how formality, hierarchy and relationship building work in the UAE context.
+                    </p>
+                    <div className="h-32 mb-4 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+                      <span className="text-white/40 text-xs">Guide cover placeholder</span>
+                    </div>
+                    <button
+                      onClick={() => handleRegisterInterest('fr-uae')}
+                      className="w-full mt-4 px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
+                    >
+                      Register interest
+                    </button>
+                  </div>
+                </motion.div>
+
+                {/* Italy - Coming Soon */}
+                <motion.div
+                  variants={itemVariants}
+                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/5 via-transparent to-orange/5" />
+                  <div className="relative z-10">
+                    <div className="inline-block mb-4">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/10 border border-white/20 text-white/70">
+                        Coming soon
+                      </span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-4">Italy to UAE Guide</h3>
+                    <p className="text-white/80 mb-4 leading-relaxed text-sm">
+                      For Italian professionals and families who want to understand how relationship focused communication and family values translate in the UAE.
+                    </p>
+                    <div className="h-32 mb-4 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+                      <span className="text-white/40 text-xs">Guide cover placeholder</span>
+                    </div>
+                    <button
+                      onClick={() => handleRegisterInterest('it-uae')}
+                      className="w-full mt-4 px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
+                    >
+                      Register interest
+                    </button>
+                  </div>
+                </motion.div>
+
+                {/* Russia - Coming Soon */}
+                <motion.div
+                  variants={itemVariants}
+                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/5 via-transparent to-orange/5" />
+                  <div className="relative z-10">
+                    <div className="inline-block mb-4">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/10 border border-white/20 text-white/70">
+                        Coming soon
+                      </span>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-4">Russia to UAE Guide</h3>
+                    <p className="text-white/80 mb-4 leading-relaxed text-sm">
+                      For Russian professionals and families who want to understand how direct communication and hierarchical structures work in the UAE context.
+                    </p>
+                    <div className="h-32 mb-4 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+                      <span className="text-white/40 text-xs">Guide cover placeholder</span>
+                    </div>
+                    <button
+                      onClick={() => handleRegisterInterest('ru-uae')}
+                      className="w-full mt-4 px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
+                    >
+                      Register interest
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
 
               <motion.p
                 variants={itemVariants}
-                className="text-center text-white/60 text-sm mt-6"
+                className="text-center text-white/60 text-sm mt-8"
               >
-                Additional country specific resources will be added in the future for other nationalities.
+                When you register interest we will tag your email by origin country so you receive the right guide when it launches.
               </motion.p>
             </motion.div>
           </div>
@@ -633,7 +769,7 @@ export default function MovingToUAEPage() {
                 variants={itemVariants}
                 className="text-lg text-white/80 mb-12 text-center max-w-3xl mx-auto leading-relaxed"
               >
-                Some people are fine with self guided reading, while others need tailored guidance for their company or family situation.
+                Guides are perfect for independent learners. If you want tailored support for your team or family, our cultural intelligence masterclasses and advisory sessions go deeper into your real scenarios.
               </motion.p>
 
               <div className="grid md:grid-cols-2 gap-6">
@@ -641,7 +777,7 @@ export default function MovingToUAEPage() {
                   {
                     title: 'For individuals and families',
                     items: [
-                      'Cultural intelligence masterclass seats',
+                      'Seats in live or virtual cultural intelligence masterclasses',
                       'UAE focused webinars or online sessions',
                       'Option to join a small cohort'
                     ]
@@ -706,7 +842,7 @@ export default function MovingToUAEPage() {
                 className="text-3xl md:text-5xl font-bold mb-6"
               >
                 <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
-                  Take The Next Step Toward Your Move
+                  Choose The Next Step That Fits You
                 </span>
               </motion.h2>
 
@@ -714,7 +850,7 @@ export default function MovingToUAEPage() {
                 variants={itemVariants}
                 className="text-lg text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed"
               >
-                You do not have to figure everything out on your own. Start with the resource that fits your situation right now and build from there.
+                You do not have to understand everything today. Start with a guide or training that matches your origin country and life stage, and build your cultural intelligence step by step.
               </motion.p>
 
               <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -732,7 +868,7 @@ export default function MovingToUAEPage() {
                       whileTap={{ scale: 0.95 }}
                       className="w-full px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 mb-4"
                     >
-                      Start with the relocation overview guide
+                      Review the four step overview
                     </motion.button>
                   </div>
                 </motion.div>
@@ -749,7 +885,7 @@ export default function MovingToUAEPage() {
                         whileTap={{ scale: 0.95 }}
                         className="w-full px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 mb-4"
                       >
-                        Get the UK to UAE guide
+                        View the UK to UAE guide
                       </motion.button>
                     </Link>
                   </div>
@@ -760,7 +896,7 @@ export default function MovingToUAEPage() {
                 variants={itemVariants}
                 className="text-center text-white/60 text-sm"
               >
-                You can also buy the UK to UAE guide as a gift for a friend, colleague or family member who is about to move or has just arrived in the Emirates.
+                You can also buy the UK to UAE guide as a gift for a friend, colleague or family member who is about to move or has recently arrived in the Emirates.
               </motion.p>
             </motion.div>
           </div>
@@ -781,7 +917,7 @@ export default function MovingToUAEPage() {
                 className="text-3xl md:text-5xl font-bold mb-12 text-center"
               >
                 <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                  Frequently asked questions about moving to the UAE
+                  Questions About Moving To The UAE
                 </span>
               </motion.h2>
 
