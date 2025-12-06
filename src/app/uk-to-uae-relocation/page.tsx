@@ -1805,7 +1805,7 @@ export default function UKToUAERelocationPage() {
                   className="text-3xl md:text-5xl font-bold mb-6 text-center"
                 >
                   <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                    How Does UAE Workplace Culture Differ from the UK?
+                    How Everyday Life in the UAE Really Differs From the UK
                   </span>
                 </motion.h2>
 
@@ -1813,37 +1813,41 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="text-lg text-white/70 mb-12 text-center max-w-3xl mx-auto"
                 >
-                  Understanding these key differences will help you adapt quickly and build successful relationships in the UAE workplace.
+                  These real examples show how small cultural differences shape your daily experience at work, at home and in social settings.
                 </motion.p>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   {[
                     {
-                      title: 'Communication',
-                      uk: 'UK is direct and explicit.',
-                      uae: 'UAE uses indirect and diplomatic communication, especially in professional settings.',
+                      title: 'Workplace expectations',
+                      uk: 'Teams communicate directly, decisions are made quickly and feedback is clear and open.',
+                      uae: 'Communication is softer and more diplomatic. Respect for hierarchy shapes who speaks first, how decisions are made and how disagreements are expressed.',
+                      why: 'One direct comment can feel rude in the wrong context. Understanding these workplace expectations helps you avoid common mistakes and build trust faster from your first week.',
                       icon: MessageSquare,
                       color: 'azure-blue'
                     },
                     {
-                      title: 'Feedback',
-                      uk: 'UK feedback is clear and straightforward.',
-                      uae: 'UAE feedback is softened to maintain harmony.',
-                      icon: CheckCircle,
+                      title: 'Social life and friendships',
+                      uk: 'Social plans are often made in advance and people value privacy, personal space and clear boundaries.',
+                      uae: 'Relationships grow through hospitality, spontaneous invitations and a strong sense of community that often crosses work and personal life.',
+                      why: 'Knowing how and when people like to connect makes it easier to build real friendships, instead of feeling like an outsider who does not quite fit in.',
+                      icon: Users,
                       color: 'orange'
                     },
                     {
-                      title: 'Time',
-                      uk: 'UK follows strict punctuality.',
-                      uae: 'UAE has a flexible and relationship focused approach.',
-                      icon: Clock,
+                      title: 'Daily life and practical etiquette',
+                      uk: 'Dress codes are flexible and vary widely between cities, workplaces and social settings.',
+                      uae: 'Dress codes and behaviour depend strongly on context, especially in malls, offices, government buildings and more traditional areas.',
+                      why: 'Many new arrivals guess the rules and only realise later that they were underdressed or too informal. Clear guidance helps you feel confident and respectful wherever you go.',
+                      icon: Briefcase,
                       color: 'bright-blue'
                     },
                     {
-                      title: 'Hierarchy',
-                      uk: 'UK workplaces are flatter.',
-                      uae: 'UAE workplaces respect clear leadership structures.',
-                      icon: Briefcase,
+                      title: 'Family life, schools and children',
+                      uk: 'Children are encouraged to speak up, share opinions and question ideas as long as they are polite.',
+                      uae: 'Respect for elders, teachers and guests is a core value. Politeness, modest behaviour and courtesy are expected at home, at school and in public.',
+                      why: 'If you relocate with children, understanding these expectations helps them settle quickly at school, avoid misunderstandings and show respect in a way that fits local culture.',
+                      icon: Users,
                       color: 'azure-blue'
                     }
                   ].map((item, index) => {
@@ -1878,7 +1882,7 @@ export default function UKToUAERelocationPage() {
                             />
                             <h3 className="text-2xl font-bold text-white">{item.title}</h3>
                           </div>
-                          <div className="space-y-3">
+                          <div className="space-y-3 mb-4">
                             <div className="p-3 rounded-lg bg-orange/10 border border-orange/20">
                               <p className="text-sm font-semibold text-orange mb-1">🇬🇧 UK</p>
                               <p className="text-white/80 text-sm">{item.uk}</p>
@@ -1888,6 +1892,7 @@ export default function UKToUAERelocationPage() {
                               <p className="text-white/80 text-sm">{item.uae}</p>
                             </div>
                           </div>
+                          <p className="text-white/70 text-sm leading-relaxed">{item.why}</p>
                         </div>
                       </motion.div>
                     )
