@@ -1506,23 +1506,6 @@ export default function UKToUAERelocationPage() {
                   </div>
                 </motion.div>
 
-                {/* CTA Button */}
-                <motion.div
-                  variants={itemVariants}
-                  className="mt-6 flex justify-center mb-6"
-                >
-                  <Link href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
-                    <motion.button
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => handleCTAClick('Get the Guide - Limited Launch Price', '/uk-to-uae-relocation')}
-                      className="px-8 py-4 rounded-xl bg-gradient-to-r from-orange to-azure-blue text-white font-semibold shadow-lg hover:opacity-90 transition"
-                    >
-                      ⚡ Get the Guide – Limited Launch Price
-                    </motion.button>
-                  </Link>
-                </motion.div>
-
                 <motion.div
                   variants={itemVariants}
                   className="relative p-8 md:p-12 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
