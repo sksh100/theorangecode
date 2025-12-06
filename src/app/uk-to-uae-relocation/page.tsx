@@ -38,21 +38,24 @@ export default function UKToUAERelocationPage() {
   useEffect(() => {
     setMounted(true)
 
+    // Only run in browser environment
+    if (typeof window === 'undefined') return
+
     // Detect UK visitors - try to get country from visitor tracking
     // First check browser language/timezone as fallback
-    const isUKBrowser = navigator.language.includes('en-GB') || 
-                       navigator.language.includes('en-UK') ||
-                       Intl.DateTimeFormat().resolvedOptions().timeZone === 'Europe/London'
-    
-    if (isUKBrowser) {
-      setIsUK(true)
-      setCurrency('GBP')
-      setPrice(59) // £59 for UK visitors
-    }
-
-    // Try to get more accurate location from IP (optional enhancement)
-    // This would require storing country in localStorage from the tracking API
     try {
+      const isUKBrowser = navigator.language.includes('en-GB') || 
+                         navigator.language.includes('en-UK') ||
+                         Intl.DateTimeFormat().resolvedOptions().timeZone === 'Europe/London'
+      
+      if (isUKBrowser) {
+        setIsUK(true)
+        setCurrency('GBP')
+        setPrice(59) // £59 for UK visitors
+      }
+
+      // Try to get more accurate location from IP (optional enhancement)
+      // This would require storing country in localStorage from the tracking API
       const storedCountry = localStorage.getItem('visitor_country')
       if (storedCountry && (storedCountry === 'United Kingdom' || storedCountry === 'GB' || storedCountry === 'GBR')) {
         setIsUK(true)
@@ -60,7 +63,7 @@ export default function UKToUAERelocationPage() {
         setPrice(59) // £59 for UK visitors
       }
     } catch (e) {
-      // Ignore localStorage errors
+      // Ignore localStorage/navigator errors
     }
   }, [])
 

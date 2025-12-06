@@ -2,7 +2,14 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { notifyContactForm, notifyError } from "@/lib/slack";
 
-const resend = new Resend(process.env.RESEND_API_KEY as string);
+// Lazy initialization to avoid build-time errors
+const getResend = () => {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY is not configured');
+  }
+  return new Resend(apiKey);
+};
 
 export async function POST(request: Request) {
   try {
@@ -24,6 +31,7 @@ export async function POST(request: Request) {
       process.env.RESEND_API_KEY?.slice(0, 8)
     );
 
+    const resend = getResend();
     const { error } = await resend.emails.send({
       from: "The Orange Code <contact@theorangecode.com>",
       to: ["hello@theorangecode.com", "sksh.ae100@gmail.com"], // Send to both inboxes
