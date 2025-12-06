@@ -1,11 +1,10 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 export function ScrollRestoration() {
   const pathname = usePathname()
-  const searchParams = useSearchParams()
   const prevPathnameRef = useRef<string>('')
 
   useEffect(() => {
@@ -74,7 +73,7 @@ export function ScrollRestoration() {
     return () => {
       window.removeEventListener('hashchange', handleHashChange)
     }
-  }, [pathname, searchParams])
+  }, [pathname])
 
   return null
 }
