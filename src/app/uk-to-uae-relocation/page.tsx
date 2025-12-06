@@ -2120,10 +2120,17 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="text-3xl md:text-5xl font-bold mb-6"
                 >
-                  <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent lg:whitespace-nowrap">
-                    Prepare for a successful move to the UAE
+                  <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
+                    Feel prepared, confident and at home in the UAE
                   </span>
                 </motion.h2>
+
+                <motion.p
+                  variants={itemVariants}
+                  className="text-lg text-white/80 mb-8 leading-relaxed max-w-2xl mx-auto"
+                >
+                  Whether you're relocating for work, family or a new chapter in life, this guide gives you the understanding most expats only gain after months of trial and error.
+                </motion.p>
 
                 <motion.div
                   variants={itemVariants}
@@ -2133,10 +2140,10 @@ export default function UKToUAERelocationPage() {
                     <motion.button
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => handleCTAClick('Get the Guide - Final CTA', '/uk-to-uae-relocation')}
+                      onClick={() => handleCTAClick('Get Instant Access - Final CTA', '/uk-to-uae-relocation')}
                       className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                     >
-                      Get the Guide - Start Today
+                      Get Instant Access
                     </motion.button>
                   </Link>
                 </motion.div>
