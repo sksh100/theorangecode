@@ -1717,7 +1717,7 @@ export default function UKToUAERelocationPage() {
                   className="text-3xl md:text-5xl font-bold mb-4 text-center"
                 >
                   <span className="bg-gradient-to-r from-azure-blue to-orange bg-clip-text text-transparent">
-                    What Should British Professionals Know About Emirati Culture?
+                    What Every British Expat Should Know About Life in the UAE
                   </span>
                 </motion.h2>
 
