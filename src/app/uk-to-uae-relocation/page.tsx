@@ -1406,19 +1406,16 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="text-xl text-white/80 mb-4"
                 >
-                  Instant email delivery. Practical. Research based. Written for UK professionals.
+                  Instant download. Clear. Practical. Written specifically for British professionals moving to the UAE.
                 </motion.p>
 
                 {/* Social Proof Counter */}
                 <motion.div
                   variants={itemVariants}
-                  className="mb-8 text-center"
+                  className="mt-4 mb-6 text-center space-y-1"
                 >
-                  <p className="text-white/70 text-sm mb-2">
-                    <span className="text-orange font-bold">500+</span> British professionals have used this guide
-                  </p>
-                  <p className="text-white/50 text-xs">
-                    ⭐ 4.9/5 stars from 127 verified buyers
+                  <p className="text-white/80 text-sm">
+                    ⭐ <strong className="text-white">Rated 4.9/5</strong> by <strong className="text-white">127 verified UK professionals</strong>
                   </p>
                 </motion.div>
 
@@ -1427,24 +1424,46 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="mb-6 max-w-2xl mx-auto text-white/80 text-sm sm:text-base leading-relaxed"
                 >
-                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
+                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">
                     Why this guide is worth far more than £59
                   </h3>
-                  <p>
-                    A single cultural mistake in a meeting, contract negotiation or workplace interaction can cost you far more than the price of this guide. The guide distils years of experience with British expats in the UAE into clear explanations, real examples and practical tools, so you can avoid costly misunderstandings and feel prepared from your very first week.
-                  </p>
-                </motion.div>
-
-                {/* Urgency Badge */}
-                <motion.div
-                  variants={itemVariants}
-                  className="mb-6 text-center"
-                >
-                  <div className="inline-block px-4 py-2 bg-orange/20 border border-orange/40 rounded-full">
-                    <p className="text-orange text-sm font-semibold">
-                      ⚡ Launch Price - Limited Time Offer
+                  <div className="space-y-4">
+                    <p>
+                      One cultural misunderstanding in the UAE — a meeting handled the wrong way, a comment taken incorrectly, a decision escalated due to hierarchy — can cost you opportunities, trust and time.
+                    </p>
+                    <p>
+                      This guide prevents that instantly.
+                    </p>
+                    <p>
+                      It translates years of real UAE experience into a clear, practical roadmap for British expats. You'll understand exactly how to communicate, behave and make decisions in the Emirates — the things no relocation agency or generic online resource teaches.
+                    </p>
+                    <p>
+                      Professionals who read this guide step into the UAE workplace with confidence, avoid costly mistakes and integrate faster than most new arrivals.
+                    </p>
+                    <p>
+                      You're not just buying a PDF.
+                    </p>
+                    <p>
+                      You're buying clarity on day one and removing the uncertainty that holds most newcomers back.
                     </p>
                   </div>
+                </motion.div>
+
+                {/* CTA Button */}
+                <motion.div
+                  variants={itemVariants}
+                  className="mt-6 flex justify-center mb-6"
+                >
+                  <Link href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+                    <motion.button
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => handleCTAClick('Get the Guide - Limited Launch Price', '/uk-to-uae-relocation')}
+                      className="px-8 py-4 rounded-xl bg-gradient-to-r from-orange to-azure-blue text-white font-semibold shadow-lg hover:opacity-90 transition"
+                    >
+                      ⚡ Get the Guide – Limited Launch Price
+                    </motion.button>
+                  </Link>
                 </motion.div>
 
                 <motion.div
