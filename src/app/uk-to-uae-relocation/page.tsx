@@ -1454,9 +1454,9 @@ export default function UKToUAERelocationPage() {
               >
                 <motion.h2
                   variants={itemVariants}
-                  className="text-3xl md:text-5xl font-bold mb-4"
+                  className="text-3xl md:text-5xl font-bold mb-4 text-center w-full"
                 >
-                  <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent lg:whitespace-nowrap">
+                  <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent lg:whitespace-nowrap inline-block">
                     Get the UK to UAE Cultural Intelligence Guide
                   </span>
                 </motion.h2>
