@@ -38,38 +38,6 @@ export default function UKToUAERelocationPage() {
   useEffect(() => {
     setMounted(true)
 
-    // Disable common screenshot shortcuts when preview is open
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (selectedPreview !== null) {
-        // Disable Print Screen, Ctrl+S, Ctrl+P, F12, etc.
-        if (
-          e.key === 'PrintScreen' ||
-          (e.ctrlKey && (e.key === 's' || e.key === 'p' || e.key === 'u')) ||
-          e.key === 'F12' ||
-          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J'))
-        ) {
-          e.preventDefault()
-          e.stopPropagation()
-          return false
-        }
-      }
-    }
-
-    if (selectedPreview !== null) {
-      document.addEventListener('keydown', handleKeyDown)
-      // Disable right-click globally when preview is open
-      document.addEventListener('contextmenu', (e) => e.preventDefault())
-      // Disable text selection
-      document.body.style.userSelect = 'none'
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-      document.removeEventListener('contextmenu', (e) => e.preventDefault())
-      document.body.style.userSelect = ''
-    }
-  }, [selectedPreview])
-    
     // Detect UK visitors - try to get country from visitor tracking
     // First check browser language/timezone as fallback
     const isUKBrowser = navigator.language.includes('en-GB') || 
@@ -95,6 +63,41 @@ export default function UKToUAERelocationPage() {
       // Ignore localStorage errors
     }
   }, [])
+
+  // Disable common screenshot shortcuts and protect images when preview is open
+  useEffect(() => {
+    if (selectedPreview === null) return
+
+    // Disable common screenshot shortcuts when preview is open
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Disable Print Screen, Ctrl+S, Ctrl+P, F12, etc.
+      if (
+        e.key === 'PrintScreen' ||
+        (e.ctrlKey && (e.key === 's' || e.key === 'p' || e.key === 'u')) ||
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J'))
+      ) {
+        e.preventDefault()
+        e.stopPropagation()
+        return false
+      }
+    }
+
+    const handleContextMenu = (e: Event) => {
+      e.preventDefault()
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('contextmenu', handleContextMenu)
+    // Disable text selection
+    document.body.style.userSelect = 'none'
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('contextmenu', handleContextMenu)
+      document.body.style.userSelect = ''
+    }
+  }, [selectedPreview])
 
   const containerVariants = {
     hidden: { opacity: 0 },
