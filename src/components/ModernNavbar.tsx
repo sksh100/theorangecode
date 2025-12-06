@@ -214,7 +214,6 @@ export function ModernNavbar() {
       setIsAboutMegaOpen(false)
       setIsContactMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
-      setIsUAELivingMegaOpen(false)
       if (isOpening) trackDropdownOpen(label)
       return
     }
@@ -259,7 +258,6 @@ export function ModernNavbar() {
       setIsAboutMegaOpen(false)
       setIsContactMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
-      setIsUAELivingMegaOpen(false)
     }
   }
 
