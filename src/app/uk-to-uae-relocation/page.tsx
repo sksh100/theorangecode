@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { CheckCircle, ArrowRight, BookOpen, Users, Globe, Clock, MessageSquare, Briefcase, Sparkles, Quote, X, ChevronDown } from 'lucide-react'
+import { CheckCircle, ArrowRight, BookOpen, Users, Globe, Clock, MessageSquare, Briefcase, Sparkles, Quote, X, ChevronDown, Copy, Check } from 'lucide-react'
 import Link from 'next/link'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
@@ -31,6 +31,7 @@ export default function UKToUAERelocationPage() {
   const [showSampleModal, setShowSampleModal] = useState(false)
   const [selectedPreview, setSelectedPreview] = useState<number | null>(null)
   const [openFAQ, setOpenFAQ] = useState<number | null>(null)
+  const [linkCopied, setLinkCopied] = useState(false)
   
   // Stripe Payment Link
   // For UK visitors: £59, For others: AED 270 (approx £59)
@@ -125,6 +126,18 @@ export default function UKToUAERelocationPage() {
 
   const handleCTAClick = (element: string, location: string) => {
     trackCTAClick(element, location)
+  }
+
+  const handleCopyLink = async () => {
+    const url = 'https://www.theorangecode.com/uk-to-uae-relocation'
+    try {
+      await navigator.clipboard.writeText(url)
+      setLinkCopied(true)
+      setTimeout(() => setLinkCopied(false), 2000)
+      handleCTAClick('Copy Link - Share Section', '/uk-to-uae-relocation')
+    } catch (err) {
+      console.error('Failed to copy link:', err)
+    }
   }
 
   // Download is only available after purchase via email link
@@ -1937,8 +1950,11 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="text-3xl md:text-5xl font-bold mb-6"
                 >
-                  <span className="bg-gradient-to-r from-orange to-azure-blue bg-clip-text text-transparent">
-                    Guidance from a cultural intelligence consultant in the UAE
+                  <span className="bg-gradient-to-r from-orange to-azure-blue bg-clip-text text-transparent block lg:whitespace-nowrap">
+                    Guidance from a cultural intelligence consultant
+                  </span>
+                  <span className="bg-gradient-to-r from-orange to-azure-blue bg-clip-text text-transparent block lg:whitespace-nowrap">
+                    in the UAE
                   </span>
                 </motion.h2>
 
@@ -1968,12 +1984,30 @@ export default function UKToUAERelocationPage() {
                       understand the culture from day one.
                     </p>
 
-                    <div className="pt-2 flex md:justify-center">
+                    <div className="pt-2 flex flex-wrap gap-3 md:justify-center">
                       <WhatsAppShareButton
                         variant="default"
                         url="https://www.theorangecode.com/uk-to-uae-relocation"
                         message="I found this UK to UAE cultural intelligence guide and thought it could really help you as you move to the Emirates."
                       />
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleCopyLink}
+                        className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold font-montserrat transition-all duration-300 flex items-center gap-2 backdrop-blur-sm"
+                      >
+                        {linkCopied ? (
+                          <>
+                            <Check className="w-5 h-5" />
+                            <span>Link copied!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-5 h-5" />
+                            <span>Copy link</span>
+                          </>
+                        )}
+                      </motion.button>
                     </div>
                   </div>
                 </motion.div>
