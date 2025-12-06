@@ -102,8 +102,8 @@ export function ModernNavbar() {
       label: 'UAE Living',
       href: '/uae-living',
       dropdown: [
-        { label: 'Life in the UAE', icon: Home, href: '/life-in-the-uae' },
-        { label: 'Moving to the UAE', icon: Plane, href: '/moving-to-the-uae' },
+        { label: 'Life in the UAE', icon: Home, href: '/uae-living' },
+        { label: 'Moving to the UAE', icon: Plane, href: '/moving-to-uae' },
       ]
     },
     {
@@ -455,6 +455,9 @@ export function ModernNavbar() {
                                   // Orange, Azure Blue, Bright Blue for different masterclasses
                                   iconColor = index === 0 ? 'text-orange' : index === 1 ? 'text-azure-blue' : 'text-bright-blue'
                                   bgHoverColor = index === 0 ? 'hover:bg-orange/10' : index === 1 ? 'hover:bg-azure-blue-transparent' : 'hover:bg-bright-blue/10'
+                                }
+                                
+                                const Icon = dropdownItem.icon
                                 
                                 return (
                                   <div key={dropdownItem.label}>
@@ -477,7 +480,7 @@ export function ModernNavbar() {
                                       className={`flex items-center space-x-3 p-3 text-white/70 hover:text-white ${bgHoverColor} rounded-lg transition-all duration-300 cursor-pointer touch-manipulation relative z-10`}
                                       style={{ WebkitTapHighlightColor: 'transparent', pointerEvents: 'auto' }}
                                     >
-                                      <dropdownItem.icon className={`w-5 h-5 ${iconColor} flex-shrink-0`} />
+                                      <Icon className={`w-5 h-5 ${iconColor} flex-shrink-0`} />
                                       <span className="font-montserrat text-sm">{dropdownItem.label}</span>
                                     </Link>
                                   </div>

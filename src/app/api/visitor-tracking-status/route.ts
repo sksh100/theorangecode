@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { redis } from "@/lib/redis";
 
+export const dynamic = 'force-dynamic'
+
 /**
  * Diagnostic endpoint to check visitor tracking status
  * Visit: /api/visitor-tracking-status to see current configuration
