@@ -1191,13 +1191,13 @@ export default function UKToUAERelocationPage() {
                   {/* Main heading */}
                   <motion.h1
                     variants={itemVariants}
-                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-normal text-center w-full"
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-center w-full"
                     itemProp="headline"
                   >
-                    <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent block lg:whitespace-nowrap text-center">
+                    <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent block lg:whitespace-nowrap text-center pt-1">
                       Moving from the UK to the UAE
                     </span>
-                    <span className="text-white block mt-6 lg:whitespace-nowrap text-center">
+                    <span className="text-white block mt-8 lg:whitespace-nowrap text-center">
                       Understand UAE culture before you arrive
                     </span>
                   </motion.h1>

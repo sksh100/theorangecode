@@ -53,10 +53,10 @@ export function StickyCTABar({ price, currency, paymentLink, onCTAClick }: Stick
                     {currency === 'GBP' ? '£' : 'AED '}{price}
                   </p>
                 </div>
-                <div className="hidden md:flex items-center gap-2 text-white/70 text-sm">
+                <Link href={paymentLink} onClick={onCTAClick} className="hidden md:flex items-center gap-2 text-white/70 hover:text-white text-sm transition-colors duration-200 cursor-pointer">
                   <Download className="w-4 h-4" />
                   <span>Instant Download</span>
-                </div>
+                </Link>
               </div>
               <Link href={paymentLink} onClick={onCTAClick}>
                 <motion.button
