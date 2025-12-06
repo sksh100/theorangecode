@@ -1424,21 +1424,6 @@ export default function UKToUAERelocationPage() {
                   </motion.div>
                 </motion.div>
 
-                <motion.div
-                  variants={itemVariants}
-                  className="flex justify-center"
-                >
-                  <Link href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
-                    <motion.button
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => handleCTAClick('Get the Relocation Guide - Peek Inside', '/uk-to-uae-relocation')}
-                      className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
-                    >
-                      Get the Relocation Guide
-                    </motion.button>
-                  </Link>
-                </motion.div>
               </motion.div>
             </div>
           </section>
