@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { CheckCircle, ArrowRight, BookOpen, Users, Globe, Clock, MessageSquare, Briefcase, Sparkles, Quote, X } from 'lucide-react'
+import { CheckCircle, ArrowRight, BookOpen, Users, Globe, Clock, MessageSquare, Briefcase, Sparkles, Quote, X, ChevronDown } from 'lucide-react'
 import Link from 'next/link'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
@@ -1962,7 +1962,7 @@ export default function UKToUAERelocationPage() {
                   </span>
                 </motion.h2>
 
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {[
                     {
                       q: 'What do UK expats need to know before moving to the UAE?',
@@ -1996,12 +1996,36 @@ export default function UKToUAERelocationPage() {
                     <motion.div
                       key={index}
                       variants={itemVariants}
-                      className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                      className="relative rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/5 via-transparent to-orange/5" />
                       <div className="relative z-10">
-                        <h3 className="text-xl font-bold text-white mb-3">{faq.q}</h3>
-                        <p className="text-white/80">{faq.a}</p>
+                        <button
+                          onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
+                          className="w-full p-6 text-left flex items-center justify-between gap-4 hover:bg-white/5 transition-colors duration-200"
+                        >
+                          <h3 className="text-lg md:text-xl font-bold text-white flex-1">{faq.q}</h3>
+                          <ChevronDown 
+                            className={`w-5 h-5 text-white/70 flex-shrink-0 transition-transform duration-300 ${
+                              openFAQ === index ? 'rotate-180' : ''
+                            }`}
+                          />
+                        </button>
+                        <AnimatePresence>
+                          {openFAQ === index && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3, ease: 'easeInOut' }}
+                              className="overflow-hidden"
+                            >
+                              <div className="px-6 pb-6 pt-0">
+                                <p className="text-white/80 leading-relaxed">{faq.a}</p>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
                     </motion.div>
                   ))}
