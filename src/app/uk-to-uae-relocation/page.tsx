@@ -1377,7 +1377,7 @@ export default function UKToUAERelocationPage() {
                       </div>
                     </motion.div>
                     <p className="text-sm text-white/90 leading-relaxed px-2">
-                      Start reading Chapter 1 — an honest, relatable explanation of the opportunities and realities of moving to the Emirates.
+                      Start with Chapter One for a clear and relatable introduction to the opportunities and realities of moving to the Emirates.
                     </p>
                   </motion.div>
 
@@ -1419,7 +1419,7 @@ export default function UKToUAERelocationPage() {
                       </div>
                     </motion.div>
                     <p className="text-sm text-white/90 leading-relaxed px-2">
-                      The cultural differences nobody tells you about — until you're already here. This section alone saves new expats months of confusion.
+                      Discover the cultural differences that most newcomers learn the hard way. This section saves new expats months of confusion.
                     </p>
                   </motion.div>
                 </motion.div>
