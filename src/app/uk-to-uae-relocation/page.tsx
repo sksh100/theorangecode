@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import { CheckCircle, ArrowRight, BookOpen, Users, Globe, Clock, MessageSquare, Briefcase, Sparkles, Quote } from 'lucide-react'
 import Link from 'next/link'
 import { ModernNavbar } from '@/components/ModernNavbar'
@@ -1135,7 +1136,7 @@ export default function UKToUAERelocationPage() {
           {/* Add top padding if banner is visible */}
           {mounted && isUK && <div className="h-[56px]"></div>}
           {/* SECTION 1: HERO */}
-          <section className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-32">
+          <section className="relative overflow-hidden min-h-screen flex items-center justify-center">
             <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5" />
             <div className="container mx-auto px-6 relative z-10">
               <motion.div
@@ -1143,7 +1144,7 @@ export default function UKToUAERelocationPage() {
                 initial="hidden"
                 animate={mounted ? "visible" : "visible"}
                 viewport={{ once: true }}
-                className="max-w-4xl mx-auto text-center"
+                className="max-w-5xl mx-auto text-center"
               >
                 <motion.div
                   variants={itemVariants}
@@ -1156,37 +1157,36 @@ export default function UKToUAERelocationPage() {
                 
                 <motion.h1
                   variants={itemVariants}
-                  className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
                   itemProp="headline"
                 >
                   <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
                     Moving from the UK to the UAE
                   </span>
-                  <br />
-                  <span className="text-white mt-2 block">
+                  <span className="block text-white mt-2">
                     Understand UAE culture before you arrive
                   </span>
                 </motion.h1>
 
                 <motion.p
                   variants={itemVariants}
-                  className="text-lg md:text-xl text-white/80 mb-4 max-w-3xl mx-auto leading-relaxed"
+                  className="text-sm sm:text-base md:text-lg text-white/80 mb-4 max-w-2xl mx-auto leading-relaxed"
                 >
                   A practical cultural intelligence guide for British professionals, families and students relocating from the United Kingdom to the United Arab Emirates.
                 </motion.p>
 
                 <motion.p
                   variants={itemVariants}
-                  className="text-base md:text-lg text-white/70 mb-8 max-w-3xl mx-auto"
+                  className="text-sm font-medium text-orange mb-8"
                 >
-                  <strong className="text-orange">Purchase for £59 - Instant email delivery with secure download link.</strong>
+                  Purchase for £59 - Instant email delivery with secure download link.
                 </motion.p>
 
                 <motion.div
                   variants={itemVariants}
-                  className="flex flex-wrap gap-4 justify-center"
+                  className="flex flex-col items-center gap-2"
                 >
-                  <Link href="#ebook-offer">
+                  <Link href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
                     <motion.button
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
@@ -1196,14 +1196,121 @@ export default function UKToUAERelocationPage() {
                       Get the Relocation Ebook
                     </motion.button>
                   </Link>
-                  <Link href="/masterclasses">
+                  <motion.button
+                    variants={itemVariants}
+                    onClick={() => {
+                      document.getElementById('peek-inside')?.scrollIntoView({ behavior: 'smooth' })
+                    }}
+                    className="text-xs sm:text-sm text-white/70 hover:text-white underline-offset-2 hover:underline transition-colors"
+                  >
+                    Or preview a sample
+                  </motion.button>
+                </motion.div>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* PEEK INSIDE SECTION */}
+          <section id="peek-inside" className="relative py-16 md:py-24">
+            <div className="container mx-auto px-6">
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                className="max-w-5xl mx-auto"
+              >
+                <motion.div
+                  variants={itemVariants}
+                  className="text-center mb-10"
+                >
+                  <motion.h2
+                    variants={itemVariants}
+                    className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4"
+                  >
+                    <span className="bg-gradient-to-r from-orange via-azure-blue to-bright-blue bg-clip-text text-transparent">
+                      See inside the guide
+                    </span>
+                  </motion.h2>
+                  <motion.p
+                    variants={itemVariants}
+                    className="text-sm sm:text-base text-white/70 max-w-2xl mx-auto"
+                  >
+                    A quick look at how the ebook will support your move.
+                  </motion.p>
+                </motion.div>
+
+                <motion.div
+                  variants={itemVariants}
+                  className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mb-10"
+                >
+                  {/* Preview 1 */}
+                  <motion.div
+                    variants={itemVariants}
+                    className="space-y-3"
+                  >
+                    <div className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3]">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="text-center p-4">
+                          <div className="text-white/40 text-xs mb-2">Preview Image</div>
+                          <div className="text-white/20 text-xs">/images/uk-uae-preview-1.png</div>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-sm text-white/90">
+                      Chapter overviews that explain what to expect in each stage of your move
+                    </p>
+                  </motion.div>
+
+                  {/* Preview 2 */}
+                  <motion.div
+                    variants={itemVariants}
+                    className="space-y-3"
+                  >
+                    <div className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3]">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="text-center p-4">
+                          <div className="text-white/40 text-xs mb-2">Preview Image</div>
+                          <div className="text-white/20 text-xs">/images/uk-uae-preview-2.png</div>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-sm text-white/90">
+                      Practical do and do not lists for meetings, housing and daily life
+                    </p>
+                  </motion.div>
+
+                  {/* Preview 3 */}
+                  <motion.div
+                    variants={itemVariants}
+                    className="space-y-3"
+                  >
+                    <div className="relative overflow-hidden rounded-2xl bg-primary-dark/60 backdrop-blur-sm border border-white/10 aspect-[4/3]">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="text-center p-4">
+                          <div className="text-white/40 text-xs mb-2">Preview Image</div>
+                          <div className="text-white/20 text-xs">/images/uk-uae-preview-3.png</div>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-sm text-white/90">
+                      Reflection tools and field notes to help you apply what you read
+                    </p>
+                  </motion.div>
+                </motion.div>
+
+                <motion.div
+                  variants={itemVariants}
+                  className="flex justify-center"
+                >
+                  <Link href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
                     <motion.button
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => handleCTAClick('Explore Masterclasses - Hero', '/uk-to-uae-relocation')}
-                      className="px-8 py-4 nav-button-glass text-white/90 hover:text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
+                      onClick={() => handleCTAClick('Get the Relocation Ebook - Peek Inside', '/uk-to-uae-relocation')}
+                      className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                     >
-                      Explore Masterclasses
+                      Get the Relocation Ebook
                     </motion.button>
                   </Link>
                 </motion.div>
