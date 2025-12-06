@@ -1293,7 +1293,7 @@ export default function UKToUAERelocationPage() {
                       </div>
                     </motion.div>
                     <p className="text-sm text-white/90 leading-relaxed px-2">
-                      What British expats said after using this guide — the confidence boost they needed before relocating.
+                      Real feedback from British expats who used this guide. Their confidence and clarity increased before relocating.
                     </p>
                   </motion.div>
 
@@ -1335,7 +1335,7 @@ export default function UKToUAERelocationPage() {
                       </div>
                     </motion.div>
                     <p className="text-sm text-white/90 leading-relaxed px-2">
-                      Written specifically for British professionals, families, students and healthcare workers — finally, a guide that speaks your language.
+                      Designed for British families, professionals, students and healthcare workers who want a guide that answers real UAE relocation questions.
                     </p>
                   </motion.div>
 
