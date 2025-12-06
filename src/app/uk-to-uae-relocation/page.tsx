@@ -1917,7 +1917,7 @@ export default function UKToUAERelocationPage() {
                   className="text-3xl md:text-5xl font-bold mb-6"
                 >
                   <span className="bg-gradient-to-r from-orange to-azure-blue bg-clip-text text-transparent">
-                    Written by a cultural intelligence consultant based in the UAE
+                    Created by UAE based cultural intelligence experts
                   </span>
                 </motion.h2>
 
@@ -1925,7 +1925,7 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="text-lg text-white/80 leading-relaxed mb-8"
                 >
-                  This guide was created by The Orange Code, a UAE based cultural intelligence consultancy. We help professionals, teams and expats succeed in the UAE workplace through training, courses and practical learning tools.
+                  This guide was developed by The Orange Code, a cultural intelligence consultancy based in the UAE. We help expatriates, families and professionals understand Emirati culture with clarity and confidence through training, courses and practical learning tools.
                 </motion.p>
 
                 {/* Share CTA inside guide preview section */}
@@ -1936,7 +1936,7 @@ export default function UKToUAERelocationPage() {
                   <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
                   <div className="relative z-10">
                     <p className="text-white/90 text-lg mb-4 font-medium">
-                      If you know someone preparing to move to the UAE, share this guide with them.
+                      If you know someone relocating to the UAE or someone who has recently arrived and could benefit from this guidance, you can share or gift this guide to support their transition.
                     </p>
                     <WhatsAppShareButton 
                       variant="default"
