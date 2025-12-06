@@ -1625,7 +1625,7 @@ export default function UKToUAERelocationPage() {
                   variants={itemVariants}
                   className="text-2xl md:text-3xl font-bold mb-4 text-center mt-12"
                 >
-                  <span className="text-white">
+                  <span className="bg-gradient-to-r from-orange via-azure-blue to-bright-blue bg-clip-text text-transparent">
                     Why British Expats Need This Guide
                   </span>
                 </motion.h3>
