@@ -189,6 +189,8 @@ export default function WhatIsCQPage() {
         {/* Hero Video Section */}
         <section className="relative overflow-hidden">
           <div className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] w-full">
+            {/* Fallback gradient background (shown if video fails to load) */}
+            <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/20 via-primary-dark/40 to-orange/20 z-0" />
             {/* Video Background */}
             <video
               ref={videoRef}
@@ -197,10 +199,8 @@ export default function WhatIsCQPage() {
               muted
               playsInline
               preload="auto"
-              className="absolute inset-0 w-full h-full object-cover z-0"
+              className="absolute inset-0 w-full h-full object-cover z-[1]"
               style={{
-                minWidth: '100%',
-                minHeight: '100%',
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover'
@@ -208,8 +208,6 @@ export default function WhatIsCQPage() {
             >
               <source src="/what-is-cultural-intelligence.mp4" type="video/mp4" />
             </video>
-            {/* Fallback gradient background (shown if video fails to load) */}
-            <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/20 via-primary-dark/40 to-orange/20 z-[1]" />
             {/* Gradient Overlay - lighter to show video */}
             <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/30 via-primary-dark/50 to-primary-dark/80 z-[2]" />
             {/* Content */}
