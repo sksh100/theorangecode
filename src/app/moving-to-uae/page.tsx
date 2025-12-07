@@ -801,6 +801,7 @@ export default function MovingToUAEPage() {
                             alt="Russia to UAE Cultural Intelligence Guide"
                             fill
                             className="object-contain"
+                            priority
                             style={{ transform: 'translateZ(0)' }}
                           />
                           {/* Book spine shadow effect */}
