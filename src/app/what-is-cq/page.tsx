@@ -14,9 +14,30 @@ export default function WhatIsCQPage() {
   // Ensure video plays on mount
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.play().catch((error) => {
-        console.log('Video autoplay prevented:', error)
-      })
+      // Set video properties
+      videoRef.current.muted = true
+      videoRef.current.playsInline = true
+      
+      // Try to play the video
+      const playPromise = videoRef.current.play()
+      
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log('Video is playing')
+          })
+          .catch((error) => {
+            console.log('Video autoplay prevented:', error)
+            // Try again after user interaction
+            const tryPlay = () => {
+              if (videoRef.current) {
+                videoRef.current.play().catch(() => {})
+              }
+            }
+            document.addEventListener('click', tryPlay, { once: true })
+            document.addEventListener('touchstart', tryPlay, { once: true })
+          })
+      }
     }
   }, [])
 
