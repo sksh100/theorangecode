@@ -115,8 +115,11 @@ export function ModernNavbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [isAboutMegaOpen, setIsAboutMegaOpen] = useState(false)
   const [isContactMegaOpen, setIsContactMegaOpen] = useState(false)
+  
+  // Get cart items from context
   const { getTotalItems } = useCart()
   const cartItems = getTotalItems()
+  
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(false)
   const [userName, setUserName] = useState<string>('')
