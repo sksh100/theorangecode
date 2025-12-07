@@ -153,35 +153,54 @@ export default function WhatIsCQPage() {
         transition={{ duration: 0.8 }}
         className="relative"
       >
-        {/* Hero Section */}
-        <section className="relative overflow-hidden pt-32 pb-20">
-          <div className="absolute inset-0 bg-gradient-to-b from-azure-blue/5 via-transparent to-orange/5" />
-          <div className="container mx-auto px-6 relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="max-w-4xl mx-auto text-center"
+        {/* Hero Video Section */}
+        <section className="relative overflow-hidden">
+          <div className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] w-full">
+            {/* Video Background */}
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
             >
-              <motion.div
-                initial={{ scale: 0.9 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="inline-block mb-6"
-              >
-                <span className="text-azure-blue text-sm font-semibold tracking-wider uppercase">
-                  Understanding CQ
-                </span>
-              </motion.div>
-              <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-6 px-4 sm:px-0 break-words">
-                <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
-                  Cultural Intelligence UAE: What is CQ in the UAE
-                </span>
-              </h1>
-              <p className="text-lg sm:text-xl text-white/80 mb-4">
-                Learn the cultural intelligence (CQ) skills you need to succeed in the UAE. Designed for newcomers, long-term residents, families, and professionals living in Dubai, Abu Dhabi, and every emirate.
-              </p>
-            </motion.div>
+              <source src="/what-is-cultural-intelligence.mp4" type="video/mp4" />
+              {/* Fallback for browsers that don't support video */}
+              <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/20 via-primary-dark/40 to-orange/20" />
+            </video>
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/40 via-primary-dark/60 to-primary-dark/90" />
+            {/* Content */}
+            <div className="absolute inset-0 flex items-end">
+              <div className="container mx-auto px-6 pb-12 md:pb-16 relative z-10">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="max-w-4xl mx-auto text-center"
+                >
+                  <motion.div
+                    initial={{ scale: 0.9 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="inline-block mb-4"
+                  >
+                    <span className="text-orange text-sm font-semibold tracking-wider uppercase">
+                      Understanding CQ
+                    </span>
+                  </motion.div>
+                  <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+                    <span className="text-white">Cultural Intelligence UAE: </span>
+                    <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                      What is CQ in the UAE
+                    </span>
+                  </h1>
+                  <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed">
+                    Learn the cultural intelligence (CQ) skills you need to succeed in the UAE. Designed for newcomers, long-term residents, families, and professionals living in Dubai, Abu Dhabi, and every emirate.
+                  </p>
+                </motion.div>
+              </div>
+            </div>
           </div>
         </section>
 
