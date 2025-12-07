@@ -11,6 +11,7 @@ import { ContactMegaDropdown } from './ContactMegaDropdown'
 import { MasterclassesMegaDropdown } from './MasterclassesMegaDropdown'
 import { trackDropdownOpen, trackDropdownItemClick, trackButtonClick } from '@/lib/analytics'
 import { trackCTAClick } from '@/lib/tracking'
+import { useCart } from '@/contexts/CartContext'
 
 interface SimpleDropdownProps {
   isOpen: boolean
@@ -114,10 +115,12 @@ export function ModernNavbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [isAboutMegaOpen, setIsAboutMegaOpen] = useState(false)
   const [isContactMegaOpen, setIsContactMegaOpen] = useState(false)
-  const [cartItems, setCartItems] = useState(0)
+  const { getTotalItems } = useCart()
+  const cartItems = getTotalItems()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(false)
   const [userName, setUserName] = useState<string>('')
+  const [cartAnimation, setCartAnimation] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -196,7 +199,7 @@ export function ModernNavbar() {
     {
       label: 'Moving to the UAE',
       href: '/moving-to-uae',
-    }, // Direct link - no dropdown - Updated to replace UAE Living
+    }, // Direct link - no dropdown - FINAL: Replaced UAE Living permanently - v2
     {
       label: 'Contact',
       href: '/#contact',
