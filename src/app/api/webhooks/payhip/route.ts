@@ -32,15 +32,14 @@ export async function POST(req: NextRequest) {
     }
 
     // Verify webhook signature (Payhip uses HMAC SHA256)
-
-    if (signatureHeader) {
+    if (signature) {
       const expectedSignature = crypto
         .createHmac("sha256", payhipApiKey)
         .update(body)
         .digest("hex");
 
       // Payhip may send signature as: sha256=<hash> or just the hash
-      const receivedHash = signatureHeader.replace(/^sha256=/, "").trim();
+      const receivedHash = signature.replace(/^sha256=/, "").trim();
 
       if (receivedHash !== expectedSignature) {
         console.error("❌ Invalid Payhip webhook signature", {
