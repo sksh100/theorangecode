@@ -6,8 +6,20 @@ import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 import { Brain, Eye, Heart, Target, Sparkles, ArrowRight, CheckCircle, Globe } from 'lucide-react'
 import Script from 'next/script'
+import { useEffect, useRef } from 'react'
 
 export default function WhatIsCQPage() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  // Ensure video plays on mount
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch((error) => {
+        console.log('Video autoplay prevented:', error)
+      })
+    }
+  }, [])
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -158,20 +170,29 @@ export default function WhatIsCQPage() {
           <div className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] w-full">
             {/* Video Background */}
             <video
+              ref={videoRef}
               autoPlay
               loop
               muted
               playsInline
-              className="absolute inset-0 w-full h-full object-cover"
+              preload="auto"
+              className="absolute inset-0 w-full h-full object-cover z-0"
+              style={{ 
+                minWidth: '100%',
+                minHeight: '100%',
+                width: 'auto',
+                height: 'auto'
+              }}
             >
               <source src="/what-is-cultural-intelligence.mp4" type="video/mp4" />
-              {/* Fallback for browsers that don't support video */}
-              <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/20 via-primary-dark/40 to-orange/20" />
+              Your browser does not support the video tag.
             </video>
+            {/* Fallback gradient background (shown if video fails to load) */}
+            <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/20 via-primary-dark/40 to-orange/20 z-0" />
             {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/40 via-primary-dark/60 to-primary-dark/90" />
+            <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/40 via-primary-dark/60 to-primary-dark/90 z-[1]" />
             {/* Content */}
-            <div className="absolute inset-0 flex items-end">
+            <div className="absolute inset-0 flex items-end z-[2]">
               <div className="container mx-auto px-6 pb-12 md:pb-16 relative z-10">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
