@@ -21,7 +21,6 @@ const nextConfig = {
   
   // Experimental features for performance
   experimental: {
-    optimizeCss: true, // Optimize CSS
     optimizePackageImports: ['lucide-react', 'framer-motion'], // Tree-shake unused exports
   },
   
