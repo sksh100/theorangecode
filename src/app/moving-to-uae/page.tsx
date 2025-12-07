@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { CheckCircle, ArrowRight, Home, Briefcase, Car, ShoppingBag, Globe, Users, FileText, GraduationCap, Baby, Building2, BookOpen, ChevronDown, Target, FileCheck, Home as HomeIcon, Heart, MessageSquare, Zap, Shield } from 'lucide-react'
+import { CheckCircle, ArrowRight, Home, Briefcase, Car, ShoppingBag, Globe, Users, FileText, GraduationCap, Baby, Building2, BookOpen, ChevronDown, Target, FileCheck, Home as HomeIcon, Heart, MessageSquare, Zap, Shield, X, Mail, User } from 'lucide-react'
 import Link from 'next/link'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
@@ -20,26 +20,63 @@ const AtmosphericBackground = dynamic(
 export default function MovingToUAEPage() {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null)
   const [interestGuide, setInterestGuide] = useState<string | null>(null)
+  const [showRegisterModal, setShowRegisterModal] = useState(false)
+  const [formData, setFormData] = useState({ name: '', email: '' })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+
+  const guideNames: Record<string, string> = {
+    'nl-uae': 'Netherlands to UAE Guide',
+    'fr-uae': 'France to UAE Guide',
+    'it-uae': 'Italy to UAE Guide',
+    'ru-uae': 'Russia to UAE Guide',
+    'us-uae': 'US to UAE Guide'
+  }
 
   const handleRegisterInterest = (guideKey: string) => {
     setInterestGuide(guideKey)
-    // TODO: open a modal or send the guideKey to your analytics
-    // For now, log to the console so we can confirm it works
-    console.log('Register interest for guide:', guideKey)
-    
-    // Example of how you can send this to an API route later:
-    // fetch('/api/guide-interest', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     guideKey,
-    //     // email: collected from a form field in a modal
-    //   }),
-    // })
-    // 
-    // guideKey can be "uk-uae", "nl-uae", "fr-uae", "it-uae", "ru-uae"
-    // In your database or email platform, this becomes a category or tag
-    // Later, when sending campaigns, you can filter by guideKey
+    setShowRegisterModal(true)
+    setSubmitSuccess(false)
+    setFormData({ name: '', email: '' })
+  }
+
+  const handleCloseModal = () => {
+    setShowRegisterModal(false)
+    setInterestGuide(null)
+    setFormData({ name: '', email: '' })
+    setSubmitSuccess(false)
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!interestGuide || !formData.name || !formData.email) return
+
+    setIsSubmitting(true)
+    try {
+      const response = await fetch('/api/guide-interest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          guideKey: interestGuide,
+          name: formData.name,
+          email: formData.email,
+          guideName: guideNames[interestGuide] || 'Guide'
+        })
+      })
+
+      if (response.ok) {
+        setSubmitSuccess(true)
+        setTimeout(() => {
+          handleCloseModal()
+        }, 2000)
+      } else {
+        console.error('Failed to submit interest')
+      }
+    } catch (error) {
+      console.error('Error submitting interest:', error)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   // Animation variants
@@ -612,21 +649,21 @@ export default function MovingToUAEPage() {
                 {/* Netherlands - Coming Soon */}
                 <motion.div
                   variants={itemVariants}
-                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px] flex flex-col h-full"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/5 via-transparent to-orange/5" />
-                  <div className="relative z-10">
+                  <div className="relative z-10 flex flex-col h-full">
                     <div className="inline-block mb-4">
                       <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/10 border border-white/20 text-white/70">
                         Coming soon
                       </span>
                     </div>
                     <h3 className="text-2xl font-bold text-white mb-4">Netherlands to UAE Guide</h3>
-                    <p className="text-white/80 mb-4 leading-relaxed text-sm">
+                    <p className="text-white/80 mb-4 leading-relaxed text-sm flex-grow">
                       For Dutch professionals and families who want to understand how direct communication and consensus based decision making translate in the UAE.
                     </p>
                     <motion.div 
-                      className="relative h-64 mb-4 perspective-1000 group cursor-pointer"
+                      className="relative h-64 mb-4 perspective-1000 group cursor-pointer flex-shrink-0"
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.3 }}
                     >
@@ -654,7 +691,7 @@ export default function MovingToUAEPage() {
                     </motion.div>
                     <button
                       onClick={() => handleRegisterInterest('nl-uae')}
-                      className="w-full mt-4 px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
+                      className="w-full mt-auto px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
                     >
                       Register interest
                     </button>
@@ -664,21 +701,21 @@ export default function MovingToUAEPage() {
                 {/* France - Coming Soon */}
                 <motion.div
                   variants={itemVariants}
-                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px] flex flex-col h-full"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/5 via-transparent to-orange/5" />
-                  <div className="relative z-10">
+                  <div className="relative z-10 flex flex-col h-full">
                     <div className="inline-block mb-4">
                       <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/10 border border-white/20 text-white/70">
                         Coming soon
                       </span>
                     </div>
                     <h3 className="text-2xl font-bold text-white mb-4">France to UAE Guide</h3>
-                    <p className="text-white/80 mb-4 leading-relaxed text-sm">
+                    <p className="text-white/80 mb-4 leading-relaxed text-sm flex-grow">
                       For French professionals and families who want to understand how formality, hierarchy and relationship building work in the UAE context.
                     </p>
                     <motion.div 
-                      className="relative h-64 mb-4 perspective-1000 group cursor-pointer"
+                      className="relative h-64 mb-4 perspective-1000 group cursor-pointer flex-shrink-0"
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.3 }}
                     >
@@ -706,7 +743,7 @@ export default function MovingToUAEPage() {
                     </motion.div>
                     <button
                       onClick={() => handleRegisterInterest('fr-uae')}
-                      className="w-full mt-4 px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
+                      className="w-full mt-auto px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
                     >
                       Register interest
                     </button>
@@ -716,21 +753,21 @@ export default function MovingToUAEPage() {
                 {/* Italy - Coming Soon */}
                 <motion.div
                   variants={itemVariants}
-                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px] flex flex-col h-full"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/5 via-transparent to-orange/5" />
-                  <div className="relative z-10">
+                  <div className="relative z-10 flex flex-col h-full">
                     <div className="inline-block mb-4">
                       <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/10 border border-white/20 text-white/70">
                         Coming soon
                       </span>
                     </div>
                     <h3 className="text-2xl font-bold text-white mb-4">Italy to UAE Guide</h3>
-                    <p className="text-white/80 mb-4 leading-relaxed text-sm">
+                    <p className="text-white/80 mb-4 leading-relaxed text-sm flex-grow">
                       For Italian professionals and families who want to understand how relationship focused communication and family values translate in the UAE.
                     </p>
                     <motion.div 
-                      className="relative h-64 mb-4 perspective-1000 group cursor-pointer"
+                      className="relative h-64 mb-4 perspective-1000 group cursor-pointer flex-shrink-0"
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.3 }}
                     >
@@ -758,7 +795,7 @@ export default function MovingToUAEPage() {
                     </motion.div>
                     <button
                       onClick={() => handleRegisterInterest('it-uae')}
-                      className="w-full mt-4 px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
+                      className="w-full mt-auto px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
                     >
                       Register interest
                     </button>
@@ -768,21 +805,21 @@ export default function MovingToUAEPage() {
                 {/* Russia - Coming Soon */}
                 <motion.div
                   variants={itemVariants}
-                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px] flex flex-col h-full"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/5 via-transparent to-orange/5" />
-                  <div className="relative z-10">
+                  <div className="relative z-10 flex flex-col h-full">
                     <div className="inline-block mb-4">
                       <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/10 border border-white/20 text-white/70">
                         Coming soon
                       </span>
                     </div>
                     <h3 className="text-2xl font-bold text-white mb-4">Russia to UAE Guide</h3>
-                    <p className="text-white/80 mb-4 leading-relaxed text-sm">
+                    <p className="text-white/80 mb-4 leading-relaxed text-sm flex-grow">
                       For Russian professionals and families who want to understand how direct communication and hierarchical structures work in the UAE context.
                     </p>
                     <motion.div 
-                      className="relative h-64 mb-4 perspective-1000 group cursor-pointer"
+                      className="relative h-64 mb-4 perspective-1000 group cursor-pointer flex-shrink-0"
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.3 }}
                     >
@@ -811,7 +848,7 @@ export default function MovingToUAEPage() {
                     </motion.div>
                     <button
                       onClick={() => handleRegisterInterest('ru-uae')}
-                      className="w-full mt-4 px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
+                      className="w-full mt-auto px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
                     >
                       Register interest
                     </button>
@@ -821,21 +858,21 @@ export default function MovingToUAEPage() {
                 {/* US - Coming Soon */}
                 <motion.div
                   variants={itemVariants}
-                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]"
+                  className="relative p-6 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px] flex flex-col h-full"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/5 via-transparent to-orange/5" />
-                  <div className="relative z-10">
+                  <div className="relative z-10 flex flex-col h-full">
                     <div className="inline-block mb-4">
                       <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/10 border border-white/20 text-white/70">
                         Coming soon
                       </span>
                     </div>
                     <h3 className="text-2xl font-bold text-white mb-4">US to UAE Guide</h3>
-                    <p className="text-white/80 mb-4 leading-relaxed text-sm">
+                    <p className="text-white/80 mb-4 leading-relaxed text-sm flex-grow">
                       For American professionals and families who want to understand how direct communication, individual achievement and business culture translate in the UAE context.
                     </p>
                     <motion.div 
-                      className="relative h-64 mb-4 perspective-1000 group cursor-pointer"
+                      className="relative h-64 mb-4 perspective-1000 group cursor-pointer flex-shrink-0"
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.3 }}
                     >
@@ -863,7 +900,7 @@ export default function MovingToUAEPage() {
                     </motion.div>
                     <button
                       onClick={() => handleRegisterInterest('us-uae')}
-                      className="w-full mt-4 px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
+                      className="w-full mt-auto px-6 py-3 nav-button-glass text-sm font-semibold rounded-xl text-white/90 hover:text-white transition-all duration-300"
                     >
                       Register interest
                     </button>
@@ -1111,6 +1148,116 @@ export default function MovingToUAEPage() {
           </div>
         </section>
       </main>
+
+      {/* Register Interest Modal */}
+      <AnimatePresence>
+        {showRegisterModal && interestGuide && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={handleCloseModal}
+            />
+            
+            {/* Modal */}
+            <motion.div
+              className="fixed inset-0 z-[101] flex items-center justify-center p-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <motion.div
+                className="relative w-full max-w-md bg-primary-dark/95 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden"
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.9, y: 20 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
+                <div className="relative z-10 p-8">
+                  {/* Close Button */}
+                  <button
+                    onClick={handleCloseModal}
+                    className="absolute top-4 right-4 p-2 text-white/60 hover:text-white transition-colors rounded-lg hover:bg-white/10"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+
+                  {submitSuccess ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="text-center py-8"
+                    >
+                      <CheckCircle className="w-16 h-16 text-orange mx-auto mb-4" />
+                      <h3 className="text-2xl font-bold text-white mb-2">Thank You!</h3>
+                      <p className="text-white/80">
+                        We'll notify you when the {guideNames[interestGuide]} is available.
+                      </p>
+                    </motion.div>
+                  ) : (
+                    <>
+                      <h3 className="text-2xl font-bold text-white mb-2">
+                        Register Interest
+                      </h3>
+                      <p className="text-white/70 mb-6 text-sm">
+                        Be the first to know when the {guideNames[interestGuide]} launches.
+                      </p>
+
+                      <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                          <label htmlFor="name" className="block text-sm font-medium text-white/80 mb-2">
+                            Name
+                          </label>
+                          <input
+                            type="text"
+                            id="name"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-orange/50 transition-colors"
+                            placeholder="Your name"
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <label htmlFor="email" className="block text-sm font-medium text-white/80 mb-2">
+                            Email
+                          </label>
+                          <input
+                            type="email"
+                            id="email"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-orange/50 transition-colors"
+                            placeholder="your.email@example.com"
+                            required
+                          />
+                        </div>
+
+                        <motion.button
+                          type="submit"
+                          disabled={isSubmitting}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="w-full px-6 py-3 cta-button-glow text-white font-semibold rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {isSubmitting ? 'Submitting...' : 'Register Interest'}
+                        </motion.button>
+                      </form>
+                    </>
+                  )}
+                </div>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       <ModernFooter />
     </>

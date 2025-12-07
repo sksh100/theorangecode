@@ -202,7 +202,7 @@ export function ModernNavbar() {
     {
       label: 'Moving to the UAE',
       href: '/moving-to-uae',
-    }, // Direct link - no dropdown - FINAL: Replaced UAE Living permanently - v2
+    }, // Direct link - no dropdown - Replaced UAE Living permanently
     {
       label: 'Contact',
       href: '/#contact',
@@ -382,7 +382,7 @@ export function ModernNavbar() {
                         if (pathname === '/') {
                           // Already on homepage, scroll to contact form
                           setTimeout(() => {
-                            const contactElement = document.getElementById('contact')
+                            const contactElement = document.getElementById('contact') || document.getElementById('contact-form')
                             if (contactElement) {
                               const navbarHeight = 80
                               const elementPosition = contactElement.getBoundingClientRect().top + window.pageYOffset
@@ -393,8 +393,10 @@ export function ModernNavbar() {
                               })
                             }
                           }, 100)
+                        } else {
+                          // Not on homepage, navigate first then scroll
+                          // The hash will be handled by ScrollRestoration component
                         }
-                        // If not on homepage, Next.js Link will navigate and ScrollRestoration will handle scrolling
                       }
                     }}
                   >
@@ -653,7 +655,7 @@ export function ModernNavbar() {
                             if (pathname === '/') {
                               // Already on homepage, scroll to contact form
                               setTimeout(() => {
-                                const contactElement = document.getElementById('contact')
+                                const contactElement = document.getElementById('contact') || document.getElementById('contact-form')
                                 if (contactElement) {
                                   const navbarHeight = 80
                                   const elementPosition = contactElement.getBoundingClientRect().top + window.pageYOffset
@@ -664,8 +666,10 @@ export function ModernNavbar() {
                                   })
                                 }
                               }, 100)
+                            } else {
+                              // Not on homepage, navigate first then scroll
+                              // The hash will be handled by ScrollRestoration component
                             }
-                            // If not on homepage, Next.js Link will navigate and ScrollRestoration will handle scrolling
                           }
                         }}
                         className="block p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium cursor-pointer touch-manipulation"
