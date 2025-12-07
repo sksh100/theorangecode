@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import dynamic from 'next/dynamic'
+import nextDynamic from 'next/dynamic'
 import { CheckCircle, ArrowRight, Home, Briefcase, Car, ShoppingBag, Globe, Users, Calendar, MapPin, Utensils, Mountain, Palette, Music, Coffee, GraduationCap, Baby, ChevronDown, Clock } from 'lucide-react'
 import Link from 'next/link'
 import { ModernNavbar } from '@/components/ModernNavbar'
@@ -14,7 +14,7 @@ import { PageHeading } from '@/components/PageHeading'
 import Script from 'next/script'
 
 // Dynamic imports for performance
-const AtmosphericBackground = dynamic(
+const AtmosphericBackground = nextDynamic(
   () => import('@/components/AtmosphericBackground').then(mod => ({ default: mod.AtmosphericBackground })),
   { ssr: false, loading: () => null }
 )

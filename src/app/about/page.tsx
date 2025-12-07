@@ -3,7 +3,7 @@
 // Force dynamic rendering to prevent build timeouts
 export const dynamic = 'force-dynamic'
 
-import dynamic from 'next/dynamic'
+import nextDynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import { motion } from 'framer-motion'
 import { Sparkles, Target, Heart, Eye, Users, Globe, ArrowRight, CheckCircle, Zap } from 'lucide-react'
@@ -14,7 +14,7 @@ import Script from 'next/script'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 
-const ValuesTimeline = dynamic(
+const ValuesTimeline = nextDynamic(
   () => import('@/components/ValuesTimeline').then(mod => ({ default: mod.ValuesTimeline })),
   { 
     ssr: false,

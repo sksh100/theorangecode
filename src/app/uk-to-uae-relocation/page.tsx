@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import dynamic from 'next/dynamic'
+import nextDynamic from 'next/dynamic'
 import Image from 'next/image'
 import { CheckCircle, ArrowRight, BookOpen, Users, Globe, Clock, MessageSquare, Briefcase, Sparkles, Quote, X, ChevronDown, Copy, Check } from 'lucide-react'
 import Link from 'next/link'
@@ -23,7 +23,7 @@ import { EbookSampleModal } from '@/components/EbookSampleModal'
 import { useCart } from '@/contexts/CartContext'
 
 // Dynamic imports for performance
-const AtmosphericBackground = dynamic(
+const AtmosphericBackground = nextDynamic(
   () => import('@/components/AtmosphericBackground').then(mod => ({ default: mod.AtmosphericBackground })),
   { ssr: false, loading: () => null }
 )
