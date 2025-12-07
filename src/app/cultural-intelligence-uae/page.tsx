@@ -275,7 +275,7 @@ export default function CulturalIntelligenceUAEPage() {
                   </div>
                   <div className="space-y-4 text-lg text-white/90">
                     <p>
-                      <strong className="text-white">Abu Dhabi:</strong> In-person masterclasses at Etihad Towers, Tower 3, Floor 36. Experience cultural intelligence training in the heart of the UAE capital.
+                      <strong className="text-white">Abu Dhabi:</strong> In-person masterclasses at Etihad Towers, Tower 3, Floor 36.
                     </p>
                     <p>
                       <strong className="text-white">Dubai:</strong> Corporate training and private coaching available. We bring cultural intelligence expertise to your office or preferred location.
