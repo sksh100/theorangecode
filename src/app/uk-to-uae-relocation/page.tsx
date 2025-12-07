@@ -17,6 +17,7 @@ import { trackCTAClick } from '@/lib/tracking'
 import Script from 'next/script'
 import { gsap } from 'gsap'
 import { EbookSampleModal } from '@/components/EbookSampleModal'
+import { useCart } from '@/contexts/CartContext'
 
 // Dynamic imports for performance
 const AtmosphericBackground = dynamic(
@@ -25,6 +26,7 @@ const AtmosphericBackground = dynamic(
 )
 
 export default function UKToUAERelocationPage() {
+  const { addToCart } = useCart()
   const [isUK, setIsUK] = useState(false)
   const [currency, setCurrency] = useState('AED')
   const [price, setPrice] = useState(99) // Default AED price
@@ -1698,6 +1700,39 @@ export default function UKToUAERelocationPage() {
                       <span className="text-white/90">{item}</span>
                     </motion.div>
                   ))}
+                </motion.div>
+                
+                {/* CTA Button to Buy the Book */}
+                <motion.div
+                  variants={itemVariants}
+                  className="mt-12 text-center"
+                >
+                  <motion.button
+                    onClick={() => {
+                      // Add to cart
+                      addToCart({
+                        id: 'uk-uae-ebook',
+                        name: 'UK to UAE Cultural Intelligence Guide',
+                        price: price,
+                        currency: currency,
+                        quantity: 1,
+                        stripeLink: STRIPE_PAYMENT_LINK
+                      })
+                      // Track CTA click
+                      trackCTAClick('Buy UK to UAE Guide', window.location.pathname)
+                      // Redirect to Stripe
+                      window.open(STRIPE_PAYMENT_LINK, '_blank')
+                    }}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center gap-3"
+                  >
+                    <span>Buy the Guide Now</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </motion.button>
+                  <p className="mt-4 text-white/70 text-sm">
+                    {currency === 'GBP' ? `£${price}` : `${price} ${currency}`} • Instant Digital Delivery
+                  </p>
                 </motion.div>
               </motion.div>
             </div>
