@@ -8,6 +8,6 @@ export const lato = localFont({
   display: 'swap', // Prevents invisible text during font load
   preload: true, // Preload font for faster rendering
   fallback: ['system-ui', 'arial'], // Fallback fonts
-  adjustFontFallback: true, // Adjust fallback font metrics
+  adjustFontFallback: 'Arial', // Adjust fallback font metrics
 })
 
