@@ -1,5 +1,8 @@
 'use client'
 
+// Force dynamic rendering to prevent build timeouts
+export const dynamic = 'force-dynamic'
+
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Calendar, Clock, MapPin, Mail, ArrowRight, Check, Sparkles, X, Sparkle, Send, MessageSquare } from 'lucide-react'
@@ -131,34 +134,41 @@ const generateAvailableDates = (masterclassId: number | null): TimeSlot[] => {
   const currentDate = new Date(today)
   currentDate.setHours(0, 0, 0, 0) // Start from beginning of today
   
-  while (currentDate <= endDate) {
+  // Safety limit to prevent infinite loops (max 2 years of dates)
+  const maxIterations = 730
+  let iterations = 0
+  
+  while (currentDate <= endDate && iterations < maxIterations) {
+    iterations++
     const d = new Date(currentDate)
     const dayOfWeek = d.getDay()
 
-    if (!offlineDays.includes(dayOfWeek)) {
-      continue
+    if (offlineDays.includes(dayOfWeek)) {
+      const formattedDate = d.toLocaleDateString('en-US', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+      })
+
+      const isTarget =
+        d.getFullYear() === firstAvailableDate.getFullYear() &&
+        d.getMonth() === firstAvailableDate.getMonth() &&
+        d.getDate() === firstAvailableDate.getDate()
+
+      slots.push({
+        date: formattedDate,
+        time: offlineTime,
+        available: isTarget,
+        type: 'offline',
+      })
     }
-
-    const formattedDate = d.toLocaleDateString('en-US', {
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric',
-    })
-
-    const isTarget =
-      d.getFullYear() === firstAvailableDate.getFullYear() &&
-      d.getMonth() === firstAvailableDate.getMonth() &&
-      d.getDate() === firstAvailableDate.getDate()
-
-    slots.push({
-      date: formattedDate,
-      time: offlineTime,
-      available: isTarget,
-      type: 'offline',
-    })
     
-    // Move to next day
+    // Move to next day - must be done outside the if statement
     currentDate.setDate(currentDate.getDate() + 1)
+  }
+  
+  if (iterations >= maxIterations) {
+    console.warn('Date generation reached max iterations limit')
   }
 
   return slots
