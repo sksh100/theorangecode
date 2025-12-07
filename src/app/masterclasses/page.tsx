@@ -121,10 +121,18 @@ const generateAvailableDates = (masterclassId: number | null): TimeSlot[] => {
   const today = new Date()
   const targetYear = 2026
   const firstAvailableDate = new Date(targetYear, 0, 6) // Tuesday 6 January 2026
+  // End date: February 20, 2026 (month 1 = February in 0-indexed months)
   const endDate = new Date(targetYear, 1, 20) // February 20, 2026
+  
+  // Set time to end of day to ensure we include the full day
+  endDate.setHours(23, 59, 59, 999)
 
   // Loop from today up to and including the end date
-  for (let d = new Date(today); d <= endDate; d.setDate(d.getDate() + 1)) {
+  const currentDate = new Date(today)
+  currentDate.setHours(0, 0, 0, 0) // Start from beginning of today
+  
+  while (currentDate <= endDate) {
+    const d = new Date(currentDate)
     const dayOfWeek = d.getDay()
 
     if (!offlineDays.includes(dayOfWeek)) {
@@ -148,6 +156,9 @@ const generateAvailableDates = (masterclassId: number | null): TimeSlot[] => {
       available: isTarget,
       type: 'offline',
     })
+    
+    // Move to next day
+    currentDate.setDate(currentDate.getDate() + 1)
   }
 
   return slots
