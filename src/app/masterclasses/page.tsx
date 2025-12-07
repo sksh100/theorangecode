@@ -117,11 +117,11 @@ const generateAvailableDates = (masterclassId: number | null): TimeSlot[] => {
 
   // Business rule: until Tuesday 6 January (fixed date), all sessions are sold out
   // except that single day, which is the only available in-person slot.
-  // NOTE: JavaScript months are 0-indexed, so 0 = January.
+  // NOTE: JavaScript months are 0-indexed, so 0 = January, 1 = February.
   const today = new Date()
   const targetYear = 2026
   const firstAvailableDate = new Date(targetYear, 0, 6) // Tuesday 6 January 2026
-  const endDate = new Date(targetYear, 0, 13) // Tuesday 13 January 2026 (fully booked)
+  const endDate = new Date(targetYear, 1, 20) // February 20, 2026
 
   // Loop from today up to and including the end date
   for (let d = new Date(today); d <= endDate; d.setDate(d.getDate() + 1)) {
@@ -806,17 +806,19 @@ export default function MasterclassesPage() {
                       Need a Tailormade Course or Different Time?
                     </h2>
                     <p className="text-white/80 text-lg leading-relaxed mb-4">
-                      We understand that schedules can be challenging and that every organization and individual has unique needs. If you require a custom masterclass tailored to specific topics, industries, or learning objectives, or if you need a different time slot than what's available, we're here to work with you to find the perfect solution.
+                      We understand that schedules can be challenging and that every organization and individual has unique needs. If you require a custom masterclass tailored to specific topics, industries, learning objectives, or if you need a different time slot than what's available, we're here to work with you to find the perfect solution. You may also contact us if virtual sessions suit you better.
                     </p>
-                    <p className="text-white/70 text-base">
-                      Contact us at{' '}
+                    <div className="mt-4 p-4 bg-primary-dark/30 rounded-xl border border-orange/20">
+                      <p className="text-white/90 text-base font-medium mb-1">
+                        Contact us at:
+                      </p>
                       <a 
                         href="mailto:contact@theorangecode.com" 
-                        className="text-orange hover:text-orange/80 transition-colors font-semibold"
+                        className="text-orange hover:text-orange/80 transition-colors font-semibold text-lg"
                       >
                         contact@theorangecode.com
                       </a>
-                    </p>
+                    </div>
                   </div>
                 </div>
 

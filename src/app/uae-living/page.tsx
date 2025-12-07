@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { CheckCircle, ArrowRight, Home, Briefcase, Car, ShoppingBag, Globe, Users, Calendar, MapPin, Utensils, Mountain, Palette, Music, Coffee, GraduationCap, Baby, ChevronDown, Clock } from 'lucide-react'
@@ -17,12 +17,7 @@ const AtmosphericBackground = dynamic(
 )
 
 export default function UAELivingPage() {
-  const [mounted, setMounted] = useState(false)
   const [openFAQ, setOpenFAQ] = useState<number | null>(null)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   // Animation variants
   const containerVariants = {
@@ -133,7 +128,7 @@ export default function UAELivingPage() {
               <motion.div
                 variants={containerVariants}
                 initial="hidden"
-                animate={mounted ? 'visible' : 'visible'}
+                animate="visible"
                 className="max-w-5xl mx-auto text-center"
               >
                 {/* Small label */}

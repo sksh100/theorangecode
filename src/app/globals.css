@@ -40,6 +40,14 @@
   body {
     @apply bg-primary-dark text-white min-h-screen overflow-x-hidden leading-relaxed;
     font-family: 'Glacial Indifference', sans-serif;
+    /* Ensure body always has background to prevent white screens during navigation */
+    background-color: #0A2244 !important;
+  }
+  
+  /* Ensure html also has background */
+  html {
+    @apply bg-primary-dark;
+    background-color: #0A2244 !important;
   }
 }
 

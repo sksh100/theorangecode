@@ -468,6 +468,107 @@ export async function notifyEbookPurchase(data: {
 }
 
 /**
+ * Notify about Payhip ebook purchase
+ */
+export async function notifyPayhipEbookPurchase(data: {
+  customerEmail: string;
+  customerName?: string;
+  amount: number;
+  currency: string;
+  orderId: string;
+  productName: string;
+}): Promise<void> {
+  const formattedAmount = new Intl.NumberFormat('en-AE', {
+    style: 'currency',
+    currency: data.currency.toUpperCase(),
+  }).format(data.amount);
+
+  const message: SlackMessage = {
+    blocks: [
+      {
+        type: 'header',
+        text: {
+          type: 'plain_text',
+          text: '📚 New Ebook Purchase (Payhip)!',
+          emoji: true,
+        },
+      },
+      {
+        type: 'section',
+        fields: [
+          {
+            type: 'mrkdwn',
+            text: `*Customer:*\n${data.customerName || data.customerEmail}`,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Email:*\n${data.customerEmail}`,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Amount:*\n${formattedAmount}`,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Product:*\n${data.productName}`,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Order ID:*\n\`${data.orderId}\``,
+          },
+          {
+            type: 'mrkdwn',
+            text: `*Time:*\n${new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })}`,
+          },
+        ],
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Platform:*\nPayhip`,
+        },
+      },
+      {
+        type: 'actions',
+        elements: [
+          {
+            type: 'button',
+            text: {
+              type: 'plain_text',
+              text: '💳 View in Payhip',
+              emoji: true,
+            },
+            url: `https://payhip.com/dashboard/sales`,
+            style: 'primary',
+          },
+          {
+            type: 'button',
+            text: {
+              type: 'plain_text',
+              text: '📧 Email Customer',
+              emoji: true,
+            },
+            url: `mailto:${data.customerEmail}`,
+          },
+        ],
+      },
+      {
+        type: 'context',
+        elements: [
+          {
+            type: 'mrkdwn',
+            text: '✅ Ebook will be automatically sent to the customer via Payhip.',
+          },
+        ],
+      },
+    ],
+  };
+
+  await sendToSlack(message);
+}
+
+/**
  * Notify about ebook delivery
  */
 export async function notifyEbookDelivery(data: EbookDeliveryData): Promise<void> {

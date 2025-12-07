@@ -1180,7 +1180,7 @@ export default function UKToUAERelocationPage() {
                 <motion.div
                   variants={containerVariants}
                   initial="hidden"
-                  animate={mounted ? 'visible' : 'visible'}
+                  animate="visible"
                   className="max-w-5xl mx-auto text-center"
                 >
                   {/* Small label */}

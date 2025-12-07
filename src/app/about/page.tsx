@@ -1,18 +1,26 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
 import { motion } from 'framer-motion'
 import { Sparkles, Target, Heart, Eye, Users, Globe, ArrowRight, CheckCircle, Zap } from 'lucide-react'
 import Image from 'next/image'
 import Script from 'next/script'
 
-// Dynamically import all components to prevent hydration issues
-const ModernNavbar = dynamic(() => import('@/components/ModernNavbar').then(mod => ({ default: mod.ModernNavbar })), { ssr: false })
-const ModernFooter = dynamic(() => import('@/components/ModernFooter').then(mod => ({ default: mod.ModernFooter })), { ssr: false })
+// Import components normally - they should render on server to prevent blank screens
+import { ModernNavbar } from '@/components/ModernNavbar'
+import { ModernFooter } from '@/components/ModernFooter'
 
 const ValuesTimeline = dynamic(
   () => import('@/components/ValuesTimeline').then(mod => ({ default: mod.ValuesTimeline })),
-  { ssr: false }
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-96 flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-white/20 border-t-orange rounded-full animate-spin" />
+      </div>
+    )
+  }
 )
 
 export default function AboutPage() {
@@ -311,7 +319,13 @@ export default function AboutPage() {
                   <p className="text-white/60 text-lg">The Culture Code — Our Six Core Values</p>
                 </div>
 
-                <ValuesTimeline />
+                <Suspense fallback={
+                  <div className="w-full h-96 flex items-center justify-center">
+                    <div className="w-12 h-12 border-4 border-white/20 border-t-orange rounded-full animate-spin" />
+                  </div>
+                }>
+                  <ValuesTimeline />
+                </Suspense>
               </motion.div>
 
               {/* Slogan Section */}

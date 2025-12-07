@@ -43,10 +43,12 @@ export function ScrollRestoration() {
       }
     } else if (pathnameChanged) {
       // For all other route changes, scroll to top
-      // Use requestAnimationFrame to ensure DOM is ready
-      requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, behavior: 'instant' })
-      })
+      // Wait a bit longer to ensure page content is rendered
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          window.scrollTo({ top: 0, behavior: 'instant' })
+        })
+      }, 100)
     }
 
     // Also handle hash changes on the same page

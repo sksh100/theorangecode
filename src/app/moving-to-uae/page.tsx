@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
@@ -18,13 +18,8 @@ const AtmosphericBackground = dynamic(
 )
 
 export default function MovingToUAEPage() {
-  const [mounted, setMounted] = useState(false)
   const [openFAQ, setOpenFAQ] = useState<number | null>(null)
   const [interestGuide, setInterestGuide] = useState<string | null>(null)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   const handleRegisterInterest = (guideKey: string) => {
     setInterestGuide(guideKey)
@@ -156,7 +151,7 @@ export default function MovingToUAEPage() {
               <motion.div
                 variants={containerVariants}
                 initial="hidden"
-                animate={mounted ? 'visible' : 'visible'}
+                animate="visible"
                 className="max-w-5xl mx-auto"
               >
                 <motion.div

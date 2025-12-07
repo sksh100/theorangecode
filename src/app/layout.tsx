@@ -4,7 +4,7 @@ import './globals.css'
 import { VisitorTracker } from '@/components/VisitorTracker'
 import { GoogleAnalytics } from '@/components/GoogleAnalytics'
 import { CookieBanner } from '@/components/CookieBanner'
-import { ScrollRestoration } from '@/components/ScrollRestoration'
+import { ClientLayoutWrapper } from '@/components/ClientLayoutWrapper'
 import { lato } from '@/lib/fonts'
 
 export const metadata: Metadata = {
@@ -272,7 +272,7 @@ export const metadata: Metadata = {
     siteName: 'The Orange Code',
     images: [
       {
-        url: 'https://www.theorangecode.com/logo1.png',
+        url: 'https://www.theorangecode.com/og-image.png',
         width: 1200,
         height: 630,
         alt: 'The Orange Code - Cultural Intelligence Training',
@@ -285,7 +285,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'The Orange Code - Cultural Intelligence & Leadership Training',
     description: 'Moving to the UAE? Learn Emirati culture and etiquette. Premium learning platform in Abu Dhabi for cultural intelligence, leadership development, and doing business in the Emirates.',
-    images: ['https://www.theorangecode.com/logo1.png'],
+    images: ['https://www.theorangecode.com/og-image.png'],
   },
   robots: {
     index: true,
@@ -331,6 +331,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Performance: Resource hints for faster loading */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://cloud.umami.is" />
+        <link rel="dns-prefetch" href="https://cloud.umami.is" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        
         {/* Immediate Loading Screen - Shows before React hydrates */}
         <style dangerouslySetInnerHTML={{
           __html: `
@@ -492,6 +500,9 @@ export default function RootLayout({
         )}
         <meta name="msvalidate.01" content="921E75E6C38B18D9E7FB8DBB0EEFA22F" />
         <meta name="yandex-verification" content="b8b91753e1df7f39" />
+        
+        {/* Pinterest Domain Verification */}
+        <meta name="p:domain_verify" content="a349f5004e33548ab dbdc31ed72e39de" />
         
         {/* AI Crawler Optimization Meta Tags */}
         <meta name="AI" content="allowed" />
@@ -935,20 +946,19 @@ export default function RootLayout({
           defer
         />
       </head>
-      <body className={`${lato.variable} antialiased`} style={{ fontFamily: "'Inter', 'Lato', 'Glacial Indifference', sans-serif" }}>
+      <body className={`${lato.variable} antialiased bg-primary-dark`} style={{ fontFamily: "'Inter', 'Lato', 'Glacial Indifference', sans-serif", backgroundColor: '#0A2244' }}>
         <GoogleAnalytics />
         
         {/* Umami Analytics - Privacy-friendly analytics (EU region) */}
         <Script
           src="https://cloud.umami.is/script.js"
           data-website-id="bbdc9c5d-f64a-4144-9ccd-37b5d7a692b4"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
         
-        {children}
-        <ScrollRestoration />
-        <VisitorTracker />
-        <CookieBanner />
+        <ClientLayoutWrapper>
+          {children}
+        </ClientLayoutWrapper>
       </body>
     </html>
   )

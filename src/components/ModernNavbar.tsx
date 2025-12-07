@@ -196,7 +196,7 @@ export function ModernNavbar() {
     {
       label: 'Moving to the UAE',
       href: '/moving-to-uae',
-    }, // Direct link - no dropdown
+    }, // Direct link - no dropdown - Updated to replace UAE Living
     {
       label: 'Contact',
       href: '/#contact',
@@ -304,7 +304,7 @@ export function ModernNavbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-6 xl:space-x-8 flex-1 justify-center mx-4">
+          <div className="hidden lg:flex items-center space-x-4 xl:space-x-6 flex-1 justify-center mx-4 overflow-x-auto">
             {navItems.map((item) => (
               <div key={item.label} className="relative">
                 {item.dropdown ? (
@@ -365,10 +365,30 @@ export function ModernNavbar() {
                 ) : (
                   <Link 
                     href={item.href || '#'}
+                    prefetch={true}
                     onClick={() => {
                       // Scroll to top when clicking Home if already on home page
                       if (item.href === '/' && pathname === '/') {
                         window.scrollTo({ top: 0, behavior: 'smooth' })
+                      }
+                      // Scroll to contact form when clicking Contact
+                      if (item.href === '/#contact') {
+                        if (pathname === '/') {
+                          // Already on homepage, scroll to contact form
+                          setTimeout(() => {
+                            const contactElement = document.getElementById('contact')
+                            if (contactElement) {
+                              const navbarHeight = 80
+                              const elementPosition = contactElement.getBoundingClientRect().top + window.pageYOffset
+                              const offsetPosition = Math.max(0, elementPosition - navbarHeight)
+                              window.scrollTo({
+                                top: offsetPosition,
+                                behavior: 'smooth'
+                              })
+                            }
+                          }, 100)
+                        }
+                        // If not on homepage, Next.js Link will navigate and ScrollRestoration will handle scrolling
                       }
                     }}
                   >
@@ -621,6 +641,25 @@ export function ModernNavbar() {
                           // Scroll to top when clicking Home if already on home page
                           if (item.href === '/' && pathname === '/') {
                             window.scrollTo({ top: 0, behavior: 'smooth' })
+                          }
+                          // Scroll to contact form when clicking Contact
+                          if (item.href === '/#contact') {
+                            if (pathname === '/') {
+                              // Already on homepage, scroll to contact form
+                              setTimeout(() => {
+                                const contactElement = document.getElementById('contact')
+                                if (contactElement) {
+                                  const navbarHeight = 80
+                                  const elementPosition = contactElement.getBoundingClientRect().top + window.pageYOffset
+                                  const offsetPosition = Math.max(0, elementPosition - navbarHeight)
+                                  window.scrollTo({
+                                    top: offsetPosition,
+                                    behavior: 'smooth'
+                                  })
+                                }
+                              }, 100)
+                            }
+                            // If not on homepage, Next.js Link will navigate and ScrollRestoration will handle scrolling
                           }
                         }}
                         className="block p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium cursor-pointer touch-manipulation"

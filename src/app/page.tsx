@@ -227,17 +227,27 @@ export default function Home() {
       </div>
 
       <div className="relative z-10">
-        <ModernNavbar />
+        <Suspense fallback={<div className="h-20 bg-primary-dark" />}>
+          <ModernNavbar />
+        </Suspense>
         <main itemScope itemType="https://schema.org/WebPage">
           <HeroSection />
           <WhyCulturalIntelligenceSection />
-          <MasterclassesOverview />
+          <Suspense fallback={<div className="h-96 bg-primary-dark" />}>
+            <MasterclassesOverview />
+          </Suspense>
           <USPBar />
-          <TestimonialCarousel />
+          <Suspense fallback={<div className="h-64 bg-primary-dark" />}>
+            <TestimonialCarousel />
+          </Suspense>
           <StartTodayCTA />
-          <ContactFormSection />
+          <Suspense fallback={<div className="h-96 bg-primary-dark" />}>
+            <ContactFormSection />
+          </Suspense>
         </main>
-        <ModernFooter />
+        <Suspense fallback={<div className="h-64 bg-primary-dark" />}>
+          <ModernFooter />
+        </Suspense>
       </div>
     </div>
     </>
