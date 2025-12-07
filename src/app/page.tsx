@@ -1,5 +1,8 @@
 'use client'
 
+// Force dynamic rendering to prevent build timeouts
+export const dynamic = 'force-dynamic'
+
 import { useState, useEffect, useRef, Suspense } from 'react'
 import { useScroll, useSpring, useMotionValue } from 'framer-motion'
 import dynamic from 'next/dynamic'

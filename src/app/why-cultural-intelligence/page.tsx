@@ -1,5 +1,8 @@
 'use client'
 
+// Force dynamic rendering to prevent build timeouts
+export const dynamic = 'force-dynamic'
+
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { ModernNavbar } from '@/components/ModernNavbar'
