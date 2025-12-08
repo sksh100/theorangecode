@@ -511,30 +511,64 @@ export function ModernNavbar() {
         {/* Mobile Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
-            <motion.div
-              className="lg:hidden mt-4 mega-dropdown-glass rounded-2xl overflow-hidden fixed top-24 left-4 right-4 z-[70] max-w-[calc(100vw-2rem)]"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div 
-                className="p-4 space-y-2 max-h-[70vh] overflow-y-auto overscroll-contain relative z-[70]"
-                onScroll={(e) => {
-                  e.stopPropagation()
-                  // Prevent menu from closing when scrolling inside
-                }}
+            <>
+              {/* Backdrop - Match desktop dropdown backdrop */}
+              <motion.div
+                className="lg:hidden fixed top-20 left-0 right-0 bottom-0 bg-black/40 backdrop-blur-md z-[65]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setIsMobileMenuOpen(false)}
+              />
+              
+              <motion.div
+                className="lg:hidden mt-4 mega-dropdown-glass rounded-2xl overflow-hidden fixed top-24 left-4 right-4 z-[70] max-w-[calc(100vw-2rem)]"
+                initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
                 onClick={(e) => e.stopPropagation()}
-                onTouchMove={(e) => e.stopPropagation()}
-                onTouchStart={(e) => e.stopPropagation()}
-                style={{ 
-                  WebkitOverflowScrolling: 'touch',
-                  touchAction: 'pan-y',
-                  pointerEvents: 'auto'
-                }}
               >
-                {navItems.map((item) => (
+                <div className="p-4 space-y-2 relative z-[70]">
+                {/* Header with Close Button - Match desktop design */}
+                <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/10">
+                  <h3 className="text-xl font-bold">
+                    <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                      Menu
+                    </span>
+                  </h3>
+                  <motion.button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    aria-label="Close menu"
+                  >
+                    <X className="w-5 h-5 text-white/70" />
+                  </motion.button>
+                </div>
+                
+                <div 
+                  className="space-y-2 max-h-[60vh] overflow-y-auto overscroll-contain"
+                  onScroll={(e) => {
+                    e.stopPropagation()
+                    // Prevent menu from closing when scrolling inside menu
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                  onTouchMove={(e) => {
+                    e.stopPropagation()
+                  }}
+                  onTouchStart={(e) => {
+                    e.stopPropagation()
+                  }}
+                  style={{ 
+                    WebkitOverflowScrolling: 'touch',
+                    touchAction: 'pan-y',
+                    pointerEvents: 'auto'
+                  }}
+                >
+                  {navItems.map((item) => (
                   <div key={item.label}>
                     {item.dropdown ? (
                       <>
@@ -677,10 +711,11 @@ export function ModernNavbar() {
                         style={{ WebkitTapHighlightColor: 'transparent' }}
                       >
                         {item.label}
-                      </Link>
-                    )}
+                  </Link>
+                )}
                   </div>
                 ))}
+                </div>
                 
                 {/* Mobile CTA Buttons */}
                 <div className="mt-4 space-y-3">
@@ -767,6 +802,7 @@ export function ModernNavbar() {
                 </div>
               </div>
             </motion.div>
+            </>
           )}
         </AnimatePresence>
       </div>

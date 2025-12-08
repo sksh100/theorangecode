@@ -160,7 +160,7 @@ export default function WhatIsCQPage() {
       >
         {/* Hero Image Section */}
         <section className="relative overflow-hidden">
-          <div className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] w-full">
+          <div className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[70vh] w-full">
             {/* Fallback gradient background */}
             <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/20 via-primary-dark/40 to-orange/20 z-0" />
             {/* Image Background */}
@@ -176,7 +176,7 @@ export default function WhatIsCQPage() {
             <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/40 via-primary-dark/60 to-primary-dark/90 z-[2]" />
             {/* Content */}
             <div className="absolute inset-0 flex items-end z-[3]">
-              <div className="container mx-auto px-6 pb-12 md:pb-16 relative z-10">
+              <div className="w-full px-6 pb-12 md:pb-16 lg:container lg:mx-auto relative z-10">
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
