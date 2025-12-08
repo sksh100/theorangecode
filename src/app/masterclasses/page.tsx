@@ -118,11 +118,11 @@ const generateAvailableDates = (masterclassId: number | null): TimeSlot[] => {
     : []
   const offlineTime = '11:00 AM - 2:00 PM'
 
-  // Business rule: All dates after January 6, 2026 are available until end of February
+  // Business rule: All dates from January 19, 2026 are available until end of February
   // NOTE: JavaScript months are 0-indexed, so 0 = January, 1 = February.
   const today = new Date()
   const targetYear = 2026
-  const cutoffDate = new Date(targetYear, 0, 6) // January 6, 2026 - dates after this are available
+  const cutoffDate = new Date(targetYear, 0, 19) // January 19, 2026 - dates from this date are available
   // End date: Last day of February 2026 (February 28, 2026 - 2026 is not a leap year)
   const endDate = new Date(targetYear, 1, 28) // February 28, 2026
   
