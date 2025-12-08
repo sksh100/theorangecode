@@ -81,7 +81,7 @@ export function UAELivingMegaDropdown({ isOpen, onClose }: UAELivingMegaDropdown
                         UAE Living
                       </span>
                     </h3>
-                    <p className="text-white/70 text-sm">Explore life in the UAE and plan your move with cultural intelligence</p>
+                    <p className="text-white/70 text-sm">Explore life in the UAE and plan your move with Cultural Intelligence</p>
                   </div>
                   <button
                     onClick={onClose}

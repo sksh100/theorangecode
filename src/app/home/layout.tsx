@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Home | The Orange Code',
-  description: 'The Orange Code - Cultural Intelligence & Leadership Training in Dubai and Abu Dhabi, UAE. Premium cultural intelligence courses and masterclasses for professionals.',
+  description: 'The Orange Code - Cultural Intelligence & Leadership Training in Dubai and Abu Dhabi, UAE. Premium Cultural Intelligence courses and masterclasses for professionals.',
   alternates: {
     canonical: 'https://www.theorangecode.com/home',
   },

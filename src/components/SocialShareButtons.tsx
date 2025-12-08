@@ -19,7 +19,7 @@ interface SocialShareButtonsProps {
 export function SocialShareButtons({
   url = 'https://www.theorangecode.com/uk-to-uae-relocation',
   title = 'UK to UAE Relocation Cultural Guide',
-  description = 'A practical cultural intelligence guide for British professionals relocating to the UAE. Learn workplace culture, etiquette, communication and expectations before you arrive.',
+  description = 'A practical Cultural Intelligence guide for British professionals relocating to the UAE. Learn workplace culture, etiquette, communication and expectations before you arrive.',
   imageUrl = 'https://www.theorangecode.com/og-image',
   variant = 'default',
   className = '',

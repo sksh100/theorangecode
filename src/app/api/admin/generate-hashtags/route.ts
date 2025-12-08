@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     const brandData = await kv.get('brand_profile')
     const brandProfile = brandData ? JSON.parse(brandData as string) : {
       name: 'The Orange Code',
-      targetAudience: 'Professionals seeking cultural intelligence',
+      targetAudience: 'Professionals seeking Cultural Intelligence',
     }
 
     // Use OpenAI API if available

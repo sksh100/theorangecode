@@ -166,7 +166,7 @@ export default function PrivacyPolicy() {
                 <div className="bg-gradient-to-r from-bright-blue/10 to-bright-blue/5 border border-bright-blue/20 rounded-xl p-4">
                   <h4 className="text-white font-semibold mb-2">Service Delivery</h4>
                   <ul className="text-white/70 text-sm space-y-1">
-                    <li>• Provide cultural intelligence training and masterclasses</li>
+                    <li>• Provide Cultural Intelligence training and masterclasses</li>
                     <li>• Deliver digital products (ebooks) via secure download links</li>
                     <li>• Personalize your learning experience</li>
                     <li>• Process payments and bookings</li>

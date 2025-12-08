@@ -23,7 +23,7 @@ const modules: Module[] = [
   {
     id: '1',
     title: 'Introduction to Cultural Intelligence',
-    description: 'Understand the fundamentals of cultural intelligence and why it matters in today\'s globalized world. Learn the core concepts and frameworks that will guide your learning journey.',
+    description: 'Understand the fundamentals of Cultural Intelligence and why it matters in today\'s globalized world. Learn the core concepts and frameworks that will guide your learning journey.',
     duration: '15 min',
     completed: false,
     locked: false
@@ -95,7 +95,7 @@ const modules: Module[] = [
   {
     id: '10',
     title: 'Mastering Your CQ Journey',
-    description: 'Integrate everything you\'ve learned and create your personal action plan. Commit to continuous growth in cultural intelligence.',
+    description: 'Integrate everything you\'ve learned and create your personal action plan. Commit to continuous growth in Cultural Intelligence.',
     duration: '30 min',
     completed: false,
     locked: false
@@ -201,7 +201,7 @@ export default function CulturalIntelligenceCourse() {
                     Cultural Intelligence
                   </h1>
                   <p className="text-lg text-white/80 mb-4">
-                    Transform your ability to work effectively across cultures. This comprehensive course will guide you through mastering cultural intelligence and applying it in real-world situations.
+                    Transform your ability to work effectively across cultures. This comprehensive course will guide you through mastering Cultural Intelligence and applying it in real-world situations.
                   </p>
                   
                   {/* Progress Bar */}

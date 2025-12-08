@@ -214,7 +214,7 @@ export default function NewHomePage() {
                 transition={{ duration: 0.8, delay: 0.5 }}
                 className="text-lg text-white/70 leading-relaxed mb-8"
               >
-                We empower individuals and organizations with cultural intelligence—the ability to connect authentically across cultures, build trust rapidly, and achieve extraordinary outcomes in international environments.
+                We empower individuals and organizations with Cultural Intelligence—the ability to connect authentically across cultures, build trust rapidly, and achieve extraordinary outcomes in international environments.
               </motion.p>
 
               <motion.div
@@ -315,7 +315,7 @@ export default function NewHomePage() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-2xl md:text-3xl text-white/80 max-w-4xl mx-auto leading-relaxed"
             >
-              In a world where success depends on understanding, cultural intelligence is your competitive advantage.
+              In a world where success depends on understanding, Cultural Intelligence is your competitive advantage.
             </motion.p>
           </motion.div>
 
@@ -415,10 +415,10 @@ export default function NewHomePage() {
             </h3>
 
             <p className="text-2xl md:text-3xl text-white/90 leading-relaxed max-w-5xl mx-auto">
-              Teams with high cultural intelligence see <span className="text-orange font-black">40% better collaboration</span>, 
+              Teams with high Cultural Intelligence see <span className="text-orange font-black">40% better collaboration</span>, 
               <span className="text-azure-blue font-black"> faster decision-making</span>, and 
               <span className="text-orange font-black"> stronger client relationships</span>. 
-              In a region where relationships drive business, cultural intelligence is your competitive advantage.
+              In a region where relationships drive business, Cultural Intelligence is your competitive advantage.
             </p>
           </motion.div>
         </div>
@@ -441,7 +441,7 @@ export default function NewHomePage() {
               Our Masterclasses
             </h2>
             <p className="text-2xl md:text-3xl text-white/80 max-w-3xl mx-auto">
-              Transform your cultural intelligence in just four weeks
+              Transform your Cultural Intelligence in just four weeks
             </p>
           </motion.div>
 
@@ -450,13 +450,13 @@ export default function NewHomePage() {
               {
                 title: 'Foundation Masterclass',
                 duration: '4 Weeks',
-                description: 'Master the fundamentals of cultural intelligence and build authentic cross-cultural connections.',
+                description: 'Master the fundamentals of Cultural Intelligence and build authentic cross-cultural connections.',
                 features: ['Cultural Awareness', 'Communication Skills', 'Business Protocols', 'UAE & Gulf Focus']
               },
               {
                 title: 'Advanced Mastery',
                 duration: '8 Weeks',
-                description: 'Deep dive into advanced cultural intelligence strategies for senior professionals and leaders.',
+                description: 'Deep dive into advanced Cultural Intelligence strategies for senior professionals and leaders.',
                 features: ['Strategic Thinking', 'Leadership Excellence', 'Complex Negotiations', 'Team Dynamics']
               },
               {
@@ -528,7 +528,7 @@ export default function NewHomePage() {
             </h2>
 
             <p className="text-2xl md:text-3xl text-white/90 mb-12 leading-relaxed">
-              Join thousands of professionals who have elevated their cultural intelligence and achieved extraordinary success.
+              Join thousands of professionals who have elevated their Cultural Intelligence and achieved extraordinary success.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center">

@@ -48,7 +48,7 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
     {
       id: 'what-is-cq',
       title: 'What is Cultural Intelligence (CQ)',
-      description: 'Discover the power of cultural intelligence and how it transforms your interactions',
+      description: 'Discover the power of Cultural Intelligence and how it transforms your interactions',
       icon: Sparkles,
       href: '/what-is-cq',
       gradient: 'from-bright-blue/20 to-light-blue/20'
@@ -56,7 +56,7 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
     {
       id: 'why-matters',
       title: 'WHY Cultural Intelligence Matters',
-      description: 'Understand why cultural intelligence is essential for success in the GCC region',
+      description: 'Understand why Cultural Intelligence is essential for success in the GCC region',
       icon: Zap,
       href: '/why-cultural-intelligence',
       gradient: 'from-light-blue/20 to-orange/20'
@@ -96,7 +96,7 @@ export function AboutMegaDropdown({ isOpen, onClose }: AboutMegaDropdownProps) {
                         About
                       </span>
                     </h3>
-                    <p className="text-white/70 text-sm">Explore our mission, values, and cultural intelligence resources</p>
+                    <p className="text-white/70 text-sm">Explore our mission, values, and Cultural Intelligence resources</p>
                   </div>
                   <button
                     onClick={onClose}

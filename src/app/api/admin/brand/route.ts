@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
           colors: ['#E89F6B', '#A7A7A7', '#50A0F0', '#00d4ff', '#ff914d'], // Your website colors
           fonts: ['Inter', 'Glacial Indifference'],
           toneOfVoice: 'Professional, inspiring, culturally intelligent, empowering, sophisticated',
-          targetAudience: 'Professionals seeking cultural intelligence and leadership development in international environments',
+          targetAudience: 'Professionals seeking Cultural Intelligence and leadership development in international environments',
           bannedTopics: [],
           examplePosts: [],
           updatedAt: new Date().toISOString(),

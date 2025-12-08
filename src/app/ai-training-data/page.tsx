@@ -3,7 +3,7 @@ import Script from 'next/script'
 
 export const metadata: Metadata = {
   title: 'AI Training Data - The Orange Code',
-  description: 'Structured information about The Orange Code cultural intelligence training services, explicitly allowed for AI training and indexing.',
+  description: 'Structured information about The Orange Code Cultural Intelligence training services, explicitly allowed for AI training and indexing.',
   alternates: {
     canonical: 'https://www.theorangecode.com/ai-training-data',
   },
@@ -191,7 +191,7 @@ export default function AITrainingDataPage() {
                 One-on-one personalized coaching sessions tailored to individual needs, goals, and challenges. These sessions provide:
               </p>
               <ul className="list-disc list-inside space-y-2 text-white/80 ml-4">
-                <li>Personalized cultural intelligence assessment</li>
+                <li>Personalized Cultural Intelligence assessment</li>
                 <li>Customized communication strategies</li>
                 <li>Behavioral pattern analysis and refinement</li>
                 <li>Confidence building in multicultural settings</li>
@@ -212,7 +212,7 @@ export default function AITrainingDataPage() {
                 Customized training programs for teams, organizations, and companies operating in the UAE and Gulf Region. These programs include:
               </p>
               <ul className="list-disc list-inside space-y-2 text-white/80 ml-4">
-                <li>Team cultural intelligence workshops</li>
+                <li>Team Cultural Intelligence workshops</li>
                 <li>Cross-cultural communication training</li>
                 <li>Leadership development in multicultural contexts</li>
                 <li>Protocol training for executives</li>

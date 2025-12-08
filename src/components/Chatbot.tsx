@@ -45,9 +45,9 @@ export function Chatbot({ onWhatsAppRedirect }: ChatbotProps) {
   ]
 
   const automatedResponses: { [key: string]: string } = {
-    consultation: "I'd be happy to help you book a consultation! Our luxury cultural intelligence sessions are tailored to your specific needs. Would you like to schedule a call with our expert team?",
+    consultation: "I'd be happy to help you book a consultation! Our luxury Cultural Intelligence sessions are tailored to your specific needs. Would you like to schedule a call with our expert team?",
     masterclasses: "We offer three signature masterclasses: 'Born to Lead' for leadership excellence, 'Masterclass for UAE Expats' for cultural integration, and 'Doing Business in the Middle East' for business success. Which interests you most?",
-    training: "Our training masterclasses are designed for fast-track transformation in just 4 weeks. We cover protocol training, cultural intelligence, and luxury lifestyle consulting. When would you like to start?",
+    training: "Our training masterclasses are designed for fast-track transformation in just 4 weeks. We cover protocol training, Cultural Intelligence, and luxury lifestyle consulting. When would you like to start?",
     cultural: "Our cultural guidance covers Emirati customs, Islamic etiquette, business protocols, and social integration. We're certified by the Washington School of Protocol and trusted by embassies worldwide.",
     default: "Thank you for your message! For detailed assistance, I can connect you directly with The Orange Code team via WhatsApp. Would you like me to do that?"
   }

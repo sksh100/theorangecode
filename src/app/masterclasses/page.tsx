@@ -69,7 +69,7 @@ const masterclasses: Masterclass[] = [
       "Develop emotional and cultural awareness in daily interactions"
     ],
     outcomes: [
-      "A higher level of cultural intelligence and interpersonal awareness",
+      "A higher level of Cultural Intelligence and interpersonal awareness",
       "Stronger relationships at work and in personal life",
       "Practical tools to communicate clearly and respectfully across cultures",
       "The ability to avoid common cultural misunderstandings"
@@ -150,8 +150,8 @@ const generateAvailableDates = (masterclassId: number | null): TimeSlot[] => {
         day: 'numeric',
       })
 
-      // Date is available if it's after January 6, 2026
-      const isAvailable = d > cutoffDate
+      // Date is available if it's on or after January 19, 2026
+      const isAvailable = d >= cutoffDate
 
       slots.push({
         date: formattedDate,

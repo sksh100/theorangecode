@@ -663,7 +663,7 @@ export function WhyCulturalIntelligenceSection() {
                   The Bottom Line
                 </h4>
                 <p className="text-base sm:text-xl md:text-2xl text-white/90 leading-relaxed px-4 sm:px-0">
-                  Teams with high cultural intelligence see{' '}
+                  Teams with high Cultural Intelligence see{' '}
                   <motion.span 
                     className="font-bold text-orange inline-block relative"
                     key={collaborationPercent}
@@ -684,7 +684,7 @@ export function WhyCulturalIntelligenceSection() {
                   {' '}better collaboration,{' '}
                   <span className="font-bold text-orange">faster decision-making</span>, and{' '}
                   <span className="font-bold text-orange">stronger client relationships</span>. 
-                  In a region where relationships drive business, cultural intelligence is your competitive advantage.
+                  In a region where relationships drive business, Cultural Intelligence is your competitive advantage.
                 </p>
               </div>
             </div>

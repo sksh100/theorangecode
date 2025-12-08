@@ -22,7 +22,7 @@ export default function FAQ() {
     {
       id: '1',
       question: 'What makes The Orange Code different from other Masterclasses?',
-      answer: 'The Orange Code offers an experience that goes far beyond standard cultural training. Our programs are designed specifically for the realities of the UAE and the wider GCC. We blend cultural intelligence, leadership psychology, behaviour science, and region specific insights to help clients strengthen confidence, communication, and emotional awareness.\n\nEach session is crafted to bring immediate clarity and practical behavioural shifts that enhance the way clients live, work, and build relationships in the Emirates.',
+      answer: 'The Orange Code offers an experience that goes far beyond standard cultural training. Our programs are designed specifically for the realities of the UAE and the wider GCC. We blend Cultural Intelligence, leadership psychology, behaviour science, and region specific insights to help clients strengthen confidence, communication, and emotional awareness.\n\nEach session is crafted to bring immediate clarity and practical behavioural shifts that enhance the way clients live, work, and build relationships in the Emirates.',
       category: 'general',
       icon: <Award className="w-5 h-5" />
     },
@@ -99,7 +99,7 @@ export default function FAQ() {
     {
       id: '12',
       question: 'What is your success rate and client satisfaction?',
-      answer: 'We maintain a strong satisfaction rate across all Masterclasses. Our clients include embassy staff, executives, entrepreneurs, and expat families from around the world.\n\nMany describe the experience as transformative because it increases clarity, confidence, and cultural alignment both professionally and personally.\n\nOur mission is to deliver measurable growth and long term cultural intelligence.',
+      answer: 'We maintain a strong satisfaction rate across all Masterclasses. Our clients include embassy staff, executives, entrepreneurs, and expat families from around the world.\n\nMany describe the experience as transformative because it increases clarity, confidence, and cultural alignment both professionally and personally.\n\nOur mission is to deliver measurable growth and long term Cultural Intelligence.',
       category: 'general',
       icon: <Award className="w-5 h-5" />
     }
@@ -214,7 +214,7 @@ export default function FAQ() {
             </div>
             <div>
               <h1 className="text-5xl font-bold text-white mb-2">Frequently Asked Questions</h1>
-              <p className="text-white/70 text-xl">Find answers to common questions about our luxury cultural intelligence masterclasses</p>
+              <p className="text-white/70 text-xl">Find answers to common questions about our luxury Cultural Intelligence masterclasses</p>
             </div>
           </motion.div>
 

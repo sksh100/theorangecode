@@ -89,7 +89,7 @@ export function ResourcesMegaDropdown({ isOpen, onClose }: ResourcesMegaDropdown
                         <h4 className="text-lg font-bold text-white">Ebook Coming Soon</h4>
                       </div>
                       <p className="text-white/70 text-sm leading-relaxed">
-                        We're preparing exclusive cultural intelligence resources for you. Stay tuned for updates!
+                        We're preparing exclusive Cultural Intelligence resources for you. Stay tuned for updates!
                       </p>
                     </div>
                   </div>

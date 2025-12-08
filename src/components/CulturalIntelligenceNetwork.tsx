@@ -1,6 +1,6 @@
 'use client'
 
-// WebGL 3D network visualization for cultural intelligence theme
+// WebGL 3D network visualization for Cultural Intelligence theme
 import { useRef, useMemo, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Line, Sphere } from '@react-three/drei'

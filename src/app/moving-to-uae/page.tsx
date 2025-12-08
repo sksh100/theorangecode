@@ -111,7 +111,7 @@ export default function MovingToUAEPage() {
             "@context": "https://schema.org",
             "@type": "WebPage",
             "name": "Moving to the UAE. Cultural intelligence and relocation hub",
-            "description": "A cultural intelligence hub for anyone who wants to move to the UAE. Understand work culture, expectations, housing basics and everyday life, and explore country specific guides such as the UK to UAE cultural intelligence ebook.",
+            "description": "A Cultural Intelligence hub for anyone who wants to move to the UAE. Understand work culture, expectations, housing basics and everyday life, and explore country specific guides such as the UK to UAE Cultural Intelligence ebook.",
             "url": "https://www.theorangecode.com/moving-to-uae",
             "inLanguage": "en",
             "isPartOf": {
@@ -122,7 +122,7 @@ export default function MovingToUAEPage() {
             "about": {
               "@type": "Thing",
               "name": "Moving to the UAE",
-              "description": "Learning hub for professionals, families, students and entrepreneurs who are exploring a move to the United Arab Emirates, with a focus on cultural intelligence, workplace expectations and daily life."
+              "description": "Learning hub for professionals, families, students and entrepreneurs who are exploring a move to the United Arab Emirates, with a focus on Cultural Intelligence, workplace expectations and daily life."
             },
             "mainEntity": {
               "@type": "FAQPage",
@@ -132,7 +132,7 @@ export default function MovingToUAEPage() {
                   "name": "Can people from any country use this relocation hub?",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Yes, it is written for a global audience. Citizenship affects visa rules but the cultural intelligence principles apply to everyone."
+                    "text": "Yes, it is written for a global audience. Citizenship affects visa rules but the Cultural Intelligence principles apply to everyone."
                   }
                 },
                 {
@@ -453,25 +453,25 @@ export default function MovingToUAEPage() {
                     icon: Briefcase,
                     title: 'Established professionals and managers',
                     text: 'Use the hub to understand workplace expectations, leadership style and how to protect your reputation while you transition into a new role.',
-                    linkText: 'Explore cultural intelligence training'
+                    linkText: 'Explore Cultural Intelligence training'
                   },
                   {
                     icon: Baby,
                     title: 'Families who are relocating together',
                     text: 'Use the hub to think through housing, schools, partner careers and routines so that everyone adjusts in a healthy way.',
-                    linkText: 'Explore cultural intelligence training'
+                    linkText: 'Explore Cultural Intelligence training'
                   },
                   {
                     icon: GraduationCap,
                     title: 'Students, graduates and early career explorers',
                     text: 'Use the hub to understand cost of living, first roles, internships and what professional behaviour looks like in the UAE.',
-                    linkText: 'Explore cultural intelligence training'
+                    linkText: 'Explore Cultural Intelligence training'
                   },
                   {
                     icon: Building2,
                     title: 'Entrepreneurs and independent consultants',
                     text: 'Use the hub to frame questions about free zones, client relationships and how to build trust as an external partner.',
-                    linkText: 'Explore cultural intelligence training'
+                    linkText: 'Explore Cultural Intelligence training'
                   }
                 ].map((item, index) => {
                   const Icon = item.icon
@@ -531,7 +531,7 @@ export default function MovingToUAEPage() {
               <div className="grid md:grid-cols-2 gap-8">
                 {/* Left column */}
                 <motion.div variants={itemVariants} className="space-y-4">
-                  <h3 className="text-2xl font-bold text-white mb-6">How cultural intelligence helps</h3>
+                  <h3 className="text-2xl font-bold text-white mb-6">How Cultural Intelligence helps</h3>
                   <ul className="space-y-4">
                     {[
                       'It improves meetings and negotiations because you understand how people communicate, decide and push back in a respectful way.',
@@ -556,7 +556,7 @@ export default function MovingToUAEPage() {
                     <h3 className="text-2xl font-bold text-white mb-6">How The Orange Code helps</h3>
                     <ul className="space-y-3 mb-6">
                       {[
-                        'Country specific cultural intelligence guides for people moving to the UAE',
+                        'Country specific Cultural Intelligence guides for people moving to the UAE',
                         'Live and virtual masterclasses that translate theory into real conversations',
                         'Resources that focus on the Emirates and the wider GCC region'
                       ].map((item, index) => (
@@ -572,7 +572,7 @@ export default function MovingToUAEPage() {
                         whileTap={{ scale: 0.95 }}
                         className="w-full px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300"
                       >
-                        View cultural intelligence masterclasses
+                        View Cultural Intelligence masterclasses
                       </motion.button>
                     </Link>
                   </div>
@@ -602,7 +602,7 @@ export default function MovingToUAEPage() {
                 variants={itemVariants}
                 className="text-lg text-white/80 mb-12 text-center max-w-3xl mx-auto leading-relaxed"
               >
-                The core principles of cultural intelligence are universal, but each country arrives in the UAE with its own habits, communication style and blind spots. Our guides are written from inside the Emirates so that you can see the differences clearly.
+                The core principles of Cultural Intelligence are universal, but each country arrives in the UAE with its own habits, communication style and blind spots. Our guides are written from inside the Emirates so that you can see the differences clearly.
               </motion.p>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -938,7 +938,7 @@ export default function MovingToUAEPage() {
                 variants={itemVariants}
                 className="text-lg text-white/80 mb-12 text-center max-w-3xl mx-auto leading-relaxed"
               >
-                Guides are perfect for independent learners. If you want tailored support for your team or family, our cultural intelligence masterclasses and advisory sessions go deeper into your real scenarios.
+                Guides are perfect for independent learners. If you want tailored support for your team or family, our Cultural Intelligence masterclasses and advisory sessions go deeper into your real scenarios.
               </motion.p>
 
               <div className="grid md:grid-cols-2 gap-6">
@@ -946,7 +946,7 @@ export default function MovingToUAEPage() {
                   {
                     title: 'For individuals and families',
                     items: [
-                      'Seats in live or virtual cultural intelligence masterclasses',
+                      'Seats in live or virtual Cultural Intelligence masterclasses',
                       'UAE focused webinars or online sessions',
                       'Option to join a small cohort'
                     ]
@@ -1016,7 +1016,7 @@ export default function MovingToUAEPage() {
                 variants={itemVariants}
                 className="text-lg text-white/80 mb-12 max-w-2xl mx-auto leading-relaxed"
               >
-                You do not have to understand everything today. Start with a guide or training that matches your origin country and life stage, and build your cultural intelligence step by step.
+                You do not have to understand everything today. Start with a guide or training that matches your origin country and life stage, and build your Cultural Intelligence step by step.
               </motion.p>
 
               <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -1088,7 +1088,7 @@ export default function MovingToUAEPage() {
                 {[
                   {
                     q: 'Can people from any country use this relocation hub?',
-                    a: 'Yes, it is written for a global audience. Citizenship affects visa rules but the cultural intelligence principles apply to everyone.'
+                    a: 'Yes, it is written for a global audience. Citizenship affects visa rules but the Cultural Intelligence principles apply to everyone.'
                   },
                   {
                     q: 'Is this page only about Dubai?',

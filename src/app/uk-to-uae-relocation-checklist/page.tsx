@@ -79,7 +79,7 @@ export default function RelocationChecklistPage() {
         'Adapt to time perception and scheduling',
         'Respect hierarchical structures',
         'Participate in team-building activities',
-        'Seek cultural intelligence training if needed'
+        'Seek Cultural Intelligence training if needed'
       ]
     },
     {
@@ -252,7 +252,7 @@ export default function RelocationChecklistPage() {
                     </h2>
                     
                     <p className="text-lg text-white/80 mb-6 leading-relaxed">
-                      This checklist covers the essentials. For comprehensive cultural intelligence, workplace communication strategies, and in-depth guidance, get the full <strong>UK to UAE Cultural Intelligence Guide</strong>.
+                      This checklist covers the essentials. For comprehensive Cultural Intelligence, workplace communication strategies, and in-depth guidance, get the full <strong>UK to UAE Cultural Intelligence Guide</strong>.
                     </p>
 
                     <div className="flex flex-wrap gap-4 justify-center">
@@ -271,7 +271,7 @@ export default function RelocationChecklistPage() {
                       <SocialShareButtons
                         url="https://www.theorangecode.com/uk-to-uae-relocation"
                         title="UK to UAE Relocation Cultural Guide"
-                        description="A practical cultural intelligence guide for British professionals relocating to the UAE."
+                        description="A practical Cultural Intelligence guide for British professionals relocating to the UAE."
                         variant="compact"
                         showLabel={true}
                         className="justify-center"

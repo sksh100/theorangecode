@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     const brandData = await kv.get('brand_profile')
     const brandProfile = brandData ? JSON.parse(brandData as string) : {
       toneOfVoice: 'Professional, inspiring, culturally intelligent, empowering, sophisticated',
-      targetAudience: 'Professionals seeking cultural intelligence and leadership development',
+      targetAudience: 'Professionals seeking Cultural Intelligence and leadership development',
       examplePosts: [],
     }
 

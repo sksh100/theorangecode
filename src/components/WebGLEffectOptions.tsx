@@ -941,7 +941,7 @@ const effectOptions: EffectOption[] = [
     description: 'Connected nodes representing people and cross-cultural connections',
     icon: <Network className="w-6 h-6" />,
     concept: 'Visualizes the interconnected web of relationships, showing how individuals from different cultures connect and form meaningful bonds. Each node represents a person, and the lines show cultural bridges being built.',
-    whyItWorks: 'Perfect for representing cultural intelligence as it emphasizes connection, networking, and the beautiful complexity of intercultural relationships.'
+    whyItWorks: 'Perfect for representing Cultural Intelligence as it emphasizes connection, networking, and the beautiful complexity of intercultural relationships.'
   },
   {
     id: 'converging',
@@ -949,7 +949,7 @@ const effectOptions: EffectOption[] = [
     description: 'Flowing particles that merge, separate, and blend together',
     icon: <Globe className="w-6 h-6" />,
     concept: 'Represents different cultures flowing together, merging, and creating something new. Particles start from distinct clusters (representing different cultures) and converge in harmony, then flow outward again.',
-    whyItWorks: 'Metaphorically shows how understanding cultures means seeing them blend and merge while maintaining their unique identity - core to cultural intelligence.'
+    whyItWorks: 'Metaphorically shows how understanding cultures means seeing them blend and merge while maintaining their unique identity - core to Cultural Intelligence.'
   },
   {
     id: 'harmonic',
@@ -957,7 +957,7 @@ const effectOptions: EffectOption[] = [
     description: 'Spheres orbiting in perfect harmony, each in their own rhythm',
     icon: <Users className="w-6 h-6" />,
     concept: 'Multiple orbital rings with spheres moving in synchronized harmony. Each ring represents a different cultural perspective, all coexisting peacefully and beautifully together.',
-    whyItWorks: 'Shows how different cultures can coexist harmoniously while maintaining their own rhythm and identity - essential concept in cultural intelligence training.'
+    whyItWorks: 'Shows how different cultures can coexist harmoniously while maintaining their own rhythm and identity - essential concept in Cultural Intelligence training.'
   },
   {
     id: 'bridges',
@@ -965,7 +965,7 @@ const effectOptions: EffectOption[] = [
     description: 'Arches connecting different cultural spaces and communities',
     icon: <Link2 className="w-6 h-6" />,
     concept: 'Torus arches forming bridges between distinct spaces. Each bridge represents a connection point where cultures meet, exchange ideas, and build understanding. The arches span gaps, creating pathways for communication.',
-    whyItWorks: 'Bridges are powerful symbols of connection and understanding. This effect visually represents how cultural intelligence helps build bridges between different communities, enabling meaningful exchange and collaboration.'
+    whyItWorks: 'Bridges are powerful symbols of connection and understanding. This effect visually represents how Cultural Intelligence helps build bridges between different communities, enabling meaningful exchange and collaboration.'
   },
   {
     id: 'threads',
@@ -973,7 +973,7 @@ const effectOptions: EffectOption[] = [
     description: 'Threads weaving together to create a unified cultural fabric',
     icon: <GitBranch className="w-6 h-6" />,
     concept: 'Vertical threads representing different cultural elements that weave together, creating a beautiful tapestry. Each thread maintains its color and identity while contributing to a larger, unified pattern.',
-    whyItWorks: 'Represents how individual cultural elements can be woven together to create something greater. This metaphor emphasizes that cultural intelligence involves understanding how different threads contribute to the whole fabric of society.'
+    whyItWorks: 'Represents how individual cultural elements can be woven together to create something greater. This metaphor emphasizes that Cultural Intelligence involves understanding how different threads contribute to the whole fabric of society.'
   },
   {
     id: 'layers',
@@ -981,7 +981,7 @@ const effectOptions: EffectOption[] = [
     description: 'Transparent layers representing depth of cultural understanding',
     icon: <Layers className="w-6 h-6" />,
     concept: 'Multiple transparent planes stacked to create depth. Each layer represents a different level of cultural understanding - from surface awareness to deep comprehension. As layers accumulate, understanding becomes richer and more nuanced.',
-    whyItWorks: 'Shows that cultural intelligence is not a single skill but a layered understanding that deepens over time. Each layer adds complexity and richness, representing the journey from basic awareness to profound cultural mastery.'
+    whyItWorks: 'Shows that Cultural Intelligence is not a single skill but a layered understanding that deepens over time. Each layer adds complexity and richness, representing the journey from basic awareness to profound cultural mastery.'
   },
   {
     id: 'floating',
@@ -989,7 +989,7 @@ const effectOptions: EffectOption[] = [
     description: '3D spheres floating gracefully in space',
     icon: <Circle className="w-6 h-6" />,
     concept: 'Multiple 3D spheres of varying sizes floating independently in three-dimensional space. Each sphere represents a unique cultural perspective, moving freely while maintaining its own identity. The spheres gently float and rotate, creating a sense of harmony and balance.',
-    whyItWorks: 'Represents individual cultural identities existing independently yet harmoniously in a shared space. The floating motion suggests flexibility and adaptability - key qualities in cultural intelligence.'
+    whyItWorks: 'Represents individual cultural identities existing independently yet harmoniously in a shared space. The floating motion suggests flexibility and adaptability - key qualities in Cultural Intelligence.'
   },
   {
     id: 'orbiting',
@@ -1005,7 +1005,7 @@ const effectOptions: EffectOption[] = [
     description: 'Spheres that rhythmically pulse and glow',
     icon: <Sparkles className="w-6 h-6" />,
     concept: 'Spheres that rhythmically expand and contract, pulsing with energy and light. Each sphere pulses at its own rhythm, creating a mesmerizing wave-like effect. The pulsing represents the dynamic, living nature of culture - always changing, always breathing.',
-    whyItWorks: 'The pulsing motion represents the living, breathing nature of culture. Just as cultures evolve and adapt, these spheres pulse with life, showing that cultural intelligence is about understanding dynamic, ever-changing systems.'
+    whyItWorks: 'The pulsing motion represents the living, breathing nature of culture. Just as cultures evolve and adapt, these spheres pulse with life, showing that Cultural Intelligence is about understanding dynamic, ever-changing systems.'
   },
   {
     id: 'grid',
@@ -1013,7 +1013,7 @@ const effectOptions: EffectOption[] = [
     description: 'Spheres arranged in a perfect 3D grid formation',
     icon: <Grid3x3 className="w-6 h-6" />,
     concept: 'Spheres arranged in a precise three-dimensional grid pattern, creating a structured, organized formation. Each sphere maintains its position in the grid while the entire structure rotates, showing how individual elements contribute to a larger organized system.',
-    whyItWorks: 'Represents the structured, organized nature of cultural systems. The grid shows that while cultures have structure and rules, they can still move and evolve as a whole. This emphasizes the systematic approach to understanding cultural intelligence.'
+    whyItWorks: 'Represents the structured, organized nature of cultural systems. The grid shows that while cultures have structure and rules, they can still move and evolve as a whole. This emphasizes the systematic approach to understanding Cultural Intelligence.'
   },
   {
     id: 'merging',
@@ -1021,7 +1021,7 @@ const effectOptions: EffectOption[] = [
     description: 'Sphere clusters that merge and separate',
     icon: <Users className="w-6 h-6" />,
     concept: 'Groups of spheres that come together, merge into unified clusters, then separate again. The merging and separating represents the dynamic nature of cultural exchange - how different groups can come together, share ideas, and then maintain their distinct identities.',
-    whyItWorks: 'Perfect metaphor for cultural exchange and collaboration. Shows how different cultural groups can merge temporarily to share knowledge and understanding, then separate while maintaining their unique identities - core to cultural intelligence.'
+    whyItWorks: 'Perfect metaphor for cultural exchange and collaboration. Shows how different cultural groups can merge temporarily to share knowledge and understanding, then separate while maintaining their unique identities - core to Cultural Intelligence.'
   },
   {
     id: 'cluster',
@@ -1029,7 +1029,7 @@ const effectOptions: EffectOption[] = [
     description: 'Spheres forming an interconnected network cluster',
     icon: <Network className="w-6 h-6" />,
     concept: 'Spheres arranged in a cluster formation with connecting lines between nearby spheres. The cluster represents a network of relationships, where each sphere is connected to others, creating a web of cultural connections and understanding.',
-    whyItWorks: 'Visualizes the interconnected nature of cultural relationships. Each sphere represents an individual or group, and the connections show how cultural understanding is built through relationships and networks - essential to cultural intelligence.'
+    whyItWorks: 'Visualizes the interconnected nature of cultural relationships. Each sphere represents an individual or group, and the connections show how cultural understanding is built through relationships and networks - essential to Cultural Intelligence.'
   }
 ]
 
@@ -1108,7 +1108,7 @@ export function WebGLEffectSelector() {
               WebGL Effect Options
             </h1>
             <p className="text-[10px] md:text-xs text-white/80 mb-2 text-center max-w-md mx-auto">
-              Select the perfect visual metaphor for cultural intelligence
+              Select the perfect visual metaphor for Cultural Intelligence
             </p>
 
             {/* Effect Cards - 6 options in 2 rows */}

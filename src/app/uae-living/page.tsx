@@ -54,7 +54,7 @@ export default function UAELivingPage() {
             "@context": "https://schema.org",
             "@type": "WebPage",
             "name": "Life in the UAE. Cultural intelligence guide to living in Dubai and Abu Dhabi",
-            "description": "A calm, research based overview of life in the UAE for expats and professionals from around the world. Learn what everyday life in Dubai and Abu Dhabi feels like, how culture and etiquette work, and how cultural intelligence helps you feel at home faster.",
+            "description": "A calm, research based overview of life in the UAE for expats and professionals from around the world. Learn what everyday life in Dubai and Abu Dhabi feels like, how culture and etiquette work, and how Cultural Intelligence helps you feel at home faster.",
             "url": "https://www.theorangecode.com/uae-living",
             "inLanguage": "en",
             "isPartOf": {
@@ -65,7 +65,7 @@ export default function UAELivingPage() {
             "about": {
               "@type": "Thing",
               "name": "Life in the UAE",
-              "description": "Guide to life in the United Arab Emirates seen through cultural intelligence. Covers everyday life, work culture, etiquette and community in Dubai, Abu Dhabi and the wider UAE."
+              "description": "Guide to life in the United Arab Emirates seen through Cultural Intelligence. Covers everyday life, work culture, etiquette and community in Dubai, Abu Dhabi and the wider UAE."
             },
             "mainEntity": {
               "@type": "FAQPage",
@@ -107,7 +107,7 @@ export default function UAELivingPage() {
                   "name": "Where can I learn more about moving to the UAE",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "For relocation planning, visit The Orange Code Moving to the UAE hub at /moving-to-uae. It offers step by step guidance on visas, work culture, housing and cultural intelligence. British citizens can also explore the UK to UAE relocation guide at /uk-to-uae-relocation."
+                    "text": "For relocation planning, visit The Orange Code Moving to the UAE hub at /moving-to-uae. It offers step by step guidance on visas, work culture, housing and Cultural Intelligence. British citizens can also explore the UK to UAE relocation guide at /uk-to-uae-relocation."
                   }
                 }
               ]
@@ -144,7 +144,7 @@ export default function UAELivingPage() {
                 {/* Main heading */}
                 <motion.div variants={itemVariants} className="mb-6">
                   <PageHeading level="h1">
-                    Life in the UAE through a cultural intelligence lens
+                    Life in the UAE through a Cultural Intelligence lens
                   </PageHeading>
                 </motion.div>
 
@@ -358,7 +358,7 @@ export default function UAELivingPage() {
                 variants={itemVariants}
                 className="text-lg text-white/80 mb-12 text-center max-w-3xl mx-auto leading-relaxed"
               >
-                Life in the UAE is shaped by Emirati traditions, Islamic values and a large international community. Understanding how these layers work together is at the heart of cultural intelligence. When you know what respect looks like in practice, you feel more grounded and relationships grow faster.
+                Life in the UAE is shaped by Emirati traditions, Islamic values and a large international community. Understanding how these layers work together is at the heart of Cultural Intelligence. When you know what respect looks like in practice, you feel more grounded and relationships grow faster.
               </motion.p>
 
               {/* Three column list */}
@@ -397,7 +397,7 @@ export default function UAELivingPage() {
                 <div className="relative z-10 text-center">
                   <h3 className="text-2xl font-bold text-white mb-3">Want to understand the deeper patterns behind life in the UAE</h3>
                   <p className="text-white/80 mb-6 max-w-2xl mx-auto">
-                    Our cultural intelligence masterclasses and country specific guides explain how values, expectations and unwritten rules show up in meetings, emails, friendships and community life.
+                    Our Cultural Intelligence masterclasses and country specific guides explain how values, expectations and unwritten rules show up in meetings, emails, friendships and community life.
                   </p>
                   <Link href="/moving-to-uae">
                     <motion.button
@@ -606,7 +606,7 @@ export default function UAELivingPage() {
                         Visit the Moving to the UAE hub
                       </motion.button>
                     </Link>
-                    <p className="text-white/60 text-sm flex-grow">Step by step guidance on visas, work culture, housing and cultural intelligence for all nationalities.</p>
+                    <p className="text-white/60 text-sm flex-grow">Step by step guidance on visas, work culture, housing and Cultural Intelligence for all nationalities.</p>
                   </div>
                 </motion.div>
 
@@ -625,7 +625,7 @@ export default function UAELivingPage() {
                         UK to UAE guide for British expats
                       </motion.button>
                     </Link>
-                    <p className="text-white/60 text-sm flex-grow">A dedicated cultural intelligence guide for British citizens who want a clear roadmap for their move.</p>
+                    <p className="text-white/60 text-sm flex-grow">A dedicated Cultural Intelligence guide for British citizens who want a clear roadmap for their move.</p>
                   </div>
                 </motion.div>
               </div>

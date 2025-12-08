@@ -53,7 +53,7 @@ export default function CulturalIntelligenceUAEPage() {
             "mainEntity": [
               {
                 "@type": "Question",
-                "name": "What is cultural intelligence UAE?",
+                "name": "What is Cultural Intelligence UAE?",
                 "acceptedAnswer": {
                   "@type": "Answer",
                   "text": "Cultural intelligence UAE is the ability to understand, adapt to, and effectively work with people from diverse cultural backgrounds in the United Arab Emirates. It's essential for professionals in Dubai, Abu Dhabi, and across all seven emirates, where over 200 nationalities work and live together."
@@ -61,15 +61,15 @@ export default function CulturalIntelligenceUAEPage() {
               },
               {
                 "@type": "Question",
-                "name": "Where can I get cultural intelligence training in Dubai?",
+                "name": "Where can I get Cultural Intelligence training in Dubai?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "The Orange Code offers cultural intelligence training in Dubai and Abu Dhabi. Our masterclasses cover Emirati cultural foundations, cross-cultural communication, business protocol, and multicultural team leadership. We provide both in-person sessions at Etihad Towers in Abu Dhabi and online training options."
+                  "text": "The Orange Code offers Cultural Intelligence training in Dubai and Abu Dhabi. Our masterclasses cover Emirati cultural foundations, cross-cultural communication, business protocol, and multicultural team leadership. We provide both in-person sessions at Etihad Towers in Abu Dhabi and online training options."
                 }
               },
               {
                 "@type": "Question",
-                "name": "Why is cultural intelligence important in Abu Dhabi?",
+                "name": "Why is Cultural Intelligence important in Abu Dhabi?",
                 "acceptedAnswer": {
                   "@type": "Answer",
                   "text": "Cultural intelligence is crucial in Abu Dhabi because the UAE hosts one of the world's most diverse populations. Understanding Emirati culture, Islamic values, and how to navigate multicultural environments helps professionals build trust, communicate effectively, and succeed in business. Without it, misunderstandings increase and relationships suffer."
@@ -77,7 +77,7 @@ export default function CulturalIntelligenceUAEPage() {
               },
               {
                 "@type": "Question",
-                "name": "What does cultural intelligence training cover in the UAE?",
+                "name": "What does Cultural Intelligence training cover in the UAE?",
                 "acceptedAnswer": {
                   "@type": "Answer",
                   "text": "Cultural intelligence training in the UAE covers Emirati cultural foundations, Islamic etiquette, communication styles, business protocol, hierarchy and decision-making, relationship-building, feedback styles, dress codes, and how to navigate multicultural teams. Training helps professionals adapt their approach while remaining authentic."
@@ -113,7 +113,7 @@ export default function CulturalIntelligenceUAEPage() {
               "mainEntity": [
                 {
                   "@type": "Question",
-                  "name": "What is cultural intelligence UAE?",
+                  "name": "What is Cultural Intelligence UAE?",
                   "acceptedAnswer": {
                     "@type": "Answer",
                     "text": "Cultural intelligence UAE is essential for professionals working in Dubai, Abu Dhabi, and across the United Arab Emirates."
@@ -160,7 +160,7 @@ export default function CulturalIntelligenceUAEPage() {
                   </span>
                 </h1>
                 <p className="text-xl sm:text-2xl text-white/90 mb-4 leading-relaxed">
-                  Master cultural intelligence for success in Dubai, Abu Dhabi, and across the United Arab Emirates
+                  Master Cultural Intelligence for success in Dubai, Abu Dhabi, and across the United Arab Emirates
                 </p>
                 <p className="text-lg text-white/80 max-w-3xl mx-auto">
                   Essential training for professionals working in one of the world's most diverse business environments. Learn Emirati culture, cross-cultural communication, and business protocol.
@@ -186,14 +186,14 @@ export default function CulturalIntelligenceUAEPage() {
                   </h2>
                   <div className="space-y-6 text-lg leading-relaxed text-white/90">
                     <p>
-                      The <strong className="text-white">United Arab Emirates</strong> is home to over <strong className="text-orange">200 nationalities</strong>, making it one of the most culturally diverse countries in the world. Whether you're working in <strong className="text-azure-blue">Dubai</strong>, <strong className="text-azure-blue">Abu Dhabi</strong>, or any of the seven emirates, <strong className="text-orange">cultural intelligence</strong> is not optional—it's essential for professional success.
+                      The <strong className="text-white">United Arab Emirates</strong> is home to over <strong className="text-orange">200 nationalities</strong>, making it one of the most culturally diverse countries in the world. Whether you're working in <strong className="text-azure-blue">Dubai</strong>, <strong className="text-azure-blue">Abu Dhabi</strong>, or any of the seven emirates, <strong className="text-orange">Cultural Intelligence</strong> is not optional—it's essential for professional success.
                     </p>
                     <p>
                       <strong className="text-white">Cultural intelligence UAE</strong> helps you understand how Emirati traditions, Islamic values, and international business practices intersect. It enables you to communicate with clarity, build trust across cultures, navigate hierarchy appropriately, and avoid misunderstandings that can damage relationships and business opportunities.
                     </p>
                     <div className="p-6 rounded-xl bg-white/5 backdrop-blur-sm border-l-4 border-orange mt-8">
                       <p className="text-white font-semibold text-lg">
-                        Without cultural intelligence, even the most skilled professionals struggle in the UAE. With it, you unlock deeper connections, clearer communication, and genuine respect from colleagues and clients across all cultures.
+                        Without Cultural Intelligence, even the most skilled professionals struggle in the UAE. With it, you unlock deeper connections, clearer communication, and genuine respect from colleagues and clients across all cultures.
                       </p>
                     </div>
                   </div>
@@ -278,10 +278,10 @@ export default function CulturalIntelligenceUAEPage() {
                       <strong className="text-white">Abu Dhabi:</strong> In-person masterclasses at Etihad Towers, Tower 3, Floor 36.
                     </p>
                     <p>
-                      <strong className="text-white">Dubai:</strong> Corporate training and private coaching available. We bring cultural intelligence expertise to your office or preferred location.
+                      <strong className="text-white">Dubai:</strong> Corporate training and private coaching available. We bring Cultural Intelligence expertise to your office or preferred location.
                     </p>
                     <p>
-                      <strong className="text-white">Online:</strong> Virtual cultural intelligence training available for international clients and remote teams.
+                      <strong className="text-white">Online:</strong> Virtual Cultural Intelligence training available for international clients and remote teams.
                     </p>
                   </div>
                 </motion.div>
@@ -304,7 +304,7 @@ export default function CulturalIntelligenceUAEPage() {
                     </motion.a>
                   </Link>
                   <p className="text-white/70 mt-4">
-                    Join professionals from across the UAE who are mastering cultural intelligence
+                    Join professionals from across the UAE who are mastering Cultural Intelligence
                   </p>
                 </motion.div>
               </div>

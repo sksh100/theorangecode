@@ -75,7 +75,7 @@ export default function WhyCulturalIntelligencePage() {
             "@context": "https://schema.org",
             "@type": "Article",
             "headline": "Why Cultural Intelligence Matters",
-            "description": "Discover why cultural intelligence is essential for success in the UAE and Gulf region. Learn how CQ improves communication, reduces misunderstandings, and builds stronger relationships across cultures.",
+            "description": "Discover why Cultural Intelligence is essential for success in the UAE and Gulf region. Learn how CQ improves communication, reduces misunderstandings, and builds stronger relationships across cultures.",
             "url": "https://www.theorangecode.com/why-cultural-intelligence",
             "image": "https://www.theorangecode.com/og-image",
             "author": {
@@ -142,7 +142,7 @@ export default function WhyCulturalIntelligencePage() {
                     </span>
                   </h1>
                   <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed">
-                    Discover why cultural intelligence is essential for success in the UAE and Gulf region.
+                    Discover why Cultural Intelligence is essential for success in the UAE and Gulf region.
                   </p>
                 </motion.div>
               </div>
@@ -174,7 +174,7 @@ export default function WhyCulturalIntelligencePage() {
                     className="p-6 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm"
                   >
                     <p className="text-white/90 font-semibold">
-                      <span className="text-white">Without cultural intelligence:</span> These differences create confusion that slows progress.
+                      <span className="text-white">Without Cultural Intelligence:</span> These differences create confusion that slows progress.
                     </p>
                   </motion.div>
                   <motion.div
@@ -182,7 +182,7 @@ export default function WhyCulturalIntelligencePage() {
                     className="p-6 rounded-xl border border-white/20 bg-white/5 backdrop-blur-sm"
                   >
                     <p className="text-white/90 font-semibold">
-                      <span className="text-white">With cultural intelligence:</span> They turn into an advantage that strengthens relationships and drives meaningful success.
+                      <span className="text-white">With Cultural Intelligence:</span> They turn into an advantage that strengthens relationships and drives meaningful success.
                     </p>
                   </motion.div>
                 </div>
@@ -338,7 +338,7 @@ export default function WhyCulturalIntelligencePage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                   <div className="space-y-4">
                     <p className="text-lg leading-relaxed text-white/80">
-                      In practical terms, cultural intelligence:
+                      In practical terms, Cultural Intelligence:
                     </p>
                     <div className="space-y-3">
                       {benefits.map((benefit, index) => (
@@ -376,7 +376,7 @@ export default function WhyCulturalIntelligencePage() {
                   </span>
                 </h2>
                 <p className="text-lg leading-relaxed text-white/80 text-center max-w-3xl mx-auto">
-                  From leading teams across nationalities to negotiating with local partners or simply forming friendships, cultural intelligence allows you to connect in a meaningful, respectful, and strategic way.
+                  From leading teams across nationalities to negotiating with local partners or simply forming friendships, Cultural Intelligence allows you to connect in a meaningful, respectful, and strategic way.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">

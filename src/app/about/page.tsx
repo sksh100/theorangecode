@@ -61,7 +61,7 @@ export default function AboutPage() {
             "name": "The Orange Code",
             "url": "https://www.theorangecode.com",
             "logo": "https://www.theorangecode.com/logo1.png",
-            "description": "Cultural Intelligence & Leadership Training in Abu Dhabi, UAE. We empower professionals moving to the UAE to develop cultural intelligence, understand Emirati culture and etiquette, and master doing business in the Emirates.",
+            "description": "Cultural Intelligence & Leadership Training in Abu Dhabi, UAE. We empower professionals moving to the UAE to develop Cultural Intelligence, understand Emirati culture and etiquette, and master doing business in the Emirates.",
             "address": {
               "@type": "PostalAddress",
               "streetAddress": "Etihad Towers, Tower 3, Floor 36",
@@ -94,13 +94,13 @@ export default function AboutPage() {
             "@context": "https://schema.org",
             "@type": "AboutPage",
             "name": "About The Orange Code",
-            "description": "Learn about The Orange Code, a cultural intelligence and leadership training platform in Abu Dhabi, UAE. Our mission is to bridge people, cultures and intelligence.",
+            "description": "Learn about The Orange Code, a Cultural Intelligence and leadership training platform in Abu Dhabi, UAE. Our mission is to bridge people, cultures and intelligence.",
             "url": "https://www.theorangecode.com/about",
             "mainEntityOfPage": "https://www.theorangecode.com/about",
             "about": {
               "@type": "Organization",
               "name": "The Orange Code",
-              "description": "The Orange Code equips individuals, teams and organisations with the cultural intelligence needed to communicate with clarity, build lasting connections and operate confidently across the UAE and wider Gulf.",
+              "description": "The Orange Code equips individuals, teams and organisations with the Cultural Intelligence needed to communicate with clarity, build lasting connections and operate confidently across the UAE and wider Gulf.",
               "url": "https://www.theorangecode.com",
               "foundingDate": "2024"
             }
@@ -191,7 +191,7 @@ export default function AboutPage() {
                   </p>
                 </div>
                 <p>
-                  The truth is simple: thriving in the UAE and wider Gulf is not about simply blending in. It is about developing the cultural intelligence to adapt, interpret and respond to the region's unique dynamics, from local Emirati customs to the multicultural interactions that shape everyday life.
+                  The truth is simple: thriving in the UAE and wider Gulf is not about simply blending in. It is about developing the Cultural Intelligence to adapt, interpret and respond to the region's unique dynamics, from local Emirati customs to the multicultural interactions that shape everyday life.
                 </p>
                 <p className="text-xl font-semibold text-orange">
                   The Orange Code was created to answer these questions.
@@ -282,7 +282,7 @@ export default function AboutPage() {
                       </div>
                       <h3 className="text-2xl font-bold text-white mb-5">MISSION</h3>
                       <p className="text-white/90 leading-relaxed text-lg">
-                        Our mission is to equip individuals, teams and organisations with the cultural intelligence needed to communicate with clarity, build lasting connections and operate confidently across the UAE and the wider Gulf. Through practical guidance and research driven insight, we enable people to navigate cultural dynamics with respect, purpose and professionalism.
+                        Our mission is to equip individuals, teams and organisations with the Cultural Intelligence needed to communicate with clarity, build lasting connections and operate confidently across the UAE and the wider Gulf. Through practical guidance and research driven insight, we enable people to navigate cultural dynamics with respect, purpose and professionalism.
                       </p>
                     </div>
                   </motion.div>

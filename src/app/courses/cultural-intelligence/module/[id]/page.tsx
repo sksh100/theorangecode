@@ -11,7 +11,7 @@ import Link from 'next/link'
 const modules: Record<string, { title: string; description: string; videoUrl?: string }> = {
   '1': {
     title: 'Introduction to Cultural Intelligence',
-    description: 'Understand the fundamentals of cultural intelligence and why it matters in today\'s globalized world. Learn the core concepts and frameworks that will guide your learning journey.',
+    description: 'Understand the fundamentals of Cultural Intelligence and why it matters in today\'s globalized world. Learn the core concepts and frameworks that will guide your learning journey.',
     videoUrl: '/videos/module-1.mp4' // Replace with actual video URLs
   },
   '2': {
@@ -56,7 +56,7 @@ const modules: Record<string, { title: string; description: string; videoUrl?: s
   },
   '10': {
     title: 'Mastering Your CQ Journey',
-    description: 'Integrate everything you\'ve learned and create your personal action plan. Commit to continuous growth in cultural intelligence.',
+    description: 'Integrate everything you\'ve learned and create your personal action plan. Commit to continuous growth in Cultural Intelligence.',
     videoUrl: '/videos/module-10.mp4'
   }
 }

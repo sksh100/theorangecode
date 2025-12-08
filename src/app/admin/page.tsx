@@ -2024,7 +2024,7 @@ function ContentPlannerTab() {
     name: 'The Orange Code',
     colors: ['#E89F6B', '#A7A7A7', '#50A0F0', '#00d4ff', '#ff914d'],
     toneOfVoice: 'Professional, inspiring, culturally intelligent, empowering, sophisticated',
-    targetAudience: 'Professionals seeking cultural intelligence and leadership development in international environments',
+    targetAudience: 'Professionals seeking Cultural Intelligence and leadership development in international environments',
     bannedTopics: [] as string[],
     examplePosts: [] as Array<{ caption: string; hashtags: string[] }>,
   })
@@ -2093,7 +2093,7 @@ function ContentPlannerTab() {
           name: data.data.name || 'The Orange Code',
           colors: data.data.colors || ['#E89F6B', '#A7A7A7', '#50A0F0', '#00d4ff', '#ff914d'],
           toneOfVoice: data.data.toneOfVoice || 'Professional, inspiring, culturally intelligent, empowering, sophisticated',
-          targetAudience: data.data.targetAudience || 'Professionals seeking cultural intelligence and leadership development in international environments',
+          targetAudience: data.data.targetAudience || 'Professionals seeking Cultural Intelligence and leadership development in international environments',
           bannedTopics: data.data.bannedTopics || [],
           examplePosts: data.data.examplePosts || [],
         })

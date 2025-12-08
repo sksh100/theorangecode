@@ -273,7 +273,7 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
             >
               <h4 className="text-lg font-semibold text-white mb-6 tracking-tight">Stay Connected</h4>
               <p className="text-white/70 text-sm mb-6 leading-relaxed">
-                Subscribe to our newsletter for exclusive insights and cultural intelligence updates.
+                Subscribe to our newsletter for exclusive insights and Cultural Intelligence updates.
               </p>
               
               {!isSubscribed ? (
