@@ -24,6 +24,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 301)
   }
 
+  // Redirect /moving-to-uae to homepage (page removed)
+  if (pathname === '/moving-to-uae') {
+    url.pathname = '/'
+    return NextResponse.redirect(url, 301)
+  }
+
   // IP-based access control for /uk-to-uae-relocation page
   // Only allow UK IP addresses to access this page
   if (pathname === '/uk-to-uae-relocation') {
