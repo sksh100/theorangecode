@@ -118,17 +118,17 @@ const generateAvailableDates = (masterclassId: number | null): TimeSlot[] => {
     : []
   const offlineTime = '11:00 AM - 2:00 PM'
 
-  // Business rule: until Tuesday 6 January (fixed date), all sessions are sold out
-  // except that single day, which is the only available in-person slot.
+  // Business rule: All dates after January 6, 2026 are available until end of February
   // NOTE: JavaScript months are 0-indexed, so 0 = January, 1 = February.
   const today = new Date()
   const targetYear = 2026
-  const firstAvailableDate = new Date(targetYear, 0, 6) // Tuesday 6 January 2026
-  // End date: February 20, 2026 (month 1 = February in 0-indexed months)
-  const endDate = new Date(targetYear, 1, 20) // February 20, 2026
+  const cutoffDate = new Date(targetYear, 0, 6) // January 6, 2026 - dates after this are available
+  // End date: Last day of February 2026 (February 28, 2026 - 2026 is not a leap year)
+  const endDate = new Date(targetYear, 1, 28) // February 28, 2026
   
   // Set time to end of day to ensure we include the full day
   endDate.setHours(23, 59, 59, 999)
+  cutoffDate.setHours(23, 59, 59, 999)
 
   // Loop from today up to and including the end date
   const currentDate = new Date(today)
@@ -150,15 +150,13 @@ const generateAvailableDates = (masterclassId: number | null): TimeSlot[] => {
         day: 'numeric',
       })
 
-      const isTarget =
-        d.getFullYear() === firstAvailableDate.getFullYear() &&
-        d.getMonth() === firstAvailableDate.getMonth() &&
-        d.getDate() === firstAvailableDate.getDate()
+      // Date is available if it's after January 6, 2026
+      const isAvailable = d > cutoffDate
 
       slots.push({
         date: formattedDate,
         time: offlineTime,
-        available: isTarget,
+        available: isAvailable,
         type: 'offline',
       })
     }

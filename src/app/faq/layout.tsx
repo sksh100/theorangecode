@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'FAQ - Frequently Asked Questions | The Orange Code',
-  description: 'Frequently asked questions about The Orange Code cultural intelligence masterclasses, private coaching, corporate training, and services in Abu Dhabi, UAE.',
+  title: 'Cultural Intelligence Institute – The Orange Code',
+  description: 'Master cultural intelligence with The Orange Code, the Gulf's premier institute for research‑based training in communication, trust and leadership. Our programs teach professionals, families and organisations how to thrive in Dubai, Abu Dhabi and across the GCC by building respectful relationships, understanding local traditions and unlocking opportunity through cultural intelligence. Learn how to translate awareness into success, connect confidently with diverse teams and accelerate your career and business across the Middle East',
   alternates: {
     canonical: 'https://www.theorangecode.com/faq',
   },
@@ -26,8 +26,8 @@ export const metadata: Metadata = {
     'geographic-focus': 'United Arab Emirates, UAE, Dubai, Abu Dhabi',
   },
   openGraph: {
-    title: 'FAQ - Frequently Asked Questions | The Orange Code',
-    description: 'Frequently asked questions about The Orange Code cultural intelligence masterclasses, private coaching, corporate training, and services in Abu Dhabi, UAE.',
+    title: 'Cultural Intelligence Institute – The Orange Code',
+    description: 'Master cultural intelligence with The Orange Code, the Gulf's premier institute for research‑based training in communication, trust and leadership. Our programs teach professionals, families and organisations how to thrive in Dubai, Abu Dhabi and across the GCC by building respectful relationships, understanding local traditions and unlocking opportunity through cultural intelligence. Learn how to translate awareness into success, connect confidently with diverse teams and accelerate your career and business across the Middle East',
     url: 'https://www.theorangecode.com/faq',
     siteName: 'The Orange Code',
     images: [
@@ -43,8 +43,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FAQ - Frequently Asked Questions | The Orange Code',
-    description: 'Frequently asked questions about The Orange Code cultural intelligence masterclasses and services.',
+    title: 'Cultural Intelligence Institute – The Orange Code',
+    description: 'Master cultural intelligence with The Orange Code, the Gulf's premier institute for research‑based training in communication, trust and leadership. Our programs teach professionals, families and organisations how to thrive in Dubai, Abu Dhabi and across the GCC.',
     images: ['https://www.theorangecode.com/about-us.jpg'],
   },
 }

@@ -5,51 +5,13 @@ export const dynamic = 'force-dynamic'
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
 import { Brain, Eye, Heart, Target, Sparkles, ArrowRight, CheckCircle, Globe } from 'lucide-react'
 import Script from 'next/script'
-import { useEffect, useRef } from 'react'
 
 export default function WhatIsCQPage() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  // Ensure video plays on mount and set slow playback speed
-  useEffect(() => {
-    if (videoRef.current) {
-      // Set video properties
-      videoRef.current.muted = true
-      videoRef.current.playsInline = true
-      // Set very slow playback speed (0.3 = 30% of normal speed)
-      videoRef.current.playbackRate = 0.3
-      
-      // Try to play the video
-      const playPromise = videoRef.current.play()
-      
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            console.log('Video is playing')
-            // Ensure playback rate is maintained after play
-            if (videoRef.current) {
-              videoRef.current.playbackRate = 0.3
-            }
-          })
-          .catch((error) => {
-            console.log('Video autoplay prevented:', error)
-            // Try again after user interaction
-            const tryPlay = () => {
-              if (videoRef.current) {
-                videoRef.current.playbackRate = 0.3
-                videoRef.current.play().catch(() => {})
-              }
-            }
-            document.addEventListener('click', tryPlay, { once: true })
-            document.addEventListener('touchstart', tryPlay, { once: true })
-          })
-      }
-    }
-  }, [])
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -110,9 +72,9 @@ export default function WhatIsCQPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            "headline": "What is Cultural Intelligence (CQ)? | Cultural Intelligence UAE",
-            "description": "Cultural intelligence (CQ) is the ability to interpret, adapt to, and effectively engage with people from different cultural backgrounds. Essential for professionals in the UAE, Dubai, and Abu Dhabi. Learn about its three pillars: cognitive understanding, emotional awareness, and behavioural flexibility.",
-            "keywords": "cultural intelligence, cultural intelligence UAE, cultural intelligence Dubai, cultural intelligence Abu Dhabi, CQ, cultural competence UAE",
+            "headline": "What is Cultural Intelligence (CQ)? | Cultural Intelligence GCC & Middle East",
+            "description": "Cultural Intelligence (CQ) is the ability to interpret, adapt to, and effectively engage with people from different cultural backgrounds. Essential for professionals across the GCC and Middle East including UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman. Learn about its three pillars: cognitive understanding, emotional awareness, and behavioural flexibility.",
+            "keywords": "Cultural Intelligence GCC, Cultural Intelligence Middle East, cultural intelligence, cultural intelligence UAE, cultural intelligence Dubai, cultural intelligence Abu Dhabi, cultural intelligence Saudi Arabia, cultural intelligence Qatar, CQ, cultural competence GCC",
             "url": "https://www.theorangecode.com/what-is-cq",
             "image": "https://www.theorangecode.com/og-image",
             "author": {
@@ -196,30 +158,21 @@ export default function WhatIsCQPage() {
         transition={{ duration: 0.8 }}
         className="relative"
       >
-        {/* Hero Video Section */}
+        {/* Hero Image Section */}
         <section className="relative overflow-hidden">
           <div className="relative h-[50vh] sm:h-[60vh] md:h-[70vh] w-full">
-            {/* Fallback gradient background (shown if video fails to load) */}
+            {/* Fallback gradient background */}
             <div className="absolute inset-0 bg-gradient-to-br from-azure-blue/20 via-primary-dark/40 to-orange/20 z-0" />
-            {/* Video Background */}
-            <video
-              ref={videoRef}
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
+            {/* Image Background */}
+            <Image
+              src="/what-is-cultural-intelligence.png"
+              alt="What is Cultural Intelligence"
+              fill
               className="absolute inset-0 w-full h-full object-cover z-[1]"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover'
-              }}
-            >
-              <source src="/what-is-cultural-intelligence.mp4" type="video/mp4" />
-            </video>
-            {/* Gradient Overlay - lighter to show video */}
-            <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/30 via-primary-dark/50 to-primary-dark/80 z-[2]" />
+              priority
+            />
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/40 via-primary-dark/60 to-primary-dark/90 z-[2]" />
             {/* Content */}
             <div className="absolute inset-0 flex items-end z-[3]">
               <div className="container mx-auto px-6 pb-12 md:pb-16 relative z-10">
@@ -245,7 +198,7 @@ export default function WhatIsCQPage() {
                     </span>
                   </h1>
                   <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed">
-                    Learn the cultural intelligence (CQ) skills you need to succeed in the UAE. Designed for newcomers, long-term residents, families, and professionals living in Dubai, Abu Dhabi, and every emirate.
+                    Learn the Cultural Intelligence (CQ) skills you need to succeed in the UAE. Designed for newcomers, long-term residents, families, and professionals living in Dubai, Abu Dhabi, and every emirate.
                   </p>
                 </motion.div>
               </div>
@@ -268,7 +221,7 @@ export default function WhatIsCQPage() {
                 <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-white/20 via-white/30 to-white/20 opacity-60" />
                 <div className="pl-4 sm:pl-8 space-y-6 px-4 sm:px-0">
                   <p className="text-lg sm:text-xl md:text-2xl leading-relaxed text-white/90 font-medium break-words">
-                    Cultural intelligence is a <span className="text-orange font-bold">scientifically recognised ability</span> that allows individuals to interpret, adapt to, and effectively engage with people from different cultural backgrounds.
+                    Cultural Intelligence is a <span className="text-orange font-bold">scientifically recognised ability</span> that allows individuals to interpret, adapt to, and effectively engage with people from different cultural backgrounds.
                   </p>
                   <p className="text-base sm:text-lg leading-relaxed text-white/80 break-words">
                     It is a structured skill built on <span className="text-azure-blue font-semibold">cognitive understanding</span>, <span className="text-orange font-semibold">emotional awareness</span>, and <span className="text-azure-blue font-semibold">behavioural flexibility</span>.
@@ -295,14 +248,14 @@ export default function WhatIsCQPage() {
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.15 }}
                         whileHover={{ y: -10, scale: 1.02 }}
-                        className="relative p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm group"
+                        className="relative p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm group flex flex-col h-full"
                       >
                         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
-                        <div className="relative z-10">
+                        <div className="relative z-10 flex flex-col h-full">
                           <div className={`w-16 h-16 rounded-xl bg-white/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform ${hoverBg}`}>
                             <pillar.icon className={`w-8 h-8 ${iconColor}`} />
                           </div>
-                          <h3 className="text-xl font-bold text-white mb-3">{pillar.title}</h3>
+                          <h3 className="text-xl font-bold text-white mb-3 min-h-[3rem] flex items-start">{pillar.title}</h3>
                           <p className="text-white/70 leading-relaxed">{pillar.description}</p>
                         </div>
                       </motion.div>
@@ -348,7 +301,7 @@ export default function WhatIsCQPage() {
                 </div>
               </motion.div>
 
-              {/* UAE & GCC Context Section */}
+              {/* GCC & Middle East Context Section */}
               <motion.div variants={itemVariants} className="relative">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                   <motion.div
@@ -361,19 +314,19 @@ export default function WhatIsCQPage() {
                       <Globe className="w-10 h-10 text-azure-blue" />
                       <h2 className="text-3xl font-bold">
                         <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-                          Cultural Intelligence in the UAE
+                          Cultural Intelligence in the GCC & Middle East
                         </span>
                       </h2>
                     </div>
                     <p className="text-lg leading-relaxed text-white/80">
-                      <strong className="text-white">Cultural Intelligence UAE</strong> helps anyone who wants to make their life in the Emirates feel natural and effortless. The region brings together rich Emirati traditions, Islamic principles, and people from every corner of the world. When you understand how these influences shape daily life, communication, and relationships, you move through the Emirates with confidence and respect. No matter which emirate becomes your home, <strong className="text-orange">cultural intelligence</strong> becomes the key that unlocks genuine connection and opportunity.
+                      <strong className="text-white">Cultural Intelligence GCC & Middle East</strong> is essential for anyone working, living, or building relationships across the Gulf Cooperation Council and Middle East region. The GCC brings together rich local traditions, Islamic principles, and people from every corner of the world. When you understand how these influences shape daily life, communication, and relationships, you move through the GCC and Middle East with confidence and respect. Whether you're in the UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, or Oman, <strong className="text-orange">Cultural Intelligence</strong> becomes the key that unlocks genuine connection and opportunity across the Gulf region.
                     </p>
                     <motion.div
                       whileHover={{ scale: 1.02, x: 10 }}
                       className="p-6 rounded-xl bg-white/5 backdrop-blur-sm border-l-4 border-orange"
                     >
                       <p className="text-white/90 font-semibold">
-                        Without cultural understanding, confusion rises, relationships weaken, workplaces lose harmony, communication falls short. Cultural Intelligence helps individuals, families, and professionals navigate daily life with confidence, clarity, and natural ease.
+                        Without Cultural understanding, confusion rises, relationships weaken, workplaces lose harmony, communication falls short. Cultural Intelligence helps individuals, families, and professionals navigate daily life with confidence, clarity, and natural ease.
                       </p>
                     </motion.div>
                   </motion.div>
@@ -439,7 +392,7 @@ export default function WhatIsCQPage() {
                   </h2>
                   <div className="max-w-3xl mx-auto space-y-4 text-lg leading-relaxed text-white/90">
                     <p>
-                      With cultural intelligence, your <span className="text-orange font-semibold">interactions become clearer</span>, your <span className="text-azure-blue font-semibold">leadership becomes more effective</span>, and your <span className="text-orange font-semibold">relationships become stronger</span>.
+                      With Cultural Intelligence, your <span className="text-orange font-semibold">interactions become clearer</span>, your <span className="text-azure-blue font-semibold">leadership becomes more effective</span>, and your <span className="text-orange font-semibold">relationships become stronger</span>.
                     </p>
                     <motion.p
                       initial={{ opacity: 0, y: 20 }}

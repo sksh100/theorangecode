@@ -44,7 +44,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            <span className="sr-only">The Orange Code - </span>Master Cultural Intelligence for the UAE and GCC
+            <span className="sr-only">The Orange Code - </span>Cultural Intelligence GCC & Middle East: Master CQ for the Gulf Region
           </motion.h1>
           
           <motion.p 
@@ -53,10 +53,10 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            Learn how communication, trust, and leadership actually work in a
+            The Gulf's premier institute for Cultural Intelligence training across the GCC and Middle East. Learn how communication, trust, and leadership actually work in a
             region where more than two hundred nationalities meet. Build the
             awareness that helps you connect with confidence and grow faster
-            in the Gulf.
+            in the Gulf Cooperation Council.
           </motion.p>
           
           <motion.div 
@@ -83,7 +83,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            Understand people. Unlock opportunity in the UAE, the Gulf Region.
+            Understand people. Unlock opportunity across the GCC and Middle East.
           </motion.p>
         </motion.div>
       </div>

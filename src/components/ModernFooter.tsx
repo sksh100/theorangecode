@@ -253,9 +253,6 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                 <Link href="/masterclasses" className="block text-white/70 text-sm hover:text-orange transition-colors cursor-pointer touch-manipulation" style={{ WebkitTapHighlightColor: 'transparent' }}>
                   Masterclasses
                 </Link>
-                <Link href="/uk-to-uae-relocation" className="block text-white/70 text-sm hover:text-orange transition-colors cursor-pointer touch-manipulation" style={{ WebkitTapHighlightColor: 'transparent' }}>
-                  UK to UAE Relocation Guide
-                </Link>
                 <Link href="/#contact" className="block text-white/70 text-sm hover:text-orange transition-colors cursor-pointer touch-manipulation" style={{ WebkitTapHighlightColor: 'transparent' }}>
                   Contact
                 </Link>

@@ -116,7 +116,7 @@ export default function Home() {
             "name": "The Orange Code",
             "alternateName": ["The Orange Code", "the orange code", "theorangecode"],
             "url": "https://www.theorangecode.com",
-            "description": "The Orange Code - Cultural Intelligence & Leadership Training in Dubai and Abu Dhabi, UAE. Premium cultural intelligence courses and masterclasses for professionals.",
+            "description": "Cultural Intelligence GCC | Cultural Intelligence Middle East | Cultural Intelligence UAE. The Orange Code is the Gulf's premier institute for Cultural Intelligence training across the GCC and Middle East. Expert Cultural Intelligence courses and masterclasses for professionals in UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman.",
             "publisher": {
               "@type": "Organization",
               "name": "The Orange Code",
@@ -146,21 +146,80 @@ export default function Home() {
             "@context": "https://schema.org",
             "@type": "EducationalOrganization",
             "name": "The Orange Code",
-            "alternateName": ["The Orange Code", "the orange code", "theorangecode", "The Orange Code UAE"],
+            "alternateName": ["The Orange Code", "the orange code", "theorangecode", "The Orange Code UAE", "The Orange Code GCC", "Cultural Intelligence GCC", "Cultural Intelligence Middle East", "Cultural Intelligence Abu Dhabi", "Cultural Intelligence Dubai"],
             "url": "https://www.theorangecode.com",
             "logo": "https://www.theorangecode.com/android-chrome-512x512.png",
-            "description": "The Orange Code - Cultural intelligence and leadership training masterclasses in Abu Dhabi, UAE.",
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "Etihad Towers, Tower 3, Floor 36",
-              "addressLocality": "Abu Dhabi",
-              "addressRegion": "Abu Dhabi",
-              "addressCountry": "AE"
-            },
-            "areaServed": {
-              "@type": "Country",
-              "name": "United Arab Emirates"
-            },
+            "description": "Cultural Intelligence GCC & Middle East: The Orange Code is the Gulf's premier institute for Cultural Intelligence training. Expert Cultural Intelligence courses and masterclasses for professionals across the GCC region including UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman. Master Cultural Intelligence (CQ) to navigate diverse teams, build trust, and drive success in the Gulf Cooperation Council and Middle East.",
+            "address": [
+              {
+                "@type": "PostalAddress",
+                "streetAddress": "Etihad Towers, Tower 3, Floor 36",
+                "addressLocality": "Abu Dhabi",
+                "addressRegion": "Abu Dhabi",
+                "addressCountry": "AE"
+              },
+              {
+                "@type": "PostalAddress",
+                "addressLocality": "Dubai",
+                "addressRegion": "Dubai",
+                "addressCountry": "AE"
+              }
+            ],
+            "areaServed": [
+              {
+                "@type": "GeoRegion",
+                "name": "Gulf Cooperation Council",
+                "alternateName": "GCC"
+              },
+              {
+                "@type": "GeoRegion",
+                "name": "Middle East"
+              },
+              {
+                "@type": "Country",
+                "name": "United Arab Emirates"
+              },
+              {
+                "@type": "City",
+                "name": "Abu Dhabi"
+              },
+              {
+                "@type": "City",
+                "name": "Dubai"
+              },
+              {
+                "@type": "Country",
+                "name": "Saudi Arabia"
+              },
+              {
+                "@type": "City",
+                "name": "Riyadh"
+              },
+              {
+                "@type": "City",
+                "name": "Jeddah"
+              },
+              {
+                "@type": "Country",
+                "name": "Qatar"
+              },
+              {
+                "@type": "City",
+                "name": "Doha"
+              },
+              {
+                "@type": "Country",
+                "name": "Kuwait"
+              },
+              {
+                "@type": "Country",
+                "name": "Bahrain"
+              },
+              {
+                "@type": "Country",
+                "name": "Oman"
+              }
+            ],
             "contactPoint": {
               "@type": "ContactPoint",
               "telephone": "+971568786106",
@@ -184,10 +243,61 @@ export default function Home() {
               "name": "The Orange Code",
               "url": "https://www.theorangecode.com"
             },
-            "areaServed": {
-              "@type": "Country",
-              "name": "United Arab Emirates"
-            },
+            "areaServed": [
+              {
+                "@type": "GeoRegion",
+                "name": "Gulf Cooperation Council",
+                "alternateName": "GCC"
+              },
+              {
+                "@type": "GeoRegion",
+                "name": "Middle East"
+              },
+              {
+                "@type": "Country",
+                "name": "United Arab Emirates"
+              },
+              {
+                "@type": "City",
+                "name": "Abu Dhabi"
+              },
+              {
+                "@type": "City",
+                "name": "Dubai"
+              },
+              {
+                "@type": "Country",
+                "name": "Saudi Arabia"
+              },
+              {
+                "@type": "City",
+                "name": "Riyadh"
+              },
+              {
+                "@type": "City",
+                "name": "Jeddah"
+              },
+              {
+                "@type": "Country",
+                "name": "Qatar"
+              },
+              {
+                "@type": "City",
+                "name": "Doha"
+              },
+              {
+                "@type": "Country",
+                "name": "Kuwait"
+              },
+              {
+                "@type": "Country",
+                "name": "Bahrain"
+              },
+              {
+                "@type": "Country",
+                "name": "Oman"
+              }
+            ],
             "hasOfferCatalog": {
               "@type": "OfferCatalog",
               "name": "Training Programs",
@@ -197,7 +307,7 @@ export default function Home() {
                   "itemOffered": {
                     "@type": "Course",
                     "name": "Cultural Intelligence Masterclass",
-                    "description": "3-hour masterclass covering cultural foundations, communication styles, and business protocols for the UAE and Gulf Region.",
+                    "description": "3-hour masterclass covering Cultural Intelligence foundations, communication styles, and business protocols for the UAE, Dubai, Saudi Arabia (Riyadh, Jeddah), and Qatar (Doha).",
                     "courseCode": "CI-MASTERCLASS",
                     "educationalLevel": "Professional Development"
                   }

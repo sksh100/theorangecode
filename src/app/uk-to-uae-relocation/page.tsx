@@ -78,7 +78,7 @@ export default function UKToUAERelocationPage() {
             </span>
           </h1>
           <p className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mb-4">
-            The complete relocation & cultural intelligence handbook for UK movers
+            The complete relocation & Cultural Intelligence handbook for UK movers
           </p>
         </motion.div>
 
@@ -90,7 +90,7 @@ export default function UKToUAERelocationPage() {
           className="text-center mb-12 space-y-6"
         >
           <p className="text-lg sm:text-xl text-white/90 leading-relaxed max-w-3xl mx-auto">
-            Built for UK professionals, families, and students relocating to the Emirates. This handbook bundles relocation essentials with cultural intelligence so you land with clarity, confidence, and a plan.
+            Built for UK professionals, families, and students relocating to the Emirates. This handbook bundles relocation essentials with Cultural Intelligence so you land with clarity, confidence, and a plan.
           </p>
           <p className="text-base sm:text-lg text-white/80 leading-relaxed max-w-3xl mx-auto">
             Learn how UAE communication, trust, and leadership really work; what to do (and avoid) in daily life and business; and how to adapt your UK habits to build respect and opportunity faster.
