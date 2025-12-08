@@ -7,7 +7,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ChevronDown, Menu, X, Sparkles, Zap, Shield, Users, Settings, LogOut, LogIn, ShoppingBag, CheckCircle, FileText, Globe, Home, Plane } from 'lucide-react'
 import { AboutMegaDropdown } from './AboutMegaDropdown'
-import { ContactMegaDropdown } from './ContactMegaDropdown'
 import { MasterclassesMegaDropdown } from './MasterclassesMegaDropdown'
 import { trackDropdownOpen, trackDropdownItemClick, trackButtonClick } from '@/lib/analytics'
 import { trackCTAClick } from '@/lib/tracking'
@@ -209,24 +208,22 @@ export function ModernNavbar() {
   const [isMasterclassesMegaOpen, setIsMasterclassesMegaOpen] = useState(false)
 
   const handleDropdownToggle = (label: string, isMobile: boolean = false) => {
-    // On mobile, always use simple dropdown structure
-    if (isMobile) {
-      const isOpening = activeDropdown !== label
-      setActiveDropdown(isOpening ? label : null)
-      // Close mega dropdowns on mobile
-      setIsAboutMegaOpen(false)
-      setIsContactMegaOpen(false)
-      setIsMasterclassesMegaOpen(false)
-      if (isOpening) trackDropdownOpen(label)
-      return
-    }
+      // On mobile, always use simple dropdown structure
+      if (isMobile) {
+        const isOpening = activeDropdown !== label
+        setActiveDropdown(isOpening ? label : null)
+        // Close mega dropdowns on mobile
+        setIsAboutMegaOpen(false)
+        setIsMasterclassesMegaOpen(false)
+        if (isOpening) trackDropdownOpen(label)
+        return
+      }
     
     // Desktop: use mega dropdowns for specific items
     if (label === 'About') {
       const isOpening = !isAboutMegaOpen
       setIsAboutMegaOpen(isOpening)
       setActiveDropdown(null)
-      setIsContactMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
       if (isOpening) trackDropdownOpen('About')
     } else if (label === 'Masterclasses') {
@@ -234,20 +231,11 @@ export function ModernNavbar() {
       setIsMasterclassesMegaOpen(isOpening)
       setActiveDropdown(null)
       setIsAboutMegaOpen(false)
-      setIsContactMegaOpen(false)
       if (isOpening) trackDropdownOpen('Masterclasses')
-    } else if (label === 'Contact') {
-      const isOpening = !isContactMegaOpen
-      setIsContactMegaOpen(isOpening)
-      setActiveDropdown(null)
-      setIsAboutMegaOpen(false)
-      setIsMasterclassesMegaOpen(false)
-      if (isOpening) trackDropdownOpen('Contact')
     } else {
       const isOpening = activeDropdown !== label
       setActiveDropdown(isOpening ? label : null)
       setIsAboutMegaOpen(false)
-      setIsContactMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
       if (isOpening) trackDropdownOpen(label)
     }
@@ -259,7 +247,6 @@ export function ModernNavbar() {
     if (!isMobileMenuOpen) {
       setActiveDropdown(null)
       setIsAboutMegaOpen(false)
-      setIsContactMegaOpen(false)
       setIsMasterclassesMegaOpen(false)
     }
   }
@@ -324,8 +311,7 @@ export function ModernNavbar() {
                           className={`w-4 h-4 transition-transform duration-300 ${
                             (activeDropdown === item.label || 
                              (item.label === 'About' && isAboutMegaOpen) ||
-                             (item.label === 'Masterclasses' && isMasterclassesMegaOpen) ||
-                             (item.label === 'Contact' && isContactMegaOpen)) ? 'rotate-180' : ''
+                             (item.label === 'Masterclasses' && isMasterclassesMegaOpen)) ? 'rotate-180' : ''
                           }`} 
                         />
                       )}
@@ -344,15 +330,9 @@ export function ModernNavbar() {
                         onClose={() => setIsMasterclassesMegaOpen(false)} 
                       />
                     )}
-                    {item.label === 'Contact' && (
-                      <ContactMegaDropdown 
-                        isOpen={isContactMegaOpen} 
-                        onClose={() => setIsContactMegaOpen(false)} 
-                      />
-                    )}
 
                     {/* Simple Dropdowns for items that aren't mega dropdowns */}
-                    {item.label !== 'About' && item.label !== 'Masterclasses' && item.label !== 'Contact' && (
+                    {item.label !== 'About' && item.label !== 'Masterclasses' && (
                       <SimpleDropdown
                         isOpen={activeDropdown === item.label}
                         onClose={() => setActiveDropdown(null)}
@@ -375,7 +355,7 @@ export function ModernNavbar() {
                         e.preventDefault()
                         window.scrollTo({ top: 0, behavior: 'smooth' })
                       }
-                      // Scroll to contact form when clicking Contact
+                      // Direct link to contact form - always scroll to #contact
                       if (item.href === '/#contact' || item.label === 'Contact') {
                         e.preventDefault()
                         if (pathname === '/') {
@@ -837,10 +817,6 @@ export function ModernNavbar() {
       <AboutMegaDropdown 
         isOpen={isAboutMegaOpen} 
         onClose={() => setIsAboutMegaOpen(false)} 
-      />
-      <ContactMegaDropdown 
-        isOpen={isContactMegaOpen} 
-        onClose={() => setIsContactMegaOpen(false)} 
       />
     </motion.nav>
   )

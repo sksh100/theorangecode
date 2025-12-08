@@ -126,9 +126,10 @@ const generateAvailableDates = (masterclassId: number | null): TimeSlot[] => {
   // End date: Last day of February 2026 (February 28, 2026 - 2026 is not a leap year)
   const endDate = new Date(targetYear, 1, 28) // February 28, 2026
   
-  // Set time to end of day to ensure we include the full day
+  // Set cutoffDate to start of day (00:00:00) so dates ON January 19 are included
+  cutoffDate.setHours(0, 0, 0, 0)
+  // Set endDate to end of day to ensure we include the full day
   endDate.setHours(23, 59, 59, 999)
-  cutoffDate.setHours(23, 59, 59, 999)
 
   // Loop from today up to and including the end date
   const currentDate = new Date(today)

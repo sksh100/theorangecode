@@ -38,14 +38,7 @@ export function UAELivingMegaDropdown({ isOpen, onClose }: UAELivingMegaDropdown
   }, [isOpen, onClose])
 
   const uaeLivingSections: UAELivingCard[] = [
-    {
-      id: 'moving-to-uae',
-      title: 'Moving to the UAE',
-      description: 'A practical, research-based hub that helps you understand how life, work and relationships function in the UAE so you can plan your move with clarity.',
-      icon: Plane,
-      href: '/moving-to-uae',
-      gradient: 'from-bright-blue/20 to-light-blue/20'
-    }
+    // All sections removed - UAE Living dropdown is no longer used
   ]
 
   return (
