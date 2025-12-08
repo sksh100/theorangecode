@@ -33,6 +33,23 @@
 }
 
 @layer base {
+  :root {
+    /* Glassmorphic design variables - consistent across all devices */
+    --glass-bg-start: rgba(1, 1, 30, 0.98);
+    --glass-bg-mid: rgba(1, 1, 30, 0.95);
+    --glass-bg-end: rgba(1, 1, 30, 0.97);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-border-inset: rgba(255, 255, 255, 0.15);
+    --glass-blur: 40px;
+    --glass-shadow-1: rgba(0, 0, 0, 0.6);
+    --glass-shadow-2: rgba(0, 212, 255, 0.3);
+    
+    /* Glass card variables - consistent across all devices */
+    --glass-card-bg: rgba(0, 212, 255, 0.15);
+    --glass-card-border: rgba(0, 212, 255, 0.4);
+    --glass-card-blur: 20px;
+  }
+  
   html, body {
     @apply m-0 p-0 w-full overflow-x-hidden;
   }
@@ -53,14 +70,17 @@
 
 @layer components {
   .glass-card {
+    /* Consistent glassmorphic styling across all devices - no mobile overrides for colors/transparency */
     @apply bg-glass-bg backdrop-blur-[20px] rounded-3xl p-12 shadow-glass relative overflow-hidden;
-    border: 1px solid rgba(0, 212, 255, 0.4);
+    border: 1px solid var(--glass-card-border);
     box-shadow: 
       0 8px 32px rgba(0, 0, 0, 0.7),
       0 0 0 1px rgba(0, 212, 255, 0.3),
       inset 0 1px 0 rgba(0, 212, 255, 0.1),
       0 0 60px rgba(0, 212, 255, 0.3),
       0 0 100px rgba(0, 153, 255, 0.15);
+    backdrop-filter: blur(var(--glass-card-blur));
+    -webkit-backdrop-filter: blur(var(--glass-card-blur));
   }
   
   .glass-card::before {
@@ -481,29 +501,37 @@
   }
 
   .mobile-menu-glass {
-    @apply bg-primary-dark/95 backdrop-blur-[20px] border border-glass-border;
+    /* Match mega-dropdown-glass exactly for consistent design - uses CSS variables */
+    @apply backdrop-blur-[40px] border border-white/20;
     background: linear-gradient(135deg, 
-      rgba(1, 1, 30, 0.95) 0%, 
-      rgba(0, 212, 255, 0.1) 50%, 
-      rgba(1, 1, 30, 0.95) 100%);
+      var(--glass-bg-start) 0%, 
+      var(--glass-bg-mid) 25%, 
+      var(--glass-bg-end) 50%, 
+      var(--glass-bg-mid) 75%, 
+      var(--glass-bg-start) 100%);
     box-shadow: 
-      0 20px 40px rgba(0, 0, 0, 0.3),
-      0 0 60px rgba(0, 212, 255, 0.2);
+      0 20px 60px var(--glass-shadow-1),
+      0 0 0 1px var(--glass-border),
+      inset 0 1px 0 var(--glass-border-inset);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
   }
 
-  /* Mega Dropdown Styles - 2026 SaaS Trends */
+  /* Mega Dropdown Styles - 2026 SaaS Trends - Consistent across all devices */
   .mega-dropdown-glass {
     @apply backdrop-blur-[40px] border border-white/20;
     background: linear-gradient(135deg, 
-      rgba(1, 1, 30, 0.98) 0%, 
-      rgba(1, 1, 30, 0.95) 25%, 
-      rgba(1, 1, 30, 0.97) 50%, 
-      rgba(1, 1, 30, 0.95) 75%, 
-      rgba(1, 1, 30, 0.98) 100%);
+      var(--glass-bg-start) 0%, 
+      var(--glass-bg-mid) 25%, 
+      var(--glass-bg-end) 50%, 
+      var(--glass-bg-mid) 75%, 
+      var(--glass-bg-start) 100%);
     box-shadow: 
-      0 20px 60px rgba(0, 0, 0, 0.6),
-      0 0 0 1px rgba(255, 255, 255, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      0 20px 60px var(--glass-shadow-1),
+      0 0 0 1px var(--glass-border),
+      inset 0 1px 0 var(--glass-border-inset);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
   }
 
   .service-card {

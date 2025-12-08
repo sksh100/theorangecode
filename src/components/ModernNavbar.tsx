@@ -512,7 +512,7 @@ export function ModernNavbar() {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
-              className="lg:hidden mt-4 mobile-menu-glass rounded-2xl overflow-hidden fixed top-24 left-4 right-4 z-[70] max-w-[calc(100vw-2rem)]"
+              className="lg:hidden mt-4 mega-dropdown-glass rounded-2xl overflow-hidden fixed top-24 left-4 right-4 z-[70] max-w-[calc(100vw-2rem)]"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
