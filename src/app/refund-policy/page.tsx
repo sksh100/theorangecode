@@ -218,8 +218,8 @@ export default function RefundPolicy() {
                 </ul>
                 <p className="text-white/80 leading-relaxed mt-4">
                   To request consideration for exceptional circumstances, please contact us at{' '}
-                  <a href="mailto:hello@theorangecode.com" className="text-orange hover:text-bright-blue transition-colors">
-                    hello@theorangecode.com
+                  <a href="mailto:legal@theorangecode.com" className="text-orange hover:text-bright-blue transition-colors">
+                    legal@theorangecode.com
                   </a>{' '}
                   within 7 days of purchase, providing detailed information about your situation.
                 </p>
@@ -252,7 +252,7 @@ export default function RefundPolicy() {
               <div className="bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl p-6 mb-8">
                 <p className="text-white font-semibold mb-3">The Orange Code</p>
                 <p className="text-white/80 leading-relaxed mb-2">
-                  Email: <a href="mailto:hello@theorangecode.com" className="text-orange hover:text-bright-blue transition-colors">hello@theorangecode.com</a>
+                  Email: <a href="mailto:legal@theorangecode.com" className="text-orange hover:text-bright-blue transition-colors">legal@theorangecode.com</a>
                 </p>
                 <p className="text-white/80 leading-relaxed mb-2">
                   Phone: <a href="tel:+971568786106" className="text-orange hover:text-bright-blue transition-colors">+971 56 878 6106</a>
