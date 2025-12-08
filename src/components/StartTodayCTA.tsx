@@ -90,17 +90,17 @@ export function StartTodayCTA() {
             transition={{ duration: 0.8, delay: 0.6 }}
             viewport={{ once: true }}
           >
-            <p>
-              Enter the UAE with clarity, confidence, and a grounded sense of direction.
+            <p className="leading-relaxed">
+              Enter the UAE with clarity, confidence, and a grounded sense of&nbsp;direction.
             </p>
-            <p>
-              Once you understand how the culture works, everything starts to shift. You speak with more confidence, you avoid misunderstandings, and you build trust faster than most newcomers.
+            <p className="leading-relaxed">
+              Once you understand how the culture works, everything starts to shift. You speak with more confidence, you avoid misunderstandings, and you build trust faster than most&nbsp;newcomers.
             </p>
-            <p>
-              Many people struggle because they guess their way through. The people who excel choose to learn the cultural foundations, refine how they show up, and take action with real purpose.
+            <p className="leading-relaxed">
+              Many people struggle because they guess their way through. The people who excel choose to learn the cultural foundations, refine how they show up, and take action with real&nbsp;purpose.
             </p>
-            <p>
-              If you want your life, career, or business in the UAE to feel successful, respected, and supported, your first step begins here.
+            <p className="leading-relaxed">
+              If you want your life, career, or business in the UAE to feel successful, respected, and supported, your first step begins&nbsp;here.
             </p>
           </motion.div>
 

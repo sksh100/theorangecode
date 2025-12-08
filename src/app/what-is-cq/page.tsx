@@ -14,12 +14,14 @@ import { useEffect, useRef } from 'react'
 export default function WhatIsCQPage() {
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  // Ensure video plays on mount
+  // Ensure video plays on mount and set slow playback speed
   useEffect(() => {
     if (videoRef.current) {
       // Set video properties
       videoRef.current.muted = true
       videoRef.current.playsInline = true
+      // Set very slow playback speed (0.3 = 30% of normal speed)
+      videoRef.current.playbackRate = 0.3
       
       // Try to play the video
       const playPromise = videoRef.current.play()
@@ -28,12 +30,17 @@ export default function WhatIsCQPage() {
         playPromise
           .then(() => {
             console.log('Video is playing')
+            // Ensure playback rate is maintained after play
+            if (videoRef.current) {
+              videoRef.current.playbackRate = 0.3
+            }
           })
           .catch((error) => {
             console.log('Video autoplay prevented:', error)
             // Try again after user interaction
             const tryPlay = () => {
               if (videoRef.current) {
+                videoRef.current.playbackRate = 0.3
                 videoRef.current.play().catch(() => {})
               }
             }
@@ -220,7 +227,7 @@ export default function WhatIsCQPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8 }}
-                  className="max-w-4xl mx-auto text-center"
+                  className="max-w-4xl"
                 >
                   <motion.div
                     initial={{ scale: 0.9 }}
@@ -233,7 +240,6 @@ export default function WhatIsCQPage() {
                     </span>
                   </motion.div>
                   <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
-                    <span className="text-white">Cultural Intelligence UAE: </span>
                     <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
                       What is CQ in the UAE
                     </span>

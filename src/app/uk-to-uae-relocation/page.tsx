@@ -78,7 +78,7 @@ export default function UKToUAERelocationPage() {
             </span>
           </h1>
           <p className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mb-4">
-            Understand UAE culture before you arrive
+            The complete relocation & cultural intelligence handbook for UK movers
           </p>
         </motion.div>
 
@@ -90,11 +90,16 @@ export default function UKToUAERelocationPage() {
           className="text-center mb-12 space-y-6"
         >
           <p className="text-lg sm:text-xl text-white/90 leading-relaxed max-w-3xl mx-auto">
-            A practical cultural intelligence guide for British professionals, families and students relocating from the United Kingdom to the United Arab Emirates.
+            Built for UK professionals, families, and students relocating to the Emirates. This handbook bundles relocation essentials with cultural intelligence so you land with clarity, confidence, and a plan.
           </p>
           <p className="text-base sm:text-lg text-white/80 leading-relaxed max-w-3xl mx-auto">
-            This research-based guide helps you understand how communication, trust, and leadership work in the UAE. Learn the cultural foundations that help you connect with confidence and avoid misunderstandings that damage trust and reputation.
+            Learn how UAE communication, trust, and leadership really work; what to do (and avoid) in daily life and business; and how to adapt your UK habits to build respect and opportunity faster.
           </p>
+          <ul className="text-white/80 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto space-y-2 list-disc list-inside text-left sm:text-center sm:list-none sm:space-y-1">
+            <li className="sm:list-none sm:before:content-['•'] sm:before:mr-2 sm:before:text-orange">Exact dos/don’ts for social and business settings so you avoid missteps.</li>
+            <li className="sm:list-none sm:before:content-['•'] sm:before:mr-2 sm:before:text-orange">How to read UAE communication styles, build trust, and earn respect quickly.</li>
+            <li className="sm:list-none sm:before:content-['•'] sm:before:mr-2 sm:before:text-orange">Step-by-step arrival prep: documents, etiquette, and daily life basics tailored to UK movers.</li>
+          </ul>
           <p className="text-sm font-medium text-orange">
             Purchase for £59 · Instant email delivery with secure download link.
           </p>
