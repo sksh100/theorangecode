@@ -33,7 +33,7 @@ export async function GET() {
     (
       <div
         style={{
-          background: 'linear-gradient(135deg, #01011e 0%, #0a0e27 50%, #01011e 100%)',
+          background: 'transparent',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -43,23 +43,12 @@ export async function GET() {
           position: 'relative',
         }}
       >
-        {/* Background gradient overlay */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 145, 77, 0.05) 50%, rgba(0, 153, 255, 0.1) 100%)',
-          }}
-        />
-        
-        {/* Logo container */}
+        {/* Logo container - only logo, no tagline */}
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '30px',
             zIndex: 1,
           }}
         >
@@ -68,8 +57,8 @@ export async function GET() {
             <img
               src={logoDataUrl}
               alt="The Orange Code Logo"
-              width={400}
-              height={400}
+              width={600}
+              height={600}
               style={{
                 objectFit: 'contain',
               }}
@@ -81,13 +70,13 @@ export async function GET() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                fontSize: '72px',
+                fontSize: '96px',
                 fontWeight: 'bold',
-                color: 'white',
+                color: '#ff914d',
                 textAlign: 'center',
               }}
             >
-              <span style={{ fontSize: '32px', color: '#00d4ff' }}>The</span>
+              <span style={{ fontSize: '40px', color: '#00d4ff' }}>The</span>
               <span
                 style={{
                   background: 'linear-gradient(135deg, #ff914d 0%, #00d4ff 100%)',
@@ -100,19 +89,6 @@ export async function GET() {
               </span>
             </div>
           )}
-          
-          {/* Tagline */}
-          <div
-            style={{
-              fontSize: '28px',
-              color: '#00d4ff',
-              textAlign: 'center',
-              opacity: 0.9,
-              fontWeight: 500,
-            }}
-          >
-            Cultural Intelligence & Leadership Training
-          </div>
         </div>
       </div>
     ),
