@@ -50,19 +50,24 @@ const AtmosphericBackground = nextDynamic(
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [mounted, setMounted] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
-  
-  // Only use scroll tracking if containerRef is available
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-    layoutEffect: false // Use effect instead of layoutEffect to avoid SSR issues
-  })
 
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
   const smoothMouseX = useSpring(mouseX, { stiffness: 4, damping: 100 })
   const smoothMouseY = useSpring(mouseY, { stiffness: 4, damping: 100 })
+
+  // Only use scroll tracking after component is mounted and ref is available
+  const { scrollYProgress } = useScroll({
+    target: mounted && containerRef.current ? containerRef : undefined,
+    offset: ['start start', 'end end'],
+    layoutEffect: false
+  })
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
