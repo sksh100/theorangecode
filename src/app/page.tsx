@@ -58,10 +58,9 @@ export default function Home() {
   const smoothMouseX = useSpring(mouseX, { stiffness: 4, damping: 100 })
   const smoothMouseY = useSpring(mouseY, { stiffness: 4, damping: 100 })
 
-  // Only use scroll tracking after component is mounted and ref is available
+  // Only use scroll tracking after component is mounted
+  // Use window scroll instead of container ref to avoid SSR issues
   const { scrollYProgress } = useScroll({
-    target: mounted && containerRef.current ? containerRef : undefined,
-    offset: ['start start', 'end end'],
     layoutEffect: false
   })
 
