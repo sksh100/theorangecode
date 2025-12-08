@@ -41,15 +41,21 @@ export async function GET() {
           alignItems: 'center',
           justifyContent: 'center',
           position: 'relative',
+          margin: 0,
+          padding: 0,
         }}
       >
-        {/* Logo container - only logo, no tagline */}
+        {/* Logo container - only logo, no tagline, no padding */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 1,
+            margin: 0,
+            padding: 0,
+            width: '100%',
+            height: '100%',
           }}
         >
           {/* Logo image */}
@@ -57,10 +63,14 @@ export async function GET() {
             <img
               src={logoDataUrl}
               alt="The Orange Code Logo"
-              width={600}
-              height={600}
+              width={1200}
+              height={630}
               style={{
                 objectFit: 'contain',
+                margin: 0,
+                padding: 0,
+                width: '100%',
+                height: '100%',
               }}
             />
           ) : (
@@ -74,6 +84,8 @@ export async function GET() {
                 fontWeight: 'bold',
                 color: '#ff914d',
                 textAlign: 'center',
+                margin: 0,
+                padding: 0,
               }}
             >
               <span style={{ fontSize: '40px', color: '#00d4ff' }}>The</span>
