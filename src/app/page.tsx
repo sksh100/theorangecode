@@ -95,6 +95,7 @@ export default function Home() {
   }, [smoothMouseX, smoothMouseY])
 
   useEffect(() => {
+    if (!scrollYProgress) return
     const unsubscribe = scrollYProgress.on('change', (latest) => {
       setScrollProgress(latest)
     })
