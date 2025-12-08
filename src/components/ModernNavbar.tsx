@@ -652,6 +652,7 @@ export function ModernNavbar() {
                       <Link 
                         href={item.href || '#'}
                         onClick={(e) => {
+                          e.preventDefault()
                           e.stopPropagation()
                           setIsMobileMenuOpen(false)
                           // Scroll to top when clicking Home if already on home page
@@ -659,11 +660,11 @@ export function ModernNavbar() {
                             window.scrollTo({ top: 0, behavior: 'smooth' })
                           }
                           // Scroll to contact form when clicking Contact
-                          if (item.href === '/#contact') {
+                          if (item.href === '/#contact' || item.label === 'Contact') {
                             if (pathname === '/') {
-                              // Already on homepage, scroll to contact form
-                              setTimeout(() => {
-                                const contactElement = document.getElementById('contact') || document.getElementById('contact-form')
+                              // Already on homepage, scroll to contact form immediately
+                              const scrollToContact = () => {
+                                const contactElement = document.getElementById('contact') || document.getElementById('contact-form') || document.querySelector('[id*="contact"]')
                                 if (contactElement) {
                                   const navbarHeight = 80
                                   const elementPosition = contactElement.getBoundingClientRect().top + window.pageYOffset
@@ -672,12 +673,24 @@ export function ModernNavbar() {
                                     top: offsetPosition,
                                     behavior: 'smooth'
                                   })
+                                  return true
                                 }
-                              }, 100)
+                                return false
+                              }
+                              // Try immediately
+                              if (!scrollToContact()) {
+                                // Retry after a short delay if element not found
+                                setTimeout(() => {
+                                  scrollToContact()
+                                }, 200)
+                              }
                             } else {
                               // Not on homepage, navigate first then scroll
-                              // The hash will be handled by ScrollRestoration component
+                              window.location.href = '/#contact'
                             }
+                          } else {
+                            // For other links, use normal navigation
+                            window.location.href = item.href || '/'
                           }
                         }}
                         className="block p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium cursor-pointer touch-manipulation"
