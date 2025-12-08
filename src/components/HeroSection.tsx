@@ -80,7 +80,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            Understand people. Unlock opportunity across the GCC and Middle East.
+            Understand people and their culture. Unlock opportunity across the UAE and GCC.
           </motion.p>
         </motion.div>
       </div>
