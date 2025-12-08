@@ -131,9 +131,10 @@ const generateAvailableDates = (masterclassId: number | null): TimeSlot[] => {
   // Set endDate to end of day to ensure we include the full day
   endDate.setHours(23, 59, 59, 999)
 
-  // Loop from today up to and including the end date
-  const currentDate = new Date(today)
-  currentDate.setHours(0, 0, 0, 0) // Start from beginning of today
+  // Loop from cutoffDate (January 19, 2026) to endDate (February 28, 2026)
+  // This ensures all dates from January 19 onwards are generated consistently on both mobile and desktop
+  const currentDate = new Date(cutoffDate)
+  currentDate.setHours(0, 0, 0, 0) // Start from cutoffDate, not today
   
   // Safety limit to prevent infinite loops (max 2 years of dates)
   const maxIterations = 730
