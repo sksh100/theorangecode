@@ -3,7 +3,7 @@
 // Force dynamic rendering to prevent build timeouts
 export const dynamic = 'force-dynamic'
 
-import dynamic from 'next/dynamic'
+import nextDynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { ModernFooter } from '@/components/ModernFooter'
@@ -13,7 +13,7 @@ import Image from 'next/image'
 import Script from 'next/script'
 
 // Dynamically import 3D component to avoid SSR issues
-const CultureMap3D = dynamic(() => import('@/components/CultureMap3D'), { ssr: false })
+const CultureMap3D = nextDynamic(() => import('@/components/CultureMap3D'), { ssr: false })
 
 export default function WhyCulturalIntelligencePage() {
   const containerVariants = {
