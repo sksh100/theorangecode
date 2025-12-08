@@ -5,12 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ChevronDown, Menu, X, Sparkles, Zap, Shield, Users, Settings, LogOut, LogIn, ShoppingBag, CheckCircle, FileText, Globe, Home, Plane } from 'lucide-react'
+import { ChevronDown, Menu, X, Sparkles, Zap, Shield, Users, Settings, LogOut, LogIn, CheckCircle, FileText, Globe, Home, Plane } from 'lucide-react'
 import { AboutMegaDropdown } from './AboutMegaDropdown'
 import { MasterclassesMegaDropdown } from './MasterclassesMegaDropdown'
 import { trackDropdownOpen, trackDropdownItemClick, trackButtonClick } from '@/lib/analytics'
 import { trackCTAClick } from '@/lib/tracking'
-import { useCart } from '@/contexts/CartContext'
 
 interface SimpleDropdownProps {
   isOpen: boolean
@@ -115,14 +114,9 @@ export function ModernNavbar() {
   const [isAboutMegaOpen, setIsAboutMegaOpen] = useState(false)
   const [isContactMegaOpen, setIsContactMegaOpen] = useState(false)
   
-  // Get cart items from context
-  const { getTotalItems } = useCart()
-  const cartItems = getTotalItems()
-  
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(false)
   const [userName, setUserName] = useState<string>('')
-  const [cartAnimation, setCartAnimation] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -251,12 +245,6 @@ export function ModernNavbar() {
     }
   }
 
-  // Shopping cart should only be updated when masterclass is actually added
-  // This function is kept for UI purposes but cart should be managed elsewhere
-  const addToCart = () => {
-    // Don't increment on button click - cart should only update when masterclass is added
-    // This will be handled by the masterclasses booking page
-  }
 
   return (
     <motion.nav
@@ -403,29 +391,6 @@ export function ModernNavbar() {
 
           {/* CTA Buttons - Always right aligned */}
           <div className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0 ml-auto">
-            {/* Shopping Basket - Hidden on mobile, visible on desktop */}
-            <Link href="/masterclasses" className="relative hidden sm:block">
-              <motion.button
-                className="relative p-2 sm:p-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300 group min-w-[44px] min-h-[44px] flex items-center justify-center"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                onClick={() => trackCTAClick('Shopping Cart', pathname)}
-              >
-                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
-                {cartItems > 0 && (
-                  <motion.span
-                    className="cart-badge"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  >
-                    {cartItems}
-                  </motion.span>
-                )}
-              </motion.button>
-            </Link>
-
             {/* Login/Dashboard Button - Hidden for now */}
             {/* {isLoggedIn ? (
               <Link href="/dashboard">
@@ -719,23 +684,6 @@ export function ModernNavbar() {
                 
                 {/* Mobile CTA Buttons */}
                 <div className="mt-4 space-y-3">
-                  {/* Shopping Basket - Mobile */}
-                  <Link href="/masterclasses" onClick={() => setIsMobileMenuOpen(false)}>
-                    <motion.button
-                      className="w-full flex items-center justify-center space-x-2 p-3 nav-button-glass text-white/80 hover:text-white transition-all duration-300"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <ShoppingBag className="w-5 h-5" />
-                      <span className="font-montserrat font-medium">Shopping Cart</span>
-                      {cartItems > 0 && (
-                        <span className="cart-badge">
-                          {cartItems}
-                        </span>
-                      )}
-                    </motion.button>
-                  </Link>
-
                   {/* Login/Dashboard Button - Mobile - Hidden for now */}
                   {/* {isLoggedIn ? (
                     <Link href="/dashboard">
