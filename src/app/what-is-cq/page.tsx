@@ -193,7 +193,7 @@ export default function WhatIsCQPage() {
                       Understanding CQ
                     </span>
                   </motion.div>
-                  <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+                  <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 whitespace-nowrap">
                     <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
                       What is Cultural Intelligence?
                     </span>
