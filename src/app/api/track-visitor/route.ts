@@ -724,8 +724,16 @@ export async function POST(req: NextRequest) {
       city
     });
 
+    // Check if IP should be excluded from notifications
+    // Default excluded IPs (add your own IPs here to prevent self-notifications)
+    const defaultExcludedIPs = ['94.59.182.192'];
+    const envExcludedIPs = process.env.EXCLUDED_IP_ADDRESSES?.split(',').map(ip => ip.trim()) || [];
+    const excludedIPs = [...defaultExcludedIPs, ...envExcludedIPs];
+    const isExcludedIP = excludedIPs.includes(ip) || excludedIPs.some(excludedIP => ip.startsWith(excludedIP));
+    
     // Send Slack notification for new visitors only (to avoid spam)
-    if (shouldNotify) {
+    // Skip notification if IP is in exclusion list
+    if (shouldNotify && !isExcludedIP) {
       console.log("👤 NEW VISITOR - Sending Slack notification...", {
         ip,
         country,
@@ -806,6 +814,11 @@ export async function POST(req: NextRequest) {
           });
           // Don't fail tracking if Slack fails
         });
+    } else if (isExcludedIP) {
+      console.log("🚫 IP excluded from notifications, skipping Slack notification", {
+        ip,
+        excludedIPs: excludedIPs.length > 0 ? excludedIPs : "none configured"
+      });
     } else {
       console.log("⏭️ Visitor already seen recently, skipping notification", {
         ip,

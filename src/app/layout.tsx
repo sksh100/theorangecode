@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     default: 'Cultural Intelligence GCC | Cultural Intelligence Middle East | Cultural Intelligence UAE | The Orange Code',
     template: '%s | The Orange Code'
   },
-  description: 'Cultural Intelligence GCC & Middle East: The Gulf's premier institute for Cultural Intelligence training. Master Cultural Intelligence (CQ) for the GCC region including UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman. Expert Cultural Intelligence courses in Dubai, Abu Dhabi, Riyadh, Doha, and across the Middle East. Learn how to navigate diverse teams, build trust, and drive success in the Gulf Cooperation Council.',
+  description: 'Cultural Intelligence GCC & Middle East: The Gulf\'s premier institute for Cultural Intelligence training. Master Cultural Intelligence (CQ) for the GCC region including UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman. Expert Cultural Intelligence courses in Dubai, Abu Dhabi, Riyadh, Doha, and across the Middle East. Learn how to navigate diverse teams, build trust, and drive success in the Gulf Cooperation Council.',
   keywords: [
     // Primary region-based keywords for SEO - GCC and Middle East first
     'Cultural Intelligence GCC',
@@ -316,7 +316,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Cultural Intelligence GCC | Cultural Intelligence Middle East | The Orange Code',
-    description: 'Cultural Intelligence GCC & Middle East: The Gulf's premier institute for Cultural Intelligence training. Master Cultural Intelligence (CQ) for the GCC region including UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman. Expert Cultural Intelligence courses in Dubai, Abu Dhabi, Riyadh, Doha, and across the Middle East.',
+    description: 'Cultural Intelligence GCC & Middle East: The Gulf\'s premier institute for Cultural Intelligence training. Master Cultural Intelligence (CQ) for the GCC region including UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman. Expert Cultural Intelligence courses in Dubai, Abu Dhabi, Riyadh, Doha, and across the Middle East.',
     url: 'https://www.theorangecode.com',
     siteName: 'The Orange Code',
     images: [
@@ -333,7 +333,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Cultural Intelligence GCC | Cultural Intelligence Middle East | The Orange Code',
-    description: 'Cultural Intelligence GCC & Middle East: The Gulf's premier institute for Cultural Intelligence training. Master Cultural Intelligence (CQ) for the GCC region including UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman.',
+    description: 'Cultural Intelligence GCC & Middle East: The Gulf\'s premier institute for Cultural Intelligence training. Master Cultural Intelligence (CQ) for the GCC region including UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman.',
     images: ['https://www.theorangecode.com/og-image.png'],
   },
   robots: {

@@ -653,7 +653,7 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
     location += `, ${data.area}`;
   }
   
-  // Format coordinates if available (with more precision to show differences)
+  // Format coordinates if available
   const coordinates = data.lat && data.lng 
     ? `${data.lat.toFixed(8)}, ${data.lng.toFixed(8)}`
     : null;
@@ -662,21 +662,6 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
   const mapLink = coordinates 
     ? `https://www.google.com/maps?q=${data.lat},${data.lng}`
     : null;
-  
-  // Note: IP geolocation coordinates are city-level approximations
-  // Multiple IPs in the same city may show the same coordinates
-  // This is normal behavior for IP-based geolocation services
-
-  // Format session duration
-  const formatDuration = (seconds: number): string => {
-    if (seconds < 60) return `${seconds}s`;
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    if (minutes < 60) return `${minutes}m ${remainingSeconds}s`;
-    const hours = Math.floor(minutes / 60);
-    const remainingMinutes = minutes % 60;
-    return `${hours}h ${remainingMinutes}m`;
-  };
   
   // Format IP address with custom name if applicable
   const displayIP = formatIPAddress(data.ip);
@@ -695,7 +680,7 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
       fields: [
         {
           type: 'mrkdwn',
-          text: `*📍 Location:*\n${location}${data.postalCode ? `\n_Postal: ${data.postalCode}_` : ''}`,
+          text: `*📍 Location:*\n${location}`,
         },
         {
           type: 'mrkdwn',
@@ -713,62 +698,36 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
     },
   ];
 
-  // Add network information if available
-  if (data.networkType || data.networkEffectiveType) {
-    const networkInfo: string[] = [];
-    
-    if (data.networkType) {
-      const networkEmoji = data.networkType === 'wifi' ? '📶' : 
-                          data.networkType === 'cellular' ? '📱' : 
-                          data.networkType === 'ethernet' ? '🔌' : '🌐';
-      networkInfo.push(`*${networkEmoji} Connection:* ${data.networkType.charAt(0).toUpperCase() + data.networkType.slice(1)}`);
-    }
-    
-    if (data.networkEffectiveType) {
-      networkInfo.push(`*⚡ Network Speed:* ${data.networkEffectiveType.toUpperCase()}`);
-    }
-    
-    if (data.networkDownlink) {
-      networkInfo.push(`*⬇️ Downlink:* ${data.networkDownlink.toFixed(2)} Mbps`);
-    }
-    
-    if (data.networkRtt) {
-      networkInfo.push(`*⏱️ Latency:* ${data.networkRtt}ms`);
-    }
-    
-    if (networkInfo.length > 0) {
-      blocks.push({
-        type: 'section',
-        fields: networkInfo.map(info => ({
+  // Add Connection (network type only)
+  if (data.networkType) {
+    const networkEmoji = data.networkType === 'wifi' ? '📶' : 
+                        data.networkType === 'cellular' ? '📱' : 
+                        data.networkType === 'ethernet' ? '🔌' : '🌐';
+    blocks.push({
+      type: 'section',
+      fields: [
+        {
           type: 'mrkdwn',
-          text: info,
-        })),
-      });
-    }
+          text: `*${networkEmoji} Connection:* ${data.networkType.charAt(0).toUpperCase() + data.networkType.slice(1)}`,
+        },
+      ],
+    });
   }
 
-  // Add visit count and session duration if available
-  if (data.visitCount || data.sessionDuration) {
-    const visitInfo: string[] = [];
-    if (data.visitCount) {
-      visitInfo.push(`*🔄 Visit Count:* ${data.visitCount}${data.visitCount === 1 ? ' (First visit)' : ' (Returning visitor)'}`);
-    }
-    if (data.sessionDuration !== undefined && data.sessionDuration > 0) {
-      visitInfo.push(`*⏱️ Time on Site:* ${formatDuration(data.sessionDuration)}`);
-    }
-    
-    if (visitInfo.length > 0) {
-      blocks.push({
-        type: 'section',
-        fields: visitInfo.map(info => ({
+  // Add Visit Count
+  if (data.visitCount) {
+    blocks.push({
+      type: 'section',
+      fields: [
+        {
           type: 'mrkdwn',
-          text: info,
-        })),
-      });
-    }
+          text: `*🔄 Visit Count:* ${data.visitCount}${data.visitCount === 1 ? ' (First visit)' : ' (Returning visitor)'}`,
+        },
+      ],
+    });
   }
 
-  // Add coordinates field if available
+  // Add Coordinates
   if (coordinates) {
     blocks.push({
       type: 'section',
@@ -781,19 +740,13 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
     });
   }
 
-  // Add enhanced location information (ISP, Organization, Timezone)
+  // Add ISP and Timezone
   const locationDetails: string[] = [];
   if (data.isp) {
     locationDetails.push(`*🏢 ISP:* ${data.isp}`);
   }
-  if (data.org && data.org !== data.isp) {
-    locationDetails.push(`*🏛️ Organization:* ${data.org}`);
-  }
   if (data.timezone) {
     locationDetails.push(`*🕐 Timezone:* ${data.timezone}`);
-  }
-  if (data.timezoneBrowser && data.timezoneBrowser !== data.timezone) {
-    locationDetails.push(`*🌍 Browser TZ:* ${data.timezoneBrowser}`);
   }
   
   if (locationDetails.length > 0) {
@@ -806,194 +759,21 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
     });
   }
 
-  // Add device & display information
-  const deviceInfo: string[] = [];
-  if (data.screenWidth && data.screenHeight) {
-    deviceInfo.push(`*📺 Screen:* ${data.screenWidth}×${data.screenHeight}px`);
-  }
-  if (data.viewportWidth && data.viewportHeight) {
-    deviceInfo.push(`*👁️ Viewport:* ${data.viewportWidth}×${data.viewportHeight}px`);
-  }
-  if (data.colorDepth) {
-    deviceInfo.push(`*🎨 Color Depth:* ${data.colorDepth}-bit`);
-  }
-  if (data.pixelRatio && data.pixelRatio !== 1) {
-    deviceInfo.push(`*🔍 Pixel Ratio:* ${data.pixelRatio}x`);
-  }
-  if (data.deviceMemory) {
-    deviceInfo.push(`*💾 Memory:* ${data.deviceMemory}GB`);
-  }
-  if (data.cpuCores) {
-    deviceInfo.push(`*⚙️ CPU Cores:* ${data.cpuCores}`);
-  }
-  if (data.batteryLevel !== undefined) {
-    const batteryEmoji = data.batteryCharging ? '🔌' : '🔋';
-    deviceInfo.push(`*${batteryEmoji} Battery:* ${data.batteryLevel}%${data.batteryCharging ? ' (Charging)' : ''}`);
-  }
-  
-  if (deviceInfo.length > 0) {
-    blocks.push({
-      type: 'section',
-      fields: deviceInfo.map(info => ({
-        type: 'mrkdwn',
-        text: info,
-      })),
-    });
-  }
-
-  // Add language & locale information
-  if (data.language || data.languages) {
-    const langInfo: string[] = [];
-    if (data.language) {
-      langInfo.push(`*🌐 Language:* ${data.language}`);
-    }
-    if (data.languages && data.languages.length > 1) {
-      langInfo.push(`*🗣️ Languages:* ${data.languages.join(', ')}`);
-    }
-    if (data.timezoneOffset !== undefined) {
-      const offsetHours = Math.abs(data.timezoneOffset / 60);
-      const offsetMins = Math.abs(data.timezoneOffset % 60);
-      const offsetSign = data.timezoneOffset <= 0 ? '+' : '-';
-      langInfo.push(`*⏰ TZ Offset:* UTC${offsetSign}${offsetHours}:${offsetMins.toString().padStart(2, '0')}`);
-    }
-    
-    if (langInfo.length > 0) {
-      blocks.push({
-        type: 'section',
-        fields: langInfo.map(info => ({
-          type: 'mrkdwn',
-          text: info,
-        })),
-      });
-    }
-  }
-
-  // Add platform information
-  if (data.platform || data.vendor) {
-    const platformInfo: string[] = [];
-    if (data.platform) {
-      platformInfo.push(`*💿 Platform:* ${data.platform}`);
-    }
-    if (data.vendor) {
-      platformInfo.push(`*🏷️ Vendor:* ${data.vendor}`);
-    }
-    
-    if (platformInfo.length > 0) {
-      blocks.push({
-        type: 'section',
-        fields: platformInfo.map(info => ({
-          type: 'mrkdwn',
-          text: info,
-        })),
-      });
-    }
-  }
-
-  // Add performance metrics
-  if (data.pageLoadTime || data.domContentLoaded) {
-    const perfInfo: string[] = [];
-    if (data.pageLoadTime) {
-      perfInfo.push(`*⚡ Page Load:* ${(data.pageLoadTime / 1000).toFixed(2)}s`);
-    }
-    if (data.domContentLoaded) {
-      perfInfo.push(`*📄 DOM Ready:* ${(data.domContentLoaded / 1000).toFixed(2)}s`);
-    }
-    
-    if (perfInfo.length > 0) {
-      blocks.push({
-        type: 'section',
-        fields: perfInfo.map(info => ({
-          type: 'mrkdwn',
-          text: info,
-        })),
-      });
-    }
-  }
-
-  // Add privacy settings
-  if (data.doNotTrack || data.cookieEnabled !== undefined) {
-    const privacyInfo: string[] = [];
-    if (data.doNotTrack && data.doNotTrack !== 'unknown') {
-      privacyInfo.push(`*🔒 Do Not Track:* ${data.doNotTrack === '1' ? 'Enabled' : 'Disabled'}`);
-    }
-    if (data.cookieEnabled !== undefined) {
-      privacyInfo.push(`*🍪 Cookies:* ${data.cookieEnabled ? 'Enabled' : 'Disabled'}`);
-    }
-    
-    if (privacyInfo.length > 0) {
-      blocks.push({
-        type: 'section',
-        fields: privacyInfo.map(info => ({
-          type: 'mrkdwn',
-          text: info,
-        })),
-      });
-    }
-  }
-
-  // Add traffic source with enhanced details
-  const trafficInfo: string[] = [];
-  trafficInfo.push(`*📄 Landing Page:*\n\`${data.page}\``);
-  trafficInfo.push(`*🔗 Traffic Source:*\n${data.source || 'Direct'}`);
-  
-  if (data.referrerDomain) {
-    trafficInfo.push(`*🌐 Referrer:*\n${data.referrerDomain}${data.referrerPath ? data.referrerPath : ''}`);
-  }
-  if (data.searchQuery) {
-    trafficInfo.push(`*🔍 Search Query:*\n"${data.searchQuery}"`);
-  }
-  
-  if (data.utmParams && Object.keys(data.utmParams).length > 0) {
-    const utmText = Object.entries(data.utmParams)
-      .map(([key, value]) => `${key}: ${value}`)
-      .join('\n');
-    trafficInfo.push(`*📊 UTM Params:*\n${utmText}`);
-  }
-  
-  blocks.push({
-    type: 'section',
-    fields: trafficInfo.map(info => ({
-      type: 'mrkdwn',
-      text: info,
-    })),
-  });
-  
-  // Add visit count and session duration if available
-  if (data.visitCount || data.sessionDuration) {
-    const visitInfo: string[] = [];
-    if (data.visitCount) {
-      visitInfo.push(`*🔄 Visit Count:* ${data.visitCount}${data.visitCount === 1 ? ' (First visit)' : ' (Returning visitor)'}`);
-    }
-    if (data.sessionDuration !== undefined && data.sessionDuration > 0) {
-      visitInfo.push(`*⏱️ Time on Site:* ${formatDuration(data.sessionDuration)}`);
-    }
-    
-    if (visitInfo.length > 0) {
-      blocks.push({
-        type: 'section',
-        fields: visitInfo.map(info => ({
-          type: 'mrkdwn',
-          text: info,
-        })),
-      });
-    }
-  }
-
-  // Add coordinates field if available
-  if (coordinates) {
+  // Add Languages
+  if (data.languages && data.languages.length > 0) {
     blocks.push({
       type: 'section',
       fields: [
         {
           type: 'mrkdwn',
-          text: `*🗺️ Coordinates:*\n\`${coordinates}\`\n_*Note:* City-level approximation (IP geolocation)_`,
+          text: `*🗣️ Languages:* ${data.languages.join(', ')}`,
         },
       ],
     });
   }
 
-  // Add navigation flow if available
-  if (data.navigationFlow && data.navigationFlow.length > 1) {
+  // Add Pages Visited (Navigation Flow)
+  if (data.navigationFlow && data.navigationFlow.length > 0) {
     const flowText = data.navigationFlow
       .map((page, index) => `${index + 1}. \`${page}\``)
       .join('\n');
@@ -1001,10 +781,25 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*🧭 Navigation Flow:*\n${flowText}`,
+        text: `*🧭 Pages Visited:*\n${flowText}`,
       },
     });
   }
+
+  // Add Traffic Source
+  blocks.push({
+    type: 'section',
+    fields: [
+      {
+        type: 'mrkdwn',
+        text: `*📄 Landing Page:*\n\`${data.page}\``,
+      },
+      {
+        type: 'mrkdwn',
+        text: `*🔗 Traffic Source:*\n${data.source || 'Direct'}`,
+      },
+    ],
+  });
 
   // Add map link button if coordinates are available
   if (mapLink) {
