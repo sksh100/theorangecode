@@ -4,6 +4,7 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone()
   const hostname = request.headers.get('host') || ''
+  const pathname = request.nextUrl.pathname
   
   // Check if request is HTTP (Vercel uses x-forwarded-proto header)
   const forwardedProto = request.headers.get('x-forwarded-proto')
@@ -21,6 +22,25 @@ export function middleware(request: NextRequest) {
     url.hostname = 'www.theorangecode.com'
     url.protocol = 'https:'
     return NextResponse.redirect(url, 301)
+  }
+
+  // IP-based access control for /uk-to-uae-relocation page
+  // Only allow UK IP addresses to access this page
+  if (pathname === '/uk-to-uae-relocation') {
+    // Get country from Vercel geolocation headers
+    const country = request.headers.get('x-vercel-ip-country') || 
+                    request.headers.get('cf-ipcountry') || // Cloudflare fallback
+                    null
+    
+    // If country is not UK (GB), redirect to homepage
+    if (country && country !== 'GB') {
+      url.pathname = '/'
+      return NextResponse.redirect(url, 302)
+    }
+    
+    // If country is unknown but we have IP, we could use an API to check
+    // For now, allow access if country is not detected (to avoid blocking legitimate UK users)
+    // You can add additional IP checking logic here if needed
   }
 
   return NextResponse.next()

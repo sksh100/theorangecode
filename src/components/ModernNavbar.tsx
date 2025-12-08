@@ -200,10 +200,6 @@ export function ModernNavbar() {
       ]
     },
     {
-      label: 'Moving to the UAE',
-      href: '/moving-to-uae',
-    }, // Direct link - no dropdown - Replaced UAE Living permanently
-    {
       label: 'Contact',
       href: '/#contact',
     }
