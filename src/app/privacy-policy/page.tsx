@@ -3,10 +3,13 @@
 import { motion } from 'framer-motion'
 import { ArrowLeft, Shield, Lock, Eye, Database, UserCheck, AlertTriangle, Globe, FileText, Users, Target, Mail } from 'lucide-react'
 import Link from 'next/link'
+import { ModernNavbar } from '@/components/ModernNavbar'
+import { ModernFooter } from '@/components/ModernFooter'
 
 export default function PrivacyPolicy() {
   return (
     <div className="min-h-screen bg-primary-dark">
+      <ModernNavbar />
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 opacity-20">
@@ -785,6 +788,7 @@ export default function PrivacyPolicy() {
           </div>
         </motion.div>
       </div>
+      <ModernFooter />
     </div>
   )
 }

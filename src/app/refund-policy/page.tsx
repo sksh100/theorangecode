@@ -230,16 +230,40 @@ export default function RefundPolicy() {
                 5. Payment Processing
               </h2>
               <p className="text-white/80 leading-relaxed mb-6 text-lg">
-                All payments are processed securely through our payment gateway. Once a transaction is completed and confirmed, 
+                All payments are processed securely through Stripe, a third-party payment processor. Once a transaction is completed and confirmed, 
                 the purchase is considered final.
               </p>
+              <div className="bg-gradient-to-r from-bright-blue/10 to-bright-blue/5 border border-bright-blue/20 rounded-xl p-6 mb-6">
+                <p className="text-white font-semibold mb-3">Third-Party Payment Processor</p>
+                <p className="text-white/80 leading-relaxed mb-3">
+                  The Orange Code uses Stripe, Inc. as our payment processor. Stripe is responsible for processing all payment transactions, 
+                  handling payment card information, and managing the payment gateway infrastructure.
+                </p>
+                <p className="text-white/80 leading-relaxed mb-3">
+                  <strong>Limitation of Liability:</strong> The Orange Code is not responsible for any issues, errors, delays, failures, or shortcomings 
+                  arising from Stripe's payment processing services, including but not limited to:
+                </p>
+                <ul className="text-white/70 text-sm space-y-2 ml-4 mb-3">
+                  <li>• Payment processing delays or failures</li>
+                  <li>• Technical issues with Stripe's payment gateway</li>
+                  <li>• Stripe service outages or downtime</li>
+                  <li>• Payment card authorization failures</li>
+                  <li>• Fraud detection or prevention measures implemented by Stripe</li>
+                  <li>• Any errors or issues in Stripe's systems or services</li>
+                </ul>
+                <p className="text-white/80 leading-relaxed">
+                  Any disputes or issues related to payment processing should be directed to Stripe in accordance with their terms of service. 
+                  The Orange Code will assist in resolving payment-related matters to the best of our ability, but we are not liable for Stripe's 
+                  performance or any shortcomings in their services.
+                </p>
+              </div>
               <p className="text-white/80 leading-relaxed mb-8 text-lg">
                 If you experience any issues with payment processing, duplicate charges, or unauthorized transactions, 
                 please contact us immediately at{' '}
-                <a href="mailto:hello@theorangecode.com" className="text-orange hover:text-bright-blue transition-colors">
-                  hello@theorangecode.com
+                <a href="mailto:legal@theorangecode.com" className="text-orange hover:text-bright-blue transition-colors">
+                  legal@theorangecode.com
                 </a>{' '}
-                and we will investigate promptly.
+                and we will investigate promptly. For issues directly related to Stripe's payment processing, you may also contact Stripe support.
               </p>
 
               <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-4">

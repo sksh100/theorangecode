@@ -1,6 +1,13 @@
 import { ImageResponse } from 'next/og'
+import { NextResponse } from 'next/server'
 
 export const runtime = 'edge'
+export const alt = 'The Orange Code - Cultural Intelligence Training'
+export const contentType = 'image/png'
+export const size = {
+  width: 1200,
+  height: 630,
+}
 
 export async function GET() {
   // Fetch the logo image from public URL
@@ -22,7 +29,7 @@ export async function GET() {
     console.error('Failed to load logo:', error)
   }
 
-  return new ImageResponse(
+  const imageResponse = new ImageResponse(
     (
       <div
         style={{
@@ -110,9 +117,18 @@ export async function GET() {
       </div>
     ),
     {
-      width: 1200,
-      height: 630,
+      ...size,
     }
   )
+
+  // Add proper headers for social media platforms
+  return new NextResponse(imageResponse.body, {
+    status: 200,
+    headers: {
+      'Content-Type': 'image/png',
+      'Cache-Control': 'public, max-age=31536000, immutable',
+      'X-Content-Type-Options': 'nosniff',
+    },
+  })
 }
 

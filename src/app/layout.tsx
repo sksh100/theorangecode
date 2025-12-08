@@ -321,10 +321,11 @@ export const metadata: Metadata = {
     siteName: 'The Orange Code',
     images: [
       {
-        url: 'https://www.theorangecode.com/og-image.png',
+        url: 'https://www.theorangecode.com/og-image',
         width: 1200,
         height: 630,
         alt: 'The Orange Code - Cultural Intelligence Training',
+        type: 'image/png',
       },
     ],
     locale: 'en_US',
@@ -334,7 +335,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Cultural Intelligence GCC | Cultural Intelligence Middle East | The Orange Code',
     description: 'Cultural Intelligence GCC & Middle East: The Gulf\'s premier institute for Cultural Intelligence training. Master Cultural Intelligence (CQ) for the GCC region including UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman.',
-    images: ['https://www.theorangecode.com/og-image.png'],
+    images: ['https://www.theorangecode.com/og-image'],
   },
   robots: {
     index: true,
@@ -380,6 +381,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Open Graph and Social Media Meta Tags - Explicit for WhatsApp and LinkedIn */}
+        <meta property="og:image" content="https://www.theorangecode.com/og-image" />
+        <meta property="og:image:url" content="https://www.theorangecode.com/og-image" />
+        <meta property="og:image:secure_url" content="https://www.theorangecode.com/og-image" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="The Orange Code - Cultural Intelligence Training" />
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:image" content="https://www.theorangecode.com/og-image" />
+        <meta name="twitter:image:src" content="https://www.theorangecode.com/og-image" />
+        {/* WhatsApp specific meta tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="The Orange Code" />
         {/* Performance: Resource hints for faster loading */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
