@@ -90,7 +90,7 @@ export function StartTodayCTA() {
             transition={{ duration: 0.8, delay: 0.6 }}
             viewport={{ once: true }}
           >
-            <p className="leading-relaxed whitespace-nowrap lg:whitespace-normal">
+            <p className="leading-relaxed lg:whitespace-nowrap">
               Enter the UAE with clarity, confidence, and a grounded sense of&nbsp;direction.
             </p>
             <p className="leading-relaxed">
