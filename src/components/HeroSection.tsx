@@ -53,10 +53,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            The Gulf's premier institute for Cultural Intelligence training across the GCC and Middle East. Learn how communication, trust, and leadership actually work in a
-            region where more than two hundred nationalities meet. Build the
-            awareness that helps you connect with confidence and grow faster
-            in the Gulf Cooperation Council.
+            The Gulf's premier institute for Cultural Intelligence training across the UAE and GCC. Learn how communication, trust and leadership actually operate in a region that has rapidly evolved into a global hub for business and culture. Build the awareness that helps you connect with confidence and cultivate meaningful relationships within local societies.
           </motion.p>
           
           <motion.div 
