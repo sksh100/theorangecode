@@ -90,11 +90,13 @@ export function StartTodayCTA() {
             transition={{ duration: 0.8, delay: 0.6 }}
             viewport={{ once: true }}
           >
-            <p className="leading-relaxed">
+            <p className="leading-relaxed whitespace-nowrap lg:whitespace-normal">
               Enter the UAE with clarity, confidence, and a grounded sense of&nbsp;direction.
             </p>
             <p className="leading-relaxed">
-              Once you understand how the culture works, everything starts to shift. You speak with more confidence, you avoid misunderstandings, and you build trust faster than most&nbsp;newcomers.
+              Once you understand how the culture works, everything starts to shift.{' '}
+              <span className="hidden lg:inline"><br /></span>
+              You speak with more confidence, you avoid misunderstandings, and you build trust faster than most&nbsp;newcomers.
             </p>
             <p className="leading-relaxed">
               Many people struggle because they guess their way through. The people who excel choose to learn the cultural foundations, refine how they show up, and take action with real&nbsp;purpose.
