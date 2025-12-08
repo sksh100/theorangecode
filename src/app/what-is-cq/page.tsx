@@ -201,7 +201,7 @@ export default function WhatIsCQPage() {
               loop
               muted
               playsInline
-              preload="auto"
+              preload="metadata"
               className="absolute inset-0 w-full h-full object-cover z-[1]"
               style={{
                 width: '100%',
