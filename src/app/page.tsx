@@ -15,7 +15,7 @@ import { ModernFooter } from '@/components/ModernFooter'
 import { StartTodayCTA } from '@/components/StartTodayCTA'
 
 // Lazy load heavy components for better performance
-const TestimonialCarousel = dynamic(
+const TestimonialCarousel = nextDynamic(
   () => import('@/components/TestimonialCarousel').then(mod => ({ default: mod.TestimonialCarousel })),
   { 
     ssr: false,
@@ -23,7 +23,7 @@ const TestimonialCarousel = dynamic(
   }
 )
 
-const ContactFormSection = dynamic(
+const ContactFormSection = nextDynamic(
   () => import('@/components/ContactFormSection').then(mod => ({ default: mod.ContactFormSection })),
   { 
     ssr: false,
@@ -31,7 +31,7 @@ const ContactFormSection = dynamic(
   }
 )
 
-const MasterclassesOverview = dynamic(
+const MasterclassesOverview = nextDynamic(
   () => import('@/components/ProgramsOverview').then(mod => ({ default: mod.MasterclassesOverview })),
   { 
     ssr: true, // Keep SSR for SEO
@@ -39,7 +39,7 @@ const MasterclassesOverview = dynamic(
   }
 )
 
-const AtmosphericBackground = dynamic(
+const AtmosphericBackground = nextDynamic(
   () => import('@/components/AtmosphericBackground').then(mod => ({ default: mod.AtmosphericBackground })),
   { 
     ssr: false,
