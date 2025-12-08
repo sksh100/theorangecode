@@ -51,9 +51,12 @@ export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [scrollProgress, setScrollProgress] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
+  
+  // Only use scroll tracking if containerRef is available
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start start', 'end end']
+    offset: ['start start', 'end end'],
+    layoutEffect: false // Use effect instead of layoutEffect to avoid SSR issues
   })
 
   const mouseX = useMotionValue(0)
