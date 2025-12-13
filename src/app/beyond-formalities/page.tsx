@@ -153,7 +153,7 @@ export default function BeyondFormalitiesPage() {
               },
               {
                 "@type": "Question",
-                "name": "Do you offer deeper cultural intelligence training?",
+                "name": "Do you offer deeper Cultural Intelligence training?",
                 "acceptedAnswer": {
                   "@type": "Answer",
                   "text": "Yes. The Orange Code offers comprehensive Cultural Intelligence masterclasses, private coaching, and corporate training programs. Visit our masterclasses page or contact us at hello@theorangecode.com to learn more."

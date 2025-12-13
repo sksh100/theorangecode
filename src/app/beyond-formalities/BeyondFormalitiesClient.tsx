@@ -74,7 +74,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
       )
     },
     {
-      question: "Do you offer deeper cultural intelligence training?",
+      question: "Do you offer deeper Cultural Intelligence training?",
       answer: (
         <>
           Yes. The Orange Code offers comprehensive Cultural Intelligence masterclasses, private coaching, and corporate training programs. Visit our masterclasses page or contact us at{' '}
