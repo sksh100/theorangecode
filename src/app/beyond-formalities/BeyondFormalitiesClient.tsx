@@ -114,7 +114,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             Beyond Formalities
           </span>
         </h1>
-        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-white/90 whitespace-nowrap overflow-x-auto scrollbar-hide">
+        <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold text-white/90 whitespace-nowrap">
           Understanding Emirati Culture, Local Customs, and Everyday Life
         </h2>
         
@@ -316,7 +316,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
 
       {/* B) Pain Points Section */}
       <section className="max-w-3xl mx-auto space-y-6">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center whitespace-nowrap overflow-x-auto">
+        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-center whitespace-nowrap">
           <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
             If you have ever felt unsure, you are not alone
           </span>
@@ -517,7 +517,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
 
       {/* I) Final CTA */}
       <section className="max-w-3xl mx-auto text-center space-y-6">
-        <h2 className="text-3xl sm:text-4xl font-bold whitespace-nowrap overflow-x-auto">
+        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold whitespace-nowrap">
           <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
             Understand the culture, communicate with confidence
           </span>
