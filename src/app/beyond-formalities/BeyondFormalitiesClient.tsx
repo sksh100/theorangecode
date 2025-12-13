@@ -120,7 +120,10 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
         
         <div className="max-w-3xl mx-auto space-y-4 pt-4">
           <p className="text-lg sm:text-xl text-white/90 leading-relaxed">
-            Many people complete the formalities in the UAE, yet relationships remain polite but distant and communication feels unclear. Beyond Formalities explains the cultural foundations behind Emirati culture and local customs, so you can interact with confidence in everyday life and in professional settings.
+            Many people complete the formalities in the UAE, yet relationships remain polite but distant. Business discussions start well but do not move forward, communication feels unclear, and promising connections sometimes disappear without explanation. Social circles often stay limited to other expatriates, despite genuine efforts to connect.
+          </p>
+          <p className="text-lg sm:text-xl text-white/90 leading-relaxed">
+            Beyond Formalities explains the cultural foundations behind Emirati culture and local customs, helping you understand how trust, communication, and relationships develop in the UAE. This book was written to bridge the gap and support clearer interaction, meaningful connection, and lasting relationships in everyday life and professional settings.
           </p>
         </div>
 
