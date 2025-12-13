@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -40,6 +40,27 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
     setExpandedFaq(expandedFaq === index ? null : index)
   }
 
+  // Helper functions for FAQ answers with links
+  const teamsPurchaseAnswer = () => (
+    <>
+      Yes. Teams and organizations can purchase multiple copies. For bulk purchases or corporate licensing, please contact us at{' '}
+      <a href="mailto:hello@theorangecode.com" className="text-orange hover:text-azure-blue transition-colors underline">
+        hello@theorangecode.com
+      </a>
+      {' '}to discuss options.
+    </>
+  )
+
+  const culturalIntelligenceTrainingAnswer = () => (
+    <>
+      Yes. The Orange Code offers comprehensive Cultural Intelligence masterclasses, private coaching, and corporate training programs. Visit our masterclasses page or contact us at{' '}
+      <a href="mailto:hello@theorangecode.com" className="text-orange hover:text-azure-blue transition-colors underline">
+        hello@theorangecode.com
+      </a>
+      {' '}to learn more.
+    </>
+  )
+
   const faqs = [
     {
       question: "Is this for tourists?",
@@ -63,27 +84,11 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
     },
     {
       question: "Can teams purchase access?",
-      answer: (
-        <>
-          Yes. Teams and organizations can purchase multiple copies. For bulk purchases or corporate licensing, please contact us at{' '}
-          <a href="mailto:hello@theorangecode.com" className="text-orange hover:text-azure-blue transition-colors underline">
-            hello@theorangecode.com
-          </a>
-          {' '}to discuss options.
-        </>
-      )
+      answer: teamsPurchaseAnswer()
     },
     {
       question: "Do you offer deeper Cultural Intelligence training?",
-      answer: (
-        <>
-          Yes. The Orange Code offers comprehensive Cultural Intelligence masterclasses, private coaching, and corporate training programs. Visit our masterclasses page or contact us at{' '}
-          <a href="mailto:hello@theorangecode.com" className="text-orange hover:text-azure-blue transition-colors underline">
-            hello@theorangecode.com
-          </a>
-          {' '}to learn more.
-        </>
-      )
+      answer: culturalIntelligenceTrainingAnswer()
     }
   ]
 
@@ -528,18 +533,19 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
           </span>
         </h2>
         <div className="mt-6">
-        <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
-          <motion.button
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
+          <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => handleCTAClick('Get the E-Guide - Final CTA')}
-            className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center gap-3"
-          >
-            <BookOpen className="w-5 h-5" />
-            <span>Get the E-Guide</span>
-            <ArrowRight className="w-5 h-5" />
-          </motion.button>
-        </Link>
+              className="px-10 py-5 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center gap-3"
+            >
+              <BookOpen className="w-5 h-5" />
+              <span>Get the E-Guide</span>
+              <ArrowRight className="w-5 h-5" />
+            </motion.button>
+          </Link>
+        </div>
         <div className="pt-6 space-y-2 text-white/60 text-sm">
           <p>By The Orange Code, Abu Dhabi</p>
           <p>
