@@ -103,10 +103,10 @@ export default function BeyondFormalitiesPage() {
           className="text-center mb-12 space-y-6"
         >
           <p className="text-lg sm:text-xl text-white/90 leading-relaxed max-w-3xl mx-auto">
-            A comprehensive guide that goes beyond surface-level information to help you truly understand Dubai's culture, legal systems, and the practical aspects of everyday life in the Emirates.
+            A comprehensive guide to UAE Cultural foundations that goes beyond surface-level information to help you truly understand Dubai's culture, legal systems, and the practical aspects of everyday life in the Emirates.
           </p>
           <p className="text-base sm:text-lg text-white/80 leading-relaxed max-w-3xl mx-auto">
-            Written by Dr. Marwan Al-Zarka, this ebook provides deep insights into how Dubai operates, from cultural norms and social expectations to legal frameworks and practical living advice.
+            Written by Dr. Marwan Al-Zarka, this ebook provides deep insights into UAE Cultural foundations, from cultural norms and social expectations to legal frameworks and practical living advice. Designed for anyone seeking to understand the UAE, regardless of nationality.
           </p>
           <ul className="text-white/80 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto space-y-2 list-disc list-inside text-left sm:text-center sm:list-none sm:space-y-1">
             <li className="sm:list-none sm:before:content-['•'] sm:before:mr-2 sm:before:text-orange">Comprehensive understanding of Dubai culture and social norms</li>
