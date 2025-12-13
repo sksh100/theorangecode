@@ -197,9 +197,14 @@ export function ModernNavbar() {
       href: '/resources',
       dropdown: [
         { 
-          label: 'E-Guide', 
+          label: 'UK to UAE Relocation Guide', 
           icon: BookOpen, 
           href: '/uk-to-uae-relocation'
+        },
+        { 
+          label: 'Beyond Formalities', 
+          icon: BookOpen, 
+          href: '/beyond-formalities'
         },
       ]
     },

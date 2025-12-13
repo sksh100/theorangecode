@@ -173,7 +173,14 @@ export async function POST(req: NextRequest) {
       const isEbookPurchase = (usedEbookSecret || 
                               productName.toLowerCase().includes('ebook') || 
                               productName.toLowerCase().includes('uk to uae') ||
+                              productName.toLowerCase().includes('beyond formalities') ||
                               session.metadata?.type === 'ebook')
+      
+      // Determine which ebook type
+      const ebookType = (productName.toLowerCase().includes('beyond formalities') || 
+                        session.metadata?.ebookType === 'beyond-formalities')
+                        ? 'beyond-formalities' 
+                        : 'uk-to-uae'
 
       if (isEbookPurchase && email && email !== 'unknown') {
         // Send dedicated ebook purchase notification to Slack
@@ -204,6 +211,7 @@ export async function POST(req: NextRequest) {
               customerName: session.customer_details?.name || email.split('@')[0],
               orderId: session.id,
               downloadToken: downloadToken,
+              ebookType: ebookType,
             }),
           })
 

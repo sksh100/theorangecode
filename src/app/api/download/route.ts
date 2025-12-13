@@ -9,6 +9,7 @@ import { verifyDownloadToken } from "@/lib/downloadToken";
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const token = searchParams.get("token");
+  const ebook = searchParams.get("ebook") || "uk-to-uae"; // Default to UK guide
 
   if (!token) {
     return new NextResponse("Missing token", { status: 400 });
@@ -23,8 +24,19 @@ export async function GET(req: NextRequest) {
   const email = payload.email;
 
   try {
+    // Determine which PDF to use based on ebook parameter
+    let pdfPath: string;
+    let fileName: string;
+    
+    if (ebook === "beyond-formalities") {
+      pdfPath = path.join(process.cwd(), "protected", "beyond-formalities-flattened.pdf");
+      fileName = "Beyond-Formalities-by-Dr-Marwan-Al-Zarka.pdf";
+    } else {
+      pdfPath = path.join(process.cwd(), "protected", "uk-uae-guide-flattened.pdf");
+      fileName = "UK-to-UAE-Cultural-Intelligence-Guide.pdf";
+    }
+
     // 1. Read the base flattened PDF (protected, not public)
-    const pdfPath = path.join(process.cwd(), "protected", "uk-uae-guide-flattened.pdf");
     const basePdfBytes = await fs.readFile(pdfPath);
 
     // 2. Load PDF and font
@@ -61,8 +73,6 @@ export async function GET(req: NextRequest) {
     const stampedPdfBytes = await pdfDoc.save();
 
     // 3. Return as downloadable file
-    const fileName = "UK-to-UAE-Cultural-Intelligence-Guide.pdf";
-
     return new NextResponse(Buffer.from(stampedPdfBytes), {
       status: 200,
       headers: {
@@ -75,4 +85,3 @@ export async function GET(req: NextRequest) {
     return new NextResponse("Server error", { status: 500 });
   }
 }
-

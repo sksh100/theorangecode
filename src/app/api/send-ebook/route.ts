@@ -18,12 +18,13 @@ interface EbookDeliveryRequest {
   customerName?: string
   orderId?: string
   downloadToken?: string
+  ebookType?: 'uk-to-uae' | 'beyond-formalities'
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body: EbookDeliveryRequest = await req.json()
-    const { email, customerName, orderId, downloadToken } = body
+    const { email, customerName, orderId, downloadToken, ebookType = 'uk-to-uae' } = body
 
     if (!email) {
       return NextResponse.json(
@@ -32,11 +33,46 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    // Determine ebook details based on type
+    const ebookDetails = {
+      'uk-to-uae': {
+        title: 'UK to UAE Cultural Intelligence Guide',
+        subject: 'Your UK to UAE Cultural Intelligence Guide - Instant Download',
+        fileName: 'UK-to-UAE-Cultural-Intelligence-Guide.pdf',
+        description: 'A research based guide helping British expats understand UAE culture, workplace norms, communication styles, dos and donts, and how to integrate effectively.',
+        features: [
+          'UAE cultural foundations',
+          'Communication differences between UK and UAE',
+          'Emotional expression and reading indirect cues',
+          'Feedback styles',
+          'Business etiquette and relationship building',
+          'Workplace hierarchy and decision making',
+          'Dress code rules for men and women',
+          'Time perception and punctuality',
+          'Do and don\'t list for new arrivals'
+        ]
+      },
+      'beyond-formalities': {
+        title: 'Beyond Formalities: Understanding Dubai Culture, Legal Systems, and Everyday Life',
+        subject: 'Your Beyond Formalities E-Guide - Instant Download',
+        fileName: 'Beyond-Formalities-by-Dr-Marwan-Al-Zarka.pdf',
+        description: 'A comprehensive guide that goes beyond surface-level information to help you truly understand Dubai\'s culture, legal systems, and the practical aspects of everyday life in the Emirates.',
+        features: [
+          'Comprehensive understanding of Dubai culture and social norms',
+          'Legal systems and regulations explained in practical terms',
+          'Everyday life insights for residents and professionals',
+          'Practical guidance for navigating Dubai with confidence'
+        ]
+      }
+    }
+
+    const ebook = ebookDetails[ebookType]
+
     // Generate download URL with token (if provided) or use direct link
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.NEXT_PUBLIC_DOMAIN || 'https://www.theorangecode.com'
     const downloadUrl = downloadToken 
-      ? `${baseUrl}/download?token=${encodeURIComponent(downloadToken)}`
-      : `${baseUrl}/ebooks/uk-to-uae-relocation-guide.pdf`
+      ? `${baseUrl}/api/download?token=${encodeURIComponent(downloadToken)}&ebook=${ebookType}`
+      : `${baseUrl}/ebooks/${ebook.fileName}`
 
     // Note: We're using token-based download instead of email attachment for security and personalization
 
@@ -46,7 +82,7 @@ export async function POST(req: NextRequest) {
     const emailContent = {
       from: 'The Orange Code <hello@theorangecode.com>',
       to: email,
-      subject: 'Your UK to UAE Cultural Intelligence Guide - Instant Download',
+      subject: ebook.subject,
       html: `
         <!DOCTYPE html>
         <html>
@@ -70,7 +106,7 @@ export async function POST(req: NextRequest) {
             <div class="content">
               <p>Hi ${displayName},</p>
               
-              <p>Thank you for purchasing <strong>The UK to UAE Cultural Intelligence Guide</strong>!</p>
+              <p>Thank you for purchasing <strong>${ebook.title}</strong>!</p>
               
               <p>Your personalized ebook is ready! Click the button below to download your copy (stamped with your email for security):</p>
               
@@ -86,18 +122,10 @@ export async function POST(req: NextRequest) {
               
               <h3>What's Inside:</h3>
               <ul>
-                <li>UAE cultural foundations</li>
-                <li>Communication differences between UK and UAE</li>
-                <li>Emotional expression and reading indirect cues</li>
-                <li>Feedback styles</li>
-                <li>Business etiquette and relationship building</li>
-                <li>Workplace hierarchy and decision making</li>
-                <li>Dress code rules for men and women</li>
-                <li>Time perception and punctuality</li>
-                <li>Do and don't list for new arrivals</li>
+                ${ebook.features.map(feature => `<li>${feature}</li>`).join('')}
               </ul>
               
-              <p><strong>💡 Pro Tip:</strong> Read this guide before you arrive in the UAE to start your journey with confidence!</p>
+              <p><strong>💡 Pro Tip:</strong> ${ebookType === 'uk-to-uae' ? 'Read this guide before you arrive in the UAE to start your journey with confidence!' : 'Use this guide as your reference for understanding Dubai culture, legal systems, and everyday life.'}</p>
               
               <p>If you have any questions or need support, feel free to reply to this email or contact us at <a href="mailto:hello@theorangecode.com">hello@theorangecode.com</a>.</p>
               

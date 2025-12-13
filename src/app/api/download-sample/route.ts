@@ -9,17 +9,24 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url)
     const email = searchParams.get('email')
     const name = searchParams.get('name')
+    const ebook = searchParams.get('ebook') || 'uk-to-uae'
 
-    if (!email || !name) {
-      return new NextResponse('Missing required parameters', { status: 400 })
+    // Determine which sample PDF to serve
+    let samplePath: string
+    let fileName: string
+    
+    if (ebook === 'beyond-formalities') {
+      samplePath = path.join(process.cwd(), 'protected', 'sample-beyond-formalities.pdf')
+      fileName = 'Beyond-Formalities-Sample.pdf'
+    } else {
+      samplePath = path.join(process.cwd(), 'protected', 'sample-uk-uae-guide.pdf')
+      fileName = 'UK-to-UAE-Cultural-Intelligence-Guide-Sample.pdf'
     }
 
     // Log the download
-    console.log('📥 Sample PDF downloaded:', { name, email, timestamp: new Date().toISOString() })
+    console.log('📥 Sample PDF downloaded:', { name, email, ebook, timestamp: new Date().toISOString() })
 
     // Serve the sample PDF
-    const samplePath = path.join(process.cwd(), 'protected', 'sample-uk-uae-guide.pdf')
-    
     try {
       const fileBuffer = await fs.readFile(samplePath)
       
@@ -27,7 +34,7 @@ export async function GET(req: NextRequest) {
         status: 200,
         headers: {
           'Content-Type': 'application/pdf',
-          'Content-Disposition': `attachment; filename="UK-to-UAE-Cultural-Intelligence-Guide-Sample.pdf"`,
+          'Content-Disposition': `inline; filename="${fileName}"`,
           'Cache-Control': 'no-cache, no-store, must-revalidate',
         },
       })
