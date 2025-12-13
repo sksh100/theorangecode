@@ -36,8 +36,8 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
       answer: "Yes. Beyond Formalities covers business culture and protocol in the UAE, including how cultural values influence professional communication, relationship building, and business etiquette."
     },
     {
-      question: "Is it respectful to Emirati culture?",
-      answer: "Yes. This guide is written with respect for Emirati culture and is designed to reduce misunderstandings and support meaningful connection. It focuses on understanding cultural foundations rather than making assumptions or judgments."
+      question: "What do Emiratis say about the E-Guide?",
+      answer: "The Emiratis to whom this E-Guide was presented were all delighted to see the efforts we made to reflect their culture and values with respect for their country and society to foreigners. They were grateful for our undertaking to compile the E-Guide and for the fact that we are educating others with respect for their culture and society to make them understand the dynamics that can bridge the distance."
     },
     {
       question: "How do I receive the E-Guide?",
