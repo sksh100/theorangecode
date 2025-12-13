@@ -470,9 +470,6 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
                 <ArrowRight className="w-5 h-5" />
               </motion.button>
             </Link>
-            <p className="text-sm text-white/60">
-              Charged in AED, your bank may convert automatically.
-            </p>
           </div>
         </div>
       </section>
