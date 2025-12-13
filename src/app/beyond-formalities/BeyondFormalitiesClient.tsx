@@ -524,6 +524,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             Understand the culture, communicate with confidence
           </span>
         </h2>
+        <div className="mt-6">
         <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
           <motion.button
             whileHover={{ scale: 1.05, y: -2 }}
