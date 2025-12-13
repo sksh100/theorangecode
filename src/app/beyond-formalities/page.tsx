@@ -16,6 +16,8 @@ export default function BeyondFormalitiesPage() {
   const [showPreview, setShowPreview] = useState(false)
   
   // Stripe Payment Link
+  // Note: Success URL must be configured in Stripe Dashboard for this payment link
+  // Set success URL to: https://www.theorangecode.com/beyond-formalities/thank-you?session_id={CHECKOUT_SESSION_ID}
   const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/eVqbJ1ctw66t9qz7pC8k806'
 
   useEffect(() => {
