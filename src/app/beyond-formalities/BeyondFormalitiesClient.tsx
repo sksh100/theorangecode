@@ -96,7 +96,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => handleCTAClick('Get the E-Guide - Sticky Mobile CTA')}
-              className="w-full px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-base inline-flex items-center justify-center gap-2"
+              className="w-full px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-base inline-flex items-center justify-center gap-2"
             >
               <BookOpen className="w-5 h-5" />
               <span>Get the E-Guide - 149 AED</span>
@@ -138,7 +138,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => handleCTAClick('Get the E-Guide - Hero')}
-              className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center gap-3"
+              className="px-10 py-5 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center gap-3"
             >
               <BookOpen className="w-5 h-5" />
               <span>Get the E-Guide</span>
@@ -463,7 +463,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => handleCTAClick('Buy now - Pricing')}
-                className="w-full px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center justify-center gap-3"
+                className="w-full px-10 py-5 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center justify-center gap-3"
               >
                 <BookOpen className="w-5 h-5" />
                 <span>Buy now</span>
