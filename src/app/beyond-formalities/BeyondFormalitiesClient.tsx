@@ -54,7 +54,25 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
   ]
 
   return (
-    <div className="space-y-16 md:space-y-24">
+    <>
+      {/* Sticky Mobile CTA Bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-primary-dark/95 backdrop-blur-md border-t border-white/10 shadow-lg">
+        <div className="container mx-auto px-4 py-3">
+          <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleCTAClick('Get the Ebook - Sticky Mobile CTA')}
+              className="w-full px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-base inline-flex items-center justify-center gap-2"
+            >
+              <BookOpen className="w-5 h-5" />
+              <span>Get the Ebook - 149 AED</span>
+              <ArrowRight className="w-5 h-5" />
+            </motion.button>
+          </Link>
+        </div>
+      </div>
+
+      <div className="space-y-16 md:space-y-24 pb-20 lg:pb-0">
       {/* A) Hero Section */}
       <section className="text-center space-y-6">
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
@@ -438,7 +456,8 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
           </p>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   )
 }
 
