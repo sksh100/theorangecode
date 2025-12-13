@@ -45,11 +45,27 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
     },
     {
       question: "Can teams purchase access?",
-      answer: "Yes. Teams and organizations can purchase multiple copies. For bulk purchases or corporate licensing, please contact us at hello@theorangecode.com to discuss options."
+      answer: (
+        <>
+          Yes. Teams and organizations can purchase multiple copies. For bulk purchases or corporate licensing, please contact us at{' '}
+          <a href="mailto:hello@theorangecode.com" className="text-orange hover:text-azure-blue transition-colors underline">
+            hello@theorangecode.com
+          </a>
+          {' '}to discuss options.
+        </>
+      )
     },
     {
       question: "Do you offer deeper cultural intelligence training?",
-      answer: "Yes. The Orange Code offers comprehensive Cultural Intelligence masterclasses, private coaching, and corporate training programs. Visit our masterclasses page or contact us at hello@theorangecode.com to learn more."
+      answer: (
+        <>
+          Yes. The Orange Code offers comprehensive Cultural Intelligence masterclasses, private coaching, and corporate training programs. Visit our masterclasses page or contact us at{' '}
+          <a href="mailto:hello@theorangecode.com" className="text-orange hover:text-azure-blue transition-colors underline">
+            hello@theorangecode.com
+          </a>
+          {' '}to learn more.
+        </>
+      )
     }
   ]
 
@@ -419,7 +435,9 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
                   exit={{ opacity: 0, height: 0 }}
                   className="px-6 pb-6"
                 >
-                  <p className="text-white/80 leading-relaxed">{faq.answer}</p>
+                  <div className="text-white/80 leading-relaxed">
+                    {typeof faq.answer === 'string' ? <p>{faq.answer}</p> : faq.answer}
+                  </div>
                 </motion.div>
               )}
             </div>
