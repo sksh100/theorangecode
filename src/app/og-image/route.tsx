@@ -2,9 +2,8 @@ import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
 
 export const runtime = 'edge'
-export const alt = 'The Orange Code - Cultural Intelligence Training'
-export const contentType = 'image/png'
-export const size = {
+
+const OG_IMAGE_SIZE = {
   width: 1200,
   height: 630,
 }
@@ -105,7 +104,7 @@ export async function GET() {
       </div>
     ),
     {
-      ...size,
+      ...OG_IMAGE_SIZE,
     }
   )
 
