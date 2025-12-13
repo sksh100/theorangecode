@@ -458,6 +458,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
                 <span>Secure Stripe checkout</span>
               </p>
             </div>
+            <div className="mt-6">
             <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -470,6 +471,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
                 <ArrowRight className="w-5 h-5" />
               </motion.button>
             </Link>
+            </div>
           </div>
         </div>
       </section>
