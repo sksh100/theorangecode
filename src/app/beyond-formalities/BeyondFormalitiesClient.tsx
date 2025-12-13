@@ -1,9 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowRight, BookOpen, CheckCircle, Users, Briefcase, Home, Shield, Mail, HelpCircle, Eye, ChevronDown, ChevronUp } from 'lucide-react'
+import Image from 'next/image'
+import { ArrowRight, BookOpen, CheckCircle, Users, Briefcase, Home, Shield, Mail, HelpCircle, Eye, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react'
 import { trackCTAClick } from '@/lib/tracking'
 
 interface BeyondFormalitiesClientProps {
@@ -13,6 +14,23 @@ interface BeyondFormalitiesClientProps {
 export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClientProps) {
   const [showPreview, setShowPreview] = useState(false)
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
+  const [currentPage, setCurrentPage] = useState(0)
+  const [enlargedImage, setEnlargedImage] = useState<number | null>(null)
+
+  // 6 placeholder pages for the preview
+  const previewPages = Array.from({ length: 6 }, (_, i) => ({
+    id: i + 1,
+    src: `/beyond-formalities/preview/page-${i + 1}.jpg`, // Placeholder path - images can be added later
+    alt: `Beyond Formalities Preview Page ${i + 1}`
+  }))
+
+  const nextPage = () => {
+    setCurrentPage((prev) => (prev + 1) % previewPages.length)
+  }
+
+  const prevPage = () => {
+    setCurrentPage((prev) => (prev - 1 + previewPages.length) % previewPages.length)
+  }
 
   const handleCTAClick = (label: string) => {
     trackCTAClick(label, '/beyond-formalities')
@@ -143,27 +161,158 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
       </section>
 
       {/* Preview Section */}
-      {showPreview && (
-        <motion.section
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          className="bg-white/5 border border-white/10 rounded-xl p-6 max-w-4xl mx-auto"
-        >
-          <h3 className="text-xl font-semibold text-white mb-4 text-center">Sample Preview</h3>
-          <div className="relative w-full" style={{ paddingBottom: '75%' }}>
-            <iframe
-              src="/api/download-sample?ebook=beyond-formalities"
-              className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10"
-              title="Beyond Formalities Sample Preview"
-              allow="fullscreen"
-            />
-          </div>
-          <p className="text-sm text-white/60 mt-4 text-center">
-            This is a preview. Purchase the full guide to access all content.
-          </p>
-        </motion.section>
-      )}
+      <AnimatePresence>
+        {showPreview && (
+          <motion.section
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="bg-white/5 border border-white/10 rounded-xl p-6 max-w-4xl mx-auto"
+          >
+            <h3 className="text-xl font-semibold text-white mb-4 text-center">Sample Preview</h3>
+            
+            {/* Image Carousel */}
+            <div className="relative w-full">
+              {/* Main Image Container */}
+              <div className="relative w-full aspect-[3/4] bg-white/5 rounded-lg border border-white/10 overflow-hidden mb-4">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentPage}
+                    initial={{ opacity: 0, x: 100 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -100 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative w-full h-full cursor-pointer group"
+                    onClick={() => setEnlargedImage(currentPage)}
+                  >
+                    {/* Placeholder Image */}
+                    <div className="w-full h-full bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10 flex items-center justify-center">
+                      <div className="text-center p-8">
+                        <BookOpen className="w-16 h-16 text-white/30 mx-auto mb-4" />
+                        <p className="text-white/60 text-sm">Preview Page {currentPage + 1}</p>
+                        <p className="text-white/40 text-xs mt-2">Click to enlarge</p>
+                      </div>
+                    </div>
+                    
+                    {/* Enlarge Icon Overlay */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                      <Maximize2 className="w-8 h-8 text-white/80" />
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Navigation Arrows */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    prevPage()
+                  }}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 z-10"
+                  aria-label="Previous page"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    nextPage()
+                  }}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 z-10"
+                  aria-label="Next page"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </div>
+
+              {/* Page Indicators */}
+              <div className="flex items-center justify-center gap-2 mb-4">
+                {previewPages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentPage(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === currentPage
+                        ? 'bg-orange w-8'
+                        : 'bg-white/30 hover:bg-white/50'
+                    }`}
+                    aria-label={`Go to page ${index + 1}`}
+                  />
+                ))}
+              </div>
+
+              {/* Page Counter */}
+              <p className="text-sm text-white/60 text-center mb-2">
+                Page {currentPage + 1} of {previewPages.length}
+              </p>
+            </div>
+
+            <p className="text-sm text-white/60 mt-4 text-center">
+              This is a preview. Purchase the full guide to access all content.
+            </p>
+          </motion.section>
+        )}
+      </AnimatePresence>
+
+      {/* Enlarged Image Modal/Lightbox */}
+      <AnimatePresence>
+        {enlargedImage !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={() => setEnlargedImage(null)}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setEnlargedImage(null)}
+              className="absolute top-4 right-4 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 z-10"
+              aria-label="Close"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Enlarged Image */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              className="relative max-w-4xl max-h-[90vh] w-full h-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative w-full h-full bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10 rounded-lg border border-white/20 flex items-center justify-center">
+                <div className="text-center p-8">
+                  <BookOpen className="w-24 h-24 text-white/30 mx-auto mb-4" />
+                  <p className="text-white/60 text-lg">Preview Page {enlargedImage + 1}</p>
+                  <p className="text-white/40 text-sm mt-2">Full preview image will appear here</p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Navigation Arrows in Modal */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setEnlargedImage((prev) => (prev! - 1 + previewPages.length) % previewPages.length)
+              }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 z-10"
+              aria-label="Previous page"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setEnlargedImage((prev) => (prev! + 1) % previewPages.length)
+              }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all duration-300 z-10"
+              aria-label="Next page"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* B) Pain Points Section */}
       <section className="max-w-3xl mx-auto space-y-6">
