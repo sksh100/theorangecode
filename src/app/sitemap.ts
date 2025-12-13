@@ -20,6 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     // Main content pages - High priority
     {
+      url: `${baseUrl}/beyond-formalities`,
+      lastModified: recentUpdate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/uk-to-uae-relocation`,
       lastModified: recentUpdate,
       changeFrequency: 'weekly',

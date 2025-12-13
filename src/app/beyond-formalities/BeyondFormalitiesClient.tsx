@@ -67,11 +67,8 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
         </h2>
         
         <div className="max-w-3xl mx-auto space-y-4 pt-4">
-          <p className="text-lg sm:text-xl text-white/80 leading-relaxed">
-            People complete procedures but relationships stay polite and distant. Communication feels unclear. Business and social interactions are hard to read.
-          </p>
-          <p className="text-lg sm:text-xl text-white/90 leading-relaxed font-medium">
-            This ebook explains the cultural foundations behind everyday life and interaction in the UAE.
+          <p className="text-lg sm:text-xl text-white/90 leading-relaxed">
+            Many people complete the formalities in the UAE, yet relationships remain polite but distant and communication feels unclear. Beyond Formalities explains the cultural foundations behind Emirati culture and local customs, so you can interact with confidence in everyday life and in professional settings.
           </p>
         </div>
 
@@ -84,7 +81,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-          <Link href={paymentLink} target="_blank" rel="noopener noreferrer">
+          <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
@@ -120,11 +117,14 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
           className="bg-white/5 border border-white/10 rounded-xl p-6 max-w-4xl mx-auto"
         >
           <h3 className="text-xl font-semibold text-white mb-4 text-center">Sample Preview</h3>
-          <iframe
-            src="/api/download-sample?ebook=beyond-formalities"
-            className="w-full h-[600px] rounded-lg border border-white/10"
-            title="Beyond Formalities Sample"
-          />
+          <div className="relative w-full" style={{ paddingBottom: '75%' }}>
+            <iframe
+              src="/api/download-sample?ebook=beyond-formalities"
+              className="absolute top-0 left-0 w-full h-full rounded-lg border border-white/10"
+              title="Beyond Formalities Sample Preview"
+              allow="fullscreen"
+            />
+          </div>
           <p className="text-sm text-white/60 mt-4 text-center">
             This is a preview. Purchase the full guide to access all content.
           </p>
@@ -351,7 +351,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
                 <span>Secure Stripe checkout</span>
               </p>
             </div>
-            <Link href={paymentLink} target="_blank" rel="noopener noreferrer">
+            <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
@@ -416,7 +416,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             Understand the culture, communicate with confidence
           </span>
         </h2>
-        <Link href={paymentLink} target="_blank" rel="noopener noreferrer">
+        <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
           <motion.button
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
