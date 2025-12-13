@@ -1,0 +1,444 @@
+'use client'
+
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { ArrowRight, BookOpen, CheckCircle, Users, Briefcase, Home, Shield, Mail, HelpCircle, Eye, ChevronDown, ChevronUp } from 'lucide-react'
+import { trackCTAClick } from '@/lib/tracking'
+
+interface BeyondFormalitiesClientProps {
+  paymentLink: string
+}
+
+export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClientProps) {
+  const [showPreview, setShowPreview] = useState(false)
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
+
+  const handleCTAClick = (label: string) => {
+    trackCTAClick(label, '/beyond-formalities')
+  }
+
+  const toggleFaq = (index: number) => {
+    setExpandedFaq(expandedFaq === index ? null : index)
+  }
+
+  const faqs = [
+    {
+      question: "Is this for tourists?",
+      answer: "Beyond Formalities is designed for professionals, residents, and anyone doing business or building relationships in the UAE. While tourists may find it helpful, it focuses on deeper cultural understanding for those engaging with Emirati culture in professional and social contexts."
+    },
+    {
+      question: "Is it only for relocating?",
+      answer: "No. This guide is valuable whether you are preparing to arrive, newly arrived, or already living in the UAE. It helps anyone who wants to understand Emirati culture and build meaningful relationships, regardless of how long they have been in the Emirates."
+    },
+    {
+      question: "Does it include business culture?",
+      answer: "Yes. Beyond Formalities covers business culture and protocol in the UAE, including how cultural values influence professional communication, relationship building, and business etiquette."
+    },
+    {
+      question: "Is it respectful to Emirati culture?",
+      answer: "Yes. This guide is written with respect for Emirati culture and is designed to reduce misunderstandings and support meaningful connection. It focuses on understanding cultural foundations rather than making assumptions or judgments."
+    },
+    {
+      question: "How do I receive the ebook?",
+      answer: "After completing your purchase through our secure Stripe checkout, you will receive an email with a download link. The link is valid for 48 hours. Your PDF copy will be watermarked with your email address for security."
+    },
+    {
+      question: "Can teams purchase access?",
+      answer: "Yes. Teams and organizations can purchase multiple copies. For bulk purchases or corporate licensing, please contact us at hello@theorangecode.com to discuss options."
+    },
+    {
+      question: "Do you offer deeper cultural intelligence training?",
+      answer: "Yes. The Orange Code offers comprehensive Cultural Intelligence masterclasses, private coaching, and corporate training programs. Visit our masterclasses page or contact us at hello@theorangecode.com to learn more."
+    }
+  ]
+
+  return (
+    <div className="space-y-16 md:space-y-24">
+      {/* A) Hero Section */}
+      <section className="text-center space-y-6">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
+          <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+            Beyond Formalities
+          </span>
+        </h1>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white/90">
+          Understanding Emirati Culture, Local Customs, and Everyday Life
+        </h2>
+        
+        <div className="max-w-3xl mx-auto space-y-4 pt-4">
+          <p className="text-lg sm:text-xl text-white/80 leading-relaxed">
+            People complete procedures but relationships stay polite and distant. Communication feels unclear. Business and social interactions are hard to read.
+          </p>
+          <p className="text-lg sm:text-xl text-white/90 leading-relaxed font-medium">
+            This ebook explains the cultural foundations behind everyday life and interaction in the UAE.
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
+          <div className="text-center sm:text-left">
+            <p className="text-3xl sm:text-4xl font-bold text-orange mb-2">149 AED</p>
+            <p className="text-sm text-white/60">Instant download after checkout</p>
+            <p className="text-sm text-white/60">Secure Stripe payment</p>
+          </div>
+        </div>
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+          <Link href={paymentLink} target="_blank" rel="noopener noreferrer">
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleCTAClick('Get the Ebook - Hero')}
+              className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center gap-3"
+            >
+              <BookOpen className="w-5 h-5" />
+              <span>Get the Ebook</span>
+              <ArrowRight className="w-5 h-5" />
+            </motion.button>
+          </Link>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              setShowPreview(!showPreview)
+              handleCTAClick('Read what\'s inside')
+            }}
+            className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl text-white/90 hover:text-white transition-all duration-300 inline-flex items-center gap-2"
+          >
+            <Eye className="w-5 h-5" />
+            <span>Read what's inside</span>
+          </motion.button>
+        </div>
+      </section>
+
+      {/* Preview Section */}
+      {showPreview && (
+        <motion.section
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          className="bg-white/5 border border-white/10 rounded-xl p-6 max-w-4xl mx-auto"
+        >
+          <h3 className="text-xl font-semibold text-white mb-4 text-center">Sample Preview</h3>
+          <iframe
+            src="/api/download-sample?ebook=beyond-formalities"
+            className="w-full h-[600px] rounded-lg border border-white/10"
+            title="Beyond Formalities Sample"
+          />
+          <p className="text-sm text-white/60 mt-4 text-center">
+            This is a preview. Purchase the full guide to access all content.
+          </p>
+        </motion.section>
+      )}
+
+      {/* B) Pain Points Section */}
+      <section className="max-w-3xl mx-auto space-y-6">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center">
+          <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+            If you have ever felt unsure, you are not alone
+          </span>
+        </h2>
+        <div className="space-y-4">
+          <div className="flex items-start gap-4 p-4 bg-white/5 border border-white/10 rounded-xl">
+            <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
+            <p className="text-lg text-white/90">You did the formalities, yet trust still takes time.</p>
+          </div>
+          <div className="flex items-start gap-4 p-4 bg-white/5 border border-white/10 rounded-xl">
+            <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
+            <p className="text-lg text-white/90">Meetings are warm, but decisions move differently than expected.</p>
+          </div>
+          <div className="flex items-start gap-4 p-4 bg-white/5 border border-white/10 rounded-xl">
+            <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
+            <p className="text-lg text-white/90">Indirect communication and silence can be hard to interpret.</p>
+          </div>
+          <div className="flex items-start gap-4 p-4 bg-white/5 border border-white/10 rounded-xl">
+            <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
+            <p className="text-lg text-white/90">You want to show respect, but you are not sure what matters most.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* C) What This Ebook Helps You Understand */}
+      <section className="max-w-3xl mx-auto space-y-6">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center">
+          <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+            What Beyond Formalities explains
+          </span>
+        </h2>
+        <p className="text-lg sm:text-xl text-white/90 leading-relaxed text-center">
+          UAE daily life is shaped by values such as respect, hospitality, faith, family, hierarchy, and social harmony. When those foundations are understood, communication becomes clearer and relationships become easier to build.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+          <div className="flex items-start gap-3 p-4 bg-white/5 border border-white/10 rounded-xl">
+            <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
+            <p className="text-white/90">How cultural values shape everyday interaction</p>
+          </div>
+          <div className="flex items-start gap-3 p-4 bg-white/5 border border-white/10 rounded-xl">
+            <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+            <p className="text-white/90">How trust and relationships develop over time</p>
+          </div>
+          <div className="flex items-start gap-3 p-4 bg-white/5 border border-white/10 rounded-xl">
+            <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
+            <p className="text-white/90">How social boundaries and etiquette work in real life</p>
+          </div>
+          <div className="flex items-start gap-3 p-4 bg-white/5 border border-white/10 rounded-xl">
+            <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+            <p className="text-white/90">How business culture and protocol are influenced by cultural context</p>
+          </div>
+        </div>
+      </section>
+
+      {/* D) What You Will Gain */}
+      <section className="max-w-3xl mx-auto space-y-6">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center">
+          <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+            What you will gain
+          </span>
+        </h2>
+        <div className="space-y-4">
+          <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl">
+            <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
+            <p className="text-white/90">Clarity on Emirati culture and local customs</p>
+          </div>
+          <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl">
+            <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+            <p className="text-white/90">More confidence in social and professional interaction</p>
+          </div>
+          <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl">
+            <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
+            <p className="text-white/90">A stronger understanding of nonverbal communication and social distance</p>
+          </div>
+          <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl">
+            <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+            <p className="text-white/90">Practical awareness of etiquette in hospitality, dining, and majlis settings</p>
+          </div>
+          <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl">
+            <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
+            <p className="text-white/90">A foundation for respectful business communication and professional conduct in the UAE</p>
+          </div>
+        </div>
+      </section>
+
+      {/* E) What's Inside */}
+      <section className="max-w-3xl mx-auto space-y-6">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center">
+          <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+            What's inside
+          </span>
+        </h2>
+        <div className="bg-white/5 border border-white/10 rounded-xl p-6 space-y-3">
+          <ul className="space-y-2 text-white/90">
+            <li className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
+              <span>The Seven Emirates and national foundations</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-azure-blue rounded-full mt-2 flex-shrink-0" />
+              <span>The Trucial States and the formation of the UAE</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
+              <span>The UAE flag, identity, values, and heritage</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-azure-blue rounded-full mt-2 flex-shrink-0" />
+              <span>First impressions and cultural appearance</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
+              <span>Arabic greetings and everyday expressions</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-azure-blue rounded-full mt-2 flex-shrink-0" />
+              <span>Nonverbal communication and social distance</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
+              <span>Gender etiquette and respectful interaction</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-azure-blue rounded-full mt-2 flex-shrink-0" />
+              <span>Daily life, social etiquette, and behavioural norms</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
+              <span>Islamic values and their influence on daily life</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-azure-blue rounded-full mt-2 flex-shrink-0" />
+              <span>Family, kinship, honour, and tribal structure</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
+              <span>Names, honour, and lineage in Emirati culture</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-azure-blue rounded-full mt-2 flex-shrink-0" />
+              <span>Dining etiquette and social gatherings</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
+              <span>Hospitality, coffee culture, and majlis etiquette</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-azure-blue rounded-full mt-2 flex-shrink-0" />
+              <span>Business culture and protocol in the UAE</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
+              <span>Modern life in the United Arab Emirates</span>
+            </li>
+          </ul>
+          <p className="text-white/70 text-sm italic pt-4 border-t border-white/10">
+            Written with respect for Emirati culture, designed to reduce misunderstandings and support meaningful connection.
+          </p>
+        </div>
+      </section>
+
+      {/* F) Who It Is For */}
+      <section className="max-w-4xl mx-auto space-y-6">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center">
+          <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+            Who this guide is for
+          </span>
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-gradient-to-br from-orange/10 to-orange/5 border border-orange/20 rounded-xl p-6 space-y-4">
+            <div className="w-12 h-12 bg-orange/20 rounded-xl flex items-center justify-center">
+              <Briefcase className="w-6 h-6 text-orange" />
+            </div>
+            <h3 className="text-xl font-semibold text-white">Preparing from abroad</h3>
+            <p className="text-white/80">For professionals, founders, and individuals who want cultural clarity before arriving or partnering with the UAE.</p>
+          </div>
+          <div className="bg-gradient-to-br from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl p-6 space-y-4">
+            <div className="w-12 h-12 bg-azure-blue/20 rounded-xl flex items-center justify-center">
+              <Home className="w-6 h-6 text-azure-blue" />
+            </div>
+            <h3 className="text-xl font-semibold text-white">Relocating or newly arrived</h3>
+            <p className="text-white/80">For those settling in and seeking confidence in daily interaction, customs, and communication.</p>
+          </div>
+          <div className="bg-gradient-to-br from-orange/10 to-azure-blue/10 border border-orange/20 rounded-xl p-6 space-y-4">
+            <div className="w-12 h-12 bg-orange/20 rounded-xl flex items-center justify-center">
+              <Users className="w-6 h-6 text-orange" />
+            </div>
+            <h3 className="text-xl font-semibold text-white">Already living or doing business in the UAE</h3>
+            <p className="text-white/80">For anyone who wants deeper understanding beyond procedures, to build lasting relationships.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* G) Pricing Block */}
+      <section className="max-w-2xl mx-auto">
+        <div className="bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-2xl p-8 text-center space-y-6">
+          <h2 className="text-3xl sm:text-4xl font-bold">
+            <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+              Get Beyond Formalities
+            </span>
+          </h2>
+          <div className="space-y-4">
+            <p className="text-4xl sm:text-5xl font-bold text-orange">149 AED</p>
+            <div className="space-y-2 text-white/80">
+              <p className="flex items-center justify-center gap-2">
+                <CheckCircle className="w-4 h-4 text-orange" />
+                <span>PDF ebook</span>
+              </p>
+              <p className="flex items-center justify-center gap-2">
+                <CheckCircle className="w-4 h-4 text-azure-blue" />
+                <span>Instant access after checkout</span>
+              </p>
+              <p className="flex items-center justify-center gap-2">
+                <Shield className="w-4 h-4 text-orange" />
+                <span>Secure Stripe checkout</span>
+              </p>
+            </div>
+            <Link href={paymentLink} target="_blank" rel="noopener noreferrer">
+              <motion.button
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => handleCTAClick('Buy now - Pricing')}
+                className="w-full px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center justify-center gap-3"
+              >
+                <BookOpen className="w-5 h-5" />
+                <span>Buy now</span>
+                <ArrowRight className="w-5 h-5" />
+              </motion.button>
+            </Link>
+            <p className="text-sm text-white/60">
+              Charged in AED, your bank may convert automatically.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* H) FAQ Section */}
+      <section className="max-w-3xl mx-auto space-y-6">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center">
+          <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+            Frequently Asked Questions
+          </span>
+        </h2>
+        <div className="space-y-4">
+          {faqs.map((faq, index) => (
+            <div
+              key={index}
+              className="bg-white/5 border border-white/10 rounded-xl overflow-hidden"
+            >
+              <button
+                onClick={() => toggleFaq(index)}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-white/5 transition-colors"
+              >
+                <h3 className="text-lg font-semibold text-white pr-4">{faq.question}</h3>
+                {expandedFaq === index ? (
+                  <ChevronUp className="w-5 h-5 text-orange flex-shrink-0" />
+                ) : (
+                  <ChevronDown className="w-5 h-5 text-white/60 flex-shrink-0" />
+                )}
+              </button>
+              {expandedFaq === index && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="px-6 pb-6"
+                >
+                  <p className="text-white/80 leading-relaxed">{faq.answer}</p>
+                </motion.div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* I) Final CTA */}
+      <section className="max-w-3xl mx-auto text-center space-y-6">
+        <h2 className="text-3xl sm:text-4xl font-bold">
+          <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+            Understand the culture, communicate with confidence
+          </span>
+        </h2>
+        <Link href={paymentLink} target="_blank" rel="noopener noreferrer">
+          <motion.button
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => handleCTAClick('Get the Ebook - Final CTA')}
+            className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center gap-3"
+          >
+            <BookOpen className="w-5 h-5" />
+            <span>Get the Ebook</span>
+            <ArrowRight className="w-5 h-5" />
+          </motion.button>
+        </Link>
+        <div className="pt-6 space-y-2 text-white/60 text-sm">
+          <p>By The Orange Code, Abu Dhabi</p>
+          <p>
+            Questions? Contact us at{' '}
+            <a href="mailto:hello@theorangecode.com" className="text-orange hover:text-azure-blue transition-colors">
+              hello@theorangecode.com
+            </a>
+          </p>
+        </div>
+      </section>
+    </div>
+  )
+}
+
