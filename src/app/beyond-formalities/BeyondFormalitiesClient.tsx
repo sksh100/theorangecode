@@ -40,8 +40,8 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
       answer: "Yes. This guide is written with respect for Emirati culture and is designed to reduce misunderstandings and support meaningful connection. It focuses on understanding cultural foundations rather than making assumptions or judgments."
     },
     {
-      question: "How do I receive the ebook?",
-      answer: "After completing your purchase through our secure Stripe checkout, you will receive an email with a download link. The link is valid for 48 hours. Your PDF copy will be watermarked with your email address for security."
+      question: "How do I receive the E-Guide?",
+      answer: "After completing your purchase through our secure Stripe checkout, you will receive an email with a download link. The link is valid for 48 hours. Your PDF E-Guide will be watermarked with your email address for security."
     },
     {
       question: "Can teams purchase access?",
@@ -77,11 +77,11 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
           <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
             <motion.button
               whileTap={{ scale: 0.95 }}
-              onClick={() => handleCTAClick('Get the Ebook - Sticky Mobile CTA')}
+              onClick={() => handleCTAClick('Get the E-Guide - Sticky Mobile CTA')}
               className="w-full px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-base inline-flex items-center justify-center gap-2"
             >
               <BookOpen className="w-5 h-5" />
-              <span>Get the Ebook - 149 AED</span>
+              <span>Get the E-Guide - 149 AED</span>
               <ArrowRight className="w-5 h-5" />
             </motion.button>
           </Link>
@@ -96,7 +96,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             Beyond Formalities
           </span>
         </h1>
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white/90">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white/90 whitespace-nowrap overflow-x-auto">
           Understanding Emirati Culture, Local Customs, and Everyday Life
         </h2>
         
@@ -119,11 +119,11 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => handleCTAClick('Get the Ebook - Hero')}
+              onClick={() => handleCTAClick('Get the E-Guide - Hero')}
               className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center gap-3"
             >
               <BookOpen className="w-5 h-5" />
-              <span>Get the Ebook</span>
+              <span>Get the E-Guide</span>
               <ArrowRight className="w-5 h-5" />
             </motion.button>
           </Link>
@@ -167,7 +167,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
 
       {/* B) Pain Points Section */}
       <section className="max-w-3xl mx-auto space-y-6">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center whitespace-nowrap overflow-x-auto">
           <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
             If you have ever felt unsure, you are not alone
           </span>
@@ -192,7 +192,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
         </div>
       </section>
 
-      {/* C) What This Ebook Helps You Understand */}
+      {/* C) What This E-Guide Helps You Understand */}
       <section className="max-w-3xl mx-auto space-y-6">
         <h2 className="text-3xl sm:text-4xl font-bold text-center">
           <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
@@ -253,82 +253,6 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
         </div>
       </section>
 
-      {/* E) What's Inside */}
-      <section className="max-w-3xl mx-auto space-y-6">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center">
-          <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-            What's inside
-          </span>
-        </h2>
-        <div className="bg-white/5 border border-white/10 rounded-xl p-6 space-y-3">
-          <ul className="space-y-2 text-white/90">
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-              <span>The Seven Emirates and national foundations</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-azure-blue rounded-full mt-2 flex-shrink-0" />
-              <span>The Trucial States and the formation of the UAE</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-              <span>The UAE flag, identity, values, and heritage</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-azure-blue rounded-full mt-2 flex-shrink-0" />
-              <span>First impressions and cultural appearance</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-              <span>Arabic greetings and everyday expressions</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-azure-blue rounded-full mt-2 flex-shrink-0" />
-              <span>Nonverbal communication and social distance</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-              <span>Gender etiquette and respectful interaction</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-azure-blue rounded-full mt-2 flex-shrink-0" />
-              <span>Daily life, social etiquette, and behavioural norms</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-              <span>Islamic values and their influence on daily life</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-azure-blue rounded-full mt-2 flex-shrink-0" />
-              <span>Family, kinship, honour, and tribal structure</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-              <span>Names, honour, and lineage in Emirati culture</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-azure-blue rounded-full mt-2 flex-shrink-0" />
-              <span>Dining etiquette and social gatherings</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-              <span>Hospitality, coffee culture, and majlis etiquette</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-azure-blue rounded-full mt-2 flex-shrink-0" />
-              <span>Business culture and protocol in the UAE</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-              <span>Modern life in the United Arab Emirates</span>
-            </li>
-          </ul>
-          <p className="text-white/70 text-sm italic pt-4 border-t border-white/10">
-            Written with respect for Emirati culture, designed to reduce misunderstandings and support meaningful connection.
-          </p>
-        </div>
-      </section>
-
       {/* F) Who It Is For */}
       <section className="max-w-4xl mx-auto space-y-6">
         <h2 className="text-3xl sm:text-4xl font-bold text-center">
@@ -374,7 +298,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             <div className="space-y-2 text-white/80">
               <p className="flex items-center justify-center gap-2">
                 <CheckCircle className="w-4 h-4 text-orange" />
-                <span>PDF ebook</span>
+                <span>PDF E-Guide</span>
               </p>
               <p className="flex items-center justify-center gap-2">
                 <CheckCircle className="w-4 h-4 text-azure-blue" />
@@ -447,7 +371,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
 
       {/* I) Final CTA */}
       <section className="max-w-3xl mx-auto text-center space-y-6">
-        <h2 className="text-3xl sm:text-4xl font-bold">
+        <h2 className="text-3xl sm:text-4xl font-bold whitespace-nowrap overflow-x-auto">
           <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
             Understand the culture, communicate with confidence
           </span>
@@ -456,7 +380,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
           <motion.button
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => handleCTAClick('Get the Ebook - Final CTA')}
+              onClick={() => handleCTAClick('Get the E-Guide - Final CTA')}
             className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center gap-3"
           >
             <BookOpen className="w-5 h-5" />

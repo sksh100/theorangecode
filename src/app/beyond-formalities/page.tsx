@@ -77,7 +77,7 @@ export default function BeyondFormalitiesPage() {
             "name": "Beyond Formalities",
             "description": "Beyond Formalities is a cultural guide to Emirati culture, local customs, and everyday life in the United Arab Emirates. It covers identity and values, greetings and communication, nonverbal cues, gender etiquette, hospitality and majlis, dining customs, business culture and protocol, and modern UAE life.",
             "image": "https://www.theorangecode.com/og-image",
-            "category": "Ebook",
+            "category": "E-Guide",
             "brand": {
               "@type": "Organization",
               "name": "The Orange Code"
@@ -137,10 +137,10 @@ export default function BeyondFormalitiesPage() {
               },
               {
                 "@type": "Question",
-                "name": "How do I receive the ebook?",
+                "name": "How do I receive the E-Guide?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "After completing your purchase through our secure Stripe checkout, you will receive an email with a download link. The link is valid for 48 hours. Your PDF copy will be watermarked with your email address for security."
+                  "text": "After completing your purchase through our secure Stripe checkout, you will receive an email with a download link. The link is valid for 48 hours. Your PDF E-Guide will be watermarked with your email address for security."
                 }
               },
               {
