@@ -132,7 +132,7 @@ export default function BeyondFormalitiesPage() {
                 "name": "What do Emiratis say about the E-Guide?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "The Emiratis to whom this E-Guide was presented were all delighted to see the efforts we made to reflect their culture and values with respect for their country and society to foreigners. They were grateful for our undertaking to compile the E-Guide and for the fact that we are educating others with respect for their culture and society to make them understand the dynamics that can bridge the distance."
+                  "text": "This guide was reviewed by Emiratis who expressed their appreciation for the respectful and accurate representation of their culture, values, and society. They acknowledged the intention behind this work and welcomed the effort to educate others in a manner that promotes understanding of the cultural dynamics that influence relationships and communication in the United Arab Emirates. The guide was recognised as a constructive contribution to fostering mutual respect and deeper cultural awareness."
                 }
               },
               {
