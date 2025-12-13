@@ -114,7 +114,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             Beyond Formalities
           </span>
         </h1>
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white/90 whitespace-nowrap overflow-x-auto">
+        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-white/90 whitespace-nowrap overflow-x-auto scrollbar-hide">
           Understanding Emirati Culture, Local Customs, and Everyday Life
         </h2>
         
