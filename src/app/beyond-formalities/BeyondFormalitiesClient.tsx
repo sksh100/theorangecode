@@ -533,7 +533,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center gap-3"
           >
             <BookOpen className="w-5 h-5" />
-            <span>Get the Ebook</span>
+            <span>Get the E-Guide</span>
             <ArrowRight className="w-5 h-5" />
           </motion.button>
         </Link>
