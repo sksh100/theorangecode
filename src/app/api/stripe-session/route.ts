@@ -14,6 +14,9 @@ const getStripe = () => {
 }
 
 export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url)
+  const sessionId = searchParams.get('session_id')
+
   try {
     const stripe = getStripe()
     
@@ -23,9 +26,6 @@ export async function GET(req: NextRequest) {
         { status: 500 }
       )
     }
-
-    const { searchParams } = new URL(req.url)
-    const sessionId = searchParams.get('session_id')
 
     if (!sessionId) {
       return NextResponse.json(
