@@ -101,24 +101,33 @@ interface EbookDeliveryData {
 
 /**
  * Send a message to Slack
+ * @param message - The Slack message to send
+ * @param useSalesWebhook - If true, use SLACK_WEBHOOK_URL_SALES, otherwise use SLACK_WEBHOOK_URL
  */
-async function sendToSlack(message: SlackMessage): Promise<boolean> {
-  const webhookUrl = process.env.SLACK_WEBHOOK_URL;
+async function sendToSlack(message: SlackMessage, useSalesWebhook: boolean = false): Promise<boolean> {
+  // Determine which webhook to use
+  const webhookUrl = useSalesWebhook 
+    ? process.env.SLACK_WEBHOOK_URL_SALES 
+    : process.env.SLACK_WEBHOOK_URL;
 
-  console.log('🔍 Slack webhook status:', {
+  const webhookType = useSalesWebhook ? 'sales' : 'general';
+
+  console.log(`🔍 Slack ${webhookType} webhook status:`, {
     hasWebhook: !!webhookUrl,
     webhookPrefix: webhookUrl ? webhookUrl.substring(0, 30) + '...' : 'none',
-    messageType: message.blocks?.[0]?.text?.text || message.text || 'unknown'
+    messageType: message.blocks?.[0]?.text?.text || message.text || 'unknown',
+    usingSalesWebhook: useSalesWebhook
   });
 
   if (!webhookUrl) {
-    console.error('❌ SLACK_WEBHOOK_URL not configured - notification not sent');
-    console.error('❌ Please add SLACK_WEBHOOK_URL to Vercel environment variables');
+    const envVarName = useSalesWebhook ? 'SLACK_WEBHOOK_URL_SALES' : 'SLACK_WEBHOOK_URL';
+    console.error(`❌ ${envVarName} not configured - notification not sent`);
+    console.error(`❌ Please add ${envVarName} to Vercel environment variables`);
     return false;
   }
 
   try {
-    console.log('📤 Sending to Slack...', { messageType: message.blocks?.[0]?.text?.text || 'unknown' });
+    console.log(`📤 Sending to Slack (${webhookType})...`, { messageType: message.blocks?.[0]?.text?.text || 'unknown' });
     
     const response = await fetch(webhookUrl, {
       method: 'POST',
@@ -128,7 +137,7 @@ async function sendToSlack(message: SlackMessage): Promise<boolean> {
       body: JSON.stringify(message),
     });
 
-    console.log('📥 Slack response:', {
+    console.log(`📥 Slack ${webhookType} response:`, {
       status: response.status,
       statusText: response.statusText,
       ok: response.ok
@@ -136,7 +145,7 @@ async function sendToSlack(message: SlackMessage): Promise<boolean> {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('❌ Slack notification failed:', {
+      console.error(`❌ Slack ${webhookType} notification failed:`, {
         status: response.status,
         statusText: response.statusText,
         error: errorText
@@ -144,10 +153,10 @@ async function sendToSlack(message: SlackMessage): Promise<boolean> {
       return false;
     }
 
-    console.log('✅ Slack notification sent successfully');
+    console.log(`✅ Slack ${webhookType} notification sent successfully`);
     return true;
   } catch (error) {
-    console.error('❌ Error sending Slack notification:', error);
+    console.error(`❌ Error sending Slack ${webhookType} notification:`, error);
     return false;
   }
 }
@@ -277,7 +286,7 @@ export async function notifyNewsletterSubscription(data: NewsletterData): Promis
     ],
   };
 
-  await sendToSlack(message);
+  await sendToSlack(message, false); // General notifications use default webhook
 }
 
 /**
@@ -354,7 +363,7 @@ export async function notifyPayment(data: PaymentData): Promise<void> {
     ],
   };
 
-  await sendToSlack(message);
+  await sendToSlack(message, true); // Sales notification - use sales webhook
 }
 
 /**
@@ -467,7 +476,7 @@ export async function notifyEbookPurchase(data: {
     ],
   };
 
-  await sendToSlack(message);
+  await sendToSlack(message, true); // Sales notification - use sales webhook
 }
 
 /**
@@ -568,7 +577,7 @@ export async function notifyPayhipEbookPurchase(data: {
     ],
   };
 
-  await sendToSlack(message);
+  await sendToSlack(message, true); // Sales notification - use sales webhook
 }
 
 /**
@@ -627,7 +636,7 @@ export async function notifyEbookDelivery(data: EbookDeliveryData & { ebookType?
     ],
   };
 
-  await sendToSlack(message);
+  await sendToSlack(message, true); // Sales notification - use sales webhook
 }
 
 /**
@@ -839,7 +848,7 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
     blocks,
   };
 
-  await sendToSlack(message);
+  await sendToSlack(message, false); // General notification - use default webhook
 }
 
 /**
@@ -928,7 +937,7 @@ export async function sendDailySummary(stats: {
     ],
   };
 
-  await sendToSlack(message);
+  await sendToSlack(message, false); // General notification - use default webhook
 }
 
 /**
@@ -983,7 +992,7 @@ export async function notifyError(error: {
     });
   }
 
-  await sendToSlack(message);
+  await sendToSlack(message, false); // General notification - use default webhook
 }
 
 /**
@@ -1051,7 +1060,7 @@ export async function notifyConversionEvent(data: ConversionEventData): Promise<
     blocks,
   };
 
-  await sendToSlack(message);
+  await sendToSlack(message, false); // General notification - use default webhook
 }
 
 /**
@@ -1087,6 +1096,6 @@ export async function testSlackConnection(): Promise<boolean> {
     ],
   };
 
-  return await sendToSlack(message);
+  return await sendToSlack(message, false); // Test uses default webhook
 }
 
