@@ -2131,6 +2131,136 @@ export default function AdminDashboard() {
             <DayContentGenerator />
           )}
         </AnimatePresence>
+
+        {/* Resend Ebook Modal */}
+        <AnimatePresence>
+          {resendModalOpen && selectedPayment && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+              onClick={() => !resending && setResendModalOpen(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                onClick={(e) => e.stopPropagation()}
+                className="glass-card p-6 max-w-md w-full mx-4"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-bold text-white">Resend Ebook</h3>
+                  <button
+                    onClick={() => !resending && setResendModalOpen(false)}
+                    disabled={resending}
+                    className="text-white/50 hover:text-white transition-colors disabled:opacity-50"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-white/70 text-sm mb-2">Payment Details</label>
+                    <div className="bg-white/5 rounded-lg p-3 text-sm">
+                      <p className="text-white"><span className="text-white/60">Customer:</span> {selectedPayment.customerName}</p>
+                      <p className="text-white/70 text-xs mt-1"><span className="text-white/50">Original Email:</span> {selectedPayment.customerEmail}</p>
+                      <p className="text-white/70 text-xs mt-1"><span className="text-white/50">Amount:</span> {selectedPayment.amount} {selectedPayment.currency}</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-white/70 text-sm mb-2">
+                      Email Address <span className="text-orange">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      value={customEmail}
+                      onChange={(e) => setCustomEmail(e.target.value)}
+                      placeholder="Enter email address"
+                      disabled={resending}
+                      className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-orange/50 disabled:opacity-50"
+                    />
+                    <p className="text-white/50 text-xs mt-1">
+                      Enter the correct email address to receive the ebook
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-3 pt-2">
+                    <button
+                      onClick={async () => {
+                        if (!customEmail || !customEmail.includes('@')) {
+                          alert('Please enter a valid email address')
+                          return
+                        }
+
+                        setResending(true)
+                        try {
+                          // Determine ebook type based on payment amount
+                          const ebookType = (selectedPayment.amount === 149 && selectedPayment.currency === 'AED') 
+                            ? 'beyond-formalities' 
+                            : selectedPayment.metadata?.ebookType || selectedPayment.metadata?.type || 'beyond-formalities'
+
+                          const response = await fetch('/api/admin/resend-ebook', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                              email: customEmail,
+                              customerName: selectedPayment.customerName,
+                              orderId: selectedPayment.id,
+                              ebookType: ebookType,
+                            }),
+                          })
+                          const data = await response.json()
+                          if (data.success) {
+                            alert(`✅ Ebook sent successfully to ${customEmail}`)
+                            setResendModalOpen(false)
+                            setCustomEmail('')
+                            setSelectedPayment(null)
+                          } else {
+                            alert(`❌ Error: ${data.error}`)
+                          }
+                        } catch (error: any) {
+                          alert(`❌ Error: ${error.message}`)
+                        } finally {
+                          setResending(false)
+                        }
+                      }}
+                      disabled={resending || !customEmail || !customEmail.includes('@')}
+                      className="flex-1 px-4 py-2 bg-orange hover:bg-orange/80 disabled:bg-white/10 disabled:text-white/50 text-white rounded-lg font-medium transition-colors disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      {resending ? (
+                        <>
+                          <RefreshCw className="w-4 h-4 animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Mail className="w-4 h-4" />
+                          Send Ebook
+                        </>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (!resending) {
+                          setResendModalOpen(false)
+                          setCustomEmail('')
+                          setSelectedPayment(null)
+                        }
+                      }}
+                      disabled={resending}
+                      className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-lg transition-colors disabled:opacity-50"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
     </div>
   )
@@ -3733,136 +3863,6 @@ function CalendarView({ content, onEdit }: { content: any[]; onEdit: (item: any)
           <p className="text-white/70">No posts scheduled for {selectedDate.toLocaleDateString()}</p>
         </motion.div>
       )}
-
-      {/* Resend Ebook Modal */}
-      <AnimatePresence>
-        {resendModalOpen && selectedPayment && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
-            onClick={() => !resending && setResendModalOpen(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="glass-card p-6 max-w-md w-full mx-4"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-white">Resend Ebook</h3>
-                <button
-                  onClick={() => !resending && setResendModalOpen(false)}
-                  disabled={resending}
-                  className="text-white/50 hover:text-white transition-colors disabled:opacity-50"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-white/70 text-sm mb-2">Payment Details</label>
-                  <div className="bg-white/5 rounded-lg p-3 text-sm">
-                    <p className="text-white"><span className="text-white/60">Customer:</span> {selectedPayment.customerName}</p>
-                    <p className="text-white/70 text-xs mt-1"><span className="text-white/50">Original Email:</span> {selectedPayment.customerEmail}</p>
-                    <p className="text-white/70 text-xs mt-1"><span className="text-white/50">Amount:</span> {selectedPayment.amount} {selectedPayment.currency}</p>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-white/70 text-sm mb-2">
-                    Email Address <span className="text-orange">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    value={customEmail}
-                    onChange={(e) => setCustomEmail(e.target.value)}
-                    placeholder="Enter email address"
-                    disabled={resending}
-                    className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-orange/50 disabled:opacity-50"
-                  />
-                  <p className="text-white/50 text-xs mt-1">
-                    Enter the correct email address to receive the ebook
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-3 pt-2">
-                  <button
-                    onClick={async () => {
-                      if (!customEmail || !customEmail.includes('@')) {
-                        alert('Please enter a valid email address')
-                        return
-                      }
-
-                      setResending(true)
-                      try {
-                        // Determine ebook type based on payment amount
-                        const ebookType = (selectedPayment.amount === 149 && selectedPayment.currency === 'AED') 
-                          ? 'beyond-formalities' 
-                          : selectedPayment.metadata?.ebookType || selectedPayment.metadata?.type || 'beyond-formalities'
-
-                        const response = await fetch('/api/admin/resend-ebook', {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({
-                            email: customEmail,
-                            customerName: selectedPayment.customerName,
-                            orderId: selectedPayment.id,
-                            ebookType: ebookType,
-                          }),
-                        })
-                        const data = await response.json()
-                        if (data.success) {
-                          alert(`✅ Ebook sent successfully to ${customEmail}`)
-                          setResendModalOpen(false)
-                          setCustomEmail('')
-                          setSelectedPayment(null)
-                        } else {
-                          alert(`❌ Error: ${data.error}`)
-                        }
-                      } catch (error: any) {
-                        alert(`❌ Error: ${error.message}`)
-                      } finally {
-                        setResending(false)
-                      }
-                    }}
-                    disabled={resending || !customEmail || !customEmail.includes('@')}
-                    className="flex-1 px-4 py-2 bg-orange hover:bg-orange/80 disabled:bg-white/10 disabled:text-white/50 text-white rounded-lg font-medium transition-colors disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  >
-                    {resending ? (
-                      <>
-                        <RefreshCw className="w-4 h-4 animate-spin" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Mail className="w-4 h-4" />
-                        Send Ebook
-                      </>
-                    )}
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (!resending) {
-                        setResendModalOpen(false)
-                        setCustomEmail('')
-                        setSelectedPayment(null)
-                      }
-                    }}
-                    disabled={resending}
-                    className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-lg transition-colors disabled:opacity-50"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   )
 }
