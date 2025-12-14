@@ -82,6 +82,7 @@ export async function POST(req: NextRequest) {
     const emailContent = {
       from: 'The Orange Code <hello@theorangecode.com>',
       to: email,
+      bcc: 'bram.janssen@theorangecode.com', // Automatically BCC Bram on all ebook deliveries
       subject: ebook.subject,
       html: `
         <!DOCTYPE html>
