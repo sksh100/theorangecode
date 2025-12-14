@@ -332,7 +332,7 @@ export default function AdminDashboard() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-      setLoading(true)
+    setLoading(true)
     setAuthError('')
 
     try {
@@ -619,13 +619,13 @@ export default function AdminDashboard() {
   }
 
   // Filter data based on search
-  const filteredPayments = payments.filter(p =>
+  const filteredPayments = payments.filter((p) =>
     p.customerEmail.toLowerCase().includes(searchQuery.toLowerCase()) ||
     p.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     p.id.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
-  const filteredSubscribers = subscribers.filter(s =>
+  const filteredSubscribers = subscribers.filter((s) =>
     s.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
     s.name.toLowerCase().includes(searchQuery.toLowerCase())
   )
@@ -642,7 +642,7 @@ export default function AdminDashboard() {
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-white mb-2">Admin Dashboard</h1>
             <p className="text-white/70 text-sm">Enter password to access</p>
-        </div>
+          </div>
 
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
