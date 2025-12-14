@@ -259,7 +259,6 @@ export async function POST(req: NextRequest) {
             productName,
             usedEbookSecret
           })
-          })
 
           if (ebookResponse.ok) {
             console.log('✅ Ebook sent successfully to:', email)
