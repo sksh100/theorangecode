@@ -168,19 +168,53 @@ export async function POST(req: NextRequest) {
       });
 
       // Check if this is an ebook purchase and send the ebook
-      // Only process ebook logic if verified with ebook secret OR metadata indicates ebook
+      // Detection logic: Check metadata, product name, amount, and webhook secret
       const productName = session.metadata?.productName || session.metadata?.product || ""
-      const isEbookPurchase = (usedEbookSecret || 
-                              productName.toLowerCase().includes('ebook') || 
-                              productName.toLowerCase().includes('uk to uae') ||
-                              productName.toLowerCase().includes('beyond formalities') ||
-                              session.metadata?.type === 'ebook')
+      const amount = session.amount_total ?? 0
+      const amountInAED = amount / 100 // Convert from cents to AED
       
-      // Determine which ebook type
-      const ebookType = (productName.toLowerCase().includes('beyond formalities') || 
-                        session.metadata?.ebookType === 'beyond-formalities')
-                        ? 'beyond-formalities' 
-                        : 'uk-to-uae'
+      // PRIORITY 1: Check amount first (most reliable)
+      // Beyond Formalities = 149 AED, UK to UAE = different price
+      const is149AED = amountInAED >= 140 && amountInAED <= 160 // 149 AED range
+      
+      // PRIORITY 2: Check metadata and product name
+      const hasBeyondFormalitiesMetadata = (
+        productName.toLowerCase().includes('beyond formalities') ||
+        productName.toLowerCase().includes('beyond-formalities') ||
+        session.metadata?.ebookType === 'beyond-formalities' ||
+        session.metadata?.type === 'beyond-formalities'
+      )
+      
+      const hasUkToUaeMetadata = (
+        productName.toLowerCase().includes('uk to uae') ||
+        productName.toLowerCase().includes('uk-to-uae') ||
+        session.metadata?.ebookType === 'uk-to-uae' ||
+        session.metadata?.type === 'uk-to-uae'
+      )
+      
+      // PRIORITY 3: Check webhook secret (ebook secret = likely Beyond Formalities)
+      // But amount takes precedence!
+      
+      // Determine ebook type: Amount is most reliable indicator
+      let ebookType: 'beyond-formalities' | 'uk-to-uae' = 'uk-to-uae' // Default fallback
+      
+      if (is149AED) {
+        // 149 AED = Beyond Formalities (most reliable)
+        ebookType = 'beyond-formalities'
+      } else if (hasBeyondFormalitiesMetadata) {
+        ebookType = 'beyond-formalities'
+      } else if (hasUkToUaeMetadata) {
+        ebookType = 'uk-to-uae'
+      } else if (usedEbookSecret) {
+        // If ebook secret was used and no other indicators, default to Beyond Formalities
+        ebookType = 'beyond-formalities'
+      }
+      // Otherwise defaults to 'uk-to-uae'
+      
+      const isEbookPurchase = is149AED || hasBeyondFormalitiesMetadata || hasUkToUaeMetadata || 
+                              productName.toLowerCase().includes('ebook') ||
+                              session.metadata?.type === 'ebook' ||
+                              usedEbookSecret
 
       if (isEbookPurchase && email && email !== 'unknown') {
         // Send dedicated ebook purchase notification to Slack
@@ -188,9 +222,10 @@ export async function POST(req: NextRequest) {
           customerEmail: email,
           customerName: session.customer_details?.name || email.split('@')[0],
           amount: session.amount_total ?? 0,
-          currency: session.currency ?? "gbp",
+          currency: session.currency ?? "aed",
           orderId: session.id,
-          stripeChargeId: session.payment_intent as string || session.id
+          stripeChargeId: session.payment_intent as string || session.id,
+          ebookType: ebookType // Pass ebook type to Slack notification
         }).catch(err => {
           console.error('Slack ebook purchase notification error:', err);
           // Don't fail the webhook if Slack fails
@@ -213,6 +248,17 @@ export async function POST(req: NextRequest) {
               downloadToken: downloadToken,
               ebookType: ebookType,
             }),
+          })
+          
+          // Log for debugging
+          console.log('📚 Ebook delivery initiated:', {
+            email,
+            ebookType,
+            amount: amountInAED,
+            hasMetadata: !!session.metadata,
+            productName,
+            usedEbookSecret
+          })
           })
 
           if (ebookResponse.ok) {

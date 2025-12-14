@@ -17,7 +17,6 @@ function ThankYouContent() {
     name: string
     paymentReference: string
   } | null>(null)
-  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchCustomerData = async () => {
@@ -29,18 +28,34 @@ function ThankYouContent() {
       try {
         const response = await fetch(`/api/stripe-session?session_id=${sessionId}`)
         if (!response.ok) {
-          throw new Error('Failed to fetch session details')
+          // If API fails, use session ID as payment reference
+          // This ensures the page still works even if API is temporarily unavailable
+          setCustomerData({
+            email: 'your email address',
+            name: 'there',
+            paymentReference: sessionId || 'N/A'
+          })
+          setIsLoading(false)
+          return
         }
         const data = await response.json()
-        setCustomerData({
-          email: data.email || 'your email address',
-          name: data.name || 'there',
-          paymentReference: data.paymentReference || sessionId
-        })
+        if (data.success && data.email) {
+          setCustomerData({
+            email: data.email,
+            name: data.name || data.email.split('@')[0] || 'there',
+            paymentReference: data.paymentReference || sessionId
+          })
+        } else {
+          // Fallback if API returns but without email
+          setCustomerData({
+            email: 'your email address',
+            name: 'there',
+            paymentReference: data.paymentReference || sessionId || 'N/A'
+          })
+        }
       } catch (err) {
         console.error('Error fetching customer data:', err)
-        setError('Unable to load customer details')
-        // Still show the page with generic message
+        // Graceful fallback - page still works with session ID
         setCustomerData({
           email: 'your email address',
           name: 'there',
@@ -128,11 +143,6 @@ function ThankYouContent() {
               </div>
             </div>
 
-            {error && (
-              <div className="bg-orange/10 border border-orange/30 rounded-lg p-4">
-                <p className="text-orange text-sm">{error}</p>
-              </div>
-            )}
           </motion.div>
 
           {/* Support Section */}
@@ -150,8 +160,11 @@ function ThankYouContent() {
               >
                 hello@theorangecode.com
               </a>
-              {' '}with your payment reference: <strong className="text-white">{customerData?.paymentReference || 'N/A'}</strong>
+              {' '}with your payment reference:
             </p>
+            <div className="bg-white/5 border border-white/10 rounded-lg p-3 break-all">
+              <code className="text-white text-sm font-mono">{customerData?.paymentReference || 'N/A'}</code>
+            </div>
           </motion.div>
 
           {/* Action Buttons */}

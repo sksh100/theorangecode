@@ -46,6 +46,7 @@ import {
   Twitter,
   Sparkles,
 } from 'lucide-react'
+import { DayContentGenerator } from '@/components/30DayContentGenerator'
 import {
   LineChart,
   Line,
@@ -71,6 +72,8 @@ interface Payment {
   customerName: string
   createdAt: string
   description: string
+  stripeChargeId?: string
+  metadata?: any
 }
 
 interface Subscriber {
@@ -151,11 +154,13 @@ export default function AdminDashboard() {
   const [password, setPassword] = useState('')
   const [authError, setAuthError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [activeTab, setActiveTab] = useState<'overview' | 'payments' | 'subscribers' | 'analytics' | 'visitors' | 'content'>('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'payments' | 'subscribers' | 'analytics' | 'visitors' | 'content' | '30day'>('overview')
   const [payments, setPayments] = useState<Payment[]>([])
   const [paymentStats, setPaymentStats] = useState<{ totalRevenue: number; count: number }>({ totalRevenue: 0, count: 0 })
   const [subscribers, setSubscribers] = useState<Subscriber[]>([])
   const [analytics, setAnalytics] = useState<Analytics | null>(null)
+  const [gaData, setGaData] = useState<any>(null)
+  const [gaLoading, setGaLoading] = useState(false)
   const [visitors, setVisitors] = useState<Visitor[]>([])
   const [activeSessions, setActiveSessions] = useState<ActiveSession[]>([])
   const [visitorStats, setVisitorStats] = useState<VisitorStats | null>(null)
@@ -175,6 +180,10 @@ export default function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState('')
   const [notificationsEnabled, setNotificationsEnabled] = useState(true)
   const [soundEnabled, setSoundEnabled] = useState(true)
+  const [resendModalOpen, setResendModalOpen] = useState(false)
+  const [selectedPayment, setSelectedPayment] = useState<Payment | null>(null)
+  const [customEmail, setCustomEmail] = useState('')
+  const [resending, setResending] = useState(false)
   const [previousCounts, setPreviousCounts] = useState({
     visitors: 0,
     payments: 0,
@@ -357,6 +366,7 @@ export default function AdminDashboard() {
       fetchPayments(),
       fetchSubscribers(),
       fetchVisitors(),
+      fetchGoogleAnalytics(),
     ])
     // Calculate analytics after we have payments and subscribers data
     fetchAnalytics()
@@ -459,6 +469,21 @@ export default function AdminDashboard() {
       setSubscribers([])
     } finally {
       setSubscribersLoading(false)
+    }
+  }
+
+  const fetchGoogleAnalytics = async () => {
+    setGaLoading(true)
+    try {
+      const response = await fetch('/api/admin/google-analytics')
+      const data = await response.json()
+      if (data.success) {
+        setGaData(data.data)
+      }
+    } catch (error) {
+      console.error('Error fetching Google Analytics:', error)
+    } finally {
+      setGaLoading(false)
     }
   }
 
@@ -746,6 +771,7 @@ export default function AdminDashboard() {
               { id: 'analytics', label: 'Analytics', icon: Activity },
               { id: 'visitors', label: 'Visitors', icon: Globe },
               { id: 'content', label: 'Content Planner', icon: Calendar },
+              { id: '30day', label: '30-Day Generator', icon: Sparkles },
             ].map((tab) => (
             <button 
                 key={tab.id}
@@ -1061,6 +1087,7 @@ export default function AdminDashboard() {
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">Amount</th>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">Status</th>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-white">Date</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1102,6 +1129,35 @@ export default function AdminDashboard() {
                             </td>
                             <td className="px-6 py-4 text-white/70 text-sm">
                               {new Date(payment.createdAt).toLocaleDateString()}
+                            </td>
+                            <td className="px-6 py-4">
+                              <div className="flex items-center gap-2">
+                                {(payment.amount === 149 && payment.currency === 'AED') || (payment.metadata?.ebookType || payment.metadata?.type) && (
+                                  <button
+                                    onClick={() => {
+                                      setSelectedPayment(payment)
+                                      setCustomEmail(payment.customerEmail)
+                                      setResendModalOpen(true)
+                                    }}
+                                    className="px-3 py-1.5 bg-orange/20 hover:bg-orange/30 border border-orange/30 rounded-lg text-orange text-xs font-medium transition-colors flex items-center gap-1"
+                                    title="Resend ebook (can change email address)"
+                                  >
+                                    <Mail className="w-3 h-3" />
+                                    Resend Ebook
+                                  </button>
+                                )}
+                                {payment.stripeChargeId && (
+                                  <a
+                                    href={`https://dashboard.stripe.com/payments/${payment.stripeChargeId}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-3 py-1.5 bg-azure-blue/20 hover:bg-azure-blue/30 border border-azure-blue/30 rounded-lg text-azure-blue text-xs font-medium transition-colors flex items-center gap-1"
+                                  >
+                                    <ExternalLink className="w-3 h-3" />
+                                    Stripe
+                                  </a>
+                                )}
+                              </div>
                             </td>
                           </motion.tr>
                         ))}
@@ -1260,6 +1316,87 @@ export default function AdminDashboard() {
               exit={{ opacity: 0, y: -20 }}
               className="space-y-6"
             >
+              {/* Google Analytics Section */}
+              <div className="glass-card p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-bold text-white">Google Analytics</h2>
+                  <button
+                    onClick={fetchGoogleAnalytics}
+                    className="px-4 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue transition-all flex items-center gap-2 text-sm"
+                  >
+                    <RefreshCw className={`w-4 h-4 ${gaLoading ? 'animate-spin' : ''}`} />
+                    Refresh
+                  </button>
+                </div>
+                {gaLoading ? (
+                  <div className="p-8 text-center text-white/70">Loading Google Analytics...</div>
+                ) : gaData ? (
+                  <div className="space-y-4">
+                    {gaData.configured ? (
+                      <>
+                        {gaData.setupRequired ? (
+                          <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
+                            <p className="text-yellow-400 text-sm font-semibold mb-2">Setup Required</p>
+                            <p className="text-white/80 text-sm mb-3">
+                              Google Analytics is configured ({gaData.measurementId}), but the Data API needs to be set up to see real-time data in the dashboard.
+                            </p>
+                            <p className="text-white/60 text-xs mb-3">
+                              View your analytics directly in Google Analytics:
+                            </p>
+                            <a
+                              href="https://analytics.google.com"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-2 inline-block px-4 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 border border-azure-blue/30 rounded-lg text-azure-blue text-sm transition-colors flex items-center gap-2"
+                            >
+                              <ExternalLink className="w-4 h-4" />
+                              Open Google Analytics Dashboard
+                            </a>
+                          </div>
+                        ) : (
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div className="bg-white/5 rounded-lg p-4">
+                              <p className="text-white/60 text-xs mb-1">Total Users</p>
+                              <p className="text-2xl font-bold text-white">{gaData.stats?.totalUsers?.toLocaleString() || 0}</p>
+                            </div>
+                            <div className="bg-white/5 rounded-lg p-4">
+                              <p className="text-white/60 text-xs mb-1">Active Now</p>
+                              <p className="text-2xl font-bold text-orange">{gaData.realtimeUsers || 0}</p>
+                            </div>
+                            <div className="bg-white/5 rounded-lg p-4">
+                              <p className="text-white/60 text-xs mb-1">Page Views</p>
+                              <p className="text-2xl font-bold text-white">{gaData.stats?.pageViews?.toLocaleString() || 0}</p>
+                            </div>
+                            <div className="bg-white/5 rounded-lg p-4">
+                              <p className="text-white/60 text-xs mb-1">Sessions</p>
+                              <p className="text-2xl font-bold text-white">{gaData.stats?.sessions?.toLocaleString() || 0}</p>
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <div className="bg-orange/10 border border-orange/30 rounded-lg p-4">
+                        <p className="text-orange text-sm font-semibold mb-2">Google Analytics Not Configured</p>
+                        <p className="text-white/80 text-sm mb-3">
+                          Add <code className="bg-white/10 px-2 py-1 rounded text-xs">NEXT_PUBLIC_GA_MEASUREMENT_ID</code> to Vercel environment variables to enable Google Analytics tracking.
+                        </p>
+                        <a
+                          href="https://analytics.google.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-block px-4 py-2 bg-orange/20 hover:bg-orange/30 border border-orange/30 rounded-lg text-orange text-sm transition-colors flex items-center gap-2"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          Set Up Google Analytics
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="p-4 text-center text-white/70 text-sm">No Google Analytics data available</div>
+                )}
+              </div>
+
               {analyticsLoading ? (
                 <div className="glass-card p-8 text-center text-white/70">Loading analytics...</div>
               ) : analytics ? (
@@ -1989,6 +2126,9 @@ export default function AdminDashboard() {
 
           {activeTab === 'content' && (
             <ContentPlannerTab />
+          )}
+          {activeTab === '30day' && (
+            <DayContentGenerator />
           )}
         </AnimatePresence>
       </main>
@@ -3593,6 +3733,136 @@ function CalendarView({ content, onEdit }: { content: any[]; onEdit: (item: any)
           <p className="text-white/70">No posts scheduled for {selectedDate.toLocaleDateString()}</p>
         </motion.div>
       )}
+
+      {/* Resend Ebook Modal */}
+      <AnimatePresence>
+        {resendModalOpen && selectedPayment && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+            onClick={() => !resending && setResendModalOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="glass-card p-6 max-w-md w-full mx-4"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold text-white">Resend Ebook</h3>
+                <button
+                  onClick={() => !resending && setResendModalOpen(false)}
+                  disabled={resending}
+                  className="text-white/50 hover:text-white transition-colors disabled:opacity-50"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-white/70 text-sm mb-2">Payment Details</label>
+                  <div className="bg-white/5 rounded-lg p-3 text-sm">
+                    <p className="text-white"><span className="text-white/60">Customer:</span> {selectedPayment.customerName}</p>
+                    <p className="text-white/70 text-xs mt-1"><span className="text-white/50">Original Email:</span> {selectedPayment.customerEmail}</p>
+                    <p className="text-white/70 text-xs mt-1"><span className="text-white/50">Amount:</span> {selectedPayment.amount} {selectedPayment.currency}</p>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-white/70 text-sm mb-2">
+                    Email Address <span className="text-orange">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    value={customEmail}
+                    onChange={(e) => setCustomEmail(e.target.value)}
+                    placeholder="Enter email address"
+                    disabled={resending}
+                    className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:border-orange/50 disabled:opacity-50"
+                  />
+                  <p className="text-white/50 text-xs mt-1">
+                    Enter the correct email address to receive the ebook
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-3 pt-2">
+                  <button
+                    onClick={async () => {
+                      if (!customEmail || !customEmail.includes('@')) {
+                        alert('Please enter a valid email address')
+                        return
+                      }
+
+                      setResending(true)
+                      try {
+                        // Determine ebook type based on payment amount
+                        const ebookType = (selectedPayment.amount === 149 && selectedPayment.currency === 'AED') 
+                          ? 'beyond-formalities' 
+                          : selectedPayment.metadata?.ebookType || selectedPayment.metadata?.type || 'beyond-formalities'
+
+                        const response = await fetch('/api/admin/resend-ebook', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            email: customEmail,
+                            customerName: selectedPayment.customerName,
+                            orderId: selectedPayment.id,
+                            ebookType: ebookType,
+                          }),
+                        })
+                        const data = await response.json()
+                        if (data.success) {
+                          alert(`✅ Ebook sent successfully to ${customEmail}`)
+                          setResendModalOpen(false)
+                          setCustomEmail('')
+                          setSelectedPayment(null)
+                        } else {
+                          alert(`❌ Error: ${data.error}`)
+                        }
+                      } catch (error: any) {
+                        alert(`❌ Error: ${error.message}`)
+                      } finally {
+                        setResending(false)
+                      }
+                    }}
+                    disabled={resending || !customEmail || !customEmail.includes('@')}
+                    className="flex-1 px-4 py-2 bg-orange hover:bg-orange/80 disabled:bg-white/10 disabled:text-white/50 text-white rounded-lg font-medium transition-colors disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    {resending ? (
+                      <>
+                        <RefreshCw className="w-4 h-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Mail className="w-4 h-4" />
+                        Send Ebook
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (!resending) {
+                        setResendModalOpen(false)
+                        setCustomEmail('')
+                        setSelectedPayment(null)
+                      }
+                    }}
+                    disabled={resending}
+                    className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-lg transition-colors disabled:opacity-50"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

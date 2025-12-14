@@ -367,6 +367,7 @@ export async function notifyEbookPurchase(data: {
   currency: string;
   orderId: string;
   stripeChargeId: string;
+  ebookType?: 'beyond-formalities' | 'uk-to-uae';
 }): Promise<void> {
   const formattedAmount = new Intl.NumberFormat('en-AE', {
     style: 'currency',
@@ -400,7 +401,9 @@ export async function notifyEbookPurchase(data: {
           },
           {
             type: 'mrkdwn',
-            text: `*Product:*\nUK to UAE Cultural Intelligence Ebook`,
+            text: `*Product:*\n${data.ebookType === 'beyond-formalities' 
+              ? 'Beyond Formalities: Understanding Emirati Culture, Local Customs, and Everyday Life'
+              : 'UK to UAE Cultural Intelligence Guide'}`,
           },
           {
             type: 'mrkdwn',
@@ -448,7 +451,7 @@ export async function notifyEbookPurchase(data: {
               text: '📥 Resend Ebook',
               emoji: true,
             },
-            url: `https://www.theorangecode.com/api/send-ebook?email=${encodeURIComponent(data.customerEmail)}&product=${encodeURIComponent('UK to UAE Cultural Intelligence Ebook')}`,
+            url: `https://www.theorangecode.com/api/send-ebook?email=${encodeURIComponent(data.customerEmail)}&ebookType=${encodeURIComponent(data.ebookType || 'uk-to-uae')}`,
           },
         ],
       },
@@ -571,7 +574,7 @@ export async function notifyPayhipEbookPurchase(data: {
 /**
  * Notify about ebook delivery
  */
-export async function notifyEbookDelivery(data: EbookDeliveryData): Promise<void> {
+export async function notifyEbookDelivery(data: EbookDeliveryData & { ebookType?: 'beyond-formalities' | 'uk-to-uae' }): Promise<void> {
   const message: SlackMessage = {
     blocks: [
       {
@@ -607,7 +610,9 @@ export async function notifyEbookDelivery(data: EbookDeliveryData): Promise<void
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: '✅ *UK to UAE Cultural Intelligence Guide* has been sent to the customer via email.',
+          text: `✅ *${data.ebookType === 'beyond-formalities' 
+            ? 'Beyond Formalities: Understanding Emirati Culture, Local Customs, and Everyday Life'
+            : 'UK to UAE Cultural Intelligence Guide'}* has been sent to the customer via email.`,
         },
       },
       {

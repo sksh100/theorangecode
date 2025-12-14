@@ -55,10 +55,14 @@ export async function GET(req: NextRequest) {
 
   } catch (error: any) {
     console.error('Error fetching Stripe session:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch session details', details: error.message },
-      { status: 500 }
-    )
+    // Return success with fallback data so thank you page still works
+    return NextResponse.json({
+      email: null,
+      name: null,
+      paymentReference: sessionId || 'N/A',
+      success: false,
+      error: error.message
+    })
   }
 }
 

@@ -3,6 +3,20 @@ import { kv } from '@vercel/kv'
 
 export const dynamic = 'force-dynamic'
 
+interface UnsplashImage {
+  id: string
+  url: string
+  regularUrl: string
+  smallUrl: string
+  photographer: {
+    name: string
+    username: string
+    profileUrl: string
+  }
+  unsplashUrl: string
+  attributionText: string
+}
+
 interface ContentPost {
   id: string
   caption: string
@@ -12,9 +26,13 @@ interface ContentPost {
   platforms: string[]
   scheduledDate?: string
   publishedDate?: string
-  status: 'draft' | 'scheduled' | 'published'
+  status: 'draft' | 'ready_for_review' | 'approved' | 'scheduled' | 'published'
   location?: string
   tags?: string
+  unsplashImage?: UnsplashImage
+  imageCacheKey?: string
+  approvedAt?: string
+  approvedBy?: string
   createdAt: string
   updatedAt: string
 }

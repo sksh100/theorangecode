@@ -161,6 +161,7 @@ export async function POST(req: NextRequest) {
       email,
       customerName: displayName,
       orderId: orderId || 'unknown',
+      ebookType: ebookType,
     }).catch(err => console.error('Slack notification failed:', err))
 
     console.log('✅ Ebook sent successfully to:', email)
