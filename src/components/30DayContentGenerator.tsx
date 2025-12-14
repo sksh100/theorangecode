@@ -19,7 +19,6 @@ import {
   Instagram,
   Linkedin,
   Twitter,
-  Pinterest,
 } from 'lucide-react'
 import { ContentPreviewModal } from './ContentPreviewModal'
 

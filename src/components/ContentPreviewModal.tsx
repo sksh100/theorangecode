@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Instagram, Linkedin, Twitter, Pinterest, ExternalLink, CheckCircle } from 'lucide-react'
+import { X, Instagram, Linkedin, Twitter, Image as ImageIcon, ExternalLink, CheckCircle } from 'lucide-react'
 import Image from 'next/image'
 
 interface UnsplashImage {
