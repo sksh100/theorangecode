@@ -317,15 +317,30 @@ export async function POST(req: NextRequest) {
     }
 
     const body = (await req.json()) as Partial<VisitorPayload>;
-
-    const now = Date.now();
-    const id = body.id ?? `anon:${now}`;
-
-    // Get IP from headers (Vercel provides x-forwarded-for)
+    
+    // Get IP early to check exclusion (align with Google Analytics exclusion)
     const ip = body.ip ?? 
       req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? 
       req.headers.get("x-real-ip") ?? 
       "unknown";
+    
+    // Check if IP should be excluded from tracking (same as Google Analytics)
+    // Default excluded IPs (must match GoogleAnalytics.tsx EXCLUDED_IPS)
+    const defaultExcludedIPs = ['94.59.182.192'];
+    const envExcludedIPs = process.env.EXCLUDED_IP_ADDRESSES?.split(',').map(ip => ip.trim()) || [];
+    const excludedIPs = [...defaultExcludedIPs, ...envExcludedIPs];
+    const isExcludedIP = excludedIPs.includes(ip) || excludedIPs.some(excludedIP => ip.startsWith(excludedIP));
+    
+    // If IP is excluded, don't track (align with Google Analytics behavior)
+    if (isExcludedIP) {
+      console.log("🚫 IP excluded from tracking (matches GA exclusion):", ip);
+      return NextResponse.json({ ok: true, message: "Tracking skipped - IP excluded" });
+    }
+
+    const now = Date.now();
+    const id = body.id ?? `anon:${now}`;
+
+    // IP already retrieved above for exclusion check
 
     // Get location from Vercel headers (fallback)
     let country = body.country ?? req.headers.get("x-vercel-ip-country") ?? "Unknown";
@@ -735,16 +750,9 @@ export async function POST(req: NextRequest) {
       city
     });
 
-    // Check if IP should be excluded from notifications
-    // Default excluded IPs (add your own IPs here to prevent self-notifications)
-    const defaultExcludedIPs = ['94.59.182.192'];
-    const envExcludedIPs = process.env.EXCLUDED_IP_ADDRESSES?.split(',').map(ip => ip.trim()) || [];
-    const excludedIPs = [...defaultExcludedIPs, ...envExcludedIPs];
-    const isExcludedIP = excludedIPs.includes(ip) || excludedIPs.some(excludedIP => ip.startsWith(excludedIP));
-    
     // Send Slack notification for new visitors only (to avoid spam)
-    // Skip notification if IP is in exclusion list
-    if (shouldNotify && !isExcludedIP) {
+    // Note: IP exclusion already checked above, so isExcludedIP is false here
+    if (shouldNotify) {
       console.log("👤 NEW VISITOR - Sending Slack notification...", {
         ip,
         country,
@@ -825,11 +833,6 @@ export async function POST(req: NextRequest) {
           });
           // Don't fail tracking if Slack fails
         });
-    } else if (isExcludedIP) {
-      console.log("🚫 IP excluded from notifications, skipping Slack notification", {
-        ip,
-        excludedIPs: excludedIPs.length > 0 ? excludedIPs : "none configured"
-      });
     } else {
       console.log("⏭️ Visitor already seen recently, skipping notification", {
         ip,

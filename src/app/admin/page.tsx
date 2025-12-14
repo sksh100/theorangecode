@@ -170,6 +170,7 @@ export default function AdminDashboard() {
   const [dailyVisitorStats, setDailyVisitorStats] = useState<Array<{ date: string; visitors: number }>>([])
   const [comingSoonVisitors, setComingSoonVisitors] = useState<Visitor[]>([])
   const [comingSoonStats, setComingSoonStats] = useState<{ total: number; today: number; thisWeek: number; thisMonth: number } | null>(null)
+  const [visitorTimeFilter, setVisitorTimeFilter] = useState<'all' | 'day' | 'week' | 'month' | 'year'>('all')
   const [topSources, setTopSources] = useState<Array<{ source: string; count: number }>>([])
   const [sourceTypes, setSourceTypes] = useState<Array<{ type: string; count: number }>>([])
   const [utmCampaigns, setUtmCampaigns] = useState<Array<{ campaign: string; count: number }>>([])
@@ -801,10 +802,10 @@ export default function AdminDashboard() {
         </div>
       </header>
 
-      {/* Tabs */}
-      <div className="border-b border-white/10 bg-primary-dark/50 backdrop-blur-sm sticky top-[73px] z-40">
+      {/* Tabs - Mobile Optimized */}
+      <div className="border-b border-white/10 bg-primary-dark/50 backdrop-blur-sm sticky top-[60px] sm:top-[73px] z-40">
         <div className="container mx-auto px-2 sm:px-4 md:px-6">
-          <div className="flex gap-1 overflow-x-auto scrollbar-hide scroll-smooth -mx-2 px-2 sm:mx-0 sm:px-0">
+          <div className="flex gap-1 overflow-x-auto scrollbar-hide scroll-smooth -mx-2 px-2 sm:mx-0 sm:px-0 pb-1">
             {[
               { id: 'overview', label: 'Overview', icon: BarChart3 },
               { id: 'payments', label: 'Payments', icon: CreditCard },
@@ -1724,81 +1725,165 @@ export default function AdminDashboard() {
                 </motion.div>
               )}
 
+              {/* Time Period Filter - Mobile Optimized */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="glass-card p-3 sm:p-4 mb-4 sm:mb-6"
+              >
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <h3 className="text-base sm:text-lg font-bold text-white">Filter Visitors by Time Period</h3>
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                    {(['all', 'day', 'week', 'month', 'year'] as const).map((period) => (
+                      <button
+                        key={period}
+                        onClick={() => setVisitorTimeFilter(period)}
+                        className={`px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
+                          visitorTimeFilter === period
+                            ? 'bg-azure-blue text-white border-2 border-azure-blue'
+                            : 'bg-white/5 text-white/70 border-2 border-white/10 hover:bg-white/10 hover:text-white'
+                        }`}
+                      >
+                        {period === 'all' ? 'All' : period === 'day' ? 'Today' : period === 'week' ? 'Week' : period === 'month' ? 'Month' : 'Year'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+
               {/* Stats Cards - Visitor Statistics */}
-              {visitorStats && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+              {visitorStats && (() => {
+                // Calculate filtered visitors based on time period
+                const now = Date.now();
+                let filterStartTime = 0;
+                
+                switch (visitorTimeFilter) {
+                  case 'day':
+                    filterStartTime = now - (24 * 60 * 60 * 1000); // Last 24 hours
+                    break;
+                  case 'week':
+                    filterStartTime = now - (7 * 24 * 60 * 60 * 1000); // Last 7 days
+                    break;
+                  case 'month':
+                    filterStartTime = now - (30 * 24 * 60 * 60 * 1000); // Last 30 days
+                    break;
+                  case 'year':
+                    filterStartTime = now - (365 * 24 * 60 * 60 * 1000); // Last 365 days
+                    break;
+                  default:
+                    filterStartTime = 0; // All time
+                }
+                
+                const filteredVisitors = visitorTimeFilter === 'all' 
+                  ? visitors 
+                  : visitors.filter(v => {
+                      const visitTime = new Date(v.timestamp).getTime();
+                      return visitTime >= filterStartTime;
+                    });
+                
+                const filteredUniqueVisitors = new Set(filteredVisitors.map(v => v.ip || v.id)).size;
+                
+                return (
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6">
                   {/* Total Visitors */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="glass-card p-6 border-2 border-azure-blue/30"
+                    className="glass-card p-3 sm:p-6 border-2 border-azure-blue/30"
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 bg-azure-blue/20 rounded-lg">
-                        <Globe className="w-6 h-6 text-azure-blue" />
+                    <div className="flex items-center justify-between mb-2 sm:mb-4">
+                      <div className="p-2 sm:p-3 bg-azure-blue/20 rounded-lg">
+                        <Globe className="w-4 h-4 sm:w-6 sm:h-6 text-azure-blue" />
                       </div>
                     </div>
-                    <h3 className="text-white/70 text-sm mb-1">Total Visitors</h3>
-                    <p className="text-3xl font-bold text-white">
-                      {visitorStats.totalVisitors.toLocaleString()}
+                    <h3 className="text-white/70 text-xs sm:text-sm mb-1 leading-tight">
+                      {visitorTimeFilter === 'all' ? 'Total Visitors' : 
+                       visitorTimeFilter === 'day' ? 'Today' :
+                       visitorTimeFilter === 'week' ? 'This Week' :
+                       visitorTimeFilter === 'month' ? 'This Month' :
+                       'This Year'}
+                    </h3>
+                    <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-white break-words">
+                      {filteredVisitors.length.toLocaleString()}
                     </p>
+                    {visitorTimeFilter !== 'all' && (
+                      <p className="text-xs text-white/50 mt-1 sm:mt-2 leading-tight">
+                        Total: {visitorStats.totalVisitors.toLocaleString()}
+                      </p>
+                    )}
                   </motion.div>
 
                   {/* Unique Visitors */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="glass-card p-6 border-2 border-orange/30"
+                    className="glass-card p-3 sm:p-6 border-2 border-orange/30"
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 bg-orange/20 rounded-lg">
-                        <Users className="w-6 h-6 text-orange" />
+                    <div className="flex items-center justify-between mb-2 sm:mb-4">
+                      <div className="p-2 sm:p-3 bg-orange/20 rounded-lg">
+                        <Users className="w-4 h-4 sm:w-6 sm:h-6 text-orange" />
                       </div>
                     </div>
-                    <h3 className="text-white/70 text-sm mb-1">Unique Visitors</h3>
-                    <p className="text-3xl font-bold text-white">
-                      {(visitorStats.uniqueVisitors || visitorStats.totalVisitors || 0).toLocaleString()}
+                    <h3 className="text-white/70 text-xs sm:text-sm mb-1 leading-tight">
+                      {visitorTimeFilter === 'all' ? 'Unique' :
+                       visitorTimeFilter === 'day' ? 'Unique Today' :
+                       visitorTimeFilter === 'week' ? 'Unique Week' :
+                       visitorTimeFilter === 'month' ? 'Unique Month' :
+                       'Unique Year'}
+                    </h3>
+                    <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-white break-words">
+                      {filteredUniqueVisitors.toLocaleString()}
                     </p>
-                    <p className="text-xs text-white/50 mt-2">Currently = Total</p>
+                    {visitorTimeFilter !== 'all' && (
+                      <p className="text-xs text-white/50 mt-1 sm:mt-2 leading-tight">
+                        Total: {(visitorStats.uniqueVisitors || visitorStats.totalVisitors || 0).toLocaleString()}
+                      </p>
+                    )}
                   </motion.div>
 
                   {/* Active Now */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="glass-card p-6 border-2 border-green-500/30"
+                    className="glass-card p-3 sm:p-6 border-2 border-green-500/30"
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 bg-green-500/20 rounded-lg">
-                        <Activity className="w-6 h-6 text-green-400" />
+                    <div className="flex items-center justify-between mb-2 sm:mb-4">
+                      <div className="p-2 sm:p-3 bg-green-500/20 rounded-lg">
+                        <Activity className="w-4 h-4 sm:w-6 sm:h-6 text-green-400" />
                       </div>
                       <div className="flex items-center gap-1">
-                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                        <span className="text-xs text-green-400 font-semibold">Live</span>
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span className="text-xs text-green-400 font-semibold hidden sm:inline">Live</span>
                       </div>
                     </div>
-                    <h3 className="text-white/70 text-sm mb-1">Active Now</h3>
-                    <p className="text-3xl font-bold text-white">
+                    <h3 className="text-white/70 text-xs sm:text-sm mb-1 leading-tight">Active Now</h3>
+                    <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-white break-words">
                       {(visitorStats.currentVisitors || visitorStats.activeNow || 0).toLocaleString()}
                     </p>
-                    <p className="text-xs text-white/50 mt-2">Last 60 seconds</p>
+                    <p className="text-xs text-white/50 mt-1 sm:mt-2 leading-tight">Last 60s</p>
                   </motion.div>
 
                   {/* Today */}
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="glass-card p-6 border-2 border-purple-500/30"
+                    className="glass-card p-3 sm:p-6 border-2 border-purple-500/30"
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 bg-purple-500/20 rounded-lg">
-                        <Calendar className="w-6 h-6 text-purple-400" />
+                    <div className="flex items-center justify-between mb-2 sm:mb-4">
+                      <div className="p-2 sm:p-3 bg-purple-500/20 rounded-lg">
+                        <Calendar className="w-4 h-4 sm:w-6 sm:h-6 text-purple-400" />
                       </div>
                     </div>
-                    <h3 className="text-white/70 text-sm mb-1">Today</h3>
-                    <p className="text-3xl font-bold text-white">
+                    <h3 className="text-white/70 text-xs sm:text-sm mb-1 leading-tight">Today</h3>
+                    <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-white break-words">
                       {(visitorStats.todayVisitors || 0).toLocaleString()}
                     </p>
-                    <p className="text-xs text-white/50 mt-2">This month: {(visitorStats.monthlyVisitors || 0).toLocaleString()}</p>
+                    <p className="text-xs text-white/50 mt-1 sm:mt-2 leading-tight">
+                      {visitorTimeFilter === 'day' ? `Week: ${visitorStats.lastWeekVisitors || 0}` :
+                       visitorTimeFilter === 'week' ? `Month: ${visitorStats.monthlyVisitors || 0}` :
+                       visitorTimeFilter === 'month' ? `Year: ${filteredVisitors.length}` :
+                       `Month: ${visitorStats.monthlyVisitors || 0}`}
+                    </p>
                   </motion.div>
                 </div>
-              )}
+                );
+              })()}
 
               {/* World Map Visualization - Always show */}
               <motion.div
@@ -2031,143 +2116,327 @@ export default function AdminDashboard() {
                   </div>
                 </motion.div>
 
-              {/* Top Pages */}
-              {topPages.length > 0 && (
+              {/* Page Statistics - Enhanced with detailed stats */}
+              {topPages.length > 0 && (() => {
+                // Calculate page stats based on filtered visitors
+                const now = Date.now();
+                let filterStartTime = 0;
+                
+                switch (visitorTimeFilter) {
+                  case 'day':
+                    filterStartTime = now - (24 * 60 * 60 * 1000);
+                    break;
+                  case 'week':
+                    filterStartTime = now - (7 * 24 * 60 * 60 * 1000);
+                    break;
+                  case 'month':
+                    filterStartTime = now - (30 * 24 * 60 * 60 * 1000);
+                    break;
+                  case 'year':
+                    filterStartTime = now - (365 * 24 * 60 * 60 * 1000);
+                    break;
+                  default:
+                    filterStartTime = 0;
+                }
+                
+                // Calculate page stats from filtered visitors
+                const filteredVisitors = visitorTimeFilter === 'all' 
+                  ? visitors 
+                  : visitors.filter(v => {
+                      const visitTime = new Date(v.timestamp).getTime();
+                      return visitTime >= filterStartTime;
+                    });
+                
+                // Group visitors by page
+                const pageStatsMap = new Map<string, { views: number; uniqueVisitors: Set<string>; countries: Set<string> }>();
+                
+                filteredVisitors.forEach(visitor => {
+                  const page = visitor.page || '/';
+                  if (!pageStatsMap.has(page)) {
+                    pageStatsMap.set(page, {
+                      views: 0,
+                      uniqueVisitors: new Set(),
+                      countries: new Set()
+                    });
+                  }
+                  
+                  const stats = pageStatsMap.get(page)!;
+                  stats.views++;
+                  if (visitor.ip) stats.uniqueVisitors.add(visitor.ip);
+                  if (visitor.country) stats.countries.add(visitor.country);
+                });
+                
+                // Convert to array and sort by views
+                const pageStats = Array.from(pageStatsMap.entries())
+                  .map(([page, stats]) => ({
+                    page,
+                    views: stats.views,
+                    uniqueVisitors: stats.uniqueVisitors.size,
+                    countries: stats.countries.size
+                  }))
+                  .sort((a, b) => b.views - a.views);
+                
+                return (
                 <motion.div
                   whileHover={{ scale: 1.01 }}
                   className="glass-card p-6"
                 >
-                  <h3 className="text-xl font-bold text-white mb-4">Top Pages</h3>
-                  <div className="space-y-2">
-                    {topPages.slice(0, 10).map((page, index) => (
-                      <motion.div
-                        key={page.page}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                        className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors"
-                      >
-                        <div className="flex items-center gap-3 flex-1 min-w-0">
-                          <ExternalLink className="w-4 h-4 text-white/50 flex-shrink-0" />
-                          <p className="text-white text-sm truncate">{page.page}</p>
-                        </div>
-                        <span className="text-azure-blue font-semibold text-sm ml-4">
-                          {page.views.toLocaleString()} views
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2">
+                    <h3 className="text-lg sm:text-xl font-bold text-white">
+                      Page Statistics
+                      {visitorTimeFilter !== 'all' && (
+                        <span className="text-xs sm:text-sm text-white/60 ml-2">
+                          ({visitorTimeFilter === 'day' ? 'Today' : 
+                            visitorTimeFilter === 'week' ? 'Week' : 
+                            visitorTimeFilter === 'month' ? 'Month' : 
+                            'Year'})
                         </span>
-                      </motion.div>
-                    ))}
+                      )}
+                    </h3>
+                    <span className="text-white/60 text-xs sm:text-sm">
+                      {pageStats.length} pages
+                    </span>
                   </div>
+                  
+                  <div className="overflow-x-auto -mx-4 sm:mx-0">
+                    <div className="inline-block min-w-full align-middle px-4 sm:px-0">
+                      <table className="w-full min-w-[600px]">
+                        <thead className="bg-white/5">
+                          <tr>
+                            <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-white">Page</th>
+                            <th className="px-2 sm:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm font-semibold text-white">Views</th>
+                            <th className="px-2 sm:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm font-semibold text-white hidden sm:table-cell">Unique</th>
+                            <th className="px-2 sm:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm font-semibold text-white hidden md:table-cell">Countries</th>
+                            <th className="px-2 sm:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm font-semibold text-white">%</th>
+                          </tr>
+                        </thead>
+                      <tbody>
+                        {pageStats.slice(0, 20).map((pageStat, index) => {
+                          const totalViews = pageStats.reduce((sum, p) => sum + p.views, 0);
+                          const percentage = totalViews > 0 ? ((pageStat.views / totalViews) * 100).toFixed(1) : '0';
+                          
+                          return (
+                            <motion.tr
+                              key={pageStat.page}
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: index * 0.02 }}
+                              className="border-t border-white/5 hover:bg-white/5 transition-colors"
+                            >
+                              <td className="px-2 sm:px-4 py-2 sm:py-3">
+                                <div className="flex items-center gap-1.5 sm:gap-2">
+                                  <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 text-azure-blue flex-shrink-0" />
+                                  <span className="text-white font-medium truncate max-w-[120px] sm:max-w-xs text-xs sm:text-sm" title={pageStat.page}>
+                                    {pageStat.page === '/' ? 'Homepage' : pageStat.page.length > 20 ? `${pageStat.page.substring(0, 20)}...` : pageStat.page}
+                                  </span>
+                                </div>
+                              </td>
+                              <td className="px-2 sm:px-4 py-2 sm:py-3 text-right">
+                                <span className="text-azure-blue font-semibold text-xs sm:text-sm">
+                                  {pageStat.views.toLocaleString()}
+                                </span>
+                              </td>
+                              <td className="px-2 sm:px-4 py-2 sm:py-3 text-right hidden sm:table-cell">
+                                <span className="text-orange font-semibold text-xs sm:text-sm">
+                                  {pageStat.uniqueVisitors.toLocaleString()}
+                                </span>
+                              </td>
+                              <td className="px-2 sm:px-4 py-2 sm:py-3 text-right hidden md:table-cell">
+                                <span className="text-white/70 text-xs sm:text-sm">
+                                  {pageStat.countries}
+                                </span>
+                              </td>
+                              <td className="px-2 sm:px-4 py-2 sm:py-3 text-right">
+                                <div className="flex items-center justify-end gap-1 sm:gap-2">
+                                  <div className="w-12 sm:w-16 h-1.5 sm:h-2 bg-white/10 rounded-full overflow-hidden">
+                                    <motion.div
+                                      initial={{ width: 0 }}
+                                      animate={{ width: `${percentage}%` }}
+                                      transition={{ delay: index * 0.05, duration: 0.5 }}
+                                      className="h-full bg-gradient-to-r from-azure-blue to-bright-blue"
+                                    />
+                                  </div>
+                                  <span className="text-white/70 text-xs w-8 sm:w-12 text-right">
+                                    {percentage}%
+                                  </span>
+                                </div>
+                              </td>
+                            </motion.tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  {pageStats.length === 0 && (
+                    <div className="text-center py-8 text-white/60">
+                      No page views for selected time period
+                    </div>
+                  )}
                 </motion.div>
-              )}
+                );
+              })()}
 
-              {/* Recent Visitors Table */}
+              {/* Recent Visitors Table - Mobile Optimized */}
               <div className="glass-card overflow-hidden">
-                <div className="p-6 border-b border-white/10 flex items-center justify-between">
-                  <div>
-                    <h2 className="text-xl font-bold text-white">Recent Visitors</h2>
-                    <p className="text-white/50 text-xs mt-1">
+                <div className="p-3 sm:p-6 border-b border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-lg sm:text-xl font-bold text-white break-words">
+                      Recent Visitors
+                      {visitorTimeFilter !== 'all' && (
+                        <span className="text-xs sm:text-sm text-white/60 ml-1 sm:ml-2">
+                          ({visitorTimeFilter === 'day' ? 'Today' : 
+                            visitorTimeFilter === 'week' ? 'Week' : 
+                            visitorTimeFilter === 'month' ? 'Month' : 
+                            'Year'})
+                        </span>
+                      )}
+                    </h2>
+                    <p className="text-white/50 text-xs mt-1 hidden sm:block">
                       Visitor tracking is active. Open your website in another tab to see yourself here!
                     </p>
                   </div>
                   <button
                     onClick={fetchVisitors}
-                    className="px-4 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue transition-all flex items-center gap-2"
+                    className="px-3 sm:px-4 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue transition-all flex items-center justify-center gap-2 text-sm sm:text-base flex-shrink-0"
                   >
                     <RefreshCw className="w-4 h-4" />
-                    Refresh
+                    <span className="hidden sm:inline">Refresh</span>
                   </button>
                 </div>
                 {visitorsLoading ? (
                   <div className="p-8 text-center text-white/70">Loading visitors...</div>
-                ) : visitors.length === 0 ? (
-                  <div className="p-8 text-center text-white/70">
-                    <Globe className="w-12 h-12 mx-auto mb-4 text-white/30" />
-                    <p className="mb-2">No visitors yet.</p>
-                    <p className="text-sm text-white/50">
-                      Visitor tracking is active! Open your website ({process.env.NEXT_PUBLIC_BASE_URL || 'theorangecode.com'}) in another tab or share it with someone to see visitor data appear here.
-                    </p>
-                    <p className="text-xs text-white/40 mt-4">
-                      The tracker automatically records: page views, location, IP address, clicks, scroll depth, and time on page.
-                    </p>
-                  </div>
-                ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                      <thead className="bg-white/5">
-                        <tr>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Timestamp</th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">IP Address</th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Location</th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Page/Path</th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Referrer</th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">User Agent</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {visitors.slice(0, 50).map((visitor, index) => (
-                          <motion.tr
-                            key={visitor.id}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.02 }}
-                            className="border-t border-white/5 hover:bg-white/5 transition-colors"
-                          >
-                            <td className="px-6 py-4 text-white/70 text-sm">
-                              {new Date(visitor.timestamp).toLocaleString()}
-                          </td>
-                            <td className="px-6 py-4 text-white/90 text-sm font-mono">
-                              {visitor.ip || 'Unknown'}
-                          </td>
-                            <td className="px-6 py-4">
-                              {visitor.country ? (
-                                <div className="flex items-center gap-2">
-                                  <MapPin className="w-3 h-3 text-azure-blue" />
-                                  <span className="text-white text-sm">
-                                    {visitor.city ? `${visitor.city}, ` : ''}{visitor.country}
+                ) : (() => {
+                  // Filter visitors based on time period
+                  const now = Date.now();
+                  let filterStartTime = 0;
+                  
+                  switch (visitorTimeFilter) {
+                    case 'day':
+                      filterStartTime = now - (24 * 60 * 60 * 1000);
+                      break;
+                    case 'week':
+                      filterStartTime = now - (7 * 24 * 60 * 60 * 1000);
+                      break;
+                    case 'month':
+                      filterStartTime = now - (30 * 24 * 60 * 60 * 1000);
+                      break;
+                    case 'year':
+                      filterStartTime = now - (365 * 24 * 60 * 60 * 1000);
+                      break;
+                    default:
+                      filterStartTime = 0;
+                  }
+                  
+                  const filteredVisitors = visitorTimeFilter === 'all' 
+                    ? visitors 
+                    : visitors.filter(v => {
+                        const visitTime = new Date(v.timestamp).getTime();
+                        return visitTime >= filterStartTime;
+                      });
+                  
+                  return filteredVisitors.length === 0 ? (
+                    <div className="p-8 text-center text-white/70">
+                      <Globe className="w-12 h-12 mx-auto mb-4 text-white/30" />
+                      <p className="mb-2">No visitors found for selected time period.</p>
+                      <p className="text-sm text-white/50">
+                        Try selecting a different time period or wait for new visitors.
+                      </p>
+                    </div>
+                  ) : (
+                <div className="overflow-x-auto -mx-4 sm:mx-0">
+                  <div className="inline-block min-w-full align-middle px-4 sm:px-0">
+                    <table className="w-full min-w-[800px]">
+                        <thead className="bg-white/5">
+                          <tr>
+                            <th className="px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-left text-xs sm:text-sm font-semibold text-white">Time</th>
+                            <th className="px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-left text-xs sm:text-sm font-semibold text-white hidden sm:table-cell">IP</th>
+                            <th className="px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-left text-xs sm:text-sm font-semibold text-white">Location</th>
+                            <th className="px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-left text-xs sm:text-sm font-semibold text-white">Page</th>
+                            <th className="px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-left text-xs sm:text-sm font-semibold text-white hidden md:table-cell">Referrer</th>
+                            <th className="px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-left text-xs sm:text-sm font-semibold text-white hidden lg:table-cell">User Agent</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          {filteredVisitors.slice(0, 50).map((visitor, index) => (
+                            <motion.tr
+                              key={visitor.id}
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: index * 0.02 }}
+                              className="border-t border-white/5 hover:bg-white/5 transition-colors"
+                            >
+                              <td className="px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-white/70 text-xs sm:text-sm">
+                                {new Date(visitor.timestamp).toLocaleString(undefined, { 
+                                  month: 'short', 
+                                  day: 'numeric', 
+                                  hour: '2-digit', 
+                                  minute: '2-digit' 
+                                })}
+                            </td>
+                              <td className="px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-white/90 text-xs sm:text-sm font-mono hidden sm:table-cell">
+                                {visitor.ip ? `${visitor.ip.substring(0, 12)}...` : 'Unknown'}
+                            </td>
+                              <td className="px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4">
+                                {visitor.country ? (
+                                  <div className="flex items-center gap-1.5 sm:gap-2">
+                                    <MapPin className="w-3 h-3 text-azure-blue flex-shrink-0" />
+                                    <span className="text-white text-xs sm:text-sm truncate max-w-[100px] sm:max-w-none" title={visitor.city ? `${visitor.city}, ${visitor.country}` : visitor.country}>
+                                      {visitor.city ? `${visitor.city.substring(0, 8)}...` : ''}{visitor.country}
+                                    </span>
+                                  </div>
+                                ) : (
+                                  <span className="text-white/50 text-xs sm:text-sm">Unknown</span>
+                                )}
+                              </td>
+                              <td className="px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4">
+                                <div className="flex items-center gap-1.5 sm:gap-2">
+                                  <ExternalLink className="w-3 h-3 text-white/50 flex-shrink-0" />
+                                  <span className="text-white text-xs sm:text-sm truncate max-w-[80px] sm:max-w-none" title={visitor.page}>
+                                    {visitor.page === '/' ? 'Home' : visitor.page.length > 15 ? `${visitor.page.substring(0, 15)}...` : visitor.page}
                                   </span>
                                 </div>
-                              ) : (
-                                <span className="text-white/50 text-sm">Unknown</span>
-                              )}
-                            </td>
-                            <td className="px-6 py-4">
-                              <div className="flex items-center gap-2">
-                                <ExternalLink className="w-3 h-3 text-white/50" />
-                                <span className="text-white text-sm">{visitor.page}</span>
-                              </div>
-                            </td>
-                            <td className="px-6 py-4">
-                              {visitor.referrer ? (
-                                <a
-                                  href={visitor.referrer}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-azure-blue text-sm hover:underline truncate max-w-xs block"
-                                  title={visitor.referrer}
-                                >
-                                  {visitor.referrer.length > 50 ? `${visitor.referrer.substring(0, 50)}...` : visitor.referrer}
-                                </a>
-                              ) : (
-                                <span className="text-white/50 text-sm">Direct</span>
-                              )}
-                            </td>
-                            <td className="px-6 py-4">
-                              <span className="text-xs text-white/60 truncate max-w-xs block" title={visitor.userAgent || 'Unknown'}>
-                                {visitor.userAgent ? (
-                                  visitor.userAgent.length > 60 
-                                    ? `${visitor.userAgent.substring(0, 60)}...` 
-                                    : visitor.userAgent
+                              </td>
+                              <td className="px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 hidden md:table-cell">
+                                {visitor.referrer ? (
+                                  <a
+                                    href={visitor.referrer}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-azure-blue text-xs sm:text-sm hover:underline truncate max-w-xs block"
+                                    title={visitor.referrer}
+                                  >
+                                    {visitor.referrer.length > 30 ? `${visitor.referrer.substring(0, 30)}...` : visitor.referrer}
+                                  </a>
                                 ) : (
-                                  'Unknown'
+                                  <span className="text-white/50 text-xs sm:text-sm">Direct</span>
                                 )}
-                              </span>
-                            </td>
-                          </motion.tr>
-                      ))}
-                    </tbody>
-                  </table>
+                              </td>
+                              <td className="px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 hidden lg:table-cell">
+                                <span className="text-xs text-white/60 truncate max-w-xs block" title={visitor.userAgent || 'Unknown'}>
+                                  {visitor.userAgent ? (
+                                    visitor.userAgent.length > 40 
+                                      ? `${visitor.userAgent.substring(0, 40)}...` 
+                                      : visitor.userAgent
+                                  ) : (
+                                    'Unknown'
+                                  )}
+                                </span>
+                              </td>
+                            </motion.tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                    );
+                  })()}
                 </div>
-              )}
+                {visitors.length === 0 && (
+                  <div className="p-8 text-center text-white/60">
+                    No visitors found. Visitor tracking will appear here once someone visits your site.
+                  </div>
+                )}
+              </div>
             </div>
             </motion.div>
           )}

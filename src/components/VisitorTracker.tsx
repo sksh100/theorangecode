@@ -149,7 +149,7 @@ export function VisitorTracker() {
 
     const send = async () => {
       try {
-        // Get or create session ID
+        // Get or create session ID (align with GA session tracking)
         let sessionId = localStorage.getItem('visitor_session_id');
         if (!sessionId) {
           sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -159,10 +159,24 @@ export function VisitorTracker() {
         // Get comprehensive visitor information
         const visitorInfo = await getVisitorInfo();
 
+        // Get current path with query params (match GA's page_path tracking)
         const currentPath = window.location.pathname;
-        console.log('📍 Tracking page view:', { 
-          page: currentPath, 
+        const searchParams = new URLSearchParams(window.location.search);
+        const fullPath = searchParams.toString() ? `${currentPath}?${searchParams.toString()}` : currentPath;
+        
+        // Extract UTM parameters (match GA's UTM tracking)
+        const utmParams: any = {};
+        ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(param => {
+          const value = searchParams.get(param);
+          if (value) utmParams[param] = value;
+        });
+        
+        console.log('📍 Tracking page view (aligned with GA):', { 
+          page: currentPath,
+          fullPath: fullPath,
           sessionId: sessionId.substring(0, 20) + '...',
+          referrer: document.referrer || 'direct',
+          utmParams: Object.keys(utmParams).length > 0 ? utmParams : 'none',
           timestamp: new Date().toISOString()
         });
 
@@ -171,9 +185,10 @@ export function VisitorTracker() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             id: sessionId,
-            path: currentPath,
+            path: currentPath, // Store path without query params for consistency
             referrer: document.referrer || null,
             userAgent: navigator.userAgent,
+            utmParams: Object.keys(utmParams).length > 0 ? utmParams : null,
             ...visitorInfo, // Spread all collected info
           }),
         });

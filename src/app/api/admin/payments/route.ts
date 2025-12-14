@@ -21,53 +21,10 @@ export async function GET(_req: NextRequest) {
     let totalRevenue = 0;
     let count = 0;
 
-    // Try Redis first
-    try {
-      if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
-        const [listRaw, totalRevenueRaw, countRaw] = await Promise.all([
-          redis.lrange("payments:list", 0, 50),
-          redis.get("payments:total_revenue"),
-          redis.get("payments:count"),
-        ]);
-
-        // Parse payments safely
-        const payments = (listRaw || []).map((p: string) => {
-          try {
-            return typeof p === 'string' ? JSON.parse(p) : p;
-          } catch {
-            return null;
-          }
-        }).filter(Boolean);
-
-        // Parse revenue and count
-        totalRevenue = typeof totalRevenueRaw === 'string' 
-          ? parseFloat(totalRevenueRaw) || 0 
-          : (totalRevenueRaw as number) || 0;
-        
-        count = typeof countRaw === 'string' 
-          ? parseInt(countRaw, 10) || 0 
-          : (countRaw as number) || 0;
-
-        // Format payments
-        formattedPayments = payments.map((p: any) => ({
-          id: p.id,
-          amount: p.amount,
-          currency: p.currency,
-          status: p.status || 'succeeded',
-          customerEmail: p.email || 'unknown',
-          customerName: p.email ? p.email.split('@')[0] : 'Customer',
-          createdAt: new Date(p.time).toISOString(),
-          description: `Payment - ${p.currency} ${p.amount}`,
-          stripeChargeId: p.id,
-        }));
-      }
-    } catch (redisError) {
-      console.warn('⚠️ Redis fetch failed, falling back to Stripe API:', redisError);
-    }
-
-    // If Redis is empty or failed, fetch directly from Stripe
-    if ((formattedPayments.length === 0 || !process.env.KV_REST_API_URL) && stripe) {
-      console.log('📊 Fetching payments directly from Stripe API...');
+    // Always fetch from Stripe API for accurate payment amounts
+    // Redis cache may have stale/incorrect amounts, so we fetch fresh data from Stripe
+    if (stripe) {
+      console.log('📊 Fetching payments directly from Stripe API (always use Stripe for accurate amounts)...');
       
       try {
         // Fetch checkout sessions (most reliable for payment links)
@@ -76,48 +33,154 @@ export async function GET(_req: NextRequest) {
           expand: ['data.customer', 'data.payment_intent'],
         });
 
-        // Fetch payment intents as fallback
+        // Fetch payment intents with expanded charges to get actual amounts
         const paymentIntents = await stripe.paymentIntents.list({
           limit: 100,
+          expand: ['data.latest_charge'],
         });
+
+        // Fetch ALL charges (paginate to get all, not just 100)
+        const allCharges: any[] = [];
+        let hasMoreCharges = true;
+        let lastChargeId: string | undefined = undefined;
+        
+        while (hasMoreCharges) {
+          const chargesResult = await stripe.charges.list({
+            limit: 100,
+            ...(lastChargeId ? { starting_after: lastChargeId } : {}),
+          });
+          allCharges.push(...chargesResult.data);
+          hasMoreCharges = chargesResult.has_more;
+          if (chargesResult.data.length > 0) {
+            lastChargeId = chargesResult.data[chargesResult.data.length - 1].id;
+          } else {
+            hasMoreCharges = false;
+          }
+        }
+
+        // Create a map of payment intent ID to charge amount
+        // Priority: Use latest_charge from payment intent if available, otherwise use charges list
+        const chargeMap = new Map<string, { amount: number; currency: string; receipt_email?: string; chargeId?: string }>();
+        
+        // First, map charges from the charges list
+        allCharges.forEach((charge: any) => {
+          if (charge.payment_intent && typeof charge.payment_intent === 'string') {
+            // Use the charge amount (actual amount charged, accounting for refunds)
+            const chargeAmount = charge.amount - (charge.amount_refunded || 0);
+            chargeMap.set(charge.payment_intent, {
+              amount: chargeAmount,
+              currency: charge.currency,
+              receipt_email: charge.receipt_email,
+              chargeId: charge.id,
+            });
+            
+            // Log for debugging payment amount discrepancies
+            if (chargeAmount !== charge.amount) {
+              console.log(`⚠️ Charge ${charge.id} has refunds: original ${charge.amount / 100}, net ${chargeAmount / 100}`);
+            }
+          }
+        });
+        
+        // Then, update with latest_charge from payment intents (most accurate)
+        paymentIntents.data.forEach((pi: any) => {
+          if (pi.latest_charge) {
+            const chargeId = typeof pi.latest_charge === 'string' ? pi.latest_charge : pi.latest_charge.id;
+            // Fetch the full charge object if we have it
+            const charge = allCharges.find(c => c.id === chargeId);
+            if (charge) {
+              const chargeAmount = charge.amount - (charge.amount_refunded || 0);
+              chargeMap.set(pi.id, {
+                amount: chargeAmount,
+                currency: charge.currency,
+                receipt_email: charge.receipt_email,
+                chargeId: charge.id,
+              });
+            } else if (typeof pi.latest_charge === 'object' && pi.latest_charge.amount) {
+              // Use the expanded charge data directly
+              const chargeAmount = pi.latest_charge.amount - (pi.latest_charge.amount_refunded || 0);
+              chargeMap.set(pi.id, {
+                amount: chargeAmount,
+                currency: pi.latest_charge.currency,
+                receipt_email: pi.latest_charge.receipt_email,
+                chargeId: chargeId,
+              });
+            }
+          }
+        });
+        
+        console.log(`📊 Created charge map with ${chargeMap.size} charges from ${allCharges.length} total charges`);
 
         // Combine and deduplicate
         const allPayments: any[] = [];
         const seenIds = new Set<string>();
 
-        // Process checkout sessions
+        // Process checkout sessions (most reliable - use session amount)
         sessions.data.forEach((session: any) => {
           if (session.payment_status === 'paid' && session.amount_total && !seenIds.has(session.id)) {
             seenIds.add(session.id);
+            const paymentIntentId = typeof session.payment_intent === 'string' 
+              ? session.payment_intent 
+              : session.payment_intent?.id;
+            
+            // Check if we have a charge for this payment intent
+            const charge = paymentIntentId ? chargeMap.get(paymentIntentId) : null;
+            const actualAmount = charge ? charge.amount / 100 : session.amount_total / 100;
+            const actualCurrency = charge ? charge.currency.toUpperCase() : (session.currency || 'aed').toUpperCase();
+            
+            // Log if amounts differ for debugging
+            if (charge && Math.abs(charge.amount / 100 - session.amount_total / 100) > 0.01) {
+              console.log(`⚠️ Amount mismatch for session ${session.id}: session=${session.amount_total / 100}, charge=${charge.amount / 100}`);
+            }
+            
             allPayments.push({
               id: session.id,
-              amount: session.amount_total / 100,
-              currency: (session.currency || 'aed').toUpperCase(),
+              amount: actualAmount,
+              currency: actualCurrency,
               status: 'succeeded',
-              customerEmail: session.customer_details?.email || session.customer_email || 'unknown',
+              customerEmail: session.customer_details?.email || session.customer_email || charge?.receipt_email || 'unknown',
               customerName: session.customer_details?.name || session.customer_details?.email?.split('@')[0] || 'Customer',
               createdAt: new Date(session.created * 1000).toISOString(),
-              description: session.metadata?.productName || `Payment - ${session.currency} ${session.amount_total / 100}`,
-              stripeChargeId: session.payment_intent?.id || session.id,
+              description: session.metadata?.productName || `Payment - ${actualCurrency} ${actualAmount}`,
+              stripeChargeId: paymentIntentId || session.id,
               metadata: session.metadata,
             });
           }
         });
 
-        // Process payment intents
+        // Process payment intents - ALWAYS use charge amount if available (more accurate)
         paymentIntents.data.forEach((pi: any) => {
           if (pi.status === 'succeeded' && pi.amount && !seenIds.has(pi.id)) {
             seenIds.add(pi.id);
+            
+            // Get actual charge amount - prioritize charge over payment intent amount
+            const charge = chargeMap.get(pi.id);
+            let actualAmount = pi.amount / 100;
+            let actualCurrency = (pi.currency || 'aed').toUpperCase();
+            
+            if (charge) {
+              // Use charge amount (this is the actual amount charged)
+              actualAmount = charge.amount / 100;
+              actualCurrency = charge.currency.toUpperCase();
+              
+              // Log if amounts differ for debugging
+              if (Math.abs(charge.amount / 100 - pi.amount / 100) > 0.01) {
+                console.log(`⚠️ Amount mismatch for payment intent ${pi.id}: pi=${pi.amount / 100}, charge=${charge.amount / 100} (using charge)`);
+              }
+            } else {
+              // If no charge found, log warning
+              console.log(`⚠️ No charge found for payment intent ${pi.id}, using payment intent amount: ${actualAmount}`);
+            }
+            
             allPayments.push({
               id: pi.id,
-              amount: pi.amount / 100,
-              currency: (pi.currency || 'aed').toUpperCase(),
+              amount: actualAmount,
+              currency: actualCurrency,
               status: 'succeeded',
-              customerEmail: pi.receipt_email || 'unknown',
-              customerName: pi.receipt_email?.split('@')[0] || 'Customer',
+              customerEmail: pi.receipt_email || charge?.receipt_email || 'unknown',
+              customerName: (pi.receipt_email || charge?.receipt_email)?.split('@')[0] || 'Customer',
               createdAt: new Date(pi.created * 1000).toISOString(),
-              description: `Payment Intent - ${pi.currency} ${pi.amount / 100}`,
-              stripeChargeId: pi.id,
+              description: `Payment Intent - ${actualCurrency} ${actualAmount}`,
+              stripeChargeId: charge?.chargeId || pi.id,
             });
           }
         });
