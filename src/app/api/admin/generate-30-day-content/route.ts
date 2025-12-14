@@ -15,6 +15,7 @@ interface UnsplashImage {
   }
   unsplashUrl: string
   attributionText: string
+  description?: string
 }
 
 interface ContentPost {
