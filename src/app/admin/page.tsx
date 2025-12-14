@@ -680,7 +680,7 @@ export default function AdminDashboard() {
   }
 
   // Main dashboard
-    return (
+  return (
     <div className="min-h-screen bg-primary-dark">
       {/* Push Registration for PWA */}
       {isAuthenticated && <PushRegistration />}
