@@ -170,8 +170,8 @@ export async function POST(req: NextRequest) {
       // Check if this is an ebook purchase and send the ebook
       // Detection logic: Check metadata, product name, amount, and webhook secret
       const productName = session.metadata?.productName || session.metadata?.product || ""
-      const amount = session.amount_total ?? 0
-      const amountInAED = amount / 100 // Convert from cents to AED
+      const amountTotal = session.amount_total ?? 0
+      const amountInAED = amountTotal / 100 // Convert from cents to AED
       
       // PRIORITY 1: Check amount first (most reliable)
       // Beyond Formalities = 149 AED, UK to UAE = different price
