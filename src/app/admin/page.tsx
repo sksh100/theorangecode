@@ -184,6 +184,8 @@ export default function AdminDashboard() {
   const [selectedPayment, setSelectedPayment] = useState<Payment | null>(null)
   const [customEmail, setCustomEmail] = useState('')
   const [resending, setResending] = useState(false)
+  const [orderDetailModalOpen, setOrderDetailModalOpen] = useState(false)
+  const [selectedOrderPayment, setSelectedOrderPayment] = useState<Payment | null>(null)
   const [previousCounts, setPreviousCounts] = useState({
     visitors: 0,
     payments: 0,
@@ -453,19 +455,35 @@ export default function AdminDashboard() {
     setSubscribersLoading(true)
     try {
       console.log('📧 Fetching subscribers...')
-      const response = await fetch('/api/admin/subscribers')
+      const response = await fetch('/api/admin/subscribers', { cache: 'no-store' })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
       const data = await response.json()
-      console.log('📧 Subscribers response:', { success: data.success, subscribersCount: data.data?.subscribers?.length || 0 })
-      if (data.success) {
-        const subscribersList = data.data.subscribers || []
+      console.log('📧 Subscribers response:', { 
+        success: data.success, 
+        hasData: !!data.data,
+        subscribersCount: data.data?.subscribers?.length || 0,
+        stats: data.data?.stats,
+        fullResponse: data
+      })
+      if (data.success && data.data) {
+        const subscribersList = Array.isArray(data.data.subscribers) ? data.data.subscribers : []
         console.log(`✅ Loaded ${subscribersList.length} subscribers`)
+        if (subscribersList.length > 0) {
+          console.log('📧 Sample subscriber:', subscribersList[0])
+        }
         setSubscribers(subscribersList)
       } else {
-        console.error('❌ Failed to fetch subscribers:', data.error)
+        console.error('❌ Failed to fetch subscribers:', data.error || 'Unknown error')
         setSubscribers([])
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('❌ Error fetching subscribers:', error)
+      console.error('Error details:', {
+        message: error.message,
+        stack: error.stack
+      })
       setSubscribers([])
     } finally {
       setSubscribersLoading(false)
@@ -475,13 +493,36 @@ export default function AdminDashboard() {
   const fetchGoogleAnalytics = async () => {
     setGaLoading(true)
     try {
-      const response = await fetch('/api/admin/google-analytics')
+      console.log('📊 Fetching Google Analytics...')
+      const response = await fetch('/api/admin/google-analytics', { cache: 'no-store' })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
       const data = await response.json()
+      console.log('📊 Google Analytics response:', { 
+        success: data.success, 
+        configured: data.data?.configured,
+        realtimeUsers: data.data?.realtimeUsers,
+        setupRequired: data.data?.setupRequired,
+        fullResponse: data
+      })
       if (data.success) {
         setGaData(data.data)
+        // If setup is required, log it clearly
+        if (data.data?.setupRequired) {
+          console.warn('⚠️ Google Analytics setup required - real-time data not available')
+        }
+      } else {
+        console.error('❌ Failed to fetch Google Analytics:', data.error)
+        setGaData(null)
       }
-    } catch (error) {
-      console.error('Error fetching Google Analytics:', error)
+    } catch (error: any) {
+      console.error('❌ Error fetching Google Analytics:', error)
+      console.error('Error details:', {
+        message: error.message,
+        stack: error.stack
+      })
+      setGaData(null)
     } finally {
       setGaLoading(false)
     }
@@ -1101,7 +1142,14 @@ export default function AdminDashboard() {
                           >
                             <td className="px-6 py-4 text-sm text-white/90 font-mono">{payment.id.substring(0, 20)}...</td>
                             <td className="px-6 py-4">
-                              <div>
+                              <div 
+                                className="cursor-pointer hover:opacity-80 transition-opacity"
+                                onClick={() => {
+                                  setSelectedOrderPayment(payment)
+                                  setOrderDetailModalOpen(true)
+                                }}
+                                title="Click to view order details"
+                              >
                                 <p className="text-white font-medium">{payment.customerName}</p>
                                 <p className="text-white/60 text-xs">{payment.customerEmail}</p>
                               </div>
@@ -2254,6 +2302,138 @@ export default function AdminDashboard() {
                       className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-lg transition-colors disabled:opacity-50"
                     >
                       Cancel
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+
+          {/* Order Details Modal */}
+          {orderDetailModalOpen && selectedOrderPayment && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+              onClick={() => setOrderDetailModalOpen(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                onClick={(e) => e.stopPropagation()}
+                className="glass-card max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-bold text-white">Order Details</h3>
+                  <button
+                    onClick={() => setOrderDetailModalOpen(false)}
+                    className="text-white/50 hover:text-white transition-colors"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  {/* Customer Information */}
+                  <div className="bg-white/5 rounded-lg p-4">
+                    <h4 className="text-white font-semibold mb-3">Customer Information</h4>
+                    <div className="space-y-2 text-sm">
+                      <p className="text-white"><span className="text-white/60">Name:</span> {selectedOrderPayment.customerName}</p>
+                      <p className="text-white"><span className="text-white/60">Email:</span> {selectedOrderPayment.customerEmail}</p>
+                    </div>
+                  </div>
+
+                  {/* Order Information */}
+                  <div className="bg-white/5 rounded-lg p-4">
+                    <h4 className="text-white font-semibold mb-3">Order Information</h4>
+                    <div className="space-y-2 text-sm">
+                      <p className="text-white"><span className="text-white/60">Payment ID:</span> <span className="font-mono text-xs">{selectedOrderPayment.id}</span></p>
+                      <p className="text-white"><span className="text-white/60">Amount:</span> {selectedOrderPayment.amount.toLocaleString()} {selectedOrderPayment.currency}</p>
+                      <p className="text-white"><span className="text-white/60">Status:</span> 
+                        <span className={`ml-2 px-2 py-1 rounded-full text-xs ${
+                          selectedOrderPayment.status === 'succeeded' 
+                            ? 'bg-green-500/20 text-green-400' 
+                            : selectedOrderPayment.status === 'pending'
+                            ? 'bg-yellow-500/20 text-yellow-400'
+                            : 'bg-red-500/20 text-red-400'
+                        }`}>
+                          {selectedOrderPayment.status}
+                        </span>
+                      </p>
+                      <p className="text-white"><span className="text-white/60">Date:</span> {new Date(selectedOrderPayment.createdAt).toLocaleString()}</p>
+                    </div>
+                  </div>
+
+                  {/* Product Information */}
+                  <div className="bg-white/5 rounded-lg p-4">
+                    <h4 className="text-white font-semibold mb-3">Product Ordered</h4>
+                    <div className="space-y-2 text-sm">
+                      {(() => {
+                        const isEbook = (selectedOrderPayment.amount === 149 && selectedOrderPayment.currency === 'AED') || 
+                                       selectedOrderPayment.metadata?.ebookType || 
+                                       selectedOrderPayment.metadata?.type
+                        const ebookType = (selectedOrderPayment.amount === 149 && selectedOrderPayment.currency === 'AED')
+                          ? 'beyond-formalities'
+                          : selectedOrderPayment.metadata?.ebookType || selectedOrderPayment.metadata?.type || 'beyond-formalities'
+                        
+                        if (isEbook) {
+                          const ebookName = ebookType === 'beyond-formalities' 
+                            ? 'Beyond Formalities: Understanding Dubai Culture, Legal Systems, and Everyday Life'
+                            : 'UK to UAE Cultural Intelligence Guide'
+                          return (
+                            <>
+                              <p className="text-white"><span className="text-white/60">Product:</span> {ebookName}</p>
+                              <p className="text-white"><span className="text-white/60">Type:</span> Ebook / E-Guide</p>
+                              <p className="text-white"><span className="text-white/60">Format:</span> PDF (Watermarked)</p>
+                            </>
+                          )
+                        } else {
+                          return (
+                            <>
+                              <p className="text-white"><span className="text-white/60">Product:</span> {selectedOrderPayment.metadata?.productName || selectedOrderPayment.description || 'Masterclass or Service'}</p>
+                              <p className="text-white"><span className="text-white/60">Type:</span> {selectedOrderPayment.metadata?.type || 'Service'}</p>
+                            </>
+                          )
+                        }
+                      })()}
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex gap-3 pt-2">
+                    {(selectedOrderPayment.amount === 149 && selectedOrderPayment.currency === 'AED') || 
+                     (selectedOrderPayment.metadata?.ebookType || selectedOrderPayment.metadata?.type) ? (
+                      <button
+                        onClick={() => {
+                          setOrderDetailModalOpen(false)
+                          setSelectedPayment(selectedOrderPayment)
+                          setCustomEmail(selectedOrderPayment.customerEmail)
+                          setResendModalOpen(true)
+                        }}
+                        className="flex-1 px-4 py-2 bg-orange hover:bg-orange/80 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                      >
+                        <Mail className="w-4 h-4" />
+                        Resend Ebook
+                      </button>
+                    ) : null}
+                    {selectedOrderPayment.stripeChargeId && (
+                      <a
+                        href={`https://dashboard.stripe.com/payments/${selectedOrderPayment.stripeChargeId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 px-4 py-2 bg-azure-blue/20 hover:bg-azure-blue/30 border border-azure-blue/30 text-azure-blue rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        View in Stripe
+                      </a>
+                    )}
+                    <button
+                      onClick={() => setOrderDetailModalOpen(false)}
+                      className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-lg transition-colors"
+                    >
+                      Close
                     </button>
                   </div>
                 </div>
