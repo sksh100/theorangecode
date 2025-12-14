@@ -56,7 +56,7 @@ const platformIcons = {
   instagram: Instagram,
   linkedin: Linkedin,
   twitter: Twitter,
-  pinterest: Pinterest,
+  pinterest: ImageIcon,
 }
 
 export function DayContentGenerator() {
