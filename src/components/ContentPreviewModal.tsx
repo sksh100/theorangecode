@@ -204,10 +204,10 @@ export function ContentPreviewModal({ isOpen, onClose, preview, loading }: Conte
                             <div className="bg-primary-dark rounded-lg p-3 border border-white/10">
                               <p className="text-sm text-white/90 whitespace-pre-wrap">
                                 {platform === 'instagram' 
-                                  ? platformPreview.caption
+                                  ? ('caption' in platformPreview ? platformPreview.caption : '')
                                   : platform === 'linkedin' || platform === 'twitter'
-                                  ? platformPreview.text
-                                  : platformPreview.description
+                                  ? ('text' in platformPreview ? platformPreview.text : '')
+                                  : ('description' in platformPreview ? platformPreview.description : '')
                                 }
                               </p>
                               {platformPreview.attribution && (
