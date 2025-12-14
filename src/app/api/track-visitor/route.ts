@@ -698,6 +698,17 @@ export async function POST(req: NextRequest) {
       ? Math.round((now - parseInt(lastSeen, 10)) / 1000) 
       : null;
     
+    // Log tracking details for debugging
+    console.log('📍 Tracking visitor:', {
+      path: path,
+      ip: ip,
+      country: country,
+      city: city,
+      isNewVisitor: isNewVisitor,
+      sessionId: id.substring(0, 20) + '...',
+      timestamp: new Date(now).toISOString()
+    });
+    
     console.log("📊 Visitor tracked:", {
       ip,
       country,

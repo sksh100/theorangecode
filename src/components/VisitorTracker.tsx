@@ -159,12 +159,19 @@ export function VisitorTracker() {
         // Get comprehensive visitor information
         const visitorInfo = await getVisitorInfo();
 
+        const currentPath = window.location.pathname;
+        console.log('📍 Tracking page view:', { 
+          page: currentPath, 
+          sessionId: sessionId.substring(0, 20) + '...',
+          timestamp: new Date().toISOString()
+        });
+
         const response = await fetch("/api/track-visitor", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             id: sessionId,
-            path: window.location.pathname,
+            path: currentPath,
             referrer: document.referrer || null,
             userAgent: navigator.userAgent,
             ...visitorInfo, // Spread all collected info
@@ -172,12 +179,18 @@ export function VisitorTracker() {
         });
         const data = await response.json();
         if (data.ok) {
-          console.log('✅ Visitor tracked successfully');
+          console.log('✅ Visitor tracked successfully:', { 
+            page: currentPath,
+            response: data 
+          });
         } else {
-          console.warn('⚠️ Visitor tracking response:', data);
+          console.warn('⚠️ Visitor tracking response:', { page: currentPath, response: data });
         }
       } catch (err) {
-        console.error("❌ Visitor tracking failed", err);
+        console.error("❌ Visitor tracking failed:", { 
+          page: window.location.pathname, 
+          error: err 
+        });
       }
     };
 
