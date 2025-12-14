@@ -155,10 +155,10 @@ function ThankYouContent() {
             <p className="text-white/80 mb-4">
               If you face any inconveniences or have questions about your purchase, please contact us at{' '}
               <a 
-                href={`mailto:hello@theorangecode.com?subject=Beyond Formalities Purchase Inquiry&body=Payment Reference: ${customerData?.paymentReference || 'N/A'}`}
+                href={`mailto:support@theorangecode.com?subject=Beyond Formalities Purchase Inquiry&body=Payment Reference: ${customerData?.paymentReference || 'N/A'}`}
                 className="text-orange hover:text-azure-blue transition-colors font-semibold"
               >
-                hello@theorangecode.com
+                support@theorangecode.com
               </a>
               {' '}with your payment reference:
             </p>
