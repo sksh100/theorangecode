@@ -769,8 +769,14 @@ export function ModernNavbar() {
                     href="/beyond-formalities" 
                     prefetch={true}
                     onClick={(e) => {
+                      e.stopPropagation()
                       setIsMobileMenuOpen(false)
                       trackCTAClick('Get Started (Mobile)', pathname)
+                      // Force navigation to ensure it goes to the right place
+                      if (e.currentTarget.href !== window.location.origin + '/beyond-formalities') {
+                        e.preventDefault()
+                        window.location.href = '/beyond-formalities'
+                      }
                     }}
                   >
                     <motion.button
@@ -778,6 +784,12 @@ export function ModernNavbar() {
                       className="w-full px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl cursor-pointer"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        setIsMobileMenuOpen(false)
+                        window.location.href = '/beyond-formalities'
+                      }}
                     >
                       Get Started
                     </motion.button>
