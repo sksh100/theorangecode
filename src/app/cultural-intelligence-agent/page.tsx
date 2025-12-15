@@ -85,6 +85,11 @@ export default function CulturalIntelligenceAgentPage() {
         })
       })
 
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ error: 'Network error occurred' }))
+        throw new Error(errorData.error || `Server error: ${res.status}`)
+      }
+
       const data = await res.json()
       setResponse(data)
       
@@ -94,10 +99,11 @@ export default function CulturalIntelligenceAgentPage() {
           alert('Your report has been generated and sent to your email!')
         }, 500)
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Cultural Intelligence Agent error:', error)
       setResponse({ 
         success: false, 
-        error: 'Failed to get response. Please try again.' 
+        error: error.message || 'Failed to get response. Please check your connection and try again.' 
       })
     } finally {
       setIsLoading(false)
@@ -125,14 +131,20 @@ export default function CulturalIntelligenceAgentPage() {
         })
       })
 
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ error: 'Network error occurred' }))
+        throw new Error(errorData.error || `Server error: ${res.status}`)
+      }
+
       const data = await res.json()
       if (data.success) {
         alert('Report generated and sent to your email!')
       } else {
-        alert('Failed to generate report. Please try again.')
+        alert(data.error || 'Failed to generate report. Please try again.')
       }
-    } catch (error) {
-      alert('Failed to generate report. Please try again.')
+    } catch (error: any) {
+      console.error('Report generation error:', error)
+      alert(error.message || 'Failed to generate report. Please check your connection and try again.')
     } finally {
       setIsGeneratingReport(false)
     }

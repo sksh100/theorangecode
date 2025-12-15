@@ -42,7 +42,8 @@ export function middleware(request: NextRequest) {
   }
 
   // Temporarily hide Cultural Intelligence Agent - redirect to homepage
-  if (pathname === '/cultural-intelligence-agent') {
+  // Allow access with ?preview=true parameter for testing
+  if (pathname === '/cultural-intelligence-agent' && !originalUrl.searchParams.get('preview')) {
     url.pathname = '/'
     return NextResponse.redirect(url, 301)
   }

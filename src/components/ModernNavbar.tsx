@@ -218,16 +218,16 @@ export function ModernNavbar() {
   const [isMasterclassesMegaOpen, setIsMasterclassesMegaOpen] = useState(false)
 
   const handleDropdownToggle = (label: string, isMobile: boolean = false) => {
-      // On mobile, always use simple dropdown structure
-      if (isMobile) {
-        const isOpening = activeDropdown !== label
-        setActiveDropdown(isOpening ? label : null)
-        // Close mega dropdowns on mobile
-        setIsAboutMegaOpen(false)
-        setIsMasterclassesMegaOpen(false)
-        if (isOpening) trackDropdownOpen(label)
-        return
-      }
+    // On mobile, always use simple dropdown structure
+    if (isMobile) {
+      const isOpening = activeDropdown !== label
+      setActiveDropdown(isOpening ? label : null)
+      // Close mega dropdowns on mobile
+      setIsAboutMegaOpen(false)
+      setIsMasterclassesMegaOpen(false)
+      if (isOpening) trackDropdownOpen(label)
+      return
+    }
     
     // Desktop: use mega dropdowns for specific items
     if (label === 'About') {
@@ -243,6 +243,7 @@ export function ModernNavbar() {
       setIsAboutMegaOpen(false)
       if (isOpening) trackDropdownOpen('Masterclasses')
     } else {
+      // For Resources and other simple dropdowns
       const isOpening = activeDropdown !== label
       setActiveDropdown(isOpening ? label : null)
       setIsAboutMegaOpen(false)
@@ -304,8 +305,13 @@ export function ModernNavbar() {
                 {item.dropdown ? (
                   <>
                     <motion.button
-                      className="flex items-center space-x-1 text-white/90 hover:text-white font-medium font-montserrat transition-colors duration-300 group"
-                      onClick={() => handleDropdownToggle(item.label)}
+                      type="button"
+                      className="flex items-center space-x-1 text-white/90 hover:text-white font-medium font-montserrat transition-colors duration-300 group cursor-pointer"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        handleDropdownToggle(item.label)
+                      }}
                       whileHover={{ y: -2 }}
                       transition={{ type: "spring", stiffness: 400, damping: 10 }}
                     >
@@ -460,13 +466,16 @@ export function ModernNavbar() {
             )} */}
 
             {/* Get Started Button - Smaller on mobile, full size on desktop */}
-            <Link href="/masterclasses">
+            <Link href="/beyond-formalities" prefetch={true}>
               <motion.button
-                className="hidden sm:flex px-3 sm:px-4 md:px-6 py-2 sm:py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-xs sm:text-sm md:text-base"
+                type="button"
+                className="hidden sm:flex px-3 sm:px-4 md:px-6 py-2 sm:py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-xs sm:text-sm md:text-base cursor-pointer"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                onClick={() => trackCTAClick('Get Started', pathname)}
+                onClick={(e) => {
+                  trackCTAClick('Get Started', pathname)
+                }}
               >
                 Get Started
               </motion.button>
@@ -475,8 +484,13 @@ export function ModernNavbar() {
 
           {/* Mobile Menu Button - Prominent on mobile */}
           <motion.button
-            className="lg:hidden relative p-3 bg-gradient-to-r from-orange/20 to-azure-blue/20 border border-orange/40 rounded-xl text-white hover:text-white transition-all duration-300 ml-2 backdrop-blur-[10px] shadow-lg shadow-orange/20 hover:shadow-orange/30 hover:border-orange/60"
-            onClick={handleMobileMenuToggle}
+            type="button"
+            className="lg:hidden relative p-3 bg-gradient-to-r from-orange/20 to-azure-blue/20 border border-orange/40 rounded-xl text-white hover:text-white transition-all duration-300 ml-2 backdrop-blur-[10px] shadow-lg shadow-orange/20 hover:shadow-orange/30 hover:border-orange/60 cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              handleMobileMenuToggle()
+            }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -554,7 +568,8 @@ export function ModernNavbar() {
                     {item.dropdown ? (
                       <>
                         <motion.button
-                          className="w-full flex items-center justify-between p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium z-10 relative touch-manipulation"
+                          type="button"
+                          className="w-full flex items-center justify-between p-3 text-white/80 hover:text-white hover:bg-azure-blue-transparent rounded-xl transition-all duration-300 font-montserrat font-medium z-10 relative touch-manipulation cursor-pointer"
                           onClick={(e) => {
                             e.preventDefault()
                             e.stopPropagation()
@@ -564,7 +579,7 @@ export function ModernNavbar() {
                             e.stopPropagation()
                           }}
                           whileTap={{ scale: 0.98 }}
-                          style={{ WebkitTapHighlightColor: 'transparent', cursor: 'pointer' }}
+                          style={{ WebkitTapHighlightColor: 'transparent' }}
                         >
                           <span>{item.label}</span>
                           <ChevronDown 
@@ -620,19 +635,12 @@ export function ModernNavbar() {
                                   <div key={dropdownItem.label}>
                                     <Link
                                       href={dropdownItem.href}
+                                      prefetch={true}
                                       onClick={(e) => {
-                                        e.preventDefault()
                                         e.stopPropagation()
                                         setIsMobileMenuOpen(false)
                                         setActiveDropdown(null)
-                                        // Navigate after closing menu
-                                        setTimeout(() => {
-                                          if (dropdownItem.href.startsWith('#')) {
-                                            window.location.hash = dropdownItem.href.substring(1)
-                                          } else {
-                                            window.location.href = dropdownItem.href
-                                          }
-                                        }, 100)
+                                        trackDropdownItemClick(item.label, dropdownItem.label)
                                       }}
                                       className={`flex items-center space-x-3 p-3 text-white/70 hover:text-white ${bgHoverColor} rounded-lg transition-all duration-300 cursor-pointer touch-manipulation relative z-10`}
                                       style={{ WebkitTapHighlightColor: 'transparent', pointerEvents: 'auto' }}
@@ -755,12 +763,17 @@ export function ModernNavbar() {
                   )} */}
 
                   {/* Get Started Button - Mobile */}
-                  <Link href="/masterclasses" onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    trackCTAClick('Get Started (Mobile)', pathname);
-                  }}>
+                  <Link 
+                    href="/beyond-formalities" 
+                    prefetch={true}
+                    onClick={(e) => {
+                      setIsMobileMenuOpen(false)
+                      trackCTAClick('Get Started (Mobile)', pathname)
+                    }}
+                  >
                     <motion.button
-                      className="w-full px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl"
+                      type="button"
+                      className="w-full px-6 py-3 cta-button-glow text-white font-semibold font-montserrat rounded-xl cursor-pointer"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >

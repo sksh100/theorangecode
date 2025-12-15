@@ -287,7 +287,10 @@ For detailed, personalized Cultural Intelligence guidance, please contact our te
   } catch (error: any) {
     console.error('Cultural Intelligence Agent error:', error)
     return NextResponse.json(
-      { success: false, error: 'An error occurred. Please try again.' },
+      { 
+        success: false, 
+        error: error.message || 'An error occurred. Please try again. If the problem persists, please contact support.' 
+      },
       { status: 500 }
     )
   }
