@@ -41,22 +41,24 @@ function SimpleDropdown({ isOpen, onClose, title, items, onItemClick }: SimpleDr
         <>
           {/* Backdrop */}
           <motion.div
-            className="fixed top-20 left-0 right-0 bottom-0 bg-black/40 backdrop-blur-md z-40"
+            className="fixed inset-0 bg-black/40 backdrop-blur-md z-[100]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
+            style={{ top: '80px' }}
           />
           
           {/* Dropdown Menu */}
           <motion.div
-            className="hidden lg:block absolute top-full left-1/2 -translate-x-1/2 mt-2 w-auto min-w-[280px] z-[55]"
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            className="hidden lg:block absolute top-full left-1/2 -translate-x-1/2 mt-2 w-auto min-w-[280px] z-[101] pointer-events-auto"
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
             onClick={(e) => e.stopPropagation()}
+            style={{ pointerEvents: 'auto' }}
           >
             <div className="mega-dropdown-glass rounded-3xl overflow-hidden border border-white/10 shadow-glow-luminous">
               <div className="p-6">
@@ -265,7 +267,7 @@ export function ModernNavbar() {
 
   return (
     <motion.nav
-      className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
         isScrolled 
           ? 'navbar-glass shadow-glow' 
           : 'bg-transparent'
@@ -306,7 +308,7 @@ export function ModernNavbar() {
                   <>
                     <motion.button
                       type="button"
-                      className="flex items-center space-x-1 text-white/90 hover:text-white font-medium font-montserrat transition-colors duration-300 group cursor-pointer"
+                      className="flex items-center space-x-1 text-white/90 hover:text-white font-medium font-montserrat transition-colors duration-300 group cursor-pointer relative z-50"
                       onClick={(e) => {
                         e.preventDefault()
                         e.stopPropagation()
@@ -314,6 +316,7 @@ export function ModernNavbar() {
                       }}
                       whileHover={{ y: -2 }}
                       transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                      style={{ pointerEvents: 'auto' }}
                     >
                       <span>{item.label}</span>
                       {item.dropdown && (
