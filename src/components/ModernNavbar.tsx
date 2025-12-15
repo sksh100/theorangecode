@@ -41,13 +41,12 @@ function SimpleDropdown({ isOpen, onClose, title, items, onItemClick }: SimpleDr
         <>
           {/* Backdrop */}
           <motion.div
-            className="fixed inset-0 bg-black/40 backdrop-blur-md z-[100]"
+            className="fixed top-20 left-0 right-0 bottom-0 bg-black/40 backdrop-blur-md z-[100]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            style={{ top: '80px' }}
           />
           
           {/* Dropdown Menu */}
