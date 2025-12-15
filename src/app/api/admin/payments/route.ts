@@ -114,7 +114,7 @@ export async function GET(_req: NextRequest) {
         const allPayments: any[] = [];
         const seenIds = new Set<string>();
 
-        // Process checkout sessions (most reliable - use session amount)
+        // Process checkout sessions (most reliable - use session amount_total to match Stripe invoices)
         sessions.data.forEach((session: any) => {
           if (session.payment_status === 'paid' && session.amount_total && !seenIds.has(session.id)) {
             seenIds.add(session.id);
@@ -122,22 +122,17 @@ export async function GET(_req: NextRequest) {
               ? session.payment_intent 
               : session.payment_intent?.id;
             
-            // Check if we have a charge for this payment intent
-            const charge = paymentIntentId ? chargeMap.get(paymentIntentId) : null;
-            const actualAmount = charge ? charge.amount / 100 : session.amount_total / 100;
-            const actualCurrency = charge ? charge.currency.toUpperCase() : (session.currency || 'aed').toUpperCase();
-            
-            // Log if amounts differ for debugging
-            if (charge && Math.abs(charge.amount / 100 - session.amount_total / 100) > 0.01) {
-              console.log(`⚠️ Amount mismatch for session ${session.id}: session=${session.amount_total / 100}, charge=${charge.amount / 100}`);
-            }
+            // Always use session.amount_total to match Stripe invoice amounts
+            // This is what the customer actually paid and what Stripe invoices show
+            const actualAmount = session.amount_total / 100;
+            const actualCurrency = (session.currency || 'aed').toUpperCase();
             
             allPayments.push({
               id: session.id,
               amount: actualAmount,
               currency: actualCurrency,
               status: 'succeeded',
-              customerEmail: session.customer_details?.email || session.customer_email || charge?.receipt_email || 'unknown',
+              customerEmail: session.customer_details?.email || session.customer_email || 'unknown',
               customerName: session.customer_details?.name || session.customer_details?.email?.split('@')[0] || 'Customer',
               createdAt: new Date(session.created * 1000).toISOString(),
               description: session.metadata?.productName || `Payment - ${actualCurrency} ${actualAmount}`,
@@ -147,29 +142,18 @@ export async function GET(_req: NextRequest) {
           }
         });
 
-        // Process payment intents - ALWAYS use charge amount if available (more accurate)
+        // Process payment intents - use payment intent amount to match Stripe invoices
         paymentIntents.data.forEach((pi: any) => {
           if (pi.status === 'succeeded' && pi.amount && !seenIds.has(pi.id)) {
             seenIds.add(pi.id);
             
-            // Get actual charge amount - prioritize charge over payment intent amount
-            const charge = chargeMap.get(pi.id);
-            let actualAmount = pi.amount / 100;
-            let actualCurrency = (pi.currency || 'aed').toUpperCase();
+            // Always use payment intent amount to match Stripe invoice amounts
+            // This is what was intended to be charged and what Stripe invoices show
+            const actualAmount = pi.amount / 100;
+            const actualCurrency = (pi.currency || 'aed').toUpperCase();
             
-            if (charge) {
-              // Use charge amount (this is the actual amount charged)
-              actualAmount = charge.amount / 100;
-              actualCurrency = charge.currency.toUpperCase();
-              
-              // Log if amounts differ for debugging
-              if (Math.abs(charge.amount / 100 - pi.amount / 100) > 0.01) {
-                console.log(`⚠️ Amount mismatch for payment intent ${pi.id}: pi=${pi.amount / 100}, charge=${charge.amount / 100} (using charge)`);
-              }
-            } else {
-              // If no charge found, log warning
-              console.log(`⚠️ No charge found for payment intent ${pi.id}, using payment intent amount: ${actualAmount}`);
-            }
+            // Get charge for receipt email if available
+            const charge = chargeMap.get(pi.id);
             
             allPayments.push({
               id: pi.id,

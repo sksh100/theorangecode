@@ -1028,14 +1028,16 @@ export default function Dashboard() {
                           <span className="text-xs font-medium">Courses</span>
                         </motion.button>
                       </Link>
-                      <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white hover:bg-white/20 transition-all flex flex-col items-center gap-2"
-                      >
-                        <FileText className="w-5 h-5" />
-                        <span className="text-xs font-medium">Resources</span>
-                      </motion.button>
+                      <Link href="/resources">
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white hover:bg-white/20 transition-all flex flex-col items-center gap-2"
+                        >
+                          <FileText className="w-5 h-5" />
+                          <span className="text-xs font-medium">Resources</span>
+                        </motion.button>
+                      </Link>
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
