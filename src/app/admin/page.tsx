@@ -619,16 +619,17 @@ export default function AdminDashboard() {
   }
 
   // Filter data based on search
-  const filteredPayments = payments.filter((p) =>
-    p.customerEmail.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.id.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  const query = searchQuery.toLowerCase()
+  const filteredPayments = payments.filter((p) => {
+    return p.customerEmail.toLowerCase().includes(query) ||
+      p.customerName.toLowerCase().includes(query) ||
+      p.id.toLowerCase().includes(query)
+  })
 
-  const filteredSubscribers = subscribers.filter((s) =>
-    s.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    s.name.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  const filteredSubscribers = subscribers.filter((s) => {
+    return s.email.toLowerCase().includes(query) ||
+      s.name.toLowerCase().includes(query)
+  })
 
   // Login page
   if (!isAuthenticated) {
@@ -676,7 +677,7 @@ export default function AdminDashboard() {
           </form>
         </motion.div>
       </div>
-    )
+    );
   }
 
   // Main dashboard
@@ -2267,6 +2268,7 @@ export default function AdminDashboard() {
                       </tbody>
                     </table>
                   </div>
+                  </div>
                   
                   {pageStats.length === 0 && (
                     <div className="text-center py-8 text-white/60">
@@ -2278,7 +2280,7 @@ export default function AdminDashboard() {
               })()}
 
               {/* Recent Visitors Table - Mobile Optimized */}
-              <div className="glass-card overflow-hidden">
+              <motion.div whileHover={{ scale: 1.01 }} className="glass-card overflow-hidden">
                 <div className="p-3 sm:p-6 border-b border-white/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                   <div className="flex-1 min-w-0">
                     <h2 className="text-lg sm:text-xl font-bold text-white break-words">
@@ -2428,16 +2430,15 @@ export default function AdminDashboard() {
                       </tbody>
                     </table>
                   </div>
-                    );
-                  })()}
-                </div>
+                  </div>
+                  );
+                })()}
                 {visitors.length === 0 && (
                   <div className="p-8 text-center text-white/60">
                     No visitors found. Visitor tracking will appear here once someone visits your site.
                   </div>
                 )}
-              </div>
-            </div>
+              </motion.div>
             </motion.div>
           )}
 

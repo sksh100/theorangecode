@@ -45,7 +45,7 @@ export async function GET(_req: NextRequest) {
         let lastChargeId: string | undefined = undefined;
         
         while (hasMoreCharges) {
-          const chargesResult = await stripe.charges.list({
+          const chargesResult: Stripe.ApiList<Stripe.Charge> = await stripe.charges.list({
             limit: 100,
             ...(lastChargeId ? { starting_after: lastChargeId } : {}),
           });
