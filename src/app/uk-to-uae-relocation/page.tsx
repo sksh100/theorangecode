@@ -65,19 +65,19 @@ export default function UKToUAERelocationPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-8"
+          className="text-center mb-6 sm:mb-8 px-4"
         >
-          <div className="inline-block mb-4">
-            <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/5 border border-white/10 text-white/80">
+          <div className="inline-block mb-3 sm:mb-4">
+            <span className="px-3 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold tracking-wider uppercase bg-white/5 border border-white/10 text-white/80">
               UK to UAE relocation guide
             </span>
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
             <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
               Moving from the UK to the UAE
             </span>
           </h1>
-          <p className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mb-4">
+          <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-white mb-4 leading-tight px-2">
             The complete relocation & Cultural Intelligence handbook for UK movers
           </p>
         </motion.div>
@@ -87,20 +87,29 @@ export default function UKToUAERelocationPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-center mb-12 space-y-6"
+          className="text-center mb-8 sm:mb-12 px-4 sm:px-6 space-y-4 sm:space-y-6"
         >
-          <p className="text-lg sm:text-xl text-white/90 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-3xl mx-auto">
             Built for UK professionals, families, and students relocating to the Emirates. This handbook bundles relocation essentials with Cultural Intelligence so you land with clarity, confidence, and a plan.
           </p>
-          <p className="text-base sm:text-lg text-white/80 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-white/80 leading-relaxed max-w-3xl mx-auto">
             Learn how UAE communication, trust, and leadership really work; what to do (and avoid) in daily life and business; and how to adapt your UK habits to build respect and opportunity faster.
           </p>
-          <ul className="text-white/80 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto space-y-2 list-disc list-inside text-left sm:text-center sm:list-none sm:space-y-1">
-            <li className="sm:list-none sm:before:content-['•'] sm:before:mr-2 sm:before:text-orange">Exact dos/don’ts for social and business settings so you avoid missteps.</li>
-            <li className="sm:list-none sm:before:content-['•'] sm:before:mr-2 sm:before:text-orange">How to read UAE communication styles, build trust, and earn respect quickly.</li>
-            <li className="sm:list-none sm:before:content-['•'] sm:before:mr-2 sm:before:text-orange">Step-by-step arrival prep: documents, etiquette, and daily life basics tailored to UK movers.</li>
+          <ul className="text-base sm:text-lg md:text-xl text-white/80 leading-relaxed max-w-3xl mx-auto space-y-2 sm:space-y-3 text-left sm:text-center list-none">
+            <li className="flex items-start sm:items-center sm:justify-center gap-2 sm:gap-3">
+              <span className="text-orange flex-shrink-0 mt-1 sm:mt-0">•</span>
+              <span>Exact dos/don'ts for social and business settings so you avoid missteps.</span>
+            </li>
+            <li className="flex items-start sm:items-center sm:justify-center gap-2 sm:gap-3">
+              <span className="text-orange flex-shrink-0 mt-1 sm:mt-0">•</span>
+              <span>How to read UAE communication styles, build trust, and earn respect quickly.</span>
+            </li>
+            <li className="flex items-start sm:items-center sm:justify-center gap-2 sm:gap-3">
+              <span className="text-orange flex-shrink-0 mt-1 sm:mt-0">•</span>
+              <span>Step-by-step arrival prep: documents, etiquette, and daily life basics tailored to UK movers.</span>
+            </li>
           </ul>
-          <p className="text-sm font-medium text-orange">
+          <p className="text-sm sm:text-base font-medium text-orange mt-4 sm:mt-6">
             Purchase for £59 · Instant email delivery with secure download link.
           </p>
         </motion.div>
@@ -110,17 +119,17 @@ export default function UKToUAERelocationPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16 px-4"
         >
           <Link href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => handleCTAClick('Get the Relocation Guide - Minimalist', '/uk-to-uae-relocation')}
-              className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center gap-3"
+              className="px-6 sm:px-8 py-3 sm:py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-base sm:text-lg inline-flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-center"
             >
               <span>Get the relocation guide</span>
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </motion.button>
           </Link>
         </motion.div>

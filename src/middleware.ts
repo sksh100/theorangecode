@@ -41,6 +41,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 301)
   }
 
+  // Temporarily hide Cultural Intelligence Agent - redirect to homepage
+  if (pathname === '/cultural-intelligence-agent') {
+    url.pathname = '/'
+    return NextResponse.redirect(url, 301)
+  }
+
   // IP-based access control removed - /uk-to-uae-relocation page is now visible to all users
 
   return NextResponse.next()
