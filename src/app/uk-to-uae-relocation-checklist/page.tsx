@@ -1,348 +1,130 @@
 'use client'
 
+// Force dynamic rendering to prevent build timeouts
+export const dynamic = 'force-dynamic'
+
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { CheckCircle, Download, ArrowRight, MessageCircle, Share2, BookOpen } from 'lucide-react'
 import Link from 'next/link'
-import { ModernNavbar } from '@/components/ModernNavbar'
-import { ModernFooter } from '@/components/ModernFooter'
-import { WhatsAppShareButton } from '@/components/WhatsAppShareButton'
-import { SocialShareButtons } from '@/components/SocialShareButtons'
+import { ArrowRight } from 'lucide-react'
+import { MinimalistLayout } from '@/components/MinimalistLayout'
 import { trackCTAClick } from '@/lib/tracking'
-import dynamic from 'next/dynamic'
+import Script from 'next/script'
 
-const AtmosphericBackground = dynamic(
-  () => import('@/components/AtmosphericBackground').then(mod => ({ default: mod.AtmosphericBackground })),
-  { ssr: false, loading: () => null }
-)
-
-export default function RelocationChecklistPage() {
+export default function UKToUAERelocationChecklistPage() {
   const [mounted, setMounted] = useState(false)
+  
+  // Stripe Payment Link
+  const STRIPE_PAYMENT_LINK = process.env.NEXT_PUBLIC_STRIPE_EBOOK_LINK || 'https://buy.stripe.com/14AcN5514gL746fcJW8k805'
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
+  const handleCTAClick = (label: string, path: string) => {
+    trackCTAClick(label, path)
   }
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
-  }
-
-  const checklistItems = [
-    {
-      category: 'Before You Arrive',
-      items: [
-        'Research UAE cultural norms and business etiquette',
-        'Understand workplace hierarchy and communication styles',
-        'Learn about dress codes for men and women',
-        'Familiarize yourself with UAE laws and regulations',
-        'Prepare necessary documents (passport, visa, certificates)',
-        'Set up banking arrangements',
-        'Research accommodation options',
-        'Understand healthcare system and insurance requirements'
-      ]
-    },
-    {
-      category: 'First Week Essentials',
-      items: [
-        'Complete Emirates ID application',
-        'Open a UAE bank account',
-        'Get a local SIM card and phone number',
-        'Register with a healthcare provider',
-        'Set up utilities (electricity, water, internet)',
-        'Learn basic Arabic greetings',
-        'Understand local transportation options',
-        'Find grocery stores and essential services'
-      ]
-    },
-    {
-      category: 'Workplace Integration',
-      items: [
-        'Observe communication styles in your workplace',
-        'Build relationships with Emirati colleagues',
-        'Understand meeting etiquette and protocols',
-        'Learn about feedback and decision-making processes',
-        'Adapt to time perception and scheduling',
-        'Respect hierarchical structures',
-        'Participate in team-building activities',
-        'Seek Cultural Intelligence training if needed'
-      ]
-    },
-    {
-      category: 'Cultural Adaptation',
-      items: [
-        'Respect local customs and traditions',
-        'Understand religious practices and observances',
-        'Learn about appropriate social behaviors',
-        'Adapt communication style (indirect, diplomatic)',
-        'Build trust through relationship-building',
-        'Avoid cultural faux pas',
-        'Participate in local events and celebrations',
-        'Connect with expat communities for support'
-      ]
-    }
-  ]
-
-  const handleDownload = () => {
-    trackCTAClick('Download Checklist PDF', '/uk-to-uae-relocation-checklist')
-    // In production, this would download the actual PDF
-    // For now, we'll create a printable version
-    window.print()
+  if (!mounted) {
+    return null // Prevent hydration mismatch
   }
 
   return (
     <>
-      <div className="relative w-full bg-primary-dark text-white min-h-screen">
-        {/* Atmospheric Background */}
-        <div className="fixed inset-0 z-0 pointer-events-none">
-          <AtmosphericBackground mousePosition={{ x: 0, y: 0 }} scrollProgress={0} />
-        </div>
+      {/* Schema Markup */}
+      <Script
+        id="product-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "UK to UAE Cultural Intelligence Guide",
+            "description": "A research based guide helping British expats understand UAE culture, workplace norms, communication styles, dos and donts, and how to integrate effectively. Written specifically for UK professionals moving to Dubai and Abu Dhabi.",
+            "image": "https://www.theorangecode.com/og-image",
+            "category": "Educational Book",
+            "brand": {
+              "@type": "Organization",
+              "name": "The Orange Code"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "59",
+              "priceCurrency": "GBP",
+              "availability": "https://schema.org/InStock",
+              "url": STRIPE_PAYMENT_LINK
+            }
+          })
+        }}
+      />
 
-        <ModernNavbar />
+      <MinimalistLayout>
+        {/* Headline */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-8"
+        >
+          <div className="inline-block mb-4">
+            <span className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/5 border border-white/10 text-white/80">
+              UK to UAE relocation guide
+            </span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+              Moving from the UK to the UAE
+            </span>
+          </h1>
+          <p className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mb-4">
+            The complete relocation & Cultural Intelligence handbook for UK movers
+          </p>
+        </motion.div>
 
-        <main className="relative z-10">
-          {/* HERO SECTION */}
-          <section className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-32">
-            <div className="absolute inset-0 bg-gradient-to-b from-orange/5 via-transparent to-azure-blue/5" />
-            <div className="container mx-auto px-6 relative z-10">
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate={mounted ? "visible" : "visible"}
-                viewport={{ once: true }}
-                className="max-w-4xl mx-auto text-center"
-              >
-                <motion.div
-                  variants={itemVariants}
-                  className="inline-block mb-6"
-                >
-                  <span className="text-orange text-sm font-semibold tracking-wider uppercase">
-                    Free Resource
-                  </span>
-                </motion.div>
-                
-                <motion.h1
-                  variants={itemVariants}
-                  className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6"
-                >
-                  <span className="bg-gradient-to-r from-azure-blue via-orange to-azure-blue bg-clip-text text-transparent">
-                    UK to UAE Relocation
-                  </span>
-                  <br />
-                  <span className="text-white mt-2 block">
-                    Essential Checklist
-                  </span>
-                </motion.h1>
+        {/* Descriptive Copy */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-center mb-12 space-y-6"
+        >
+          <p className="text-lg sm:text-xl text-white/90 leading-relaxed max-w-3xl mx-auto">
+            Built for UK professionals, families, and students relocating to the Emirates. This handbook bundles relocation essentials with Cultural Intelligence so you land with clarity, confidence, and a plan.
+          </p>
+          <p className="text-base sm:text-lg text-white/80 leading-relaxed max-w-3xl mx-auto">
+            Learn how UAE communication, trust, and leadership really work; what to do (and avoid) in daily life and business; and how to adapt your UK habits to build respect and opportunity faster.
+          </p>
+          <ul className="text-white/80 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto space-y-2 list-disc list-inside text-left sm:text-center sm:list-none sm:space-y-1">
+            <li className="sm:list-none sm:before:content-['•'] sm:before:mr-2 sm:before:text-orange">Exact dos/don'ts for social and business settings so you avoid missteps.</li>
+            <li className="sm:list-none sm:before:content-['•'] sm:before:mr-2 sm:before:text-orange">How to read UAE communication styles, build trust, and earn respect quickly.</li>
+            <li className="sm:list-none sm:before:content-['•'] sm:before:mr-2 sm:before:text-orange">Step-by-step arrival prep: documents, etiquette, and daily life basics tailored to UK movers.</li>
+          </ul>
+          <p className="text-sm font-medium text-orange">
+            Purchase for £59 · Instant email delivery with secure download link.
+          </p>
+        </motion.div>
 
-                <motion.p
-                  variants={itemVariants}
-                  className="text-lg md:text-xl text-white/80 mb-8 max-w-3xl mx-auto leading-relaxed"
-                >
-                  A comprehensive checklist to help British professionals prepare for their move to the UAE. Share this with friends, family, and colleagues who are relocating.
-                </motion.p>
-
-                <motion.div
-                  variants={itemVariants}
-                  className="flex flex-wrap gap-4 justify-center mb-8"
-                >
-                  <motion.button
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handleDownload}
-                    className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 flex items-center gap-2"
-                  >
-                    <Download className="w-5 h-5" />
-                    Download PDF Checklist
-                  </motion.button>
-                  
-                  <SocialShareButtons
-                    url="https://www.theorangecode.com/uk-to-uae-relocation-checklist"
-                    title="UK to UAE Relocation Checklist"
-                    description="A comprehensive free checklist to help British professionals prepare for their move to the UAE."
-                    variant="default"
-                    showLabel={true}
-                  />
-                </motion.div>
-
-                <motion.p
-                  variants={itemVariants}
-                  className="text-sm text-white/60"
-                >
-                  ⭐ Free resource • Share with anyone who needs it
-                </motion.p>
-              </motion.div>
-            </div>
-          </section>
-
-          {/* CHECKLIST SECTION */}
-          <section className="relative py-16 md:py-24">
-            <div className="container mx-auto px-6">
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                className="max-w-4xl mx-auto"
-              >
-                {checklistItems.map((category, categoryIndex) => (
-                  <motion.div
-                    key={categoryIndex}
-                    variants={itemVariants}
-                    className="mb-12"
-                  >
-                    <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">
-                      <span className="bg-gradient-to-r from-orange to-azure-blue bg-clip-text text-transparent">
-                        {category.category}
-                      </span>
-                    </h2>
-                    
-                    <div className="relative p-6 md:p-8 rounded-2xl overflow-hidden border border-white/10 bg-primary-dark/90 backdrop-blur-[20px]">
-                      <div className="absolute inset-0 bg-gradient-to-br from-orange/5 via-transparent to-azure-blue/5" />
-                      <div className="relative z-10 space-y-4">
-                        {category.items.map((item, itemIndex) => (
-                          <div key={itemIndex} className="flex items-start space-x-3">
-                            <CheckCircle className="w-6 h-6 text-orange flex-shrink-0 mt-0.5" />
-                            <span className="text-white/90 text-base leading-relaxed">{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-          </section>
-
-          {/* CTA TO FULL EBOOK */}
-          <section className="relative py-16 md:py-24 bg-gradient-to-b from-transparent via-primary-dark/50 to-transparent">
-            <div className="container mx-auto px-6">
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                className="max-w-3xl mx-auto text-center"
-              >
-                <motion.div
-                  variants={itemVariants}
-                  className="relative p-8 md:p-12 rounded-2xl overflow-hidden border-2 border-orange/30 bg-gradient-to-br from-orange/10 via-primary-dark/90 to-azure-blue/10 backdrop-blur-[20px]"
-                >
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-orange/20 rounded-full blur-3xl -translate-y-16 translate-x-16" />
-                  <div className="absolute bottom-0 left-0 w-40 h-40 bg-azure-blue/20 rounded-full blur-3xl translate-y-20 -translate-x-20" />
-                  
-                  <div className="relative z-10">
-                    <BookOpen className="w-16 h-16 text-orange mx-auto mb-6" />
-                    
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-                      Need More Detailed Guidance?
-                    </h2>
-                    
-                    <p className="text-lg text-white/80 mb-6 leading-relaxed">
-                      This checklist covers the essentials. For comprehensive Cultural Intelligence, workplace communication strategies, and in-depth guidance, get the full <strong>UK to UAE Cultural Intelligence Guide</strong>.
-                    </p>
-
-                    <div className="flex flex-wrap gap-4 justify-center">
-                      <Link href="/uk-to-uae-relocation">
-                        <motion.button
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => trackCTAClick('Get Full Guide - Checklist Page', '/uk-to-uae-relocation-checklist')}
-                          className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 flex items-center gap-2"
-                        >
-                          Get the Full Guide
-                          <ArrowRight className="w-5 h-5" />
-                        </motion.button>
-                      </Link>
-                      
-                      <SocialShareButtons
-                        url="https://www.theorangecode.com/uk-to-uae-relocation"
-                        title="UK to UAE Relocation Cultural Guide"
-                        description="A practical Cultural Intelligence guide for British professionals relocating to the UAE."
-                        variant="compact"
-                        showLabel={true}
-                        className="justify-center"
-                      />
-                    </div>
-
-                    <p className="text-white/60 text-sm mt-6">
-                      📚 9 comprehensive chapters • 💼 Workplace culture • 🤝 Communication strategies • ⭐ 4.9/5 rating
-                    </p>
-                  </div>
-                </motion.div>
-              </motion.div>
-            </div>
-          </section>
-
-          {/* SHARE SECTION */}
-          <section className="relative py-16 md:py-24">
-            <div className="container mx-auto px-6">
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-100px" }}
-                className="max-w-3xl mx-auto text-center"
-              >
-                <motion.h2
-                  variants={itemVariants}
-                  className="text-3xl md:text-4xl font-bold mb-4 text-white"
-                >
-                  Share This Checklist
-                </motion.h2>
-                
-                <motion.p
-                  variants={itemVariants}
-                  className="text-lg text-white/80 mb-8 leading-relaxed"
-                >
-                  If you know someone preparing to move to the UAE, share this checklist with them. It's free and could save them from costly mistakes.
-                </motion.p>
-
-                <motion.div
-                  variants={itemVariants}
-                >
-                  <SocialShareButtons
-                    url="https://www.theorangecode.com/uk-to-uae-relocation-checklist"
-                    title="UK to UAE Relocation Checklist"
-                    description="A comprehensive free checklist to help British professionals prepare for their move to the UAE."
-                    variant="default"
-                    showLabel={true}
-                  />
-                </motion.div>
-              </motion.div>
-            </div>
-          </section>
-        </main>
-
-        <ModernFooter />
-      </div>
-
-      {/* Print Styles */}
-      <style jsx global>{`
-        @media print {
-          body {
-            background: white;
-            color: black;
-          }
-          .no-print {
-            display: none !important;
-          }
-        }
-      `}</style>
+        {/* Call-to-Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-center mb-16"
+        >
+          <Link href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer">
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleCTAClick('Get the Relocation Guide - Checklist Page', '/uk-to-uae-relocation-checklist')}
+              className="px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center gap-3"
+            >
+              <span>Get the relocation guide</span>
+              <ArrowRight className="w-5 h-5" />
+            </motion.button>
+          </Link>
+        </motion.div>
+      </MinimalistLayout>
     </>
   )
 }
-

@@ -7,15 +7,7 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
   const originalUrl = request.nextUrl
   
-  // Check for UK page bypass methods FIRST (before any redirects)
-  // This ensures query parameters are preserved
-  const isUKPage = pathname === '/uk-to-uae-relocation'
   const hasDevParam = originalUrl.searchParams.get('dev') === 'true'
-  const isLocalhost = hostname.includes('localhost') || hostname.includes('127.0.0.1') || hostname.includes('0.0.0.0')
-  const disableIPCheck = (process.env.DISABLE_UK_IP_CHECK || '').toLowerCase() === 'true'
-  const cookieBypass = request.cookies.get('uk_bypass')?.value === 'true'
-  const headerBypass = request.headers.get('x-uk-bypass') === 'true'
-  const bypassUKCheck = isLocalhost || hasDevParam || disableIPCheck || cookieBypass || headerBypass
   
   // Check if request is HTTP (Vercel uses x-forwarded-proto header)
   const forwardedProto = request.headers.get('x-forwarded-proto')
@@ -49,29 +41,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 301)
   }
 
-  // IP-based access control for /uk-to-uae-relocation page
-  // Only allow UK IP addresses to access this page
-  if (isUKPage) {
-    // Allow access if any bypass method is active
-    if (bypassUKCheck) {
-      return NextResponse.next()
-    }
-    
-    // Get country from Vercel geolocation headers
-    const country = request.headers.get('x-vercel-ip-country') || 
-                    request.headers.get('cf-ipcountry') || // Cloudflare fallback
-                    null
-    
-    // If country is not UK (GB), redirect to homepage
-    if (country && country !== 'GB') {
-      url.pathname = '/'
-      return NextResponse.redirect(url, 302)
-    }
-    
-    // If country is unknown but we have IP, we could use an API to check
-    // For now, allow access if country is not detected (to avoid blocking legitimate UK users)
-    // You can add additional IP checking logic here if needed
-  }
+  // IP-based access control removed - /uk-to-uae-relocation page is now visible to all users
 
   return NextResponse.next()
 }
