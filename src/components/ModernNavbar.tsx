@@ -118,6 +118,7 @@ export function ModernNavbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(false)
   const [userName, setUserName] = useState<string>('')
+  const [isMasterclassesMegaOpen, setIsMasterclassesMegaOpen] = useState(false)
 
   // Close all dropdowns when pathname changes (navigation happens)
   useEffect(() => {
@@ -216,8 +217,6 @@ export function ModernNavbar() {
       isDirectLink: true, // Mark as direct link to scroll to contact form
     }
   ]
-
-  const [isMasterclassesMegaOpen, setIsMasterclassesMegaOpen] = useState(false)
 
   const handleDropdownToggle = (label: string, isMobile: boolean = false) => {
     // On mobile, always use simple dropdown structure
