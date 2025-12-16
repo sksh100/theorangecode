@@ -119,6 +119,15 @@ export function ModernNavbar() {
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(false)
   const [userName, setUserName] = useState<string>('')
 
+  // Close all dropdowns when pathname changes (navigation happens)
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+    setActiveDropdown(null)
+    setIsAboutMegaOpen(false)
+    setIsContactMegaOpen(false)
+    setIsMasterclassesMegaOpen(false)
+  }, [pathname])
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
@@ -143,14 +152,6 @@ export function ModernNavbar() {
     }
   }, [])
 
-  // Close mobile menu and dropdowns when route changes
-  useEffect(() => {
-    setIsMobileMenuOpen(false)
-    setActiveDropdown(null)
-    setIsAboutMegaOpen(false)
-    setIsContactMegaOpen(false)
-    setIsMasterclassesMegaOpen(false)
-  }, [pathname])
 
   const navItems = [
     {
@@ -306,26 +307,40 @@ export function ModernNavbar() {
                 {item.dropdown ? (
                   <>
                     {item.label === 'Resources' ? (
-                      // Resources: Navigate on click, show dropdown on hover
+                      // Resources: Navigate on click, show dropdown on hover only
                       <div 
                         className="relative group"
-                        onMouseEnter={() => handleDropdownToggle(item.label)}
-                        onMouseLeave={() => {
-                          if (activeDropdown === item.label) {
-                            setActiveDropdown(null)
+                        onMouseEnter={() => {
+                          // Show dropdown on hover
+                          if (activeDropdown !== item.label) {
+                            handleDropdownToggle(item.label)
                           }
+                        }}
+                        onMouseLeave={() => {
+                          // Close dropdown when mouse leaves
+                          setTimeout(() => {
+                            if (activeDropdown === item.label) {
+                              setActiveDropdown(null)
+                            }
+                          }, 100) // Small delay to allow clicking dropdown items
                         }}
                       >
                         <Link
                           href={item.href}
                           className="flex items-center space-x-1 text-white/90 hover:text-white font-medium font-montserrat transition-colors duration-300 cursor-pointer relative z-50"
                           onClick={() => {
+                            // Immediately close all dropdowns before navigation
                             setActiveDropdown(null)
+                            setIsAboutMegaOpen(false)
+                            setIsMasterclassesMegaOpen(false)
+                            setIsContactMegaOpen(false)
                             trackCTAClick('Resources', item.href)
                           }}
                         >
                           <span>{item.label}</span>
-                          <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
+                          <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${
+                            activeDropdown === item.label ? 'rotate-180' : ''
+                          }`} />
                         </Link>
                       </div>
                     ) : (
