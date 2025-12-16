@@ -17,8 +17,8 @@ export default function ResourcesPage() {
       href: '/uk-to-uae-relocation',
       image: '/images/uk-uae-preview-1.png',
       type: 'E-Guide',
-      price: '£59',
-      currency: 'GBP'
+      price: '289',
+      currency: 'AED'
     },
     {
       id: 'beyond-formalities',
@@ -92,6 +92,7 @@ export default function ResourcesPage() {
                             <p className="text-2xl font-bold text-orange">
                               {resource.price} {resource.currency}
                             </p>
+                            <p className="text-xs text-white/60 mt-1">dirhams</p>
                           </div>
                         </div>
                         
