@@ -367,6 +367,7 @@ export function ModernNavbar() {
                           />
                         )}
                       </motion.button>
+                    )}
 
                     {/* Mega Dropdowns */}
                     {item.label === 'About' && (
