@@ -305,29 +305,54 @@ export function ModernNavbar() {
               <div key={item.label} className="relative">
                 {item.dropdown ? (
                   <>
-                    <motion.button
-                      type="button"
-                      className="flex items-center space-x-1 text-white/90 hover:text-white font-medium font-montserrat transition-colors duration-300 group cursor-pointer relative z-50"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        e.stopPropagation()
-                        handleDropdownToggle(item.label)
-                      }}
-                      whileHover={{ y: -2 }}
-                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                      style={{ pointerEvents: 'auto' }}
-                    >
-                      <span>{item.label}</span>
-                      {item.dropdown && (
-                        <ChevronDown 
-                          className={`w-4 h-4 transition-transform duration-300 ${
-                            (activeDropdown === item.label || 
-                             (item.label === 'About' && isAboutMegaOpen) ||
-                             (item.label === 'Masterclasses' && isMasterclassesMegaOpen)) ? 'rotate-180' : ''
-                          }`} 
-                        />
-                      )}
-                    </motion.button>
+                    {item.label === 'Resources' ? (
+                      // Resources: Navigate on click, show dropdown on hover
+                      <div 
+                        className="relative group"
+                        onMouseEnter={() => handleDropdownToggle(item.label)}
+                        onMouseLeave={() => {
+                          if (activeDropdown === item.label) {
+                            setActiveDropdown(null)
+                          }
+                        }}
+                      >
+                        <Link
+                          href={item.href}
+                          className="flex items-center space-x-1 text-white/90 hover:text-white font-medium font-montserrat transition-colors duration-300 cursor-pointer relative z-50"
+                          onClick={() => {
+                            setActiveDropdown(null)
+                            trackCTAClick('Resources', item.href)
+                          }}
+                        >
+                          <span>{item.label}</span>
+                          <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
+                        </Link>
+                      </div>
+                    ) : (
+                      // Other dropdowns: Toggle on click
+                      <motion.button
+                        type="button"
+                        className="flex items-center space-x-1 text-white/90 hover:text-white font-medium font-montserrat transition-colors duration-300 group cursor-pointer relative z-50"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          handleDropdownToggle(item.label)
+                        }}
+                        whileHover={{ y: -2 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                        style={{ pointerEvents: 'auto' }}
+                      >
+                        <span>{item.label}</span>
+                        {item.dropdown && (
+                          <ChevronDown 
+                            className={`w-4 h-4 transition-transform duration-300 ${
+                              (activeDropdown === item.label || 
+                               (item.label === 'About' && isAboutMegaOpen) ||
+                               (item.label === 'Masterclasses' && isMasterclassesMegaOpen)) ? 'rotate-180' : ''
+                            }`} 
+                          />
+                        )}
+                      </motion.button>
 
                     {/* Mega Dropdowns */}
                     {item.label === 'About' && (
