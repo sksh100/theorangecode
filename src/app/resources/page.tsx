@@ -15,7 +15,7 @@ export default function ResourcesPage() {
       title: 'UK to UAE Relocation Guide',
       description: 'A research-based guide helping British expats understand UAE culture, workplace norms, communication styles, dos and don\'ts, and how to integrate effectively.',
       href: '/uk-to-uae-relocation',
-      image: '/images/uk-uae-preview-1.png',
+      image: '/images/eguide-cover-move-and-thrive.png',
       type: 'E-Guide',
       price: '289',
       currency: 'AED'
@@ -25,7 +25,7 @@ export default function ResourcesPage() {
       title: 'Beyond Formalities',
       description: 'Understanding Emirati culture, local customs, and everyday life in the United Arab Emirates. Covers identity, values, greetings, communication, business culture, and modern UAE life.',
       href: '/beyond-formalities',
-      image: '/e-book.png',
+      image: '/images/eguide-cover-beyond-formalities.png',
       type: 'E-Guide',
       price: '149',
       currency: 'AED'
@@ -73,7 +73,7 @@ export default function ResourcesPage() {
                           src={resource.image}
                           alt={resource.title}
                           fill
-                          className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
 
