@@ -1886,6 +1886,103 @@ export default function AdminDashboard() {
                 );
               })()}
 
+              {/* Google Analytics Comparison Section */}
+              {gaData && gaData.configured && !gaData.setupRequired && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="glass-card p-6 border-2 border-azure-blue/30"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                      <Activity className="w-5 h-5 text-azure-blue" />
+                      Google Analytics Data
+                    </h3>
+                    <button
+                      onClick={fetchGoogleAnalytics}
+                      className="px-3 py-1.5 bg-azure-blue/20 hover:bg-azure-blue/30 rounded-lg border border-azure-blue/30 text-azure-blue transition-all flex items-center gap-2 text-sm"
+                    >
+                      <RefreshCw className={`w-3 h-3 ${gaLoading ? 'animate-spin' : ''}`} />
+                      Refresh
+                    </button>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div className="bg-white/5 rounded-lg p-4">
+                      <p className="text-white/60 text-xs mb-1">GA Total Users</p>
+                      <p className="text-2xl font-bold text-white">{gaData.stats?.totalUsers?.toLocaleString() || 0}</p>
+                      <p className="text-xs text-white/50 mt-1">Last 30 days</p>
+                    </div>
+                    <div className="bg-white/5 rounded-lg p-4">
+                      <p className="text-white/60 text-xs mb-1">GA Active Now</p>
+                      <p className="text-2xl font-bold text-orange">{gaData.realtimeUsers || 0}</p>
+                      <p className="text-xs text-white/50 mt-1">Real-time</p>
+                    </div>
+                    <div className="bg-white/5 rounded-lg p-4">
+                      <p className="text-white/60 text-xs mb-1">GA Page Views</p>
+                      <p className="text-2xl font-bold text-white">{gaData.stats?.pageViews?.toLocaleString() || 0}</p>
+                      <p className="text-xs text-white/50 mt-1">Last 30 days</p>
+                    </div>
+                    <div className="bg-white/5 rounded-lg p-4">
+                      <p className="text-white/60 text-xs mb-1">GA Sessions</p>
+                      <p className="text-2xl font-bold text-white">{gaData.stats?.sessions?.toLocaleString() || 0}</p>
+                      <p className="text-xs text-white/50 mt-1">Last 30 days</p>
+                    </div>
+                  </div>
+
+                  {/* Google Analytics Top Pages */}
+                  {gaData.topPages && gaData.topPages.length > 0 && (
+                    <div className="mt-6">
+                      <h4 className="text-white/70 text-sm mb-3">Top Pages (Google Analytics)</h4>
+                      <div className="space-y-2">
+                        {gaData.topPages.slice(0, 5).map((page: any, index: number) => (
+                          <div
+                            key={index}
+                            className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10"
+                          >
+                            <span className="text-white text-sm truncate flex-1">{page.page}</span>
+                            <span className="text-azure-blue font-semibold text-sm ml-4">{page.views.toLocaleString()}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Google Analytics Top Countries */}
+                  {gaData.topCountries && gaData.topCountries.length > 0 && (
+                    <div className="mt-6">
+                      <h4 className="text-white/70 text-sm mb-3">Top Countries (Google Analytics)</h4>
+                      <div className="space-y-2">
+                        {gaData.topCountries.slice(0, 5).map((country: any, index: number) => (
+                          <div
+                            key={index}
+                            className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10"
+                          >
+                            <div className="flex items-center gap-2">
+                              <MapPin className="w-4 h-4 text-azure-blue" />
+                              <span className="text-white text-sm">{country.country}</span>
+                            </div>
+                            <span className="text-azure-blue font-semibold text-sm">{country.count.toLocaleString()}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="mt-4 pt-4 border-t border-white/10">
+                    <a
+                      href="https://analytics.google.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-azure-blue hover:text-azure-luminous text-sm transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      View Full Analytics in Google Analytics
+                    </a>
+                  </div>
+                </motion.div>
+              )}
+
               {/* World Map Visualization - Always show */}
               <motion.div
                 whileHover={{ scale: 1.01 }}

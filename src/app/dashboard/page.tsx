@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import { ModernNavbar } from '@/components/ModernNavbar'
 import { Background } from '@/components/Background'
 import { ModernFooter } from '@/components/ModernFooter'
@@ -27,6 +28,7 @@ interface UserProfile {
 }
 
 export default function Dashboard() {
+  const router = useRouter()
   const [isEditing, setIsEditing] = useState(false)
   const [profile, setProfile] = useState<UserProfile>({
     firstName: '',
@@ -1028,16 +1030,15 @@ export default function Dashboard() {
                           <span className="text-xs font-medium">Courses</span>
                         </motion.button>
                       </Link>
-                      <Link href="/resources">
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white hover:bg-white/20 transition-all flex flex-col items-center gap-2"
-                        >
-                          <FileText className="w-5 h-5" />
-                          <span className="text-xs font-medium">Resources</span>
-                        </motion.button>
-                      </Link>
+                      <motion.button
+                        onClick={() => router.push('/resources')}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="w-full px-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white hover:bg-white/20 transition-all flex flex-col items-center gap-2"
+                      >
+                        <FileText className="w-5 h-5" />
+                        <span className="text-xs font-medium">Resources</span>
+                      </motion.button>
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
