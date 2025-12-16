@@ -15,8 +15,10 @@ export default function ResourcesPage() {
       title: 'UK to UAE Relocation Guide',
       description: 'A research-based guide helping British expats understand UAE culture, workplace norms, communication styles, dos and don\'ts, and how to integrate effectively.',
       href: '/uk-to-uae-relocation',
-      image: '/e-book.png',
-      type: 'E-Guide'
+      image: '/images/uk-uae-preview-1.png',
+      type: 'E-Guide',
+      price: '£59',
+      currency: 'GBP'
     },
     {
       id: 'beyond-formalities',
@@ -24,7 +26,9 @@ export default function ResourcesPage() {
       description: 'Understanding Emirati culture, local customs, and everyday life in the United Arab Emirates. Covers identity, values, greetings, communication, business culture, and modern UAE life.',
       href: '/beyond-formalities',
       image: '/e-book.png',
-      type: 'E-Guide'
+      type: 'E-Guide',
+      price: '149',
+      currency: 'AED'
     }
   ]
 
@@ -75,13 +79,20 @@ export default function ResourcesPage() {
 
                       {/* Content */}
                       <div className="flex-1 flex flex-col">
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
-                            <BookOpen className="w-5 h-5 text-white" />
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
+                              <BookOpen className="w-5 h-5 text-white" />
+                            </div>
+                            <span className="px-3 py-1 bg-orange/20 text-orange rounded-full text-xs font-medium">
+                              {resource.type}
+                            </span>
                           </div>
-                          <span className="px-3 py-1 bg-orange/20 text-orange rounded-full text-xs font-medium">
-                            {resource.type}
-                          </span>
+                          <div className="text-right">
+                            <p className="text-2xl font-bold text-orange">
+                              {resource.price} {resource.currency}
+                            </p>
+                          </div>
                         </div>
                         
                         <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-orange transition-colors">
