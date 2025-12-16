@@ -198,18 +198,6 @@ export function ModernNavbar() {
     {
       label: 'Resources',
       href: '/resources',
-      dropdown: [
-        { 
-          label: 'UK to UAE Relocation Guide', 
-          icon: BookOpen, 
-          href: '/uk-to-uae-relocation'
-        },
-        { 
-          label: 'Beyond Formalities', 
-          icon: BookOpen, 
-          href: '/beyond-formalities'
-        },
-      ]
     },
     {
       label: 'Contact',
@@ -305,69 +293,30 @@ export function ModernNavbar() {
               <div key={item.label} className="relative">
                 {item.dropdown ? (
                   <>
-                    {item.label === 'Resources' ? (
-                      // Resources: Navigate on click, show dropdown on hover only
-                      <div 
-                        className="relative group"
-                        onMouseEnter={() => {
-                          // Show dropdown on hover
-                          if (activeDropdown !== item.label) {
-                            handleDropdownToggle(item.label)
-                          }
-                        }}
-                        onMouseLeave={() => {
-                          // Close dropdown when mouse leaves
-                          setTimeout(() => {
-                            if (activeDropdown === item.label) {
-                              setActiveDropdown(null)
-                            }
-                          }, 100) // Small delay to allow clicking dropdown items
-                        }}
-                      >
-                        <Link
-                          href={item.href}
-                          className="flex items-center space-x-1 text-white/90 hover:text-white font-medium font-montserrat transition-colors duration-300 cursor-pointer relative z-50"
-                          onClick={() => {
-                            // Immediately close all dropdowns before navigation
-                            setActiveDropdown(null)
-                            setIsAboutMegaOpen(false)
-                            setIsMasterclassesMegaOpen(false)
-                            setIsContactMegaOpen(false)
-                            trackCTAClick('Resources', item.href)
-                          }}
-                        >
-                          <span>{item.label}</span>
-                          <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${
-                            activeDropdown === item.label ? 'rotate-180' : ''
-                          }`} />
-                        </Link>
-                      </div>
-                    ) : (
-                      // Other dropdowns: Toggle on click
-                      <motion.button
-                        type="button"
-                        className="flex items-center space-x-1 text-white/90 hover:text-white font-medium font-montserrat transition-colors duration-300 group cursor-pointer relative z-50"
-                        onClick={(e) => {
-                          e.preventDefault()
-                          e.stopPropagation()
-                          handleDropdownToggle(item.label)
-                        }}
-                        whileHover={{ y: -2 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                        style={{ pointerEvents: 'auto' }}
-                      >
-                        <span>{item.label}</span>
-                        {item.dropdown && (
-                          <ChevronDown 
-                            className={`w-4 h-4 transition-transform duration-300 ${
-                              (activeDropdown === item.label || 
-                               (item.label === 'About' && isAboutMegaOpen) ||
-                               (item.label === 'Masterclasses' && isMasterclassesMegaOpen)) ? 'rotate-180' : ''
-                            }`} 
-                          />
-                        )}
-                      </motion.button>
-                    )}
+                    {/* Dropdowns: Toggle on click */}
+                    <motion.button
+                      type="button"
+                      className="flex items-center space-x-1 text-white/90 hover:text-white font-medium font-montserrat transition-colors duration-300 group cursor-pointer relative z-50"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        handleDropdownToggle(item.label)
+                      }}
+                      whileHover={{ y: -2 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                      style={{ pointerEvents: 'auto' }}
+                    >
+                      <span>{item.label}</span>
+                      {item.dropdown && (
+                        <ChevronDown 
+                          className={`w-4 h-4 transition-transform duration-300 ${
+                            (activeDropdown === item.label || 
+                             (item.label === 'About' && isAboutMegaOpen) ||
+                             (item.label === 'Masterclasses' && isMasterclassesMegaOpen)) ? 'rotate-180' : ''
+                          }`} 
+                        />
+                      )}
+                    </motion.button>
 
                     {/* Mega Dropdowns */}
                     {item.label === 'About' && (
