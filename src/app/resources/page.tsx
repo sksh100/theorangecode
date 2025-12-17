@@ -73,7 +73,7 @@ export default function ResourcesPage() {
                           src={resource.image}
                           alt={resource.title}
                           fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="object-contain p-6 group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
 
