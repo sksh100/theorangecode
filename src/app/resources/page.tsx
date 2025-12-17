@@ -68,12 +68,13 @@ export default function ResourcesPage() {
                   <Link href={resource.href}>
                     <div className="glass-card p-6 rounded-3xl border border-white/10 hover:border-orange/50 transition-all duration-300 group cursor-pointer h-full flex flex-col">
                       {/* Image */}
-                      <div className="relative w-full h-64 mb-6 rounded-2xl overflow-hidden bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10">
+                      <div className="relative w-full h-80 mb-6 rounded-2xl overflow-hidden bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10 flex items-center justify-center">
                         <Image
                           src={resource.image}
                           alt={resource.title}
-                          fill
-                          className="object-contain p-6 group-hover:scale-105 transition-transform duration-300"
+                          width={400}
+                          height={600}
+                          className="object-contain w-auto h-full max-w-full p-6 group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
 
