@@ -24,7 +24,7 @@ export function TestimonialCarousel() {
       name: 'Regional Project Lead',
       role: 'Dutch Construction Leader Managing Major Projects in the Gulf Region',
       company: '',
-      content: 'Working in the Gulf taught me that what feels natural in my own culture doesn\'t always land the same here. Once I understood the unspoken expectations and subtle ways people build trust, my whole approach shifted. I feel more grounded, more respectful and far more effective in every conversation I have.',
+      content: 'Working in the Gulf taught me that what feels natural in my own culture doesn\'t always land the same here. Beyond Formalities helped me understand the unspoken expectations and subtle ways people build trust. My whole approach shifted. I feel more grounded, more respectful and far more effective in every conversation I have.',
       rating: 5
     },
     {
@@ -32,7 +32,7 @@ export function TestimonialCarousel() {
       name: 'Ciara K. Al-J.',
       role: 'Irish professional married to an Emirati',
       company: '',
-      content: 'I\'m very thankful. Understanding the culture around me changed everything. It brought calm into my marriage, clarity into my daily life and a sense of belonging I didn\'t know I could feel. I understand my husband\'s world so much better now and I\'m genuinely grateful for how much lighter and more connected life here feels after what I\'ve learned.',
+      content: 'I\'m very thankful. Beyond Formalities changed everything. It brought calm into my marriage, clarity into my daily life and a sense of belonging I didn\'t know I could feel. I understand my husband\'s world so much better now and I\'m genuinely grateful for how much lighter and more connected life here feels after reading Beyond Formalities.',
       rating: 5
     },
     {
@@ -72,7 +72,7 @@ export function TestimonialCarousel() {
       name: 'Francesca Morelli',
       role: 'Italian Expat Living in the UAE for 5+ Years',
       company: '',
-      content: 'I have been living in the Gulf already for more than five years because of my husband\'s work, but honestly I never had the possibility to understand the culture in such a complete way. Many things I was feeling but could not explain. This training finally put all the pieces together. Now I understand why people communicate in certain ways, how respect is shown here and what I was sometimes misunderstanding. I feel much more connected to others and the country. For me this experience was really precious.',
+      content: 'I have been living in the Gulf already for more than five years because of my husband\'s work, but honestly I never had the possibility to understand the culture in such a complete way. Many things I was feeling but could not explain. Beyond Formalities finally put all the pieces together. Now I understand why people communicate in certain ways, how respect is shown here and what I was sometimes misunderstanding. I feel much more connected to others and the country. For me Beyond Formalities was really precious.',
       rating: 5
     },
     {
