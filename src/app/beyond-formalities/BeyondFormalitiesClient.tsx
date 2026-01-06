@@ -171,7 +171,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
                   <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full mb-4">
                     <Download className="w-4 h-4 text-orange" />
                     <span className="text-sm text-white/80">
-                      <span className="font-bold text-orange">268</span> downloads and counting
+                      <span className="font-bold text-orange">289</span> purchases and counting
                     </span>
                   </div>
                   <div className="flex items-center justify-center gap-1 mb-2">
@@ -524,7 +524,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             </span>
           </h2>
           <p className="text-sm sm:text-base text-white/70 max-w-2xl mx-auto">
-            Join 268+ professionals, spouses, and long-term residents who have gained deeper cultural understanding
+            Join 289+ professionals, spouses, and long-term residents who have already purchased the E-Guide
           </p>
         </div>
         <TestimonialCarousel />
@@ -569,7 +569,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
                     <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-orange text-orange" />
                   ))}
                 </div>
-                <span className="text-xs sm:text-sm text-white/70">268+ downloads</span>
+                <span className="text-xs sm:text-sm text-white/70">289+ purchases</span>
               </div>
               
               <div className="space-y-2 text-white/80 text-sm sm:text-base">
