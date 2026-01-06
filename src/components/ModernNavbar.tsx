@@ -196,8 +196,8 @@ export function ModernNavbar() {
       ]
     },
     {
-      label: 'Resources',
-      href: '/resources',
+      label: 'E-Guide',
+      href: '/beyond-formalities',
     },
     {
       label: 'Contact',
@@ -614,8 +614,8 @@ export function ModernNavbar() {
                                   // Orange, Azure Blue, Bright Blue for different masterclasses
                                   iconColor = index === 0 ? 'text-orange' : index === 1 ? 'text-azure-blue' : 'text-bright-blue'
                                   bgHoverColor = index === 0 ? 'hover:bg-orange/10' : index === 1 ? 'hover:bg-azure-blue-transparent' : 'hover:bg-bright-blue/10'
-                                } else if (item.label === 'Resources') {
-                                  // Orange color for Resources section
+                                } else if (item.label === 'E-Guide') {
+                                  // Orange color for E-Guide section
                                   iconColor = 'text-orange'
                                   bgHoverColor = 'hover:bg-orange/10'
                                 }
