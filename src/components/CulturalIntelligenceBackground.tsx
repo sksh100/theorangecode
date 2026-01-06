@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, Suspense } from 'react'
+import { useRef, Suspense, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
@@ -9,33 +9,108 @@ interface CulturalIntelligenceBackgroundProps {
 }
 
 interface NodeData {
-  mesh: THREE.Mesh
   basePosition: THREE.Vector3
   speed: number
   color: THREE.Color
+  size: number
+  connections: number[]
+}
+
+interface ConnectionData {
+  start: THREE.Vector3
+  end: THREE.Vector3
+  color1: THREE.Color
+  color2: THREE.Color
+}
+
+function NetworkNode({ nodeData, mousePosition, index }: { nodeData: NodeData, mousePosition: { x: number, y: number }, index: number }) {
+  const meshRef = useRef<THREE.Mesh>(null)
+  const materialRef = useRef<THREE.MeshBasicMaterial>(null)
+
+  useFrame((state) => {
+    if (!meshRef.current || !materialRef.current) return
+    const time = state.clock.getElapsedTime()
+    const { basePosition, speed } = nodeData
+    
+    // Floating animation
+    meshRef.current.position.y = basePosition.y + Math.sin(time * speed + index) * 1.5
+    meshRef.current.position.x = basePosition.x + Math.cos(time * speed * 0.7 + index) * 0.8
+    
+    // Mouse parallax effect
+    meshRef.current.position.x += mousePosition.x * 1.5
+    meshRef.current.position.z += mousePosition.y * 1.5
+    
+    // Pulsing opacity and scale
+    const pulse = 0.3 + Math.sin(time * 0.5 + index) * 0.2
+    materialRef.current.opacity = pulse
+    meshRef.current.scale.setScalar(0.8 + Math.sin(time * 0.4 + index) * 0.3)
+  })
+
+  return (
+    <mesh ref={meshRef} position={nodeData.basePosition}>
+      <sphereGeometry args={[nodeData.size, 16, 16]} />
+      <meshBasicMaterial
+        ref={materialRef}
+        color={nodeData.color}
+        transparent
+        opacity={0.4}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
+  )
+}
+
+function ConnectionLine({ connectionData }: { connectionData: ConnectionData }) {
+  const lineRef = useRef<THREE.Line>(null)
+  const materialRef = useRef<THREE.LineBasicMaterial>(null)
+
+  const points = useMemo(() => [
+    connectionData.start,
+    connectionData.end
+  ], [connectionData])
+
+  useFrame((state) => {
+    if (!materialRef.current) return
+    const time = state.clock.getElapsedTime()
+    materialRef.current.opacity = 0.2 + Math.sin(time * 0.3) * 0.15
+  })
+
+  return (
+    <line ref={lineRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={points.length}
+          array={new Float32Array(points.flatMap(p => [p.x, p.y, p.z]))}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <lineBasicMaterial
+        ref={materialRef}
+        color="#00d4ff"
+        transparent
+        opacity={0.3}
+      />
+    </line>
+  )
 }
 
 function CulturalNetwork({ mousePosition }: { mousePosition: { x: number, y: number } }) {
   const groupRef = useRef<THREE.Group>(null)
-  const nodesRef = useRef<NodeData[]>([])
-  const linesRef = useRef<THREE.Line[]>([])
 
   // Cultural intelligence colors - representing diversity and connection
-  const colors = [
+  const colors = useMemo(() => [
     new THREE.Color('#ff914d'), // Orange - warmth
     new THREE.Color('#00d4ff'), // Azure - clarity
     new THREE.Color('#0099ff'), // Bright Blue - trust
-  ]
+  ], [])
 
-  useEffect(() => {
-    if (!groupRef.current) return
-
-    // Create 12 interconnected nodes representing different cultures/people
+  // Create node data
+  const nodes = useMemo(() => {
     const nodeCount = 12
-    const nodes: NodeData[] = []
+    const nodeData: NodeData[] = []
     
     for (let i = 0; i < nodeCount; i++) {
-      // Distribute nodes in a circular pattern with some randomness
       const angle = (i / nodeCount) * Math.PI * 2
       const radius = 15 + Math.random() * 8
       const basePosition = new THREE.Vector3(
@@ -44,34 +119,17 @@ function CulturalNetwork({ mousePosition }: { mousePosition: { x: number, y: num
         Math.sin(angle) * radius - 20
       )
 
-      const color = colors[i % colors.length]
-      const geometry = new THREE.SphereGeometry(1.5 + Math.random() * 0.5, 16, 16)
-      const material = new THREE.MeshBasicMaterial({
-        color: color,
-        transparent: true,
-        opacity: 0.4,
-        side: THREE.DoubleSide
-      })
-
-      const node = new THREE.Mesh(geometry, material)
-      node.position.copy(basePosition)
-      
-      nodes.push({
-        mesh: node,
-        basePosition: basePosition.clone(),
+      nodeData.push({
+        basePosition,
         speed: 0.2 + Math.random() * 0.3,
-        color: color
+        color: colors[i % colors.length].clone(),
+        size: 1.5 + Math.random() * 0.5,
+        connections: []
       })
-
-      groupRef.current.add(node)
     }
 
-    // Create connections between nodes - representing cultural bridges
-    const connections: number[] = []
-    const connectionColors: number[] = []
-
-    // Connect each node to 2-3 other nodes (network effect)
-    nodes.forEach((nodeData, i) => {
+    // Create connections
+    nodeData.forEach((nodeData, i) => {
       const connectionsPerNode = 2 + Math.floor(Math.random() * 2)
       const connectedIndices = new Set<number>()
       
@@ -82,39 +140,29 @@ function CulturalNetwork({ mousePosition }: { mousePosition: { x: number, y: num
         } while (targetIndex === i || connectedIndices.has(targetIndex))
         
         connectedIndices.add(targetIndex)
-        const targetNode = nodes[targetIndex]
-        
-        // Add connection line positions
-        connections.push(
-          nodeData.basePosition.x, nodeData.basePosition.y, nodeData.basePosition.z,
-          targetNode.basePosition.x, targetNode.basePosition.y, targetNode.basePosition.z
-        )
-
-        // Add colors for each vertex (start and end)
-        const color1 = nodeData.color
-        const color2 = targetNode.color
-        connectionColors.push(color1.r, color1.g, color1.b)
-        connectionColors.push(color2.r, color2.g, color2.b)
+        nodeData.connections.push(targetIndex)
       }
     })
 
-    const connectionGeometry = new THREE.BufferGeometry()
-    connectionGeometry.setAttribute('position', new THREE.Float32BufferAttribute(connections, 3))
-    connectionGeometry.setAttribute('color', new THREE.Float32BufferAttribute(connectionColors, 3))
-    
-    // Create line material with colors
-    const lineMaterial = new THREE.LineBasicMaterial({
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.3,
-      linewidth: 1
-    })
+    return nodeData
+  }, [colors])
 
-    const lines = new THREE.LineSegments(connectionGeometry, lineMaterial)
-    groupRef.current.add(lines)
-    linesRef.current.push(lines)
-    nodesRef.current = nodes
-  }, [])
+  // Create connection data
+  const connections = useMemo(() => {
+    const connectionData: ConnectionData[] = []
+    nodes.forEach((nodeData, i) => {
+      nodeData.connections.forEach(targetIndex => {
+        const targetNode = nodes[targetIndex]
+        connectionData.push({
+          start: nodeData.basePosition.clone(),
+          end: targetNode.basePosition.clone(),
+          color1: nodeData.color.clone(),
+          color2: targetNode.color.clone()
+        })
+      })
+    })
+    return connectionData
+  }, [nodes])
 
   useFrame((state) => {
     if (!groupRef.current) return
@@ -122,34 +170,18 @@ function CulturalNetwork({ mousePosition }: { mousePosition: { x: number, y: num
     
     // Gentle rotation of the entire network
     groupRef.current.rotation.y = time * 0.015
-    
-    // Animate nodes - floating and pulsing
-    nodesRef.current.forEach((nodeData, i) => {
-      const { mesh, basePosition, speed } = nodeData
-      
-      // Floating animation
-      mesh.position.y = basePosition.y + Math.sin(time * speed + i) * 1.5
-      mesh.position.x = basePosition.x + Math.cos(time * speed * 0.7 + i) * 0.8
-      
-      // Mouse parallax effect
-      mesh.position.x += mousePosition.x * 1.5
-      mesh.position.z += mousePosition.y * 1.5
-      
-      // Pulsing opacity and scale
-      const material = mesh.material as THREE.MeshBasicMaterial
-      const pulse = 0.3 + Math.sin(time * 0.5 + i) * 0.2
-      material.opacity = pulse
-      mesh.scale.setScalar(0.8 + Math.sin(time * 0.4 + i) * 0.3)
-    })
-
-    // Animate connection lines - subtle pulse
-    linesRef.current.forEach((line) => {
-      const material = line.material as THREE.LineBasicMaterial
-      material.opacity = 0.2 + Math.sin(time * 0.3) * 0.15
-    })
   })
 
-  return <group ref={groupRef} />
+  return (
+    <group ref={groupRef}>
+      {nodes.map((nodeData, i) => (
+        <NetworkNode key={i} nodeData={nodeData} mousePosition={mousePosition} index={i} />
+      ))}
+      {connections.map((connectionData, i) => (
+        <ConnectionLine key={i} connectionData={connectionData} />
+      ))}
+    </group>
+  )
 }
 
 export function CulturalIntelligenceBackground({ mousePosition }: CulturalIntelligenceBackgroundProps) {

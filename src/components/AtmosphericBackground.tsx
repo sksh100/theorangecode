@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, Suspense } from 'react'
+import { useRef, Suspense, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
@@ -10,35 +10,60 @@ interface AtmosphericBackgroundProps {
 }
 
 interface OrbData {
-  mesh: THREE.Mesh
   basePosition: THREE.Vector3
   speed: number
+  color: THREE.Color
+  size: number
+}
+
+function FloatingOrb({ orbData, mousePosition, index }: { orbData: OrbData, mousePosition: { x: number, y: number }, index: number }) {
+  const meshRef = useRef<THREE.Mesh>(null)
+  const materialRef = useRef<THREE.MeshBasicMaterial>(null)
+
+  useFrame((state) => {
+    if (!meshRef.current || !materialRef.current) return
+    const time = state.clock.getElapsedTime()
+    const { basePosition, speed } = orbData
+    
+    // Floating animation from base position
+    meshRef.current.position.y = basePosition.y + Math.sin(time * speed + index) * 0.5
+    
+    // Mouse influence - subtle parallax effect (relative to base)
+    meshRef.current.position.x = basePosition.x + mousePosition.x * 2
+    meshRef.current.position.z = basePosition.z + mousePosition.y * 2
+    
+    // Gentle pulsing opacity
+    materialRef.current.opacity = 0.15 + Math.sin(time * 0.4 + index * 0.5) * 0.08
+  })
+
+  return (
+    <mesh ref={meshRef} position={orbData.basePosition}>
+      <sphereGeometry args={[orbData.size, 32, 32]} />
+      <meshBasicMaterial
+        ref={materialRef}
+        color={orbData.color}
+        transparent
+        opacity={0.2}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
+  )
 }
 
 function FlowingOrbs({ mousePosition }: { mousePosition: { x: number, y: number } }) {
   const groupRef = useRef<THREE.Group>(null)
-  const orbs = useRef<OrbData[]>([])
 
   // Brand colors
-  const colors = [
+  const colors = useMemo(() => [
     new THREE.Color('#ff914d'), // Orange
     new THREE.Color('#00d4ff'), // Azure
     new THREE.Color('#0099ff'), // Bright Blue
-  ]
+  ], [])
 
-  useEffect(() => {
-    // Create 8 large glowing orbs for atmospheric background
+  // Create orb data
+  const orbs = useMemo(() => {
+    const orbData: OrbData[] = []
     for (let i = 0; i < 8; i++) {
-      const orb = new THREE.Mesh(
-        new THREE.SphereGeometry(6 + Math.random() * 5, 32, 32),
-        new THREE.MeshBasicMaterial({
-          color: colors[i % colors.length],
-          transparent: true,
-          opacity: 0.2,
-          side: THREE.DoubleSide
-        })
-      )
-      
       const angle = (i / 8) * Math.PI * 2
       const radius = 20 + Math.random() * 15
       const basePosition = new THREE.Vector3(
@@ -47,19 +72,15 @@ function FlowingOrbs({ mousePosition }: { mousePosition: { x: number, y: number 
         Math.sin(angle) * radius - 25
       )
       
-      orb.position.copy(basePosition)
-      
-      orbs.current.push({
-        mesh: orb,
-        basePosition: basePosition.clone(),
-        speed: 0.3 + Math.random() * 0.3
+      orbData.push({
+        basePosition,
+        speed: 0.3 + Math.random() * 0.3,
+        color: colors[i % colors.length].clone(),
+        size: 6 + Math.random() * 5
       })
-      
-      if (groupRef.current) {
-        groupRef.current.add(orb)
-      }
     }
-  }, [])
+    return orbData
+  }, [colors])
 
   useFrame((state) => {
     if (!groupRef.current) return
@@ -67,25 +88,15 @@ function FlowingOrbs({ mousePosition }: { mousePosition: { x: number, y: number 
     
     // Gentle rotation
     groupRef.current.rotation.y = time * 0.02
-    
-    // Animate orbs - floating motion
-    orbs.current.forEach((orbData, i) => {
-      const { mesh, basePosition, speed } = orbData
-      
-      // Floating animation from base position
-      mesh.position.y = basePosition.y + Math.sin(time * speed + i) * 0.5
-      
-      // Mouse influence - subtle parallax effect (relative to base)
-      mesh.position.x = basePosition.x + mousePosition.x * 2
-      mesh.position.z = basePosition.z + mousePosition.y * 2
-      
-      // Gentle pulsing opacity
-      const material = mesh.material as THREE.MeshBasicMaterial
-      material.opacity = 0.15 + Math.sin(time * 0.4 + i * 0.5) * 0.08
-    })
   })
 
-  return <group ref={groupRef} />
+  return (
+    <group ref={groupRef}>
+      {orbs.map((orbData, i) => (
+        <FloatingOrb key={i} orbData={orbData} mousePosition={mousePosition} index={i} />
+      ))}
+    </group>
+  )
 }
 
 

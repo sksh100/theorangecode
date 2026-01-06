@@ -101,42 +101,51 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={() => handleCTAClick('Get the E-Guide - Sticky Mobile CTA')}
-              className="w-full px-8 py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-base inline-flex items-center justify-center gap-2"
+              className="w-full px-6 sm:px-8 py-3 sm:py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-sm sm:text-base inline-flex items-center justify-center gap-2"
             >
-              <BookOpen className="w-5 h-5" />
-              <span>Get the E-Guide - 149 AED</span>
-              <ArrowRight className="w-5 h-5" />
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
+                <span>Get the E-Guide</span>
+                <span className="flex items-center gap-1">
+                  <span className="text-xs line-through text-white/60">149</span>
+                  <span className="text-orange font-bold">89 AED</span>
+                </span>
+              </span>
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </motion.button>
           </Link>
         </div>
       </div>
 
-      <div className="space-y-16 md:space-y-24 pb-20 lg:pb-0">
+      <div className="space-y-12 sm:space-y-16 md:space-y-20 lg:space-y-24 pb-20 lg:pb-0">
       {/* A) Hero Section */}
-      <section className="text-center space-y-6">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
+      <section className="text-center space-y-4 sm:space-y-6 px-4">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold">
           <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
             Beyond Formalities
           </span>
         </h1>
-        <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold text-white/90 whitespace-nowrap">
+        <h2 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white/90 px-2">
           Understanding Emirati Culture, Local Customs, and Everyday Life
         </h2>
         
-        <div className="max-w-3xl mx-auto space-y-4 pt-4">
-          <p className="text-lg sm:text-xl text-white/90 leading-relaxed">
+        <div className="max-w-3xl mx-auto space-y-3 sm:space-y-4 pt-2 sm:pt-4">
+          <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed">
             Many people complete the formalities in the UAE, yet relationships remain polite but distant. Business discussions start well but do not move forward, communication feels unclear, and promising connections sometimes disappear without explanation. Social circles often stay limited to other expatriates, despite genuine efforts to connect.
           </p>
-          <p className="text-lg sm:text-xl text-white/90 leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed">
             Beyond Formalities explains the cultural foundations behind Emirati culture and local customs, helping you understand how trust, communication, and relationships develop in the UAE. This guide was written to bridge the gap and support clearer interaction, meaningful connection, and lasting relationships in everyday life and professional settings.
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 sm:pt-6">
           <div className="text-center sm:text-left">
-            <p className="text-3xl sm:text-4xl font-bold text-orange mb-2">149 AED</p>
-            <p className="text-sm text-white/60">Instant download after checkout</p>
-            <p className="text-sm text-white/60">Secure Stripe payment</p>
+            <div className="flex flex-col items-center sm:items-start">
+              <p className="text-xs sm:text-sm text-white/50 line-through">149 AED</p>
+              <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-orange mb-1">89 AED</p>
+            </div>
+            <p className="text-xs sm:text-sm text-white/60">New Year offer · Instant download after checkout</p>
+            <p className="text-xs sm:text-sm text-white/60">Secure Stripe payment</p>
           </div>
         </div>
 
@@ -146,11 +155,11 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => handleCTAClick('Get the E-Guide - Hero')}
-              className="px-10 py-5 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center gap-3"
+              className="px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-base sm:text-lg inline-flex items-center gap-2 sm:gap-3"
             >
-              <BookOpen className="w-5 h-5" />
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>Get the E-Guide</span>
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </motion.button>
           </Link>
         </div>
@@ -311,160 +320,164 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
       </AnimatePresence>
 
       {/* B) Pain Points Section */}
-      <section className="max-w-3xl mx-auto space-y-6">
-        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-center whitespace-nowrap">
+      <section className="max-w-3xl mx-auto space-y-4 sm:space-y-6 px-4">
+        <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-center">
           <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
             If you have ever felt unsure, you are not alone
           </span>
         </h2>
-        <div className="space-y-4">
-          <div className="flex items-start gap-4 p-4 bg-white/5 border border-white/10 rounded-xl">
+        <div className="space-y-3 sm:space-y-4">
+          <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
             <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-            <p className="text-lg text-white/90">You did the formalities, yet trust still takes time.</p>
+            <p className="text-sm sm:text-base md:text-lg text-white/90">You did the formalities, yet trust still takes time.</p>
           </div>
-          <div className="flex items-start gap-4 p-4 bg-white/5 border border-white/10 rounded-xl">
+          <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
             <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-            <p className="text-lg text-white/90">Meetings are warm, but decisions move differently than expected.</p>
+            <p className="text-sm sm:text-base md:text-lg text-white/90">Meetings are warm, but decisions move differently than expected.</p>
           </div>
-          <div className="flex items-start gap-4 p-4 bg-white/5 border border-white/10 rounded-xl">
+          <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
             <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-            <p className="text-lg text-white/90">Indirect communication and silence can be hard to interpret.</p>
+            <p className="text-sm sm:text-base md:text-lg text-white/90">Indirect communication and silence can be hard to interpret.</p>
           </div>
-          <div className="flex items-start gap-4 p-4 bg-white/5 border border-white/10 rounded-xl">
+          <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
             <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-            <p className="text-lg text-white/90">You want to show respect, but you are not sure what matters most.</p>
+            <p className="text-sm sm:text-base md:text-lg text-white/90">You want to show respect, but you are not sure what matters most.</p>
           </div>
         </div>
       </section>
 
       {/* C) What This E-Guide Helps You Understand */}
-      <section className="max-w-3xl mx-auto space-y-6">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center">
+      <section className="max-w-3xl mx-auto space-y-4 sm:space-y-6 px-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center">
           <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
             What Beyond Formalities explains
           </span>
         </h2>
-        <p className="text-lg sm:text-xl text-white/90 leading-relaxed text-center">
+        <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed text-center">
           UAE daily life is shaped by values such as respect, hospitality, faith, family, hierarchy, and social harmony. When those foundations are understood, communication becomes clearer and relationships become easier to build.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-          <div className="flex items-start gap-3 p-4 bg-white/5 border border-white/10 rounded-xl">
-            <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
-            <p className="text-white/90">How cultural values shape everyday interaction</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 pt-2 sm:pt-4">
+          <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
+            <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0 mt-0.5" />
+            <p className="text-sm sm:text-base text-white/90">How cultural values shape everyday interaction</p>
           </div>
-          <div className="flex items-start gap-3 p-4 bg-white/5 border border-white/10 rounded-xl">
-            <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-            <p className="text-white/90">How trust and relationships develop over time</p>
+          <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
+            <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+            <p className="text-sm sm:text-base text-white/90">How trust and relationships develop over time</p>
           </div>
-          <div className="flex items-start gap-3 p-4 bg-white/5 border border-white/10 rounded-xl">
-            <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
-            <p className="text-white/90">How social boundaries and etiquette work in real life</p>
+          <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
+            <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0 mt-0.5" />
+            <p className="text-sm sm:text-base text-white/90">How social boundaries and etiquette work in real life</p>
           </div>
-          <div className="flex items-start gap-3 p-4 bg-white/5 border border-white/10 rounded-xl">
-            <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-            <p className="text-white/90">How business culture and protocol are influenced by cultural context</p>
+          <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
+            <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+            <p className="text-sm sm:text-base text-white/90">How business culture and protocol are influenced by cultural context</p>
           </div>
         </div>
       </section>
 
       {/* D) What You Will Gain */}
-      <section className="max-w-3xl mx-auto space-y-6">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center">
+      <section className="max-w-3xl mx-auto space-y-4 sm:space-y-6 px-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center">
           <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
             What you will gain
           </span>
         </h2>
-        <div className="space-y-4">
-          <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl">
-            <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
-            <p className="text-white/90">Clarity on Emirati culture and local customs</p>
+        <div className="space-y-3 sm:space-y-4">
+          <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl">
+            <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0 mt-0.5" />
+            <p className="text-sm sm:text-base text-white/90">Clarity on Emirati culture and local customs</p>
           </div>
-          <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl">
-            <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-            <p className="text-white/90">More confidence in social and professional interaction</p>
+          <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl">
+            <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+            <p className="text-sm sm:text-base text-white/90">More confidence in social and professional interaction</p>
           </div>
-          <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl">
-            <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
-            <p className="text-white/90">A stronger understanding of nonverbal communication and social distance</p>
+          <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl">
+            <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0 mt-0.5" />
+            <p className="text-sm sm:text-base text-white/90">A stronger understanding of nonverbal communication and social distance</p>
           </div>
-          <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl">
-            <CheckCircle className="w-5 h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-            <p className="text-white/90">Practical awareness of etiquette in hospitality, dining, and majlis settings</p>
+          <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl">
+            <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-azure-blue flex-shrink-0 mt-0.5" />
+            <p className="text-sm sm:text-base text-white/90">Practical awareness of etiquette in hospitality, dining, and majlis settings</p>
           </div>
-          <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl">
-            <CheckCircle className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" />
-            <p className="text-white/90">A foundation for respectful business communication and professional conduct in the UAE</p>
+          <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl">
+            <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0 mt-0.5" />
+            <p className="text-sm sm:text-base text-white/90">A foundation for respectful business communication and professional conduct in the UAE</p>
           </div>
         </div>
       </section>
 
       {/* F) Who It Is For */}
-      <section className="max-w-4xl mx-auto space-y-6">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center">
+      <section className="max-w-4xl mx-auto space-y-4 sm:space-y-6 px-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center">
           <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
             Who this guide is for
           </span>
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-gradient-to-br from-orange/10 to-orange/5 border border-orange/20 rounded-xl p-6 space-y-4">
-            <div className="w-12 h-12 bg-orange/20 rounded-xl flex items-center justify-center">
-              <Briefcase className="w-6 h-6 text-orange" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+          <div className="bg-gradient-to-br from-orange/10 to-orange/5 border border-orange/20 rounded-xl p-4 sm:p-6 space-y-3 sm:space-y-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange/20 rounded-xl flex items-center justify-center">
+              <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 text-orange" />
             </div>
-            <h3 className="text-xl font-semibold text-white">Preparing from abroad</h3>
-            <p className="text-white/80">For professionals, founders, and individuals who want cultural clarity before arriving or partnering with the UAE.</p>
+            <h3 className="text-lg sm:text-xl font-semibold text-white">Preparing from abroad</h3>
+            <p className="text-sm sm:text-base text-white/80">For professionals, founders, and individuals who want cultural clarity before arriving or partnering with the UAE.</p>
           </div>
-          <div className="bg-gradient-to-br from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl p-6 space-y-4">
-            <div className="w-12 h-12 bg-azure-blue/20 rounded-xl flex items-center justify-center">
-              <Home className="w-6 h-6 text-azure-blue" />
+          <div className="bg-gradient-to-br from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl p-4 sm:p-6 space-y-3 sm:space-y-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-azure-blue/20 rounded-xl flex items-center justify-center">
+              <Home className="w-5 h-5 sm:w-6 sm:h-6 text-azure-blue" />
             </div>
-            <h3 className="text-xl font-semibold text-white">Relocating or newly arrived</h3>
-            <p className="text-white/80">For those settling in and seeking confidence in daily interaction, customs, and communication.</p>
+            <h3 className="text-lg sm:text-xl font-semibold text-white">Relocating or newly arrived</h3>
+            <p className="text-sm sm:text-base text-white/80">For those settling in and seeking confidence in daily interaction, customs, and communication.</p>
           </div>
-          <div className="bg-gradient-to-br from-orange/10 to-azure-blue/10 border border-orange/20 rounded-xl p-6 space-y-4">
-            <div className="w-12 h-12 bg-orange/20 rounded-xl flex items-center justify-center">
-              <Users className="w-6 h-6 text-orange" />
+          <div className="bg-gradient-to-br from-orange/10 to-azure-blue/10 border border-orange/20 rounded-xl p-4 sm:p-6 space-y-3 sm:space-y-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange/20 rounded-xl flex items-center justify-center">
+              <Users className="w-5 h-5 sm:w-6 sm:h-6 text-orange" />
             </div>
-            <h3 className="text-xl font-semibold text-white">Already living or doing business in the UAE</h3>
-            <p className="text-white/80">For anyone who wants deeper understanding beyond procedures, to build lasting relationships.</p>
+            <h3 className="text-lg sm:text-xl font-semibold text-white">Already living or doing business in the UAE</h3>
+            <p className="text-sm sm:text-base text-white/80">For anyone who wants deeper understanding beyond procedures, to build lasting relationships.</p>
           </div>
         </div>
       </section>
 
       {/* G) Pricing Block */}
-      <section className="max-w-2xl mx-auto">
-        <div className="bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-2xl p-8 text-center space-y-6">
-          <h2 className="text-3xl sm:text-4xl font-bold">
+      <section className="max-w-2xl mx-auto px-4">
+        <div className="bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-2xl p-6 sm:p-8 text-center space-y-4 sm:space-y-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
             <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
               Get Beyond Formalities
             </span>
           </h2>
-          <div className="space-y-4">
-            <p className="text-4xl sm:text-5xl font-bold text-orange">149 AED</p>
-            <div className="space-y-2 text-white/80">
+            <div className="space-y-3 sm:space-y-4">
+            <div className="flex flex-col items-center">
+              <p className="text-xs sm:text-sm text-white/50 line-through">149 AED</p>
+              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-orange">89 AED</p>
+              <p className="text-xs sm:text-sm text-white/60 mt-1">Limited New Year offer</p>
+            </div>
+            <div className="space-y-2 text-white/80 text-sm sm:text-base">
               <p className="flex items-center justify-center gap-2">
-                <CheckCircle className="w-4 h-4 text-orange" />
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0" />
                 <span>PDF E-Guide</span>
               </p>
               <p className="flex items-center justify-center gap-2">
-                <CheckCircle className="w-4 h-4 text-azure-blue" />
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-azure-blue flex-shrink-0" />
                 <span>Instant access after checkout</span>
               </p>
               <p className="flex items-center justify-center gap-2">
-                <Shield className="w-4 h-4 text-orange" />
+                <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0" />
                 <span>Secure Stripe checkout</span>
               </p>
             </div>
-            <div className="mt-6">
+            <div className="mt-4 sm:mt-6">
             <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
               <motion.button
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => handleCTAClick('Buy now - Pricing')}
-                className="w-full px-10 py-5 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center justify-center gap-3"
+                className="w-full px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-base sm:text-lg inline-flex items-center justify-center gap-2 sm:gap-3"
               >
-                <BookOpen className="w-5 h-5" />
+                <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span>Buy now</span>
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </motion.button>
             </Link>
             </div>
@@ -473,13 +486,13 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
       </section>
 
       {/* H) FAQ Section */}
-      <section className="max-w-3xl mx-auto space-y-6">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center">
+      <section className="max-w-3xl mx-auto space-y-4 sm:space-y-6 px-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center">
           <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
             Frequently Asked Questions
           </span>
         </h2>
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {faqs.map((faq, index) => (
             <div
               key={index}
@@ -487,13 +500,13 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             >
               <button
                 onClick={() => toggleFaq(index)}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-white/5 transition-colors"
+                className="w-full flex items-center justify-between p-4 sm:p-6 text-left hover:bg-white/5 transition-colors"
               >
-                <h3 className="text-lg font-semibold text-white pr-4">{faq.question}</h3>
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-white pr-3 sm:pr-4">{faq.question}</h3>
                 {expandedFaq === index ? (
-                  <ChevronUp className="w-5 h-5 text-orange flex-shrink-0" />
+                  <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0" />
                 ) : (
-                  <ChevronDown className="w-5 h-5 text-white/60 flex-shrink-0" />
+                  <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5 text-white/60 flex-shrink-0" />
                 )}
               </button>
               {expandedFaq === index && (
@@ -501,9 +514,9 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="px-6 pb-6"
+                  className="px-4 sm:px-6 pb-4 sm:pb-6"
                 >
-                  <div className="text-white/80 leading-relaxed">
+                  <div className="text-sm sm:text-base text-white/80 leading-relaxed">
                     {typeof faq.answer === 'string' ? <p>{faq.answer}</p> : faq.answer}
                   </div>
                 </motion.div>
@@ -514,27 +527,27 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
       </section>
 
       {/* I) Final CTA */}
-      <section className="max-w-3xl mx-auto text-center space-y-6">
-        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold whitespace-nowrap">
+      <section className="max-w-3xl mx-auto text-center space-y-4 sm:space-y-6 px-4">
+        <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold">
           <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
             Understand the culture, communicate with confidence
           </span>
         </h2>
-        <div className="mt-6">
+        <div className="mt-4 sm:mt-6">
           <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => handleCTAClick('Get the E-Guide - Final CTA')}
-              className="px-10 py-5 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-lg inline-flex items-center gap-3"
+              className="px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-base sm:text-lg inline-flex items-center gap-2 sm:gap-3"
             >
-              <BookOpen className="w-5 h-5" />
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>Get the E-Guide</span>
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </motion.button>
           </Link>
         </div>
-        <div className="pt-6 space-y-2 text-white/60 text-sm">
+        <div className="pt-4 sm:pt-6 space-y-2 text-white/60 text-xs sm:text-sm">
           <p>By The Orange Code, Abu Dhabi</p>
           <p>
             Questions? Contact us at{' '}

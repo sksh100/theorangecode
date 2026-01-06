@@ -59,8 +59,11 @@ export const metadata: Metadata = {
   },
 }
 
-// Use environment variable with fallback to provided link
-const STRIPE_PAYMENT_LINK = process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK_BEYOND_FORMALITIES || 'https://buy.stripe.com/eVqbJ1ctw66t9qz7pC8k806'
+// Use environment variable with fallback to provided New Year offer link
+// New Stripe payment link: https://buy.stripe.com/14AeVddxA66tdGPaBO8k807
+const STRIPE_PAYMENT_LINK =
+  process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK_BEYOND_FORMALITIES ||
+  'https://buy.stripe.com/14AeVddxA66tdGPaBO8k807'
 
 export default function BeyondFormalitiesPage() {
   return (
@@ -84,7 +87,7 @@ export default function BeyondFormalitiesPage() {
             },
             "offers": {
               "@type": "Offer",
-              "price": "149",
+              "price": "89",
               "priceCurrency": "AED",
               "availability": "https://schema.org/InStock",
               "url": "https://www.theorangecode.com/beyond-formalities"
