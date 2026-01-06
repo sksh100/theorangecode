@@ -4,8 +4,9 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, BookOpen, CheckCircle, Users, Briefcase, Home, Shield, Mail, HelpCircle, Eye, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react'
+import { ArrowRight, BookOpen, CheckCircle, Users, Briefcase, Home, Shield, Mail, HelpCircle, Eye, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, X, Maximize2, Clock, TrendingDown, Download, Star } from 'lucide-react'
 import { trackCTAClick } from '@/lib/tracking'
+import { TestimonialCarousel } from '@/components/TestimonialCarousel'
 
 interface BeyondFormalitiesClientProps {
   paymentLink: string
@@ -138,30 +139,105 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 sm:pt-6">
-          <div className="text-center sm:text-left">
-            <div className="flex flex-col items-center sm:items-start">
-              <p className="text-xs sm:text-sm text-white/50 line-through">149 AED</p>
-              <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-orange mb-1">89 AED</p>
+        {/* Enhanced Offer Section - High Conversion Design */}
+        <div className="max-w-4xl mx-auto pt-6 sm:pt-8 px-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="relative"
+          >
+            {/* Urgency Badge */}
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <motion.div
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange/20 to-azure-blue/20 border border-orange/40 rounded-full"
+              >
+                <Clock className="w-4 h-4 text-orange" />
+                <span className="text-xs sm:text-sm font-semibold text-orange">Limited Time Offer</span>
+              </motion.div>
             </div>
-            <p className="text-xs sm:text-sm text-white/60">New Year offer · Instant download after checkout</p>
-            <p className="text-xs sm:text-sm text-white/60">Secure Stripe payment</p>
-          </div>
-        </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-          <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleCTAClick('Get the E-Guide - Hero')}
-              className="px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-base sm:text-lg inline-flex items-center gap-2 sm:gap-3"
-            >
-              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span>Get the E-Guide</span>
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-            </motion.button>
-          </Link>
+            {/* Prominent Pricing Box */}
+            <div className="glass-card border-2 border-orange/30 rounded-3xl p-6 sm:p-8 md:p-10 bg-gradient-to-br from-orange/10 via-azure-blue/5 to-orange/10 relative overflow-hidden">
+              {/* Decorative background elements */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-orange/5 rounded-full blur-3xl" />
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-azure-blue/5 rounded-full blur-3xl" />
+              
+              <div className="relative z-10">
+                {/* Social Proof */}
+                <div className="text-center mb-6">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full mb-4">
+                    <Download className="w-4 h-4 text-orange" />
+                    <span className="text-sm text-white/80">
+                      <span className="font-bold text-orange">268</span> downloads and counting
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-center gap-1 mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-orange text-orange" />
+                    ))}
+                    <span className="ml-2 text-sm text-white/70">5.0 rating</span>
+                  </div>
+                </div>
+
+                {/* Pricing Display */}
+                <div className="text-center mb-6">
+                  <div className="flex items-center justify-center gap-3 mb-2">
+                    <p className="text-lg sm:text-xl text-white/50 line-through">149 AED</p>
+                    <div className="px-3 py-1 bg-orange/20 border border-orange/40 rounded-full">
+                      <span className="text-xs sm:text-sm font-bold text-orange">Save 40%</span>
+                    </div>
+                  </div>
+                  <div className="mb-4">
+                    <p className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-orange mb-2">
+                      89 AED
+                    </p>
+                    <p className="text-sm sm:text-base text-white/70">One-time payment · Lifetime access</p>
+                  </div>
+                </div>
+
+                {/* Value Props */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
+                  <div className="flex items-center gap-2 p-3 bg-white/5 rounded-xl border border-white/10">
+                    <CheckCircle className="w-5 h-5 text-orange flex-shrink-0" />
+                    <span className="text-xs sm:text-sm text-white/90">Instant Download</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-3 bg-white/5 rounded-xl border border-white/10">
+                    <Shield className="w-5 h-5 text-azure-blue flex-shrink-0" />
+                    <span className="text-xs sm:text-sm text-white/90">Secure Payment</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-3 bg-white/5 rounded-xl border border-white/10">
+                    <BookOpen className="w-5 h-5 text-orange flex-shrink-0" />
+                    <span className="text-xs sm:text-sm text-white/90">PDF Format</span>
+                  </div>
+                </div>
+
+                {/* Primary CTA */}
+                <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored" className="block">
+                  <motion.button
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleCTAClick('Get the E-Guide - Enhanced Hero Offer')}
+                    className="w-full px-8 py-5 cta-button-glow text-white font-bold font-montserrat rounded-xl transition-all duration-300 text-lg sm:text-xl inline-flex items-center justify-center gap-3 shadow-2xl shadow-orange/20"
+                  >
+                    <BookOpen className="w-6 h-6" />
+                    <span>Get the E-Guide Now - 89 AED</span>
+                    <ArrowRight className="w-6 h-6" />
+                  </motion.button>
+                </Link>
+
+                {/* Trust Indicators */}
+                <div className="mt-4 text-center">
+                  <p className="text-xs text-white/60">
+                    <Shield className="w-3 h-3 inline mr-1" />
+                    Secure checkout powered by Stripe
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -439,47 +515,91 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
         </div>
       </section>
 
-      {/* G) Pricing Block */}
-      <section className="max-w-2xl mx-auto px-4">
-        <div className="bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-2xl p-6 sm:p-8 text-center space-y-4 sm:space-y-6">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+      {/* Testimonials Section - Before Pricing */}
+      <section className="max-w-7xl mx-auto px-4">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
             <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-              Get Beyond Formalities
+              Trusted by Professionals Across the UAE
             </span>
           </h2>
+          <p className="text-sm sm:text-base text-white/70 max-w-2xl mx-auto">
+            Join 268+ professionals, spouses, and long-term residents who have gained deeper cultural understanding
+          </p>
+        </div>
+        <TestimonialCarousel />
+      </section>
+
+      {/* G) Enhanced Pricing Block */}
+      <section className="max-w-2xl mx-auto px-4">
+        <div className="bg-gradient-to-br from-white/10 to-white/5 border-2 border-orange/30 rounded-2xl p-6 sm:p-8 text-center space-y-4 sm:space-y-6 relative overflow-hidden">
+          {/* Decorative elements */}
+          <div className="absolute top-0 right-0 w-24 h-24 bg-orange/5 rounded-full blur-2xl" />
+          <div className="absolute bottom-0 left-0 w-20 h-20 bg-azure-blue/5 rounded-full blur-2xl" />
+          
+          <div className="relative z-10">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">
+              <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+                Get Beyond Formalities
+              </span>
+            </h2>
+            
+            {/* Urgency indicator */}
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Clock className="w-4 h-4 text-orange" />
+              <span className="text-xs sm:text-sm text-orange font-semibold">Limited Time: New Year Offer</span>
+            </div>
+            
             <div className="space-y-3 sm:space-y-4">
-            <div className="flex flex-col items-center">
-              <p className="text-xs sm:text-sm text-white/50 line-through">149 AED</p>
-              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-orange">89 AED</p>
-              <p className="text-xs sm:text-sm text-white/60 mt-1">Limited New Year offer</p>
-            </div>
-            <div className="space-y-2 text-white/80 text-sm sm:text-base">
-              <p className="flex items-center justify-center gap-2">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0" />
-                <span>PDF E-Guide</span>
-              </p>
-              <p className="flex items-center justify-center gap-2">
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-azure-blue flex-shrink-0" />
-                <span>Instant access after checkout</span>
-              </p>
-              <p className="flex items-center justify-center gap-2">
-                <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0" />
-                <span>Secure Stripe checkout</span>
-              </p>
-            </div>
-            <div className="mt-4 sm:mt-6">
-            <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => handleCTAClick('Buy now - Pricing')}
-                className="w-full px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-base sm:text-lg inline-flex items-center justify-center gap-2 sm:gap-3"
-              >
-                <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span>Buy now</span>
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-              </motion.button>
-            </Link>
+              <div className="flex flex-col items-center">
+                <div className="flex items-center gap-3 mb-2">
+                  <p className="text-lg sm:text-xl text-white/50 line-through">149 AED</p>
+                  <div className="px-2 py-1 bg-orange/20 border border-orange/40 rounded">
+                    <span className="text-xs font-bold text-orange">40% OFF</span>
+                  </div>
+                </div>
+                <p className="text-4xl sm:text-5xl md:text-6xl font-bold text-orange mb-2">89 AED</p>
+                <p className="text-xs sm:text-sm text-white/60">One-time payment · Lifetime access</p>
+              </div>
+              
+              {/* Social proof in pricing box */}
+              <div className="flex items-center justify-center gap-4 py-2">
+                <div className="flex items-center gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-orange text-orange" />
+                  ))}
+                </div>
+                <span className="text-xs sm:text-sm text-white/70">268+ downloads</span>
+              </div>
+              
+              <div className="space-y-2 text-white/80 text-sm sm:text-base">
+                <p className="flex items-center justify-center gap-2">
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0" />
+                  <span>PDF E-Guide</span>
+                </p>
+                <p className="flex items-center justify-center gap-2">
+                  <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-azure-blue flex-shrink-0" />
+                  <span>Instant access after checkout</span>
+                </p>
+                <p className="flex items-center justify-center gap-2">
+                  <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0" />
+                  <span>Secure Stripe checkout</span>
+                </p>
+              </div>
+              <div className="mt-4 sm:mt-6">
+              <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
+                <motion.button
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleCTAClick('Buy now - Pricing')}
+                  className="w-full px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 cta-button-glow text-white font-bold font-montserrat rounded-xl transition-all duration-300 text-base sm:text-lg md:text-xl inline-flex items-center justify-center gap-2 sm:gap-3 shadow-2xl shadow-orange/20"
+                >
+                  <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <span>Get the E-Guide Now - 89 AED</span>
+                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                </motion.button>
+              </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -526,35 +646,49 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
         </div>
       </section>
 
-      {/* I) Final CTA */}
-      <section className="max-w-3xl mx-auto text-center space-y-4 sm:space-y-6 px-4">
-        <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold">
-          <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-            Understand the culture, communicate with confidence
-          </span>
-        </h2>
-        <div className="mt-4 sm:mt-6">
-          <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleCTAClick('Get the E-Guide - Final CTA')}
-              className="px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-base sm:text-lg inline-flex items-center gap-2 sm:gap-3"
-            >
-              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span>Get the E-Guide</span>
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-            </motion.button>
-          </Link>
-        </div>
-        <div className="pt-4 sm:pt-6 space-y-2 text-white/60 text-xs sm:text-sm">
-          <p>By The Orange Code, Abu Dhabi</p>
-          <p>
-            Questions? Contact us at{' '}
-            <a href="mailto:hello@theorangecode.com" className="text-orange hover:text-azure-blue transition-colors">
-              hello@theorangecode.com
-            </a>
+      {/* I) Final CTA with Testimonials */}
+      <section className="max-w-7xl mx-auto px-4">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold mb-4 break-words px-4">
+            <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+              Understand the culture, communicate with confidence
+            </span>
+          </h2>
+          <p className="text-sm sm:text-base text-white/70 max-w-2xl mx-auto mb-8">
+            See what others are saying about their experience
           </p>
+        </div>
+        
+        {/* Second Testimonial Carousel */}
+        <div className="mb-8 sm:mb-12">
+          <TestimonialCarousel />
+        </div>
+        
+        {/* Final CTA */}
+        <div className="max-w-2xl mx-auto text-center space-y-4 sm:space-y-6">
+          <div className="mt-4 sm:mt-6">
+            <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
+              <motion.button
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => handleCTAClick('Get the E-Guide - Final CTA')}
+                className="px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 cta-button-glow text-white font-bold font-montserrat rounded-xl transition-all duration-300 text-lg sm:text-xl md:text-2xl inline-flex items-center gap-3 sm:gap-4 shadow-2xl shadow-orange/30"
+              >
+                <BookOpen className="w-6 h-6 sm:w-7 sm:h-7" />
+                <span>Get the E-Guide Now - 89 AED</span>
+                <ArrowRight className="w-6 h-6 sm:w-7 sm:h-7" />
+              </motion.button>
+            </Link>
+          </div>
+          <div className="pt-4 sm:pt-6 space-y-2 text-white/60 text-xs sm:text-sm">
+            <p>By The Orange Code, Abu Dhabi</p>
+            <p>
+              Questions? Contact us at{' '}
+              <a href="mailto:hello@theorangecode.com" className="text-orange hover:text-azure-blue transition-colors">
+                hello@theorangecode.com
+              </a>
+            </p>
+          </div>
         </div>
       </section>
       </div>
