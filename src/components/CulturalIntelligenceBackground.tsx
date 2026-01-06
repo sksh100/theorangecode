@@ -61,7 +61,6 @@ function NetworkNode({ nodeData, mousePosition, index }: { nodeData: NodeData, m
 }
 
 function ConnectionLine({ connectionData }: { connectionData: ConnectionData }) {
-  const lineRef = useRef<THREE.Line>(null)
   const materialRef = useRef<THREE.LineBasicMaterial>(null)
 
   const points = useMemo(() => [
@@ -76,7 +75,7 @@ function ConnectionLine({ connectionData }: { connectionData: ConnectionData }) 
   })
 
   return (
-    <line ref={lineRef}>
+    <line>
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
