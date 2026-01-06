@@ -517,16 +517,6 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
 
       {/* Testimonials Section - Before Pricing */}
       <section className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-              Trusted by Professionals Across the UAE
-            </span>
-          </h2>
-          <p className="text-sm sm:text-base text-white/70 max-w-2xl mx-auto">
-            Join 289+ professionals, spouses, and long-term residents who have already purchased the E-Guide
-          </p>
-        </div>
         <TestimonialCarousel />
       </section>
 
@@ -646,49 +636,35 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
         </div>
       </section>
 
-      {/* I) Final CTA with Testimonials */}
-      <section className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold mb-4 break-words px-4">
-            <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
-              Understand the culture, communicate with confidence
-            </span>
-          </h2>
-          <p className="text-sm sm:text-base text-white/70 max-w-2xl mx-auto mb-8">
-            See what others are saying about their experience
+      {/* I) Final CTA */}
+      <section className="max-w-3xl mx-auto text-center space-y-4 sm:space-y-6 px-4">
+        <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold break-words px-4">
+          <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
+            Understand the culture, communicate with confidence
+          </span>
+        </h2>
+        <div className="mt-4 sm:mt-6">
+          <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleCTAClick('Get the E-Guide - Final CTA')}
+              className="px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 cta-button-glow text-white font-bold font-montserrat rounded-xl transition-all duration-300 text-lg sm:text-xl md:text-2xl inline-flex items-center gap-3 sm:gap-4 shadow-2xl shadow-orange/30"
+            >
+              <BookOpen className="w-6 h-6 sm:w-7 sm:h-7" />
+              <span>Get the E-Guide Now - 89 AED</span>
+              <ArrowRight className="w-6 h-6 sm:w-7 sm:h-7" />
+            </motion.button>
+          </Link>
+        </div>
+        <div className="pt-4 sm:pt-6 space-y-2 text-white/60 text-xs sm:text-sm">
+          <p>By The Orange Code, Abu Dhabi</p>
+          <p>
+            Questions? Contact us at{' '}
+            <a href="mailto:hello@theorangecode.com" className="text-orange hover:text-azure-blue transition-colors">
+              hello@theorangecode.com
+            </a>
           </p>
-        </div>
-        
-        {/* Second Testimonial Carousel */}
-        <div className="mb-8 sm:mb-12">
-          <TestimonialCarousel />
-        </div>
-        
-        {/* Final CTA */}
-        <div className="max-w-2xl mx-auto text-center space-y-4 sm:space-y-6">
-          <div className="mt-4 sm:mt-6">
-            <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => handleCTAClick('Get the E-Guide - Final CTA')}
-                className="px-8 sm:px-10 md:px-12 py-4 sm:py-5 md:py-6 cta-button-glow text-white font-bold font-montserrat rounded-xl transition-all duration-300 text-lg sm:text-xl md:text-2xl inline-flex items-center gap-3 sm:gap-4 shadow-2xl shadow-orange/30"
-              >
-                <BookOpen className="w-6 h-6 sm:w-7 sm:h-7" />
-                <span>Get the E-Guide Now - 89 AED</span>
-                <ArrowRight className="w-6 h-6 sm:w-7 sm:h-7" />
-              </motion.button>
-            </Link>
-          </div>
-          <div className="pt-4 sm:pt-6 space-y-2 text-white/60 text-xs sm:text-sm">
-            <p>By The Orange Code, Abu Dhabi</p>
-            <p>
-              Questions? Contact us at{' '}
-              <a href="mailto:hello@theorangecode.com" className="text-orange hover:text-azure-blue transition-colors">
-                hello@theorangecode.com
-              </a>
-            </p>
-          </div>
         </div>
       </section>
       </div>
