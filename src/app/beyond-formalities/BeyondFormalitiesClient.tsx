@@ -125,15 +125,15 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             Beyond Formalities
           </span>
         </h1>
-        <h2 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white/90 px-2">
+        <h2 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white/90 px-4 break-words">
           Understanding Emirati Culture, Local Customs, and Everyday Life
         </h2>
         
-        <div className="max-w-3xl mx-auto space-y-3 sm:space-y-4 pt-2 sm:pt-4">
-          <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed">
+        <div className="max-w-3xl mx-auto space-y-3 sm:space-y-4 pt-2 sm:pt-4 px-4">
+          <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed break-words">
             Many people complete the formalities in the UAE, yet relationships remain polite but distant. Business discussions start well but do not move forward, communication feels unclear, and promising connections sometimes disappear without explanation. Social circles often stay limited to other expatriates, despite genuine efforts to connect.
           </p>
-          <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed break-words">
             Beyond Formalities explains the cultural foundations behind Emirati culture and local customs, helping you understand how trust, communication, and relationships develop in the UAE. This guide was written to bridge the gap and support clearer interaction, meaningful connection, and lasting relationships in everyday life and professional settings.
           </p>
         </div>
@@ -321,7 +321,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
 
       {/* B) Pain Points Section */}
       <section className="max-w-3xl mx-auto space-y-4 sm:space-y-6 px-4">
-        <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-center">
+        <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-center break-words px-4">
           <span className="bg-gradient-to-r from-orange via-azure-blue to-orange bg-clip-text text-transparent">
             If you have ever felt unsure, you are not alone
           </span>
@@ -329,19 +329,19 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
         <div className="space-y-3 sm:space-y-4">
           <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
             <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-            <p className="text-sm sm:text-base md:text-lg text-white/90">You did the formalities, yet trust still takes time.</p>
+            <p className="text-sm sm:text-base md:text-lg text-white/90 break-words">You did the formalities, yet trust still takes time.</p>
           </div>
           <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
             <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-            <p className="text-sm sm:text-base md:text-lg text-white/90">Meetings are warm, but decisions move differently than expected.</p>
+            <p className="text-sm sm:text-base md:text-lg text-white/90 break-words">Meetings are warm, but decisions move differently than expected.</p>
           </div>
           <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
             <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-            <p className="text-sm sm:text-base md:text-lg text-white/90">Indirect communication and silence can be hard to interpret.</p>
+            <p className="text-sm sm:text-base md:text-lg text-white/90 break-words">Indirect communication and silence can be hard to interpret.</p>
           </div>
           <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
             <div className="w-2 h-2 bg-orange rounded-full mt-2 flex-shrink-0" />
-            <p className="text-sm sm:text-base md:text-lg text-white/90">You want to show respect, but you are not sure what matters most.</p>
+            <p className="text-sm sm:text-base md:text-lg text-white/90 break-words">You want to show respect, but you are not sure what matters most.</p>
           </div>
         </div>
       </section>
@@ -353,25 +353,25 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             What Beyond Formalities explains
           </span>
         </h2>
-        <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed text-center">
+        <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed text-center break-words px-4">
           UAE daily life is shaped by values such as respect, hospitality, faith, family, hierarchy, and social harmony. When those foundations are understood, communication becomes clearer and relationships become easier to build.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 pt-2 sm:pt-4">
           <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
             <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0 mt-0.5" />
-            <p className="text-sm sm:text-base text-white/90">How cultural values shape everyday interaction</p>
+            <p className="text-sm sm:text-base text-white/90 break-words">How cultural values shape everyday interaction</p>
           </div>
           <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
             <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-            <p className="text-sm sm:text-base text-white/90">How trust and relationships develop over time</p>
+            <p className="text-sm sm:text-base text-white/90 break-words">How trust and relationships develop over time</p>
           </div>
           <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
             <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0 mt-0.5" />
-            <p className="text-sm sm:text-base text-white/90">How social boundaries and etiquette work in real life</p>
+            <p className="text-sm sm:text-base text-white/90 break-words">How social boundaries and etiquette work in real life</p>
           </div>
           <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-white/5 border border-white/10 rounded-xl">
             <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-            <p className="text-sm sm:text-base text-white/90">How business culture and protocol are influenced by cultural context</p>
+            <p className="text-sm sm:text-base text-white/90 break-words">How business culture and protocol are influenced by cultural context</p>
           </div>
         </div>
       </section>
@@ -386,23 +386,23 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
         <div className="space-y-3 sm:space-y-4">
           <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl">
             <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0 mt-0.5" />
-            <p className="text-sm sm:text-base text-white/90">Clarity on Emirati culture and local customs</p>
+            <p className="text-sm sm:text-base text-white/90 break-words">Clarity on Emirati culture and local customs</p>
           </div>
           <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl">
             <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-            <p className="text-sm sm:text-base text-white/90">More confidence in social and professional interaction</p>
+            <p className="text-sm sm:text-base text-white/90 break-words">More confidence in social and professional interaction</p>
           </div>
           <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl">
             <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0 mt-0.5" />
-            <p className="text-sm sm:text-base text-white/90">A stronger understanding of nonverbal communication and social distance</p>
+            <p className="text-sm sm:text-base text-white/90 break-words">A stronger understanding of nonverbal communication and social distance</p>
           </div>
           <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-gradient-to-r from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl">
             <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-azure-blue flex-shrink-0 mt-0.5" />
-            <p className="text-sm sm:text-base text-white/90">Practical awareness of etiquette in hospitality, dining, and majlis settings</p>
+            <p className="text-sm sm:text-base text-white/90 break-words">Practical awareness of etiquette in hospitality, dining, and majlis settings</p>
           </div>
           <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-gradient-to-r from-orange/10 to-orange/5 border border-orange/20 rounded-xl">
             <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0 mt-0.5" />
-            <p className="text-sm sm:text-base text-white/90">A foundation for respectful business communication and professional conduct in the UAE</p>
+            <p className="text-sm sm:text-base text-white/90 break-words">A foundation for respectful business communication and professional conduct in the UAE</p>
           </div>
         </div>
       </section>
@@ -419,22 +419,22 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange/20 rounded-xl flex items-center justify-center">
               <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 text-orange" />
             </div>
-            <h3 className="text-lg sm:text-xl font-semibold text-white">Preparing from abroad</h3>
-            <p className="text-sm sm:text-base text-white/80">For professionals, founders, and individuals who want cultural clarity before arriving or partnering with the UAE.</p>
+            <h3 className="text-lg sm:text-xl font-semibold text-white break-words">Preparing from abroad</h3>
+            <p className="text-sm sm:text-base text-white/80 break-words">For professionals, founders, and individuals who want cultural clarity before arriving or partnering with the UAE.</p>
           </div>
           <div className="bg-gradient-to-br from-azure-blue/10 to-azure-blue/5 border border-azure-blue/20 rounded-xl p-4 sm:p-6 space-y-3 sm:space-y-4">
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-azure-blue/20 rounded-xl flex items-center justify-center">
               <Home className="w-5 h-5 sm:w-6 sm:h-6 text-azure-blue" />
             </div>
-            <h3 className="text-lg sm:text-xl font-semibold text-white">Relocating or newly arrived</h3>
-            <p className="text-sm sm:text-base text-white/80">For those settling in and seeking confidence in daily interaction, customs, and communication.</p>
+            <h3 className="text-lg sm:text-xl font-semibold text-white break-words">Relocating or newly arrived</h3>
+            <p className="text-sm sm:text-base text-white/80 break-words">For those settling in and seeking confidence in daily interaction, customs, and communication.</p>
           </div>
           <div className="bg-gradient-to-br from-orange/10 to-azure-blue/10 border border-orange/20 rounded-xl p-4 sm:p-6 space-y-3 sm:space-y-4">
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange/20 rounded-xl flex items-center justify-center">
               <Users className="w-5 h-5 sm:w-6 sm:h-6 text-orange" />
             </div>
-            <h3 className="text-lg sm:text-xl font-semibold text-white">Already living or doing business in the UAE</h3>
-            <p className="text-sm sm:text-base text-white/80">For anyone who wants deeper understanding beyond procedures, to build lasting relationships.</p>
+            <h3 className="text-lg sm:text-xl font-semibold text-white break-words">Already living or doing business in the UAE</h3>
+            <p className="text-sm sm:text-base text-white/80 break-words">For anyone who wants deeper understanding beyond procedures, to build lasting relationships.</p>
           </div>
         </div>
       </section>
@@ -500,9 +500,9 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
             >
               <button
                 onClick={() => toggleFaq(index)}
-                className="w-full flex items-center justify-between p-4 sm:p-6 text-left hover:bg-white/5 transition-colors"
+                className="w-full flex items-center justify-between p-4 sm:p-6 text-left hover:bg-white/5 transition-colors gap-3"
               >
-                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-white pr-3 sm:pr-4">{faq.question}</h3>
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-white pr-3 sm:pr-4 break-words flex-1 text-left">{faq.question}</h3>
                 {expandedFaq === index ? (
                   <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5 text-orange flex-shrink-0" />
                 ) : (
@@ -516,7 +516,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
                   exit={{ opacity: 0, height: 0 }}
                   className="px-4 sm:px-6 pb-4 sm:pb-6"
                 >
-                  <div className="text-sm sm:text-base text-white/80 leading-relaxed">
+                  <div className="text-sm sm:text-base text-white/80 leading-relaxed break-words">
                     {typeof faq.answer === 'string' ? <p>{faq.answer}</p> : faq.answer}
                   </div>
                 </motion.div>
