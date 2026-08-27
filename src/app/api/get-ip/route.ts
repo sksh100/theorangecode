@@ -5,7 +5,6 @@ export async function GET(request: NextRequest) {
   const ip =
     request.headers.get('x-forwarded-for')?.split(',')[0] ||
     request.headers.get('x-real-ip') ||
-    request.ip ||
     'unknown'
 
   return NextResponse.json({ ip })

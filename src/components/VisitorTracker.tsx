@@ -234,20 +234,22 @@ export function VisitorTracker() {
   // Track session end when user leaves
   useEffect(() => {
     const handleBeforeUnload = () => {
-      // Send final tracking update
       const sessionId = localStorage.getItem('visitor_session_id');
-      if (sessionId) {
-        // Collect basic info for sendBeacon (async not supported)
-      const basicInfo: any = {
+      if (!sessionId) return;
+
+      const basicInfo: Record<string, unknown> = {
         id: sessionId,
         path: window.location.pathname,
         referrer: document.referrer || null,
         userAgent: navigator.userAgent,
+        sessionEnd: true,
       };
-      
-      // Add synchronous info only
+
       if ('connection' in navigator) {
-        const connection = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
+        const connection =
+          (navigator as any).connection ||
+          (navigator as any).mozConnection ||
+          (navigator as any).webkitConnection;
         if (connection) {
           basicInfo.networkType = connection.type || 'unknown';
           basicInfo.networkEffectiveType = connection.effectiveType || 'unknown';
@@ -255,18 +257,18 @@ export function VisitorTracker() {
           basicInfo.networkRtt = connection.rtt || 0;
         }
       }
-      
+
       basicInfo.screenWidth = window.screen.width;
       basicInfo.screenHeight = window.screen.height;
       basicInfo.viewportWidth = window.innerWidth;
       basicInfo.viewportHeight = window.innerHeight;
       basicInfo.language = navigator.language;
       basicInfo.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      
-      // Use sendBeacon for reliable tracking on page unload
-        const payload = JSON.stringify(basicInfo);
-        navigator.sendBeacon('/api/track-visitor', payload);
-      }
+
+      navigator.sendBeacon(
+        '/api/track-visitor',
+        new Blob([JSON.stringify(basicInfo)], { type: 'application/json' })
+      );
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { Instagram, Twitter, Linkedin, Mail, Phone, MapPin, Send, Crown } from 'lucide-react'
+import { Instagram, Twitter, Linkedin, Mail, MapPin, Send, Crown } from 'lucide-react'
 import Link from 'next/link'
 
 interface ModernFooterProps {
@@ -195,18 +195,6 @@ export function ModernFooter({ hideQuickLinks = false, hideLegalLinks = false }:
                     <p className="text-white/60 text-xs font-medium uppercase tracking-wider mb-1">Email</p>
                     <a href="mailto:hello@theorangecode.com" className="text-white text-sm hover:text-orange transition-colors break-all">
                       hello@theorangecode.com
-                    </a>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="w-9 h-9 bg-gradient-to-br from-orange/15 to-orange/5 rounded-lg flex items-center justify-center flex-shrink-0 border border-orange/20">
-                    <Phone className="w-4 h-4 text-orange" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-white/60 text-xs font-medium uppercase tracking-wider mb-1">Phone</p>
-                    <a href="tel:+971568786106" className="text-white text-sm hover:text-orange transition-colors">
-                      +971 56 878 6106
                     </a>
                   </div>
                 </div>

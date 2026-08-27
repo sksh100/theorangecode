@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { notifyContactForm, notifyError } from "@/lib/slack";
+import { redis } from "@/lib/redis";
 
 // Lazy initialization to avoid build-time errors
 const getResend = () => {
@@ -11,11 +12,26 @@ const getResend = () => {
   return new Resend(apiKey);
 };
 
-export async function POST(request: Request) {
+async function loadVisitorContext(sessionId?: string | null) {
+  if (!sessionId) return null;
+  try {
+    if (!process.env.UPSTASH_REDIS_REST_URL && !process.env.KV_REST_API_URL) {
+      return null;
+    }
+    const raw = await redis.get(`visitor:context:${sessionId}`);
+    if (!raw) return null;
+    return typeof raw === 'string' ? JSON.parse(raw) : raw;
+  } catch (err) {
+    console.warn('⚠️ Could not load visitor context for contact Slack:', err);
+    return null;
+  }
+}
+
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    const { name, email, phone, subject, message } = body;
+    const { name, email, phone, subject, message, sessionId, page } = body;
 
     // Basic validation
     if (!name || !email || !subject || !message) {
@@ -63,9 +79,43 @@ export async function POST(request: Request) {
       );
     }
 
+    const visitor = await loadVisitorContext(sessionId);
+    const ip =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+      request.headers.get("x-real-ip") ??
+      undefined;
+
     // Send Slack notification (don't wait for it, fire and forget)
     console.log("📢 Attempting to send Slack notification for contact form...");
-    notifyContactForm({ name, email, phone, subject, message })
+    notifyContactForm({
+      name,
+      email,
+      phone,
+      subject,
+      message,
+      sessionId: sessionId || undefined,
+      page: page || visitor?.page || undefined,
+      country: visitor?.country,
+      city: visitor?.city,
+      area: visitor?.area,
+      region: visitor?.region,
+      postalCode: visitor?.postalCode,
+      ip: visitor?.ip || ip,
+      lat: visitor?.lat,
+      lng: visitor?.lng,
+      timezone: visitor?.timezone,
+      isp: visitor?.isp,
+      device: visitor?.device,
+      browser: visitor?.browser,
+      source: visitor?.source,
+      referrerDomain: visitor?.referrerDomain,
+      searchQuery: visitor?.searchQuery,
+      utmParams: visitor?.utmParams,
+      navigationFlow: visitor?.navigationFlow,
+      sessionDuration: visitor?.sessionDuration,
+      visitCount: visitor?.visitCount,
+      language: visitor?.language,
+    })
       .then(() => console.log("✅ Slack notification sent successfully"))
       .catch((err) => console.error("❌ Slack notification failed:", err));
 

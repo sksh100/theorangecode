@@ -91,7 +91,7 @@ function GulfPoints() {
     return gulfCities.map(city => latLonToVector3(city.lat, city.lon, radius));
   }, []);
 
-  const ref = useRef<any>();
+  const ref = useRef<any>(null);
   useFrame((state) => {
     if (!ref.current) return;
     const t = state.clock.getElapsedTime();

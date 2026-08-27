@@ -60,9 +60,7 @@ export default function Home() {
 
   // Only use scroll tracking after component is mounted
   // Use window scroll instead of container ref to avoid SSR issues
-  const { scrollYProgress } = useScroll({
-    layoutEffect: false
-  })
+  const { scrollYProgress } = useScroll()
 
   useEffect(() => {
     setMounted(true)

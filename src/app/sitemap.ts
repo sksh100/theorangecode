@@ -23,7 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/beyond-formalities`,
       lastModified: recentUpdate,
       changeFrequency: 'weekly',
-      priority: 0.9,
+      priority: 1.0,
     },
     {
       url: `${baseUrl}/uk-to-uae-relocation`,
@@ -94,6 +94,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/ai-training-data`,
+      lastModified: monthlyUpdate,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/resources`,
+      lastModified: recentUpdate,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/uae-living`,
+      lastModified: recentUpdate,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/workshops`,
       lastModified: monthlyUpdate,
       changeFrequency: 'monthly',
       priority: 0.7,

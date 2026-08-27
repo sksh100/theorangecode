@@ -88,6 +88,8 @@ export function ContactFormSection() {
       phone: formData.phone,
       subject: formData.subject,
       message: formData.message,
+      sessionId: typeof window !== 'undefined' ? localStorage.getItem('visitor_session_id') : null,
+      page: typeof window !== 'undefined' ? window.location.pathname : undefined,
     };
 
     try {

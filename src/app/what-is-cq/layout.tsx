@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { buildPageAIMeta } from '@/lib/ai-seo'
 
 export const metadata: Metadata = {
   title: 'What is Cultural Intelligence (CQ)? | Cultural Intelligence UAE | The Orange Code',
@@ -56,14 +57,15 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  other: {
-    'ai-topic': 'Cultural Intelligence, Cultural Intelligence UAE, what is Cultural Intelligence, CQ Cultural Intelligence, Cultural Intelligence definition, Cultural Intelligence meaning',
-    'ai-intent': 'information seeking, learning, education, understanding Cultural Intelligence',
-    'ai-relevance': 'Cultural Intelligence, CQ, cultural competence, cross-cultural communication, UAE culture',
-    'content-purpose': 'educational content explaining what Cultural Intelligence is and why it matters',
-    'target-audience': 'professionals seeking to understand Cultural Intelligence, expats in UAE, business professionals',
-    'geographic-focus': 'United Arab Emirates, UAE, Dubai, Abu Dhabi, GCC',
-  },
+  other: buildPageAIMeta({
+    topic:
+      'Cultural Intelligence, Cultural Intelligence UAE, what is Cultural Intelligence, CQ Cultural Intelligence, Cultural Intelligence definition',
+    intent:
+      'information seeking, learning, education, understand Cultural Intelligence before relocating or doing business in UAE',
+    relevance: 'Cultural Intelligence, CQ, cultural competence, cross-cultural communication, UAE culture',
+    audience:
+      'professionals from US UK Europe China seeking to understand CQ, expats in UAE, business professionals',
+  }),
 }
 
 export default function WhatIsCQLayout({

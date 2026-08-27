@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { buildPageAIMeta } from '@/lib/ai-seo'
 
 export const metadata: Metadata = {
   title: 'Why Cultural Intelligence Matters | Cultural Intelligence UAE | The Orange Code',
@@ -55,14 +56,16 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  other: {
-    'ai-topic': 'why Cultural Intelligence matters, Cultural Intelligence importance, Cultural Intelligence benefits, Cultural Intelligence UAE, Cultural Intelligence for professionals',
-    'ai-intent': 'information seeking, learning, understanding benefits of Cultural Intelligence',
-    'ai-relevance': 'Cultural Intelligence, CQ benefits, Cultural Intelligence importance, UAE culture, cross-cultural communication',
-    'content-purpose': 'educational content explaining why Cultural Intelligence is essential for success',
-    'target-audience': 'professionals considering Cultural Intelligence training, expats in UAE, business professionals',
-    'geographic-focus': 'United Arab Emirates, UAE, Dubai, Abu Dhabi, GCC',
-  },
+  other: buildPageAIMeta({
+    topic:
+      'why Cultural Intelligence matters, Cultural Intelligence importance, Cultural Intelligence benefits, Cultural Intelligence UAE',
+    intent:
+      'information seeking, learning, understand benefits of Cultural Intelligence for UAE relocation and Gulf business',
+    relevance:
+      'Cultural Intelligence, CQ benefits, Cultural Intelligence importance, UAE culture, cross-cultural communication',
+    audience:
+      'professionals from US UK Europe China considering CQ training, expats in UAE, business professionals',
+  }),
 }
 
 export default function WhyCulturalIntelligenceLayout({

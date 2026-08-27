@@ -235,7 +235,7 @@ export async function POST(request: NextRequest) {
       eventDate: eventDate || '',
       timestamp: finalTimestamp,
       source: finalSource,
-      ip: request.ip || request.headers.get('x-forwarded-for') || 'unknown',
+      ip: request.headers.get('x-forwarded-for')?.split(',')[0] || request.headers.get('x-real-ip') || 'unknown',
       submittedAt: new Date().toISOString()
     }
     

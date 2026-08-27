@@ -63,6 +63,8 @@ type VisitorPayload = {
   searchQuery?: string | null;  // Search query if from search engine
   // UTM Parameters
   utmParams?: Record<string, string> | null;
+  /** Client sets true on beforeunload for session-end Slack summary */
+  sessionEnd?: boolean;
 };
 
 // Helper function to detect device type from user agent
@@ -688,10 +690,42 @@ export async function POST(req: NextRequest) {
       redisAvailable = false;
     }
 
+    // Snapshot used by contact / conversion Slack enrichment
+    const visitorContext = {
+      country: country !== "Unknown" ? country : undefined,
+      city: city !== "Unknown" ? city : undefined,
+      region: ipRegion || region || undefined,
+      area: ipArea || undefined,
+      postalCode: ipPostalCode || undefined,
+      device,
+      browser,
+      page: path,
+      ip: ip !== "unknown" ? ip : undefined,
+      lat: coordinates?.lat,
+      lng: coordinates?.lng,
+      source: trafficSource,
+      navigationFlow: navigationFlow.length > 0 ? navigationFlow : undefined,
+      sessionDuration: sessionDuration > 0 ? sessionDuration : 0,
+      visitCount: visitCount > 0 ? visitCount : undefined,
+      networkType: networkType || undefined,
+      isp: ipIsp || undefined,
+      org: ipOrg || undefined,
+      timezone: ipTimezone || body.timezone || undefined,
+      language: body.language || undefined,
+      languages: body.languages || undefined,
+      referrerDomain: body.referrerDomain || undefined,
+      searchQuery: body.searchQuery || undefined,
+      utmParams: body.utmParams || undefined,
+      updatedAt: now,
+    };
+
     // Try to store visitor data (but don't fail if Redis is down)
     try {
       // store active visitor with TTL 60 seconds
       await redis.set(key, JSON.stringify(payload), { ex: 60 });
+
+      // Rich session context for contact form / conversions (2 hours)
+      await redis.set(`visitor:context:${sessionId}`, JSON.stringify(visitorContext), { ex: 7200 });
 
       // Mark this IP as seen (2 minute window for notifications, but store longer for analytics)
       await redis.set(visitorKey, now.toString(), { ex: NOTIFICATION_WINDOW_SECONDS });
@@ -750,95 +784,126 @@ export async function POST(req: NextRequest) {
       city
     });
 
-    // Send Slack notification for new visitors only (to avoid spam)
-    // Note: IP exclusion already checked above, so isExcludedIP is false here
-    if (shouldNotify) {
+    const slackVisitorPayload = {
+      country: visitorContext.country,
+      city: visitorContext.city,
+      region: visitorContext.region,
+      area: visitorContext.area,
+      postalCode: visitorContext.postalCode,
+      device,
+      browser,
+      page: path,
+      ip: visitorContext.ip,
+      lat: coordinates?.lat,
+      lng: coordinates?.lng,
+      source: trafficSource,
+      navigationFlow: visitorContext.navigationFlow,
+      sessionDuration: sessionDuration > 0 ? sessionDuration : undefined,
+      visitCount: visitorContext.visitCount,
+      networkType: networkType || undefined,
+      networkEffectiveType: networkEffectiveType || undefined,
+      networkDownlink: networkDownlink || undefined,
+      networkRtt: networkRtt || undefined,
+      isp: ipIsp || undefined,
+      org: ipOrg || undefined,
+      timezone: visitorContext.timezone,
+      screenWidth: payload.screenWidth || undefined,
+      screenHeight: payload.screenHeight || undefined,
+      viewportWidth: payload.viewportWidth || undefined,
+      viewportHeight: payload.viewportHeight || undefined,
+      colorDepth: payload.colorDepth || undefined,
+      pixelRatio: payload.pixelRatio || undefined,
+      deviceMemory: payload.deviceMemory || undefined,
+      cpuCores: payload.cpuCores || undefined,
+      language: payload.language || undefined,
+      languages: payload.languages || undefined,
+      timezoneBrowser: payload.timezoneBrowser || undefined,
+      timezoneOffset: payload.timezoneOffset || undefined,
+      platform: payload.platform || undefined,
+      vendor: payload.vendor || undefined,
+      batteryLevel: payload.batteryLevel || undefined,
+      batteryCharging: payload.batteryCharging || undefined,
+      doNotTrack: payload.doNotTrack || undefined,
+      cookieEnabled: payload.cookieEnabled || undefined,
+      pageLoadTime: payload.pageLoadTime || undefined,
+      domContentLoaded: payload.domContentLoaded || undefined,
+      referrerDomain: payload.referrerDomain || undefined,
+      referrerPath: payload.referrerPath || undefined,
+      searchQuery: payload.searchQuery || undefined,
+      utmParams: payload.utmParams || undefined,
+    };
+
+    // New visitor Slack (first land / returning after window)
+    if (shouldNotify && !body.sessionEnd) {
       console.log("👤 NEW VISITOR - Sending Slack notification...", {
         ip,
         country,
         city,
-        coordinates: coordinates ? `${coordinates.lat}, ${coordinates.lng}` : "not available",
-        device,
-        browser,
         path,
-        timestamp: new Date().toISOString()
+        sessionDuration,
       });
-      
+
       notifyNewVisitor({
-        country: country !== "Unknown" ? country : undefined,
-        city: city !== "Unknown" ? city : undefined,
-        area: ipArea || undefined,
-        postalCode: ipPostalCode || undefined,
-        device: device,
-        browser: browser,
-        page: path,
-        ip: ip !== "unknown" ? ip : undefined,
-        lat: coordinates?.lat,
-        lng: coordinates?.lng,
-        source: trafficSource,
-        navigationFlow: navigationFlow.length > 0 ? navigationFlow : undefined,
-        sessionDuration: sessionDuration > 0 ? sessionDuration : undefined,
-        visitCount: visitCount > 0 ? visitCount : undefined,
-        networkType: networkType || undefined,
-        networkEffectiveType: networkEffectiveType || undefined,
-        networkDownlink: networkDownlink || undefined,
-        networkRtt: networkRtt || undefined,
-        // Enhanced location
-        isp: ipIsp || undefined,
-        org: ipOrg || undefined,
-        timezone: ipTimezone || undefined,
-        // Device & Display
-        screenWidth: payload.screenWidth || undefined,
-        screenHeight: payload.screenHeight || undefined,
-        viewportWidth: payload.viewportWidth || undefined,
-        viewportHeight: payload.viewportHeight || undefined,
-        colorDepth: payload.colorDepth || undefined,
-        pixelRatio: payload.pixelRatio || undefined,
-        deviceMemory: payload.deviceMemory || undefined,
-        cpuCores: payload.cpuCores || undefined,
-        // Language & Locale
-        language: payload.language || undefined,
-        languages: payload.languages || undefined,
-        timezoneBrowser: payload.timezoneBrowser || undefined,
-        timezoneOffset: payload.timezoneOffset || undefined,
-        // Platform
-        platform: payload.platform || undefined,
-        vendor: payload.vendor || undefined,
-        // Battery
-        batteryLevel: payload.batteryLevel || undefined,
-        batteryCharging: payload.batteryCharging || undefined,
-        // Privacy
-        doNotTrack: payload.doNotTrack || undefined,
-        cookieEnabled: payload.cookieEnabled || undefined,
-        // Performance
-        pageLoadTime: payload.pageLoadTime || undefined,
-        domContentLoaded: payload.domContentLoaded || undefined,
-        // Referrer details
-        referrerDomain: payload.referrerDomain || undefined,
-        referrerPath: payload.referrerPath || undefined,
-        searchQuery: payload.searchQuery || undefined,
-        // UTM Parameters
-        utmParams: payload.utmParams || undefined,
+        ...slackVisitorPayload,
+        notificationType: 'new',
       })
-        .then(() => {
-          console.log("✅✅✅ Visitor Slack notification SENT SUCCESSFULLY");
-        })
+        .then(() => console.log("✅✅✅ Visitor Slack notification SENT SUCCESSFULLY"))
         .catch(err => {
           console.error("❌❌❌ Slack notification FAILED:", {
             error: err.message,
-            stack: err.stack,
             ip,
             country,
-            city
+            city,
           });
-          // Don't fail tracking if Slack fails
         });
-    } else {
-      console.log("⏭️ Visitor already seen recently, skipping notification", {
+    } else if (!body.sessionEnd) {
+      console.log("⏭️ Visitor already seen recently, skipping new-visitor notification", {
         ip,
-        lastSeen: lastSeen,
-        timeSinceLastSeen: lastSeen && typeof lastSeen === 'string' ? `${Math.round((now - parseInt(lastSeen, 10)) / 1000)} seconds` : "unknown"
+        timeSinceLastSeen:
+          lastSeen && typeof lastSeen === 'string'
+            ? `${Math.round((now - parseInt(lastSeen, 10)) / 1000)} seconds`
+            : "unknown",
       });
+    }
+
+    // Engaged visitor: once after ~60s on site (includes real time + pages)
+    const ENGAGED_SECONDS = 60;
+    if (!body.sessionEnd && sessionDuration >= ENGAGED_SECONDS) {
+      try {
+        const engagedKey = `slack:engaged:${sessionId}`;
+        const alreadyEngaged = await redis.get(engagedKey);
+        if (!alreadyEngaged) {
+          await redis.set(engagedKey, '1', { ex: 7200 });
+          console.log("🔥 Engaged visitor — sending Slack summary", { sessionDuration, path });
+          notifyNewVisitor({
+            ...slackVisitorPayload,
+            sessionDuration,
+            notificationType: 'engaged',
+          }).catch(err => console.error("❌ Engaged Slack failed:", err));
+        }
+      } catch (engagedErr) {
+        console.warn("⚠️ Engaged notification check failed:", engagedErr);
+      }
+    }
+
+    // Session end summary on leave (beacon) — once, if they stayed ≥45s
+    const SESSION_END_MIN_SECONDS = 45;
+    if (body.sessionEnd && sessionDuration >= SESSION_END_MIN_SECONDS) {
+      try {
+        const endedKey = `slack:ended:${sessionId}`;
+        const alreadyEnded = await redis.get(endedKey);
+        if (!alreadyEnded) {
+          await redis.set(endedKey, '1', { ex: 7200 });
+          console.log("👋 Session end — sending Slack summary", { sessionDuration, path });
+          notifyNewVisitor({
+            ...slackVisitorPayload,
+            sessionDuration,
+            notificationType: 'session_end',
+          }).catch(err => console.error("❌ Session-end Slack failed:", err));
+        }
+      } catch (endErr) {
+        console.warn("⚠️ Session-end notification check failed:", endErr);
+      }
     }
 
     return NextResponse.json({ ok: true });

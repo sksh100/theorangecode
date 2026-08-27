@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
 
     // Serve the sample PDF
     try {
-      const fileBuffer = await fs.readFile(samplePath)
+      const fileBuffer = await fs.readFile(/*turbopackIgnore: true*/ samplePath)
       
       return new NextResponse(fileBuffer, {
         status: 200,

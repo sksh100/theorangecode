@@ -1,6 +1,6 @@
 "use client";
 
-import WorldMap from "react-svg-worldmap";
+import WorldMap, { type DataItem } from "react-svg-worldmap";
 
 type Props = {
   countries: Record<string, number>; // eg { US: 2, AE: 1 }
@@ -12,7 +12,7 @@ export function VisitorsWorldMap({ countries }: Props) {
     .map(([code, value]) => ({
       country: code.toLowerCase(), // library expects lower case ISO 3166-1 alpha-2
       value,
-    }));
+    })) as DataItem[];
 
   if (data.length === 0) {
     return (

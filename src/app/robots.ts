@@ -1,158 +1,24 @@
 import { MetadataRoute } from 'next'
+import { AI_CRAWLER_ALLOWLIST, AI_DISALLOWED_PATHS, SITE_URL } from '@/lib/ai-seo'
 
 export default function robots(): MetadataRoute.Robots {
+  const disallow = [...AI_DISALLOWED_PATHS]
+
   return {
     rules: [
-      // OpenAI / ChatGPT
-      {
-        userAgent: 'GPTBot',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      {
-        userAgent: 'ChatGPT-User',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      {
-        userAgent: 'ChatGPTBot',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      // Anthropic / Claude
-      {
-        userAgent: 'anthropic-ai',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      {
-        userAgent: 'Claude-Web',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      // Google AI / Gemini
-      {
-        userAgent: 'Google-Extended',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      {
-        userAgent: 'Googlebot',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      // Perplexity
-      {
-        userAgent: 'PerplexityBot',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      {
-        userAgent: 'Perplexity',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      // Apple / Siri
-      {
-        userAgent: 'Applebot-Extended',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      {
-        userAgent: 'Applebot',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      // Microsoft / Bing
-      {
-        userAgent: 'Bingbot',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      // X.AI / Grok
-      {
-        userAgent: 'xai-grok',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      {
-        userAgent: 'Grok',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      // Common Crawl
-      {
-        userAgent: 'CCBot',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      // LinkedIn
-      {
-        userAgent: 'LinkedInBot',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      // DeepSeek (AI Search Engine)
-      {
-        userAgent: 'DeepSeekBot',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      {
-        userAgent: 'DeepSeek',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      // Chinese Search Engines
-      {
-        userAgent: 'Baiduspider',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      {
-        userAgent: 'Sogou',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      {
-        userAgent: 'Sogou web spider',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      {
-        userAgent: '360Spider',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      {
-        userAgent: 'YisouSpider',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
-      // Other search engines
-      {
-        userAgent: 'Yandex',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/dashboard/', '/login/', '/signup/', '/settings/', '/courses/', '/coming-soon', '/favicon.ico'],
-      },
+      ...AI_CRAWLER_ALLOWLIST.map((userAgent) => ({
+        userAgent,
+        allow: '/' as const,
+        disallow,
+      })),
       // Default rule for all other bots
       {
         userAgent: '*',
         allow: '/',
-        disallow: [
-          '/admin/',
-          '/api/',
-          '/dashboard/',
-          '/login/',
-          '/signup/',
-          '/settings/',
-          '/courses/',
-          '/coming-soon',  // Redirected to homepage, don't index
-          '/favicon.ico',  // Don't index favicon
-        ],
+        disallow,
       },
     ],
-    sitemap: 'https://www.theorangecode.com/sitemap.xml',
+    sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   }
 }
-

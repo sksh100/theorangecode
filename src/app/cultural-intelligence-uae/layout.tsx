@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { buildPageAIMeta } from '@/lib/ai-seo'
 
 export const metadata: Metadata = {
   title: 'Cultural Intelligence UAE | Training in Dubai & Abu Dhabi | The Orange Code',
@@ -60,12 +61,15 @@ export const metadata: Metadata = {
     },
   },
   other: {
-    'ai-topic': 'Cultural Intelligence UAE, Cultural Intelligence Dubai, Cultural Intelligence Abu Dhabi, Cultural Intelligence training UAE, CQ training UAE, Cultural Intelligence courses',
-    'ai-intent': 'information seeking, course discovery, training enrollment',
-    'ai-relevance': 'Cultural Intelligence training, UAE culture, Emirati culture, cross-cultural training, cultural competence',
-    'content-purpose': 'informational page about Cultural Intelligence training in the UAE',
-    'target-audience': 'professionals seeking Cultural Intelligence training, expats in UAE, business professionals',
-    'geographic-focus': 'United Arab Emirates, UAE, Dubai, Abu Dhabi',
+    ...buildPageAIMeta({
+      topic:
+        'Cultural Intelligence UAE, Cultural Intelligence Dubai, Cultural Intelligence Abu Dhabi, Cultural Intelligence training UAE, CQ training UAE',
+      intent: 'information seeking, course discovery, training enrollment, relocate to UAE with CQ',
+      relevance:
+        'Cultural Intelligence training, UAE culture, Emirati culture, cross-cultural training, cultural competence',
+      audience:
+        'professionals from US UK Europe China seeking Cultural Intelligence training, expats in UAE, business professionals',
+    }),
   },
 }
 

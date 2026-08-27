@@ -13,6 +13,29 @@ interface ContactFormData {
   phone?: string;
   subject: string;
   message: string;
+  /** Optional session / visitor context for richer Slack alerts */
+  sessionId?: string;
+  page?: string;
+  country?: string;
+  city?: string;
+  area?: string;
+  region?: string;
+  postalCode?: string;
+  ip?: string;
+  lat?: number;
+  lng?: number;
+  timezone?: string;
+  isp?: string;
+  device?: string;
+  browser?: string;
+  source?: string;
+  referrerDomain?: string;
+  searchQuery?: string;
+  utmParams?: Record<string, string>;
+  navigationFlow?: string[];
+  sessionDuration?: number;
+  visitCount?: number;
+  language?: string;
 }
 
 interface NewsletterData {
@@ -33,6 +56,7 @@ interface VisitorData {
   country?: string;
   city?: string;
   area?: string;  // Area/neighborhood (e.g., Al Bateen, Al Khalidiyah)
+  region?: string;
   postalCode?: string;  // Postal code if available
   device?: string;
   browser?: string;
@@ -84,6 +108,8 @@ interface VisitorData {
   searchQuery?: string;  // Search query if from search engine
   // UTM Parameters
   utmParams?: Record<string, string>;
+  /** When set, formats as engagement/session-end instead of first-land */
+  notificationType?: 'new' | 'engaged' | 'session_end';
 }
 
 interface ConversionEventData {
@@ -91,12 +117,229 @@ interface ConversionEventData {
   element: string;
   location?: string;
   metadata?: Record<string, any>;
+  sessionDuration?: number;
+  country?: string;
+  city?: string;
+  area?: string;
+  page?: string;
+  source?: string;
+  navigationFlow?: string[];
+  device?: string;
+  browser?: string;
 }
 
 interface EbookDeliveryData {
   email: string;
   customerName?: string;
   orderId?: string;
+}
+
+const COUNTRY_NAMES: Record<string, string> = {
+  AE: 'United Arab Emirates',
+  SA: 'Saudi Arabia',
+  QA: 'Qatar',
+  KW: 'Kuwait',
+  BH: 'Bahrain',
+  OM: 'Oman',
+  US: 'United States',
+  GB: 'United Kingdom',
+  UK: 'United Kingdom',
+  DE: 'Germany',
+  FR: 'France',
+  NL: 'Netherlands',
+  IT: 'Italy',
+  ES: 'Spain',
+  PT: 'Portugal',
+  PL: 'Poland',
+  SE: 'Sweden',
+  NO: 'Norway',
+  DK: 'Denmark',
+  FI: 'Finland',
+  RU: 'Russia',
+  UA: 'Ukraine',
+  CN: 'China',
+  IN: 'India',
+  PK: 'Pakistan',
+  EG: 'Egypt',
+  TR: 'Turkey',
+  CA: 'Canada',
+  AU: 'Australia',
+  CH: 'Switzerland',
+  AT: 'Austria',
+  BE: 'Belgium',
+  IE: 'Ireland',
+  CZ: 'Czech Republic',
+  RO: 'Romania',
+  GR: 'Greece',
+  HU: 'Hungary',
+};
+
+function countryLabel(code?: string | null): string {
+  if (!code || code === 'Unknown') return 'Unknown';
+  const upper = code.toUpperCase();
+  return COUNTRY_NAMES[upper] ? `${COUNTRY_NAMES[upper]} (${upper})` : code;
+}
+
+/** Human-readable time on site, e.g. "3m 42s" */
+export function formatSessionDuration(seconds?: number | null): string {
+  if (seconds == null || seconds < 0 || Number.isNaN(seconds)) return 'Just arrived';
+  if (seconds < 60) return `${seconds}s`;
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  if (m < 60) return s > 0 ? `${m}m ${s}s` : `${m}m`;
+  const h = Math.floor(m / 60);
+  const rm = m % 60;
+  return rm > 0 ? `${h}h ${rm}m` : `${h}h`;
+}
+
+function formatAccurateLocation(data: {
+  country?: string | null;
+  city?: string | null;
+  area?: string | null;
+  region?: string | null;
+  postalCode?: string | null;
+}): string {
+  const parts: string[] = [];
+  if (data.area) parts.push(data.area);
+  if (data.city && data.city !== 'Unknown') parts.push(data.city);
+  else if (data.region) parts.push(data.region);
+  if (data.postalCode) parts.push(data.postalCode);
+  if (data.country && data.country !== 'Unknown') parts.push(countryLabel(data.country));
+  return parts.length > 0 ? parts.join(', ') : 'Unknown location';
+}
+
+function formatIPAddress(ip: string | undefined | null): string {
+  if (!ip) return 'Unknown';
+  const knownIPs: Record<string, string> = {
+    '94.59.182.192': 'Sunain',
+  };
+  return knownIPs[ip] || ip;
+}
+
+function buildMapLink(lat?: number, lng?: number): string | null {
+  if (lat == null || lng == null) return null;
+  return `https://www.google.com/maps?q=${lat},${lng}`;
+}
+
+function buildContextBlocks(data: {
+  country?: string | null;
+  city?: string | null;
+  area?: string | null;
+  region?: string | null;
+  postalCode?: string | null;
+  ip?: string | null;
+  lat?: number | null;
+  lng?: number | null;
+  timezone?: string | null;
+  isp?: string | null;
+  device?: string | null;
+  browser?: string | null;
+  source?: string | null;
+  referrerDomain?: string | null;
+  searchQuery?: string | null;
+  utmParams?: Record<string, string> | null;
+  navigationFlow?: string[] | null;
+  sessionDuration?: number | null;
+  visitCount?: number | null;
+  language?: string | null;
+  page?: string | null;
+  networkType?: string | null;
+}): any[] {
+  const blocks: any[] = [];
+  const location = formatAccurateLocation(data);
+  const mapLink = buildMapLink(data.lat ?? undefined, data.lng ?? undefined);
+  const duration = formatSessionDuration(data.sessionDuration);
+
+  blocks.push({
+    type: 'section',
+    fields: [
+      { type: 'mrkdwn', text: `*📍 Location:*\n${location}` },
+      { type: 'mrkdwn', text: `*⏱️ Time on site:*\n${duration}` },
+      { type: 'mrkdwn', text: `*🌐 IP:*\n\`${formatIPAddress(data.ip)}\`` },
+      {
+        type: 'mrkdwn',
+        text: `*💻 Device / Browser:*\n${data.device || 'Unknown'} · ${data.browser || 'Unknown'}`,
+      },
+    ],
+  });
+
+  const extras: string[] = [];
+  if (data.timezone) extras.push(`*🕐 Timezone:* ${data.timezone}`);
+  if (data.isp) extras.push(`*🏢 ISP:* ${data.isp}`);
+  if (data.language) extras.push(`*🗣️ Language:* ${data.language}`);
+  if (data.networkType) extras.push(`*📶 Network:* ${data.networkType}`);
+  if (data.visitCount) extras.push(`*🔄 Visit #:* ${data.visitCount}`);
+  if (data.page) extras.push(`*📄 Page:* \`${data.page}\``);
+  if (data.source) extras.push(`*🔗 Source:* ${data.source}`);
+  if (data.referrerDomain) extras.push(`*↩️ Referrer:* ${data.referrerDomain}`);
+  if (data.searchQuery) extras.push(`*🔍 Search query:* ${data.searchQuery}`);
+
+  if (extras.length > 0) {
+    blocks.push({
+      type: 'section',
+      fields: extras.slice(0, 10).map((text) => ({ type: 'mrkdwn', text })),
+    });
+  }
+
+  if (data.utmParams && Object.keys(data.utmParams).length > 0) {
+    const utmText = Object.entries(data.utmParams)
+      .map(([k, v]) => `*${k}:* ${v}`)
+      .join('\n');
+    blocks.push({
+      type: 'section',
+      text: { type: 'mrkdwn', text: `*📣 UTM / campaign:*\n${utmText}` },
+    });
+  }
+
+  if (data.navigationFlow && data.navigationFlow.length > 0) {
+    const flowText = data.navigationFlow
+      .slice(-12)
+      .map((p, i) => `${i + 1}. \`${p}\``)
+      .join('\n');
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*🧭 Pages visited (${data.navigationFlow.length}):*\n${flowText}`,
+      },
+    });
+  }
+
+  if (data.lat != null && data.lng != null) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*🗺️ Coordinates:* \`${data.lat.toFixed(5)}, ${data.lng.toFixed(5)}\` _(IP/city-level approximation)_`,
+      },
+    });
+  }
+
+  if (mapLink) {
+    blocks.push({
+      type: 'actions',
+      elements: [
+        {
+          type: 'button',
+          text: { type: 'plain_text', text: '🗺️ Open map', emoji: true },
+          url: mapLink,
+          style: 'primary',
+        },
+      ],
+    });
+  }
+
+  blocks.push({
+    type: 'context',
+    elements: [
+      {
+        type: 'mrkdwn',
+        text: `⏰ ${new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })} (UAE Time)`,
+      },
+    ],
+  });
+
+  return blocks;
 }
 
 /**
@@ -162,75 +405,86 @@ async function sendToSlack(message: SlackMessage, useSalesWebhook: boolean = fal
 }
 
 /**
- * Notify about contact form submission
+ * Notify about contact form submission (includes visitor location + time on site)
  */
 export async function notifyContactForm(data: ContactFormData): Promise<void> {
-  const message: SlackMessage = {
-    blocks: [
-      {
-        type: 'header',
-        text: {
-          type: 'plain_text',
-          text: '📧 New Contact Form Submission',
-          emoji: true,
+  const blocks: any[] = [
+    {
+      type: 'header',
+      text: {
+        type: 'plain_text',
+        text: '📧 New Contact Form Submission',
+        emoji: true,
+      },
+    },
+    {
+      type: 'section',
+      fields: [
+        { type: 'mrkdwn', text: `*Name:*\n${data.name}` },
+        { type: 'mrkdwn', text: `*Email:*\n${data.email}` },
+        { type: 'mrkdwn', text: `*Phone:*\n${data.phone || 'Not provided'}` },
+        { type: 'mrkdwn', text: `*Subject:*\n${data.subject}` },
+      ],
+    },
+    {
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*Message:*\n${data.message}`,
+      },
+    },
+    {
+      type: 'divider',
+    },
+    ...buildContextBlocks({
+      country: data.country,
+      city: data.city,
+      area: data.area,
+      region: data.region,
+      postalCode: data.postalCode,
+      ip: data.ip,
+      lat: data.lat,
+      lng: data.lng,
+      timezone: data.timezone,
+      isp: data.isp,
+      device: data.device,
+      browser: data.browser,
+      source: data.source,
+      referrerDomain: data.referrerDomain,
+      searchQuery: data.searchQuery,
+      utmParams: data.utmParams,
+      navigationFlow: data.navigationFlow,
+      sessionDuration: data.sessionDuration,
+      visitCount: data.visitCount,
+      language: data.language,
+      page: data.page,
+    }),
+    {
+      type: 'actions',
+      elements: [
+        {
+          type: 'button',
+          text: { type: 'plain_text', text: '📧 Reply via Email', emoji: true },
+          url: `mailto:${data.email}?subject=Re: ${encodeURIComponent(data.subject)}`,
+          style: 'primary',
         },
-      },
-      {
-        type: 'section',
-        fields: [
-          {
-            type: 'mrkdwn',
-            text: `*Name:*\n${data.name}`,
-          },
-          {
-            type: 'mrkdwn',
-            text: `*Email:*\n${data.email}`,
-          },
-          {
-            type: 'mrkdwn',
-            text: `*Phone:*\n${data.phone || 'Not provided'}`,
-          },
-          {
-            type: 'mrkdwn',
-            text: `*Subject:*\n${data.subject}`,
-          },
-        ],
-      },
-      {
-        type: 'section',
-        text: {
-          type: 'mrkdwn',
-          text: `*Message:*\n${data.message}`,
-        },
-      },
-      {
-        type: 'context',
-        elements: [
-          {
-            type: 'mrkdwn',
-            text: `⏰ ${new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })} (UAE Time)`,
-          },
-        ],
-      },
-      {
-        type: 'actions',
-        elements: [
-          {
-            type: 'button',
-            text: {
-              type: 'plain_text',
-              text: '📧 Reply via Email',
-              emoji: true,
-            },
-            url: `mailto:${data.email}?subject=Re: ${data.subject}`,
-            style: 'primary',
-          },
-        ],
-      },
-    ],
-  };
+      ],
+    },
+  ];
 
-  await sendToSlack(message);
+  if (data.sessionId) {
+    blocks.push({
+      type: 'context',
+      elements: [
+        {
+          type: 'mrkdwn',
+          text: `Session \`${data.sessionId.slice(0, 24)}…\``,
+        },
+      ],
+    });
+  }
+
+  await sendToSlack({ blocks });
 }
 
 /**
@@ -640,142 +894,51 @@ export async function notifyEbookDelivery(data: EbookDeliveryData & { ebookType?
 }
 
 /**
- * Format IP address for display (with custom names for known IPs)
- */
-function formatIPAddress(ip: string | undefined | null): string {
-  if (!ip) return 'Unknown';
-  
-  // Custom IP address mappings
-  const knownIPs: Record<string, string> = {
-    '94.59.182.192': 'Sunain',
-  };
-  
-  return knownIPs[ip] || ip;
-}
-
-/**
- * Notify about new visitor (when someone first lands on the site)
+ * Notify about visitors: first land, engaged (time on site), or session end summary
  */
 export async function notifyNewVisitor(data: VisitorData): Promise<void> {
-  // Build location string with area if available
-  let location = data.country && data.country !== 'Unknown' 
-    ? `${data.country}${data.city && data.city !== 'Unknown' ? `, ${data.city}` : ''}`
-    : 'Unknown location';
-  
-  // Add area/neighborhood if available (e.g., "UAE, Abu Dhabi, Al Bateen")
-  if (data.area) {
-    location += `, ${data.area}`;
+  const type = data.notificationType || 'new';
+  const location = formatAccurateLocation(data);
+  const duration = formatSessionDuration(data.sessionDuration);
+
+  let headerText = '👤 New Visitor on Website';
+  if (type === 'engaged') {
+    headerText = `🔥 Engaged Visitor · ${duration} on site`;
+  } else if (type === 'session_end') {
+    headerText = `👋 Session Ended · ${duration} on site`;
+  } else if (data.visitCount && data.visitCount > 1) {
+    headerText = `👤 Returning Visitor (Visit #${data.visitCount})`;
   }
-  
-  // Format coordinates if available
-  const coordinates = data.lat && data.lng 
-    ? `${data.lat.toFixed(8)}, ${data.lng.toFixed(8)}`
-    : null;
-  
-  // Create Google Maps link if coordinates are available
-  const mapLink = coordinates 
-    ? `https://www.google.com/maps?q=${data.lat},${data.lng}`
-    : null;
-  
-  // Format IP address with custom name if applicable
-  const displayIP = formatIPAddress(data.ip);
 
   const blocks: any[] = [
     {
       type: 'header',
       text: {
         type: 'plain_text',
-        text: data.visitCount && data.visitCount > 1 ? `👤 Returning Visitor (Visit #${data.visitCount})` : '👤 New Visitor on Website',
+        text: headerText,
         emoji: true,
       },
     },
     {
       type: 'section',
-      fields: [
-        {
-          type: 'mrkdwn',
-          text: `*📍 Location:*\n${location}`,
-        },
-        {
-          type: 'mrkdwn',
-          text: `*🌐 IP Address:*\n\`${displayIP}\``,
-        },
-        {
-          type: 'mrkdwn',
-          text: `*💻 Device:*\n${data.device || 'Unknown'}`,
-        },
-        {
-          type: 'mrkdwn',
-          text: `*🔍 Browser:*\n${data.browser || 'Unknown'}`,
-        },
-      ],
+      text: {
+        type: 'mrkdwn',
+        text:
+          type === 'engaged'
+            ? `Still browsing — *${duration}* · *${location}*`
+            : type === 'session_end'
+              ? `Left after *${duration}* · *${location}*`
+              : `Just landed · *${location}*`,
+      },
     },
   ];
 
-  // Add Connection (network type only)
-  if (data.networkType) {
-    const networkEmoji = data.networkType === 'wifi' ? '📶' : 
-                        data.networkType === 'cellular' ? '📱' : 
-                        data.networkType === 'ethernet' ? '🔌' : '🌐';
-    blocks.push({
-      type: 'section',
-      fields: [
-        {
-          type: 'mrkdwn',
-          text: `*${networkEmoji} Connection:* ${data.networkType.charAt(0).toUpperCase() + data.networkType.slice(1)}`,
-        },
-      ],
-    });
-  }
+  blocks.push(...buildContextBlocks(data));
 
-  // Add Visit Count
-  if (data.visitCount) {
-    blocks.push({
-      type: 'section',
-      fields: [
-        {
-          type: 'mrkdwn',
-          text: `*🔄 Visit Count:* ${data.visitCount}${data.visitCount === 1 ? ' (First visit)' : ' (Returning visitor)'}`,
-        },
-      ],
-    });
-  }
-
-  // Add Coordinates
-  if (coordinates) {
-    blocks.push({
-      type: 'section',
-      fields: [
-        {
-          type: 'mrkdwn',
-          text: `*🗺️ Coordinates:*\n\`${coordinates}\`\n_*Note:* City-level approximation (IP geolocation)_`,
-        },
-      ],
-    });
-  }
-
-  // Add ISP and Timezone
-  const locationDetails: string[] = [];
-  if (data.isp) {
-    locationDetails.push(`*🏢 ISP:* ${data.isp}`);
-  }
-  if (data.timezone) {
-    locationDetails.push(`*🕐 Timezone:* ${data.timezone}`);
-  }
-  
-  if (locationDetails.length > 0) {
-    blocks.push({
-      type: 'section',
-      fields: locationDetails.map(info => ({
-        type: 'mrkdwn',
-        text: info,
-      })),
-    });
-  }
-
-  // Add Languages
-  if (data.languages && data.languages.length > 0) {
-    blocks.push({
+  if (data.languages && data.languages.length > 1) {
+    // Insert languages before the final context block
+    const contextIdx = blocks.findIndex((b) => b.type === 'context');
+    const langBlock = {
       type: 'section',
       fields: [
         {
@@ -783,72 +946,12 @@ export async function notifyNewVisitor(data: VisitorData): Promise<void> {
           text: `*🗣️ Languages:* ${data.languages.join(', ')}`,
         },
       ],
-    });
+    };
+    if (contextIdx >= 0) blocks.splice(contextIdx, 0, langBlock);
+    else blocks.push(langBlock);
   }
 
-  // Add Pages Visited (Navigation Flow)
-  if (data.navigationFlow && data.navigationFlow.length > 0) {
-    const flowText = data.navigationFlow
-      .map((page, index) => `${index + 1}. \`${page}\``)
-      .join('\n');
-    blocks.push({
-      type: 'section',
-      text: {
-        type: 'mrkdwn',
-        text: `*🧭 Pages Visited:*\n${flowText}`,
-      },
-    });
-  }
-
-  // Add Traffic Source
-  blocks.push({
-    type: 'section',
-    fields: [
-      {
-        type: 'mrkdwn',
-        text: `*📄 Landing Page:*\n\`${data.page}\``,
-      },
-      {
-        type: 'mrkdwn',
-        text: `*🔗 Traffic Source:*\n${data.source || 'Direct'}`,
-      },
-    ],
-  });
-
-  // Add map link button if coordinates are available
-  if (mapLink) {
-    blocks.push({
-      type: 'actions',
-      elements: [
-        {
-          type: 'button',
-          text: {
-            type: 'plain_text',
-            text: '🗺️ View on Map',
-            emoji: true,
-          },
-          url: mapLink,
-          style: 'primary',
-        },
-      ],
-    });
-  }
-
-  blocks.push({
-    type: 'context',
-    elements: [
-      {
-        type: 'mrkdwn',
-        text: `⏰ ${new Date().toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })} (UAE Time)`,
-      },
-    ],
-  });
-
-  const message: SlackMessage = {
-    blocks,
-  };
-
-  await sendToSlack(message, false); // General notification - use default webhook
+  await sendToSlack({ blocks }, false);
 }
 
 /**
@@ -999,14 +1102,18 @@ export async function notifyError(error: {
  * Notify about conversion events (form completions, masterclass interest, etc.)
  */
 export async function notifyConversionEvent(data: ConversionEventData): Promise<void> {
-  const eventEmoji = data.event === 'form_complete' ? '✅' : 
-                     data.event === 'masterclass_interest' ? '🎓' : 
+  const eventEmoji = data.event === 'form_complete' ? '✅' :
+                     data.event === 'masterclass_interest' ? '🎓' :
                      data.event === 'cta_click' ? '👆' : '📊';
 
   const eventTitle = data.event === 'form_complete' ? 'Form Completed' :
                      data.event === 'masterclass_interest' ? 'Masterclass Interest' :
                      data.event === 'cta_click' ? 'CTA Clicked' :
                      'Conversion Event';
+
+  const geoLocation = formatAccurateLocation(data);
+  const duration = formatSessionDuration(data.sessionDuration);
+  const pagePath = data.page || data.location || 'Unknown';
 
   const blocks: any[] = [
     {
@@ -1020,23 +1127,49 @@ export async function notifyConversionEvent(data: ConversionEventData): Promise<
     {
       type: 'section',
       fields: [
-        {
-          type: 'mrkdwn',
-          text: `*Element:*\n${data.element}`,
-        },
-        {
-          type: 'mrkdwn',
-          text: `*Location:*\n\`${data.location || 'Unknown'}\``,
-        },
+        { type: 'mrkdwn', text: `*Element:*\n${data.element}` },
+        { type: 'mrkdwn', text: `*📄 Page:*\n\`${pagePath}\`` },
+        { type: 'mrkdwn', text: `*📍 Location:*\n${geoLocation}` },
+        { type: 'mrkdwn', text: `*⏱️ Time on site:*\n${duration}` },
       ],
     },
   ];
+
+  if (data.device || data.browser || data.source) {
+    blocks.push({
+      type: 'section',
+      fields: [
+        {
+          type: 'mrkdwn',
+          text: `*💻 Device:*\n${data.device || 'Unknown'} · ${data.browser || 'Unknown'}`,
+        },
+        {
+          type: 'mrkdwn',
+          text: `*🔗 Source:*\n${data.source || 'Unknown'}`,
+        },
+      ],
+    });
+  }
+
+  if (data.navigationFlow && data.navigationFlow.length > 0) {
+    const flowText = data.navigationFlow
+      .slice(-12)
+      .map((p, i) => `${i + 1}. \`${p}\``)
+      .join('\n');
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `*🧭 Pages visited:*\n${flowText}`,
+      },
+    });
+  }
 
   if (data.metadata && Object.keys(data.metadata).length > 0) {
     const metadataText = Object.entries(data.metadata)
       .map(([key, value]) => `*${key}:* ${value}`)
       .join('\n');
-    
+
     blocks.push({
       type: 'section',
       text: {
@@ -1056,11 +1189,7 @@ export async function notifyConversionEvent(data: ConversionEventData): Promise<
     ],
   });
 
-  const message: SlackMessage = {
-    blocks,
-  };
-
-  await sendToSlack(message, false); // General notification - use default webhook
+  await sendToSlack({ blocks }, false);
 }
 
 /**

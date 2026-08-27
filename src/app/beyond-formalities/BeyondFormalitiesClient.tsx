@@ -4,12 +4,76 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, BookOpen, CheckCircle, Users, Briefcase, Home, Shield, Mail, HelpCircle, Eye, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, X, Maximize2, Clock, TrendingDown, Download, Star } from 'lucide-react'
+import { ArrowRight, BookOpen, CheckCircle, Users, Briefcase, Home, Shield, Mail, HelpCircle, Eye, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, X, Maximize2, Clock, TrendingDown, Download, Star, Lock } from 'lucide-react'
 import { trackCTAClick } from '@/lib/tracking'
 import { TestimonialCarousel } from '@/components/TestimonialCarousel'
 
 interface BeyondFormalitiesClientProps {
   paymentLink: string
+}
+
+const COVER_IMAGE = {
+  src: '/images/beyond-formalities-emirati-culture-uae-etiquette-eguide-cover.png',
+  alt: 'Beyond Formalities e-guide cover by The Orange Code — Understanding Emirati culture, local customs, hospitality, majlis etiquette and UAE business protocol',
+  title: 'Beyond Formalities: Emirati Culture & UAE Etiquette E-Guide',
+}
+
+const PREVIEW_PAGES = [
+  {
+    id: 1,
+    src: '/images/beyond-formalities/preview/beyond-formalities-emirati-identity-values-sample-page-1.jpg',
+    alt: 'Beyond Formalities sample page — Emirati identity, values and cultural foundations in the United Arab Emirates',
+  },
+  {
+    id: 2,
+    src: '/images/beyond-formalities/preview/beyond-formalities-uae-greetings-communication-sample-page-2.jpg',
+    alt: 'Beyond Formalities sample page — UAE greetings, communication styles and nonverbal cues in Emirati culture',
+  },
+  {
+    id: 3,
+    src: '/images/beyond-formalities/preview/beyond-formalities-hospitality-majlis-etiquette-sample-page-3.jpg',
+    alt: 'Beyond Formalities sample page — Emirati hospitality, majlis etiquette and social customs in the UAE',
+  },
+  {
+    id: 4,
+    src: '/images/beyond-formalities/preview/beyond-formalities-dining-customs-sample-page-4.jpg',
+    alt: 'Beyond Formalities sample page — Dining customs and everyday etiquette in Emirati and UAE culture',
+  },
+  {
+    id: 5,
+    src: '/images/beyond-formalities/preview/beyond-formalities-uae-business-protocol-sample-page-5.jpg',
+    alt: 'Beyond Formalities sample page — UAE business culture, professional protocol and relationship-building',
+  },
+  {
+    id: 6,
+    src: '/images/beyond-formalities/preview/beyond-formalities-modern-uae-everyday-life-sample-page-6.jpg',
+    alt: 'Beyond Formalities sample page — Modern UAE everyday life and practical cultural guidance for expats',
+  },
+]
+
+function TrustChips({ compact = false }: { compact?: boolean }) {
+  const chipClass = compact
+    ? 'inline-flex items-center gap-1 text-[10px] sm:text-xs text-white/70'
+    : 'inline-flex items-center gap-1.5 text-xs sm:text-sm text-white/75'
+
+  return (
+    <div className={`flex flex-wrap items-center justify-center gap-x-3 gap-y-1 ${compact ? '' : 'mt-3'}`}>
+      <span className={chipClass}>
+        <Download className={`${compact ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-orange`} />
+        <span><span className="text-orange font-semibold">468+</span> times bought</span>
+      </span>
+      <span className="text-white/30">·</span>
+      <span className={chipClass}>
+        <Lock className={`${compact ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-azure-blue`} />
+        Secure Stripe
+      </span>
+      <span className="text-white/30">·</span>
+      <span className={chipClass}>
+        <CheckCircle className={`${compact ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-orange`} />
+        Instant PDF
+      </span>
+    </div>
+  )
 }
 
 export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClientProps) {
@@ -18,12 +82,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
   const [currentPage, setCurrentPage] = useState(0)
   const [enlargedImage, setEnlargedImage] = useState<number | null>(null)
 
-  // 6 placeholder pages for the preview
-  const previewPages = Array.from({ length: 6 }, (_, i) => ({
-    id: i + 1,
-    src: `/beyond-formalities/preview/page-${i + 1}.jpg`, // Placeholder path - images can be added later
-    alt: `Beyond Formalities Preview Page ${i + 1}`
-  }))
+  const previewPages = PREVIEW_PAGES
 
   const nextPage = () => {
     setCurrentPage((prev) => (prev + 1) % previewPages.length)
@@ -95,17 +154,18 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
 
   return (
     <>
-      {/* Sticky Mobile CTA Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-primary-dark/95 backdrop-blur-md border-t border-white/10 shadow-lg">
-        <div className="container mx-auto px-4 py-3">
-          <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored">
+      {/* Sticky CTA + trust chips (all viewports) */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-primary-dark/95 backdrop-blur-md border-t border-white/10 shadow-[0_-8px_30px_rgba(0,0,0,0.35)]">
+        <div className="container mx-auto px-4 py-2.5 sm:py-3 max-w-3xl">
+          <TrustChips compact />
+          <Link href={paymentLink} target="_blank" rel="noopener noreferrer nofollow sponsored" className="block mt-2">
             <motion.button
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleCTAClick('Get the E-Guide - Sticky Mobile CTA')}
-              className="w-full px-6 sm:px-8 py-3 sm:py-4 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-sm sm:text-base inline-flex items-center justify-center gap-2"
+              whileTap={{ scale: 0.97 }}
+              onClick={() => handleCTAClick('Get the E-Guide - Sticky CTA')}
+              className="w-full px-6 sm:px-8 py-3 sm:py-3.5 cta-button-glow text-white font-semibold font-montserrat rounded-xl transition-all duration-300 text-sm sm:text-base inline-flex items-center justify-center gap-2"
             >
               <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
+              <span className="flex flex-col sm:flex-row items-center gap-0.5 sm:gap-2">
                 <span>Get the E-Guide</span>
                 <span className="flex items-center gap-1">
                   <span className="text-xs line-through text-white/60">149</span>
@@ -118,7 +178,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
         </div>
       </div>
 
-      <div className="space-y-12 sm:space-y-16 md:space-y-20 lg:space-y-24 pb-20 lg:pb-0">
+      <div className="space-y-12 sm:space-y-16 md:space-y-20 lg:space-y-24 pb-28 sm:pb-32">
       {/* A) Hero Section */}
       <section className="text-center space-y-4 sm:space-y-6 px-4">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold">
@@ -129,6 +189,21 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
         <h2 className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white/90 px-4 break-words">
           Understanding Emirati Culture, Local Customs, and Everyday Life
         </h2>
+
+        {/* Product cover — conversion visual + SEO image signals */}
+        <div className="max-w-[220px] sm:max-w-[260px] mx-auto pt-2">
+          <div className="relative aspect-[2/3] rounded-xl overflow-hidden border border-white/15 shadow-2xl shadow-orange/10">
+            <Image
+              src={COVER_IMAGE.src}
+              alt={COVER_IMAGE.alt}
+              title={COVER_IMAGE.title}
+              fill
+              priority
+              sizes="(max-width: 640px) 220px, 260px"
+              className="object-cover"
+            />
+          </div>
+        </div>
         
         <div className="max-w-3xl mx-auto space-y-3 sm:space-y-4 pt-2 sm:pt-4 px-4">
           <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed break-words">
@@ -171,7 +246,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
                   <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full mb-4">
                     <Download className="w-4 h-4 text-orange" />
                     <span className="text-sm text-white/80">
-                      <span className="font-bold text-orange">289</span> purchases and counting
+                      <span className="font-bold text-orange">468+</span> times bought
                     </span>
                   </div>
                   <div className="flex items-center justify-center gap-1 mb-2">
@@ -229,11 +304,12 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
                 </Link>
 
                 {/* Trust Indicators */}
-                <div className="mt-4 text-center">
+                <div className="mt-4 text-center space-y-2">
                   <p className="text-xs text-white/60">
                     <Shield className="w-3 h-3 inline mr-1" />
                     Secure checkout powered by Stripe
                   </p>
+                  <TrustChips />
                 </div>
               </div>
             </div>
@@ -266,14 +342,16 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
                     className="relative w-full h-full cursor-pointer group"
                     onClick={() => setEnlargedImage(currentPage)}
                   >
-                    {/* Placeholder Image */}
+                    {/* Preview frame — descriptive alt for crawlers / accessibility */}
                     <div className="w-full h-full bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10 flex items-center justify-center">
                       <div className="text-center p-8">
-                        <BookOpen className="w-16 h-16 text-white/30 mx-auto mb-4" />
+                        <BookOpen className="w-16 h-16 text-white/30 mx-auto mb-4" aria-hidden="true" />
                         <p className="text-white/60 text-sm">Preview Page {currentPage + 1}</p>
+                        <p className="text-white/40 text-xs mt-2 px-4">{previewPages[currentPage].alt}</p>
                         <p className="text-white/40 text-xs mt-2">Click to enlarge</p>
                       </div>
                     </div>
+                    <span className="sr-only">{previewPages[currentPage].alt}</span>
                     
                     {/* Enlarge Icon Overlay */}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
@@ -559,7 +637,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
                     <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-orange text-orange" />
                   ))}
                 </div>
-                <span className="text-xs sm:text-sm text-white/70">289+ purchases</span>
+                <span className="text-xs sm:text-sm text-white/70">468+ times bought</span>
               </div>
               
               <div className="space-y-2 text-white/80 text-sm sm:text-base">
@@ -589,6 +667,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
                   <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
                 </motion.button>
               </Link>
+              <TrustChips />
               </div>
             </div>
           </div>
@@ -656,6 +735,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
               <ArrowRight className="w-6 h-6 sm:w-7 sm:h-7" />
             </motion.button>
           </Link>
+          <TrustChips />
         </div>
         <div className="pt-4 sm:pt-6 space-y-2 text-white/60 text-xs sm:text-sm">
           <p>By The Orange Code, Abu Dhabi</p>

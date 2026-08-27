@@ -16,6 +16,17 @@ interface EventPayload {
   referrer?: string | null;
 }
 
+async function loadVisitorContext(sessionId?: string | null) {
+  if (!sessionId) return null;
+  try {
+    const raw = await redis.get(`visitor:context:${sessionId}`);
+    if (!raw) return null;
+    return typeof raw === 'string' ? JSON.parse(raw) : raw;
+  } catch {
+    return null;
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body: EventPayload = await req.json();
@@ -52,7 +63,7 @@ export async function POST(req: NextRequest) {
     if (event === 'form_complete' || event === 'masterclass_interest' || event === 'cta_click') {
       try {
         const conversionKey = `conversions:${event}:${element || 'unknown'}`;
-        await redis.incr(conversionKey);
+        await (redis as any).incr(conversionKey);
         await redis.expire(conversionKey, 86400 * 30); // 30 days
       } catch (error) {
         console.warn('⚠️ Failed to track conversion:', error);
@@ -63,21 +74,31 @@ export async function POST(req: NextRequest) {
     if (event === 'conversion_funnel') {
       try {
         const funnelKey = `funnel:${element}`;
-        await redis.incr(funnelKey);
+        await (redis as any).incr(funnelKey);
         await redis.expire(funnelKey, 86400 * 30); // 30 days
       } catch (error) {
         console.warn('⚠️ Failed to track funnel step:', error);
       }
     }
 
-    // Send Slack notification for important events
+    // Send Slack notification for important events (with geo + time on site)
     if (event === 'form_complete' || event === 'masterclass_interest') {
       try {
+        const visitor = await loadVisitorContext(sessionId);
         await notifyConversionEvent({
           event,
           element: element || 'Unknown',
           location: location || path,
+          page: path || visitor?.page,
           metadata,
+          sessionDuration: visitor?.sessionDuration,
+          country: visitor?.country,
+          city: visitor?.city,
+          area: visitor?.area,
+          source: visitor?.source,
+          navigationFlow: visitor?.navigationFlow,
+          device: visitor?.device,
+          browser: visitor?.browser,
         });
       } catch (slackError) {
         console.warn('⚠️ Failed to send Slack notification:', slackError);
@@ -93,4 +114,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-

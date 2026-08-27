@@ -98,48 +98,36 @@ const masterclasses: Masterclass[] = [
   }
 ]
 
-// Generate available dates for the next 4 weeks
-// Masterclass day mapping:
-// 1 = UAE Cultural Foundations -> Monday
-// 2 = Cultural Intelligence For Expats -> Tuesday
-// 3 = Business Culture & Professional Etiquette -> Thursday
+// Generate available in-person dates through end of year (twice weekly per masterclass)
+// Masterclass day mapping (two days each week):
+// 1 = UAE Cultural Foundations -> Monday + Wednesday
+// 2 = Cultural Intelligence For Expats -> Tuesday + Friday
+// 3 = Business Culture & Professional Etiquette -> Thursday + Saturday
 const generateAvailableDates = (masterclassId: number | null): TimeSlot[] => {
   const slots: TimeSlot[] = []
 
-  // Map masterclass ID to day of week (0 = Sunday, 1 = Monday, 2 = Tuesday, etc.)
-  const masterclassDays: Record<number, number> = {
-    1: 1, // UAE Cultural Foundations -> Monday
-    2: 2, // Cultural Intelligence For Expats -> Tuesday
-    3: 4  // Business Culture & Professional Etiquette -> Thursday
+  // Map masterclass ID to days of week (0 = Sunday, 1 = Monday, ... 6 = Saturday)
+  const masterclassDays: Record<number, number[]> = {
+    1: [1, 3], // UAE Cultural Foundations -> Monday + Wednesday
+    2: [2, 5], // Cultural Intelligence For Expats -> Tuesday + Friday
+    3: [4, 6], // Business Culture & Professional Etiquette -> Thursday + Saturday
   }
 
-  const offlineDays = masterclassId && masterclassDays[masterclassId]
-    ? [masterclassDays[masterclassId]]
-    : []
+  const offlineDays =
+    masterclassId && masterclassDays[masterclassId] ? masterclassDays[masterclassId] : []
   const offlineTime = '11:00 AM - 2:00 PM'
 
-  // Business rule: All dates from January 19, 2026 are available until end of February
-  // NOTE: JavaScript months are 0-indexed, so 0 = January, 1 = February.
+  // In-person sessions only: from today through 31 Dec 2026, twice weekly
   const today = new Date()
-  const targetYear = 2026
-  const cutoffDate = new Date(targetYear, 0, 19) // January 19, 2026 - dates from this date are available
-  // End date: Last day of February 2026 (February 28, 2026 - 2026 is not a leap year)
-  const endDate = new Date(targetYear, 1, 28) // February 28, 2026
-  
-  // Set cutoffDate to start of day (00:00:00) so dates ON January 19 are included
-  cutoffDate.setHours(0, 0, 0, 0)
-  // Set endDate to end of day to ensure we include the full day
+  today.setHours(0, 0, 0, 0)
+
+  const endDate = new Date(2026, 11, 31) // December 31, 2026
   endDate.setHours(23, 59, 59, 999)
 
-  // Loop from cutoffDate (January 19, 2026) to endDate (February 28, 2026)
-  // This ensures all dates from January 19 onwards are generated consistently on both mobile and desktop
-  const currentDate = new Date(cutoffDate)
-  currentDate.setHours(0, 0, 0, 0) // Start from cutoffDate, not today
-  
-  // Safety limit to prevent infinite loops (max 2 years of dates)
-  const maxIterations = 730
+  const currentDate = new Date(today)
+  const maxIterations = 400
   let iterations = 0
-  
+
   while (currentDate <= endDate && iterations < maxIterations) {
     iterations++
     const d = new Date(currentDate)
@@ -152,21 +140,17 @@ const generateAvailableDates = (masterclassId: number | null): TimeSlot[] => {
         day: 'numeric',
       })
 
-      // Date is available if it's on or after January 19, 2026
-      const isAvailable = d >= cutoffDate
-
       slots.push({
         date: formattedDate,
         time: offlineTime,
-        available: isAvailable,
+        available: true,
         type: 'offline',
       })
     }
-    
-    // Move to next day - must be done outside the if statement
+
     currentDate.setDate(currentDate.getDate() + 1)
   }
-  
+
   if (iterations >= maxIterations) {
     console.warn('Date generation reached max iterations limit')
   }
@@ -700,14 +684,14 @@ export default function MasterclassesPage() {
                         <span className="w-2 h-2 bg-azure-blue rounded-full"></span>
                         Step 2: <span className="text-orange">Choose</span> Your Time
                       </h2>
-                      <p className="text-white/60 text-xs sm:text-sm mb-6">Select your preferred date and session type</p>
+                      <p className="text-white/60 text-xs sm:text-sm mb-6">Select your preferred in-person date — twice weekly at Etihad Towers through Dec 2026</p>
                     </div>
 
-                    {/* Filter Tabs - Only In-Person Available */}
+                    {/* Filter Tabs - Physical / In-Person Only */}
                     <div className="flex gap-3 mb-6">
                       <div className="px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-orange to-light-blue text-white flex items-center gap-2">
                         <MapPin className="w-3 h-3" />
-                        In-Person Sessions
+                        In-Person Only
                       </div>
                     </div>
 
@@ -765,12 +749,17 @@ export default function MasterclassesPage() {
                         className="mt-6"
                       >
                         <div className="rounded-xl overflow-hidden border border-white/10">
-                          <div className="relative w-full aspect-video">
-                            <Image
-                              src="/etihad-towers.jpg"
-                              alt="The Orange Code at Etihad Towers"
-                              fill
-                              className="object-cover"
+                          <div className="relative w-full aspect-video bg-primary-dark">
+                            <p className="absolute top-3 left-3 z-10 text-white text-sm font-semibold drop-shadow-md pointer-events-none">
+                              The Orange Code at Etihad Towers
+                            </p>
+                            <iframe
+                              title="The Orange Code at Etihad Towers — Google Maps"
+                              src="https://www.google.com/maps?q=Etihad+Towers,+Corniche+Road,+Abu+Dhabi,+United+Arab+Emirates&hl=en&z=16&output=embed"
+                              className="absolute inset-0 h-full w-full border-0"
+                              loading="lazy"
+                              referrerPolicy="no-referrer-when-downgrade"
+                              allowFullScreen
                             />
                           </div>
                           <div className="p-4 bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10 border-t border-white/10">
@@ -784,6 +773,14 @@ export default function MasterclassesPage() {
                                   Abu Dhabi,<br />
                                   United Arab Emirates
                                 </p>
+                                <a
+                                  href="https://www.google.com/maps/search/?api=1&query=Etihad+Towers+Abu+Dhabi"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-block mt-2 text-orange text-xs font-medium hover:underline"
+                                >
+                                  Open in Google Maps
+                                </a>
                               </div>
                             </div>
                           </div>

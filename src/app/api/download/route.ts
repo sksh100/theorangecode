@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
     }
 
     // 1. Read the base flattened PDF (protected, not public)
-    const basePdfBytes = await fs.readFile(pdfPath);
+    const basePdfBytes = await fs.readFile(/*turbopackIgnore: true*/ pdfPath);
 
     // 2. Load PDF and font
     const pdfDoc = await PDFDocument.load(basePdfBytes);

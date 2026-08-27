@@ -25,7 +25,7 @@ export default function ResourcesPage() {
       title: 'Beyond Formalities',
       description: 'Understanding Emirati culture, local customs, and everyday life in the United Arab Emirates. Covers identity, values, greetings, communication, business culture, and modern UAE life.',
       href: '/beyond-formalities',
-      image: '/images/eguide-cover-beyond-formalities.png',
+      image: '/images/beyond-formalities-emirati-culture-uae-etiquette-eguide-cover.png',
       type: 'E-Guide',
       price: '149',
       currency: 'AED'
@@ -71,7 +71,14 @@ export default function ResourcesPage() {
                       <div className="relative w-full h-80 mb-6 rounded-2xl overflow-hidden bg-gradient-to-br from-orange/10 via-azure-blue/10 to-orange/10 flex items-center justify-center">
                         <Image
                           src={resource.image}
-                          alt={resource.title}
+                          alt={
+                            resource.id === 'beyond-formalities'
+                              ? 'Beyond Formalities e-guide cover — Emirati culture, local customs and UAE etiquette by The Orange Code'
+                              : resource.id === 'uk-to-uae-relocation'
+                              ? 'UK to UAE Relocation Guide e-guide cover — Cultural Intelligence for British professionals moving to the Emirates'
+                              : resource.title
+                          }
+                          title={resource.title}
                           width={400}
                           height={600}
                           className="object-contain w-auto h-full max-w-full p-6 group-hover:scale-105 transition-transform duration-300"

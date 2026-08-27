@@ -5,14 +5,17 @@ import { VisitorTracker } from '@/components/VisitorTracker'
 import { GoogleAnalytics } from '@/components/GoogleAnalytics'
 import { CookieBanner } from '@/components/CookieBanner'
 import { ClientLayoutWrapper } from '@/components/ClientLayoutWrapper'
+import { AICrawlerHeadTags, AIKnowledgeSummary } from '@/components/AICrawlerTags'
+import { BeyondFormalitiesI18nDigest } from '@/components/BeyondFormalitiesI18nMeta'
+import { SITEWIDE_AI_META } from '@/lib/ai-seo'
 import { lato } from '@/lib/fonts'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Cultural Intelligence GCC | Cultural Intelligence Middle East | Cultural Intelligence UAE | The Orange Code',
+    default: 'Cultural Intelligence UAE & Middle East | Relocate & Do Business | The Orange Code',
     template: '%s | The Orange Code'
   },
-  description: 'Cultural Intelligence GCC & Middle East: The Gulf\'s premier institute for Cultural Intelligence training. Master Cultural Intelligence (CQ) for the GCC region including UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman. Expert Cultural Intelligence courses in Dubai, Abu Dhabi, Riyadh, Doha, and across the Middle East. Learn how to navigate diverse teams, build trust, and drive success in the Gulf Cooperation Council.',
+  description: 'Cultural Intelligence for the UAE, GCC and Middle East: practical training and guides for professionals from the US, UK, Europe and China relocating to Dubai or Abu Dhabi, expanding into Gulf markets, or building trust with Emirati partners. Master CQ, Emirati culture, and Middle East business etiquette with The Orange Code.',
   keywords: [
     // Primary region-based keywords for SEO - GCC and Middle East first
     'Cultural Intelligence GCC',
@@ -92,6 +95,7 @@ export const metadata: Metadata = {
     'moving to the UAE',
     'moving to UAE',
     'relocating to UAE',
+    'relocating to the Middle East',
     'moving to Dubai',
     'moving to Abu Dhabi',
     'expatriate UAE',
@@ -120,6 +124,16 @@ export const metadata: Metadata = {
     'UAE cultural training',
     'Dubai cultural training',
     'Abu Dhabi cultural training',
+    // USA-specific keywords
+    'Cultural Intelligence USA',
+    'US professionals UAE',
+    'American expats Dubai',
+    'American expats Abu Dhabi',
+    'USA to UAE relocation',
+    'moving to UAE from USA',
+    'US executives Middle East',
+    'American professionals Gulf',
+    'doing business in Middle East from USA',
     // UK-specific keywords
     'Cultural Intelligence UK',
     'UAE culture training UK',
@@ -129,6 +143,7 @@ export const metadata: Metadata = {
     'UAE masterclass UK',
     'British expats Dubai',
     'British expats Abu Dhabi',
+    'moving to UAE from UK',
     // Netherlands/Dutch keywords
     'culturele intelligentie',
     'culturele intelligentie training',
@@ -147,6 +162,13 @@ export const metadata: Metadata = {
     'Dutch expats Abu Dhabi',
     'Cultural Intelligence Netherlands',
     'UAE cultural training Netherlands',
+    // Germany / Europe
+    'Cultural Intelligence Germany',
+    'German expats UAE',
+    'German professionals Dubai',
+    'Europe to UAE relocation',
+    'European expats Middle East',
+    'moving to UAE from Europe',
     // Italy/Italian keywords
     'intelligenza culturale',
     'intelligenza culturale training',
@@ -186,6 +208,21 @@ export const metadata: Metadata = {
     'French expats Abu Dhabi',
     'Cultural Intelligence France',
     'UAE cultural training France',
+    // China-specific keywords
+    'Cultural Intelligence China',
+    'Chinese professionals UAE',
+    'Chinese expats Dubai',
+    'Chinese executives Middle East',
+    'China to UAE business',
+    'doing business in UAE from China',
+    '阿联酋文化',
+    '迪拜文化',
+    '阿布扎比文化',
+    '阿联酋商务礼仪',
+    '中东商务文化',
+    '移居阿联酋',
+    '文化智能',
+    '跨文化沟通 阿联酋',
     // Jobs, life and expat queries (UAE, Abu Dhabi, Dubai)
     'jobs in UAE',
     'jobs in the United Arab Emirates',
@@ -291,6 +328,7 @@ export const metadata: Metadata = {
     'UAE cultural dos and donts',
     'GCC expat guide',
     'Middle East expat guide',
+    'Beyond Formalities',
   ],
   authors: [{ name: 'The Orange Code' }],
   creator: 'The Orange Code',
@@ -315,8 +353,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Cultural Intelligence GCC | Cultural Intelligence Middle East | The Orange Code',
-    description: 'Cultural Intelligence GCC & Middle East: The Gulf\'s premier institute for Cultural Intelligence training. Master Cultural Intelligence (CQ) for the GCC region including UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman. Expert Cultural Intelligence courses in Dubai, Abu Dhabi, Riyadh, Doha, and across the Middle East.',
+    title: 'Cultural Intelligence UAE & Middle East | Relocate & Do Business with Confidence',
+    description: 'Practical Cultural Intelligence for professionals from the US, UK, Europe and China relocating to the UAE or doing business across the Middle East. Emirati culture, Gulf etiquette, and CQ training from The Orange Code.',
     url: 'https://www.theorangecode.com',
     siteName: 'The Orange Code',
     images: [
@@ -324,17 +362,18 @@ export const metadata: Metadata = {
         url: 'https://www.theorangecode.com/og-image',
         width: 1200,
         height: 630,
-        alt: 'The Orange Code - Cultural Intelligence Training',
+        alt: 'The Orange Code - Cultural Intelligence Training for UAE and Middle East',
         type: 'image/png',
       },
     ],
     locale: 'en_US',
+    alternateLocale: ['en_GB', 'en_AE', 'zh_CN', 'nl_NL', 'fr_FR', 'de_DE', 'it_IT'],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Cultural Intelligence GCC | Cultural Intelligence Middle East | The Orange Code',
-    description: 'Cultural Intelligence GCC & Middle East: The Gulf\'s premier institute for Cultural Intelligence training. Master Cultural Intelligence (CQ) for the GCC region including UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman.',
+    title: 'Cultural Intelligence UAE & Middle East | Relocate & Do Business with Confidence',
+    description: 'CQ training and Emirati culture guides for US, UK, European and Chinese professionals relocating to or doing business in the UAE and Gulf.',
     images: ['https://www.theorangecode.com/og-image'],
   },
   robots: {
@@ -349,13 +388,13 @@ export const metadata: Metadata = {
     },
   },
   other: {
-    'ai-topic': 'Cultural Intelligence GCC, Cultural Intelligence Middle East, Cultural Intelligence training GCC, Cultural Intelligence training Middle East, Cultural Intelligence UAE, Cultural Intelligence Saudi Arabia, Cultural Intelligence Qatar, Cultural Intelligence Kuwait, Cultural Intelligence Bahrain, Cultural Intelligence Oman, GCC culture, Middle East culture, cross-cultural communication GCC, leadership training GCC',
-    'ai-intent': 'Cultural Intelligence training GCC, Cultural Intelligence training Middle East, Cultural Intelligence courses GCC, Cultural Intelligence masterclasses Middle East, GCC cultural training, Middle East cultural training',
-    'ai-relevance': 'Cultural Intelligence GCC, Cultural Intelligence Middle East, GCC culture, Middle East business culture, Gulf Cooperation Council Cultural Intelligence, Cultural Intelligence Gulf region, Middle East cultural awareness',
-    'content-purpose': 'Cultural Intelligence and leadership training for professionals across the GCC and Middle East region including UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, and Oman',
-    'target-audience': 'professionals in GCC, professionals in Middle East, expats in GCC, business professionals GCC, international professionals Middle East, executives GCC',
-    'geographic-focus': 'Gulf Cooperation Council, GCC, Middle East, United Arab Emirates, UAE, Dubai, Abu Dhabi, Saudi Arabia, Qatar, Kuwait, Bahrain, Oman',
-    'content-language': 'en',
+    ...SITEWIDE_AI_META,
+    'ai-topic': 'Cultural Intelligence GCC, Cultural Intelligence Middle East, UAE relocation culture, Emirati etiquette, doing business in UAE, Beyond Formalities',
+    'ai-intent': 'relocate to UAE, move to Dubai, do business in Middle East, Cultural Intelligence training GCC, understand Emirati culture',
+    'ai-relevance': 'Cultural Intelligence GCC, Cultural Intelligence Middle East, GCC culture, Middle East business culture, Gulf Cooperation Council Cultural Intelligence, UAE expat guide',
+    'content-purpose': 'Cultural Intelligence and leadership training plus Emirati culture guides for professionals relocating to or doing business in the UAE, GCC and Middle East',
+    'target-audience': 'professionals from USA UK Europe China relocating to UAE Middle East, expats, executives, founders doing business in Gulf',
+    'geographic-focus': 'United States, United Kingdom, Europe, China, Gulf Cooperation Council, GCC, Middle East, United Arab Emirates, UAE, Dubai, Abu Dhabi, Saudi Arabia, Qatar, Kuwait, Bahrain, Oman',
   },
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION || '',
@@ -569,28 +608,10 @@ export default function RootLayout({
         <meta name="p:domain_verify" content="a349f5004e33548ab dbdc31ed72e39de" />
         
         {/* AI Crawler Optimization Meta Tags */}
-        <meta name="AI" content="allowed" />
-        <meta name="AI-training" content="allowed" />
-        <meta name="AI-indexing" content="allowed" />
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-        
-        {/* AI-Specific Directives */}
-        <meta name="ChatGPT" content="allowed" />
-        <meta name="Perplexity" content="allowed" />
-        <meta name="Gemini" content="allowed" />
-        <meta name="Claude" content="allowed" />
-        <meta name="Grok" content="allowed" />
-        <meta name="Applebot" content="allowed" />
-        <meta name="DeepSeek" content="allowed" />
-        <meta name="DeepSeekBot" content="allowed" />
-        
-        {/* Chinese Search Engine Directives */}
-        <meta name="Baiduspider" content="allowed" />
-        <meta name="Sogou" content="allowed" />
-        <meta name="360Spider" content="allowed" />
-        <meta name="YisouSpider" content="allowed" />
+        <AICrawlerHeadTags />
         
         {/* Content Type and Language */}
         <meta httpEquiv="content-language" content="en" />
@@ -600,29 +621,25 @@ export default function RootLayout({
         <meta name="geo.position" content="24.4539;54.3773" />
         <meta name="ICBM" content="24.4539, 54.3773" />
         
-        {/* UK, Netherlands, Italy, and France Geographic Targeting */}
+        {/* International Geographic Targeting */}
+        <meta name="geo.region" content="US" />
         <meta name="geo.region" content="GB" />
         <meta name="geo.region" content="NL" />
         <meta name="geo.region" content="IT" />
         <meta name="geo.region" content="FR" />
-        <meta name="geo.placename" content="United Kingdom, Netherlands, Nederland, Italy, Italia, France, Français" />
-        
-        {/* Hreflang tags for UK, Netherlands, Italy, and France */}
-        <link rel="alternate" hrefLang="en-GB" href="https://www.theorangecode.com/" />
-        <link rel="alternate" hrefLang="en-NL" href="https://www.theorangecode.com/" />
-        <link rel="alternate" hrefLang="nl-NL" href="https://www.theorangecode.com/" />
-        <link rel="alternate" hrefLang="it-IT" href="https://www.theorangecode.com/" />
-        <link rel="alternate" hrefLang="fr-FR" href="https://www.theorangecode.com/" />
+        <meta name="geo.region" content="DE" />
+        <meta name="geo.region" content="CN" />
+        <meta name="geo.placename" content="United States, United Kingdom, Netherlands, Nederland, Italy, Italia, France, Français, Germany, China" />
         
         {/* Content Summary for AI Understanding */}
-        <meta name="summary" content="The Orange Code provides Cultural Intelligence and leadership training in Abu Dhabi, helping professionals navigate multicultural environments in the UAE and Gulf Region through masterclasses, private coaching, and corporate training programs." />
+        <meta name="summary" content="The Orange Code provides Cultural Intelligence and leadership training in Abu Dhabi, helping professionals from the US, UK, Europe and China navigate multicultural environments in the UAE and Gulf Region through masterclasses, private coaching, Beyond Formalities, and corporate training programs." />
         
         {/* Hidden SEO Keywords for AI and Search Engines */}
         <meta
           name="keywords"
-          content="moving to the UAE, moving to UAE, relocating to UAE, moving to Dubai, moving to Abu Dhabi, expatriate UAE, expat UAE, Emirati culture, Emirati etiquette, Emirati customs, Emirati traditions, UAE culture, UAE etiquette, UAE customs, Gulf culture, GCC culture, doing business in the Emirates, doing business in UAE, business in Dubai, business in Abu Dhabi, UAE business culture, Emirates business etiquette, Gulf business protocol, UAE expat guide, Dubai expat guide, Abu Dhabi expat guide, UAE cultural guide, Emirati cultural training, UAE cultural training, Dubai cultural training, Abu Dhabi cultural training, jobs in UAE, jobs in the United Arab Emirates, jobs in Abu Dhabi, jobs in Dubai, work in UAE, work in the United Arab Emirates, work in Abu Dhabi, work in Dubai, careers in UAE, career opportunities in Abu Dhabi, career opportunities in Dubai, life in UAE, life in the United Arab Emirates, life in Abu Dhabi, life in Dubai, living in UAE as an expat, living in Abu Dhabi as an expat, living in Dubai as an expat, expats in UAE, expats in the United Arab Emirates, expats in Abu Dhabi, expats in Dubai, Abu Dhabi culture, Dubai culture, United Arab Emirates culture, UAE lifestyle, Dubai lifestyle, Abu Dhabi lifestyle, doing business in Dubai, doing business in Abu Dhabi, doing business in Sharjah, doing business in Ras Al Khaimah, doing business in Ajman, doing business in Fujairah, doing business in Umm Al Quwain, doing business in the Emirates, doing business in the UAE, doing business in the United Arab Emirates, doing business in the Gulf, doing business in the GCC, doing business in the Middle East, Middle East business protocol, GCC business protocol, Dubai business protocol, Abu Dhabi business protocol, UAE business protocol, Dubai business etiquette, Abu Dhabi business etiquette, GCC business etiquette, Middle East business etiquette, GCC culture, Gulf business culture, Middle East culture, Saudi Arabia culture, Saudi culture, Saudi business culture, doing business in Saudi Arabia, doing business in Saudi, Saudi business etiquette, Saudi business protocol, Cultural Intelligence Saudi Arabia, Cultural Intelligence in Saudi, expats in Saudi Arabia, life in Saudi Arabia, jobs in Saudi Arabia, Qatar culture, Qatari culture, Qatar business culture, doing business in Qatar, Qatar business etiquette, Qatar business protocol, expats in Qatar, life in Qatar, jobs in Qatar, UAE guide, United Arab Emirates guide, Dubai guide, Abu Dhabi guide, expat guide UAE, expat guide to the UAE, expat guide Dubai, expat guide Abu Dhabi, tourist guide UAE, tourist guide Dubai, tourist guide Abu Dhabi, UAE dos and donts, Dubai dos and donts, Abu Dhabi dos and donts, UAE rules for expats, UAE rules for tourists, Dubai rules and regulations, Abu Dhabi rules and regulations, what not to do in UAE, what not to do in Dubai, what not to do in Abu Dhabi, UAE etiquette guide, Dubai etiquette guide, Abu Dhabi etiquette guide, UAE cultural dos and donts, GCC expat guide, Middle East expat guide"
+          content="moving to the UAE, moving to UAE, relocating to UAE, moving to Dubai, moving to Abu Dhabi, expatriate UAE, expat UAE, Emirati culture, Emirati etiquette, Emirati customs, Emirati traditions, UAE culture, UAE etiquette, UAE customs, Gulf culture, GCC culture, doing business in the Emirates, doing business in UAE, business in Dubai, business in Abu Dhabi, UAE business culture, Emirates business etiquette, Gulf business protocol, UAE expat guide, Dubai expat guide, Abu Dhabi expat guide, UAE cultural guide, Emirati cultural training, UAE cultural training, Dubai cultural training, Abu Dhabi cultural training, jobs in UAE, jobs in the United Arab Emirates, jobs in Abu Dhabi, jobs in Dubai, work in UAE, work in the United Arab Emirates, work in Abu Dhabi, work in Dubai, careers in UAE, career opportunities in Abu Dhabi, career opportunities in Dubai, life in UAE, life in the United Arab Emirates, life in Abu Dhabi, life in Dubai, living in UAE as an expat, living in Abu Dhabi as an expat, living in Dubai as an expat, expats in UAE, expats in the United Arab Emirates, expats in Abu Dhabi, expats in Dubai, Abu Dhabi culture, Dubai culture, United Arab Emirates culture, UAE lifestyle, Dubai lifestyle, Abu Dhabi lifestyle, doing business in Dubai, doing business in Abu Dhabi, doing business in Sharjah, doing business in Ras Al Khaimah, doing business in Ajman, doing business in Fujairah, doing business in Umm Al Quwain, doing business in the Emirates, doing business in the UAE, doing business in the United Arab Emirates, doing business in the Gulf, doing business in the GCC, doing business in the Middle East, Middle East business protocol, GCC business protocol, Dubai business protocol, Abu Dhabi business protocol, UAE business protocol, Dubai business etiquette, Abu Dhabi business etiquette, GCC business etiquette, Middle East business etiquette, GCC culture, Gulf business culture, Middle East culture, Saudi Arabia culture, Saudi culture, Saudi business culture, doing business in Saudi Arabia, doing business in Saudi, Saudi business etiquette, Saudi business protocol, Cultural Intelligence Saudi Arabia, Cultural Intelligence in Saudi, expats in Saudi Arabia, life in Saudi Arabia, jobs in Saudi Arabia, Qatar culture, Qatari culture, Qatar business culture, doing business in Qatar, Qatar business etiquette, Qatar business protocol, expats in Qatar, life in Qatar, jobs in Qatar, UAE guide, United Arab Emirates guide, Dubai guide, Abu Dhabi guide, expat guide UAE, expat guide to the UAE, expat guide Dubai, expat guide Abu Dhabi, tourist guide UAE, tourist guide Dubai, tourist guide Abu Dhabi, UAE dos and donts, Dubai dos and donts, Abu Dhabi dos and donts, UAE rules for expats, UAE rules for tourists, Dubai rules and regulations, Abu Dhabi rules and regulations, what not to do in UAE, what not to do in Dubai, what not to do in Abu Dhabi, UAE etiquette guide, Dubai etiquette guide, Abu Dhabi etiquette guide, UAE cultural dos and donts, GCC expat guide, Middle East expat guide, Beyond Formalities, Cultural Intelligence USA, Cultural Intelligence China, American expats Dubai, Chinese professionals UAE, European expats Middle East"
         />
-        <meta name="description" content="Moving to the UAE? Learn Emirati culture and etiquette. Expert training for doing business in the Emirates. Cultural intelligence for expatriates in Abu Dhabi." />
+        <meta name="description" content="Moving to the UAE? Learn Emirati culture and etiquette. Expert training for doing business in the Emirates. Cultural intelligence for expatriates in Abu Dhabi from the US, UK, Europe and China." />
         
         {/* Structured Data for SEO - Deferred for performance */}
         <script
@@ -1011,6 +1028,8 @@ export default function RootLayout({
         />
       </head>
       <body className={`${lato.variable} antialiased bg-primary-dark`} style={{ fontFamily: "'Inter', 'Lato', 'Glacial Indifference', sans-serif", backgroundColor: '#0A2244' }}>
+        <AIKnowledgeSummary />
+        <BeyondFormalitiesI18nDigest />
         <GoogleAnalytics />
         
         {/* Umami Analytics - Privacy-friendly analytics (EU region) */}

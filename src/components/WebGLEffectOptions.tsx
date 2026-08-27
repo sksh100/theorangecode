@@ -89,12 +89,10 @@ function CulturalNetworksEffect({ mousePosition }: { mousePosition: { x: number,
             <bufferGeometry>
               <bufferAttribute
                 attach="attributes-position"
-                count={2}
-                array={new Float32Array([
+                args={[new Float32Array([
                   from.position[0], from.position[1], from.position[2],
                   to.position[0], to.position[1], to.position[2]
-                ])}
-                itemSize={3}
+                ]), 3]}
               />
             </bufferGeometry>
             <lineBasicMaterial
@@ -837,12 +835,10 @@ function SphereClusterEffect({ mousePosition }: { mousePosition: { x: number, y:
             <bufferGeometry>
               <bufferAttribute
                 attach="attributes-position"
-                count={2}
-                array={new Float32Array([
+                args={[new Float32Array([
                   from.position[0], from.position[1], from.position[2],
                   to.position[0], to.position[1], to.position[2]
-                ])}
-                itemSize={3}
+                ]), 3]}
               />
             </bufferGeometry>
             <lineBasicMaterial
