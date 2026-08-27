@@ -594,9 +594,7 @@ export function BeyondFormalitiesClient({ paymentLink }: BeyondFormalitiesClient
       </section>
 
       {/* Testimonials Section - Before Pricing */}
-      <section className="max-w-7xl mx-auto px-4">
-        <TestimonialCarousel />
-      </section>
+      <TestimonialCarousel />
 
       {/* G) Enhanced Pricing Block */}
       <section className="max-w-2xl mx-auto px-4">

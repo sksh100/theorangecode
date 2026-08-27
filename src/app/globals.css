@@ -1237,6 +1237,27 @@
   overflow-x: hidden;
 }
 
+/* Testimonials infinite marquee (Beyond Formalities + homepage) */
+@keyframes bf-testimonial-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.bf-testimonial-marquee {
+  animation: bf-testimonial-scroll 72s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bf-testimonial-marquee {
+    animation: none !important;
+  }
+}
+
 body {
   overflow-x: hidden;
 }
